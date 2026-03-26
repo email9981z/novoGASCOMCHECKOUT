@@ -327,178 +327,90 @@
             position: relative;
         }
 
-        .payment-option-card.pix-card::before {
-            content: '';
+        .payment-badge-promo {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(50, 188, 173, 0.05) 0%, rgba(50, 188, 173, 0.02) 100%);
-            border-radius: 20px;
-            pointer-events: none;
-            animation: pixPulse 3s ease-in-out infinite;
-        }
-
-        .payment-option-card.pix-card:hover {
-            border-color: #32bcad;
-            box-shadow: 0 16px 40px rgba(50, 188, 173, 0.25), inset 0 1px 0 rgba(50, 188, 173, 0.1);
-            transform: translateY(-3px);
-        }
-
-        @keyframes pixPulse {
-            0%, 100% { box-shadow: inset 0 0 0 0 rgba(50, 188, 173, 0.1); }
-            50% { box-shadow: inset 0 0 0 2px rgba(50, 188, 173, 0.15); }
-        }
-
-        .payment-option-card.pix-card.selected {
-            border: 3px solid #32bcad;
-            background: linear-gradient(135deg, rgba(50, 188, 173, 0.12) 0%, rgba(50, 188, 173, 0.05) 100%);
-            box-shadow: 0 16px 48px rgba(50, 188, 173, 0.35), inset 0 1px 0 rgba(50, 188, 173, 0.2);
-            position: relative;
-            animation: pixSelected 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes pixSelected {
-            0% { transform: scale(0.98); }
-            50% { transform: scale(1.01); }
-            100% { transform: scale(1); }
-        }
-
-        .payment-option-card.pix-card.selected::before {
-            background: linear-gradient(90deg, #32bcad 0%, #28a89d 100%);
-            animation: pixGlow 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pixGlow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .payment-option-card.pix-card.selected::after {
-            background: #32bcad;
-            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.5);
-            animation: pixCheck 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes pixCheck {
-            0% { transform: scale(0) rotate(-45deg); }
-            100% { transform: scale(1) rotate(0deg); }
+            top: 12px;
+            right: -30px;
+            background: #ff6b35;
+            color: white;
+            padding: 4px 35px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .payment-option-icon {
-            width: 54px;
-            height: 54px;
-            background: var(--primary-light);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            color: var(--primary);
-            margin-bottom: 4px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.12);
-        }
-
-        .payment-option-card.selected .payment-option-icon {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(0, 85, 255, 0.25);
-        }
-
-        .payment-option-card.pix-card.selected .payment-option-icon {
-            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.3);
-        }
-
-        .pix-card .payment-option-icon {
-            background: linear-gradient(135deg, rgba(50, 188, 173, 0.15) 0%, rgba(50, 188, 173, 0.08) 100%);
+            font-size: 1.8rem;
             color: #32bcad;
-            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.2);
-            animation: pixIconPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pixIconPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .payment-option-card.pix-card.selected .payment-option-icon {
-            background: linear-gradient(135deg, rgba(50, 188, 173, 0.2) 0%, rgba(50, 188, 173, 0.12) 100%);
-            transform: scale(1.15);
-            box-shadow: 0 8px 20px rgba(50, 188, 173, 0.35);
-            animation: pixIconSelected 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes pixIconSelected {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1.15); }
+            margin-bottom: 4px;
         }
 
         .payment-option-title {
+            font-size: 1.1rem;
             font-weight: 800;
-            font-size: 1.25rem;
             color: var(--text-dark);
-            margin: 0;
         }
 
         .payment-option-price {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 900;
-            color: var(--text-dark);
-            letter-spacing: -0.5px;
-        }
-
-        .pix-card .payment-option-price {
             color: #32bcad;
-            font-size: 2rem;
-            font-weight: 950;
-        }
-
-        .payment-option-card.pix-card.selected .payment-option-price {
-            color: #32bcad;
-            text-shadow: 0 2px 8px rgba(50, 188, 173, 0.2);
         }
 
         .payment-option-desc {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-gray);
-            line-height: 1.5;
-            margin: 0;
+            line-height: 1.4;
         }
 
-        .payment-badge-promo {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, #32bcad 0%, #28a89d 100%);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.35);
-            letter-spacing: 0.5px;
-            animation: badgePulse 2s ease-in-out infinite;
+        /* ==================== NEW PIX FORM STYLES ==================== */
+        .pix-form-container {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(50, 188, 173, 0.2);
+            display: none; /* Hidden until Pix is selected */
+            flex-direction: column;
+            gap: 12px;
+            animation: fadeIn 0.3s ease-out;
         }
 
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+        .payment-option-card.selected .pix-form-container {
+            display: flex;
         }
 
-        .payment-badge-delivery {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--warning);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
+        .pix-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .pix-input-group label {
             font-size: 0.75rem;
-            font-weight: 800;
+            font-weight: 700;
+            color: #32bcad;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pix-input-group input {
+            padding: 12px 14px;
+            border: 1.5px solid rgba(50, 188, 173, 0.3);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: white;
+            transition: all 0.2s ease;
+            color: var(--text-dark);
+        }
+
+        .pix-input-group input:focus {
+            border-color: #32bcad;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(50, 188, 173, 0.1);
+        }
+
+        .pix-input-group input::placeholder {
+            color: #b0c4c2;
         }
 
         .payment-action-btn {
@@ -785,6 +697,16 @@
             quantity: 1
         }];
 
+        // CPF Mask Function
+        function maskCPF(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+                .replace(/(-\d{2})\d+?$/, '$1');
+        }
+
         function renderPaymentOptions() {
             const item = cart[0];
             const baseTotal = item.price * item.quantity;
@@ -806,16 +728,33 @@
                             <div class="payment-option-title">Pagar Agora - Pix</div>
                             <div class="payment-option-price">R$ ${baseTotal.toFixed(2).replace('.', ',')}</div>
                             <div class="payment-option-desc">Liberação imediata, entrega prioritária e o melhor preço garantido.</div>
-                            <button class="payment-action-btn btn-pay-now" style="margin-top:10px; background: #32bcad; border-radius:12px;"><span class="btn-text">Prosseguir <i class="fas fa-chevron-right"></i></span></button>
+                            
+                            <!-- New Pix Form Fields -->
+                            <div class="pix-form-container" id="pix-form">
+                                <div class="pix-input-group">
+                                    <label for="pix-name">Nome e Sobrenome</label>
+                                    <input type="text" id="pix-name" placeholder="Ex: João Silva" required>
+                                </div>
+                                <div class="pix-input-group">
+                                    <label for="pix-cpf">CPF</label>
+                                    <input type="text" id="pix-cpf" placeholder="000.000.000-00" maxlength="14" required>
+                                </div>
+                            </div>
+
+                            <button class="payment-action-btn btn-pay-now" style="margin-top:10px; background: #32bcad; border-radius:12px;">
+                                <span class="btn-text">Prosseguir <i class="fas fa-chevron-right"></i></span>
+                            </button>
                         </div>
 
                         <div class="payment-option-card" id="pay-on-delivery">
-                            <div class="payment-badge-delivery">Sem Desconto</div>
+                            <div class="payment-badge-delivery" style="position: absolute; top: 12px; right: -30px; background: var(--text-light); color: white; padding: 4px 35px; font-size: 0.7rem; font-weight: 800; transform: rotate(45deg);">Sem Desconto</div>
                             <div class="payment-option-icon"><i class="fas fa-truck-ramp-box"></i></div>
                             <div class="payment-option-title">Pagar na Entrega</div>
                             <div class="payment-option-price">R$ ${deliveryTotal.toFixed(2).replace('.', ',')}</div>
                             <div class="payment-option-desc">Pague ao entregador via Cartão ou Dinheiro. (Inclui taxas administrativas)</div>
-                            <button class="payment-action-btn btn-pay-delivery" style="margin-top:10px; border-radius:12px;"><span class="btn-text">Prosseguir <i class="fas fa-chevron-right"></i></span></button>
+                            <button class="payment-action-btn btn-pay-delivery" style="margin-top:10px; border-radius:12px;">
+                                <span class="btn-text">Selecionar <i class="fas fa-chevron-right"></i></span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -827,6 +766,14 @@
                 cartWrapper.scrollTop = 0;
             }
 
+            // Apply CPF mask to the input
+            const cpfInput = document.getElementById('pix-cpf');
+            if (cpfInput) {
+                cpfInput.addEventListener('input', (e) => {
+                    e.target.value = maskCPF(e.target.value);
+                });
+            }
+
             document.getElementById('payment-back-btn').addEventListener('click', () => {
                 alert('Voltar clicado');
             });
@@ -834,43 +781,43 @@
             const pixCard = document.getElementById('pay-now-pix');
             const deliveryCard = document.getElementById('pay-on-delivery');
             
-            // Two-click logic for PIX
-            pixCard.addEventListener('click', () => {
+            // Pix Selection Logic
+            pixCard.addEventListener('click', (e) => {
+                // Prevent trigger if clicking inside inputs
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'LABEL') return;
+
                 if (selectedPaymentType === 'pix') {
-                    // Second click - proceed with payment
-                    handleFinalPayment('pix');
+                    // If already selected, check if button was clicked
+                    if (e.target.closest('.payment-action-btn')) {
+                        handleFinalPayment('pix');
+                    }
                 } else {
-                    // First click - select the card
                     selectedPaymentType = 'pix';
                     pixCard.classList.add('selected');
                     deliveryCard.classList.remove('selected');
                     
-                    // Update button text
                     const pixBtn = pixCard.querySelector('.payment-action-btn');
-                    pixBtn.innerHTML = '<span class="btn-text">Pagar Agora <i class="fas fa-check"></i></span>';
+                    pixBtn.innerHTML = '<span class="btn-text">Gerar QR Code Pix <i class="fas fa-check"></i></span>';
                     
-                    // Reset Delivery button
                     const deliveryBtn = deliveryCard.querySelector('.payment-action-btn');
                     deliveryBtn.innerHTML = '<span class="btn-text">Selecionar <i class="fas fa-chevron-right"></i></span>';
                 }
             });
 
-            // Two-click logic for DELIVERY
-            deliveryCard.addEventListener('click', () => {
+            // Delivery Selection Logic
+            deliveryCard.addEventListener('click', (e) => {
                 if (selectedPaymentType === 'delivery') {
-                    // Second click - proceed with payment
-                    handleFinalPayment('delivery');
+                    if (e.target.closest('.payment-action-btn')) {
+                        handleFinalPayment('delivery');
+                    }
                 } else {
-                    // First click - select the card
                     selectedPaymentType = 'delivery';
                     deliveryCard.classList.add('selected');
                     pixCard.classList.remove('selected');
                     
-                    // Update button text
                     const deliveryBtn = deliveryCard.querySelector('.payment-action-btn');
                     deliveryBtn.innerHTML = '<span class="btn-text">Prosseguir <i class="fas fa-check"></i></span>';
                     
-                    // Reset PIX button
                     const pixBtn = pixCard.querySelector('.payment-action-btn');
                     pixBtn.innerHTML = '<span class="btn-text">Selecionar <i class="fas fa-chevron-right"></i></span>';
                 }
@@ -882,10 +829,24 @@
             const totalValue = (item.price * item.quantity).toFixed(2);
             
             if (type === 'pix') {
+                const name = document.getElementById('pix-name').value;
+                const cpf = document.getElementById('pix-cpf').value;
+
+                if (!name || name.length < 3) {
+                    alert('Por favor, insira seu nome completo.');
+                    document.getElementById('pix-name').focus();
+                    return;
+                }
+
+                if (!cpf || cpf.length < 14) {
+                    alert('Por favor, insira um CPF válido.');
+                    document.getElementById('pix-cpf').focus();
+                    return;
+                }
+
                 const pixCard = document.getElementById('pay-now-pix');
                 const pixBtn = pixCard.querySelector('.payment-action-btn');
                 
-                // Adicionar estado de carregamento
                 pixBtn.classList.add('btn-loading');
                 const spinner = document.createElement('div');
                 spinner.className = 'spinner';
@@ -997,6 +958,14 @@
             document.getElementById('modal-continue-delivery').addEventListener('click', () => {
                 document.getElementById('modal-step-1').style.display = 'none';
                 document.getElementById('modal-step-2').style.display = 'block';
+                
+                // Apply mask to delivery CPF as well
+                const deliveryCpfInput = document.getElementById('delivery-cpf');
+                if (deliveryCpfInput) {
+                    deliveryCpfInput.addEventListener('input', (e) => {
+                        e.target.value = maskCPF(e.target.value);
+                    });
+                }
             });
 
             document.getElementById('delivery-contact-form').addEventListener('submit', (e) => {
