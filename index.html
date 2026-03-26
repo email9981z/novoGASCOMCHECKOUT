@@ -2617,11 +2617,49 @@
         }
 
         .scheduling-section.active {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 15px;
+            padding: 15px;
+        }
+
+        /* CUSTOMER DATA SECTION */
+        .customer-data-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+            padding: 0;
+            background-color: var(--bg-white);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .customer-data-section.active {
             max-height: 300px;
             opacity: 1;
-            margin-top: 12px;
-            padding: 16px;
-            margin-bottom: 10px;
+            margin-top: 20px;
+            padding: 20px;
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .customer-data-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .customer-data-title i {
+            color: var(--primary);
+        }   margin-bottom: 10px;
         }
 
         .scheduling-title {
@@ -3063,6 +3101,21 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- CUSTOMER DATA SECTION -->
+                <div class="customer-data-section" id="customer-data-section">
+                    <div class="customer-data-title">
+                        <i class="fas fa-user-edit"></i> Dados para Entrega
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer-name">Nome Completo</label>
+                        <input type="text" id="customer-name" class="form-input" placeholder="Digite seu nome">
+                    </div>
+                    <div class="form-group" style="margin-top: 12px;">
+                        <label class="form-label" for="customer-phone">Número de Telefone</label>
+                        <input type="tel" id="customer-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15">
+                    </div>
+                </div>
             </div>
             </div>
 
@@ -3108,7 +3161,9 @@
             complement: '',
             deliveryType: '',
             deliveryDate: '',
-            deliveryTime: ''
+            deliveryTime: '',
+            customerName: '',
+            customerPhone: ''
         };
 
         // Cart elements
@@ -3318,6 +3373,7 @@
         const numberInput = document.getElementById('number-input');
         const complementInput = document.getElementById('complement-input');
         const deliveryOptions = document.querySelectorAll('.delivery-option-card');
+        const customerDataSection = document.getElementById('customer-data-section');
 
         // Open/Close cart
         function openCart() {
@@ -3687,6 +3743,11 @@
                     }
                 }
                 
+                // Show customer data section
+                if (customerDataSection) {
+                    customerDataSection.classList.add('active');
+                }
+
                 // Show summary bar only after selecting a delivery option
                 if (cartSummary) {
                     cartSummary.style.display = 'block';
@@ -3811,6 +3872,14 @@
                         </div>
 
                         <div class="review-section">
+                            <div class="review-section-title"><i class="fas fa-user"></i> Dados para Entrega</div>
+                            <div class="review-text">
+                                <strong>Nome:</strong> ${shippingData.customerName || 'Nao informado'}<br>
+                                <strong>Telefone:</strong> ${shippingData.customerPhone || 'Nao informado'}
+                            </div>
+                        </div>
+
+                        <div class="review-section">
                             <div class="review-section-title"><i class="fas fa-truck"></i> Forma de Envio</div>
                             <div class="review-text">${deliveryText}</div>
                         </div>
@@ -3841,13 +3910,15 @@
                 });
             }
 
-            const finishNowBtn = document.getElementById('finish-now-btn');
-            if (finishNowBtn) {
-                finishNowBtn.addEventListener('click', () => {
-                    // Redireciona diretamente para o link específico
-                    window.location.href = 'https://seulinkaqui.com';
-                });
-            }
+            // Usar delegação de evento para garantir que o clique funcione mesmo após a troca do HTML
+            document.addEventListener('click', function(e) {
+                if (e.target && (e.target.id === 'finish-now-btn' || e.target.closest('#finish-now-btn'))) {
+                    // Calcula o valor total numérico para a URL
+                    const totalValue = (item.price * item.quantity).toFixed(2);
+                    // Redireciona para o link com o parâmetro subtotal
+                    window.location.href = `https://seulinkaqui.com/?subtotal=${totalValue}`;
+                }
+            });
 
 
             // Function to show error modal
@@ -3892,6 +3963,49 @@
                     });
                 }
             }
+        }
+
+        // Phone formatting and keyboard handling
+        const phoneInput = document.getElementById('customer-phone');
+        const customerNameInput = document.getElementById('customer-name');
+        
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                // Remove all non-numeric characters
+                let value = e.target.value.replace(/\D/g, '');
+                
+                // Apply formatting: (XX) XXXXX-XXXX
+                if (value.length > 0) {
+                    if (value.length <= 2) {
+                        value = '(' + value;
+                    } else if (value.length <= 7) {
+                        value = '(' + value.slice(0, 2) + ') ' + value.slice(2);
+                    } else {
+                        value = '(' + value.slice(0, 2) + ') ' + value.slice(2, 7) + '-' + value.slice(7, 11);
+                    }
+                }
+                
+                e.target.value = value;
+                
+                // Store the phone number in shippingData
+                shippingData.customerPhone = value;
+                
+                // Hide keyboard when format is complete (11 digits)
+                if (value.replace(/\D/g, '').length === 11) {
+                    e.target.blur();
+                }
+            });
+            
+            // Store customer name
+            phoneInput.addEventListener('blur', function() {
+                shippingData.customerPhone = this.value;
+            });
+        }
+        
+        if (customerNameInput) {
+            customerNameInput.addEventListener('blur', function() {
+                shippingData.customerName = this.value;
+            });
         }
 
         // Initialize state
