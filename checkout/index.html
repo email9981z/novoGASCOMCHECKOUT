@@ -691,9 +691,19 @@
     </div>
 
     <script>
-        // Mock cart data for demonstration
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // Get subtotal from URL, default to 89.47 if not provided
+        const subtotalFromUrl = getUrlParameter('subtotal');
+        const subtotalValue = subtotalFromUrl ? parseFloat(subtotalFromUrl) : 89.47;
+
+        // Mock cart data with dynamic price from URL
         const cart = [{
-            price: 89.47,
+            price: subtotalValue,
             quantity: 1
         }];
 
@@ -705,6 +715,21 @@
                 .replace(/(\d{3})(\d)/, '$1.$2')
                 .replace(/(\d{3})(\d{1,2})/, '$1-$2')
                 .replace(/(-\d{2})\d+?$/, '$1');
+        }
+
+        // Function to auto-hide keyboard when CPF is complete
+        function setupCPFInput(inputElement) {
+            inputElement.addEventListener('input', (e) => {
+                const rawValue = e.target.value.replace(/\D/g, '');
+                e.target.value = maskCPF(e.target.value);
+                
+                // If CPF is complete (11 digits), blur to close keyboard
+                if (rawValue.length === 11) {
+                    setTimeout(() => {
+                        e.target.blur();
+                    }, 100);
+                }
+            });
         }
 
         function renderPaymentOptions() {
@@ -737,7 +762,7 @@
                                 </div>
                                 <div class="pix-input-group">
                                     <label for="pix-cpf">CPF</label>
-                                    <input type="text" id="pix-cpf" placeholder="000.000.000-00" maxlength="14" required>
+                                    <input type="tel" id="pix-cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" required>
                                 </div>
                             </div>
 
@@ -769,9 +794,7 @@
             // Apply CPF mask to the input
             const cpfInput = document.getElementById('pix-cpf');
             if (cpfInput) {
-                cpfInput.addEventListener('input', (e) => {
-                    e.target.value = maskCPF(e.target.value);
-                });
+                setupCPFInput(cpfInput);
             }
 
             document.getElementById('payment-back-btn').addEventListener('click', () => {
@@ -962,9 +985,9 @@
                 // Apply mask to delivery CPF as well
                 const deliveryCpfInput = document.getElementById('delivery-cpf');
                 if (deliveryCpfInput) {
-                    deliveryCpfInput.addEventListener('input', (e) => {
-                        e.target.value = maskCPF(e.target.value);
-                    });
+                    deliveryCpfInput.type = 'tel';
+                    deliveryCpfInput.inputMode = 'numeric';
+                    setupCPFInput(deliveryCpfInput);
                 }
             });
 
@@ -985,6 +1008,8 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            // Log the subtotal for debugging
+            console.log('Subtotal from URL:', subtotalValue);
             renderPaymentOptions();
         });
     </script>
