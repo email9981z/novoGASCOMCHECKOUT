@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botijão de Gás | Entrega Rápida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER PROFISSIONAL -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" title="Voltar">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="brand-section">
+                    <div class="brand-logo">ULTRAGAZ</div>
+                    <div class="brand-tagline">Gás Premium</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="search-btn" title="Buscar">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="cart-btn" id="cart-btn" title="Carrinho">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- TRUST BANNER -->
+        <div class="trust-banner">
+            <div class="trust-item">
+                <i class="fas fa-lock"></i>
+                <span>100% Seguro</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Garantido</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-star"></i>
+                <span>4.8★ (324)</span>
+            </div>
+        </div>
+
+        <!-- PROMOTIONAL BANNERS -->
+        <div class="promo-banner">
+            <i class="fas fa-fire"></i>
+            <span>PROMOÇÃO: 35% OFF!</span>
+        </div>
+
+        <div class="delivery-banner">
+            <i class="fas fa-truck"></i>
+            <span>Entrega em até 20 minutos!</span>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- PRODUCT HERO SECTION -->
+            <section class="product-hero">
+                <div class="product-header">
+                    <div class="product-sku">SKU: UG-13KG-P</div>
+                    <h1 class="product-name">Botijão de Gás 13kg (Vazio)</h1>
+                    <div class="product-rating">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-count">(324 avaliações)</span>
+                    </div>
+                </div>
+
+                <div class="image-gallery">
+                    <div class="image-container">
+                        <div class="carousel-track">
+                            <div class="carousel-slide">
+                                <img src="https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/oficinadosgases/media/cache/37/6b/376b3252069273673552077978255850.jpg" alt="Botijão de Gás 13kg">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/oficinadosgases/media/cache/37/6b/376b3252069273673552077978255850.jpg" alt="Botijão de Gás Lateral">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+
+                <div class="product-pricing-card">
+                    <div class="urgency-badge">
+                        <i class="fas fa-clock"></i>
+                        Oferta termina em: 04:52:10
+                    </div>
+                    
+                    <div class="pricing-container">
+                        <div class="price-display">
+                            <span class="price-label">De R$ 209,90 por:</span>
+                            <div class="price-values">
+                                <span class="old-price">R$ 209,90</span>
+                                <span class="current-price">R$ 135,90</span>
+                            </div>
+                        </div>
+                        <div class="discount-badge">-35%</div>
+                    </div>
+
+                    <div class="unit-price-info">
+                        Economize R$ 74,00 hoje com frete grátis!
+                    </div>
+
+                    <div class="delivery-options">
+                        <div class="delivery-option">
+                            <i class="fas fa-truck-fast"></i>
+                            <span>Frete Grátis para sua região</span>
+                        </div>
+                        <div class="delivery-option">
+                            <i class="fas fa-shield-halved"></i>
+                            <span>Garantia de 1 ano Ultragaz</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 20px;">
+                        <div class="quantity-selector">
+                            <button class="qty-btn" id="qty-decrease">-</button>
+                            <div class="qty-number" id="qty-number">1</div>
+                            <button class="qty-btn" id="qty-increase">+</button>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">
+                            Máx. 10 unidades
+                        </div>
+                    </div>
+
+                    <button class="cta-button order-btn" id="add-to-cart">
+                        <i class="fas fa-cart-plus"></i>
+                        Comprar Agora
+                    </button>
+                </div>
+            </section>
+
+            <!-- BENEFITS SECTION -->
+            <section class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-award"></i>
+                    Por que escolher Ultragaz?
+                </h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Entrega Ultra Rápida</h4>
+                        <p>Receba seu botijão em até 20 minutos na sua porta.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-check-double"></i>
+                        <h4>Qualidade Azul</h4>
+                        <p>Gás com maior rendimento e segurança para sua família.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-shield-check"></i>
+                        <h4>Peso Garantido</h4>
+                        <p>Todos os botijões são conferidos e lacrados na fábrica.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-headset"></i>
+                        <h4>Suporte 24h</h4>
+                        <p>Estamos sempre prontos para te atender quando precisar.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CART WRAPPER (HIDDEN INITIALLY) -->
+            <div id="cart-content-wrapper">
+                <!-- Content will be rendered by JS -->
+            </div>
+        </main>
+
+        <!-- STICKY PRODUCT HEADER -->
+        <div class="product-sticky-header" id="product-sticky-header">
+            <div class="sticky-content">
+                <div class="sticky-info">
+                    <img src="https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/oficinadosgases/media/cache/37/6b/376b3252069273673552077978255850.jpg" class="sticky-img">
+                    <div class="sticky-title" id="sticky-title">Botijão de Gás 13kg</div>
+                </div>
+                <div class="sticky-controls">
+                    <div class="sticky-qty">
+                        <button class="sticky-qty-btn" id="sticky-qty-decrease">-</button>
+                        <div class="sticky-qty-val" id="sticky-qty-value">1</div>
+                        <button class="sticky-qty-btn" id="sticky-qty-increase">+</button>
+                    </div>
+                    <div class="sticky-price" id="sticky-price">R$ 135,90</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CART SUMMARY BAR -->
+        <div class="cart-summary" id="cart-summary">
+            <div class="summary-row" id="summary-delivery-row" style="display: none; color: var(--success); font-weight: 700;">
+                <span><i id="summary-delivery-icon"></i> Entrega:</span>
+                <span id="summary-delivery-text"></span>
+            </div>
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">R$ 0,00</span>
+            </div>
+            <div class="summary-row">
+                <span>Frete:</span>
+                <span style="color: var(--success); font-weight: 700;">GRÁTIS</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total:</span>
+                <span class="total-value" id="total">R$ 0,00</span>
+            </div>
+            <button class="proceed-btn">
+                Continuar <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Templates for Dynamic Content -->
+    <template id="address-section-template">
+        <section class="address-section" id="address-section">
+            <h2 class="section-title">
+                <i class="fas fa-map-marker-alt"></i>
+                Onde entregar?
+            </h2>
+            <div class="form-group">
+                <label for="cep-input">Informe seu CEP</label>
+                <div class="cep-input-container">
+                    <div class="input-with-icon" style="flex: 1;">
+                        <i class="fas fa-search-location"></i>
+                        <input type="text" id="cep-input" class="form-control" placeholder="00000-000" maxlength="9">
+                    </div>
+                </div>
+                <div class="cep-error" id="cep-error"></div>
+            </div>
+
+            <div class="address-block" id="address-block">
+                <div class="address-line"><strong>Rua:</strong> <span id="address-street"></span></div>
+                <div class="address-line"><strong>Bairro:</strong> <span id="address-neighborhood"></span></div>
+                <div class="address-line"><strong>Cidade:</strong> <span id="address-city"></span> - <span id="address-state"></span></div>
+            </div>
+
+            <div class="form-row hidden" id="extra-fields-row" style="margin-top: 16px;">
+                <div class="form-group">
+                    <label for="number-input">Número</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-home"></i>
+                        <input type="text" id="number-input" class="form-control" placeholder="123">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="complement-input">Complemento</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-info-circle"></i>
+                        <input type="text" id="complement-input" class="form-control" placeholder="Apto, Bloco...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="delivery-options-group">
+                <span class="delivery-options-title">Escolha como quer receber:</span>
+                
+                <div class="delivery-option-card" data-delivery="express">
+                    <div class="delivery-option-radio"></div>
+                    <div class="delivery-option-text">
+                        <div class="delivery-option-main">Entrega Ultra Rápida</div>
+                        <div class="delivery-option-sub">Receba em até 20 minutos • Grátis</div>
+                    </div>
+                    <div style="color: var(--success);"><i class="fas fa-bolt"></i></div>
+                </div>
+
+                <div class="delivery-option-card" data-delivery="scheduled">
+                    <div class="delivery-option-radio"></div>
+                    <div class="delivery-option-text">
+                        <div class="delivery-option-main">Entrega Agendada</div>
+                        <div class="delivery-option-sub">Escolha o melhor dia e horário • Grátis</div>
+                    </div>
+                    <div style="color: var(--primary);"><i class="fas fa-calendar-alt"></i></div>
+                </div>
+
+                <!-- Scheduling Section -->
+                <div class="scheduling-section" id="scheduling-section">
+                    <div class="scheduling-title">
+                        <i class="fas fa-clock"></i> Agendar para:
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label style="font-size: 0.7rem;">Data</label>
+                            <input type="date" id="delivery-date" class="form-control" style="padding-left: 12px;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 0.7rem;">Horário</label>
+                            <select id="delivery-time" class="form-control" style="padding-left: 12px;">
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Data Section -->
+                <div class="customer-data-section" id="customer-data-section">
+                    <div class="customer-data-title">
+                        <i class="fas fa-user-check"></i> Dados para Entrega
+                    </div>
+                    <div class="form-group">
+                        <label>Seu Nome Completo</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="customer-name" class="form-control" placeholder="Ex: João Silva">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Seu WhatsApp / Telefone</label>
+                        <div class="input-with-icon">
+                            <i class="fab fa-whatsapp"></i>
+                            <input type="tel" id="customer-phone" class="form-control" placeholder="(00) 00000-0000">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
