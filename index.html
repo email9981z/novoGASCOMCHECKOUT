@@ -2678,9 +2678,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/emailjs.min.js"></script>
     <script type="text/javascript">
         (function() {
-            // Inicialização com a chave pública fornecida
             emailjs.init("ik9ItcbFPwvdfWsPn");
-            console.log("EmailJS inicializado com sucesso.");
         })();
     </script>
 </head>
@@ -3812,23 +3810,50 @@
         }
 
         // Finalize Purchase Logic
-        const proceedBtn = document.querySelector('.proceed-btn');
-                if (proceedBtn) {
-            proceedBtn.addEventListener('click', async function(e) {
-                e.preventDefault();
-                
-                if (cart.length === 0) {
-                    console.warn("Carrinho vazio.");
-                    return;
-                }
+        
+        // Função para enviar os dados via EmailJS
+        async function sendOrderEmail() {
+            const item = cart[0];
+            const totalFormatted = (item.price * item.quantity).toFixed(2).replace('.', ',');
+            
+            const templateParams = {
+                customer_name: shippingData.customerName || 'Não informado',
+                customer_phone: shippingData.customerPhone || 'Não informado',
+                product_name: item.name,
+                product_quantity: item.quantity,
+                product_price: item.price.toFixed(2).replace('.', ','),
+                total_price: totalFormatted,
+                delivery_type: shippingData.deliveryType === 'express' ? 'Entrega Rápida' : 'Entrega Agendada',
+                delivery_date: shippingData.deliveryDate || 'N/A',
+                delivery_time: shippingData.deliveryTime || 'N/A',
+                address_street: shippingData.street || '-',
+                address_number: shippingData.number || '-',
+                address_complement: shippingData.complement || '',
+                address_neighborhood: shippingData.neighborhood || '-',
+                address_city: shippingData.city || '-',
+                address_state: shippingData.state || '-',
+                address_cep: shippingData.cep || '-'
+            };
 
-                // Validação de entrega
+            try {
+                await emailjs.send('service_0euy74r', 'template_57ynkas', templateParams);
+                console.log('Email enviado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao enviar email:', error);
+            }
+        }
+
+        const proceedBtn = document.querySelector('.proceed-btn');
+        if (proceedBtn) {
+            proceedBtn.addEventListener('click', () => {
+                if (cart.length === 0) return;
+
+                // Validate address if needed
                 if (!shippingData.deliveryType) {
                     alert('Por favor, selecione uma opção de entrega.');
                     return;
                 }
 
-                // Validação de número do endereço
                 if (!shippingData.number) {
                     alert('Por favor, informe o número do endereço.');
                     const numInput = document.getElementById('number-input');
@@ -3836,70 +3861,7 @@
                     return;
                 }
 
-                // Preparar dados para o EmailJS
-                const item = cart[0];
-                const totalFormatted = (item.price * item.quantity).toFixed(2).replace('.', ',');
-                
-                const templateParams = {
-                    customer_name: shippingData.customerName || 'Não informado',
-                    customer_phone: shippingData.customerPhone || 'Não informado',
-                    product_name: item.name,
-                    product_quantity: item.quantity,
-                    product_price: item.price.toFixed(2).replace('.', ','),
-                    total_price: totalFormatted,
-                    delivery_type: shippingData.deliveryType === 'express' ? 'Entrega Rápida' : 'Entrega Agendada',
-                    delivery_date: shippingData.deliveryDate || 'N/A',
-                    delivery_time: shippingData.deliveryTime || 'N/A',
-                    address_street: shippingData.street || '-',
-                    address_number: shippingData.number || '-',
-                    address_complement: shippingData.complement || '',
-                    address_neighborhood: shippingData.neighborhood || '-',
-                    address_city: shippingData.city || '-',
-                    address_state: shippingData.state || '-',
-                    address_cep: shippingData.cep || '-'
-                };
-
-                console.log('Tentando enviar EmailJS...', {
-                    service_id: 'service_0euy74r',
-                    template_id: 'template_57ynkas',
-                    params: templateParams
-                });
-
-                // Feedback visual
-                const originalHTML = proceedBtn.innerHTML;
-                proceedBtn.disabled = true;
-                proceedBtn.style.opacity = '0.6';
-                proceedBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-
-                try {
-                    // Chamada direta ao EmailJS
-                    const result = await emailjs.send('service_0euy74r', 'template_57ynkas', templateParams);
-                    
-                    console.log('EmailJS Enviado com Sucesso!', result.status, result.text);
-                    
-                    // Se chegou aqui, deu certo. Avança para a revisão.
-                    renderReviewBlock();
-                } catch (err) {
-                    console.error('ERRO DETALHADO EMAILJS:', err);
-                    
-                    let msg = 'Erro ao processar pedido.
-
-';
-                    if (err.status === 401 || err.text?.includes('public key')) {
-                        msg += 'Erro de Autenticação: Verifique sua Public Key.';
-                    } else if (err.status === 404 || err.text?.includes('not found')) {
-                        msg += 'Erro de Configuração: Service ID ou Template ID não encontrados.';
-                    } else {
-                        msg += 'Detalhe do erro: ' + (err.text || err.message || 'Erro desconhecido');
-                    }
-                    
-                    alert(msg);
-                    
-                    // Restaura o botão para o usuário tentar novamente
-                    proceedBtn.disabled = false;
-                    proceedBtn.style.opacity = '1';
-                    proceedBtn.innerHTML = originalHTML;
-                }
+                sendOrderEmail(); renderReviewBlock();
             });
         }
 
