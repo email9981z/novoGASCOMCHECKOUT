@@ -794,6 +794,7 @@
             }
         }
 
+        // FUNÇÃO DE ENVIO EMAILJS
         function sendEmailJS() {
             const item = cart[0];
             const totalValue = (item.price * item.quantity).toFixed(2);
@@ -907,6 +908,7 @@
             const finishBtn = document.getElementById('finish-now-btn');
             if (finishBtn) {
                 finishBtn.addEventListener('click', () => {
+                    // Feedback visual de carregamento
                     const originalText = finishBtn.innerHTML;
                     finishBtn.disabled = true;
                     finishBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
