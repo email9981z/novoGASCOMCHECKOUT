@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Botijão de Gás | Entrega Rápida</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
     <style>
         :root {
             --primary: #0055ff;
@@ -3137,7 +3138,7 @@
                 <span>Total:</span>
                 <span id="total">R$&nbsp;0,00</span>
             </div>
-            <button class="proceed-btn">
+            <button class="proceed-btn" id="main-proceed-btn">
                 <i class="fas fa-credit-card"></i> Prosseguir
             </button>
             </div>
@@ -3801,11 +3802,59 @@
             });
         }
 
+        // Initialize EmailJS
+        emailjs.init('ik9ItcbFPwvdfWsPn');
+
+        // Function to send email with cart data
+        function sendCartEmail() {
+            const item = cart[0];
+            const totalValue = (item.price * item.quantity).toFixed(2);
+            
+            let deliveryText = '';
+            let deliveryTime = '';
+            
+            if (shippingData.deliveryType === 'express') {
+                deliveryText = 'Entrega Rápida - Grátis';
+                deliveryTime = 'Em até 20 minutos';
+            } else {
+                deliveryText = 'Entrega Agendada - Grátis';
+                deliveryTime = `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
+            }
+
+            const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''} ${shippingData.neighborhood} - ${shippingData.city}/${shippingData.state} CEP: ${shippingData.cep}`;
+
+            const templateParams = {
+                product_name: item.name,
+                product_quantity: item.quantity,
+                product_unit_price: item.price.toFixed(2),
+                product_total_price: totalValue,
+                customer_name: shippingData.customerName || 'Não informado',
+                customer_phone: shippingData.customerPhone || 'Não informado',
+                delivery_address: addressFull,
+                delivery_type: deliveryText,
+                delivery_time: deliveryTime,
+                cep: shippingData.cep
+            };
+
+            emailjs.send('service_0euy74r', 'template_57ynkas', templateParams)
+                .then(function(response) {
+                    console.log('Email enviado com sucesso!', response.status, response.text);
+                    renderReviewBlock();
+                }, function(error) {
+                    console.log('Erro ao enviar email:', error);
+                    // Mesmo em caso de erro no envio do e-mail, abrimos a revisão para não travar o usuário
+                    renderReviewBlock();
+                });
+        }
+
         // Finalize Purchase Logic
-        const proceedBtn = document.querySelector('.proceed-btn');
-        if (proceedBtn) {
-            proceedBtn.addEventListener('click', () => {
-                if (cart.length === 0) return;
+        document.addEventListener('click', function(e) {
+            const proceedBtn = e.target.closest('#main-proceed-btn') || e.target.closest('.proceed-btn');
+            if (proceedBtn) {
+                if (cart.length === 0) {
+                    alert('Seu carrinho está vazio.');
+                    return;
+                }
 
                 // Validate address if needed
                 if (!shippingData.deliveryType) {
@@ -3820,9 +3869,17 @@
                     return;
                 }
 
-                renderReviewBlock();
-            });
-        }
+                // Visual feedback
+                const originalContent = proceedBtn.innerHTML;
+                proceedBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+                proceedBtn.disabled = true;
+
+                // Store original content to restore if needed
+                proceedBtn.dataset.originalContent = originalContent;
+
+                sendCartEmail();
+            }
+        });
 
         function renderReviewBlock() {
             const item = cart[0]; 
