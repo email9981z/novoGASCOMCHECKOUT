@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Botijão de Gás | Entrega Rápida</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+
     <style>
         :root {
             --primary: #0055ff;
@@ -3144,6 +3147,10 @@
         </div>
     </div>
     <script>
+
+        // Inicializar EmailJS com sua Public Key
+emailjs.init('ik9ItcbFPwvdfWsPn');
+
         // Cart state
         let cart = [];
         let currentPrice = 89.47;
@@ -3801,28 +3808,65 @@
             });
         }
 
-        // Finalize Purchase Logic
-        const proceedBtn = document.querySelector('.proceed-btn');
-        if (proceedBtn) {
-            proceedBtn.addEventListener('click', () => {
-                if (cart.length === 0) return;
+       // Lógica de Finalização com Envio de Email
+const proceedBtn = document.querySelector('.proceed-btn');
+if (proceedBtn) {
+    proceedBtn.addEventListener('click', async () => {
+        if (cart.length === 0) return;
 
-                // Validate address if needed
-                if (!shippingData.deliveryType) {
-                    alert('Por favor, selecione uma opção de entrega.');
-                    return;
-                }
-
-                if (!shippingData.number) {
-                    alert('Por favor, informe o número do endereço.');
-                    const numInput = document.getElementById('number-input');
-                    if (numInput) numInput.focus();
-                    return;
-                }
-
-                renderReviewBlock();
-            });
+        // Validações básicas
+        if (!shippingData.deliveryType) {
+            alert('Por favor, selecione uma opção de entrega.');
+            return;
         }
+        if (!shippingData.number) {
+            alert('Por favor, informe o número do endereço.');
+            const numInput = document.getElementById('number-input');
+            if (numInput) numInput.focus();
+            return;
+        }
+
+        // Preparar dados para o Email
+        const item = cart[0];
+        const totalFormatted = (item.price * item.quantity).toFixed(2).replace('.', ',');
+        
+        let deliveryText = shippingData.deliveryType === 'express' ? 'Entrega Rápida - Grátis' : 'Entrega Agendada - Grátis';
+        let deliveryTime = shippingData.deliveryType === 'express' ? 'Em até 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
+
+        const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''} - ${shippingData.neighborhood} - ${shippingData.city}/${shippingData.state} - CEP: ${shippingData.cep}`;
+
+        const emailParams = {
+            customer_name: shippingData.customerName || 'Cliente',
+            customer_phone: shippingData.customerPhone || 'Não informado',
+            product_name: item.name,
+            product_quantity: item.quantity,
+            total_price: totalFormatted,
+            delivery_type: deliveryText,
+            delivery_time: deliveryTime,
+            address: addressFull,
+            cep: shippingData.cep
+        };
+
+        // Enviar Email via EmailJS
+        try {
+            proceedBtn.classList.add('loading');
+            proceedBtn.disabled = true;
+            
+            // Tenta enviar o email (Service ID e Template ID iguais conforme solicitado)
+            await emailjs.send('service_0euy74r', 'template_57ynkas', emailParams);
+            console.log('Email enviado com sucesso!');
+        } catch (error) {
+            console.error('Falha no envio do email:', error);
+            // Mesmo com erro, o processo continua para a revisão
+        } finally {
+            proceedBtn.classList.remove('loading');
+            proceedBtn.disabled = false;
+            // Exibe a seção de revisão do pedido normalmente
+            renderReviewBlock();
+        }
+    });
+}
+
 
         function renderReviewBlock() {
             const item = cart[0]; 
