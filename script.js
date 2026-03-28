@@ -1,45 +1,62 @@
 /**
- * EMAILJS DYNAMIC LOADER & INITIALIZER
- * Carrega o script do EmailJS dinamicamente e garante que esteja pronto antes do uso.
+ * EMAILJS BULLETPROOF LOADER
+ * Carregamento dinâmico com link de backup e modo de falha segura.
  */
 const EmailJSManager = {
     isLoaded: false,
-    init: function(publicKey) {
-        return new Promise((resolve, reject) => {
+    publicKey: "ik9ItcbFPwvdfWsPn",
+    // Links oficiais e de backup
+    links: [
+        'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/emailjs.min.js',
+        'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/emailjs.min.js'
+    ],
+    
+    init: function() {
+        return new Promise((resolve) => {
             if (window.emailjs) {
                 this.isLoaded = true;
-                window.emailjs.init(publicKey);
-                resolve();
+                window.emailjs.init(this.publicKey);
+                resolve(true);
                 return;
             }
 
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/emailjs.min.js';
-            script.async = true;
+            let attempt = 0;
+            const loadScript = (url) => {
+                const script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = url;
+                script.async = true;
 
-            script.onload = () => {
-                if (window.emailjs) {
-                    window.emailjs.init(publicKey);
-                    this.isLoaded = true;
-                    console.log('EmailJS carregado e inicializado.');
-                    resolve();
-                } else {
-                    reject(new Error('EmailJS não encontrado após carregar o script.'));
-                }
+                script.onload = () => {
+                    if (window.emailjs) {
+                        window.emailjs.init(this.publicKey);
+                        this.isLoaded = true;
+                        console.log('EmailJS carregado com sucesso.');
+                        resolve(true);
+                    }
+                };
+
+                script.onerror = () => {
+                    attempt++;
+                    if (attempt < this.links.length) {
+                        console.warn(`Falha no link ${attempt}, tentando backup...`);
+                        loadScript(this.links[attempt]);
+                    } else {
+                        console.error('EmailJS falhou em todos os links. Entrando em modo de falha segura.');
+                        resolve(false); // Resolve como falso para não travar o site
+                    }
+                };
+
+                document.head.appendChild(script);
             };
 
-            script.onerror = () => {
-                reject(new Error('Falha ao carregar o script do EmailJS. Verifique sua conexão.'));
-            };
-
-            document.head.appendChild(script);
+            loadScript(this.links[0]);
         });
     }
 };
 
-// Inicializa o EmailJS assim que o script carregar
-EmailJSManager.init("ik9ItcbFPwvdfWsPn").catch(err => console.error(err));
+// Inicializa silenciosamente
+EmailJSManager.init();
 
 // Cart state
 let cart = [];
@@ -49,49 +66,33 @@ let currentVariant = 'P13';
 let currentProductName = 'Botijão de Gás 13 Kilos - Cheio (P13)';
 const PRODUCT_NAME_BASE = 'Botijão de Gás';
 let shippingData = {
-    cep: '',
-    street: '',
-    neighborhood: '',
-    city: '',
-    state: '',
-    number: '',
-    complement: '',
-    deliveryType: '',
-    deliveryDate: '',
-    deliveryTime: '',
-    customerName: '',
-    customerPhone: ''
+    cep: '', street: '', neighborhood: '', city: '', state: '',
+    number: '', complement: '', deliveryType: '', deliveryDate: '',
+    deliveryTime: '', customerName: '', customerPhone: ''
 };
 
-// Cart elements
+// Elements
 const cartBtn = document.getElementById('cart-btn');
 const cartBadge = document.getElementById('cart-badge');
-const orderBtn = document.getElementById('order-btn');
 const cartOverlay = document.getElementById('cart-overlay');
 const cartSidebar = document.getElementById('cart-sidebar');
 const cartCloseBtn = document.getElementById('cart-close-btn');
 const cartContent = document.getElementById('cart-items-list');
-const shippingSection = document.getElementById('shipping-section');
-const extraFieldsRow = document.getElementById('extra-fields-row');
 const subtotalEl = document.getElementById('subtotal');
 const totalEl = document.getElementById('total');
 const cartSummary = document.querySelector('.cart-summary');
-
-// Dynamic Delivery Elements
 const summaryDeliveryRow = document.getElementById('summary-delivery-row');
 const summaryDeliveryText = document.getElementById('summary-delivery-text');
 const summaryDeliveryIcon = document.getElementById('summary-delivery-icon');
 const schedulingSection = document.getElementById('scheduling-section');
 const deliveryDateInput = document.getElementById('delivery-date');
 const deliveryTimeSelect = document.getElementById('delivery-time');
-
-// Main quantity selector elements
 const mainQtyNumber = document.getElementById('main-qty-number');
 const mainQtyDecrease = document.getElementById('main-qty-decrease');
 const mainQtyIncrease = document.getElementById('main-qty-increase');
 let mainQuantity = 1;
 
-// Product Images Data
+// Product Images
 const productImages = {
     'P13': [
         'https://i.postimg.cc/bNrFp7fR/1000310540_removebg_preview.png',
@@ -107,7 +108,7 @@ const productImages = {
     ]
 };
 
-// Carousel Logic
+// Carousel
 let currentSlideIndex = 0;
 const carouselTrack = document.getElementById('carousel-track');
 const carouselDots = document.getElementById('carousel-dots');
@@ -121,7 +122,6 @@ function initCarousel(variant) {
     carouselTrack.innerHTML = '';
     carouselDots.innerHTML = '';
     currentSlideIndex = 0;
-
     images.forEach((src, index) => {
         const slide = document.createElement('div');
         slide.className = 'carousel-slide';
@@ -131,13 +131,11 @@ function initCarousel(variant) {
         if (index === 0) img.id = 'main-image';
         slide.appendChild(img);
         carouselTrack.appendChild(slide);
-
         const dot = document.createElement('div');
         dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
         dot.addEventListener('click', () => goToSlide(index));
         carouselDots.appendChild(dot);
     });
-
     updateCarousel();
 }
 
@@ -146,9 +144,7 @@ function updateCarousel() {
     const offset = -currentSlideIndex * 100;
     carouselTrack.style.transform = `translateX(${offset}%)`;
     const dots = carouselDots.querySelectorAll('.carousel-dot');
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlideIndex);
-    });
+    dots.forEach((dot, index) => { dot.classList.toggle('active', index === currentSlideIndex); });
 }
 
 function goToSlide(index) {
@@ -162,20 +158,9 @@ function goToSlide(index) {
 if (carouselPrev) carouselPrev.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
 if (carouselNext) carouselNext.addEventListener('click', () => goToSlide(currentSlideIndex + 1));
 
-if (carouselContainer) {
-    let touchStartX = 0;
-    let touchEndX = 0;
-    carouselContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-    carouselContainer.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, { passive: true });
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        if (touchEndX < touchStartX - swipeThreshold) goToSlide(currentSlideIndex + 1);
-        else if (touchEndX > touchStartX + swipeThreshold) goToSlide(currentSlideIndex - 1);
-    }
-}
-
 initCarousel('P13');
 
+// Variants
 const variantPills = document.querySelectorAll('.variant-pill');
 const productNameEl = document.querySelector('.product-name');
 const productSkuEl = document.querySelector('.product-sku');
@@ -191,9 +176,7 @@ variantPills.forEach(pill => {
         const variant = pill.getAttribute('data-variant');
         const price = parseFloat(pill.getAttribute('data-price'));
         const oldPrice = parseFloat(pill.getAttribute('data-old-price'));
-        currentPrice = price;
-        currentOldPrice = oldPrice;
-        currentVariant = variant;
+        currentPrice = price; currentOldPrice = oldPrice; currentVariant = variant;
         currentProductName = `${PRODUCT_NAME_BASE} ${variant === 'P13' ? '13 Kilos' : '45 Kilos'} - Cheio (${variant})`;
         initCarousel(variant);
         if (productNameEl) productNameEl.textContent = currentProductName;
@@ -211,18 +194,9 @@ variantPills.forEach(pill => {
 if (mainQtyDecrease) mainQtyDecrease.addEventListener('click', () => { if (mainQuantity > 1) { mainQuantity--; mainQtyNumber.textContent = mainQuantity; } });
 if (mainQtyIncrease) mainQtyIncrease.addEventListener('click', () => { mainQuantity++; mainQtyNumber.textContent = mainQuantity; });
 
-function openCart() {
-    if (cartOverlay) cartOverlay.classList.add('active');
-    if (cartSidebar) cartSidebar.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeCart() {
-    if (cartOverlay) cartOverlay.classList.remove('active');
-    if (cartSidebar) cartSidebar.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
+// Cart Functions
+function openCart() { if (cartOverlay) cartOverlay.classList.add('active'); if (cartSidebar) cartSidebar.classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeCart() { if (cartOverlay) cartOverlay.classList.remove('active'); if (cartSidebar) cartSidebar.classList.remove('active'); document.body.style.overflow = ''; }
 if (cartBtn) cartBtn.addEventListener('click', openCart);
 if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
 if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
@@ -283,18 +257,26 @@ function updateQuantity(index, action) {
 
 function removeFromCart(index) { cart.splice(index, 1); updateCartDisplay(); updateCartBadge(); }
 
+// CEP & Shipping
+const cepInput = document.getElementById('cep-input');
+const cepError = document.getElementById('cep-error');
+const addressBlock = document.getElementById('address-block');
+const addressStreet = document.getElementById('address-street');
+const addressNeighborhood = document.getElementById('address-neighborhood');
+const addressCity = document.getElementById('address-city');
+const addressState = document.getElementById('address-state');
+const numberInput = document.getElementById('number-input');
+const complementInput = document.getElementById('complement-input');
+const deliveryOptions = document.querySelectorAll('.delivery-option-card');
+const customerDataSection = document.getElementById('customer-data-section');
+
 if (cepInput) {
     cepInput.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 5) value = value.slice(0, 5) + '-' + value.slice(5, 8);
         e.target.value = value;
-        if (value.replace(/\D/g, '').length === 8) {
-            if (cartSummary) cartSummary.style.display = 'none';
-            fetchAddressFromViaCEP(value.replace(/\D/g, ''));
-        } else {
-            if (addressBlock) addressBlock.classList.remove('active');
-            hideAddressElements();
-        }
+        if (value.replace(/\D/g, '').length === 8) fetchAddressFromViaCEP(value.replace(/\D/g, ''));
+        else { if (addressBlock) addressBlock.classList.remove('active'); hideAddressElements(); }
     });
 }
 
@@ -311,8 +293,8 @@ async function fetchAddressFromViaCEP(cep) {
     } catch (error) { showCepError('Erro ao buscar CEP.'); }
 }
 
-function showAddressElements() { const dg = document.querySelector('.delivery-options-group'); if (extraFieldsRow) extraFieldsRow.classList.remove('hidden'); if (dg) dg.classList.add('visible'); }
-function hideAddressElements() { const dg = document.querySelector('.delivery-options-group'); if (extraFieldsRow) extraFieldsRow.classList.add('hidden'); if (dg) dg.classList.remove('visible'); }
+function showAddressElements() { const dg = document.querySelector('.delivery-options-group'); if (dg) dg.classList.add('visible'); }
+function hideAddressElements() { const dg = document.querySelector('.delivery-options-group'); if (dg) dg.classList.remove('visible'); }
 function showCepError(m) { if (cepError) { cepError.textContent = m; cepError.classList.add('active'); } hideAddressElements(); cepInput.classList.remove('loading'); }
 
 if (numberInput) numberInput.addEventListener('change', e => shippingData.number = e.target.value);
@@ -365,10 +347,12 @@ function updateStickyHeader() {
     } else if (stickyHeader) stickyHeader.style.display = 'none';
 }
 
+// Order Finalization
 async function sendOrderEmail() {
-    if (!EmailJSManager.isLoaded) {
-        console.warn('Aguardando EmailJS carregar...');
-        try { await EmailJSManager.init("ik9ItcbFPwvdfWsPn"); } catch(e) { alert('Erro ao carregar sistema de e-mail.'); return; }
+    // Se o EmailJS não carregou, ignora silenciosamente para não travar o fluxo do usuário
+    if (!window.emailjs) {
+        console.warn('EmailJS não carregado. Pulando envio de e-mail (Fail-safe).');
+        return;
     }
     const item = cart[0]; const totalFormatted = (item.price * item.quantity).toFixed(2).replace('.', ',');
     const templateParams = {
@@ -380,7 +364,7 @@ async function sendOrderEmail() {
         address_street: shippingData.street, address_number: shippingData.number, address_complement: shippingData.complement,
         address_neighborhood: shippingData.neighborhood, address_city: shippingData.city, address_state: shippingData.state, address_cep: shippingData.cep
     };
-    try { await emailjs.send('service_0euy74r', 'template_57ynkas', templateParams); console.log('Email enviado!'); } catch (error) { console.error('Erro no envio:', error); }
+    try { await emailjs.send('service_0euy74r', 'template_57ynkas', templateParams); } catch (e) { console.error('Erro EmailJS:', e); }
 }
 
 const proceedBtn = document.querySelector('.proceed-btn');
