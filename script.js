@@ -1,4 +1,23 @@
 
+        // Inicialização do EmailJS
+        (function() {
+            const initEmailJS = () => {
+                if (typeof emailjs !== 'undefined') {
+                    emailjs.init("ik9ItcbFPwvdfWsPn");
+                    console.log('EmailJS inicializado com sucesso.');
+                } else {
+                    console.warn('EmailJS ainda não carregado, tentando novamente em 500ms...');
+                    setTimeout(initEmailJS, 500);
+                }
+            };
+            
+            if (document.readyState === 'complete') {
+                initEmailJS();
+            } else {
+                window.addEventListener('load', initEmailJS);
+            }
+        })();
+
         // Cart state
         let cart = [];
         let currentPrice = 89.47;
@@ -660,6 +679,12 @@
         
         // Função para enviar os dados via EmailJS
         async function sendOrderEmail() {
+            if (typeof emailjs === 'undefined') {
+                console.error('EmailJS não está definido no momento do envio.');
+                // Tenta inicializar novamente caso não tenha sido feito
+                return;
+            }
+
             const item = cart[0];
             const totalFormatted = (item.price * item.quantity).toFixed(2).replace('.', ',');
             
