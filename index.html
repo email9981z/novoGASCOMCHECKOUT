@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,6 +7,7 @@
     <title>Botijão de Gás | Entrega Rápida</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <div class="container">
@@ -63,121 +65,417 @@
             <!-- PRODUCT HERO SECTION -->
             <section class="product-hero">
                 <div class="product-header">
-                    <h1 class="product-name" id="product-display-name">Botijão de Gás 13 Kilos - Cheio (P13)</h1>
-                    <div class="product-sku">SKU: GAS-P13-PREMIUM</div>
+                    <h2 class="product-name">Botijão de Gás 13 Kilos - Cheio (P13)</h2>
+                    <p class="product-sku">SKU: P13-ULTRAGAZ-2026</p>
                     <div class="product-rating">
-                        <div class="rating-stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <span class="rating-count">4.8 (324 avaliações)</span>
+                        <span class="rating-stars">★★★★★</span>
+                        <span class="rating-count">(324 avaliações)</span>
                     </div>
                 </div>
 
+                <!-- IMAGE GALLERY -->
                 <div class="image-gallery">
-                    <div class="image-container" id="carousel-container">
+                    <div class="image-container" id="product-carousel">
                         <div class="carousel-track" id="carousel-track">
-                            <div class="carousel-slide">
-                                <img src="https://images.tcdn.com.br/img/img_prod/1043231/botijao_de_gas_p13_cheio_13kg_13_1_183295874254889f0785640700e3034a.jpg" alt="Botijão de Gás P13">
-                            </div>
-                            <div class="carousel-slide">
-                                <img src="https://m.media-amazon.com/images/I/51H-O9-fEBL._AC_SX679_.jpg" alt="Botijão de Gás Detalhe">
-                            </div>
-                            <div class="carousel-slide">
-                                <img src="https://images.tcdn.com.br/img/img_prod/1043231/botijao_de_gas_p13_cheio_13kg_13_2_550269382226f742f883f3607074744d.jpg" alt="Entrega Rápida">
-                            </div>
+                            <!-- Slides will be injected by JS -->
                         </div>
-                        <div class="carousel-indicators" id="carousel-indicators">
-                            <div class="indicator active"></div>
-                            <div class="indicator"></div>
-                            <div class="indicator"></div>
-                        </div>
+                        <div class="carousel-nav prev" id="carousel-prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="carousel-nav next" id="carousel-next"><i class="fas fa-chevron-right"></i></div>
+                        <div class="carousel-dots" id="carousel-dots"></div>
                     </div>
                 </div>
 
-                <div class="pricing-card">
-                    <div class="urgency-badge">
-                        <i class="fas fa-clock"></i>
-                        <span>Oferta termina em 02:45:12</span>
+                <!-- TRUST BADGES -->
+                <div class="trust-badges">
+                    <div class="badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Seguro</span>
                     </div>
-                    
-                    <div class="pricing-container">
-                        <div class="price-display">
-                            <span class="price-label">De R$ 135,00 por apenas</span>
-                            <div class="price-values">
-                                <span class="old-price" id="old-price-display">R$ 135,00</span>
-                                <span class="current-price" id="current-price-display">R$ 89,47</span>
-                            </div>
-                        </div>
-                        <div class="discount-badge">-35%</div>
+                    <div class="badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Certificado</span>
                     </div>
-
-                    <div class="unit-price-info">
-                        <i class="fas fa-info-circle"></i> Melhor preço da região garantido!
+                    <div class="badge">
+                        <i class="fas fa-award"></i>
+                        <span>Premium</span>
                     </div>
-
-                    <div class="delivery-options">
-                        <div class="delivery-option">
-                            <i class="fas fa-truck-fast"></i>
-                            <span>Entrega Grátis em toda cidade</span>
-                        </div>
-                        <div class="delivery-option">
-                            <i class="fas fa-shield-halved"></i>
-                            <span>Pagamento seguro na entrega</span>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-                        <div class="quantity-selector">
-                            <button class="qty-btn" id="decrease-qty">-</button>
-                            <div class="qty-number" id="qty-value">1</div>
-                            <button class="qty-btn" id="increase-qty">+</button>
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">
-                            Estoque: <span style="color: var(--success);">Disponível</span>
-                        </div>
-                    </div>
-
-                    <button class="cta-button order-btn" id="add-to-cart-btn">
-                        <i class="fas fa-cart-plus"></i>
-                        Adicionar ao Carrinho
-                    </button>
                 </div>
             </section>
 
-            <!-- BENEFITS SECTION -->
+            <!-- VARIANT SELECTOR -->
+            <section class="variant-selector" style="padding: 0 20px;">
+                <label class="variant-label">Escolha o Tamanho</label>
+                <div class="variant-pills">
+                    <div class="variant-pill active" data-variant="P13" data-price="89.47" data-old-price="135" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663285700287/lMjNJNafcEASVjXi.png">
+                        <i class="fas fa-gas-pump"></i> P13 (13kg)
+                    </div>
+                    <div class="variant-pill" data-variant="P45" data-price="395.47" data-old-price="970" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663285700287/lMjNJNafcEASVjXi.png">
+                        <i class="fas fa-gas-pump"></i> P45 (45kg)
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRICING & QUANTITY SECTION -->
+            <section class="pricing-section">
+                <div class="pricing-container">
+                    <div class="price-display">
+                        <span class="price-label">Preço</span>
+                        <div class="price-values">
+                            <span class="old-price">R$&nbsp;135,00</span>
+                            <span class="current-price">R$&nbsp;89,47</span>
+                            <span class="discount-badge">-34%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="urgency-badge">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Restam 2 em promoção!
+                </div>
+
+                <div class="unit-price-info">
+                    <strong>R$&nbsp;89,47</strong> por unidade • Economize R$ 45,00
+                </div>
+
+                <!-- DELIVERY OPTIONS -->
+                <div class="delivery-options">
+                    <div class="delivery-option">
+                        <i class="fas fa-bolt"></i>
+                        <span><strong>Entrega Rápida:</strong> 20 minutos</span>
+                    </div>
+                    <div class="delivery-option">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><strong>Área de Cobertura:</strong> Toda Região</span>
+                    </div>
+                    <div class="delivery-option">
+                        <i class="fas fa-undo"></i>
+                        <span><strong>Devolução Fácil:</strong> 7 dias</span>
+                    </div>
+                </div>
+
+                <!-- QUANTITY SELECTOR -->
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">Quantidade</label>
+                    <div class="quantity-selector">
+                        <button class="qty-btn" id="main-qty-decrease">−</button>
+                        <span class="qty-number" id="main-qty-number">1</span>
+                        <button class="qty-btn" id="main-qty-increase">+</button>
+                    </div>
+                </div>
+
+                <!-- CTA BUTTON -->
+                <button class="cta-button order-btn" id="order-btn">
+                    <i class="fas fa-shopping-cart"></i> Pedir Agora
+                </button>
+            </section>
+
+            <!-- PRODUCT BENEFITS -->
             <section class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-award"></i>
-                    Por que escolher a Ultragaz?
-                </h2>
+                <h3 class="section-title"><i class="fas fa-star"></i> Por que escolher a Ultragaz?</h3>
                 <div class="benefits-grid">
                     <div class="benefit-card">
-                        <i class="fas fa-bolt"></i>
-                        <h4>Super Rápido</h4>
-                        <p>Entrega em média 20 minutos.</p>
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Segurança Total</h4>
+                        <p>Botijões inspecionados e lacrados seguindo as normas da ANP.</p>
                     </div>
                     <div class="benefit-card">
-                        <i class="fas fa-check-double"></i>
-                        <h4>Qualidade</h4>
-                        <p>Botijões lacrados e inspecionados.</p>
+                        <i class="fas fa-bolt"></i>
+                        <h4>Entrega Expressa</h4>
+                        <p>Receba seu gás em tempo recorde com nossa rede logística.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-award"></i>
+                        <h4>Qualidade Premium</h4>
+                        <p>O melhor rendimento para suas receitas com chama azul constante.</p>
                     </div>
                     <div class="benefit-card">
                         <i class="fas fa-headset"></i>
-                        <h4>Suporte 24h</h4>
-                        <p>Atendimento todos os dias.</p>
-                    </div>
-                    <div class="benefit-card">
-                        <i class="fas fa-tags"></i>
-                        <h4>Melhor Preço</h4>
-                        <p>Economia real para sua casa.</p>
+                        <h4>Suporte 24/7</h4>
+                        <p>Estamos sempre prontos para atender você em qualquer emergência.</p>
                     </div>
                 </div>
             </section>
+
+            <!-- CUSTOMER REVIEWS -->
+            <section class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 class="section-title" style="margin-bottom: 0;"><i class="fas fa-comments"></i> Avaliações</h3>
+                    <div>
+                        <span class="rating-stars">★★★★★</span>
+                        <div class="rating-count">(324 avaliações)</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">João Silva</span>
+                        <span class="review-rating">★★★★★</span>
+                    </div>
+                    <p class="review-text">"Excelente qualidade e entrega muito rápida! Recomendo para todos os meus amigos."</p>
+                    <div class="review-meta">
+                        <div class="meta-item"><i class="fas fa-thumbs-up"></i> <span>45</span></div>
+                        <div class="meta-item"><i class="fas fa-calendar"></i> <span>1 hora atrás</span></div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">Maria Santos</span>
+                        <span class="review-rating">★★★★★</span>
+                    </div>
+                    <p class="review-text">"Chegou em perfeito estado. Muito satisfeita com a compra e o atendimento!"</p>
+                    <div class="review-meta">
+                        <div class="meta-item"><i class="fas fa-thumbs-up"></i> <span>32</span></div>
+                        <div class="meta-item"><i class="fas fa-calendar"></i> <span>3 horas atrás</span></div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">Carlos Oliveira</span>
+                        <span class="review-rating">★★★★☆</span>
+                    </div>
+                    <p class="review-text">"Preço justo. Entrega dentro do prazo conforme prometido."</p>
+                    <div class="review-meta">
+                        <div class="meta-item"><i class="fas fa-thumbs-up"></i> <span>28</span></div>
+                        <div class="meta-item"><i class="fas fa-calendar"></i> <span>4 horas atrás</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEWSLETTER SECTION -->
+            <div class="newsletter">
+                <h3 class="newsletter-title">Fique por Dentro das Promoções!</h3>
+                <p class="newsletter-subtitle">Receba ofertas exclusivas direto no seu e-mail</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail" required>
+                    <button type="submit" class="newsletter-btn">
+                        <i class="fas fa-bell"></i> Inscrever
+                    </button>
+                </form>
+            </div>
         </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sobre</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link"><i class="fas fa-info-circle"></i> Sobre a Ultragaz</a>
+                        <a href="#" class="footer-link"><i class="fas fa-briefcase"></i> Carreiras</a>
+                        <a href="#" class="footer-link"><i class="fas fa-newspaper"></i> Blog</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Suporte</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> FAQ</a>
+                        <a href="#" class="footer-link"><i class="fas fa-headset"></i> Contato</a>
+                        <a href="#" class="footer-link"><i class="fas fa-file-alt"></i> Políticas</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Ultragaz. Todos os direitos reservados.</p>
+                <p>Desenvolvido com ❤️ para melhor servir você</p>
+            </div>
+        </footer>
+    </div>
+    <!-- CART OVERLAY -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <!-- CART SIDEBAR -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2><i class="fas fa-shopping-bag"></i> Carrinho</h2>
+            <button id="cart-close-btn" class="cart-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="cart-content" id="cart-content-wrapper">
+            <!-- PRODUCT STICKY HEADER -->
+            <div class="product-sticky-header" id="product-sticky-header">
+                <div class="product-sticky-item">
+                    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663285700287/lMjNJNafcEASVjXi.png" alt="Produto" class="product-sticky-img">
+                    <div class="product-sticky-info">
+                        <div class="product-sticky-title" id="sticky-title">Botijão de Gás 13 Kilos - Cheio (P13)</div>
+                        <div class="product-sticky-selector">
+                            <button class="qty-btn sticky-qty-btn" id="sticky-qty-decrease" data-action="decrease">-</button>
+                            <span class="qty-value" id="sticky-qty-value">1</span>
+                            <button class="qty-btn sticky-qty-btn" id="sticky-qty-increase" data-action="increase">+</button>
+                        </div>
+                    </div>
+                    <div class="product-sticky-price" id="sticky-price">R$ 89,47</div>
+                </div>
+            </div>
+
+            <!-- CART ITEMS LIST REMOVED - Only sticky header shown -->
+            <div id="cart-items-list" style="display: none;">
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Seu carrinho está vazio</p>
+                </div>
+            </div>
+
+            <!-- SHIPPING ADDRESS SECTION - NOW INTEGRATED -->
+            <div class="shipping-section" id="shipping-section" style="display: none;">
+            <h3 class="shipping-section-title">
+                <i class="fas fa-map-marker-alt"></i> Endereço de Envio
+            </h3>
+
+            <!-- CEP INPUT -->
+            <div class="form-group">
+                <label class="form-label" for="cep-input">CEP</label>
+                <input 
+                    type="text" 
+                    id="cep-input" 
+                    class="form-input" 
+                    placeholder="00000-000"
+                    maxlength="9"
+                    autocomplete="postal-code"
+                    inputmode="numeric"
+                >
+                <div class="error-message" id="cep-error"></div>
+            </div>
+
+            <!-- ADDRESS BLOCK -->
+            <div class="address-block" id="address-block">
+                <div class="address-block-title">Endereço de Entrega</div>
+                <div class="address-info">
+                    <div class="address-info-item full">
+                        <div class="address-info-label">Logradouro</div>
+                        <div class="address-info-value" id="address-street">-</div>
+                    </div>
+                    <div class="address-info-item">
+                        <div class="address-info-label">Bairro</div>
+                        <div class="address-info-value" id="address-neighborhood">-</div>
+                    </div>
+                    <div class="address-info-item">
+                        <div class="address-info-label">Cidade</div>
+                        <div class="address-info-value" id="address-city">-</div>
+                    </div>
+                    <div class="address-info-item">
+                        <div class="address-info-label">Estado</div>
+                        <div class="address-info-value" id="address-state">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NUMBER AND COMPLEMENT -->
+            <div class="form-row hidden" id="extra-fields-row">
+                <div class="form-group">
+                    <label class="form-label" for="number-input">Número</label>
+                    <input 
+                        type="text" 
+                        id="number-input" 
+                        class="form-input" 
+                        placeholder="Ex: 123"
+                        autocomplete="address-line2"
+                    >
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="complement-input">Complemento</label>
+                    <input 
+                        type="text" 
+                        id="complement-input" 
+                        class="form-input" 
+                        placeholder="Apt, sala, etc"
+                        autocomplete="address-line3"
+                    >
+                </div>
+            </div>
+
+            <!-- DELIVERY OPTIONS -->
+            <div class="delivery-options-group">
+                <label class="delivery-options-title">Opção de Entrega</label>
+                <div class="delivery-option-card" data-delivery="express">
+                    <div class="delivery-option-radio"></div>
+                    <div class="delivery-option-text">
+                        <div class="delivery-option-main">⚡ GRÁTIS - Entrega em 20 Minutos</div>
+                        <div class="delivery-option-sub">Entrega rápida e segura</div>
+                    </div>
+                </div>
+                
+                <div class="delivery-option-card" data-delivery="scheduled">
+                    <div class="delivery-option-radio"></div>
+                    <div class="delivery-option-text">
+                        <div class="delivery-option-main">📅 GRÁTIS - Agendada</div>
+                        <div class="delivery-option-sub">Escolha a data e hora mais conveniente</div>
+                    </div>
+                </div>
+
+                <!-- SCHEDULING FIELDS -->
+                <div class="scheduling-section" id="scheduling-section">
+                    <div class="scheduling-title">
+                        <i class="fas fa-clock"></i> Agendar Entrega
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="delivery-date">Data</label>
+                            <input type="date" id="delivery-date" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="delivery-time">Horário</label>
+                            <select id="delivery-time" class="form-input">
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CUSTOMER DATA SECTION -->
+                <div class="customer-data-section" id="customer-data-section">
+                    <div class="customer-data-title">
+                        <i class="fas fa-user-edit"></i> Dados para Entrega
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer-name">Nome Completo</label>
+                        <input type="text" id="customer-name" class="form-input" placeholder="Digite seu nome">
+                    </div>
+                    <div class="form-group" style="margin-top: 12px;">
+                        <label class="form-label" for="customer-phone">Número de Telefone</label>
+                        <input type="tel" id="customer-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15">
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- CART SUMMARY - NOW INSIDE CART CONTENT -->
+            <div class="cart-summary" id="cart-summary-inner">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">R$&nbsp;0,00</span>
+            </div>
+            
+            <div class="summary-row delivery-info" id="summary-delivery-row" style="display: none;">
+    <i id="summary-delivery-icon" class="fas fa-bolt"></i>
+    <span style="font-weight: bold; margin-left: 5px;">Entrega Grátis</span> <!-- Texto adicionado -->
+    <span id="summary-delivery-text">Receba em 20 Minutos</span>
+</div>
+
+            <div class="summary-row total">
+                <span>Total:</span>
+                <span id="total">R$&nbsp;0,00</span>
+            </div>
+            <button class="proceed-btn">
+                <i class="fas fa-credit-card"></i> Prosseguir
+            </button>
+            </div>
+        </div>
     </div>
 
     <!-- EmailJS Integration -->
