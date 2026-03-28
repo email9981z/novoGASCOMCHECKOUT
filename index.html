@@ -4049,11 +4049,22 @@
         updateStickyHeader();
 
     </script>
+
     <!-- EmailJS Integration -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/emailjs.min.js"></script>
     <script type="text/javascript">
         (function() {
-            emailjs.init("ik9ItcbFPwvdfWsPn");
+            // Inicializa o EmailJS assim que o script for carregado
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init("ik9ItcbFPwvdfWsPn");
+            } else {
+                // Caso o script demore a carregar, tenta novamente após o carregamento da janela
+                window.addEventListener('load', function() {
+                    if (typeof emailjs !== 'undefined') {
+                        emailjs.init("ik9ItcbFPwvdfWsPn");
+                    }
+                });
+            }
         })();
     </script>
 </body>
