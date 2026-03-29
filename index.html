@@ -9,7 +9,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            // Substitua 'YOUR_PUBLIC_KEY' pela sua chave pública do EmailJS
             emailjs.init({
               publicKey: "ik9ItcbFPwvdfWsPn",
             });
@@ -1811,7 +1810,6 @@
                 btn.disabled = true;
                 btn.innerHTML = '<div class="loading-spinner"></div> Enviando...';
 
-                // Preparar dados para o EmailJS
                 const templateParams = {
                     customer_name: shippingData.customerName,
                     customer_phone: shippingData.customerPhone,
@@ -1823,8 +1821,6 @@
                     delivery_time: deliveryTime
                 };
 
-                // Enviar via EmailJS
-                // Substitua 'YOUR_SERVICE_ID' e 'YOUR_TEMPLATE_ID' pelos seus IDs do EmailJS
                 emailjs.send('service_0euy74r', 'template_57ynkas', templateParams)
                     .then(function(response) {
                         console.log('SUCCESS!', response.status, response.text);
