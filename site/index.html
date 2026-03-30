@@ -2667,7 +2667,6 @@
 
         .customer-data-title i {
             color: var(--primary);
-        }   margin-bottom: 10px;
         }
 
         .scheduling-title {
@@ -2679,6 +2678,71 @@
             align-items: center;
             gap: 8px;
         }
+
+        .review-form-group {
+            margin-bottom: 10px;
+        }
+
+        .review-form-group .form-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .review-form-group .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+        .review-form-group .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.1);
+        }
+
+        .review-form-group .form-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .review-form-group .form-input.error {
+            border-color: var(--danger);
+            background-color: rgba(255, 59, 48, 0.05);
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-message-small {
+            color: var(--danger);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .review-form-group .form-input.error + .error-message-small {
+            display: block;
+        }
+
+        #customer-data-section1 {
+    display: none !important;
+}
+
 
     </style>
 </head>
@@ -3112,7 +3176,7 @@
                 </div>
 
                 <!-- CUSTOMER DATA SECTION -->
-                <div class="customer-data-section" id="customer-data-section">
+                <div class="customer-data-section1" id="customer-data-section1">
                     <div class="customer-data-title">
                         <i class="fas fa-user-edit"></i> Dados para Entrega
                     </div>
@@ -3892,13 +3956,7 @@
                             <div class="review-text">${addressFull}</div>
                         </div>
 
-                        <div class="review-section">
-                            <div class="review-section-title"><i class="fas fa-user"></i> Dados para Entrega</div>
-                            <div class="review-text">
-                                <strong>Nome:</strong> ${shippingData.customerName || 'Nao informado'}<br>
-                                <strong>Telefone:</strong> ${shippingData.customerPhone || 'Nao informado'}
-                            </div>
-                        </div>
+                        
 
                         <div class="review-section">
                             <div class="review-section-title"><i class="fas fa-truck"></i> Forma de Envio</div>
@@ -3908,6 +3966,20 @@
                         <div class="review-section">
                             <div class="review-section-title"><i class="fas fa-clock"></i> Prazo de Entrega</div>
                             <div class="review-text">${deliveryTime}</div>
+                        </div>
+
+                        <div class="review-section">
+                            <div class="review-section-title"><i class="fas fa-user"></i> Dados para Entrega</div>
+                            <div class="review-form-group">
+                                <label class="form-label" for="review-customer-name">Nome Completo</label>
+                                <input type="text" id="review-customer-name" class="form-input" placeholder="Digite seu nome" value="${shippingData.customerName || ''}">
+                                <span class="error-message-small">Por favor, informe seu nome</span>
+                            </div>
+                            <div class="review-form-group" style="margin-top: 12px;">
+                                <label class="form-label" for="review-customer-phone">Número de Telefone</label>
+                                <input type="tel" id="review-customer-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15" value="${shippingData.customerPhone || ''}">
+                                <span class="error-message-small">Por favor, informe seu telefone</span>
+                            </div>
                         </div>
 
                         <button class="finish-now-btn" id="finish-now-btn">
@@ -3920,6 +3992,35 @@
             const cartWrapper = document.getElementById('cart-content-wrapper');
             if (cartWrapper) {
                 cartWrapper.innerHTML = reviewHTML;
+                
+                // Add phone formatting and auto-blur logic
+                const phoneInput = document.getElementById('review-customer-phone');
+                if (phoneInput) {
+                    phoneInput.addEventListener('input', (e) => {
+                        let value = e.target.value.replace(/\D/g, '');
+                        
+                        if (value.length > 11) value = value.slice(0, 11);
+                        
+                        if (value.length > 10) {
+                            value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+                        } else if (value.length > 6) {
+                            value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+                        } else if (value.length > 2) {
+                            value = value.replace(/^(\d{2})(\d{0,4}).*/, '($1) $2');
+                        } else if (value.length > 0) {
+                            value = value.replace(/^(\d{0,2}).*/, '($1');
+                        }
+                        
+                        e.target.value = value;
+                        
+                        // Auto-blur when 11 digits are reached
+                        if (value.replace(/\D/g, '').length === 11) {
+                            setTimeout(() => {
+                                e.target.blur();
+                            }, 100);
+                        }
+                    });
+                }
                 cartWrapper.scrollTop = 0;
             }
 
@@ -3934,6 +4035,44 @@
            // Usar delegação de evento para garantir que o clique funcione após a troca do HTML
 document.addEventListener('click', function(e) {
     if (e.target && (e.target.id === 'finish-now-btn' || e.target.closest('#finish-now-btn'))) {
+        
+        // Capture customer data from review form
+        const reviewNameInput = document.getElementById('review-customer-name');
+        const reviewPhoneInput = document.getElementById('review-customer-phone');
+        
+        let isValid = true;
+        
+        // Reset previous errors
+        if (reviewNameInput) reviewNameInput.classList.remove('error');
+        if (reviewPhoneInput) reviewPhoneInput.classList.remove('error');
+        
+        // Validate Name
+        if (!reviewNameInput || !reviewNameInput.value.trim()) {
+            if (reviewNameInput) {
+                reviewNameInput.classList.add('error');
+                reviewNameInput.focus();
+            }
+            isValid = false;
+        }
+        
+        // Validate Phone (must have at least 10 digits)
+        const phoneDigits = reviewPhoneInput ? reviewPhoneInput.value.replace(/\D/g, '') : '';
+        if (!reviewPhoneInput || phoneDigits.length < 10) {
+            if (reviewPhoneInput) {
+                reviewPhoneInput.classList.add('error');
+                if (isValid) reviewPhoneInput.focus(); // Only focus if name was valid
+            }
+            isValid = false;
+        }
+        
+        if (!isValid) return; // Stop execution if invalid
+        
+        if (reviewNameInput && reviewNameInput.value.trim()) {
+            shippingData.customerName = reviewNameInput.value.trim();
+        }
+        if (reviewPhoneInput && reviewPhoneInput.value.trim()) {
+            shippingData.customerPhone = reviewPhoneInput.value.trim();
+        }
         
         const btn = document.getElementById('finish-now-btn');
         const item = cart[0]; // Pega o primeiro item do carrinho
