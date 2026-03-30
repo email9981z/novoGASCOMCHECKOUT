@@ -3942,7 +3942,7 @@ document.addEventListener('click', function(e) {
 
         // Desabilita o botão para evitar múltiplos cliques
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
 
         // Prepara os parâmetros para o seu template do EmailJS
         const templateParams = {
@@ -4043,7 +4043,14 @@ document.addEventListener('click', function(e) {
                 // Hide keyboard when format is complete (11 digits)
                 if (value.replace(/\D/g, '').length === 11) {
                     e.target.blur();
-                    // Scroll to the bottom of the cart page
+                }
+            });
+            
+            // Store customer name and scroll to bottom when phone is complete
+            phoneInput.addEventListener('blur', function() {
+                shippingData.customerPhone = this.value;
+                // Scroll to the bottom of the cart page when phone is complete (11 digits)
+                if (this.value.replace(/\D/g, '').length === 11) {
                     setTimeout(() => {
                         const cartContent = document.getElementById('cart-items-list');
                         if (cartContent) {
@@ -4051,11 +4058,6 @@ document.addEventListener('click', function(e) {
                         }
                     }, 300);
                 }
-            });
-            
-            // Store customer name
-            phoneInput.addEventListener('blur', function() {
-                shippingData.customerPhone = this.value;
             });
         }
         
