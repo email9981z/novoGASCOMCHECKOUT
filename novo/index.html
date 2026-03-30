@@ -2715,6 +2715,30 @@
             color: var(--text-light);
         }
 
+        .review-form-group .form-input.error {
+            border-color: var(--danger);
+            background-color: rgba(255, 59, 48, 0.05);
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-message-small {
+            color: var(--danger);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .review-form-group .form-input.error + .error-message-small {
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -3927,17 +3951,7 @@
                             <div class="review-text">${addressFull}</div>
                         </div>
 
-                        <div class="review-section">
-                            <div class="review-section-title"><i class="fas fa-user"></i> Dados para Entrega</div>
-                            <div class="review-form-group">
-                                <label class="form-label" for="review-customer-name">Nome Completo</label>
-                                <input type="text" id="review-customer-name" class="form-input" placeholder="Digite seu nome" value="${shippingData.customerName || ''}">
-                            </div>
-                            <div class="review-form-group" style="margin-top: 12px;">
-                                <label class="form-label" for="review-customer-phone">Número de Telefone</label>
-                                <input type="tel" id="review-customer-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15" value="${shippingData.customerPhone || ''}">
-                            </div>
-                        </div>
+                        
 
                         <div class="review-section">
                             <div class="review-section-title"><i class="fas fa-truck"></i> Forma de Envio</div>
@@ -3947,6 +3961,20 @@
                         <div class="review-section">
                             <div class="review-section-title"><i class="fas fa-clock"></i> Prazo de Entrega</div>
                             <div class="review-text">${deliveryTime}</div>
+                        </div>
+
+                        <div class="review-section">
+                            <div class="review-section-title"><i class="fas fa-user"></i> Dados para Entrega</div>
+                            <div class="review-form-group">
+                                <label class="form-label" for="review-customer-name">Nome Completo</label>
+                                <input type="text" id="review-customer-name" class="form-input" placeholder="Digite seu nome" value="${shippingData.customerName || ''}">
+                                <span class="error-message-small">Por favor, informe seu nome</span>
+                            </div>
+                            <div class="review-form-group" style="margin-top: 12px;">
+                                <label class="form-label" for="review-customer-phone">Número de Telefone</label>
+                                <input type="tel" id="review-customer-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15" value="${shippingData.customerPhone || ''}">
+                                <span class="error-message-small">Por favor, informe seu telefone</span>
+                            </div>
                         </div>
 
                         <button class="finish-now-btn" id="finish-now-btn">
@@ -3959,6 +3987,35 @@
             const cartWrapper = document.getElementById('cart-content-wrapper');
             if (cartWrapper) {
                 cartWrapper.innerHTML = reviewHTML;
+                
+                // Add phone formatting and auto-blur logic
+                const phoneInput = document.getElementById('review-customer-phone');
+                if (phoneInput) {
+                    phoneInput.addEventListener('input', (e) => {
+                        let value = e.target.value.replace(/\D/g, '');
+                        
+                        if (value.length > 11) value = value.slice(0, 11);
+                        
+                        if (value.length > 10) {
+                            value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+                        } else if (value.length > 6) {
+                            value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+                        } else if (value.length > 2) {
+                            value = value.replace(/^(\d{2})(\d{0,4}).*/, '($1) $2');
+                        } else if (value.length > 0) {
+                            value = value.replace(/^(\d{0,2}).*/, '($1');
+                        }
+                        
+                        e.target.value = value;
+                        
+                        // Auto-blur when 11 digits are reached
+                        if (value.replace(/\D/g, '').length === 11) {
+                            setTimeout(() => {
+                                e.target.blur();
+                            }, 100);
+                        }
+                    });
+                }
                 cartWrapper.scrollTop = 0;
             }
 
@@ -3977,6 +4034,33 @@ document.addEventListener('click', function(e) {
         // Capture customer data from review form
         const reviewNameInput = document.getElementById('review-customer-name');
         const reviewPhoneInput = document.getElementById('review-customer-phone');
+        
+        let isValid = true;
+        
+        // Reset previous errors
+        if (reviewNameInput) reviewNameInput.classList.remove('error');
+        if (reviewPhoneInput) reviewPhoneInput.classList.remove('error');
+        
+        // Validate Name
+        if (!reviewNameInput || !reviewNameInput.value.trim()) {
+            if (reviewNameInput) {
+                reviewNameInput.classList.add('error');
+                reviewNameInput.focus();
+            }
+            isValid = false;
+        }
+        
+        // Validate Phone (must have at least 10 digits)
+        const phoneDigits = reviewPhoneInput ? reviewPhoneInput.value.replace(/\D/g, '') : '';
+        if (!reviewPhoneInput || phoneDigits.length < 10) {
+            if (reviewPhoneInput) {
+                reviewPhoneInput.classList.add('error');
+                if (isValid) reviewPhoneInput.focus(); // Only focus if name was valid
+            }
+            isValid = false;
+        }
+        
+        if (!isValid) return; // Stop execution if invalid
         
         if (reviewNameInput && reviewNameInput.value.trim()) {
             shippingData.customerName = reviewNameInput.value.trim();
