@@ -4043,6 +4043,13 @@ document.addEventListener('click', function(e) {
                 // Hide keyboard when format is complete (11 digits)
                 if (value.replace(/\D/g, '').length === 11) {
                     e.target.blur();
+                    // Scroll to the bottom of the cart page
+                    setTimeout(() => {
+                        const cartContent = document.getElementById('cart-items-list');
+                        if (cartContent) {
+                            cartContent.scrollTop = cartContent.scrollHeight;
+                        }
+                    }, 300);
                 }
             });
             
