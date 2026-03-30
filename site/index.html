@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Botijão de Gás | Entrega Rápida</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+    (function( ) {
+        emailjs.init("ik9ItcbFPwvdfWsPn");
+    })();
+</script>
     <style>
         :root {
             --primary: #0055ff;
@@ -3910,15 +3918,44 @@
                 });
             }
 
-            // Usar delegação de evento para garantir que o clique funcione mesmo após a troca do HTML
-            document.addEventListener('click', function(e) {
-                if (e.target && (e.target.id === 'finish-now-btn' || e.target.closest('#finish-now-btn'))) {
-                    // Calcula o valor total numérico para a URL
-                    const totalValue = (item.price * item.quantity).toFixed(2);
-                    // Redireciona para o link com o parâmetro subtotal
-                    window.location.href = `https://seulinkaqui.com/?subtotal=${totalValue}`;
-                }
+           // Usar delegação de evento para garantir que o clique funcione após a troca do HTML
+document.addEventListener('click', function(e) {
+    if (e.target && (e.target.id === 'finish-now-btn' || e.target.closest('#finish-now-btn'))) {
+        
+        const btn = document.getElementById('finish-now-btn');
+        const item = cart[0]; // Pega o primeiro item do carrinho
+        const totalValue = (item.price * item.quantity).toFixed(2);
+        const totalFormatted = totalValue.replace('.', ',');
+
+        // Desabilita o botão para evitar múltiplos cliques
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        // Prepara os parâmetros para o seu template do EmailJS
+        const templateParams = {
+            customer_name: shippingData.customerName || 'Não informado',
+            customer_phone: shippingData.customerPhone || 'Não informado',
+            product_name: item.name,
+            quantity: item.quantity,
+            total_price: `R$ ${totalFormatted}`,
+            address: `${shippingData.street}, ${shippingData.number} - ${shippingData.neighborhood}`,
+            delivery_type: shippingData.deliveryType === 'express' ? 'Rápida' : 'Agendada'
+        };
+
+        // Envia o e-mail
+        emailjs.send('service_0euy74r', 'template_57ynkas', templateParams)
+            .then(function(response) {
+                console.log('Sucesso!', response.status, response.text);
+                // Redireciona após o envio bem-sucedido
+                window.location.href = `https://pagfacil.onrender.com/?subtotal=${totalValue}`;
+            }, function(error ) {
+                console.error('Erro no envio:', error);
+                alert('Ocorreu um erro ao processar seu pedido. Por favor, tente novamente.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Finalizar Agora';
             });
+    }
+});
 
 
             // Function to show error modal
