@@ -4114,7 +4114,8 @@ document.addEventListener('click', function(e) {
                     complemento: shippingData.complement || '',
                     entrega: shippingData.deliveryType === 'express' ? 'Rapida' : 'Agendada',
                     data_entrega: shippingData.deliveryDate || '',
-                    hora_entrega: shippingData.deliveryTime || ''
+                    hora_entrega: shippingData.deliveryTime || '',
+                    imagem: item.image || ''
                 });
                 window.location.href = `https://pagfacil.onrender.com/?${params.toString()}`;
             }, function(error ) {
