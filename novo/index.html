@@ -1,0 +1,4143 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botijão de Gás | Entrega Rápida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+    (function( ) {
+        emailjs.init("ik9ItcbFPwvdfWsPn");
+    })();
+</script>
+    <style>
+        :root {
+            --primary: #0055ff;
+            --primary-dark: #0033cc;
+            --primary-light: #e8f0ff;
+            --accent: #00bfff;
+            --success: #28a745;
+            --warning: #ff6b35;
+            --danger: #ff3b30;
+            --text-dark: #1a1a1a;
+            --text-gray: #555;
+            --text-light: #888;
+            --bg-light: #f5f7fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e4e8;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--bg-white);
+            box-shadow: var(--shadow-md);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==================== HEADER PROFISSIONAL ==================== */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--bg-white);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--bg-white);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-2px);
+        }
+
+        .brand-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand-logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .brand-tagline {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--bg-white);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .cart-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--bg-white);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .cart-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: bold;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-white);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cart-badge.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ==================== TRUST BANNER ==================== */
+        .trust-banner {
+            background: linear-gradient(90deg, rgba(40, 167, 69, 0.1) 0%, rgba(0, 191, 255, 0.1) 100%);
+            border-bottom: 1px solid rgba(40, 167, 69, 0.2);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .trust-item i {
+            color: var(--success);
+            font-size: 1rem;
+        }
+
+        /* ==================== PROMOTIONAL BANNERS ==================== */
+        .promo-banner {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .promo-banner i {
+            font-size: 1.1rem;
+        }
+
+        .delivery-banner {
+            background-color: var(--success);
+            color: var(--bg-white);
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .delivery-banner i {
+            font-size: 1.1rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes pulse-banner {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==================== PRODUCT HERO SECTION ==================== */
+        .product-hero {
+            padding: 20px 20px 16px 20px;
+            background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg-white) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .product-header {
+            margin-bottom: 20px;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .product-sku {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 0.9rem;
+        }
+
+        .rating-stars {
+            color: #ffc107;
+            font-size: 1rem;
+        }
+
+        .rating-count {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* ==================== IMAGE GALLERY ==================== */
+        .image-gallery {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #f0f2f5 100%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            touch-action: pan-y;
+        }
+
+        .image-container:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 1rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background-color: var(--bg-white);
+            color: var(--primary-dark);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav.prev { left: 10px; }
+        .carousel-nav.next { right: 10px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background-color: var(--primary);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* ==================== TRUST BADGES ==================== */
+        .trust-badges {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 6px;
+        }
+
+        .badge i {
+            font-size: 1.2rem;
+            color: var(--success);
+        }
+
+        .badge span {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        /* ==================== VARIANT SELECTOR ==================== */
+        .variant-selector {
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        .variant-label {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .variant-pills {
+            display: flex;
+            gap: 12px;
+        }
+
+        .variant-pill {
+            flex: 1;
+            padding: 14px 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--bg-white);
+        }
+
+        .variant-pill i {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .variant-pill.active {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.15);
+        }
+
+        .variant-pill.active i {
+            color: var(--primary);
+        }
+
+        /* ==================== PRICING SECTION ==================== */
+        .pricing-section {
+            background-color: var(--bg-white);
+            padding: 24px 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .pricing-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .price-display {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .price-values {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .old-price {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+            font-weight: 500;
+        }
+
+        .current-price {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .discount-badge {
+            background-color: var(--danger);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            animation: pulse 2s infinite;
+        }
+
+        .urgency-badge {
+            background-color: rgba(255, 107, 53, 0.1);
+            color: var(--warning);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .unit-price-info {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* ==================== DELIVERY INFO ==================== */
+        .delivery-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .delivery-option i {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* ==================== QUANTITY SELECTOR ==================== */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-light);
+            border-radius: 12px;
+            padding: 4px;
+            width: fit-content;
+            border: 1px solid var(--border-color);
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .qty-btn:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .qty-number {
+            width: 50px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        /* ==================== CTA BUTTONS ==================== */
+        .cta-button {
+            width: 100%;
+            padding: 18px 24px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .order-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 85, 255, 0.3);
+        }
+
+        .order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 85, 255, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .order-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* ==================== SECTIONS ==================== */
+        .section {
+            padding: 24px 20px;
+            border-bottom: 8px solid var(--bg-light);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* ==================== BENEFITS GRID ==================== */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .benefit-card {
+            background-color: var(--bg-light);
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .benefit-card i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .benefit-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .benefit-card p {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            line-height: 1.4;
+        }
+
+        /* ==================== REVIEWS ==================== */
+        .review-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .review-author {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: #ffc107;
+            font-size: 0.8rem;
+        }
+
+        .review-text {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-style: italic;
+        }
+
+        .review-meta {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ==================== NEWSLETTER ==================== */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            padding: 30px 20px;
+            border-radius: 20px;
+            margin: 24px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .newsletter-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .newsletter-input {
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .newsletter-btn:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .social-icon {
+            color: var(--bg-white);
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(0, 191, 255, 0.15);
+            border: 2px solid rgba(0, 191, 255, 0.3);
+        }
+
+        .social-icon:hover {
+            color: var(--accent);
+            background-color: rgba(0, 191, 255, 0.35);
+            border-color: rgba(0, 191, 255, 0.6);
+            transform: translateY(-4px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 191, 255, 0.2);
+            opacity: 0.8;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 10px 16px;
+            }
+
+            .product-hero {
+                padding: 18px 16px;
+            }
+
+            .product-name {
+                font-size: 1.4rem;
+            }
+
+            .current-price {
+                font-size: 2.2rem;
+            }
+
+            .pricing-section {
+                padding: 18px 16px;
+            }
+
+            .section {
+                padding: 18px 16px;
+            }
+
+            .image-container {
+                height: 260px;
+                padding: 16px;
+            }
+
+            .cta-button {
+                padding: 14px 16px;
+                font-size: 1rem;
+                margin-bottom: 16px;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .benefit-card {
+                padding: 14px;
+            }
+
+            .newsletter {
+                margin: 18px 16px;
+                padding: 18px 16px;
+            }
+
+            .footer {
+                padding: 30px 16px;
+            }
+
+            .footer-content {
+                gap: 24px;
+            }
+
+            .price-values {
+                gap: 10px;
+            }
+
+            .old-price {
+                font-size: 0.95rem;
+            }
+
+            .current-price {
+                font-size: 2rem;
+            }
+
+            .discount-badge {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+
+            .pricing-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .trust-banner {
+                font-size: 0.7rem;
+                padding: 8px 12px;
+            }
+        }
+
+        /* ==================== CART OVERLAY & SIDEBAR ==================== */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 200;
+            touch-action: none;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            height: 100dvh;
+            background-color: var(--bg-white);
+            box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 201;
+            overflow: hidden;
+        }
+
+        .cart-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--bg-white);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 85, 255, 0.15);
+        }
+
+        .cart-header h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.2px;
+        }
+
+        .cart-close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--bg-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .cart-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: var(--bg-white);
+            scroll-behavior: smooth;
+        }
+
+        /* ==================== STICKY PRODUCT HEADER ==================== */
+        .product-sticky-header {
+            position: sticky;
+            top: -20px;
+            background-color: var(--bg-white);
+            z-index: 10;
+            padding: 12px 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .product-sticky-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .product-sticky-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .product-sticky-info {
+            flex: 1;
+        }
+
+        .product-sticky-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .product-sticky-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sticky-qty-btn {
+            width: 28px;
+            height: 28px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+        }
+
+        .qty-value {
+            font-weight: 800;
+            font-size: 0.95rem;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .product-sticky-price {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .cart-item-price {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        .cart-item-remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        .cart-item-remove-btn:hover {
+            text-decoration: underline;
+        }
+
+        .cart-summary {
+            padding: 24px 20px;
+            background-color: var(--bg-white);
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+            margin: 0 -20px -20px -20px;
+            margin-top: 20px;
+            border-radius: 20px 20px 0 0;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .summary-row.total {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px dashed var(--border-color);
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            font-weight: 900;
+        }
+
+        .summary-row.total span:last-child {
+            color: var(--primary);
+        }
+
+        /* DYNAMIC DELIVERY DISPLAY */
+        .summary-row.delivery-info {
+            font-size: 0.95rem;
+            color: var(--success);
+            font-weight: 700;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-row.delivery-info i {
+            font-size: 1rem;
+        }
+
+        .proceed-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--success) 0%, #218838 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .proceed-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.35);
+            filter: brightness(1.05);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-cart i {
+            font-size: 3.5rem;
+            color: var(--border-color);
+            margin-bottom: 16px;
+            display: block;
+            opacity: 0.6;
+        }
+
+        .empty-cart p {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* ==================== REVIEW BLOCK ==================== */
+        .review-block {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: var(--bg-white);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .review-header-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+            flex-shrink: 0;
+        }
+
+        .review-back-btn {
+            background: var(--primary);
+            border: none;
+            color: var(--bg-white);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+        }
+
+        .review-back-btn:hover {
+            background: var(--primary-dark);
+            transform: translateX(-2px);
+        }
+
+        .review-back-btn:active {
+            transform: translateX(-1px);
+        }
+
+        .review-header-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        .review-content {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .review-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .review-title i {
+            color: var(--primary);
+        }
+
+        .review-section {
+            margin-bottom: 24px;
+            padding: 16px;
+            background-color: var(--bg-light);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .review-section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .review-section-title i {
+            color: var(--primary);
+            width: 16px;
+        }
+
+        .review-item-detail {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .review-item-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .review-item-info {
+            flex: 1;
+        }
+
+        .review-item-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        .review-item-price {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .review-text {
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        .review-text strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .finish-now-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 16px rgba(0, 85, 255, 0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .finish-now-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 85, 255, 0.35);
+            filter: brightness(1.1);
+        }
+
+        /* ==================== ERROR MESSAGE MODAL ==================== */
+        .error-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .error-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .error-modal-content {
+            background-color: var(--bg-white);
+            border-radius: 16px;
+            padding: 32px 24px;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-modal-icon {
+            font-size: 3rem;
+            color: var(--danger);
+            margin-bottom: 16px;
+        }
+
+        .error-modal-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .error-modal-message {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        
+        /* ==================== IMPROVED PAYMENT DESIGN ==================== */
+        .payment-option-card {
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-white);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .payment-option-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 85, 255, 0.12);
+        }
+
+        .payment-option-card.selected {
+            border: 3px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 85, 255, 0.05) 0%, rgba(0, 85, 255, 0.02) 100%);
+            box-shadow: 0 12px 32px rgba(0, 85, 255, 0.18), inset 0 1px 0 rgba(0, 85, 255, 0.1);
+            position: relative;
+        }
+
+        .payment-option-card.selected::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .payment-option-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3);
+        }
+
+        .payment-option-card.pix-card {
+            background: linear-gradient(145deg, #f0fffe 0%, #e8fbf8 100%);
+            border: 2px solid #32bcad;
+            box-shadow: 0 8px 24px rgba(50, 188, 173, 0.15);
+            position: relative;
+        }
+
+        .payment-option-card.pix-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(50, 188, 173, 0.05) 0%, rgba(50, 188, 173, 0.02) 100%);
+            border-radius: 20px;
+            pointer-events: none;
+            animation: pixPulse 3s ease-in-out infinite;
+        }
+        
+        .payment-option-card.pix-card:hover {
+            border-color: #32bcad;
+            box-shadow: 0 16px 40px rgba(50, 188, 173, 0.25), inset 0 1px 0 rgba(50, 188, 173, 0.1);
+            transform: translateY(-3px);
+        }
+
+        @keyframes pixPulse {
+            0%, 100% { box-shadow: inset 0 0 0 0 rgba(50, 188, 173, 0.1); }
+            50% { box-shadow: inset 0 0 0 2px rgba(50, 188, 173, 0.15); }
+        }
+
+        .payment-option-card.pix-card.selected {
+            border: 3px solid #32bcad;
+            background: linear-gradient(135deg, rgba(50, 188, 173, 0.12) 0%, rgba(50, 188, 173, 0.05) 100%);
+            box-shadow: 0 16px 48px rgba(50, 188, 173, 0.35), inset 0 1px 0 rgba(50, 188, 173, 0.2);
+            position: relative;
+            animation: pixSelected 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pixSelected {
+            0% { transform: scale(0.98); }
+            50% { transform: scale(1.01); }
+            100% { transform: scale(1); }
+        }
+
+        .payment-option-card.pix-card.selected::before {
+            background: linear-gradient(90deg, #32bcad 0%, #28a89d 100%);
+            animation: pixGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pixGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .payment-option-card.pix-card.selected::after {
+            background: #32bcad;
+            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.5);
+            animation: pixCheck 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pixCheck {
+            0% { transform: scale(0) rotate(-45deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .payment-option-icon {
+            width: 54px;
+            height: 54px;
+            background: var(--primary-light);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.12);
+        }
+
+        .payment-option-card.selected .payment-option-icon {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 85, 255, 0.25);
+        }
+
+        .payment-option-card.pix-card.selected .payment-option-icon {
+            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.3);
+        }
+
+        .pix-card .payment-option-icon {
+            background: linear-gradient(135deg, rgba(50, 188, 173, 0.15) 0%, rgba(50, 188, 173, 0.08) 100%);
+            color: #32bcad;
+            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.2);
+            animation: pixIconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pixIconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .payment-option-card.pix-card.selected .payment-option-icon {
+            background: linear-gradient(135deg, rgba(50, 188, 173, 0.2) 0%, rgba(50, 188, 173, 0.12) 100%);
+            transform: scale(1.15);
+            box-shadow: 0 8px 20px rgba(50, 188, 173, 0.35);
+            animation: pixIconSelected 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pixIconSelected {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1.15); }
+        }
+
+        .payment-option-title {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .payment-option-price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+        }
+
+        .pix-card .payment-option-price {
+            color: #32bcad;
+            font-size: 2rem;
+            font-weight: 950;
+        }
+
+        .payment-option-card.pix-card.selected .payment-option-price {
+            color: #32bcad;
+            text-shadow: 0 2px 8px rgba(50, 188, 173, 0.2);
+        }
+
+        .payment-option-desc {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .payment-badge-promo {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #32bcad 0%, #28a89d 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 6px 16px rgba(50, 188, 173, 0.35);
+            letter-spacing: 0.5px;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .payment-badge-delivery {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--warning);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        /* ==================== CONFIRMATION MODAL ==================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        
+        /* ==================== CLOSE BUTTON ==================== */
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            transform: rotate(90deg);
+        }
+
+        .modal-content {
+            position: relative;
+        }
+
+        .modal-content {
+            background-color: var(--bg-white);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transform: scale(0.9);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active 
+        /* ==================== CLOSE BUTTON ==================== */
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            transform: rotate(90deg);
+        }
+
+        .modal-content {
+            position: relative;
+        }
+
+        .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--warning);
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 1rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-modal {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-modal-pix {
+            background: #32bcad;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-modal-pix:hover {
+            background: #2ba396;
+            transform: translateY(-2px);
+        }
+
+        .btn-modal-continue {
+            background: #f0f2f5;
+            color: var(--text-gray);
+        }
+
+        .btn-modal-continue:hover {
+            background: #e4e6eb;
+        }
+
+        /* ==================== CONTACT FORM ==================== */
+        .contact-form {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .contact-form label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            margin-bottom: 6px;
+        }
+
+        .contact-form input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .btn-send-form {
+            background: var(--primary);
+            color: white;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            padding: 20px;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        /* ==================== PAYMENT OPTIONS SECTION ==================== */
+        .payment-options-container {
+            padding: 20px;
+            background-color: var(--bg-white);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .payment-option-card {
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-white);
+        }
+
+        .payment-option-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .payment-option-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .payment-option-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .payment-option-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .payment-option-price {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .payment-option-desc {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .payment-action-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .payment-action-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .payment-option-card.selected .payment-action-btn::after {
+            opacity: 1;
+            animation: shimmer 0.6s ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .btn-pay-now {
+            background: linear-gradient(135deg, rgba(0, 85, 255, 0.7) 0%, rgba(0, 51, 204, 0.7) 100%);
+            color: rgba(255, 255, 255, 0.85);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(2px);
+        }
+
+        .btn-pay-now:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 85, 255, 0.25);
+        }
+
+        .payment-option-card.selected .btn-pay-now {
+            background: linear-gradient(135deg, #0055ff 0%, #0033cc 100%);
+            box-shadow: 0 12px 32px rgba(0, 85, 255, 0.45);
+            transform: scale(1.04);
+            color: #ffffff;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .payment-option-card.pix-card.selected .btn-pay-now {
+            background: linear-gradient(135deg, #0055ff 0%, #0033cc 100%) !important;
+            box-shadow: 0 14px 40px rgba(0, 85, 255, 0.45);
+            transform: scale(1.05);
+            color: #ffffff;
+            font-weight: 950;
+            letter-spacing: 1.2px;
+            animation: pixButtonGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pixButtonGlow {
+            0%, 100% { box-shadow: 0 14px 40px rgba(0, 85, 255, 0.45); }
+            50% { box-shadow: 0 14px 50px rgba(0, 85, 255, 0.6); }
+        }
+
+        /* Efeito de Carregamento */
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .spinner {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-pay-delivery {
+            background: linear-gradient(135deg, var(--success) 0%, #218838 100%);
+            color: white;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-pay-delivery:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .payment-option-card.selected .btn-pay-delivery {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            box-shadow: 0 12px 32px rgba(40, 167, 69, 0.45);
+            transform: scale(1.04);
+            color: #ffffff;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .payment-badge {
+            position: absolute;
+            top: 12px;
+            right: -30px;
+            background-color: var(--warning);
+            color: white;
+            padding: 4px 35px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            transform: rotate(45deg);
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .error-modal-btn {
+            width: 100%;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .error-modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 85, 255, 0.3);
+        }
+
+        .error-modal-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ==================== SHIPPING ADDRESS SECTION ==================== */
+        .shipping-section {
+            padding: 20px 0;
+            background: transparent;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+
+        .shipping-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shipping-section-title i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            max-height: 500px;
+            opacity: 1;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+        }
+
+        .form-group.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .form-input::placeholder {
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.1);
+            background-color: var(--bg-white);
+        }
+
+        .form-input.loading {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%230055ff' stroke-width='2'%3E%3Cpath d='M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 2.2'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+            padding-right: 40px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            max-height: 500px;
+            opacity: 1;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+        }
+
+        .form-row.hidden {
+            max-height: 0;
+            opacity: 0;
+            gap: 0;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        /* ==================== ADDRESS BLOCK - PROFISSIONAL ==================== */
+        .address-block {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            border: none;
+            margin-bottom: 0;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .address-block.active {
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 85, 255, 0.03) 0%, rgba(0, 191, 255, 0.03) 100%);
+            border: 2px solid var(--primary-light);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            max-height: 600px;
+            opacity: 1;
+            animation: slideUpFade 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.08);
+            position: relative;
+            overflow: visible;
+        }
+
+        .address-block.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 12px 0 0 12px;
+        }
+
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .address-block-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-left: 12px;
+        }
+
+        .address-block-title::before {
+            content: '\f3c5';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .address-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            font-size: 0.9rem;
+            padding-left: 12px;
+        }
+
+        .address-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 85, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .address-info-item:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 85, 255, 0.3);
+            box-shadow: 0 2px 8px rgba(0, 85, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .address-info-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            opacity: 0.8;
+        }
+
+        .address-info-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .address-info-item.full {
+            grid-column: 1 / -1;
+        }
+
+        .address-info-item.full .address-info-value {
+            padding-bottom: 0;
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .delivery-options-group {
+            margin-top: 0;
+            margin-bottom: 0;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+        }
+
+        .delivery-options-group.visible {
+            margin-top: 16px;
+            max-height: 800px;
+            opacity: 1;
+        }
+
+        .delivery-options-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .delivery-option-card {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            background-color: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .delivery-option-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .delivery-option-card:hover {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+            box-shadow: 0 2px 8px rgba(0, 85, 255, 0.08);
+        }
+
+        .delivery-option-card.selected {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.1);
+        }
+
+        .delivery-option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2.5px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .delivery-option-card.selected .delivery-option-radio {
+            border-color: var(--primary);
+            background-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.1);
+        }
+
+        .delivery-option-radio::after {
+            content: '';
+            width: 7px;
+            height: 7px;
+            background-color: var(--bg-white);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .delivery-option-card.selected .delivery-option-radio::after {
+            opacity: 1;
+        }
+
+        .delivery-option-text {
+            flex: 1;
+        }
+
+        .delivery-option-main {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .delivery-option-sub {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 3px;
+            font-weight: 400;
+        }
+
+        /* SCHEDULING SECTION */
+        .scheduling-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .scheduling-section.active {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 15px;
+            padding: 15px;
+        }
+
+        /* CUSTOMER DATA SECTION */
+        .customer-data-section {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+            padding: 0;
+            background-color: var(--bg-white);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .customer-data-section.active {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 20px;
+            padding: 20px;
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .customer-data-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .customer-data-title i {
+            color: var(--primary);
+        }
+
+        .scheduling-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .review-form-group {
+            margin-bottom: 10px;
+        }
+
+        .review-form-group .form-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .review-form-group .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+        .review-form-group .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.1);
+        }
+
+        .review-form-group .form-input::placeholder {
+            color: var(--text-light);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER PROFISSIONAL -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" title="Voltar">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="brand-section">
+                    <div class="brand-logo">ULTRAGAZ</div>
+                    <div class="brand-tagline">Gás Premium</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="search-btn" title="Buscar">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="cart-btn" id="cart-btn" title="Carrinho">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- TRUST BANNER -->
+        <div class="trust-banner">
+            <div class="trust-item">
+                <i class="fas fa-lock"></i>
+                <span>100% Seguro</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Garantido</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-star"></i>
+                <span>4.8★ (324)</span>
+            </div>
+        </div>
+
+        <!-- PROMOTIONAL BANNERS -->
+        <div class="promo-banner">
+            <i class="fas fa-fire"></i>
+            <span>PROMOÇÃO: 35% OFF!</span>
+        </div>
+
+        <div class="delivery-banner">
+            <i class="fas fa-truck"></i>
+            <span>Entrega em até 20 minutos!</span>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- PRODUCT HERO SECTION -->
+            <section class="product-hero">
+                <div class="product-header">
+                    <h2 class="product-name">Botijão de Gás 13 Kilos - Cheio (P13)</h2>
+                    <p class="product-sku">SKU: P13-ULTRAGAZ-2026</p>
+                    <div class="product-rating">
+                        <span class="rating-stars">★★★★★</span>
+                        <span class="rating-count">(324 avaliações)</span>
+                    </div>
+                </div>
+
+                <!-- IMAGE GALLERY -->
+                <div class="image-gallery">
+                    <div class="image-container" id="product-carousel">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Slides will be injected by JS -->
+                        </div>
+                        <div class="carousel-nav prev" id="carousel-prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="carousel-nav next" id="carousel-next"><i class="fas fa-chevron-right"></i></div>
+                        <div class="carousel-dots" id="carousel-dots"></div>
+                    </div>
+                </div>
+
+                <!-- TRUST BADGES -->
+                <div class="trust-badges">
+                    <div class="badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Seguro</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Certificado</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-award"></i>
+                        <span>Premium</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VARIANT SELECTOR -->
+            <section class="variant-selector" style="padding: 0 20px;">
+                <label class="variant-label">Escolha o Tamanho</label>
+                <div class="variant-pills">
+                    <div class="variant-pill active" data-variant="P13" data-price="89.47" data-old-price="135" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663285700287/lMjNJNafcEASVjXi.png">
+                        <i class="fas fa-gas-pump"></i> P13 (13kg)
+                    </div>
+                    <div class="variant-pill" data-variant="P45" data-price="395.47" data-old-price="970" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663285700287/lMjNJNafcEASVjXi.png">
+                        <i class="fas fa-gas-pump"></i> P45 (45kg)
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRICING & QUANTITY SECTION -->
+            <section class="pricing-section">
+                <div class="pricing-container">
+                    <div class="price-display">
+                        <span class="price-label">Preço</span>
+                        <div class="price-values">
+                            <span class="old-price">R$&nbsp;135,00</span>
+                            <span class="current-price">R$&nbsp;89,47</span>
+                            <span class="discount-badge">-34%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="urgency-badge">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Restam 2 em promoção!
+                </div>
+
+                <div class="unit-price-info">
+                    <strong>R$&nbsp;89,47</strong> por unidade • Economize R$ 45,00
+                </div>
+
+                <!-- DELIVERY OPTIONS -->
+                <div class="delivery-options">
+                    <div class="delivery-option">
+                        <i class="fas fa-bolt"></i>
+                        <span><strong>Entrega Rápida:</strong> 20 minutos</span>
+                    </div>
+                    <div class="delivery-option">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><strong>Área de Cobertura:</strong> Toda Região</span>
+                    </div>
+                    <div class="delivery-option">
+                        <i class="fas fa-undo"></i>
+                        <span><strong>Devolução Fácil:</strong> 7 dias</span>
+                    </div>
+                </div>
+
+                <!-- QUANTITY SELECTOR -->
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">Quantidade</label>
+                    <div class="quantity-selector">
+                        <button class="qty-btn" id="main-qty-decrease">−</button>
+                        <span class="qty-number" id="main-qty-number">1</span>
+                        <button class="qty-btn" id="main-qty-increase">+</button>
+                    </div>
+                </div>
+
+                <!-- CTA BUTTON -->
+                <button class="cta-button order-btn" id="order-btn">
+                    <i class="fas fa-shopping-cart"></i> Pedir Agora
+                </button>
+            </section>
+
+            <!-- PRODUCT BENEFITS -->
+            <section class="section">
+                <h3 class="section-title"><i class="fas fa-star"></i> Por que escolher a Ultragaz?</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Segurança Total</h4>
+                        <p>Botijões inspecionados e lacrados seguindo as normas da ANP.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Entrega Expressa</h4>
+                        <p>Receba seu gás em tempo recorde com nossa rede logística.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-award"></i>
+                        <h4>Qualidade Premium</h4>
+                        <p>O melhor rendimento para suas receitas com chama azul constante.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-headset"></i>
+                        <h4>Suporte 24/7</h4>
+                        <p>Estamos sempre prontos para atender você em qualquer emergência.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CUSTOMER REVIEWS -->
+            <section class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 class="section-title" style="margin-bottom: 0;"><i class="fas fa-comments"></i> Avaliações</h3>
+                    <div>
+                        <span class="rating-stars">★★★★★</span>
+                        <div class="rating-count">(324 avaliações)</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">João Silva</span>
+                        <span class="review-rating">★★★★★</span>
+                    </div>
+                    <p class="review-text">"Excelente qualidade e entrega muito rápida! Recomendo para todos os meus amigos."</p>
+                    <div class="review-meta">
+                        <div class="meta-item"><i class="fas fa-thumbs-up"></i> <span>45</span></div>
+                        <div class="meta-item"><i class="fas fa-calendar"></i> <span>1 hora atrás</span></div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">Maria Santos</span>
+                        <span class="review-rating">★★★★★</span>
+                    </div>
+                    <p class="review-text">"Chegou em perfeito estado. Muito satisfeita com a compra e o atendimento!"</p>
+                    <div class="review-meta">
+                        <div class="meta-item"><i class="fas fa-thumbs-up"></i> <span>32</span></div>
+                        <div class="meta-item"><i class="fas fa-calendar"></i> <span>3 horas atrás</span></div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-author">Carlos Oliveira</span>
+                        <span class="review-rating">★★★★☆</span>
+                    </div>
+                    <p class="review-text">"Preço justo. Entrega dentro do prazo conforme prometido."</p>
+                    <div class="review-meta">
+                        <div class="meta-item"><i class="fas fa-thumbs-up"></i> <span>28</span></div>
+                        <div class="meta-item"><i class="fas fa-calendar"></i> <span>4 horas atrás</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEWSLETTER SECTION -->
+            <div class="newsletter">
+                <h3 class="newsletter-title">Fique por Dentro das Promoções!</h3>
+                <p class="newsletter-subtitle">Receba ofertas exclusivas direto no seu e-mail</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail" required>
+                    <button type="submit" class="newsletter-btn">
+                        <i class="fas fa-bell"></i> Inscrever
+                    </button>
+                </form>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sobre</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link"><i class="fas fa-info-circle"></i> Sobre a Ultragaz</a>
+                        <a href="#" class="footer-link"><i class="fas fa-briefcase"></i> Carreiras</a>
+                        <a href="#" class="footer-link"><i class="fas fa-newspaper"></i> Blog</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Suporte</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> FAQ</a>
+                        <a href="#" class="footer-link"><i class="fas fa-headset"></i> Contato</a>
+                        <a href="#" class="footer-link"><i class="fas fa-file-alt"></i> Políticas</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Ultragaz. Todos os direitos reservados.</p>
+                <p>Desenvolvido com ❤️ para melhor servir você</p>
+            </div>
+        </footer>
+    </div>
+    <!-- CART OVERLAY -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <!-- CART SIDEBAR -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2><i class="fas fa-shopping-bag"></i> Carrinho</h2>
+            <button id="cart-close-btn" class="cart-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="cart-content" id="cart-content-wrapper">
+            <!-- PRODUCT STICKY HEADER -->
+            <div class="product-sticky-header" id="product-sticky-header">
+                <div class="product-sticky-item">
+                    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663285700287/lMjNJNafcEASVjXi.png" alt="Produto" class="product-sticky-img">
+                    <div class="product-sticky-info">
+                        <div class="product-sticky-title" id="sticky-title">Botijão de Gás 13 Kilos - Cheio (P13)</div>
+                        <div class="product-sticky-selector">
+                            <button class="qty-btn sticky-qty-btn" id="sticky-qty-decrease" data-action="decrease">-</button>
+                            <span class="qty-value" id="sticky-qty-value">1</span>
+                            <button class="qty-btn sticky-qty-btn" id="sticky-qty-increase" data-action="increase">+</button>
+                        </div>
+                    </div>
+                    <div class="product-sticky-price" id="sticky-price">R$ 89,47</div>
+                </div>
+            </div>
+
+            <!-- CART ITEMS LIST REMOVED - Only sticky header shown -->
+            <div id="cart-items-list" style="display: none;">
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Seu carrinho está vazio</p>
+                </div>
+            </div>
+
+            <!-- SHIPPING ADDRESS SECTION - NOW INTEGRATED -->
+            <div class="shipping-section" id="shipping-section" style="display: none;">
+            <h3 class="shipping-section-title">
+                <i class="fas fa-map-marker-alt"></i> Endereço de Envio
+            </h3>
+
+            <!-- CEP INPUT -->
+            <div class="form-group">
+                <label class="form-label" for="cep-input">CEP</label>
+                <input 
+                    type="text" 
+                    id="cep-input" 
+                    class="form-input" 
+                    placeholder="00000-000"
+                    maxlength="9"
+                    autocomplete="postal-code"
+                    inputmode="numeric"
+                >
+                <div class="error-message" id="cep-error"></div>
+            </div>
+
+            <!-- ADDRESS BLOCK -->
+            <div class="address-block" id="address-block">
+                <div class="address-block-title">Endereço de Entrega</div>
+                <div class="address-info">
+                    <div class="address-info-item full">
+                        <div class="address-info-label">Logradouro</div>
+                        <div class="address-info-value" id="address-street">-</div>
+                    </div>
+                    <div class="address-info-item">
+                        <div class="address-info-label">Bairro</div>
+                        <div class="address-info-value" id="address-neighborhood">-</div>
+                    </div>
+                    <div class="address-info-item">
+                        <div class="address-info-label">Cidade</div>
+                        <div class="address-info-value" id="address-city">-</div>
+                    </div>
+                    <div class="address-info-item">
+                        <div class="address-info-label">Estado</div>
+                        <div class="address-info-value" id="address-state">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NUMBER AND COMPLEMENT -->
+            <div class="form-row hidden" id="extra-fields-row">
+                <div class="form-group">
+                    <label class="form-label" for="number-input">Número</label>
+                    <input 
+                        type="tel" 
+                        id="number-input" 
+                        class="form-input" 
+                        placeholder="Ex: 123"
+                        autocomplete="address-line2"
+                        inputmode="numeric"
+                    >
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="complement-input">Complemento</label>
+                    <input 
+                        type="text" 
+                        id="complement-input" 
+                        class="form-input" 
+                        placeholder="Apt, sala, etc"
+                        autocomplete="address-line3"
+                    >
+                </div>
+            </div>
+
+            <!-- DELIVERY OPTIONS -->
+            <div class="delivery-options-group">
+                <label class="delivery-options-title">Opção de Entrega</label>
+                <div class="delivery-option-card" data-delivery="express">
+                    <div class="delivery-option-radio"></div>
+                    <div class="delivery-option-text">
+                        <div class="delivery-option-main">⚡ GRÁTIS - Entrega em 20 Minutos</div>
+                        <div class="delivery-option-sub">Entrega rápida e segura</div>
+                    </div>
+                </div>
+                
+                <div class="delivery-option-card" data-delivery="scheduled">
+                    <div class="delivery-option-radio"></div>
+                    <div class="delivery-option-text">
+                        <div class="delivery-option-main">📅 GRÁTIS - Agendada</div>
+                        <div class="delivery-option-sub">Escolha a data e hora mais conveniente</div>
+                    </div>
+                </div>
+
+                <!-- SCHEDULING FIELDS -->
+                <div class="scheduling-section" id="scheduling-section">
+                    <div class="scheduling-title">
+                        <i class="fas fa-clock"></i> Agendar Entrega
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="delivery-date">Data</label>
+                            <input type="date" id="delivery-date" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="delivery-time">Horário</label>
+                            <select id="delivery-time" class="form-input">
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CUSTOMER DATA SECTION -->
+                <div class="customer-data-section" id="customer-data-section">
+                    <div class="customer-data-title">
+                        <i class="fas fa-user-edit"></i> Dados para Entrega
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer-name">Nome Completo</label>
+                        <input type="text" id="customer-name" class="form-input" placeholder="Digite seu nome">
+                    </div>
+                    <div class="form-group" style="margin-top: 12px;">
+                        <label class="form-label" for="customer-phone">Número de Telefone</label>
+                        <input type="tel" id="customer-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15">
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- CART SUMMARY - NOW INSIDE CART CONTENT -->
+            <div class="cart-summary" id="cart-summary-inner">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">R$&nbsp;0,00</span>
+            </div>
+            
+            <div class="summary-row delivery-info" id="summary-delivery-row" style="display: none;">
+    <i id="summary-delivery-icon" class="fas fa-bolt"></i>
+    <span style="font-weight: bold; margin-left: 5px;">Entrega Grátis</span> <!-- Texto adicionado -->
+    <span id="summary-delivery-text">Receba em 20 Minutos</span>
+</div>
+
+
+            <div class="summary-row total">
+                <span>Total:</span>
+                <span id="total">R$&nbsp;0,00</span>
+            </div>
+            <button class="proceed-btn">
+                <i class="fas fa-credit-card"></i> Prosseguir
+            </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Cart state
+        let cart = [];
+        let currentPrice = 89.47;
+        let currentOldPrice = 135;
+        let currentVariant = 'P13';
+        let currentProductName = 'Botijão de Gás 13 Kilos - Cheio (P13)';
+        const PRODUCT_NAME_BASE = 'Botijão de Gás';
+        let shippingData = {
+            cep: '',
+            street: '',
+            neighborhood: '',
+            city: '',
+            state: '',
+            number: '',
+            complement: '',
+            deliveryType: '',
+            deliveryDate: '',
+            deliveryTime: '',
+            customerName: '',
+            customerPhone: ''
+        };
+
+        // Cart elements
+        const cartBtn = document.getElementById('cart-btn');
+        const cartBadge = document.getElementById('cart-badge');
+        const orderBtn = document.getElementById('order-btn');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartCloseBtn = document.getElementById('cart-close-btn');
+        const cartContent = document.getElementById('cart-items-list');
+        const shippingSection = document.getElementById('shipping-section');
+        const extraFieldsRow = document.getElementById('extra-fields-row');
+        const subtotalEl = document.getElementById('subtotal');
+        const totalEl = document.getElementById('total');
+        const cartSummary = document.querySelector('.cart-summary');
+        
+        // Dynamic Delivery Elements
+        const summaryDeliveryRow = document.getElementById('summary-delivery-row');
+        const summaryDeliveryText = document.getElementById('summary-delivery-text');
+        const summaryDeliveryIcon = document.getElementById('summary-delivery-icon');
+        const schedulingSection = document.getElementById('scheduling-section');
+        const deliveryDateInput = document.getElementById('delivery-date');
+        const deliveryTimeSelect = document.getElementById('delivery-time');
+
+        // Main quantity selector elements
+        const mainQtyNumber = document.getElementById('main-qty-number');
+        const mainQtyDecrease = document.getElementById('main-qty-decrease');
+        const mainQtyIncrease = document.getElementById('main-qty-increase');
+        let mainQuantity = 1;
+
+        // Product Images Data
+        const productImages = {
+            'P13': [
+                'https://i.postimg.cc/bNrFp7fR/1000310540_removebg_preview.png',
+                'https://i.postimg.cc/vB8sG0zH/images_(1)_(22).jpg',
+                'https://i.postimg.cc/CMPqTtNT/vale_gas_repartidor_ultragaz.png',
+                'https://i.postimg.cc/8cjg6s9m/images_(1)_(23).jpg'
+            ],
+            'P45': [
+                'https://i.postimg.cc/nLbCWgpG/botij_Ao_de_g_As_45kg_2021_12_28_18_10_15_0_138.png',
+                'https://i.postimg.cc/76qbHzCw/images_(1)_(27).jpg',
+                'https://i.postimg.cc/gJGrzhwN/40943ee1e1.jpg',
+                'https://i.postimg.cc/8cjg6s9m/images_(1)_(23).jpg'
+            ]
+        };
+
+        // Carousel Logic
+        let currentSlideIndex = 0;
+        const carouselTrack = document.getElementById('carousel-track');
+        const carouselDots = document.getElementById('carousel-dots');
+        const carouselPrev = document.getElementById('carousel-prev');
+        const carouselNext = document.getElementById('carousel-next');
+        const carouselContainer = document.getElementById('product-carousel');
+
+        function initCarousel(variant) {
+            const images = productImages[variant] || [];
+            carouselTrack.innerHTML = '';
+            carouselDots.innerHTML = '';
+            currentSlideIndex = 0;
+
+            images.forEach((src, index) => {
+                // Create slide
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `${variant} - Imagem ${index + 1}`;
+                if (index === 0) img.id = 'main-image';
+                slide.appendChild(img);
+                carouselTrack.appendChild(slide);
+
+                // Create dot
+                const dot = document.createElement('div');
+                dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => goToSlide(index));
+                carouselDots.appendChild(dot);
+            });
+
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const offset = -currentSlideIndex * 100;
+            carouselTrack.style.transform = `translateX(${offset}%)`;
+            
+            // Update dots
+            const dots = carouselDots.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlideIndex);
+            });
+        }
+
+        function goToSlide(index) {
+            const images = productImages[currentVariant] || [];
+            if (index < 0) index = images.length - 1;
+            if (index >= images.length) index = 0;
+            currentSlideIndex = index;
+            updateCarousel();
+        }
+
+        carouselPrev.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
+        carouselNext.addEventListener('click', () => goToSlide(currentSlideIndex + 1));
+
+        // Touch support for carousel
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carouselContainer.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        carouselContainer.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                goToSlide(currentSlideIndex + 1);
+            } else if (touchEndX > touchStartX + swipeThreshold) {
+                goToSlide(currentSlideIndex - 1);
+            }
+        }
+
+        // Initialize carousel for default variant
+        initCarousel('P13');
+
+        // Variant elements
+        const variantPills = document.querySelectorAll('.variant-pill');
+        const mainImage = document.getElementById('main-image');
+        const productNameEl = document.querySelector('.product-name');
+        const productSkuEl = document.querySelector('.product-sku');
+        const oldPriceEl = document.querySelector('.old-price');
+        const currentPriceEl = document.querySelector('.current-price');
+        const unitPriceInfoEl = document.querySelector('.unit-price-info');
+        const stickyPriceEl = document.getElementById('sticky-price');
+
+        // Variant selection logic
+        variantPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                // Update active state
+                variantPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+
+                // Get data from pill
+                const variant = pill.getAttribute('data-variant');
+                const price = parseFloat(pill.getAttribute('data-price'));
+                const oldPrice = parseFloat(pill.getAttribute('data-old-price'));
+                const imgUrl = pill.getAttribute('data-img');
+
+                // Update state
+                currentPrice = price;
+                currentOldPrice = oldPrice;
+                currentVariant = variant;
+                currentProductName = `${PRODUCT_NAME_BASE} ${variant === 'P13' ? '13 Kilos' : '45 Kilos'} - Cheio (${variant})`;
+
+                // Update UI with animation
+                initCarousel(variant);
+
+                if (productNameEl) productNameEl.textContent = currentProductName;
+                if (productSkuEl) productSkuEl.textContent = `SKU: ${variant}-ULTRAGAZ-2026`;
+                
+                const formattedPrice = price.toFixed(2).replace('.', ',');
+                const formattedOldPrice = oldPrice.toFixed(2).replace('.', ',');
+                const savings = (oldPrice - price).toFixed(2).replace('.', ',');
+
+                if (oldPriceEl) oldPriceEl.innerHTML = `R$&nbsp;${formattedOldPrice}`;
+                if (currentPriceEl) currentPriceEl.innerHTML = `R$&nbsp;${formattedPrice}`;
+                if (stickyPriceEl) stickyPriceEl.textContent = `R$ ${formattedPrice}`;
+                
+                if (unitPriceInfoEl) {
+                    unitPriceInfoEl.innerHTML = `<strong>R$&nbsp;${formattedPrice}</strong> por unidade • Economize R$ ${savings}`;
+                }
+            });
+        });
+
+        if (mainQtyDecrease) {
+            mainQtyDecrease.addEventListener('click', () => {
+                if (mainQuantity > 1) {
+                    mainQuantity--;
+                    mainQtyNumber.textContent = mainQuantity;
+                }
+            });
+        }
+
+        if (mainQtyIncrease) {
+            mainQtyIncrease.addEventListener('click', () => {
+                mainQuantity++;
+                mainQtyNumber.textContent = mainQuantity;
+            });
+        }
+
+        // Verify all elements exist
+        if (!cartBtn || !cartOverlay || !cartSidebar || !cartCloseBtn) {
+            console.error('Erro: Elementos do carrinho não encontrados no DOM');
+        }
+
+        // Shipping elements
+        const cepInput = document.getElementById('cep-input');
+        const cepError = document.getElementById('cep-error');
+        const addressBlock = document.getElementById('address-block');
+        const addressStreet = document.getElementById('address-street');
+        const addressNeighborhood = document.getElementById('address-neighborhood');
+        const addressCity = document.getElementById('address-city');
+        const addressState = document.getElementById('address-state');
+        const numberInput = document.getElementById('number-input');
+        const complementInput = document.getElementById('complement-input');
+        const deliveryOptions = document.querySelectorAll('.delivery-option-card');
+        const customerDataSection = document.getElementById('customer-data-section');
+
+        // Open/Close cart
+        function openCart() {
+            if (cartOverlay) cartOverlay.classList.add('active');
+            if (cartSidebar) cartSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.body.style.height = '100%';
+        }
+
+        function closeCart() {
+            if (cartOverlay) cartOverlay.classList.remove('active');
+            if (cartSidebar) cartSidebar.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.body.style.height = 'auto';
+        }
+
+        // Add event listeners with null checks
+        if (cartBtn) {
+            cartBtn.addEventListener('click', openCart);
+        }
+        if (cartCloseBtn) {
+            cartCloseBtn.addEventListener('click', closeCart);
+        }
+        if (cartOverlay) {
+            cartOverlay.addEventListener('click', closeCart);
+        }
+
+        // Add to cart
+        if (orderBtn) {
+            orderBtn.addEventListener('click', () => {
+                const existingItem = cart.find(item => item.name === currentProductName && item.variant === currentVariant);
+
+                if (existingItem) {
+                    existingItem.quantity += mainQuantity;
+                } else {
+                    cart.push({
+                        name: currentProductName,
+                        variant: currentVariant,
+                        price: currentPrice,
+                        quantity: mainQuantity,
+                        image: document.getElementById('main-image').src
+                    });
+                }
+
+                // Reset main quantity selector after adding to cart
+                mainQuantity = 1;
+                if (mainQtyNumber) mainQtyNumber.textContent = mainQuantity;
+
+                updateCartDisplay();
+                updateCartBadge();
+                
+                const originalText = orderBtn.innerHTML;
+                orderBtn.innerHTML = '<i class="fas fa-check"></i> Adicionado ao Carrinho!';
+                orderBtn.style.background = 'linear-gradient(135deg, var(--success) 0%, #218838 100%)';
+                
+                setTimeout(() => {
+                    orderBtn.innerHTML = originalText;
+                    orderBtn.style.background = '';
+                }, 2000);
+
+                openCart();
+            });
+        }
+
+        function updateCartBadge() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartBadge) cartBadge.textContent = totalItems;
+            if (totalItems > 0 && cartBadge) {
+                cartBadge.classList.add('active');
+            }
+            // Update sticky header when quantity changes
+            updateStickyHeader();
+        }
+
+        function updateCartDisplay() {
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Seu carrinho está vazio</p>
+                    </div>
+                `;
+                shippingSection.style.display = 'none';
+                if (cartSummary) cartSummary.style.display = 'none';
+                subtotalEl.textContent = 'R$ 0,00';
+                totalEl.textContent = 'R$ 0,00';
+                return;
+            }
+            
+            shippingSection.style.display = 'block';
+            // Initially hide summary until shipping is selected
+            if (!shippingData.deliveryType && cartSummary) {
+                cartSummary.style.display = 'none';
+            } else if (shippingData.deliveryType && cartSummary) {
+                cartSummary.style.display = 'block';
+            }
+
+            let itemsHTML = '';
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                const formattedUnitPrice = item.price.toFixed(2).replace('.', ',');
+                const formattedItemTotal = itemTotal.toFixed(2).replace('.', ',');
+                itemsHTML += `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                        <div class="cart-item-info">
+                            <div class="cart-item-title" title="${item.name}">${item.name}</div>
+                            <div class="cart-item-price">R$ ${formattedUnitPrice} x ${item.quantity} = <strong>R$ ${formattedItemTotal}</strong></div>
+                            <div class="quantity-selector">
+                                <button class="qty-btn" data-index="${index}" data-action="decrease">-</button>
+                                <span class="qty-value">${item.quantity}</span>
+                                <button class="qty-btn" data-index="${index}" data-action="increase">+</button>
+                            </div>
+                            <button class="cart-item-remove-btn" data-index="${index}">Remover</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartContent.innerHTML = itemsHTML;
+            document.querySelectorAll('.cart-item-remove-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    removeFromCart(index);
+                });
+            });
+
+            document.querySelectorAll('.qty-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    const action = e.currentTarget.dataset.action;
+                    updateQuantity(index, action);
+                });
+            });
+
+            const formattedSubtotal = subtotal.toFixed(2).replace('.', ',');
+            if (subtotalEl) subtotalEl.textContent = `R$ ${formattedSubtotal}`;
+            if (totalEl) totalEl.textContent = `R$ ${formattedSubtotal}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+            updateCartBadge();
+        }
+
+        function addQuantityToCart(index) {
+            if (cart[index]) {
+                cart[index].quantity++;
+                updateCartDisplay();
+                updateCartBadge();
+            }
+        }
+
+        function removeQuantityFromCart(index) {
+            if (cart[index] && cart[index].quantity > 1) {
+                cart[index].quantity--;
+                updateCartDisplay();
+                updateCartBadge();
+            }
+        }
+
+        function updateQuantity(index, action) {
+            if (action === 'increase') {
+                addQuantityToCart(index);
+            } else if (action === 'decrease') {
+                removeQuantityFromCart(index);
+            }
+        }
+
+        // CEP Formatting and API Integration
+        if (cepInput) {
+            cepInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 5) {
+                    value = value.slice(0, 5) + '-' + value.slice(5, 8);
+                }
+                
+                e.target.value = value;
+                if (cepError) cepError.classList.remove('active');
+                if (cepError) cepError.textContent = '';
+
+                // Trigger API call when CEP is complete (8 digits)
+                if (value.replace(/\D/g, '').length === 8) {
+                    // Hide summary bar when searching for CEP
+                    if (cartSummary) cartSummary.style.display = 'none';
+                    fetchAddressFromViaCEP(value.replace(/\D/g, ''));
+                    // Blur the input to hide the keyboard
+                    setTimeout(() => {
+                        e.target.blur();
+                    }, 300);
+                } else {
+                    if (addressBlock) addressBlock.classList.remove('active');
+                    hideAddressElements();
+                    // Keep summary hidden if CEP is incomplete
+                    if (cartSummary) cartSummary.style.display = 'none';
+                }
+            });
+        }
+
+        // Fetch address from ViaCEP API
+        async function fetchAddressFromViaCEP(cep) {
+            try {
+                cepInput.classList.add('loading');
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+
+                if (data.erro) {
+                    showCepError('CEP não encontrado');
+                    addressBlock.classList.remove('active');
+                    hideAddressElements();
+                    cepInput.classList.remove('loading');
+                    return;
+                }
+
+                // Populate address data
+                shippingData.cep = cep;
+                shippingData.street = data.logradouro || '-';
+                shippingData.neighborhood = data.bairro || '-';
+                shippingData.city = data.localidade || '-';
+                shippingData.state = data.uf || '-';
+
+                addressStreet.textContent = shippingData.street;
+                addressNeighborhood.textContent = shippingData.neighborhood;
+                addressCity.textContent = shippingData.city;
+                addressState.textContent = shippingData.state;
+
+                addressBlock.classList.add('active');
+                showAddressElements();
+                cepInput.classList.remove('loading');
+            } catch (error) {
+                showCepError('Erro ao buscar CEP. Tente novamente.');
+                cepInput.classList.remove('loading');
+                addressBlock.classList.remove('active');
+                hideAddressElements();
+            }
+        }
+
+        // Show address elements after successful CEP search
+        function showAddressElements() {
+            const deliveryGroup = document.querySelector('.delivery-options-group');
+
+            if (extraFieldsRow) extraFieldsRow.classList.remove('hidden');
+            if (deliveryGroup) deliveryGroup.classList.add('visible');
+        }
+
+        // Hide address elements when CEP is incomplete or invalid
+        function hideAddressElements() {
+            const deliveryGroup = document.querySelector('.delivery-options-group');
+
+            if (extraFieldsRow) extraFieldsRow.classList.add('hidden');
+            if (deliveryGroup) deliveryGroup.classList.remove('visible');
+        }
+
+        function showCepError(message) {
+            cepError.textContent = message;
+            cepError.classList.add('active');
+            hideAddressElements();
+        }
+
+        // Number and complement inputs
+        numberInput.addEventListener('change', (e) => {
+            shippingData.number = e.target.value;
+        });
+
+        // Scroll to proceed button when keyboard hides after number input
+        numberInput.addEventListener('blur', (e) => {
+            if (e.target.value) {
+                setTimeout(() => {
+                    const proceedBtn = document.querySelector('.proceed-btn');
+                    if (proceedBtn) {
+                        proceedBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 300);
+            }
+        });
+
+        complementInput.addEventListener('change', (e) => {
+            shippingData.complement = e.target.value;
+        });
+
+        // Scheduling inputs
+        if (deliveryDateInput) {
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            deliveryDateInput.setAttribute('min', today);
+            deliveryDateInput.value = today;
+            shippingData.deliveryDate = today;
+
+            deliveryDateInput.addEventListener('change', (e) => {
+                shippingData.deliveryDate = e.target.value;
+                updateAvailableTimes();
+            });
+        }
+        
+        if (deliveryTimeSelect) {
+            deliveryTimeSelect.addEventListener('change', (e) => {
+                shippingData.deliveryTime = e.target.value;
+            });
+        }
+
+        function updateAvailableTimes() {
+            if (!deliveryTimeSelect || !deliveryDateInput) return;
+
+            const selectedDate = deliveryDateInput.value;
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            
+            // Clear current options except the first one
+            deliveryTimeSelect.innerHTML = '<option value="">Selecione...</option>';
+            
+            // Generate time slots: horas exatas e meias horas (00, 30)
+            const timeSlots = [];
+            for (let hour = 0; hour < 24; hour++) {
+                timeSlots.push(`${String(hour).padStart(2, '0')}:00`);
+                timeSlots.push(`${String(hour).padStart(2, '0')}:30`);
+            }
+            
+            // Determine the starting point for available times
+            let startIndex = 0;
+            
+            if (selectedDate === todayStr) {
+                // If today, start from the next available slot based on current time
+                const currentHour = now.getHours();
+                const currentMinutes = now.getMinutes();
+                
+                // If current time is past the half hour (e.g., 07:36)
+                if (currentMinutes >= 30) {
+                    // Start from next hour's half (e.g., 08:30)
+                    // Index calculation: (nextHour * 2) + 1 (the +1 gets the :30 slot)
+                    startIndex = (currentHour + 1) * 2 + 1;
+                } else {
+                    // If current time is before half hour (e.g., 07:26)
+                    // Start from next full hour (e.g., 08:00)
+                    startIndex = (currentHour + 1) * 2;
+                }
+            }
+            
+            // Add available time slots
+            for (let i = startIndex; i < timeSlots.length; i++) {
+                const timeStr = timeSlots[i];
+                addOption(timeStr);
+            }
+
+            function addOption(val) {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                deliveryTimeSelect.appendChild(opt);
+            }
+        }
+
+        // Initial call to populate times for today
+        updateAvailableTimes();
+
+        // Delivery option selection - NO pre-selection
+        deliveryOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                deliveryOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                const type = option.dataset.delivery;
+                shippingData.deliveryType = type;
+                
+                // Update dynamic delivery info in summary
+                if (summaryDeliveryRow) {
+                    summaryDeliveryRow.style.display = 'flex';
+                    if (type === 'express') {
+                        summaryDeliveryText.textContent = 'Receba em 20 Minutos';
+                        summaryDeliveryIcon.className = 'fas fa-bolt';
+                        if (schedulingSection) schedulingSection.classList.remove('active');
+                    } else if (type === 'scheduled') {
+                        summaryDeliveryText.textContent = 'Agendada';
+                        summaryDeliveryIcon.className = 'fas fa-calendar-alt';
+                        if (schedulingSection) schedulingSection.classList.add('active');
+                    }
+                }
+                
+                // Show customer data section
+                if (customerDataSection) {
+                    customerDataSection.classList.add('active');
+                }
+
+                // Show summary bar only after selecting a delivery option
+                if (cartSummary) {
+                    cartSummary.style.display = 'block';
+                    
+                    // Scroll to the summary with smooth animation
+                    setTimeout(() => {
+                        cartSummary.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'end'
+                        });
+                    }, 100);
+                }
+            });
+        });
+
+        // Sticky product header is now always visible at top of cart-content
+        // It will stick naturally due to CSS position: sticky
+
+        function updateStickyHeader() {
+            if (cart.length > 0) {
+                const item = cart[0];
+                const totalPrice = (item.price * item.quantity).toFixed(2).replace('.', ',');
+                const stickyTitle = document.getElementById('sticky-title');
+                const stickyQtyValue = document.getElementById('sticky-qty-value');
+                const stickyPrice = document.getElementById('sticky-price');
+                const stickyHeader = document.getElementById('product-sticky-header');
+                
+                if (stickyTitle) stickyTitle.textContent = item.name;
+                if (stickyQtyValue) stickyQtyValue.textContent = item.quantity;
+                if (stickyPrice) stickyPrice.textContent = `R$ ${totalPrice}`;
+                if (stickyHeader) stickyHeader.style.display = 'block';
+            } else {
+                const stickyHeader = document.getElementById('product-sticky-header');
+                if (stickyHeader) stickyHeader.style.display = 'none';
+            }
+        }
+
+        // Sticky header quantity controls
+        const stickyQtyDecrease = document.getElementById('sticky-qty-decrease');
+        const stickyQtyIncrease = document.getElementById('sticky-qty-increase');
+
+        if (stickyQtyDecrease) {
+            stickyQtyDecrease.addEventListener('click', () => {
+                if (cart.length > 0) updateQuantity(0, 'decrease');
+            });
+        }
+
+        if (stickyQtyIncrease) {
+            stickyQtyIncrease.addEventListener('click', () => {
+                if (cart.length > 0) updateQuantity(0, 'increase');
+            });
+        }
+
+        // Finalize Purchase Logic
+        const proceedBtn = document.querySelector('.proceed-btn');
+        if (proceedBtn) {
+            proceedBtn.addEventListener('click', () => {
+                if (cart.length === 0) return;
+
+                // Validate address if needed
+                if (!shippingData.deliveryType) {
+                    alert('Por favor, selecione uma opção de entrega.');
+                    return;
+                }
+
+                if (!shippingData.number) {
+                    alert('Por favor, informe o número do endereço.');
+                    const numInput = document.getElementById('number-input');
+                    if (numInput) numInput.focus();
+                    return;
+                }
+
+                renderReviewBlock();
+            });
+        }
+
+        function renderReviewBlock() {
+            const item = cart[0]; 
+            const totalFormatted = (item.price * item.quantity).toFixed(2).replace('.', ',');
+            
+            let deliveryText = '';
+            let deliveryTime = '';
+            
+            if (shippingData.deliveryType === 'express') {
+                deliveryText = 'Entrega Rápida - Grátis';
+                deliveryTime = 'Em até 20 minutos';
+            } else {
+                deliveryText = 'Entrega Agendada - Grátis';
+                deliveryTime = `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
+            }
+
+            const addressFull = `
+                ${shippingData.street}, ${shippingData.number}
+                ${shippingData.complement ? ` - ${shippingData.complement}` : ''}<br>
+                ${shippingData.neighborhood} - ${shippingData.city}/${shippingData.state}<br>
+                CEP: ${shippingData.cep}
+            `;
+
+            const reviewHTML = `
+                <div class="review-block">
+                    <div class="review-header-bar">
+                        <button class="review-back-btn" id="review-back-btn" title="Voltar ao carrinho">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <div class="review-header-title"><i class="fas fa-clipboard-check"></i> Revisão do Pedido</div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-section">
+                            <div class="review-section-title"><i class="fas fa-box"></i> Produto</div>
+                            <div class="review-item-detail">
+                                <img src="${item.image}" class="review-item-img">
+                                <div class="review-item-info">
+                                    <div class="review-item-name">${item.name}</div>
+                                    <div class="review-item-price">${item.quantity}x R$ ${item.price.toFixed(2).replace('.', ',')} = <strong>R$ ${totalFormatted}</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="review-section">
+                            <div class="review-section-title"><i class="fas fa-map-marker-alt"></i> Endereço de Envio</div>
+                            <div class="review-text">${addressFull}</div>
+                        </div>
+
+                        <div class="review-section">
+                            <div class="review-section-title"><i class="fas fa-user"></i> Dados para Entrega</div>
+                            <div class="review-form-group">
+                                <label class="form-label" for="review-customer-name">Nome Completo</label>
+                                <input type="text" id="review-customer-name" class="form-input" placeholder="Digite seu nome" value="${shippingData.customerName || ''}">
+                            </div>
+                            <div class="review-form-group" style="margin-top: 12px;">
+                                <label class="form-label" for="review-customer-phone">Número de Telefone</label>
+                                <input type="tel" id="review-customer-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15" value="${shippingData.customerPhone || ''}">
+                            </div>
+                        </div>
+
+                        <div class="review-section">
+                            <div class="review-section-title"><i class="fas fa-truck"></i> Forma de Envio</div>
+                            <div class="review-text">${deliveryText}</div>
+                        </div>
+
+                        <div class="review-section">
+                            <div class="review-section-title"><i class="fas fa-clock"></i> Prazo de Entrega</div>
+                            <div class="review-text">${deliveryTime}</div>
+                        </div>
+
+                        <button class="finish-now-btn" id="finish-now-btn">
+                            <i class="fas fa-check-circle"></i> Finalizar Agora
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            const cartWrapper = document.getElementById('cart-content-wrapper');
+            if (cartWrapper) {
+                cartWrapper.innerHTML = reviewHTML;
+                cartWrapper.scrollTop = 0;
+            }
+
+            const reviewBackBtn = document.getElementById('review-back-btn');
+            if (reviewBackBtn) {
+                reviewBackBtn.addEventListener('click', () => {
+                    // Recarrega a página para restaurar o estado original do carrinho e formulários
+                    location.reload();
+                });
+            }
+
+           // Usar delegação de evento para garantir que o clique funcione após a troca do HTML
+document.addEventListener('click', function(e) {
+    if (e.target && (e.target.id === 'finish-now-btn' || e.target.closest('#finish-now-btn'))) {
+        
+        // Capture customer data from review form
+        const reviewNameInput = document.getElementById('review-customer-name');
+        const reviewPhoneInput = document.getElementById('review-customer-phone');
+        
+        if (reviewNameInput && reviewNameInput.value.trim()) {
+            shippingData.customerName = reviewNameInput.value.trim();
+        }
+        if (reviewPhoneInput && reviewPhoneInput.value.trim()) {
+            shippingData.customerPhone = reviewPhoneInput.value.trim();
+        }
+        
+        const btn = document.getElementById('finish-now-btn');
+        const item = cart[0]; // Pega o primeiro item do carrinho
+        const totalValue = (item.price * item.quantity).toFixed(2);
+        const totalFormatted = totalValue.replace('.', ',');
+
+        // Desabilita o botão para evitar múltiplos cliques
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
+
+        // Prepara os parâmetros para o seu template do EmailJS
+        const templateParams = {
+            customer_name: shippingData.customerName || 'Não informado',
+            customer_phone: shippingData.customerPhone || 'Não informado',
+            product_name: item.name,
+            quantity: item.quantity,
+            total_price: `R$ ${totalFormatted}`,
+            address: `${shippingData.street}, ${shippingData.number} - ${shippingData.neighborhood}`,
+            delivery_type: shippingData.deliveryType === 'express' ? 'Rápida' : 'Agendada'
+        };
+
+        // Envia o e-mail
+        emailjs.send('service_0euy74r', 'template_57ynkas', templateParams)
+            .then(function(response) {
+                console.log('Sucesso!', response.status, response.text);
+                // Redireciona após o envio bem-sucedido
+                window.location.href = `https://pagfacil.onrender.com/?subtotal=${totalValue}`;
+            }, function(error ) {
+                console.error('Erro no envio:', error);
+                alert('Ocorreu um erro ao processar seu pedido. Por favor, tente novamente.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Finalizar Agora';
+            });
+    }
+});
+
+
+            // Function to show error modal
+            function showErrorModal() {
+                // Create modal HTML
+                const modalHTML = `
+                    <div class="error-modal active" id="error-modal-overlay">
+                        <div class="error-modal-content">
+                            <div class="error-modal-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="error-modal-title">Seleção Inválida</div>
+                            <div class="error-modal-message">
+                                Selecione no máximo 2 botijões do mesmo modelo
+                            </div>
+                            <button class="error-modal-btn" id="error-modal-back-btn">
+                                <i class="fas fa-redo"></i> Voltar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add modal to body
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+                
+                // Add event listener to back button
+                const backBtn = document.getElementById('error-modal-back-btn');
+                if (backBtn) {
+                    backBtn.addEventListener('click', () => {
+                        // Remove modal
+                        const modal = document.getElementById('error-modal-overlay');
+                        if (modal) {
+                            modal.classList.remove('active');
+                            setTimeout(() => {
+                                modal.remove();
+                            }, 300);
+                        }
+                        // Reload page to reset
+                        setTimeout(() => {
+                            location.reload();
+                        }, 300);
+                    });
+                }
+            }
+        }
+
+        // Phone formatting and keyboard handling
+        const phoneInput = document.getElementById('customer-phone');
+        const customerNameInput = document.getElementById('customer-name');
+        
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                // Remove all non-numeric characters
+                let value = e.target.value.replace(/\D/g, '');
+                
+                // Apply formatting: (XX) XXXXX-XXXX
+                if (value.length > 0) {
+                    if (value.length <= 2) {
+                        value = '(' + value;
+                    } else if (value.length <= 7) {
+                        value = '(' + value.slice(0, 2) + ') ' + value.slice(2);
+                    } else {
+                        value = '(' + value.slice(0, 2) + ') ' + value.slice(2, 7) + '-' + value.slice(7, 11);
+                    }
+                }
+                
+                e.target.value = value;
+                
+                // Store the phone number in shippingData
+                shippingData.customerPhone = value;
+                
+                // Hide keyboard when format is complete (11 digits)
+                if (value.replace(/\D/g, '').length === 11) {
+                    e.target.blur();
+                }
+            });
+            
+            // Store customer name and scroll to bottom when phone is complete
+            phoneInput.addEventListener('blur', function() {
+                shippingData.customerPhone = this.value;
+                // Scroll to the bottom of the cart page when phone is complete (11 digits)
+                if (this.value.replace(/\D/g, '').length === 11) {
+                    setTimeout(() => {
+                        const cartContent = document.getElementById('cart-items-list');
+                        if (cartContent) {
+                            cartContent.scrollTop = cartContent.scrollHeight;
+                        }
+                    }, 300);
+                }
+            });
+        }
+        
+        if (customerNameInput) {
+            customerNameInput.addEventListener('blur', function() {
+                shippingData.customerName = this.value;
+            });
+        }
+
+        // Reset button state when returning to the page (back button from destination page)
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                const finishBtn = document.getElementById('finish-now-btn');
+                if (finishBtn) {
+                    finishBtn.disabled = false;
+                    finishBtn.innerHTML = '<i class="fas fa-check-circle"></i> Finalizar Agora';
+                }
+                const proceedBtn = document.querySelector('.proceed-btn');
+                if (proceedBtn) {
+                    proceedBtn.disabled = false;
+                    proceedBtn.innerHTML = '<i class="fas fa-credit-card"></i> Prosseguir';
+                }
+            }
+        });
+
+        // Initialize state
+        updateCartDisplay();
+        updateCartBadge();
+        updateStickyHeader();
+
+    </script>
+</body>
+</html>
