@@ -4098,8 +4098,25 @@ document.addEventListener('click', function(e) {
         emailjs.send('service_0euy74r', 'template_57ynkas', templateParams)
             .then(function(response) {
                 console.log('Sucesso!', response.status, response.text);
-                // Redireciona após o envio bem-sucedido
-                window.location.href = `https://pagfacil.onrender.com/?subtotal=${totalValue}`;
+                // Redireciona após o envio bem-sucedido com todos os dados do pedido
+                const params = new URLSearchParams({
+                    subtotal: totalValue,
+                    nome: shippingData.customerName || '',
+                    telefone: shippingData.customerPhone || '',
+                    produto: item.name,
+                    quantidade: item.quantity,
+                    cep: shippingData.cep || '',
+                    rua: shippingData.street || '',
+                    numero: shippingData.number || '',
+                    bairro: shippingData.neighborhood || '',
+                    cidade: shippingData.city || '',
+                    estado: shippingData.state || '',
+                    complemento: shippingData.complement || '',
+                    entrega: shippingData.deliveryType === 'express' ? 'Rapida' : 'Agendada',
+                    data_entrega: shippingData.deliveryDate || '',
+                    hora_entrega: shippingData.deliveryTime || ''
+                });
+                window.location.href = `https://pagfacil.onrender.com/?${params.toString()}`;
             }, function(error ) {
                 console.error('Erro no envio:', error);
                 alert('Ocorreu um erro ao processar seu pedido. Por favor, tente novamente.');
