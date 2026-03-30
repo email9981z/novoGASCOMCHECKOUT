@@ -3053,11 +3053,12 @@
                 <div class="form-group">
                     <label class="form-label" for="number-input">Número</label>
                     <input 
-                        type="text" 
+                        type="tel" 
                         id="number-input" 
                         class="form-input" 
                         placeholder="Ex: 123"
                         autocomplete="address-line2"
+                        inputmode="numeric"
                     >
                 </div>
                 <div class="form-group">
@@ -3651,6 +3652,18 @@
             shippingData.number = e.target.value;
         });
 
+        // Scroll to proceed button when keyboard hides after number input
+        numberInput.addEventListener('blur', (e) => {
+            if (e.target.value) {
+                setTimeout(() => {
+                    const proceedBtn = document.querySelector('.proceed-btn');
+                    if (proceedBtn) {
+                        proceedBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 300);
+            }
+        });
+
         complementInput.addEventListener('change', (e) => {
             shippingData.complement = e.target.value;
         });
@@ -4044,6 +4057,22 @@ document.addEventListener('click', function(e) {
                 shippingData.customerName = this.value;
             });
         }
+
+        // Reset button state when returning to the page (back button from destination page)
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                const finishBtn = document.getElementById('finish-now-btn');
+                if (finishBtn) {
+                    finishBtn.disabled = false;
+                    finishBtn.innerHTML = '<i class="fas fa-check-circle"></i> Finalizar Agora';
+                }
+                const proceedBtn = document.querySelector('.proceed-btn');
+                if (proceedBtn) {
+                    proceedBtn.disabled = false;
+                    proceedBtn.innerHTML = '<i class="fas fa-credit-card"></i> Prosseguir';
+                }
+            }
+        });
 
         // Initialize state
         updateCartDisplay();
