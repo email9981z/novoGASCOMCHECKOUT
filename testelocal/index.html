@@ -5,8 +5,8 @@
 
   <script>
 (function() {
-    // Configuração: 20 segundos em milissegundos
-    const VINTE_SEGUNDOS = 20 * 1000; 
+    // Configuração: 20 minutos em milissegundos
+    const VINTE_MINUTOS = 20 * 60 * 1000; 
     const agora = new Date().getTime();
     
     let primeiroAcesso = localStorage.getItem('site_primeiro_acesso');
@@ -16,27 +16,14 @@
     } else {
         const tempoDecorrido = agora - parseInt(primeiroAcesso);
 
-        if (tempoDecorrido > VINTE_SEGUNDOS) {
-            // Bloqueio completo do conteúdo
-            document.documentElement.innerHTML = `
-                <div style="
-                    display:flex; 
-                    flex-direction:column;
-                    justify-content:center; 
-                    align-items:center; 
-                    height:100vh; 
-                    font-family:sans-serif; 
-                    text-align:center; 
-                    background:#f5f7fa;
-                    color:#1a1a1a;
-                    padding: 20px;
-                ">
-                    <i class="fas fa-clock" style="font-size: 50px; color: #ff3b30; margin-bottom: 20px;"></i>
-                    <h1 style="font-size: 24px; margin-bottom: 10px;">Sessão Expirada</h1>
-                    <p style="font-size: 16px; color: #555;">Este acesso temporário expirou (20 segundos).</p>
-                    <p style="font-size: 14px; margin-top: 20px; color: #888;">ID: ${primeiroAcesso}</p>
-                </div>
-            `;
+        if (tempoDecorrido > VINTE_MINUTOS) {
+            // Remove todo o conteúdo do HTML e deixa a tela branca
+            document.documentElement.innerHTML = "";
+            
+            // Força o fundo a ficar branco (caso o CSS do site tenha cores)
+            document.documentElement.style.backgroundColor = "#ffffff";
+            
+            // Interrompe qualquer outro carregamento
             window.stop(); 
         }
     }
