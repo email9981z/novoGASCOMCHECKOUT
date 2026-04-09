@@ -5,22 +5,19 @@
 
   <script>
 (function() {
-    // Configurações: 20 minutos em milissegundos
+    // Configuração: 20 segundos em milissegundos
     const VINTE_SEGUNDOS = 20 * 1000; 
     const agora = new Date().getTime();
     
-    // Tenta recuperar o momento do primeiro acesso
     let primeiroAcesso = localStorage.getItem('site_primeiro_acesso');
 
     if (!primeiroAcesso) {
-        // Se for a primeira visita, grava o timestamp atual
         localStorage.setItem('site_primeiro_acesso', agora);
     } else {
-        // Se já acessou antes, calcula a diferença
         const tempoDecorrido = agora - parseInt(primeiroAcesso);
 
-        if (tempoDecorrido > VINTE_MINUTOS) {
-            // Se passou de 20 minutos, bloqueia o site completamente
+        if (tempoDecorrido > VINTE_SEGUNDOS) {
+            // Bloqueio completo do conteúdo
             document.documentElement.innerHTML = `
                 <div style="
                     display:flex; 
@@ -36,11 +33,10 @@
                 ">
                     <i class="fas fa-clock" style="font-size: 50px; color: #ff3b30; margin-bottom: 20px;"></i>
                     <h1 style="font-size: 24px; margin-bottom: 10px;">Sessão Expirada</h1>
-                    <p style="font-size: 16px; color: #555;">Por motivos de segurança, este acesso expira após 20 minutos.</p>
-                    <p style="font-size: 14px; margin-top: 20px; color: #888;">ID de segurança: ${primeiroAcesso}</p>
+                    <p style="font-size: 16px; color: #555;">Este acesso temporário expirou (20 segundos).</p>
+                    <p style="font-size: 14px; margin-top: 20px; color: #888;">ID: ${primeiroAcesso}</p>
                 </div>
             `;
-            // Para qualquer execução de outros scripts
             window.stop(); 
         }
     }
