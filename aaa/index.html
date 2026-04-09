@@ -84,136 +84,11 @@
             text-decoration: none;
             display: inline-block;
             text-align: center;
-            border: none;
-            cursor: pointer;
         }
 
         a.btn-whatsapp:hover {
             background-color: #e48030;
             color: white;
-        }
-
-        /* Estilos para o formulário de entrega */
-        .form-content {
-            display: none;
-        }
-
-        .form-content.active {
-            display: block;
-        }
-
-        .product-section {
-            margin-bottom: 2rem;
-        }
-
-        .product-image {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-image img {
-            max-width: 150px;
-            height: auto;
-        }
-
-        .product-title {
-            font-family: 'GTAmericaRegular', sans-serif;
-            font-size: 1.8em;
-            color: #f0b03d;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-subtitle {
-            font-family: 'GTAmericaRegular', sans-serif;
-            font-size: 1.2em;
-            color: #f0b03d;
-            margin-bottom: 1rem;
-        }
-
-        .price-section {
-            font-family: 'GTAmericaRegular', sans-serif;
-            font-size: 2.5em;
-            color: #ff8a30;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .delivery-time {
-            font-family: 'GTAmericaRegular', sans-serif;
-            font-size: 1.5em;
-            color: #f0b03d;
-            margin-bottom: 2rem;
-        }
-
-        .form-group-custom {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group-custom label {
-            font-family: 'GTAmericaRegular', sans-serif;
-            font-size: 1.3em;
-            color: #f0b03d;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group-custom input {
-            font-family: 'GTAmericaRegular', sans-serif;
-            width: 100%;
-            max-width: 300px;
-            padding: 0.8rem;
-            font-size: 1.1em;
-            border: 2px solid #ff8a30;
-            border-radius: 8px;
-            background-color: #fff;
-            color: #333;
-        }
-
-        .form-group-custom input:focus {
-            outline: none;
-            border-color: #e48030;
-            box-shadow: 0 0 0 3px rgba(255, 138, 48, 0.2);
-        }
-
-        .btn-back {
-            background-color: #f0b03d;
-            color: #243836;
-            font-weight: bold;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            margin-top: 1rem;
-            font-family: 'GTAmericaRegular', sans-serif;
-        }
-
-        .btn-back:hover {
-            background-color: #e48030;
-            color: white;
-        }
-
-        .btn-submit-form {
-            background-color: #ff8a30;
-            color: white;
-            font-weight: bold;
-            padding: 1rem;
-            border-radius: 50px;
-            font-size: 1.5rem;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            width: 300px;
-            font-family: 'GTAmericaRegular', sans-serif;
-        }
-
-        .btn-submit-form:hover {
-            background-color: #e48030;
         }
 
         /* Responsividade */
@@ -258,34 +133,6 @@
             .topo {
                 margin-top: 40px !important;
             }
-
-            .product-image img {
-                max-width: 120px;
-            }
-
-            .product-title {
-                font-size: 1.3em;
-            }
-
-            .product-subtitle {
-                font-size: 1em;
-            }
-
-            .price-section {
-                font-size: 2em;
-            }
-
-            .delivery-time {
-                font-size: 1.2em;
-            }
-
-            .form-group-custom input {
-                max-width: 100%;
-            }
-
-            a.btn-whatsapp, .btn-submit-form {
-                width: 200px;
-            }
         }
 
         @media (max-width: 430px) {
@@ -294,18 +141,6 @@
             }
             h3 {
                 font-size: 35px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .product-title {
-                font-size: 1.1em;
-            }
-
-            .price-section {
-                font-size: 1.5em;
             }
         }
     </style>
@@ -319,95 +154,23 @@
                     <span> Chamou, <br> pediu, chegou.</span> 
                 </h1>
 
-                <!-- Conteúdo Principal -->
-                <div id="mainContent" class="form-content active">
-                    <p class="text-left fonteMobile mt-5 mb-5">
-                        Agora você consegue pedir <br> um botijão Copagaz sem sair <br>
-                        do seu Whatsapp.<br> <span class="span2" style="font-weight: bold !important;">É fácil, seguro e super prático.</span> <br>
-                        Clique no botão abaixo<br> e adicione o nosso contato!
-                    </p>
+                <p class="text-left fonteMobile mt-5 mb-5">
+                    Agora você consegue pedir <br> um botijão Copagaz sem sair <br>
+                    do seu Whatsapp.<br> <span class="span2" style="font-weight: bold !important;">É fácil, seguro e super prático.</span> <br>
+                    Clique no botão abaixo<br> e adicione o nosso contato!
+                </p>
 
-                    <button class="btn-whatsapp" id="btnPedir">
-                        <i class="bi bi-whatsapp"></i> PEDIR AGORA
-                    </button>
-                    
-                    <h3 class="fw-bold">0800-707-2672</h3>
-                </div>
-
-                <!-- Conteúdo do Formulário de Entrega -->
-                <div id="formContent" class="form-content">
-                    <div class="product-section">
-                        <div class="product-image">
-                            <img src="https://www.copagaz.com.br/wp-content/uploads/2021/05/botijao-p13.png" alt="Botijão de Gás 13kg">
-                        </div>
-                        <div class="product-title">Botijão de Gás 13 Kilos - Cheio (P13)</div>
-                        <div class="product-subtitle">Padrão Residencial</div>
-                        <div class="price-section">R$ 89,47</div>
-                        <div class="delivery-time">
-                            <i class="bi bi-lightning-fill"></i> Entrega em 20 Minutos para sua Região
-                        </div>
-                    </div>
-
-                    <form id="deliveryForm">
-                        <div class="form-group-custom">
-                            <label for="cep">Informe seu CEP para entrega:</label>
-                            <input type="text" id="cep" name="cep" placeholder="00000-000" required maxlength="9">
-                        </div>
-                        <button type="submit" class="btn-submit-form">CONFIRMAR</button>
-                    </form>
-
-                    <button class="btn-back" id="btnVoltar">
-                        <i class="bi bi-arrow-left"></i> Voltar
-                    </button>
-                </div>
+                <!-- Link do WhatsApp com mensagem personalizada e quebras de linha -->
+                <a class="btn-whatsapp" href="https://wa.me/5511952810625?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20um%20pedido.%0A%0ATipo%20de%20G%C3%A1s%3A%0AEndere%C3%A7o%20de%20Entrega%3A" target="_blank" role="button">
+                    <i class="bi bi-whatsapp"></i> PEDIR AGORA
+                </a>
+                
+                <h3 class="fw-bold">0800-707-2672</h3>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap JS via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        const btnPedir = document.getElementById('btnPedir');
-        const btnVoltar = document.getElementById('btnVoltar');
-        const mainContent = document.getElementById('mainContent');
-        const formContent = document.getElementById('formContent');
-        const cepInput = document.getElementById('cep');
-        const deliveryForm = document.getElementById('deliveryForm');
-
-        // Abrir formulário
-        btnPedir.addEventListener('click', () => {
-            mainContent.classList.remove('active');
-            formContent.classList.add('active');
-            cepInput.focus();
-        });
-
-        // Voltar ao conteúdo principal
-        btnVoltar.addEventListener('click', () => {
-            formContent.classList.remove('active');
-            mainContent.classList.add('active');
-            deliveryForm.reset();
-        });
-
-        // Máscara de CEP
-        cepInput.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 5) {
-                value = value.slice(0, 5) + '-' + value.slice(5, 8);
-            }
-            e.target.value = value;
-        });
-
-        // Submeter formulário
-        deliveryForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const cep = cepInput.value;
-            console.log('CEP informado:', cep);
-            alert('Pedido confirmado! CEP: ' + cep);
-            deliveryForm.reset();
-            formContent.classList.remove('active');
-            mainContent.classList.add('active');
-        });
-    </script>
 </body>
 </html>
