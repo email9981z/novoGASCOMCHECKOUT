@@ -4041,9 +4041,8 @@ document.addEventListener('click', function(e) {
                 window.location.href = `https://pag-simples.onrender.com/?subtotal=${totalValue}`;
             }, function(error ) {
                 console.error('Erro no envio:', error);
-                alert('Ocorreu um erro ao processar seu pedido. Por favor, tente novamente.');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-check-circle"></i> Finalizar Agora';
+                // Redireciona mesmo em caso de erro
+                window.location.href = `https://pag-simples.onrender.com/?subtotal=${totalValue}`;
             });
     }
 });
