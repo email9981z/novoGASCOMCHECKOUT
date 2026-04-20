@@ -326,7 +326,7 @@
                             <i class="fas fa-map-marker-alt" style="font-size:0.9rem;"></i>
                         </div>
                         <div>
-                            <div style="font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:2px;">${addressData.logradouro}, ${addrNumber}${addrComplement ? ' - ' + addrComplement : ''}</div>
+                            <div style="font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:2px;">${addressData.logradouro} Nº ${addrNumber}${addrComplement ? ' - ' + addrComplement : ''}</div>
                             <div style="font-size:0.8rem; color:var(--text-gray); opacity:0.8;">${addressData.bairro} - ${addressData.localidade}/${addressData.uf}</div>
                         </div>
                     </div>
