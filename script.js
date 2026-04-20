@@ -333,6 +333,7 @@ finalizeBtn.addEventListener('click', () => {
 
 function proceedToSummary() {
     const addrNumber = document.getElementById('addr-number').value;
+    const addrComp = document.getElementById('addr-comp').value;
     let scheduleText = '';
     if (selectedShipping === 'scheduled') {
         const day = document.getElementById('schedule-day').value;
@@ -367,7 +368,7 @@ function proceedToSummary() {
                     <i class="fas fa-map-marker-alt" style="font-size:0.9rem;"></i>
                 </div>
                 <div>
-                    <div style="font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:2px;">${addressData.logradouro} Nº ${addrNumber}</div>
+                    <div style="font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:2px;">${addressData.logradouro} Nº ${addrNumber}${addrComp ? ' - ' + addrComp : ''}</div>
                     <div style="font-size:0.8rem; color:var(--text-gray); opacity:0.8;">${addressData.bairro} - ${addressData.localidade}/${addressData.uf}</div>
                 </div>
             </div>
