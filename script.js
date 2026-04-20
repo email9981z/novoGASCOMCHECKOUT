@@ -1,60 +1,4 @@
-(function() {
-    // Configuração: 20 minutos em milissegundos
-    const VINTE_MINUTOS = 20 * 60 * 1000; 
-    const agora = new Date().getTime();
-    
-    let primeiroAcesso = localStorage.getItem('site_primeiro_acesso');
-
-    if (!primeiroAcesso) {
-        localStorage.setItem('site_primeiro_acesso', agora);
-    } else {
-        const tempoDecorrido = agora - parseInt(primeiroAcesso);
-
-        if (tempoDecorrido > VINTE_MINUTOS) {
-            // Remove todo o conteúdo do HTML e deixa a tela branca
-            document.documentElement.innerHTML = "";
-            
-            // Força o fundo a ficar branco (caso o CSS do site tenha cores)
-            document.documentElement.style.backgroundColor = "#ffffff";
-            
-            // Interrompe qualquer outro carregamento
-            window.stop(); 
-        }
-    }
-})();
-
-    (function() {
-      const locationText = document.getElementById('location-text');
-      
-      fetch('https://wtfismyip.com/json')
-        .then(response => response.json())
-        .then(data => {
-          const cidade = data.YourFuckingLocation.replace(", Brazil", "");
-          locationText.textContent = `${cidade} e Região`;
-        })
-        .catch(error => {
-          console.error('Erro:', error);
-          locationText.textContent = "Disponível na sua região";
-        });
-    })();
-
-    (function() {
-        fetch('https://wtfismyip.com/json')
-            .then(res => res.json())
-            .then(data => {
-                const cidade = data.YourFuckingLocation.replace(", Brazil", "");
-                const target = document.getElementById('location-target');
-                const icon = document.getElementById('loc-icon');
-                
-                if(target) target.textContent = cidade + " e Região";
-                if(icon) icon.style.display = 'inline'; // Mostra o ícone apenas quando carregar a cidade
-            })
-            .catch(() => {
-                document.getElementById('location-target').textContent = "sua região";
-            });
-    })();
-
-        // Data
+// Data
         const products = {
             carro: [
                 { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, old: 110.00, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
@@ -348,6 +292,7 @@
 
         function proceedToSummary() {
             const addrNumber = document.getElementById('addr-number').value;
+            const addrComplement = document.getElementById('addr-complement').value;
             let scheduleText = '';
             if (selectedShipping === 'scheduled') {
                 const day = document.getElementById('schedule-day').value;
@@ -381,7 +326,7 @@
                             <i class="fas fa-map-marker-alt" style="font-size:0.9rem;"></i>
                         </div>
                         <div>
-                            <div style="font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:2px;">${addressData.logradouro}, ${addrNumber}</div>
+                            <div style="font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:2px;">${addressData.logradouro}, ${addrNumber}${addrComplement ? ' - ' + addrComplement : ''}</div>
                             <div style="font-size:0.8rem; color:var(--text-gray); opacity:0.8;">${addressData.bairro} - ${addressData.localidade}/${addressData.uf}</div>
                         </div>
                     </div>
@@ -405,6 +350,7 @@
                     </div>
                 </div>
             `;
+            cartMainContent.style.display = 'none';
             orderSummaryContent.style.display = 'block';
             cartFooterMain.style.display = 'none';
             cartFooterSummary.style.display = 'block';
