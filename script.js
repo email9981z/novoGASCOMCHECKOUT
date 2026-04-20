@@ -62,7 +62,7 @@
                     html += `
                         <div class="variant-item ${item.variant === currentVariant.variant ? 'active' : ''}" 
                              onclick="selectVariant('${type}', ${idx})">
-                            <i class="fas fa-fire"></i>
+                            <i class="fas fa-battery-full"></i>
                             <span class="variant-name">${item.variant}</span>
                         </div>
                     `;
@@ -91,8 +91,9 @@
                     imageSpinner.classList.remove('active');
                     mainImage.classList.remove('loading');
                 };
-                productNameDisplay.textContent = currentVariant.name;
-                priceProductTitle.textContent = currentVariant.name;
+                const name = `Botijão de Gás (Cheio) ${currentVariant.variant}`;
+                productNameDisplay.textContent = name;
+                priceProductTitle.textContent = name;
                 oldPriceDisplay.textContent = `R$ ${currentVariant.old.toFixed(2).replace('.', ',')}`;
                 currentPriceDisplay.textContent = `R$ ${currentVariant.price.toFixed(2).replace('.', ',')}`;
             }, 400);
@@ -125,7 +126,6 @@
                     } else {
                         cart.push({
                             variant: currentVariant.variant,
-                            name: currentVariant.name,
                             price: currentVariant.price,
                             img: currentVariant.img,
                             qty: 1
@@ -141,10 +141,9 @@
             }, 800);
         });
         function updateCart() {
-            const count = cart.reduce((sum, i) => sum + i.qty, 0);
-            cartBadge.textContent = count;
-            cartBadge.classList.toggle('active', count > 0);
-
+            const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+            cartBadge.textContent = totalItems;
+            cartBadge.classList.toggle('active', totalItems > 0);
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p style="text-align:center; color:var(--text-light); padding:20px;">Seu carrinho está vazio.</p>';
                 if (totalDisplay) totalDisplay.textContent = 'R$ 0,00';
@@ -157,7 +156,7 @@
                         <div class="cart-item">
                             <img src="${item.img}" class="cart-item-img">
                             <div class="cart-item-details">
-                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-name">Botijão de Gás (Cheio) ${item.variant}</div>
                                 <div class="cart-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
                                 <div class="qty-control">
                                     <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
@@ -214,9 +213,6 @@
                 e.target.blur();
                 lookupCEP(val.replace('-', ''));
             } else {
-                addressDisplay.style.display = 'none';
-                checkoutFields.style.display = 'none';
-                cartFooterMain.style.display = 'none';
                 // Reset shipping selection
                 selectedShipping = null;
                 shippingCards.forEach(c => c.classList.remove('active'));
@@ -292,7 +288,7 @@
 
         function proceedToSummary() {
             const addrNumber = document.getElementById('addr-number').value;
-            const addrComplement = document.getElementById('addr-complement').value;
+            const addrComplement = document.getElementById('addr-complement')?.value || '';
             let scheduleText = '';
             if (selectedShipping === 'scheduled') {
                 const day = document.getElementById('schedule-day').value;
@@ -308,7 +304,7 @@
                 <div class="summary-item-card">
                     <img src="${item.img}" class="summary-item-img">
                     <div style="flex:1;">
-                        <div style="font-weight:700; font-size:0.85rem; color:var(--text-dark); margin-bottom:2px;">${item.name}</div>
+                        <div style="font-weight:700; font-size:0.85rem; color:var(--text-dark); margin-bottom:2px;">Botijão de Gás (Cheio) ${item.variant}</div>
                         <div style="font-size:0.75rem; color:var(--text-light);">${item.qty} unidade${item.qty > 1 ? 's' : ''}</div>
                     </div>
                     <div style="font-weight:800; color:var(--text-dark); font-size:0.9rem; text-align:right;">R$ ${(item.price * item.qty).toFixed(2).replace(".", ",")}</div>
@@ -326,7 +322,7 @@
                             <i class="fas fa-map-marker-alt" style="font-size:0.9rem;"></i>
                         </div>
                         <div>
-                            <div style="font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:2px;">${addressData.logradouro} Nº ${addrNumber}${addrComplement ? ' - ' + addrComplement : ''}</div>
+                            <div style="font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:2px;">${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''}</div>
                             <div style="font-size:0.8rem; color:var(--text-gray); opacity:0.8;">${addressData.bairro} - ${addressData.localidade}/${addressData.uf}</div>
                         </div>
                     </div>
@@ -357,14 +353,43 @@
         }
         backToCart.addEventListener('click', resetToCartView);
         confirmPaymentBtn.addEventListener('click', () => {
-            showLoading("Finalizando seu pedido...");
-            const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-            const targetUrl = `https://pag-simples.onrender.com/?subtotal=${subtotal.toFixed(2)}`;
-            // Pequeno delay para garantir que o loading apareça antes do redirecionamento
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 500);
-        });
+    showLoading("Finalizando seu pedido...");
+    
+    const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+    const addrNumber = document.getElementById('addr-number').value;
+    const addrComplement = document.getElementById('addr-complement')?.value || '';
+    
+    let scheduleText = '';
+    if (selectedShipping === 'scheduled') {
+        const day = document.getElementById('schedule-day').value;
+        const time = document.getElementById('schedule-time').value;
+        scheduleText = `${day.split('-').reverse().join('/')} às ${time}`;
+    } else {
+        scheduleText = 'Entrega em 30 Minutos';
+    }
+
+    // Prepara a lista de produtos simplificada para a URL
+    const productsData = cart.map(item => ({
+        n: `Botijão de Gás (Cheio) ${item.variant}`,
+        p: item.img,
+        v: item.price,
+        q: item.qty
+    }));
+    
+    const params = new URLSearchParams({
+        subtotal: subtotal.toFixed(2),
+        products: JSON.stringify(productsData), // Envia o array completo
+        address: `${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''} - ${addressData.bairro}, ${addressData.localidade}/${addressData.uf}`,
+        delivery_time: scheduleText,
+        cep: cepInput.value
+    });
+
+    const targetUrl = `https://testenovocheck.onrender.com/spinner/?${params.toString()}`;
+    
+    setTimeout(() => {
+        window.location.href = targetUrl;
+    }, 500);
+});
         function showLoading(text = "Processando...") { 
             document.getElementById('loading-text').innerText = text;
             loadingOverlay.classList.add('active'); 
