@@ -158,39 +158,29 @@ body {
     margin-bottom: 20px;
 }
 .hero-reviews {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  font-family: sans-serif;
-  /* Opcional: borda sutil em branco transparente */
-  border-top: 1px solid rgba(255, 255, 255, 0.2); 
-  padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.2); 
+    padding-top: 10px;
 }
-
 .reviews-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-
-.stars {
-  color: #ffb400; /* Mantive o dourado para destaque, mas pode ser branco se preferir */
-  font-size: 1.1rem;
-}
-
 .rating-score {
-  font-weight: bold;
-  color: #ffffff; /* Texto branco */
+    font-weight: bold;
+    color: #ffffff;
 }
-
 .rating-count {
-  color: #ffffff; /* Texto branco */
-  font-size: 0.9rem;
-  opacity: 0.9; /* Leve transparência para diferenciar da nota */
+    color: #ffffff;
+    font-size: 0.9rem;
+    opacity: 0.9;
 }
-
 .product-card {
     background: white;
     border-radius: var(--radius-md);
