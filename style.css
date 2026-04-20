@@ -457,62 +457,63 @@ body {
 }
 /* Reviews Section */
 .reviews-section {
-    padding: 20px;
-    background-color: var(--bg-light);
-}
-.section-title {
-    font-size: 1.1rem;
-    font-weight: 800;
-    margin-bottom: 20px;
-    text-align: center;
-}
-.review-card {
-    background: white;
-    padding: 15px;
-    border-radius: var(--radius-md);
-    margin-bottom: 12px;
-    box-shadow: var(--shadow-sm);
-}
-.review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-}
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.user-avatar {
-    width: 35px;
-    height: 35px;
-    background: var(--primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 0.8rem;
-}
-.user-name {
-    font-size: 0.85rem;
-    font-weight: 700;
-    display: block;
-}
-.stars {
-    color: var(--accent);
-    font-size: 0.7rem;
-    display: flex;
-    gap: 2px;
-}
-.review-text {
-    font-size: 0.85rem;
-    color: var(--text-gray);
-    font-style: italic;
-    line-height: 1.5;
-}
+            padding: 30px 20px;
+            background-color: #F8F9FA;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .review-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+        .user-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: block;
+        }
+        .stars {
+            color: var(--accent);
+            font-size: 0.7rem;
+            display: flex;
+            gap: 2px;
+        }
+        .review-text {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-style: italic;
+            line-height: 1.5;
+        }
+
 /* Benefits Grid */
 .benefits-grid {
     display: grid;
