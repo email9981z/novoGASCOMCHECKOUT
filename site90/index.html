@@ -3873,10 +3873,12 @@
                 const stickyQtyValue = document.getElementById('sticky-qty-value');
                 const stickyPrice = document.getElementById('sticky-price');
                 const stickyHeader = document.getElementById('product-sticky-header');
+                const stickyImg = document.querySelector('.product-sticky-img');
                 
                 if (stickyTitle) stickyTitle.textContent = item.name;
                 if (stickyQtyValue) stickyQtyValue.textContent = item.quantity;
                 if (stickyPrice) stickyPrice.textContent = `R$ ${totalPrice}`;
+                if (stickyImg && item.image) stickyImg.src = item.image;
                 if (stickyHeader) stickyHeader.style.display = 'block';
             } else {
                 const stickyHeader = document.getElementById('product-sticky-header');
