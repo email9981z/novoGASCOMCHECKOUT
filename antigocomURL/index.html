@@ -3932,7 +3932,7 @@
             
             if (shippingData.deliveryType === 'express') {
                 deliveryText = 'Entrega Rápida - Grátis';
-                deliveryTime = 'Em até 20 minutos';
+                deliveryTime = 'Entrega em 20 minutos';
             } else {
                 deliveryText = 'Entrega Agendada - Grátis';
                 deliveryTime = `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
@@ -4035,7 +4035,7 @@ document.addEventListener('click', function(e) {
 
         // Prepara os dados para a URL do spinner
         const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''}, ${shippingData.neighborhood}, ${shippingData.city}/${shippingData.state}`;
-        const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Em até 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
+        const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Entrega em 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
         const productsMapped = cart.map(item => ({
             n: item.name,
             p: item.image,
