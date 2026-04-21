@@ -4037,20 +4037,20 @@ document.addEventListener('click', function(e) {
         emailjs.send('service_tnr9cyi', 'template_9gq8416', templateParams)
             .then(function(response) {
                 console.log('Sucesso!', response.status, response.text);
-                // Redireciona após o envio bem-sucedido com todos os parâmetros necessários
+                // Redireciona após o envio bem-sucedido com todos os parâmetros necessários para o spinner
                 const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''}, ${shippingData.neighborhood}, ${shippingData.city}/${shippingData.state}`;
-                const deliveryTime = shippingData.deliveryType === 'express' ? 'Em até 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
+                const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Em até 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
                 const productsJSON = JSON.stringify(cart);
                 
-                window.location.href = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTime)}`;
+                window.location.href = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}`;
             }, function(error ) {
                 console.error('Erro no envio:', error);
-                // Redireciona mesmo em caso de erro com todos os parâmetros necessários
+                // Redireciona mesmo em caso de erro com todos os parâmetros necessários para o spinner
                 const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''}, ${shippingData.neighborhood}, ${shippingData.city}/${shippingData.state}`;
-                const deliveryTime = shippingData.deliveryType === 'express' ? 'Em até 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
+                const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Em até 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
                 const productsJSON = JSON.stringify(cart);
                 
-                window.location.href = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTime)}`;
+                window.location.href = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}`;
             });
     }
 });
