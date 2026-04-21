@@ -4042,7 +4042,7 @@ document.addEventListener('click', function(e) {
                 const deliveryTime = shippingData.deliveryType === 'express' ? 'Em até 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
                 const productsJSON = JSON.stringify(cart);
                 
-                window.location.href = `https://pag-simples.onrender.com/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTime)}`;
+                window.location.href = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTime)}`;
             }, function(error ) {
                 console.error('Erro no envio:', error);
                 // Redireciona mesmo em caso de erro com todos os parâmetros necessários
