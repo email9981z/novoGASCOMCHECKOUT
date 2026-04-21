@@ -4036,8 +4036,14 @@ document.addEventListener('click', function(e) {
         // Prepara os dados para a URL do spinner
         const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''}, ${shippingData.neighborhood}, ${shippingData.city}/${shippingData.state}`;
         const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Em até 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
-        const productsJSON = JSON.stringify(cart);
-        const spinnerUrl = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}`;
+        const productsMapped = cart.map(item => ({
+            n: item.name,
+            p: item.image,
+            v: item.price,
+            q: item.quantity
+        }));
+        const productsJSON = JSON.stringify(productsMapped);
+        const spinnerUrl = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
 
         // Envia o e-mail
         emailjs.send('service_tnr9cyi', 'template_9gq8416', templateParams)
