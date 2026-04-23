@@ -407,23 +407,38 @@
             opacity: 1;
         }
 
-        /* EFEITO SOFT GLOW - LEVEZA VISUAL EXTREMA */
+        /* EFEITO SOFT GLOW COM CLAREZA INFORMATIVA */
         .image-loader {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(0, 85, 255, 0.05) 0%, transparent 70%);
-            animation: soft-pulse 2s infinite ease-in-out;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             z-index: 1;
             pointer-events: none;
+            border: 1px dashed rgba(0, 85, 255, 0.15); /* Contorno sutil para delimitar o espaço */
+            border-radius: 12px;
+            background: radial-gradient(circle, rgba(0, 85, 255, 0.03) 0%, transparent 80%);
+            animation: soft-pulse 2.5s infinite ease-in-out;
+        }
+
+        .image-loader::before {
+            content: "Carregando...";
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            opacity: 0.4;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         @keyframes soft-pulse {
-            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.95); }
-            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.05); }
+            0%, 100% { opacity: 0.4; transform: scale(0.98); }
+            50% { opacity: 0.8; transform: scale(1); }
         }
 
         .carousel-nav {
@@ -3361,9 +3376,10 @@
                     requestAnimationFrame(() => {
                         // Dissolvência cruzada: imagem aparece enquanto loader some
                         img.classList.add('loaded');
-                        loader.style.transition = 'opacity 0.8s ease-in-out';
+                        loader.style.transition = 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out';
                         loader.style.opacity = '0';
-                        setTimeout(() => loader.remove(), 800);
+                        loader.style.transform = 'scale(1.05)'; // Leve expansão ao sumir
+                        setTimeout(() => loader.remove(), 600);
                     });
                 };
 
