@@ -33,6 +33,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Botijão de Gás | Entrega Rápida</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://i.postimg.cc">
+    <link rel="preload" as="image" href="https://i.postimg.cc/bNrFp7fR/1000310540_removebg_preview.png">
 
     <!-- EmailJS SDK -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -3318,7 +3320,10 @@
                 const img = document.createElement('img');
                 img.src = src;
                 img.alt = `${variant} - Imagem ${index + 1}`;
-                if (index === 0) img.id = 'main-image';
+                if (index === 0) {
+                    img.id = 'main-image';
+                    img.setAttribute('fetchpriority', 'high');
+                }
                 slide.appendChild(img);
                 carouselTrack.appendChild(slide);
 
