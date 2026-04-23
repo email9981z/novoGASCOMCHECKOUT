@@ -399,52 +399,31 @@
             object-fit: contain;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
             opacity: 0;
-            transform: scale(0.95); /* Inicia levemente menor para o efeito de zoom-in */
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: opacity, transform;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Dissolvência ultra-suave */
+            will-change: opacity;
         }
 
         .carousel-slide img.loaded {
             opacity: 1;
-            transform: scale(1); /* Zoom-in suave ao carregar */
         }
 
-        /* EFEITO SKELETON CARREGAMENTO PREMIUM (SHIMMER) */
+        /* EFEITO SOFT GLOW - LEVEZA VISUAL EXTREMA */
         .image-loader {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #f0f2f5;
-            background-image: linear-gradient(
-                90deg,
-                #f0f2f5 0%,
-                #e1e4e8 50%,
-                #f0f2f5 100%
-            );
-            background-size: 200% 100%;
-            animation: shimmer 1.8s infinite ease-in-out;
-            z-index: 5;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(0, 85, 255, 0.05) 0%, transparent 70%);
+            animation: soft-pulse 2s infinite ease-in-out;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        /* Ícone sutil no centro do skeleton para contexto visual */
-        .image-loader::after {
-            content: "\f03e";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            color: #d1d5db;
-            font-size: 2rem;
-            opacity: 0.5;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        @keyframes soft-pulse {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.05); }
         }
 
         .carousel-nav {
@@ -3372,20 +3351,19 @@
                     img.setAttribute('fetchpriority', 'high');
                 }
                 
-                // Create Skeleton Loader (Shimmer)
+                // Create Soft Glow Loader
                 const loader = document.createElement('div');
                 loader.className = 'image-loader';
                 slide.appendChild(loader);
                 
                 // Show image only after it's fully loaded to avoid "top-down" rendering
                 const handleLoad = () => {
-                    // Pequeno delay para garantir que o navegador está pronto para animar
                     requestAnimationFrame(() => {
+                        // Dissolvência cruzada: imagem aparece enquanto loader some
                         img.classList.add('loaded');
-                        // Fade out suave do loader
-                        loader.style.transition = 'opacity 0.4s ease-out';
+                        loader.style.transition = 'opacity 0.8s ease-in-out';
                         loader.style.opacity = '0';
-                        setTimeout(() => loader.remove(), 400);
+                        setTimeout(() => loader.remove(), 800);
                     });
                 };
 
