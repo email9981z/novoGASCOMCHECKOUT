@@ -33,8 +33,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Botijão de Gás | Entrega Rápida</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://i.postimg.cc">
-    <link rel="preload" as="image" href="https://i.postimg.cc/bNrFp7fR/1000310540_removebg_preview.png">
 
     <!-- EmailJS SDK -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -398,52 +396,6 @@
             max-height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
-            opacity: 0;
-            transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Dissolvência ultra-suave */
-            will-change: opacity;
-        }
-
-        .carousel-slide img.loaded {
-            opacity: 1;
-        }
-
-        /* EFEITO SOFT GLOW COM CLAREZA INFORMATIVA */
-        .image-loader {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-            pointer-events: none;
-            border: 1px dashed rgba(0, 85, 255, 0.15); /* Contorno sutil para delimitar o espaço */
-            border-radius: 12px;
-            background: radial-gradient(circle, rgba(0, 85, 255, 0.03) 0%, transparent 80%);
-            animation: soft-pulse 2.5s infinite ease-in-out;
-        }
-
-        .image-loader::before {
-            content: "";
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(0, 85, 255, 0.1);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            opacity: 0.6;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes soft-pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
         }
 
         .carousel-nav {
@@ -3366,34 +3318,7 @@
                 const img = document.createElement('img');
                 img.src = src;
                 img.alt = `${variant} - Imagem ${index + 1}`;
-                if (index === 0) {
-                    img.id = 'main-image';
-                    img.setAttribute('fetchpriority', 'high');
-                }
-                
-                // Create Soft Glow Loader
-                const loader = document.createElement('div');
-                loader.className = 'image-loader';
-                slide.appendChild(loader);
-                
-                // Show image only after it's fully loaded to avoid "top-down" rendering
-                const handleLoad = () => {
-                    requestAnimationFrame(() => {
-                        // Dissolvência cruzada: imagem aparece enquanto loader some
-                        img.classList.add('loaded');
-                        loader.style.transition = 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out';
-                        loader.style.opacity = '0';
-                        loader.style.transform = 'scale(1.05)'; // Leve expansão ao sumir
-                        setTimeout(() => loader.remove(), 600);
-                    });
-                };
-
-                if (img.complete) {
-                    handleLoad();
-                } else {
-                    img.onload = handleLoad;
-                }
-                
+                if (index === 0) img.id = 'main-image';
                 slide.appendChild(img);
                 carouselTrack.appendChild(slide);
 
