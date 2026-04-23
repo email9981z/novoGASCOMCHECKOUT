@@ -399,40 +399,52 @@
             object-fit: contain;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
             opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            transform: scale(0.95); /* Inicia levemente menor para o efeito de zoom-in */
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
         }
 
         .carousel-slide img.loaded {
             opacity: 1;
+            transform: scale(1); /* Zoom-in suave ao carregar */
         }
 
-        /* EFEITO SKELETON CARREGAMENTO PROFISSIONAL */
+        /* EFEITO SKELETON CARREGAMENTO PREMIUM (SHIMMER) */
         .image-loader {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #f6f7f8;
+            background: #f0f2f5;
             background-image: linear-gradient(
-                to right,
-                #f6f7f8 0%,
-                #edeef1 20%,
-                #f6f7f8 40%,
-                #f6f7f8 100%
+                90deg,
+                #f0f2f5 0%,
+                #e1e4e8 50%,
+                #f0f2f5 100%
             );
-            background-repeat: no-repeat;
-            background-size: 800px 100%;
-            display: inline-block;
-            position: relative;
-            animation: shimmer 1.5s infinite linear;
+            background-size: 200% 100%;
+            animation: shimmer 1.8s infinite ease-in-out;
             z-index: 5;
             border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ícone sutil no centro do skeleton para contexto visual */
+        .image-loader::after {
+            content: "\f03e";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #d1d5db;
+            font-size: 2rem;
+            opacity: 0.5;
         }
 
         @keyframes shimmer {
-            0% { background-position: -468px 0; }
-            100% { background-position: 468px 0; }
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .carousel-nav {
@@ -3367,14 +3379,14 @@
                 
                 // Show image only after it's fully loaded to avoid "top-down" rendering
                 const handleLoad = () => {
-                    // Small delay to ensure smooth transition
-                    setTimeout(() => {
+                    // Pequeno delay para garantir que o navegador está pronto para animar
+                    requestAnimationFrame(() => {
                         img.classList.add('loaded');
-                        // Fade out loader before removing
-                        loader.style.transition = 'opacity 0.3s ease';
+                        // Fade out suave do loader
+                        loader.style.transition = 'opacity 0.4s ease-out';
                         loader.style.opacity = '0';
-                        setTimeout(() => loader.remove(), 300);
-                    }, 50);
+                        setTimeout(() => loader.remove(), 400);
+                    });
                 };
 
                 if (img.complete) {
