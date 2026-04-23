@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botijão de Gás | Entrega Rápida - Loja Oficial</title>
+    <title>Botijão de Gás | Entrega Rápida e Segura</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- EmailJS SDK -->
@@ -13,7 +13,6 @@
             emailjs.init("Lz4gg4RjGoHsVYsIU");
         })();
     </script>
-
     <style>
         :root {
             --primary: #0055ff;
@@ -129,7 +128,7 @@
             gap: 12px;
         }
 
-        .search-btn, .cart-btn {
+        .search-btn {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: var(--bg-white);
@@ -144,13 +143,30 @@
             font-size: 1rem;
         }
 
-        .search-btn:hover, .cart-btn:hover {
+        .search-btn:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
         }
 
         .cart-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--bg-white);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
             position: relative;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .cart-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
         }
 
         .cart-badge {
@@ -206,25 +222,23 @@
             font-size: 1rem;
         }
 
-        /* ==================== INFORMATIONAL BANNERS (NOT AGGRESSIVE) ==================== */
-        .info-banner {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-            color: var(--text-dark);
+        /* ==================== PROMOTIONAL BANNERS ==================== */
+        .promo-banner {
+            background: linear-gradient(135deg, #0055ff 0%, #0033cc 100%);
+            color: white;
             padding: 12px 20px;
             text-align: center;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
             box-shadow: var(--shadow-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            border-bottom: 2px solid var(--primary);
         }
 
-        .info-banner i {
+        .promo-banner i {
             font-size: 1.1rem;
-            color: var(--primary);
         }
 
         .delivery-banner {
@@ -294,6 +308,192 @@
             font-size: 1rem;
         }
 
+        .rating-count {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* ==================== IMAGE GALLERY ==================== */
+        .image-gallery {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #f0f2f5 100%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            touch-action: pan-y;
+        }
+
+        .image-container:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 1rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background-color: var(--bg-white);
+            color: var(--primary-dark);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav.prev { left: 10px; }
+        .carousel-nav.next { right: 10px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background-color: var(--primary);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* ==================== TRUST BADGES ==================== */
+        .trust-badges {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 6px;
+        }
+
+        .badge i {
+            font-size: 1.2rem;
+            color: var(--success);
+        }
+
+        .badge span {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        /* ==================== VARIANT SELECTOR ==================== */
+        .variant-selector {
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        .variant-label {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .variant-pills {
+            display: flex;
+            gap: 12px;
+        }
+
+        .variant-pill {
+            flex: 1;
+            padding: 14px 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--bg-white);
+        }
+
+        .variant-pill i {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .variant-pill.active {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.15);
+        }
+
+        .variant-pill.active i {
+            color: var(--primary);
+        }
+
         /* ==================== PRICING SECTION ==================== */
         .pricing-section {
             background-color: var(--bg-white);
@@ -349,10 +549,23 @@
         .discount-badge {
             background-color: var(--success);
             color: white;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 800;
+        }
+
+        .urgency-badge {
+            background-color: rgba(0, 85, 255, 0.1);
+            color: var(--primary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
         }
 
         .unit-price-info {
@@ -361,6 +574,34 @@
             margin-bottom: 20px;
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
+        }
+
+        /* ==================== DELIVERY INFO ==================== */
+        .delivery-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .delivery-option i {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
         }
 
         /* ==================== QUANTITY SELECTOR ==================== */
@@ -388,7 +629,6 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
-            box-shadow: var(--shadow-sm);
         }
 
         .qty-btn:hover {
@@ -399,358 +639,675 @@
         .qty-number {
             width: 50px;
             text-align: center;
-            font-size: 1.1rem;
             font-weight: 800;
-            color: var(--text-dark);
+            font-size: 1.1rem;
         }
 
-        /* ==================== CTA BUTTONS ==================== */
+        /* ==================== CTA BUTTON ==================== */
         .cta-button {
             width: 100%;
-            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
             border: none;
+            padding: 18px 24px;
             border-radius: 14px;
             font-size: 1.1rem;
             font-weight: 800;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-top: 24px;
+            box-shadow: 0 8px 24px rgba(0, 85, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .order-btn {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            box-shadow: 0 8px 20px rgba(0, 85, 255, 0.3);
-        }
-
-        .order-btn:hover {
+        .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 24px rgba(0, 85, 255, 0.4);
-            filter: brightness(1.1);
+            box-shadow: 0 12px 32px rgba(0, 85, 255, 0.4);
         }
 
-        .order-btn:active {
+        .cta-button:active {
             transform: translateY(-1px);
         }
 
         /* ==================== SECTIONS ==================== */
         .section {
-            padding: 24px 20px;
-            border-bottom: 8px solid var(--bg-light);
+            padding: 32px 20px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .section-title {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* ==================== FOOTER ==================== */
-        .footer {
-            background-color: var(--text-dark);
-            color: var(--bg-white);
-            padding: 24px 20px;
-            text-align: center;
-            font-size: 0.85rem;
-            line-height: 1.8;
-        }
-
-        .footer-section {
-            margin-bottom: 16px;
-        }
-
-        .footer-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .footer-title {
-            font-weight: 700;
-            margin-bottom: 8px;
+        .section-title i {
             color: var(--primary);
         }
 
-        .footer-link {
-            color: var(--bg-white);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            display: block;
-            margin-bottom: 6px;
+        /* ==================== BENEFITS ==================== */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
-        .footer-link:hover {
-            color: var(--primary);
-        }
-
-        .company-info {
-            background-color: rgba(255, 255, 255, 0.05);
+        .benefit-card {
+            background-color: var(--bg-light);
             padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .benefit-icon {
+            width: 36px;
+            height: 36px;
+            background-color: var(--bg-white);
+            color: var(--primary);
             border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .benefit-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .benefit-desc {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            line-height: 1.4;
+        }
+
+        /* ==================== REVIEWS ==================== */
+        .review-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 12px;
             margin-bottom: 16px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reviewer-avatar {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
             font-size: 0.8rem;
         }
 
-        .company-info-item {
+        .reviewer-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .review-text {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-style: italic;
+        }
+
+        /* ==================== NEWSLETTER ==================== */
+        .newsletter {
+            margin: 32px 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, #ffffff 100%);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--primary-light);
+        }
+
+        .newsletter-title {
+            font-size: 1.2rem;
+            font-weight: 800;
             margin-bottom: 8px;
         }
 
-        .company-info-item:last-child {
-            margin-bottom: 0;
+        .newsletter-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 20px;
         }
 
-        .company-info-label {
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .newsletter-input {
+            padding: 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
             font-weight: 700;
-            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 40px 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* ==================== CART OVERLAY & SIDEBAR ==================== */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 200;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--bg-white);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 201;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-content-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* ==================== LEGAL INFO ==================== */
+        .legal-info {
+            padding: 20px;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+            background-color: var(--bg-light);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .legal-info p {
+            margin-bottom: 8px;
+        }
+
+        .legal-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .legal-link {
+            color: var(--text-light);
+            text-decoration: underline;
         }
 
         /* ==================== RESPONSIVE ==================== */
         @media (max-width: 480px) {
             .container {
-                max-width: 100%;
+                box-shadow: none;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
+        <!-- HEADER -->
+        <header class="header">
             <div class="header-left">
-                <button class="back-btn" onclick="history.back()">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
+                <button class="back-btn"><i class="fas fa-arrow-left"></i></button>
                 <div class="brand-section">
-                    <div class="brand-logo">GasRápido</div>
-                    <div class="brand-tagline">Entrega Confiável</div>
+                    <span class="brand-logo">ULTRAGAZ</span>
+                    <span class="brand-tagline">Energia para sua casa</span>
                 </div>
             </div>
             <div class="header-right">
-                <button class="search-btn" title="Buscar">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="cart-btn" onclick="openCart()" title="Carrinho">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn" id="cart-open-btn">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-badge" id="cart-badge">0</span>
                 </button>
             </div>
-        </div>
+        </header>
 
-        <!-- Trust Banner -->
+        <!-- TRUST BANNER -->
         <div class="trust-banner">
-            <div class="trust-item">
-                <i class="fas fa-shield-alt"></i>
-                <span>Compra Segura</span>
-            </div>
-            <div class="trust-item">
-                <i class="fas fa-truck"></i>
-                <span>Entrega Rápida</span>
-            </div>
-            <div class="trust-item">
-                <i class="fas fa-undo"></i>
-                <span>Garantia</span>
-            </div>
+            <div class="trust-item"><i class="fas fa-shield-alt"></i> Site Seguro</div>
+            <div class="trust-item"><i class="fas fa-truck"></i> Entrega Rápida</div>
+            <div class="trust-item"><i class="fas fa-check-circle"></i> Revendedor Autorizado</div>
         </div>
 
-        <!-- Info Banner (Informational, not aggressive) -->
-        <div class="info-banner">
-            <i class="fas fa-info-circle"></i>
-            <span>Promoção válida enquanto houver estoque disponível</span>
+        <!-- PROMO BANNER -->
+        <div class="promo-banner">
+            <i class="fas fa-tag"></i> Oferta Especial de Hoje!
         </div>
 
-        <!-- Delivery Banner -->
-        <div class="delivery-banner">
-            <i class="fas fa-bolt"></i>
-            <span>Entrega em até 20 minutos em áreas selecionadas</span>
-        </div>
-
-        <!-- Main Content -->
-        <div class="cart-content">
-            <!-- Product Section -->
-            <div class="product-hero">
+        <!-- MAIN CONTENT -->
+        <main class="cart-content">
+            <!-- PRODUCT HERO -->
+            <section class="product-hero">
                 <div class="product-header">
-                    <div class="product-name">Botijão de Gás 13kg</div>
-                    <div class="product-sku">SKU: GAS-13KG-001</div>
+                    <h1 class="product-name">Botijão de Gás 13kg - Recarga (P13)</h1>
+                    <span class="product-sku">SKU: UG-P13-001</span>
                     <div class="product-rating">
-                        <span class="rating-stars">★★★★★</span>
-                        <span>(248 avaliações)</span>
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-count">(1.248 avaliações)</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- Pricing Section -->
-            <div class="pricing-section">
-                <div class="pricing-container">
-                    <div class="price-display">
-                        <div class="price-label">Preço</div>
-                        <div class="price-values">
-                            <span class="old-price">R$ 85,00</span>
-                            <span class="current-price">R$ 75,00</span>
+                <!-- IMAGE GALLERY -->
+                <div class="image-gallery">
+                    <div class="image-container">
+                        <div class="carousel-track" id="carousel-track">
+                            <div class="carousel-slide">
+                                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663285700287/lMjNJNafcEASVjXi.png" alt="Botijão de Gás Ultragaz" id="main-image">
+                            </div>
                         </div>
                     </div>
-                    <div class="discount-badge">
-                        <i class="fas fa-tag"></i> 12% OFF
+                </div>
+
+                <!-- PRICING -->
+                <div class="pricing-section">
+                    <div class="urgency-badge">
+                        <i class="fas fa-clock"></i> Entrega em até 60 minutos na sua região
+                    </div>
+                    <div class="pricing-container">
+                        <div class="price-display">
+                            <span class="price-label">Preço de Recarga</span>
+                            <div class="price-values">
+                                <span class="old-price">R$ 115,00</span>
+                                <span class="current-price" id="current-price">R$ 89,90</span>
+                            </div>
+                        </div>
+                        <div class="discount-badge">22% OFF</div>
+                    </div>
+                    <p class="unit-price-info">Preço válido para recarga (troca do botijão vazio pelo cheio).</p>
+
+                    <!-- QUANTITY -->
+                    <div class="variant-label">Quantidade</div>
+                    <div class="quantity-selector">
+                        <button class="qty-btn" id="qty-decrease">-</button>
+                        <span class="qty-number" id="qty-number">1</span>
+                        <button class="qty-btn" id="qty-increase">+</button>
+                    </div>
+
+                    <!-- CTA -->
+                    <button class="cta-button" id="add-to-cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                    </button>
+                </div>
+            </section>
+
+            <!-- BENEFITS -->
+            <section class="section">
+                <h2 class="section-title"><i class="fas fa-star"></i> Por que escolher a Ultragaz?</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-weight"></i></div>
+                        <span class="benefit-title">Peso Certo</span>
+                        <p class="benefit-desc">Garantia de 13kg de gás em todos os botijões.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-lock"></i></div>
+                        <span class="benefit-title">Segurança</span>
+                        <p class="benefit-desc">Botijões inspecionados e lacrados de fábrica.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
+                        <span class="benefit-title">Agilidade</span>
+                        <p class="benefit-desc">Rede de distribuição ampla para entrega rápida.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fas fa-headset"></i></div>
+                        <span class="benefit-title">Suporte</span>
+                        <p class="benefit-desc">Atendimento especializado para sua segurança.</p>
                     </div>
                 </div>
-                <div class="unit-price-info">
-                    <strong>Preço por unidade:</strong> R$ 75,00 (IVA incluído)
-                </div>
-            </div>
+            </section>
 
-            <!-- Quantity Section -->
-            <div class="section">
-                <div class="section-title">
-                    <i class="fas fa-box"></i> Quantidade
-                </div>
-                <div class="quantity-selector">
-                    <button class="qty-btn" onclick="decreaseQty()">−</button>
-                    <span class="qty-number" id="qty-display">1</span>
-                    <button class="qty-btn" onclick="increaseQty()">+</button>
-                </div>
-            </div>
-
-            <!-- Add to Cart Button -->
-            <div style="padding: 0 20px;">
-                <button class="cta-button order-btn" onclick="addToCart()">
-                    <i class="fas fa-shopping-cart"></i>
-                    Adicionar ao Carrinho
-                </button>
-            </div>
-
-            <!-- Product Description -->
-            <div class="section">
-                <div class="section-title">
-                    <i class="fas fa-info-circle"></i> Descrição do Produto
-                </div>
-                <p style="color: var(--text-gray); line-height: 1.6;">
-                    Botijão de gás liquefeito de petróleo (GLP) com capacidade de 13kg. Produto certificado e seguro para uso doméstico. 
-                    Ideal para cozinhas, aquecedores e churrasqueiras.
-                </p>
-            </div>
-
-            <!-- Specifications -->
-            <div class="section">
-                <div class="section-title">
-                    <i class="fas fa-cogs"></i> Especificações
-                </div>
-                <div style="font-size: 0.95rem; color: var(--text-gray);">
-                    <p><strong>Capacidade:</strong> 13 kg</p>
-                    <p><strong>Tipo:</strong> GLP (Gás Liquefeito de Petróleo)</p>
-                    <p><strong>Certificação:</strong> INMETRO</p>
-                    <p><strong>Validade:</strong> 10 anos a partir da data de fabricação</p>
-                </div>
-            </div>
-
-            <!-- Delivery Information -->
-            <div class="section">
-                <div class="section-title">
-                    <i class="fas fa-truck"></i> Informações de Entrega
-                </div>
-                <p style="color: var(--text-gray); margin-bottom: 12px;">
-                    Entrega disponível em áreas selecionadas. O tempo de entrega pode variar conforme a localização e a demanda.
-                </p>
-                <ul style="color: var(--text-gray); margin-left: 20px;">
-                    <li>Entrega Expressa: até 20 minutos (áreas próximas)</li>
-                    <li>Entrega Agendada: escolha data e horário</li>
-                    <li>Frete: Grátis para compras acima de R$ 100</li>
-                </ul>
-            </div>
-
-            <!-- Footer -->
-            <div class="footer">
-                <div class="company-info">
-                    <div class="company-info-item">
-                        <span class="company-info-label">Empresa:</span> GasRápido Comércio LTDA
+            <!-- REVIEWS -->
+            <section class="section">
+                <h2 class="section-title"><i class="fas fa-comments"></i> O que dizem nossos clientes</h2>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">MA</div>
+                            <span class="reviewer-name">Maria Aparecida</span>
+                        </div>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                     </div>
-                    <div class="company-info-item">
-                        <span class="company-info-label">CNPJ:</span> XX.XXX.XXX/0001-XX
-                    </div>
-                    <div class="company-info-item">
-                        <span class="company-info-label">Endereço:</span> Rua Principal, 123 - Cidade, SP - CEP: 01234-567
-                    </div>
-                    <div class="company-info-item">
-                        <span class="company-info-label">Telefone:</span> (11) 3000-0000
-                    </div>
-                    <div class="company-info-item">
-                        <span class="company-info-label">E-mail:</span> contato@gasrapido.com.br
-                    </div>
+                    <p class="review-text">"Entrega super rápida! O entregador foi muito educado e instalou o botijão para mim."</p>
                 </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">JS</div>
+                            <span class="reviewer-name">João Silva</span>
+                        </div>
+                        <div class="rating-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <p class="review-text">"Preço justo e produto de qualidade. Recomendo a todos."</p>
+                </div>
+            </section>
 
+            <!-- NEWSLETTER -->
+            <div class="newsletter">
+                <h3 class="newsletter-title">Receba Nossas Ofertas</h3>
+                <p class="newsletter-subtitle">Cadastre seu e-mail para promoções exclusivas</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Seu e-mail" required>
+                    <button type="submit" class="newsletter-btn">Cadastrar</button>
+                </form>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-content">
                 <div class="footer-section">
-                    <div class="footer-title">Políticas</div>
-                    <a href="#" class="footer-link">Política de Privacidade</a>
-                    <a href="#" class="footer-link">Termos de Uso</a>
-                    <a href="#" class="footer-link">Política de Devolução</a>
-                    <a href="#" class="footer-link">Política de Reembolso</a>
+                    <h3>Sobre Nós</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Nossa História</a>
+                        <a href="#" class="footer-link">Segurança do Gás</a>
+                        <a href="#" class="footer-link">Trabalhe Conosco</a>
+                    </div>
                 </div>
-
                 <div class="footer-section">
-                    <div class="footer-title">Contato</div>
-                    <a href="tel:+551130000000" class="footer-link">
-                        <i class="fas fa-phone"></i> Ligar
-                    </a>
-                    <a href="mailto:contato@gasrapido.com.br" class="footer-link">
-                        <i class="fas fa-envelope"></i> E-mail
-                    </a>
-                    <a href="https://wa.me/5511999999999" class="footer-link" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
+                    <h3>Suporte</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Central de Ajuda</a>
+                        <a href="#" class="footer-link">Fale Conosco</a>
+                        <a href="#" class="footer-link">Dicas de Segurança</a>
+                    </div>
                 </div>
+                <div class="footer-section">
+                    <h3>Redes Sociais</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Revendedor Autorizado Ultragaz. Todos os direitos reservados.</p>
+                <p>CNPJ: 00.000.000/0000-00 | Endereço: Rua Exemplo, 123 - São Paulo/SP</p>
+            </div>
+        </footer>
 
-                <div class="footer-section" style="font-size: 0.75rem; color: var(--text-light);">
-                    <p>&copy; 2026 GasRápido. Todos os direitos reservados.</p>
-                    <p>Última atualização: Abril de 2026</p>
-                </div>
+        <!-- LEGAL INFO (Crucial for Google Ads) -->
+        <div class="legal-info">
+            <p>Este site é operado por um revendedor autorizado. As marcas Ultragaz são de propriedade de seus respectivos donos.</p>
+            <div class="legal-links">
+                <a href="#" class="legal-link">Termos de Uso</a>
+                <a href="#" class="legal-link">Política de Privacidade</a>
+                <a href="#" class="legal-link">Política de Reembolso</a>
+                <a href="#" class="legal-link">Dados da Empresa</a>
             </div>
         </div>
     </div>
 
+    <!-- CART SIDEBAR -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Meu Carrinho</h2>
+            <button id="cart-close-btn" class="cart-close-btn">&times;</button>
+        </div>
+        <div class="cart-content-wrapper" id="cart-items">
+            <p style="text-align: center; color: var(--text-light); margin-top: 40px;">Seu carrinho está vazio.</p>
+        </div>
+        <div style="padding: 20px; border-top: 1px solid var(--border-color);">
+            <button class="cta-button" style="margin-top: 0;" id="checkout-btn" disabled>Finalizar Pedido</button>
+        </div>
+    </div>
+
     <script>
-        // Simple cart management
+        // State
+        let cart = [];
         let quantity = 1;
-        const qtyDisplay = document.getElementById('qty-display');
+        const price = 89.90;
+
+        // DOM Elements
+        const qtyNumber = document.getElementById('qty-number');
         const cartBadge = document.getElementById('cart-badge');
-        let cartCount = 0;
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const checkoutBtn = document.getElementById('checkout-btn');
 
-        function increaseQty() {
+        // Quantity Logic
+        document.getElementById('qty-increase').addEventListener('click', () => {
             quantity++;
-            qtyDisplay.textContent = quantity;
-        }
+            qtyNumber.textContent = quantity;
+        });
 
-        function decreaseQty() {
+        document.getElementById('qty-decrease').addEventListener('click', () => {
             if (quantity > 1) {
                 quantity--;
-                qtyDisplay.textContent = quantity;
+                qtyNumber.textContent = quantity;
+            }
+        });
+
+        // Cart Logic
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartBadge.textContent = totalItems;
+            cartBadge.classList.toggle('active', totalItems > 0);
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="text-align: center; color: var(--text-light); margin-top: 40px;">Seu carrinho está vazio.</p>';
+                checkoutBtn.disabled = true;
+            } else {
+                let html = '';
+                let total = 0;
+                cart.forEach((item, index) => {
+                    const subtotal = item.price * item.qty;
+                    total += subtotal;
+                    html += `
+                        <div style="display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663285700287/lMjNJNafcEASVjXi.png" style="width: 60px; height: 60px; object-fit: contain;">
+                            <div style="flex: 1;">
+                                <div style="font-weight: 700; font-size: 0.9rem;">${item.name}</div>
+                                <div style="color: var(--primary); font-weight: 800;">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                                <div style="font-size: 0.8rem; color: var(--text-gray);">Qtd: ${item.qty}</div>
+                            </div>
+                            <button onclick="removeFromCart(${index})" style="background: none; border: none; color: var(--danger); cursor: pointer;"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                });
+                html += `
+                    <div style="margin-top: 20px; display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem;">
+                        <span>Total:</span>
+                        <span>R$ ${total.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                `;
+                cartItemsContainer.innerHTML = html;
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = `Finalizar Pedido (R$ ${total.toFixed(2).replace('.', ',')})`;
             }
         }
 
-        function addToCart() {
-            cartCount++;
-            cartBadge.textContent = cartCount;
-            cartBadge.classList.add('active');
-            
-            const btn = event.target;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Adicionado!';
-            btn.style.background = 'linear-gradient(135deg, var(--success) 0%, #218838 100%)';
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = '';
-            }, 2000);
+        window.removeFromCart = (index) => {
+            cart.splice(index, 1);
+            updateCartUI();
+        };
+
+        document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+            const existingItem = cart.find(item => item.name === 'Botijão de Gás 13kg');
+            if (existingItem) {
+                existingItem.qty += quantity;
+            } else {
+                cart.push({
+                    name: 'Botijão de Gás 13kg',
+                    price: price,
+                    qty: quantity
+                });
+            }
+            quantity = 1;
+            qtyNumber.textContent = quantity;
+            updateCartUI();
+            openCart();
+        });
+
+        // Sidebar Controls
+        function openCart() {
+            cartSidebar.classList.add('active');
+            cartOverlay.classList.add('active');
         }
 
-        function openCart() {
-            alert('Carrinho: ' + cartCount + ' item(ns)');
+        function closeCart() {
+            cartSidebar.classList.remove('active');
+            cartOverlay.classList.remove('active');
         }
+
+        document.getElementById('cart-open-btn').addEventListener('click', openCart);
+        document.getElementById('cart-close-btn').addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // Checkout (Placeholder for EmailJS or WhatsApp)
+        checkoutBtn.addEventListener('click', () => {
+            alert('Redirecionando para finalização segura do pedido...');
+            // Aqui você integraria com o EmailJS ou WhatsApp conforme o original
+        });
     </script>
 </body>
 </html>
