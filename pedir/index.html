@@ -398,6 +398,12 @@
             max-height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .carousel-slide img.loaded {
+            opacity: 1;
         }
 
         .carousel-nav {
@@ -3324,6 +3330,14 @@
                     img.id = 'main-image';
                     img.setAttribute('fetchpriority', 'high');
                 }
+                
+                // Show image only after it's fully loaded to avoid "top-down" rendering
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.onload = () => img.classList.add('loaded');
+                }
+                
                 slide.appendChild(img);
                 carouselTrack.appendChild(slide);
 
