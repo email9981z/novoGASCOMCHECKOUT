@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -2797,7 +2795,7 @@
             <section class="product-hero">
                 <div class="product-header">
                     <h2 class="product-name">Botijão de Gás 13 Kilos - Cheio (P13)</h2>
-                    <p class="product-sku">SKU: P13-ULTRAGAZ-2026</p>
+                    <p class="product-sku">SKU: P13-CHEIO-2026</p>
                     <div class="product-rating">
                         <span class="rating-stars">★★★★★</span>
                         <span class="rating-count">(324 avaliações)</span>
@@ -2902,7 +2900,7 @@
 
             <!-- PRODUCT BENEFITS -->
             <section class="section">
-                <h3 class="section-title"><i class="fas fa-star"></i> Por que escolher a Ultragaz?</h3>
+                <h3 class="section-title"><i class="fas fa-star"></i> Por que escolher a Gás Fácil?</h3>
                 <div class="benefits-grid">
                     <div class="benefit-card">
                         <i class="fas fa-shield-alt"></i>
@@ -2989,24 +2987,26 @@
 
         <!-- FOOTER -->
         <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Sobre</h3>
-                    <div class="footer-links">
-                        <a href="#" class="footer-link"><i class="fas fa-info-circle"></i> Sobre a Ultragaz</a>
-                        <a href="#" class="footer-link"><i class="fas fa-briefcase"></i> Carreiras</a>
-                        <a href="#" class="footer-link"><i class="fas fa-newspaper"></i> Blog</a>
-                    </div>
-                </div>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>Políticas e Informações</h3>
+      <div class="footer-links">
+        <!-- Link para a página de Privacidade (geralmente obrigatório) -->
+        <a href="politica-privacidade.html" class="footer-link">
+          <i class="fas fa-shield-alt"></i> Política de Privacidade
+        </a>
+        
+        <!-- Link para Sobre Nós -->
+        <a href="sobre.html" class="footer-link">
+          <i class="fas fa-info-circle"></i> Sobre Nós
+        </a>
 
-                <div class="footer-section">
-                    <h3>Suporte</h3>
-                    <div class="footer-links">
-                        <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> FAQ</a>
-                        <a href="#" class="footer-link"><i class="fas fa-headset"></i> Contato</a>
-                        <a href="#" class="footer-link"><i class="fas fa-file-alt"></i> Políticas</a>
-                    </div>
-                </div>
+        <!-- Link para Termos de Uso -->
+        <a href="termos-uso.html" class="footer-link">
+          <i class="fas fa-briefcase"></i> Termos de Uso
+        </a>
+      </div>
+    </div>
 
                 <div class="footer-section">
                     <h3>Redes Sociais</h3>
@@ -3019,12 +3019,19 @@
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2026 Ultragaz. Todos os direitos reservados.</p>
-                <p>Desenvolvido com ❤️ para melhor servir você</p>
-            </div>
-        </footer>
-    </div>
+                    <div class="footer-bottom">
+            <p>&copy; 2026 Gás Fácil. Todos os direitos reservados.</p>
+            
+            <!-- Informações Legais Obrigatórias -->
+            <p class="empresa-info">
+                Gás Fácil Distribuidora LTDA | CNPJ: 54.819.621/0001-78
+            </p>
+            
+            <p>Desenvolvido com ❤️ para melhor servir você</p>
+        </div>
+    </footer>
+</div>
+
     <!-- CART OVERLAY -->
     <div id="cart-overlay" class="cart-overlay"></div>
 
@@ -3991,17 +3998,6 @@ document.addEventListener('click', function(e) {
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
 
-        // Prepara os parâmetros para o seu template do EmailJS
-        const templateParams = {
-            customer_name: shippingData.customerName || 'Não informado',
-            customer_phone: shippingData.customerPhone || 'Não informado',
-            product_name: item.name,
-            quantity: item.quantity,
-            total_price: `R$ ${totalFormatted}`,
-            address: `${shippingData.street}, ${shippingData.number} - ${shippingData.neighborhood}`,
-            delivery_type: shippingData.deliveryType === 'express' ? 'Rápida' : 'Agendada'
-        };
-
         // Prepara os dados para a URL do spinner
         const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''}, ${shippingData.neighborhood}, ${shippingData.city}/${shippingData.state}`;
         const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Entrega em 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
@@ -4014,17 +4010,8 @@ document.addEventListener('click', function(e) {
         const productsJSON = JSON.stringify(productsMapped);
         const spinnerUrl = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
 
-        // Envia o e-mail
-        emailjs.send('service_tnr9cyi', 'template_9gq8416', templateParams)
-            .then(function(response) {
-                console.log('Sucesso!', response.status, response.text);
-                // Redireciona após o envio bem-sucedido
-                window.location.href = spinnerUrl;
-            }, function(error ) {
-                console.error('Erro no envio:', error);
-                // Redireciona mesmo em caso de erro
-                window.location.href = spinnerUrl;
-            });
+        // Redireciona diretamente para a URL do spinner
+        window.location.href = spinnerUrl;
     }
 });
 
