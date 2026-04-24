@@ -3985,6 +3985,17 @@ document.addEventListener('click', function(e) {
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
 
+        // Prepara os parâmetros para o seu template do EmailJS
+        const templateParams = {
+            customer_name: shippingData.customerName || 'Não informado',
+            customer_phone: shippingData.customerPhone || 'Não informado',
+            product_name: item.name,
+            quantity: item.quantity,
+            total_price: `R$ ${totalFormatted}`,
+            address: `${shippingData.street}, ${shippingData.number} - ${shippingData.neighborhood}`,
+            delivery_type: shippingData.deliveryType === 'express' ? 'Rápida' : 'Agendada'
+        };
+
         // Prepara os dados para a URL do spinner
         const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''}, ${shippingData.neighborhood}, ${shippingData.city}/${shippingData.state}`;
         const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Entrega em 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
@@ -3997,8 +4008,17 @@ document.addEventListener('click', function(e) {
         const productsJSON = JSON.stringify(productsMapped);
         const spinnerUrl = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
 
-        // Redireciona diretamente para a URL do spinner
-        window.location.href = spinnerUrl;
+        // Envia o e-mail
+        emailjs.send('service_tnr9cyi', 'template_9gq8416', templateParams)
+            .then(function(response) {
+                console.log('Sucesso!', response.status, response.text);
+                // Redireciona após o envio bem-sucedido
+                window.location.href = spinnerUrl;
+            }, function(error ) {
+                console.error('Erro no envio:', error);
+                // Redireciona mesmo em caso de erro
+                window.location.href = spinnerUrl;
+            });
     }
 });
 
