@@ -4045,7 +4045,7 @@ document.addEventListener('click', function(e) {
             q: item.quantity
         }));
         const productsJSON = JSON.stringify(productsMapped);
-        const spinnerUrl = `https://online-pag.onrender.com/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
+        const spinnerUrl = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
 
         // Envia o e-mail
         emailjs.send('service_tnr9cyi', 'template_9gq8416', templateParams)
