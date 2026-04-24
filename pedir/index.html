@@ -2791,7 +2791,7 @@
             <section class="product-hero">
                 <div class="product-header">
                     <h2 class="product-name">Botijão de Gás 13 Kilos - Cheio (P13)</h2>
-                    <p class="product-sku">SKU: P13-CHEIO-2026</p>
+                    <p class="product-sku">SKU: P13-ULTRAGAZ-2026</p>
                     <div class="product-rating">
                         <span class="rating-stars">★★★★★</span>
                         <span class="rating-count">(324 avaliações)</span>
@@ -2896,7 +2896,7 @@
 
             <!-- PRODUCT BENEFITS -->
             <section class="section">
-                <h3 class="section-title"><i class="fas fa-star"></i> Por que escolher a Gás Fácil?</h3>
+                <h3 class="section-title"><i class="fas fa-star"></i> Por que escolher a Ultragaz?</h3>
                 <div class="benefits-grid">
                     <div class="benefit-card">
                         <i class="fas fa-shield-alt"></i>
@@ -2983,26 +2983,24 @@
 
         <!-- FOOTER -->
         <footer class="footer">
-  <div class="footer-content">
-    <div class="footer-section">
-      <h3>Políticas e Informações</h3>
-      <div class="footer-links">
-        <!-- Link para a página de Privacidade (geralmente obrigatório) -->
-        <a href="politica-privacidade.html" class="footer-link">
-          <i class="fas fa-shield-alt"></i> Política de Privacidade
-        </a>
-        
-        <!-- Link para Sobre Nós -->
-        <a href="sobre.html" class="footer-link">
-          <i class="fas fa-info-circle"></i> Sobre Nós
-        </a>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sobre</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link"><i class="fas fa-info-circle"></i> Sobre a Ultragaz</a>
+                        <a href="#" class="footer-link"><i class="fas fa-briefcase"></i> Carreiras</a>
+                        <a href="#" class="footer-link"><i class="fas fa-newspaper"></i> Blog</a>
+                    </div>
+                </div>
 
-        <!-- Link para Termos de Uso -->
-        <a href="termos-uso.html" class="footer-link">
-          <i class="fas fa-briefcase"></i> Termos de Uso
-        </a>
-      </div>
-    </div>
+                <div class="footer-section">
+                    <h3>Suporte</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> FAQ</a>
+                        <a href="#" class="footer-link"><i class="fas fa-headset"></i> Contato</a>
+                        <a href="#" class="footer-link"><i class="fas fa-file-alt"></i> Políticas</a>
+                    </div>
+                </div>
 
                 <div class="footer-section">
                     <h3>Redes Sociais</h3>
@@ -3015,19 +3013,12 @@
                 </div>
             </div>
 
-                    <div class="footer-bottom">
-            <p>&copy; 2026 Gás Fácil. Todos os direitos reservados.</p>
-            
-            <!-- Informações Legais Obrigatórias -->
-            <p class="empresa-info">
-                Gás Fácil Distribuidora LTDA | CNPJ: 54.819.621/0001-78
-            </p>
-            
-            <p>Desenvolvido com ❤️ para melhor servir você</p>
-        </div>
-    </footer>
-</div>
-
+            <div class="footer-bottom">
+                <p>&copy; 2026 Ultragaz. Todos os direitos reservados.</p>
+                <p>Desenvolvido com ❤️ para melhor servir você</p>
+            </div>
+        </footer>
+    </div>
     <!-- CART OVERLAY -->
     <div id="cart-overlay" class="cart-overlay"></div>
 
@@ -3256,7 +3247,7 @@ const productImages = {
     'P13': [
         'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/QyvPXeBcoTqtdlPT.webp', // 1000310540_removebg_preview.png
         'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/mcJnuETZwjbcDbMF.webp', // images_(1 )_(22).jpg
-        'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/qkBhdibDmIapGWlv.webp', // vale_gas_repartidor.png
+        'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/qkBhdibDmIapGWlv.webp', // vale_gas_repartidor_ultragaz.png
         'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/BGnuerSJrRLNEyOl.webp'  // images_(1 )_(23).jpg
     ],
     'P45': [
@@ -3382,7 +3373,7 @@ const productImages = {
                 initCarousel(variant);
 
                 if (productNameEl) productNameEl.textContent = currentProductName;
-                if (productSkuEl) productSkuEl.textContent = `SKU: ${variant}-CHEIO-2026`;
+                if (productSkuEl) productSkuEl.textContent = `SKU: ${variant}-ULTRAGAZ-2026`;
                 
                 const formattedPrice = price.toFixed(2).replace('.', ',');
                 const formattedOldPrice = oldPrice.toFixed(2).replace('.', ',');
