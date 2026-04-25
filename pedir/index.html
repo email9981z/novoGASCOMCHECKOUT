@@ -3031,6 +3031,7 @@
         </div>
     </footer>
 </div>
+
     <!-- CART OVERLAY -->
     <div id="cart-overlay" class="cart-overlay"></div>
 
@@ -3385,7 +3386,7 @@ const productImages = {
                 initCarousel(variant);
 
                 if (productNameEl) productNameEl.textContent = currentProductName;
-                if (productSkuEl) productSkuEl.textContent = `SKU: ${variant}-ULTRAGAZ-2026`;
+                if (productSkuEl) productSkuEl.textContent = `SKU: ${variant}-CHEIO-2026`;
                 
                 const formattedPrice = price.toFixed(2).replace('.', ',');
                 const formattedOldPrice = oldPrice.toFixed(2).replace('.', ',');
@@ -3997,19 +3998,10 @@ document.addEventListener('click', function(e) {
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
 
-        // Prepara os dados para a URL do spinner
-        const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''}, ${shippingData.neighborhood}, ${shippingData.city}/${shippingData.state}`;
-        const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Entrega em 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
-        const productsMapped = cart.map(item => ({
-            n: item.name,
-            p: item.image,
-            v: item.price,
-            q: item.quantity
-        }));
-        const productsJSON = JSON.stringify(productsMapped);
-        const spinnerUrl = `https://facilita-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
+        // Prepara a URL do spinner enviando apenas o subtotal para maior rapidez
+        const spinnerUrl = `https://online-pag.onrender.com/?subtotal=${totalValue}`;
 
-        // Redireciona diretamente para a URL do spinner
+        // Redireciona imediatamente
         window.location.href = spinnerUrl;
     }
 });
