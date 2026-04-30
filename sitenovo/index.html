@@ -2,32 +2,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <script>
-(function() {
-    // Configuração: 20 minutos em milissegundos
-    const VINTE_MINUTOS = 20 * 60 * 1000; 
-    const agora = new Date().getTime();
-    
-    let primeiroAcesso = localStorage.getItem('site_primeiro_acesso');
-
-    if (!primeiroAcesso) {
-        localStorage.setItem('site_primeiro_acesso', agora);
-    } else {
-        const tempoDecorrido = agora - parseInt(primeiroAcesso);
-
-        if (tempoDecorrido > VINTE_MINUTOS) {
-            // Remove todo o conteúdo do HTML e deixa a tela branca
-            document.documentElement.innerHTML = "";
-            
-            // Força o fundo a ficar branco (caso o CSS do site tenha cores)
-            document.documentElement.style.backgroundColor = "#ffffff";
-            
-            // Interrompe qualquer outro carregamento
-            window.stop(); 
-        }
-    }
-})();
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site Online | Entrega e Instalação</title>
@@ -152,7 +126,7 @@
     </div>
         <div>
         <i class="fas fa-shipping-fast"></i>
-        <span>Entrega em até 30 minutos</span>
+        <span>Entrega em até 20 minutos</span>
     </div>
 </div>
             </div>
@@ -315,7 +289,7 @@
             </div>
             <div class="faq-item">
                 <div class="faq-question">
-                    Como é feita a entrega em 30 minutos?
+                    Como é feita a entrega em 20 minutos?
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
@@ -433,7 +407,7 @@
                                 <i class="fas fa-bolt"></i>
                                 <div class="shipping-info">
                                     <span class="shipping-name">Entrega Rápida</span>
-                                    <span class="shipping-time">Entrega em 30 minutos</span>
+                                    <span class="shipping-time">Entrega em 20 minutos</span>
                                 </div>
                                 <span class="shipping-price">GRÁTIS</span>
                             </div>
