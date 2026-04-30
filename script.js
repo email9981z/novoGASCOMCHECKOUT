@@ -296,7 +296,7 @@
                 if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
                 scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
             } else {
-                scheduleText = 'Entrega em 30 Minutos';
+                scheduleText = 'Entrega em 20 Minutos';
             }
             // Build Summary HTML
             let subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
@@ -365,7 +365,7 @@
         const time = document.getElementById('schedule-time').value;
         scheduleText = `${day.split('-').reverse().join('/')} às ${time}`;
     } else {
-        scheduleText = 'Entrega em 30 Minutos';
+        scheduleText = 'Entrega em 20 Minutos';
     }
 
     // Prepara a lista de produtos simplificada para a URL
