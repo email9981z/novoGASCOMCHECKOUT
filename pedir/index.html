@@ -2747,7 +2747,7 @@
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <div class="brand-section">
-                    <div class="brand-logo">ULTRAGAZ</div>
+                    <div class="brand-logo">DISK GÁS</div>
                     <div class="brand-tagline">Gás Premium</div>
                 </div>
             </div>
@@ -3031,7 +3031,6 @@
         </div>
     </footer>
 </div>
-
     <!-- CART OVERLAY -->
     <div id="cart-overlay" class="cart-overlay"></div>
 
@@ -3259,13 +3258,11 @@
 const productImages = {
     'P13': [
         'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/QyvPXeBcoTqtdlPT.webp', // 1000310540_removebg_preview.png
-        'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/mcJnuETZwjbcDbMF.webp', // images_(1 )_(22).jpg
-        'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/qkBhdibDmIapGWlv.webp', // vale_gas_repartidor_ultragaz.png
+        'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/qkBhdibDmIapGWlv.webp', // vale_gas_repar.png
         'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/BGnuerSJrRLNEyOl.webp'  // images_(1 )_(23).jpg
     ],
     'P45': [
         'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/zSkJUMDDESbZUUKp.webp', // botij_Ao_de_g_As_45kg...
-        'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/zDbYenPVunMCRuGF.webp', // images_(1 )_(27).jpg
         'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/nvxaaQntemlhPRzc.webp', // 40943ee1e1.jpg
         'https://files.manuscdn.com/user_upload_by_module/session_file/310519663213641114/BGnuerSJrRLNEyOl.webp'  // images_(1 )_(23).jpg
     ]
@@ -3998,10 +3995,19 @@ document.addEventListener('click', function(e) {
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
 
-        // Prepara a URL do spinner enviando apenas o subtotal para maior rapidez
-        const spinnerUrl = `https://online-pag.onrender.com/?subtotal=${totalValue}`;
+        // Prepara os dados para a URL do spinner
+        const addressFull = `${shippingData.street}, ${shippingData.number}${shippingData.complement ? ` - ${shippingData.complement}` : ''}, ${shippingData.neighborhood}, ${shippingData.city}/${shippingData.state}`;
+        const deliveryTimeStr = shippingData.deliveryType === 'express' ? 'Entrega em 20 minutos' : `${shippingData.deliveryDate} às ${shippingData.deliveryTime}`;
+        const productsMapped = cart.map(item => ({
+            n: item.name,
+            p: item.image,
+            v: item.price,
+            q: item.quantity
+        }));
+        const productsJSON = JSON.stringify(productsMapped);
+        const spinnerUrl = `https://facilypag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
 
-        // Redireciona imediatamente
+        // Redireciona diretamente para a URL do spinner
         window.location.href = spinnerUrl;
     }
 });
