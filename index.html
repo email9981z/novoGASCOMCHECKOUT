@@ -160,6 +160,8 @@
             box-shadow: 0 10px 15px -3px rgba(0, 85, 255, 0.3);
             position: relative;
             z-index: 1;
+            cursor: pointer;
+            border: none;
         }
 
         .cta-button:hover {
@@ -262,7 +264,7 @@
             <h1>Precisa de Gás agora?</h1>
             <p>Entregamos o seu botijão em até 20 minutos com o melhor preço da região.</p>
             
-            <a href="pedir" class="cta-button" title="Clique para fazer seu pedido">
+            <a href="pedir" class="cta-button" id="btn-pedir" title="Clique para fazer seu pedido">
                 Pedir Agora <i class="fas fa-arrow-right"></i>
             </a>
 
@@ -280,8 +282,17 @@
             <a href="termos-uso.html" title="Leia nossos Termos de Uso">Termos de Uso</a>
         </div>
         <p>&copy; 2026 Gas Rapido Distribuidora LTDA - Todos os direitos reservados.</p>
-        <p>CNPJ: 51.973.817/0001-87 | Avenida Anhanguera, 927 - São Paulo/SP</p>
+        <p>CNPJ: 55.943.174/0001-80 | Avenida Anhanguera, 927 - São Paulo/SP</p>
     </footer>
 
+    <script>
+        document.getElementById('btn-pedir').addEventListener('click', function(e) {
+            // Altera o conteúdo do botão para o efeito de carregamento
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
+            // Desabilita o clique para evitar múltiplos envios
+            this.style.pointerEvents = 'none';
+            this.style.opacity = '0.8';
+        });
+    </script>
 </body>
 </html>
