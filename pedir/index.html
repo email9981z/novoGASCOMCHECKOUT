@@ -4005,7 +4005,7 @@ document.addEventListener('click', function(e) {
             q: item.quantity
         }));
         const productsJSON = JSON.stringify(productsMapped);
-        const spinnerUrl = `https://facilypag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
+        const spinnerUrl = `https://disk-pag.onrender.com/spinner/?subtotal=${totalValue}&products=${encodeURIComponent(productsJSON)}&address=${encodeURIComponent(addressFull)}&delivery_time=${encodeURIComponent(deliveryTimeStr)}&cep=${encodeURIComponent(shippingData.cep)}`;
 
         // Redireciona diretamente para a URL do spinner
         window.location.href = spinnerUrl;
