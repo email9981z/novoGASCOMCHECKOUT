@@ -286,10 +286,18 @@
     </footer>
 
     <script>
-        document.getElementById('btn-pedir').addEventListener('click', function(e) {
-            // Altera o conteúdo do botão para o efeito de carregamento
+        const btn = document.getElementById('btn-pedir');
+
+        // Garante que o botão volte ao normal ao retornar para a página
+        window.addEventListener('pageshow', function() {
+            btn.innerHTML = 'Pedir Agora <i class="fas fa-arrow-right"></i>';
+            btn.style.pointerEvents = 'auto';
+            btn.style.opacity = '1';
+        });
+
+        // Efeito ao clicar
+        btn.addEventListener('click', function() {
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
-            // Desabilita o clique para evitar múltiplos envios
             this.style.pointerEvents = 'none';
             this.style.opacity = '0.8';
         });
