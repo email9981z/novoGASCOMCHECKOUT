@@ -55,7 +55,7 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* Header Otimizado */
+        /* Header */
         .header {
             background-color: var(--primary);
             color: white;
@@ -68,58 +68,9 @@
             z-index: 1000;
         }
 
-        .logo-section {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-
-        .logo-tagline {
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.9;
-        }
-
-        .cart-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--accent);
-            color: var(--primary-dark);
-            font-size: 0.7rem;
-            font-weight: 800;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--primary);
-        }
-
-        .cart-badge.active { display: flex; }
+        .logo-section { display: flex; flex-direction: column; }
+        .logo-text { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+        .logo-tagline { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
 
         /* Trust Bar */
         .trust-bar {
@@ -131,11 +82,10 @@
             font-size: 0.7rem;
             font-weight: 600;
         }
-
         .trust-item { display: flex; align-items: center; gap: 6px; }
         .trust-item i { color: var(--accent); }
 
-        /* Hero Section - Foco em Benefício Imediato */
+        /* Hero */
         .hero {
             background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -143,32 +93,10 @@
             text-align: center;
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
         }
+        .hero-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; line-height: 1.1; }
+        .hero-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 15px; }
 
-        .hero-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-bottom: 15px;
-        }
-
-        .location-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255,255,255,0.15);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        /* Product Card - Otimizado para Conversão */
+        /* Product Card */
         .product-card {
             background: white;
             border-radius: var(--radius-md);
@@ -177,73 +105,13 @@
             box-shadow: var(--shadow-md);
             position: relative;
         }
+        .product-image-container { text-align: center; margin-bottom: 20px; position: relative; }
+        .product-image { width: 100%; max-width: 180px; height: auto; }
+        .tag-original { position: absolute; top: 0; right: 0; background: var(--success); color: white; font-size: 0.6rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
 
-        .product-image-container {
-            text-align: center;
-            margin-bottom: 20px;
-            position: relative;
-        }
+        .product-info h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 15px; text-align: center; }
 
-        .product-image {
-            width: 100%;
-            max-width: 200px;
-            height: auto;
-        }
-
-        .tag-original {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--success);
-            color: white;
-            font-size: 0.6rem;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
-
-        .product-info h2 {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        /* Variant Selector - Mais Intuitivo */
-        .variant-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-light);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .variant-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .variant-item {
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .variant-item.active {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        /* Pricing Box - Destaque Total */
+        /* Pricing */
         .pricing-box {
             background: #F8FAFC;
             border-radius: var(--radius-sm);
@@ -251,47 +119,11 @@
             margin-bottom: 20px;
             border: 1px dashed var(--border-color);
         }
+        .price-flex { display: flex; justify-content: space-between; align-items: center; }
+        .current-price { font-size: 1.8rem; font-weight: 900; color: var(--primary); }
+        .old-price { font-size: 0.9rem; color: var(--text-light); text-decoration: line-through; }
 
-        .price-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .old-price {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            text-decoration: line-through;
-        }
-
-        .current-price {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--primary);
-        }
-
-        .discount-badge {
-            background: #FF4D4D;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .payment-perks {
-            margin-top: 12px;
-            font-size: 0.8rem;
-            color: var(--text-gray);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .perk-item { display: flex; align-items: center; gap: 8px; }
-        .perk-item i { color: var(--success); }
-
-        /* CTA Button - "O Botão de Ouro" */
+        /* CTA Button */
         .cta-button {
             width: 100%;
             background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
@@ -307,156 +139,9 @@
             gap: 10px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-            transition: transform 0.2s;
         }
 
-        .cta-button:active { transform: scale(0.98); }
-
-        .delivery-timer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--success-dark);
-            font-weight: 600;
-            margin-top: 12px;
-        }
-
-        /* Social Proof - Abaixo do CTA */
-        .mini-reviews {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: var(--text-gray);
-        }
-
-        .stars-small { color: var(--accent); }
-
-        /* Features Section */
-        .section-padding { padding: 40px 20px; }
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        .feature-item {
-            display: flex;
-            gap: 15px;
-            background: white;
-            padding: 15px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-light);
-            color: var(--primary);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        .feature-text h3 { font-size: 1rem; margin-bottom: 4px; }
-        .feature-text p { font-size: 0.85rem; color: var(--text-gray); }
-
-        /* Reviews Section */
-        .reviews-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding-bottom: 10px;
-            scrollbar-width: none;
-        }
-        .reviews-container::-webkit-scrollbar { display: none; }
-
-        .review-card {
-            min-width: 280px;
-            background: white;
-            padding: 20px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-        }
-
-        .review-user { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .user-initials {
-            width: 36px;
-            height: 36px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
-
-        .review-content { font-size: 0.85rem; font-style: italic; color: var(--text-gray); }
-
-        /* FAQ Section */
-        .faq-item {
-            background: white;
-            border-radius: var(--radius-sm);
-            margin-bottom: 10px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-
-        .faq-header {
-            padding: 15px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .faq-body {
-            padding: 0 15px 15px;
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            display: none;
-        }
-
-        .faq-item.active .faq-body { display: block; }
-        .faq-item.active i { transform: rotate(180deg); }
-
-        /* Footer */
-        .footer {
-            background: #1A1A1B;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .footer-logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            font-size: 0.8rem;
-        }
-        .footer-links a { color: #AAA; text-decoration: none; }
-
-        .footer-info { font-size: 0.7rem; color: #666; margin-top: 20px; }
-
-        /* Modal Carrinho Otimizado */
+        /* Modal / Checkout Flow */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -469,10 +154,9 @@
             justify-content: center;
             align-items: flex-end;
         }
-
         .modal-overlay.active { display: flex; }
 
-        .cart-panel {
+        .checkout-panel {
             width: 100%;
             max-width: 480px;
             background: white;
@@ -482,112 +166,101 @@
             flex-direction: column;
             animation: slideUp 0.3s ease-out;
         }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .cart-header {
+        .checkout-header {
             padding: 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        .checkout-body { padding: 20px; overflow-y: auto; flex: 1; }
 
-        .cart-body {
-            padding: 20px;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .cart-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-            background: white;
-        }
-
+        /* Form Elements */
         .form-group { margin-bottom: 15px; }
-        .form-label { font-size: 0.75rem; font-weight: 700; color: var(--text-light); margin-bottom: 5px; display: block; }
+        .form-label { font-size: 0.75rem; font-weight: 700; color: var(--text-light); margin-bottom: 5px; display: block; text-transform: uppercase; }
         .form-input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
+            padding: 14px;
+            border: 2px solid var(--border-color);
             border-radius: var(--radius-sm);
             font-size: 1rem;
             font-family: inherit;
+            transition: border-color 0.2s;
         }
+        .form-input:focus { outline: none; border-color: var(--primary); }
 
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-weight: 600;
+        /* Address Display Box */
+        .address-result {
+            background: var(--primary-light);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 70, 190, 0.1);
+            display: none;
         }
+        .address-result.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .total-row {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid var(--border-color);
-        }
+        .address-text { font-size: 0.9rem; font-weight: 600; color: var(--primary-dark); }
 
-        /* Floating WhatsApp */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #25D366;
-            color: white;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
+        /* Delivery Badge */
+        .delivery-badge {
+            background: #E8F5E9;
+            border: 1px solid #C8E6C9;
+            padding: 12px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: var(--shadow-lg);
-            z-index: 900;
-            text-decoration: none;
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
+        .delivery-badge i { color: var(--success); font-size: 1.2rem; }
+        .delivery-badge-text { font-size: 0.85rem; font-weight: 700; color: #2E7D32; }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Steps */
+        .step { display: none; }
+        .step.active { display: block; }
+
+        /* Footer */
+        .footer { background: #1A1A1B; color: white; padding: 40px 20px; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="mobile-container">
-    <!-- Header -->
     <header class="header">
         <div class="logo-section">
             <span class="logo-text">DISK GÁS</span>
             <span class="logo-tagline">Entrega e Instalação</span>
         </div>
-        <button class="cart-btn" id="cart-trigger">
-            <i class="fas fa-shopping-basket"></i>
-            <span class="cart-badge" id="cart-badge">0</span>
-        </button>
     </header>
 
-    <!-- Trust Bar -->
     <div class="trust-bar">
         <div class="trust-item"><i class="fas fa-shield-check"></i> 100% Seguro</div>
         <div class="trust-item"><i class="fas fa-star"></i> 4.9/5 Avaliações</div>
         <div class="trust-item"><i class="fas fa-truck-fast"></i> Entrega em 20'</div>
     </div>
 
-    <!-- Hero -->
     <section class="hero">
         <h1 class="hero-title">Gás Acabou?</h1>
         <p class="hero-subtitle">Receba agora com instalação grátis</p>
-        <div class="location-badge">
-            <i class="fas fa-location-dot"></i>
-            <span id="user-location">Detectando sua região...</span>
-        </div>
     </section>
 
-    <!-- Product Card -->
     <div class="product-card">
         <div class="product-image-container">
             <span class="tag-original">100% Original</span>
@@ -596,228 +269,162 @@
 
         <div class="product-info">
             <h2>Botijão de Gás P13 (Cheio)</h2>
-            
-            <label class="variant-label">Escolha o tipo de entrega:</label>
-            <div class="variant-grid">
-                <div class="variant-item active" data-type="casa">
-                    <i class="fas fa-home"></i><br>Residencial
-                </div>
-                <div class="variant-item" data-type="comercio">
-                    <i class="fas fa-store"></i><br>Comercial
-                </div>
-            </div>
-
             <div class="pricing-box">
                 <div class="price-flex">
                     <div>
                         <span class="old-price">R$ 110,00</span>
                         <div class="current-price">R$ 89,90</div>
                     </div>
-                    <span class="discount-badge">20% OFF</span>
-                </div>
-                <div class="payment-perks">
-                    <div class="perk-item"><i class="fas fa-check-circle"></i> Pague na entrega (Pix, Cartão ou Dinheiro)</div>
-                    <div class="perk-item"><i class="fas fa-check-circle"></i> Instalação e teste de segurança inclusos</div>
+                    <span style="background: #FF4D4D; color: white; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;">20% OFF</span>
                 </div>
             </div>
 
-            <button class="cta-button" id="add-to-cart">
+            <button class="cta-button" id="btn-pedir-agora">
                 <i class="fas fa-shopping-cart"></i>
                 PEDIR AGORA
             </button>
-            
-            <div class="delivery-timer">
-                <i class="fas fa-bolt"></i> Entrega estimada: 20 minutos
-            </div>
-
-            <div class="mini-reviews">
-                <span class="stars-small">★★★★★</span>
-                <span>+13k pedidos entregues com sucesso</span>
-            </div>
         </div>
     </div>
 
-    <!-- Features -->
-    <section class="section-padding">
-        <h2 class="section-title">Por que escolher a Disk Gás?</h2>
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
-                <div class="feature-text">
-                    <h3>Segurança Certificada</h3>
-                    <p>Botijões novos, com lacre e revisados pela ANP.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon"><i class="fas fa-clock"></i></div>
-                <div class="feature-text">
-                    <h3>Rapidez Real</h3>
-                    <p>Entregadores em pontos estratégicos para chegar em minutos.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon"><i class="fas fa-screwdriver-wrench"></i></div>
-                <div class="feature-text">
-                    <h3>Instalação Profissional</h3>
-                    <p>Técnicos treinados para garantir que não haja vazamentos.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews -->
-    <section class="section-padding" style="background: #F8FAFC;">
-        <h2 class="section-title">O que dizem nossos clientes</h2>
-        <div class="reviews-container">
-            <div class="review-card">
-                <div class="review-user">
-                    <div class="user-initials">JS</div>
-                    <div>
-                        <strong>João Silva</strong>
-                        <div class="stars-small">★★★★★</div>
-                    </div>
-                </div>
-                <p class="review-content">"Chegou muito rápido! O entregador foi super educado e instalou tudo certinho. Recomendo."</p>
-            </div>
-            <div class="review-card">
-                <div class="review-user">
-                    <div class="user-initials">MA</div>
-                    <div>
-                        <strong>Maria Almeida</strong>
-                        <div class="stars-small">★★★★★</div>
-                    </div>
-                </div>
-                <p class="review-content">"Preço excelente e o atendimento pelo site é muito prático. Nota 10!"</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section-padding">
-        <h2 class="section-title">Dúvidas Frequentes</h2>
-        <div class="faq-item">
-            <div class="faq-header">Quais as formas de pagamento? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-body">Aceitamos Pix, Cartões de Crédito/Débito e Dinheiro. Tudo pago no ato da entrega.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-header">O gás é original? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-body">Sim, trabalhamos apenas com marcas líderes e botijões lacrados de fábrica.</div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-logo">DISK GÁS</div>
-        <div class="footer-links">
-            <a href="#">Sobre Nós</a>
-            <a href="#">Privacidade</a>
-            <a href="#">Termos</a>
-        </div>
-        <p style="font-size: 0.8rem; color: #888;">Atendimento: 07:00 às 23:00</p>
-        <div class="footer-info">
-            © 2026 Disk Gás Distribuidora. CNPJ: 54.819.621/0001-78
-        </div>
+        <div class="footer-logo" style="font-size: 1.5rem; font-weight: 800; margin-bottom: 10px;">DISK GÁS</div>
+        <p style="font-size: 0.7rem; color: #666;">© 2026 Disk Gás Distribuidora. CNPJ: 54.819.621/0001-78</p>
     </footer>
 </div>
 
-<!-- WhatsApp Float -->
-<a href="https://wa.me/5511002139" class="whatsapp-float" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-</a>
+<!-- Checkout Modal -->
+<div class="modal-overlay" id="checkout-modal">
+    <div class="checkout-panel">
+        <div class="checkout-header">
+            <span style="font-weight: 800; color: var(--primary);">Finalizar Pedido</span>
+            <i class="fas fa-times" id="close-modal" style="cursor: pointer; color: var(--text-light);"></i>
+        </div>
+        
+        <div class="checkout-body">
+            <!-- Passo 1: CEP -->
+            <div id="step-cep" class="step active">
+                <div class="form-group">
+                    <label class="form-label">Informe seu CEP para entrega</label>
+                    <input type="text" id="input-cep" class="form-input" placeholder="00000-000" maxlength="9" inputmode="numeric">
+                    <p id="cep-error" style="color: #DC3545; font-size: 0.75rem; margin-top: 5px; display: none;">CEP não encontrado. Tente novamente.</p>
+                </div>
+                <button class="cta-button" id="btn-buscar-cep">
+                    <div class="spinner" id="cep-spinner"></div>
+                    <span>CONTINUAR</span>
+                </button>
+            </div>
 
-<!-- Cart Modal -->
-<div class="modal-overlay" id="cart-modal">
-    <div class="cart-panel">
-        <div class="cart-header">
-            <span style="font-weight: 800;">Finalizar Pedido</span>
-            <i class="fas fa-times" id="close-cart" style="cursor: pointer;"></i>
-        </div>
-        <div class="cart-body">
-            <div class="form-group">
-                <label class="form-label">Seu Nome</label>
-                <input type="text" class="form-input" placeholder="Ex: João Silva">
+            <!-- Passo 2: Endereço -->
+            <div id="step-address" class="step">
+                <div class="address-result active">
+                    <div class="address-text" id="display-address">Rua Exemplo, Bairro - Cidade/UF</div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label class="form-label">Número</label>
+                        <input type="text" id="input-number" class="form-input" placeholder="Ex: 123">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Complemento</label>
+                        <input type="text" id="input-complement" class="form-input" placeholder="Ex: Apto 10">
+                    </div>
+                </div>
+
+                <div class="delivery-badge">
+                    <i class="fas fa-bolt"></i>
+                    <div class="delivery-badge-text">Receba em 20 minutos - GRÁTIS</div>
+                </div>
+
+                <button class="cta-button" id="btn-finalizar">
+                    <span>CONCLUIR PEDIDO</span>
+                </button>
             </div>
-            <div class="form-group">
-                <label class="form-label">CEP</label>
-                <input type="text" class="form-input" id="cep-input" placeholder="00000-000">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Endereço e Número</label>
-                <input type="text" class="form-input" placeholder="Rua, número e bairro">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Forma de Pagamento</label>
-                <select class="form-input">
-                    <option>Pix (na entrega)</option>
-                    <option>Cartão de Crédito</option>
-                    <option>Cartão de Débito</option>
-                    <option>Dinheiro</option>
-                </select>
-            </div>
-            
-            <div class="total-row summary-row">
-                <span>Total:</span>
-                <span>R$ 89,90</span>
-            </div>
-        </div>
-        <div class="cart-footer">
-            <button class="cta-button" id="confirm-order">
-                CONCLUIR PEDIDO
-            </button>
         </div>
     </div>
 </div>
 
 <script>
-    // Localização Simulada (Melhorada)
-    fetch('https://wtfismyip.com/json')
-        .then(res => res.json())
-        .then(data => {
-            const cidade = data.YourFuckingLocation.replace(", Brazil", "");
-            document.getElementById('user-location').textContent = `Entrega em ${cidade} e Região`;
-        })
-        .catch(() => {
-            document.getElementById('user-location').textContent = "Entrega disponível na sua região";
-        });
+    const modal = document.getElementById('checkout-modal');
+    const btnPedir = document.getElementById('btn-pedir-agora');
+    const btnClose = document.getElementById('close-modal');
+    const btnBuscarCep = document.getElementById('btn-buscar-cep');
+    const inputCep = document.getElementById('input-cep');
+    const stepCep = document.getElementById('step-cep');
+    const stepAddress = document.getElementById('step-address');
+    const displayAddress = document.getElementById('display-address');
+    const cepSpinner = document.getElementById('cep-spinner');
+    const cepError = document.getElementById('cep-error');
 
-    // Lógica do Carrinho
-    const cartTrigger = document.getElementById('cart-trigger');
-    const addToCart = document.getElementById('add-to-cart');
-    const cartModal = document.getElementById('cart-modal');
-    const closeCart = document.getElementById('close-cart');
-    const cartBadge = document.getElementById('cart-badge');
+    // Abrir Modal
+    btnPedir.addEventListener('click', () => {
+        modal.classList.add('active');
+        inputCep.focus();
+    });
 
-    let itemsCount = 0;
+    // Fechar Modal
+    btnClose.addEventListener('click', () => {
+        modal.classList.remove('active');
+        resetSteps();
+    });
 
-    function updateCart() {
-        if(itemsCount > 0) {
-            cartBadge.textContent = itemsCount;
-            cartBadge.classList.add('active');
+    // Máscara de CEP
+    inputCep.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 5) {
+            value = value.substring(0, 5) + '-' + value.substring(5, 8);
         }
+        e.target.value = value;
+    });
+
+    // Buscar CEP
+    btnBuscarCep.addEventListener('click', async () => {
+        const cep = inputCep.value.replace(/\D/g, '');
+        if (cep.length !== 8) return;
+
+        // UI Loading
+        cepSpinner.style.display = 'block';
+        btnBuscarCep.querySelector('span').style.opacity = '0.5';
+        cepError.style.display = 'none';
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const data = await response.json();
+
+            if (data.erro) {
+                cepError.style.display = 'block';
+            } else {
+                // Sucesso
+                displayAddress.textContent = `${data.logradouro}, ${data.bairro} - ${data.localidade}/${data.uf}`;
+                stepCep.classList.remove('active');
+                stepAddress.classList.add('active');
+            }
+        } catch (error) {
+            cepError.textContent = "Erro ao buscar CEP. Verifique sua conexão.";
+            cepError.style.display = 'block';
+        } finally {
+            cepSpinner.style.display = 'none';
+            btnBuscarCep.querySelector('span').style.opacity = '1';
+        }
+    });
+
+    function resetSteps() {
+        stepCep.classList.add('active');
+        stepAddress.classList.remove('active');
+        inputCep.value = '';
+        cepError.style.display = 'none';
     }
 
-    addToCart.addEventListener('click', () => {
-        itemsCount++;
-        updateCart();
-        cartModal.classList.add('active');
-    });
-
-    cartTrigger.addEventListener('click', () => cartModal.classList.add('active'));
-    closeCart.addEventListener('click', () => cartModal.classList.remove('active'));
-
-    // FAQ Toggle
-    document.querySelectorAll('.faq-header').forEach(header => {
-        header.addEventListener('click', () => {
-            header.parentElement.classList.toggle('active');
-        });
-    });
-
-    // Variant Selection
-    document.querySelectorAll('.variant-item').forEach(item => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.variant-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-        });
+    // Finalizar (Simulação)
+    document.getElementById('btn-finalizar').addEventListener('click', () => {
+        const num = document.getElementById('input-number').value;
+        if(!num) {
+            alert("Por favor, informe o número da residência.");
+            return;
+        }
+        alert("Pedido recebido! Nosso entregador chegará em 20 minutos.");
+        modal.classList.remove('active');
+        resetSteps();
     });
 </script>
 
