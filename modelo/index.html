@@ -330,18 +330,25 @@
         }
 
         .shipping-options-container {
-            margin-top: 24px;
+            margin-top: 32px;
             margin-bottom: 24px;
         }
 
         .shipping-option {
             background: #ffffff;
-            border: 2px solid var(--primary);
+            border: 2px solid #e2e8f0;
             padding: 16px;
             border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .shipping-option.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
         }
 
         .shipping-option .left {
@@ -370,6 +377,34 @@
             color: var(--success);
             font-weight: 800;
             font-size: 1rem;
+        }
+
+        /* Círculo de Seleção */
+        .selection-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 50%;
+            margin-right: 12px;
+            position: relative;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .shipping-option.selected .selection-circle {
+            border-color: var(--primary);
+        }
+
+        .shipping-option.selected .selection-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            border-radius: 50%;
         }
 
         @keyframes fadeIn {
@@ -586,8 +621,9 @@
 
                     <div class="shipping-options-container">
                         <label class="form-group"><label>Opção de Entrega</label></label>
-                        <div class="shipping-option">
+                        <div class="shipping-option" id="shipping-express">
                             <div class="left">
+                                <div class="selection-circle"></div>
                                 <i class="fas fa-truck-fast"></i>
                                 <div>
                                     <span class="name">Entrega Expressa</span>
@@ -598,7 +634,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="cta-button enabled" id="btn-finalizar">
+                    <button type="button" class="cta-button" id="btn-finalizar">
                         Finalizar Pedido <i class="fas fa-check"></i>
                     </button>
                 </div>
@@ -641,6 +677,8 @@
         const cityInput = document.getElementById('city');
         const ufInput = document.getElementById('uf');
 
+        const shippingOption = document.getElementById('shipping-express');
+
         radios.forEach(radio => {
             radio.addEventListener('change', () => {
                 options.forEach(opt => opt.classList.remove('selected'));
@@ -671,7 +709,6 @@
             }
             e.target.value = value;
             if (value.length === 9) {
-                // Esconde o teclado (remove foco do input)
                 cepInput.blur();
                 simularBuscaCEP(value.replace('-', ''));
             } else {
@@ -681,11 +718,9 @@
         });
 
         async function simularBuscaCEP(cep) {
-            // Oculta detalhes anteriores e mostra spinner
             addressDetails.style.display = 'none';
             loadingCep.style.display = 'flex';
             
-            // Inicia a busca real imediatamente, mas aguarda os 2 segundos para exibir
             try {
                 const fetchPromise = fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json());
                 const delayPromise = new Promise(resolve => setTimeout(resolve, 2000));
@@ -704,18 +739,14 @@
                     
                     addressDetails.style.display = 'block';
                     
-                    // Alerta sutil no campo número
                     const numInput = document.getElementById('number');
                     numInput.classList.add('input-alert');
                     
-                    // Remove alerta ao começar a digitar
                     numInput.addEventListener('input', () => {
                         numInput.classList.remove('input-alert');
                     }, { once: true });
 
-                    setTimeout(() => {
-                        addressDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }, 100);
+                    // Removida a rolagem automática (scrollIntoView)
                 }
             } catch (error) {
                 loadingCep.style.display = 'none';
@@ -723,7 +754,24 @@
             }
         }
 
+        shippingOption.addEventListener('click', () => {
+            shippingOption.classList.toggle('selected');
+            updateFinalButton();
+        });
+
+        function updateFinalButton() {
+            if (shippingOption.classList.contains('selected')) {
+                btnFinalizar.classList.add('enabled');
+            } else {
+                btnFinalizar.classList.remove('enabled');
+            }
+        }
+
         btnFinalizar.addEventListener('click', () => {
+            if (!shippingOption.classList.contains('selected')) {
+                alert('Por favor, selecione uma opção de entrega.');
+                return;
+            }
             if(!document.getElementById('number').value) {
                 alert('Por favor, insira o número da residência.');
                 document.getElementById('number').focus();
