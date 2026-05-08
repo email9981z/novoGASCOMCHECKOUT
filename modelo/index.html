@@ -331,9 +331,35 @@
             padding-top: 24px;
         }
 
+        /* Melhoria de contraste entre seções */
         .shipping-options-container {
             margin-top: 32px;
             margin-bottom: 24px;
+            padding: 24px;
+            background-color: #f8fafc; /* Fundo levemente diferente para destacar a seção */
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .shipping-options-container label.section-title {
+            display: block;
+            font-weight: 800;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shipping-options-container label.section-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 2px;
         }
 
         .shipping-option {
@@ -350,8 +376,8 @@
 
         .shipping-option.selected {
             border-color: var(--primary);
-            background: var(--primary-light);
-            box-shadow: var(--shadow);
+            background: var(--white); /* Mantém branco para contraste com o fundo da seção */
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.1);
         }
 
         .shipping-option .left {
@@ -367,7 +393,6 @@
             display: block;
         }
 
-        /* Foco nos 20 minutos */
         .shipping-option .time {
             font-size: 1.1rem;
             color: var(--primary);
@@ -385,7 +410,6 @@
             border-radius: 20px;
         }
 
-        /* Círculo de Seleção */
         .selection-circle {
             width: 22px;
             height: 22px;
@@ -530,6 +554,9 @@
             .address-row {
                 gap: 8px;
             }
+            .shipping-options-container {
+                padding: 16px;
+            }
             .shipping-option {
                 padding: 16px;
             }
@@ -632,7 +659,7 @@
                     </div>
 
                     <div class="shipping-options-container">
-                        <label class="form-group"><label>Opção de Entrega</label></label>
+                        <label class="section-title">Opção de Entrega</label>
                         <div class="shipping-option" id="shipping-express">
                             <div class="left">
                                 <div class="selection-circle"></div>
