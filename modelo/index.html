@@ -325,24 +325,25 @@
             padding-top: 24px;
         }
 
-        /* Refinamento Final da Seção de Entrega */
+        /* Design de Alta Conversão para Opção de Entrega */
         .shipping-options-container {
             margin-top: 32px;
             margin-bottom: 24px;
-            padding: 20px;
+            padding: 24px;
             background-color: #f8fafc;
-            border-radius: 20px;
+            border-radius: 24px;
             border: 1px solid #e2e8f0;
+            position: relative;
         }
 
         .shipping-options-container label.section-title {
             display: block;
             font-weight: 800;
             font-size: 0.75rem;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             color: var(--text-gray);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -359,63 +360,114 @@
         .shipping-option {
             background: #ffffff;
             border: 2px solid #e2e8f0;
-            padding: 16px 20px;
-            border-radius: 16px;
+            padding: 20px 24px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap; /* Evita quebra de linha */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: visible;
         }
 
         .shipping-option:hover {
             border-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
         }
 
         .shipping-option.selected {
             border-color: var(--primary);
             background: var(--white);
-            box-shadow: 0 8px 16px -4px rgba(0, 85, 255, 0.1);
+            box-shadow: 0 15px 30px -10px rgba(0, 85, 255, 0.15);
+        }
+
+        /* Selo de Recomendado/Imperdível */
+        .shipping-badge {
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background: var(--secondary);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
+            z-index: 2;
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .shipping-option .left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             flex: 1;
         }
 
+        .shipping-option .time-container {
+            display: flex;
+            flex-direction: column;
+        }
+
         .shipping-option .time {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             color: var(--text-dark);
-            font-weight: 700;
-            display: block;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .shipping-option .time i {
+            color: var(--secondary);
+            font-size: 0.9rem;
         }
 
         .shipping-option.selected .time {
             color: var(--primary);
         }
 
+        .shipping-option .sub-text {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .shipping-option .price-tag {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
         .shipping-option .price {
             color: var(--success);
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 1rem;
             background: #f0fdf4;
-            padding: 4px 12px;
-            border-radius: 10px;
+            padding: 6px 14px;
+            border-radius: 12px;
             border: 1px solid #dcfce7;
-            margin-left: 12px;
         }
 
         /* Círculo de Seleção */
         .selection-circle {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border: 2px solid #cbd5e1;
             border-radius: 50%;
             position: relative;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             flex-shrink: 0;
             background: white;
         }
@@ -555,13 +607,17 @@
                 gap: 8px;
             }
             .shipping-options-container {
-                padding: 16px;
+                padding: 20px 16px;
             }
             .shipping-option {
-                padding: 14px 16px;
+                padding: 16px;
             }
             .shipping-option .time {
-                font-size: 0.95rem;
+                font-size: 1rem;
+            }
+            .shipping-badge {
+                right: 16px;
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -661,13 +717,17 @@
                     <div class="shipping-options-container">
                         <label class="section-title">Opção de Entrega</label>
                         <div class="shipping-option" id="shipping-express">
+                            <div class="shipping-badge">Mais Rápido</div>
                             <div class="left">
                                 <div class="selection-circle"></div>
-                                <div>
-                                    <span class="time">Em até 20 minutos</span>
+                                <div class="time-container">
+                                    <span class="time"><i class="fas fa-bolt"></i> Em até 20 minutos</span>
+                                    <span class="sub-text">Entrega prioritária na sua região</span>
                                 </div>
                             </div>
-                            <span class="price">Grátis</span>
+                            <div class="price-tag">
+                                <span class="price">Grátis</span>
+                            </div>
                         </div>
                     </div>
 
