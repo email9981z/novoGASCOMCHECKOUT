@@ -261,7 +261,6 @@
             border-color: var(--primary);
         }
 
-        /* Destaque mais leve no campo número */
         .input-alert {
             border-color: var(--primary) !important;
             background-color: #f0f7ff !important;
@@ -276,7 +275,6 @@
             cursor: not-allowed;
         }
 
-        /* Loading Spinner */
         #loading-cep {
             display: none;
             align-items: center;
@@ -288,7 +286,6 @@
             animation: fadeIn 0.3s ease;
         }
 
-        /* Selo Endereço Atendido */
         .status-badge {
             background: #f0fdf4;
             color: #166534;
@@ -303,7 +300,6 @@
             border: 1px solid #bbf7d0;
         }
 
-        /* GRID FORÇADO LADO A LADO */
         .address-row {
             display: flex !important;
             flex-direction: row !important;
@@ -325,177 +321,136 @@
             padding-top: 24px;
         }
 
-        /* Container Principal */
-.shipping-options-container {
-    margin-top: 32px;
-    margin-bottom: 24px;
-    padding: 24px;
-    background-color: #f8fafc;
-    border-radius: 24px;
-    border: 1px solid #e2e8f0;
-    position: relative;
-}
+        .shipping-options-container {
+            margin-top: 32px;
+            margin-bottom: 24px;
+            padding: 24px;
+            background-color: #f8fafc;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
 
-/* Título da Seção */
-.shipping-options-container label.section-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 800;
-    font-size: 0.75rem;
-    margin-bottom: 20px;
-    color: #475569;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-}
+        .shipping-options-container label.section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-.shipping-options-container label.section-title::before {
-    content: '';
-    width: 3px;
-    height: 14px;
-    background: #0055ff;
-    border-radius: 2px;
-}
+        .shipping-option {
+            background: var(--white);
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-/* Card da Opção de Entrega */
-.shipping-option {
-    background: #ffffff;
-    border: 2px solid #e2e8f0;
-    padding: 20px 24px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-}
+        .shipping-option.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
 
-.shipping-option:hover {
-    border-color: #e6eeff;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
-}
+        .shipping-option .left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
-.shipping-option.selected {
-    border-color: #0055ff;
-    background: #ffffff;
-    box-shadow: 0 15px 30px -10px rgba(0, 85, 255, 0.15);
-}
+        .selection-circle {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #cbd5e1;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.2s;
+            background: var(--white);
+        }
 
-/* Selo "Mais Rápido" */
-.shipping-badge {
-    position: absolute;
-    top: -12px;
-    right: 24px;
-    background: #ff6b00;
-    color: white;
-    font-size: 0.65rem;
-    font-weight: 800;
-    padding: 4px 12px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
-    z-index: 2;
-    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
+        .shipping-option.selected .selection-circle {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
 
-@keyframes bounceIn {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
+        .shipping-option.selected .selection-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+        }
 
-/* Conteúdo (Círculo + Textos) */
-.shipping-option .left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex: 1;
-}
+        .time-container {
+            display: flex;
+            flex-direction: column;
+        }
 
-.shipping-option .time-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
+        .shipping-option .time {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-.shipping-option .time {
-    font-size: 1.15rem;
-    color: #0f172a;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .shipping-option .time i {
+            color: var(--secondary);
+        }
 
-.shipping-option .time i {
-    color: #ff6b00;
-    font-size: 0.9rem;
-}
+        .sub-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
 
-.shipping-option.selected .time {
-    color: #0055ff;
-}
+        .sub-text {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-weight: 600;
+        }
 
-/* Linha Inferior (Subtexto + Preço) */
-.shipping-option .sub-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 4px;
-}
+        .shipping-option .price {
+            font-weight: 800;
+            color: var(--success);
+            font-size: 0.85rem;
+            background: #ecfdf5;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
 
-.shipping-option .sub-text {
-    font-size: 0.75rem;
-    color: #475569;
-    font-weight: 600;
-}
+        .shipping-badge {
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background: var(--secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px -1px rgba(255, 107, 0, 0.3);
+        }
 
-.shipping-option .price {
-    color: #10b981;
-    font-weight: 800;
-    font-size: 0.85rem;
-    background: #f0fdf4;
-    padding: 2px 8px;
-    border-radius: 8px;
-    border: 1px solid #dcfce7;
-    white-space: nowrap;
-}
-
-/* Círculo de Seleção */
-.selection-circle {
-    width: 22px;
-    height: 22px;
-    border: 2px solid #cbd5e1;
-    border-radius: 50%;
-    position: relative;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-    background: white;
-}
-
-.shipping-option.selected .selection-circle {
-    border-color: #0055ff;
-    background: #0055ff;
-}
-
-.shipping-option.selected .selection-circle::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    background-color: white;
-    border-radius: 50%;
-}
-
-
-
-        /* Botões */
         .cta-button {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
@@ -524,6 +479,126 @@
             transform: translateY(-2px) scale(1.02);
             box-shadow: 0 20px 25px -5px rgba(0, 85, 255, 0.4);
             filter: brightness(1.1);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            animation: modalIn 0.3s ease-out;
+        }
+
+        @keyframes modalIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .summary-section {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .summary-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .summary-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .summary-label {
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .summary-value {
+            color: var(--text-dark);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .modal-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .btn-back {
+            background: #f1f5f9;
+            color: var(--text-gray);
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-confirm {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-confirm:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
 
         .features {
@@ -588,6 +663,11 @@
             opacity: 0.6;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         @media (max-width: 480px) {
             .card {
                 padding: 32px 20px;
@@ -617,6 +697,9 @@
             .shipping-badge {
                 right: 16px;
                 font-size: 0.6rem;
+            }
+            .modal-content {
+                padding: 24px;
             }
         }
     </style>
@@ -714,22 +797,21 @@
                     </div>
 
                     <div class="shipping-options-container">
-    <label class="section-title">Opção de Entrega</label>
-    <div class="shipping-option selected" id="shipping-express">
-        <div class="shipping-badge">Mais Rápido</div>
-        <div class="left">
-            <div class="selection-circle"></div>
-            <div class="time-container">
-                <span class="time"><i class="fas fa-bolt"></i> Em até 20 minutos</span>
-                <div class="sub-row">
-                    <span class="sub-text">Entrega prioritária</span>
-                    <span class="price">Grátis</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+                        <label class="section-title">Opção de Entrega</label>
+                        <div class="shipping-option selected" id="shipping-express">
+                            <div class="shipping-badge">Mais Rápido</div>
+                            <div class="left">
+                                <div class="selection-circle"></div>
+                                <div class="time-container">
+                                    <span class="time"><i class="fas fa-bolt"></i> Em até 20 minutos</span>
+                                    <div class="sub-row">
+                                        <span class="sub-text">Entrega prioritária</span>
+                                        <span class="price">Grátis</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <button type="button" class="cta-button" id="btn-finalizar">
                         Finalizar Pedido <i class="fas fa-check"></i>
@@ -744,6 +826,56 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal-overlay" id="modal-confirmacao">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirme seu Pedido</h2>
+            </div>
+            
+            <div class="summary-section">
+                <span class="summary-title">Produto</span>
+                <div class="summary-item">
+                    <span class="summary-label" id="summary-product-name">Gás Residencial - P13</span>
+                    <span class="summary-value" id="summary-product-price">R$ 89,90</span>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <span class="summary-title">Endereço de Entrega</span>
+                <div class="summary-item">
+                    <span class="summary-label">Rua:</span>
+                    <span class="summary-value" id="summary-address-street">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Bairro:</span>
+                    <span class="summary-value" id="summary-address-neighborhood">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Cidade/UF:</span>
+                    <span class="summary-value" id="summary-address-city-uf">-</span>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <span class="summary-title">Forma de Envio</span>
+                <div class="summary-item">
+                    <span class="summary-label">Tipo:</span>
+                    <span class="summary-value" id="summary-shipping-type">Entrega Expressa</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Prazo:</span>
+                    <span class="summary-value">Até 20 minutos</span>
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button type="button" class="btn-back" id="btn-modal-voltar">Voltar</button>
+                <a href="https://checkout.exemplo.com.br/finalizar" class="btn-confirm" id="btn-modal-finalizar">Finalizar Pedido</a>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="footer-links">
@@ -773,8 +905,21 @@
         const neighborhoodInput = document.getElementById('neighborhood');
         const cityInput = document.getElementById('city');
         const ufInput = document.getElementById('uf');
+        const numberInput = document.getElementById('number');
+        const complementInput = document.getElementById('complement');
 
         const shippingOption = document.getElementById('shipping-express');
+
+        // Modal Elements
+        const modalConfirmacao = document.getElementById('modal-confirmacao');
+        const btnModalVoltar = document.getElementById('btn-modal-voltar');
+        const btnModalFinalizar = document.getElementById('btn-modal-finalizar');
+        
+        const summaryProductName = document.getElementById('summary-product-name');
+        const summaryProductPrice = document.getElementById('summary-product-price');
+        const summaryAddressStreet = document.getElementById('summary-address-street');
+        const summaryAddressNeighborhood = document.getElementById('summary-address-neighborhood');
+        const summaryAddressCityUf = document.getElementById('summary-address-city-uf');
 
         radios.forEach(radio => {
             radio.addEventListener('change', () => {
@@ -820,7 +965,7 @@
             
             try {
                 const fetchPromise = fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json());
-                const delayPromise = new Promise(resolve => setTimeout(resolve, 2000));
+                const delayPromise = new Promise(resolve => setTimeout(resolve, 1500));
                 
                 const [data] = await Promise.all([fetchPromise, delayPromise]);
                 
@@ -836,11 +981,10 @@
                     
                     addressDetails.style.display = 'block';
                     
-                    const numInput = document.getElementById('number');
-                    numInput.classList.add('input-alert');
+                    numberInput.classList.add('input-alert');
                     
-                    numInput.addEventListener('input', () => {
-                        numInput.classList.remove('input-alert');
+                    numberInput.addEventListener('input', () => {
+                        numberInput.classList.remove('input-alert');
                     }, { once: true });
                 }
             } catch (error) {
@@ -867,12 +1011,34 @@
                 alert('Por favor, selecione uma opção de entrega.');
                 return;
             }
-            if(!document.getElementById('number').value) {
+            if(!numberInput.value) {
                 alert('Por favor, insira o número da residência.');
-                document.getElementById('number').focus();
+                numberInput.focus();
                 return;
             }
-            alert('Pedido finalizado com sucesso!');
+
+            // Preencher informações no modal
+            const selectedGas = document.querySelector('input[name="gas_type"]:checked');
+            summaryProductName.textContent = selectedGas.dataset.name;
+            summaryProductPrice.textContent = selectedGas.dataset.price;
+            
+            summaryAddressStreet.textContent = `${streetInput.value}, ${numberInput.value} ${complementInput.value ? '(' + complementInput.value + ')' : ''}`;
+            summaryAddressNeighborhood.textContent = neighborhoodInput.value;
+            summaryAddressCityUf.textContent = `${cityInput.value} - ${ufInput.value}`;
+
+            // Abrir modal
+            modalConfirmacao.style.display = 'flex';
+        });
+
+        btnModalVoltar.addEventListener('click', () => {
+            modalConfirmacao.style.display = 'none';
+        });
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', (e) => {
+            if (e.target === modalConfirmacao) {
+                modalConfirmacao.style.display = 'none';
+            }
         });
     </script>
 </body>
