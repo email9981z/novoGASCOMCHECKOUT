@@ -261,16 +261,18 @@
             border-color: var(--primary);
         }
 
+        /* Melhoria no destaque do campo número */
         .input-alert {
-            border-color: var(--secondary) !important;
-            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
-            animation: pulse 2s infinite;
+            border-color: var(--primary) !important;
+            background-color: var(--primary-light) !important;
+            box-shadow: 0 0 0 4px rgba(0, 85, 255, 0.15);
+            animation: softPulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0px rgba(255, 107, 0, 0.2); }
-            70% { box-shadow: 0 0 0 6px rgba(255, 107, 0, 0); }
-            100% { box-shadow: 0 0 0 0px rgba(255, 107, 0, 0); }
+        @keyframes softPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+            100% { transform: scale(1); }
         }
 
         .form-control:disabled {
@@ -337,58 +339,62 @@
         .shipping-option {
             background: #ffffff;
             border: 2px solid #e2e8f0;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .shipping-option.selected {
             border-color: var(--primary);
             background: var(--primary-light);
+            box-shadow: var(--shadow);
         }
 
         .shipping-option .left {
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        .shipping-option i {
-            color: var(--primary);
-            font-size: 1.2rem;
+            gap: 16px;
         }
 
         .shipping-option .name {
             font-weight: 700;
             color: var(--text-dark);
+            font-size: 1rem;
+            display: block;
         }
 
+        /* Foco nos 20 minutos */
         .shipping-option .time {
-            font-size: 0.8rem;
-            color: var(--text-gray);
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 800;
             display: block;
+            margin-top: 2px;
         }
 
         .shipping-option .price {
             color: var(--success);
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            background: #f0fdf4;
+            padding: 4px 12px;
+            border-radius: 20px;
         }
 
         /* Círculo de Seleção */
         .selection-circle {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border: 2px solid #cbd5e1;
             border-radius: 50%;
-            margin-right: 12px;
             position: relative;
             transition: all 0.2s ease;
             flex-shrink: 0;
+            background: white;
         }
 
         .shipping-option.selected .selection-circle {
@@ -401,8 +407,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background-color: var(--primary);
             border-radius: 50%;
         }
@@ -524,6 +530,12 @@
             .address-row {
                 gap: 8px;
             }
+            .shipping-option {
+                padding: 16px;
+            }
+            .shipping-option .time {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -624,10 +636,9 @@
                         <div class="shipping-option" id="shipping-express">
                             <div class="left">
                                 <div class="selection-circle"></div>
-                                <i class="fas fa-truck-fast"></i>
                                 <div>
                                     <span class="name">Entrega Expressa</span>
-                                    <span class="time">Entrega em até 20 minutos</span>
+                                    <span class="time">Em até 20 minutos</span>
                                 </div>
                             </div>
                             <span class="price">Grátis</span>
@@ -745,8 +756,6 @@
                     numInput.addEventListener('input', () => {
                         numInput.classList.remove('input-alert');
                     }, { once: true });
-
-                    // Removida a rolagem automática (scrollIntoView)
                 }
             } catch (error) {
                 loadingCep.style.display = 'none';
