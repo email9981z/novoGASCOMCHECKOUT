@@ -22,6 +22,7 @@
             --text-gray: #475569;
             --white: #ffffff;
             --success: #10b981;
+            --success-dark: #059669;
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             --disabled: #cbd5e1;
@@ -481,6 +482,29 @@
             filter: brightness(1.1);
         }
 
+        /* Botão Voltar Sutil */
+        .btn-back-subtle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--text-gray);
+            border: none;
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 8px auto 0;
+            opacity: 0.7;
+        }
+
+        .btn-back-subtle:hover {
+            opacity: 1;
+            color: var(--text-dark);
+        }
+
         /* --- MODAL REFINADO --- */
         .modal-overlay {
             position: fixed;
@@ -537,7 +561,6 @@
             padding: 32px;
         }
 
-        /* Produto no Modal */
         .modal-product-card {
             display: flex;
             align-items: center;
@@ -570,7 +593,6 @@
             color: var(--primary);
         }
 
-        /* Seções de Resumo */
         .summary-group {
             margin-bottom: 20px;
         }
@@ -621,7 +643,7 @@
 
         .modal-buttons {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
 
@@ -643,7 +665,7 @@
         }
 
         .btn-modal-confirm {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
             color: white;
             border: none;
             padding: 16px;
@@ -654,7 +676,7 @@
             text-decoration: none;
             text-align: center;
             font-size: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 85, 255, 0.2);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -663,7 +685,7 @@
 
         .btn-modal-confirm:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(0, 85, 255, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.3);
             filter: brightness(1.1);
         }
 
@@ -771,13 +793,7 @@
                 padding: 0 24px 24px;
             }
             .modal-buttons {
-                grid-template-columns: 1fr;
-            }
-            .btn-modal-back {
-                order: 2;
-            }
-            .btn-modal-confirm {
-                order: 1;
+                grid-template-columns: 1fr 1fr; /* Mantém lado a lado no mobile se couber, ou ajuste conforme necessário */
             }
         }
     </style>
@@ -836,6 +852,10 @@
                     </div>
                 </div>
 
+                <button type="button" class="btn-back-subtle" id="btn-voltar-cep">
+                    <i class="fas fa-chevron-left"></i> Voltar para escolha do produto
+                </button>
+
                 <!-- Detalhes do Endereço -->
                 <div id="address-details">
                     <div class="status-badge">
@@ -876,7 +896,7 @@
 
                     <div class="shipping-options-container">
                         <label class="section-title">Opção de Entrega</label>
-                        <div class="shipping-option" id="shipping-express">
+                        <div class="shipping-option selected" id="shipping-express">
                             <div class="shipping-badge">Mais Rápido</div>
                             <div class="left">
                                 <div class="selection-circle"></div>
@@ -893,6 +913,10 @@
 
                     <button type="button" class="cta-button" id="btn-finalizar">
                         Finalizar Pedido <i class="fas fa-check"></i>
+                    </button>
+
+                    <button type="button" class="btn-back-subtle" id="btn-voltar-finalizar">
+                        <i class="fas fa-chevron-left"></i> Alterar endereço ou produto
                     </button>
                 </div>
             </div>
@@ -957,7 +981,7 @@
                 <div class="modal-buttons">
                     <button type="button" class="btn-modal-back" id="btn-modal-voltar">Voltar</button>
                     <a href="https://checkout.exemplo.com.br/finalizar" class="btn-modal-confirm" id="btn-modal-finalizar">
-                        Confirmar Pedido <i class="fas fa-chevron-right"></i>
+                        Confirmar <i class="fas fa-chevron-right"></i>
                     </a>
                 </div>
             </div>
@@ -997,6 +1021,10 @@
 
         const shippingOption = document.getElementById('shipping-express');
 
+        // Novos botões de voltar
+        const btnVoltarCep = document.getElementById('btn-voltar-cep');
+        const btnVoltarFinalizar = document.getElementById('btn-voltar-finalizar');
+
         // Modal Elements
         const modalConfirmacao = document.getElementById('modal-confirmacao');
         const btnModalVoltar = document.getElementById('btn-modal-voltar');
@@ -1030,6 +1058,16 @@
             }
         });
 
+        // Lógica dos botões voltar
+        function voltarParaSelecao() {
+            stepShipping.style.display = 'none';
+            stepSelection.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        btnVoltarCep.addEventListener('click', voltarParaSelecao);
+        btnVoltarFinalizar.addEventListener('click', voltarParaSelecao);
+
         cepInput.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 5) {
@@ -1042,12 +1080,14 @@
             } else {
                 addressDetails.style.display = 'none';
                 loadingCep.style.display = 'none';
+                btnVoltarCep.style.display = 'flex';
             }
         });
 
         async function simularBuscaCEP(cep) {
             addressDetails.style.display = 'none';
             loadingCep.style.display = 'flex';
+            btnVoltarCep.style.display = 'none';
             
             try {
                 const fetchPromise = fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json());
@@ -1059,6 +1099,7 @@
 
                 if (data.erro) {
                     alert('CEP não encontrado.');
+                    btnVoltarCep.style.display = 'flex';
                 } else {
                     streetInput.value = data.logradouro || '';
                     neighborhoodInput.value = data.bairro || '';
@@ -1073,6 +1114,7 @@
                 }
             } catch (error) {
                 loadingCep.style.display = 'none';
+                btnVoltarCep.style.display = 'flex';
                 alert('Erro ao buscar CEP.');
             }
         }
@@ -1101,7 +1143,6 @@
                 return;
             }
 
-            // Preencher informações no modal
             const selectedGas = document.querySelector('input[name="gas_type"]:checked');
             modalImg.src = selectedGas.dataset.img;
             modalProductName.textContent = selectedGas.dataset.name;
@@ -1110,7 +1151,6 @@
             modalAddressFull.textContent = `${streetInput.value}, ${numberInput.value} ${complementInput.value ? '- ' + complementInput.value : ''}`;
             modalAddressCity.textContent = `${neighborhoodInput.value}, ${cityInput.value} - ${ufInput.value}`;
 
-            // Abrir modal
             modalConfirmacao.style.display = 'flex';
         });
 
