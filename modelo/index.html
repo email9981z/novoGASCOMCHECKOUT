@@ -95,6 +95,7 @@
             border: 1px solid rgba(255, 255, 255, 0.7);
             position: relative;
             overflow: hidden;
+            transition: all 0.5s ease;
         }
 
         .card::before {
@@ -114,6 +115,11 @@
             letter-spacing: -0.025em;
             color: var(--text-dark);
             line-height: 1.2;
+        }
+
+        /* Seção 1: Seleção de Produtos */
+        #step-selection {
+            display: block;
         }
 
         .products-grid {
@@ -178,6 +184,135 @@
             cursor: pointer;
         }
 
+        /* Seção 2: Cálculo de Envio */
+        #step-shipping {
+            display: none;
+            text-align: left;
+        }
+
+        .mini-cart {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .mini-cart img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .mini-cart .info {
+            flex: 1;
+        }
+
+        .mini-cart .info h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        #address-box {
+            display: none;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #166534;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .shipping-option {
+            background: #ffffff;
+            border: 2px solid var(--primary);
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .shipping-option .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .shipping-option i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .shipping-option .name {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .shipping-option .time {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            display: block;
+        }
+
+        .shipping-option .price {
+            color: var(--success);
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Botões */
         .cta-button {
             display: inline-flex;
             align-items: center;
@@ -300,25 +435,69 @@
 
     <main class="hero">
         <div class="card">
-            <h1>Escolha seu Gás</h1>
-            
-            <div class="products-grid">
-                <label class="product-option" for="gas-p13">
-                    <input type="radio" name="gas_type" id="gas-p13" value="p13" class="radio-input">
-                    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png" alt="Gás Residencial P13">
-                    <span>Gás Residencial - P13</span>
-                </label>
+            <!-- Passo 1: Seleção -->
+            <div id="step-selection">
+                <h1>Escolha seu Gás</h1>
+                
+                <div class="products-grid">
+                    <label class="product-option" for="gas-p13">
+                        <input type="radio" name="gas_type" id="gas-p13" value="p13" class="radio-input" data-name="Gás Residencial - P13" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png">
+                        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png" alt="Gás Residencial P13">
+                        <span>Gás Residencial - P13</span>
+                    </label>
 
-                <label class="product-option" for="gas-p45">
-                    <input type="radio" name="gas_type" id="gas-p45" value="p45" class="radio-input">
-                    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png" alt="Gás Comercial P45">
-                    <span>Gás Comercial - P45</span>
-                </label>
+                    <label class="product-option" for="gas-p45">
+                        <input type="radio" name="gas_type" id="gas-p45" value="p45" class="radio-input" data-name="Gás Comercial - P45" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png">
+                        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png" alt="Gás Comercial P45">
+                        <span>Gás Comercial - P45</span>
+                    </label>
+                </div>
+                
+                <button type="button" class="cta-button" id="btn-continuar" disabled>
+                    Continuar <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
-            
-            <button type="button" class="cta-button" id="btn-continuar" disabled>
-                Continuar <i class="fas fa-arrow-right"></i>
-            </button>
+
+            <!-- Passo 2: Envio -->
+            <div id="step-shipping">
+                <h1>Calcular Envio</h1>
+                
+                <div class="mini-cart">
+                    <img src="" id="mini-img" alt="Produto">
+                    <div class="info">
+                        <h3 id="mini-name">Produto</h3>
+                        <p style="margin:0; font-size:0.8rem;">1 Unidade</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cep">Informe seu CEP</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="cep" class="form-control" placeholder="00000-000" maxlength="9">
+                    </div>
+                </div>
+
+                <div id="address-box">
+                    <strong>Endereço encontrado:</strong><br>
+                    <span id="address-text"></span>
+                </div>
+
+                <div class="shipping-option">
+                    <div class="left">
+                        <i class="fas fa-truck-fast"></i>
+                        <div>
+                            <span class="name">Entrega Expressa</span>
+                            <span class="time">Entrega em até 20 minutos</span>
+                        </div>
+                    </div>
+                    <span class="price">Grátis</span>
+                </div>
+
+                <button type="button" class="cta-button enabled" id="btn-finalizar">
+                    Finalizar Pedido <i class="fas fa-check"></i>
+                </button>
+            </div>
 
             <div class="features">
                 <div class="feature-item"><i class="fas fa-check-circle"></i> Entrega Grátis</div>
@@ -338,42 +517,85 @@
     </footer>
 
     <script>
-        const options = document.querySelectorAll('.product-option');
-        const btn = document.getElementById('btn-continuar');
+        // Elementos
+        const stepSelection = document.getElementById('step-selection');
+        const stepShipping = document.getElementById('step-shipping');
+        const btnContinuar = document.getElementById('btn-continuar');
+        const btnFinalizar = document.getElementById('btn-finalizar');
         const radios = document.querySelectorAll('input[name="gas_type"]');
+        const options = document.querySelectorAll('.product-option');
+        
+        const miniImg = document.getElementById('mini-img');
+        const miniName = document.getElementById('mini-name');
+        const cepInput = document.getElementById('cep');
+        const addressBox = document.getElementById('address-box');
+        const addressText = document.getElementById('address-text');
 
+        // Lógica de Seleção de Produto
         radios.forEach(radio => {
             radio.addEventListener('change', () => {
-                // Remove classe selected de todos os labels
                 options.forEach(opt => opt.classList.remove('selected'));
-                
-                // Adiciona classe selected ao label do radio selecionado
                 if (radio.checked) {
                     radio.parentElement.classList.add('selected');
-                    
-                    // Habilita o botão
-                    btn.disabled = false;
-                    btn.classList.add('enabled');
+                    btnContinuar.disabled = false;
+                    btnContinuar.classList.add('enabled');
                 }
             });
         });
 
-        // Efeito ao clicar no botão habilitado
-        btn.addEventListener('click', function() {
-            if (!this.disabled) {
-                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-                this.style.pointerEvents = 'none';
-                this.style.opacity = '0.8';
-                
-                // Simulação de redirecionamento ou ação futura
-                setTimeout(() => {
-                    alert('Opção selecionada: ' + document.querySelector('input[name="gas_type"]:checked').value);
-                    // Reset para fins de demonstração
-                    this.innerHTML = 'Continuar <i class="fas fa-arrow-right"></i>';
-                    this.style.pointerEvents = 'auto';
-                    this.style.opacity = '1';
-                }, 1000);
+        // Transição para Envio
+        btnContinuar.addEventListener('click', () => {
+            const selected = document.querySelector('input[name="gas_type"]:checked');
+            if (selected) {
+                // Atualiza miniatura
+                miniImg.src = selected.dataset.img;
+                miniName.textContent = selected.dataset.name;
+
+                // Troca de tela
+                stepSelection.style.display = 'none';
+                stepShipping.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+        });
+
+        // Máscara e Busca de CEP
+        cepInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 5) {
+                value = value.substring(0, 5) + '-' + value.substring(5, 8);
+            }
+            e.target.value = value;
+
+            if (value.length === 9) {
+                buscarCEP(value.replace('-', ''));
+            } else {
+                addressBox.style.display = 'none';
+            }
+        });
+
+        async function buscarCEP(cep) {
+            addressText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando endereço...';
+            addressBox.style.display = 'block';
+            
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                
+                if (data.erro) {
+                    addressText.textContent = 'CEP não encontrado. Por favor, verifique.';
+                    addressText.style.color = '#991b1b';
+                } else {
+                    addressText.innerHTML = `${data.logradouro}, ${data.bairro}<br>${data.localidade} - ${data.uf}`;
+                    addressText.style.color = '#166534';
+                }
+            } catch (error) {
+                addressText.textContent = 'Erro ao buscar CEP. Tente novamente.';
+                addressText.style.color = '#991b1b';
+            }
+        }
+
+        btnFinalizar.addEventListener('click', () => {
+            alert('Pedido finalizado com sucesso! Nossa equipe entrará em contato.');
         });
     </script>
 </body>
