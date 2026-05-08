@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Disk Gás Rápido - Entrega de gás em até 20 minutos. Pague na entrega, entrega grátis e atendimento 24h.">
+    <meta name="keywords" content="gás, entrega rápida, botijão, revenda de gás">
+    <title>Revenda de Gás | Entrega Rápida e Segura</title>
+    <link rel="canonical" href="https://seusite.com.br/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0055ff;
+            --primary-dark: #003db3;
+            --primary-light: #e6eeff;
+            --secondary: #ff6b00;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-gray: #475569;
+            --white: #ffffff;
+            --success: #10b981;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --disabled: #cbd5e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            background-image: radial-gradient(circle at 100% 0%, var(--primary-light) 0%, transparent 25%), 
+                              radial-gradient(circle at 0% 100%, var(--primary-light) 0%, transparent 25%);
+            color: var(--text-dark);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .logo::before {
+            content: "\f13d";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 1.4rem;
+        }
+
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .card {
+            background: var(--white);
+            max-width: 540px;
+            width: 100%;
+            padding: 40px 32px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 24px;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .product-option {
+            border: 2px solid #f1f5f9;
+            border-radius: 20px;
+            padding: 20px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            background: #fdfdfd;
+        }
+
+        .product-option:hover {
+            border-color: var(--primary-light);
+            background: var(--white);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .product-option.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .product-option img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 15px;
+            object-fit: contain;
+        }
+
+        .product-option span {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .radio-input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--disabled);
+            color: white;
+            text-decoration: none;
+            padding: 18px 32px;
+            border-radius: 16px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+            cursor: not-allowed;
+            border: none;
+        }
+
+        .cta-button.enabled {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            box-shadow: 0 10px 15px -3px rgba(0, 85, 255, 0.3);
+            cursor: pointer;
+        }
+
+        .cta-button.enabled:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 85, 255, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 40px;
+            text-align: left;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 32px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+
+        .feature-item i {
+            color: var(--success);
+            font-size: 1.1rem;
+        }
+
+        .footer {
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            background: var(--white);
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer p {
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+        }
+
+        .footer p:last-child {
+            margin-bottom: 0;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 32px 20px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .products-grid {
+                gap: 12px;
+            }
+            .product-option img {
+                width: 80px;
+            }
+            .features {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">Disk Gás Rápido</div>
+    </header>
+
+    <main class="hero">
+        <div class="card">
+            <h1>Escolha seu Gás</h1>
+            
+            <div class="products-grid">
+                <label class="product-option" for="gas-p13">
+                    <input type="radio" name="gas_type" id="gas-p13" value="p13" class="radio-input">
+                    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png" alt="Gás Residencial P13">
+                    <span>Gás Residencial - P13</span>
+                </label>
+
+                <label class="product-option" for="gas-p45">
+                    <input type="radio" name="gas_type" id="gas-p45" value="p45" class="radio-input">
+                    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png" alt="Gás Comercial P45">
+                    <span>Gás Comercial - P45</span>
+                </label>
+            </div>
+            
+            <button type="button" class="cta-button" id="btn-continuar" disabled>
+                Continuar <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <div class="features">
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Entrega Grátis</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Pague na Entrega</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Atendimento 24h</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="politica-privacidade.html" title="Leia nossa Política de Privacidade">Política de Privacidade</a>
+            <a href="termos-uso.html" title="Leia nossos Termos de Uso">Termos de Uso</a>
+        </div>
+        <p>&copy; Disk Gás Rápido LTDA - Todos os direitos reservados.</p>
+        <p>CNPJ: 55.943.174/0001-80</p>
+    </footer>
+
+    <script>
+        const options = document.querySelectorAll('.product-option');
+        const btn = document.getElementById('btn-continuar');
+        const radios = document.querySelectorAll('input[name="gas_type"]');
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                // Remove classe selected de todos os labels
+                options.forEach(opt => opt.classList.remove('selected'));
+                
+                // Adiciona classe selected ao label do radio selecionado
+                if (radio.checked) {
+                    radio.parentElement.classList.add('selected');
+                    
+                    // Habilita o botão
+                    btn.disabled = false;
+                    btn.classList.add('enabled');
+                }
+            });
+        });
+
+        // Efeito ao clicar no botão habilitado
+        btn.addEventListener('click', function() {
+            if (!this.disabled) {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+                this.style.pointerEvents = 'none';
+                this.style.opacity = '0.8';
+                
+                // Simulação de redirecionamento ou ação futura
+                setTimeout(() => {
+                    alert('Opção selecionada: ' + document.querySelector('input[name="gas_type"]:checked').value);
+                    // Reset para fins de demonstração
+                    this.innerHTML = 'Continuar <i class="fas fa-arrow-right"></i>';
+                    this.style.pointerEvents = 'auto';
+                    this.style.opacity = '1';
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
