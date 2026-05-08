@@ -331,85 +331,78 @@
             padding-top: 24px;
         }
 
-        /* Refinamento Premium da Seção de Entrega */
+        /* Refinamento de Proporções da Seção de Entrega */
         .shipping-options-container {
             margin-top: 32px;
             margin-bottom: 24px;
-            padding: 28px;
+            padding: 20px;
             background-color: #f8fafc;
-            border-radius: 24px;
+            border-radius: 20px;
             border: 1px solid #e2e8f0;
-            position: relative;
-            transition: all 0.3s ease;
         }
 
         .shipping-options-container label.section-title {
             display: block;
             font-weight: 800;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
+            font-size: 0.75rem;
+            margin-bottom: 16px;
             color: var(--text-gray);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .shipping-options-container label.section-title::before {
             content: '';
-            width: 4px;
-            height: 16px;
+            width: 3px;
+            height: 14px;
             background: var(--primary);
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .shipping-option {
             background: #ffffff;
             border: 2px solid #e2e8f0;
-            padding: 24px;
-            border-radius: 20px;
+            padding: 16px 20px;
+            border-radius: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .shipping-option:hover {
             border-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
         }
 
         .shipping-option.selected {
             border-color: var(--primary);
             background: var(--white);
-            box-shadow: 0 15px 30px -10px rgba(0, 85, 255, 0.15);
+            box-shadow: 0 8px 16px -4px rgba(0, 85, 255, 0.1);
         }
 
         .shipping-option .left {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 14px;
         }
 
         .shipping-option .name {
             font-weight: 600;
             color: var(--text-gray);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
 
         .shipping-option .time {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: var(--text-dark);
             font-weight: 800;
             display: block;
-            letter-spacing: -0.02em;
         }
 
         .shipping-option.selected .time {
@@ -419,21 +412,21 @@
         .shipping-option .price {
             color: var(--success);
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 0.95rem;
             background: #f0fdf4;
-            padding: 6px 16px;
-            border-radius: 12px;
+            padding: 4px 12px;
+            border-radius: 10px;
             border: 1px solid #dcfce7;
         }
 
-        /* Círculo de Seleção Premium */
+        /* Círculo de Seleção Proporcional */
         .selection-circle {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             border: 2px solid #cbd5e1;
             border-radius: 50%;
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             flex-shrink: 0;
             background: white;
         }
@@ -449,11 +442,10 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: white;
             border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes fadeIn {
@@ -574,17 +566,13 @@
                 gap: 8px;
             }
             .shipping-options-container {
-                padding: 20px;
+                padding: 16px;
             }
             .shipping-option {
-                padding: 18px;
-                gap: 12px;
-            }
-            .shipping-option .left {
-                gap: 12px;
+                padding: 14px 16px;
             }
             .shipping-option .time {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
         }
     </style>
