@@ -196,6 +196,17 @@
             text-align: left;
         }
 
+        .step-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .step-header h1 {
+            margin-bottom: 0;
+        }
+
         .mini-cart {
             display: flex;
             align-items: center;
@@ -487,22 +498,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             background: transparent;
             color: var(--text-gray);
             border: none;
-            padding: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            padding: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            margin: 8px auto 0;
             opacity: 0.7;
         }
 
         .btn-back-subtle:hover {
             opacity: 1;
-            color: var(--text-dark);
+            color: var(--primary);
+        }
+
+        .btn-back-footer {
+            margin: 12px auto 0;
         }
 
         /* --- MODAL REFINADO --- */
@@ -793,7 +807,7 @@
                 padding: 0 24px 24px;
             }
             .modal-buttons {
-                grid-template-columns: 1fr 1fr; /* Mantém lado a lado no mobile se couber, ou ajuste conforme necessário */
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
@@ -833,7 +847,12 @@
 
             <!-- Passo 2: Envio -->
             <div id="step-shipping">
-                <h1>Calcular Envio</h1>
+                <div class="step-header">
+                    <h1>Calcular Envio</h1>
+                    <button type="button" class="btn-back-subtle" id="btn-voltar-cep">
+                        <i class="fas fa-chevron-left"></i> Voltar
+                    </button>
+                </div>
                 
                 <div class="mini-cart">
                     <img src="" id="mini-img" alt="Produto">
@@ -851,10 +870,6 @@
                         <i class="fas fa-spinner fa-spin"></i> Buscando endereço...
                     </div>
                 </div>
-
-                <button type="button" class="btn-back-subtle" id="btn-voltar-cep">
-                    <i class="fas fa-chevron-left"></i> Voltar
-                </button>
 
                 <!-- Detalhes do Endereço -->
                 <div id="address-details">
@@ -896,7 +911,7 @@
 
                     <div class="shipping-options-container">
                         <label class="section-title">Opção de Entrega</label>
-                        <div class="shipping-option" id="shipping-express">
+                        <div class="shipping-option selected" id="shipping-express">
                             <div class="shipping-badge">Mais Rápido</div>
                             <div class="left">
                                 <div class="selection-circle"></div>
@@ -915,8 +930,8 @@
                         Finalizar Pedido <i class="fas fa-check"></i>
                     </button>
 
-                    <button type="button" class="btn-back-subtle" id="btn-voltar-finalizar">
-                        <i class="fas fa-chevron-left"></i> Voltar
+                    <button type="button" class="btn-back-subtle btn-back-footer" id="btn-voltar-finalizar">
+                        <i class="fas fa-chevron-left"></i> Alterar endereço ou produto
                     </button>
                 </div>
             </div>
@@ -1058,7 +1073,6 @@
             }
         });
 
-        // Lógica dos botões voltar
         function voltarParaSelecao() {
             stepShipping.style.display = 'none';
             stepSelection.style.display = 'block';
@@ -1080,14 +1094,12 @@
             } else {
                 addressDetails.style.display = 'none';
                 loadingCep.style.display = 'none';
-                btnVoltarCep.style.display = 'flex';
             }
         });
 
         async function simularBuscaCEP(cep) {
             addressDetails.style.display = 'none';
             loadingCep.style.display = 'flex';
-            btnVoltarCep.style.display = 'none';
             
             try {
                 const fetchPromise = fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json());
@@ -1099,7 +1111,6 @@
 
                 if (data.erro) {
                     alert('CEP não encontrado.');
-                    btnVoltarCep.style.display = 'flex';
                 } else {
                     streetInput.value = data.logradouro || '';
                     neighborhoodInput.value = data.bairro || '';
@@ -1114,7 +1125,6 @@
                 }
             } catch (error) {
                 loadingCep.style.display = 'none';
-                btnVoltarCep.style.display = 'flex';
                 alert('Erro ao buscar CEP.');
             }
         }
