@@ -481,15 +481,15 @@
             filter: brightness(1.1);
         }
 
-        /* Modal Styles */
+        /* --- MODAL REFINADO --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -500,105 +500,171 @@
         .modal-content {
             background: var(--white);
             width: 100%;
-            max-width: 500px;
-            border-radius: 24px;
-            padding: 32px;
-            box-shadow: var(--shadow-lg);
-            animation: modalIn 0.3s ease-out;
+            max-width: 480px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes modalIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { transform: scale(0.95) translateY(10px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
         }
 
         .modal-header {
-            margin-bottom: 24px;
+            padding: 24px 32px;
+            background: #f8fafc;
+            border-bottom: 1px solid #f1f5f9;
             text-align: center;
         }
 
         .modal-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .summary-section {
+        .modal-header h2 i {
+            color: var(--success);
+        }
+
+        .modal-body {
+            padding: 32px;
+        }
+
+        /* Produto no Modal */
+        .modal-product-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--primary-light);
+            padding: 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+
+        .modal-product-img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            background: white;
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .modal-product-info h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .modal-product-info .price {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Seções de Resumo */
+        .summary-group {
             margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #f1f5f9;
         }
 
-        .summary-section:last-of-type {
-            border-bottom: none;
-        }
-
-        .summary-title {
-            font-size: 0.75rem;
+        .summary-group label {
+            display: block;
+            font-size: 0.7rem;
             font-weight: 800;
             color: var(--text-gray);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
             margin-bottom: 8px;
-            font-size: 0.95rem;
         }
 
-        .summary-label {
-            color: var(--text-gray);
-            font-weight: 500;
+        .summary-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
         }
 
-        .summary-value {
+        .summary-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-row i {
+            color: var(--primary);
+            margin-top: 3px;
+            width: 16px;
+        }
+
+        .summary-text {
             color: var(--text-dark);
-            font-weight: 700;
-            text-align: right;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .modal-footer {
+            padding: 0 32px 32px;
         }
 
         .modal-buttons {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1.5fr;
             gap: 12px;
-            margin-top: 32px;
         }
 
-        .btn-back {
+        .btn-modal-back {
             background: #f1f5f9;
             color: var(--text-gray);
             border: none;
             padding: 16px;
-            border-radius: 12px;
+            border-radius: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
-        .btn-back:hover {
+        .btn-modal-back:hover {
             background: #e2e8f0;
+            color: var(--text-dark);
         }
 
-        .btn-confirm {
-            background: var(--primary);
+        .btn-modal-confirm {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
             padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
+            border-radius: 16px;
+            font-weight: 800;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             text-decoration: none;
             text-align: center;
+            font-size: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 85, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .btn-confirm:hover {
-            background: var(--primary-dark);
+        .btn-modal-confirm:hover {
             transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 85, 255, 0.3);
+            filter: brightness(1.1);
         }
 
         .features {
@@ -698,8 +764,20 @@
                 right: 16px;
                 font-size: 0.6rem;
             }
-            .modal-content {
+            .modal-body {
                 padding: 24px;
+            }
+            .modal-footer {
+                padding: 0 24px 24px;
+            }
+            .modal-buttons {
+                grid-template-columns: 1fr;
+            }
+            .btn-modal-back {
+                order: 2;
+            }
+            .btn-modal-confirm {
+                order: 1;
             }
         }
     </style>
@@ -798,7 +876,7 @@
 
                     <div class="shipping-options-container">
                         <label class="section-title">Opção de Entrega</label>
-                        <div class="shipping-option selected" id="shipping-express">
+                        <div class="shipping-option" id="shipping-express">
                             <div class="shipping-badge">Mais Rápido</div>
                             <div class="left">
                                 <div class="selection-circle"></div>
@@ -827,52 +905,61 @@
         </div>
     </main>
 
-    <!-- Modal de Confirmação -->
+    <!-- Modal de Confirmação Refinado -->
     <div class="modal-overlay" id="modal-confirmacao">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Confirme seu Pedido</h2>
+                <h2><i class="fas fa-shopping-cart"></i> Resumo do Pedido</h2>
             </div>
             
-            <div class="summary-section">
-                <span class="summary-title">Produto</span>
-                <div class="summary-item">
-                    <span class="summary-label" id="summary-product-name">Gás Residencial - P13</span>
-                    <span class="summary-value" id="summary-product-price">R$ 89,90</span>
+            <div class="modal-body">
+                <!-- Card do Produto -->
+                <div class="modal-product-card">
+                    <img src="" id="modal-img" class="modal-product-img" alt="Produto">
+                    <div class="modal-product-info">
+                        <h3 id="modal-product-name">-</h3>
+                        <div class="price" id="modal-product-price">-</div>
+                    </div>
+                </div>
+
+                <!-- Endereço -->
+                <div class="summary-group">
+                    <label>Endereço de Entrega</label>
+                    <div class="summary-box">
+                        <div class="summary-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="summary-text" id="modal-address-full">-</span>
+                        </div>
+                        <div class="summary-row">
+                            <i class="fas fa-city"></i>
+                            <span class="summary-text" id="modal-address-city">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Envio -->
+                <div class="summary-group">
+                    <label>Forma de Envio</label>
+                    <div class="summary-box">
+                        <div class="summary-row">
+                            <i class="fas fa-bolt"></i>
+                            <span class="summary-text">Entrega Expressa (Até 20 min)</span>
+                        </div>
+                        <div class="summary-row">
+                            <i class="fas fa-truck"></i>
+                            <span class="summary-text" style="color: var(--success);">Frete Grátis</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="summary-section">
-                <span class="summary-title">Endereço de Entrega</span>
-                <div class="summary-item">
-                    <span class="summary-label">Rua:</span>
-                    <span class="summary-value" id="summary-address-street">-</span>
+            <div class="modal-footer">
+                <div class="modal-buttons">
+                    <button type="button" class="btn-modal-back" id="btn-modal-voltar">Voltar</button>
+                    <a href="https://checkout.exemplo.com.br/finalizar" class="btn-modal-confirm" id="btn-modal-finalizar">
+                        Confirmar Pedido <i class="fas fa-chevron-right"></i>
+                    </a>
                 </div>
-                <div class="summary-item">
-                    <span class="summary-label">Bairro:</span>
-                    <span class="summary-value" id="summary-address-neighborhood">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Cidade/UF:</span>
-                    <span class="summary-value" id="summary-address-city-uf">-</span>
-                </div>
-            </div>
-
-            <div class="summary-section">
-                <span class="summary-title">Forma de Envio</span>
-                <div class="summary-item">
-                    <span class="summary-label">Tipo:</span>
-                    <span class="summary-value" id="summary-shipping-type">Entrega Expressa</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Prazo:</span>
-                    <span class="summary-value">Até 20 minutos</span>
-                </div>
-            </div>
-
-            <div class="modal-buttons">
-                <button type="button" class="btn-back" id="btn-modal-voltar">Voltar</button>
-                <a href="https://checkout.exemplo.com.br/finalizar" class="btn-confirm" id="btn-modal-finalizar">Finalizar Pedido</a>
             </div>
         </div>
     </div>
@@ -913,13 +1000,12 @@
         // Modal Elements
         const modalConfirmacao = document.getElementById('modal-confirmacao');
         const btnModalVoltar = document.getElementById('btn-modal-voltar');
-        const btnModalFinalizar = document.getElementById('btn-modal-finalizar');
         
-        const summaryProductName = document.getElementById('summary-product-name');
-        const summaryProductPrice = document.getElementById('summary-product-price');
-        const summaryAddressStreet = document.getElementById('summary-address-street');
-        const summaryAddressNeighborhood = document.getElementById('summary-address-neighborhood');
-        const summaryAddressCityUf = document.getElementById('summary-address-city-uf');
+        const modalImg = document.getElementById('modal-img');
+        const modalProductName = document.getElementById('modal-product-name');
+        const modalProductPrice = document.getElementById('modal-product-price');
+        const modalAddressFull = document.getElementById('modal-address-full');
+        const modalAddressCity = document.getElementById('modal-address-city');
 
         radios.forEach(radio => {
             radio.addEventListener('change', () => {
@@ -965,7 +1051,7 @@
             
             try {
                 const fetchPromise = fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json());
-                const delayPromise = new Promise(resolve => setTimeout(resolve, 1500));
+                const delayPromise = new Promise(resolve => setTimeout(resolve, 1200));
                 
                 const [data] = await Promise.all([fetchPromise, delayPromise]);
                 
@@ -980,9 +1066,7 @@
                     ufInput.value = data.uf || '';
                     
                     addressDetails.style.display = 'block';
-                    
                     numberInput.classList.add('input-alert');
-                    
                     numberInput.addEventListener('input', () => {
                         numberInput.classList.remove('input-alert');
                     }, { once: true });
@@ -1019,12 +1103,12 @@
 
             // Preencher informações no modal
             const selectedGas = document.querySelector('input[name="gas_type"]:checked');
-            summaryProductName.textContent = selectedGas.dataset.name;
-            summaryProductPrice.textContent = selectedGas.dataset.price;
+            modalImg.src = selectedGas.dataset.img;
+            modalProductName.textContent = selectedGas.dataset.name;
+            modalProductPrice.textContent = selectedGas.dataset.price;
             
-            summaryAddressStreet.textContent = `${streetInput.value}, ${numberInput.value} ${complementInput.value ? '(' + complementInput.value + ')' : ''}`;
-            summaryAddressNeighborhood.textContent = neighborhoodInput.value;
-            summaryAddressCityUf.textContent = `${cityInput.value} - ${ufInput.value}`;
+            modalAddressFull.textContent = `${streetInput.value}, ${numberInput.value} ${complementInput.value ? '- ' + complementInput.value : ''}`;
+            modalAddressCity.textContent = `${neighborhoodInput.value}, ${cityInput.value} - ${ufInput.value}`;
 
             // Abrir modal
             modalConfirmacao.style.display = 'flex';
@@ -1034,7 +1118,6 @@
             modalConfirmacao.style.display = 'none';
         });
 
-        // Fechar modal ao clicar fora
         window.addEventListener('click', (e) => {
             if (e.target === modalConfirmacao) {
                 modalConfirmacao.style.display = 'none';
