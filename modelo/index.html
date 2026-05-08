@@ -25,6 +25,7 @@
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             --disabled: #cbd5e1;
+            --input-bg: #f1f5f9;
         }
 
         * {
@@ -229,15 +230,17 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
             display: block;
             font-weight: 700;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: var(--text-dark);
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .input-with-icon {
@@ -254,65 +257,56 @@
 
         .form-control {
             width: 100%;
-            padding: 14px 16px 14px 44px;
+            padding: 14px 16px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 1rem;
             font-family: inherit;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
+            background: var(--white);
+            color: var(--text-dark);
+            font-weight: 500;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .form-control:disabled {
+            background: var(--input-bg);
+            border-color: #e2e8f0;
+            color: var(--text-gray);
+            cursor: not-allowed;
+        }
+
+        /* Layout em Grade para Endereço */
+        .address-row {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 0;
+        }
+
+        .row-street-number {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .row-city-uf {
+            grid-template-columns: 1fr 1fr;
         }
 
         /* Detalhes do Endereço */
         #address-details {
             display: none;
             animation: fadeIn 0.4s ease;
-        }
-
-        .address-info-card {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .address-info-card h4 {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #166534;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .address-info-card p {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #14532d;
-            margin: 0;
-            line-height: 1.4;
-        }
-
-        .address-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .address-grid .form-control {
-            padding-left: 16px; /* Sem ícone para esses campos */
+            margin-top: 24px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 24px;
         }
 
         .shipping-options-container {
+            margin-top: 24px;
             margin-bottom: 24px;
         }
 
@@ -471,7 +465,7 @@
                 grid-template-columns: 1fr;
                 gap: 12px;
             }
-            .address-grid {
+            .row-street-number, .row-city-uf {
                 grid-template-columns: 1fr;
                 gap: 12px;
             }
@@ -525,28 +519,39 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="cep">Informe seu CEP</label>
+                    <label for="cep">CEP de Entrega</label>
                     <div class="input-with-icon">
                         <i class="fas fa-map-marker-alt"></i>
                         <input type="text" id="cep" class="form-control" placeholder="00000-000" maxlength="9">
                     </div>
                 </div>
 
-                <!-- Esta seção só aparece após busca do CEP -->
+                <!-- Detalhes do Endereço (Preenchimento Automático) -->
                 <div id="address-details">
-                    <div class="address-info-card">
-                        <h4><i class="fas fa-check-circle"></i> Endereço Localizado</h4>
-                        <p id="address-text">Rua Exemplo, Bairro Exemplo, Cidade - UF</p>
-                    </div>
-
-                    <div class="address-grid">
+                    <div class="address-row row-street-number">
+                        <div class="form-group">
+                            <label for="street">Logradouro / Rua</label>
+                            <input type="text" id="street" class="form-control" disabled>
+                        </div>
                         <div class="form-group">
                             <label for="number">Número</label>
                             <input type="text" id="number" class="form-control" placeholder="Ex: 123">
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="neighborhood">Bairro</label>
+                        <input type="text" id="neighborhood" class="form-control" disabled>
+                    </div>
+
+                    <div class="address-row row-city-uf">
+                        <div class="form-group">
+                            <label for="city">Cidade</label>
+                            <input type="text" id="city" class="form-control" disabled>
+                        </div>
                         <div class="form-group">
                             <label for="complement">Complemento</label>
-                            <input type="text" id="complement" class="form-control" placeholder="Ex: Bloco A">
+                            <input type="text" id="complement" class="form-control" placeholder="Apto, Bloco...">
                         </div>
                     </div>
 
@@ -601,7 +606,11 @@
         const miniPrice = document.getElementById('mini-price');
         const cepInput = document.getElementById('cep');
         const addressDetails = document.getElementById('address-details');
-        const addressText = document.getElementById('address-text');
+        
+        // Campos de Endereço
+        const streetInput = document.getElementById('street');
+        const neighborhoodInput = document.getElementById('neighborhood');
+        const cityInput = document.getElementById('city');
 
         // Lógica de Seleção de Produto
         radios.forEach(radio => {
@@ -645,7 +654,6 @@
         });
 
         async function buscarCEP(cep) {
-            // Feedback visual de carregamento
             cepInput.style.borderColor = 'var(--primary)';
             
             try {
@@ -657,12 +665,17 @@
                     addressDetails.style.display = 'none';
                     cepInput.style.borderColor = '#ef4444';
                 } else {
-                    addressText.innerHTML = `${data.logradouro}, ${data.bairro}<br>${data.localidade} - ${data.uf}`;
+                    // Preenche os campos individuais
+                    streetInput.value = data.logradouro || '';
+                    neighborhoodInput.value = data.bairro || '';
+                    cityInput.value = `${data.localidade} - ${data.uf}`;
+                    
                     addressDetails.style.display = 'block';
                     cepInput.style.borderColor = 'var(--success)';
                     
-                    // Scroll suave para mostrar os novos campos
+                    // Foco automático no campo número para agilizar
                     setTimeout(() => {
+                        document.getElementById('number').focus();
                         addressDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     }, 100);
                 }
