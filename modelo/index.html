@@ -261,6 +261,18 @@
             border-color: var(--primary);
         }
 
+        .input-alert {
+            border-color: var(--secondary) !important;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0px rgba(255, 107, 0, 0.2); }
+            70% { box-shadow: 0 0 0 6px rgba(255, 107, 0, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(255, 107, 0, 0); }
+        }
+
         .form-control:disabled {
             background: var(--input-bg);
             border-color: #e2e8f0;
@@ -691,8 +703,17 @@
                     ufInput.value = data.uf || '';
                     
                     addressDetails.style.display = 'block';
+                    
+                    // Alerta sutil no campo número
+                    const numInput = document.getElementById('number');
+                    numInput.classList.add('input-alert');
+                    
+                    // Remove alerta ao começar a digitar
+                    numInput.addEventListener('input', () => {
+                        numInput.classList.remove('input-alert');
+                    }, { once: true });
+
                     setTimeout(() => {
-                        document.getElementById('number').focus();
                         addressDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     }, 100);
                 }
