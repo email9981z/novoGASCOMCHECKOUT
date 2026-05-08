@@ -344,7 +344,7 @@
     font-weight: 800;
     font-size: 0.75rem;
     margin-bottom: 20px;
-    color: #475569; /* var(--text-gray) */
+    color: #475569;
     text-transform: uppercase;
     letter-spacing: 1.2px;
 }
@@ -353,7 +353,7 @@
     content: '';
     width: 3px;
     height: 14px;
-    background: #0055ff; /* var(--primary) */
+    background: #0055ff;
     border-radius: 2px;
 }
 
@@ -364,7 +364,6 @@
     padding: 20px 24px;
     border-radius: 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -372,13 +371,13 @@
 }
 
 .shipping-option:hover {
-    border-color: #e6eeff; /* var(--primary-light) */
+    border-color: #e6eeff;
     transform: translateY(-2px);
     box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
 }
 
 .shipping-option.selected {
-    border-color: #0055ff; /* var(--primary) */
+    border-color: #0055ff;
     background: #ffffff;
     box-shadow: 0 15px 30px -10px rgba(0, 85, 255, 0.15);
 }
@@ -388,7 +387,7 @@
     position: absolute;
     top: -12px;
     right: 24px;
-    background: #ff6b00; /* var(--secondary) */
+    background: #ff6b00;
     color: white;
     font-size: 0.65rem;
     font-weight: 800;
@@ -406,7 +405,7 @@
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* Conteúdo Esquerdo (Círculo + Texto) */
+/* Conteúdo (Círculo + Textos) */
 .shipping-option .left {
     display: flex;
     align-items: center;
@@ -417,55 +416,53 @@
 .shipping-option .time-container {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .shipping-option .time {
     font-size: 1.15rem;
-    color: #0f172a; /* var(--text-dark) */
+    color: #0f172a;
     font-weight: 800;
     display: flex;
     align-items: center;
     gap: 8px;
-    white-space: nowrap;
 }
 
 .shipping-option .time i {
-    color: #ff6b00; /* var(--secondary) */
+    color: #ff6b00;
     font-size: 0.9rem;
 }
 
 .shipping-option.selected .time {
-    color: #0055ff; /* var(--primary) */
+    color: #0055ff;
+}
+
+/* Linha Inferior (Subtexto + Preço) */
+.shipping-option .sub-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
 }
 
 .shipping-option .sub-text {
     font-size: 0.75rem;
-    color: #475569; /* var(--text-gray) */
+    color: #475569;
     font-weight: 600;
-    margin-top: 2px;
-}
-
-/* Etiqueta de Preço (Corrigida para não vazar) */
-.shipping-option .price-tag {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-left: 8px;
-    flex-shrink: 0;
 }
 
 .shipping-option .price {
-    color: #10b981; /* var(--success) */
+    color: #10b981;
     font-weight: 800;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     background: #f0fdf4;
-    padding: 4px 10px;
-    border-radius: 10px;
+    padding: 2px 8px;
+    border-radius: 8px;
     border: 1px solid #dcfce7;
     white-space: nowrap;
 }
 
-/* Círculo de Seleção Personalizado */
+/* Círculo de Seleção */
 .selection-circle {
     width: 22px;
     height: 22px;
@@ -493,6 +490,7 @@
     background-color: white;
     border-radius: 50%;
 }
+
 
 
         /* Botões */
@@ -717,17 +715,17 @@
 
                     <div class="shipping-options-container">
     <label class="section-title">Opção de Entrega</label>
-    <div class="shipping-option" id="shipping-express">
+    <div class="shipping-option selected" id="shipping-express">
         <div class="shipping-badge">Mais Rápido</div>
         <div class="left">
             <div class="selection-circle"></div>
             <div class="time-container">
                 <span class="time"><i class="fas fa-bolt"></i> Em até 20 minutos</span>
-                <span class="sub-text">Entrega prioritária</span>
+                <div class="sub-row">
+                    <span class="sub-text">Entrega prioritária</span>
+                    <span class="price">Grátis</span>
+                </div>
             </div>
-        </div>
-        <div class="price-tag">
-            <span class="price">Grátis</span>
         </div>
     </div>
 </div>
