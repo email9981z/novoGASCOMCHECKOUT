@@ -168,14 +168,18 @@
 
         .product-option span {
             font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--text-dark);
+            font-size: 0.9rem;
+            color: var(--text-gray);
             text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 1;
-            line-height: 1.2;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .product-price {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--primary);
+            display: block;
         }
 
         .radio-input {
@@ -215,6 +219,13 @@
             font-size: 1rem;
             font-weight: 700;
             color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+
+        .mini-cart .info .price {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 0.95rem;
         }
 
         .form-group {
@@ -441,15 +452,17 @@
                 
                 <div class="products-grid">
                     <label class="product-option" for="gas-p13">
-                        <input type="radio" name="gas_type" id="gas-p13" value="p13" class="radio-input" data-name="Gás Residencial - P13" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png">
+                        <input type="radio" name="gas_type" id="gas-p13" value="p13" class="radio-input" data-name="Gás Residencial - P13" data-price="R$ 89,90" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png">
                         <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png" alt="Gás Residencial P13">
                         <span>Gás Residencial - P13</span>
+                        <div class="product-price">R$ 89,90</div>
                     </label>
 
                     <label class="product-option" for="gas-p45">
-                        <input type="radio" name="gas_type" id="gas-p45" value="p45" class="radio-input" data-name="Gás Comercial - P45" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png">
+                        <input type="radio" name="gas_type" id="gas-p45" value="p45" class="radio-input" data-name="Gás Comercial - P45" data-price="R$ 395,90" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png">
                         <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png" alt="Gás Comercial P45">
                         <span>Gás Comercial - P45</span>
+                        <div class="product-price">R$ 395,90</div>
                     </label>
                 </div>
                 
@@ -466,7 +479,8 @@
                     <img src="" id="mini-img" alt="Produto">
                     <div class="info">
                         <h3 id="mini-name">Produto</h3>
-                        <p style="margin:0; font-size:0.8rem;">1 Unidade</p>
+                        <div class="price" id="mini-price">R$ 0,00</div>
+                        <p style="margin:0; font-size:0.8rem; color: var(--text-gray);">1 Unidade</p>
                     </div>
                 </div>
 
@@ -527,6 +541,7 @@
         
         const miniImg = document.getElementById('mini-img');
         const miniName = document.getElementById('mini-name');
+        const miniPrice = document.getElementById('mini-price');
         const cepInput = document.getElementById('cep');
         const addressBox = document.getElementById('address-box');
         const addressText = document.getElementById('address-text');
@@ -550,6 +565,7 @@
                 // Atualiza miniatura
                 miniImg.src = selected.dataset.img;
                 miniName.textContent = selected.dataset.name;
+                miniPrice.textContent = selected.dataset.price;
 
                 // Troca de tela
                 stepSelection.style.display = 'none';
