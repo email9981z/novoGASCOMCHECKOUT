@@ -261,18 +261,12 @@
             border-color: var(--primary);
         }
 
-        /* Melhoria no destaque do campo número */
+        /* Destaque mais leve no campo número */
         .input-alert {
             border-color: var(--primary) !important;
-            background-color: var(--primary-light) !important;
-            box-shadow: 0 0 0 4px rgba(0, 85, 255, 0.15);
-            animation: softPulse 2s infinite;
-        }
-
-        @keyframes softPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.01); }
-            100% { transform: scale(1); }
+            background-color: #f0f7ff !important;
+            box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.08);
+            transition: all 0.3s ease;
         }
 
         .form-control:disabled {
@@ -331,7 +325,7 @@
             padding-top: 24px;
         }
 
-        /* Refinamento de Proporções da Seção de Entrega */
+        /* Refinamento Final da Seção de Entrega */
         .shipping-options-container {
             margin-top: 32px;
             margin-bottom: 24px;
@@ -372,6 +366,7 @@
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            white-space: nowrap; /* Evita quebra de linha */
         }
 
         .shipping-option:hover {
@@ -388,20 +383,13 @@
             display: flex;
             align-items: center;
             gap: 14px;
-        }
-
-        .shipping-option .name {
-            font-weight: 600;
-            color: var(--text-gray);
-            font-size: 0.85rem;
-            display: block;
-            margin-bottom: 1px;
+            flex: 1;
         }
 
         .shipping-option .time {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--text-dark);
-            font-weight: 800;
+            font-weight: 700;
             display: block;
         }
 
@@ -417,9 +405,10 @@
             padding: 4px 12px;
             border-radius: 10px;
             border: 1px solid #dcfce7;
+            margin-left: 12px;
         }
 
-        /* Círculo de Seleção Proporcional */
+        /* Círculo de Seleção */
         .selection-circle {
             width: 20px;
             height: 20px;
@@ -572,7 +561,7 @@
                 padding: 14px 16px;
             }
             .shipping-option .time {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -675,7 +664,6 @@
                             <div class="left">
                                 <div class="selection-circle"></div>
                                 <div>
-                                    <span class="name">Entrega Expressa</span>
                                     <span class="time">Em até 20 minutos</span>
                                 </div>
                             </div>
