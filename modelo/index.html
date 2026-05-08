@@ -325,174 +325,175 @@
             padding-top: 24px;
         }
 
-        /* Design de Alta Conversão para Opção de Entrega */
-        .shipping-options-container {
-            margin-top: 32px;
-            margin-bottom: 24px;
-            padding: 24px;
-            background-color: #f8fafc;
-            border-radius: 24px;
-            border: 1px solid #e2e8f0;
-            position: relative;
-        }
+        /* Container Principal */
+.shipping-options-container {
+    margin-top: 32px;
+    margin-bottom: 24px;
+    padding: 24px;
+    background-color: #f8fafc;
+    border-radius: 24px;
+    border: 1px solid #e2e8f0;
+    position: relative;
+}
 
-        .shipping-options-container label.section-title {
-            display: block;
-            font-weight: 800;
-            font-size: 0.75rem;
-            margin-bottom: 20px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+/* Título da Seção */
+.shipping-options-container label.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 0.75rem;
+    margin-bottom: 20px;
+    color: #475569; /* var(--text-gray) */
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
 
-        .shipping-options-container label.section-title::before {
-            content: '';
-            width: 3px;
-            height: 14px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
+.shipping-options-container label.section-title::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    background: #0055ff; /* var(--primary) */
+    border-radius: 2px;
+}
 
-        .shipping-option {
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
-            padding: 20px 24px;
-            border-radius: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: visible;
-        }
+/* Card da Opção de Entrega */
+.shipping-option {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    padding: 20px 24px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
 
-        .shipping-option:hover {
-            border-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
-        }
+.shipping-option:hover {
+    border-color: #e6eeff; /* var(--primary-light) */
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+}
 
-        .shipping-option.selected {
-            border-color: var(--primary);
-            background: var(--white);
-            box-shadow: 0 15px 30px -10px rgba(0, 85, 255, 0.15);
-        }
+.shipping-option.selected {
+    border-color: #0055ff; /* var(--primary) */
+    background: #ffffff;
+    box-shadow: 0 15px 30px -10px rgba(0, 85, 255, 0.15);
+}
 
-        /* Selo de Recomendado/Imperdível */
-        .shipping-badge {
-            position: absolute;
-            top: -12px;
-            right: 24px;
-            background: var(--secondary);
-            color: white;
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
-            z-index: 2;
-            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
+/* Selo "Mais Rápido" */
+.shipping-badge {
+    position: absolute;
+    top: -12px;
+    right: 24px;
+    background: #ff6b00; /* var(--secondary) */
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
+    z-index: 2;
+    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
 
-        @keyframes bounceIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+@keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
 
-        .shipping-option .left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex: 1;
-        }
+/* Conteúdo Esquerdo (Círculo + Texto) */
+.shipping-option .left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
 
-        .shipping-option .time-container {
-            display: flex;
-            flex-direction: column;
-        }
+.shipping-option .time-container {
+    display: flex;
+    flex-direction: column;
+}
 
-        .shipping-option .time {
-            font-size: 1.15rem;
-            color: var(--text-dark);
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
+.shipping-option .time {
+    font-size: 1.15rem;
+    color: #0f172a; /* var(--text-dark) */
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
 
-        .shipping-option .time i {
-            color: var(--secondary);
-            font-size: 0.9rem;
-        }
+.shipping-option .time i {
+    color: #ff6b00; /* var(--secondary) */
+    font-size: 0.9rem;
+}
 
-        .shipping-option.selected .time {
-            color: var(--primary);
-        }
+.shipping-option.selected .time {
+    color: #0055ff; /* var(--primary) */
+}
 
-        .shipping-option .sub-text {
-            font-size: 0.75rem;
-            color: var(--text-gray);
-            font-weight: 600;
-            margin-top: 2px;
-        }
+.shipping-option .sub-text {
+    font-size: 0.75rem;
+    color: #475569; /* var(--text-gray) */
+    font-weight: 600;
+    margin-top: 2px;
+}
 
-        .shipping-option .price-tag {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
+/* Etiqueta de Preço (Corrigida para não vazar) */
+.shipping-option .price-tag {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
 
-        .shipping-option .price {
-            color: var(--success);
-            font-weight: 800;
-            font-size: 1rem;
-            background: #f0fdf4;
-            padding: 6px 14px;
-            border-radius: 12px;
-            border: 1px solid #dcfce7;
-        }
+.shipping-option .price {
+    color: #10b981; /* var(--success) */
+    font-weight: 800;
+    font-size: 0.9rem;
+    background: #f0fdf4;
+    padding: 4px 10px;
+    border-radius: 10px;
+    border: 1px solid #dcfce7;
+    white-space: nowrap;
+}
 
-        /* Círculo de Seleção */
-        .selection-circle {
-            width: 22px;
-            height: 22px;
-            border: 2px solid #cbd5e1;
-            border-radius: 50%;
-            position: relative;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-            background: white;
-        }
+/* Círculo de Seleção Personalizado */
+.selection-circle {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    background: white;
+}
 
-        .shipping-option.selected .selection-circle {
-            border-color: var(--primary);
-            background: var(--primary);
-        }
+.shipping-option.selected .selection-circle {
+    border-color: #0055ff;
+    background: #0055ff;
+}
 
-        .shipping-option.selected .selection-circle::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background-color: white;
-            border-radius: 50%;
-        }
+.shipping-option.selected .selection-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
 
         /* Botões */
         .cta-button {
@@ -715,21 +716,22 @@
                     </div>
 
                     <div class="shipping-options-container">
-                        <label class="section-title">Opção de Entrega</label>
-                        <div class="shipping-option selected" id="shipping-express">
-                            <div class="shipping-badge">Mais Rápido</div>
-                            <div class="left">
-                                <div class="selection-circle"></div>
-                                <div class="time-container">
-                                    <span class="time"><i class="fas fa-bolt"></i> Em até 20 minutos</span>
-                                    <span class="sub-text">Entrega prioritária</span>
-                                </div>
-                            </div>
-                            <div class="price-tag">
-                                <span class="price">Grátis</span>
-                            </div>
-                        </div>
-                    </div>
+    <label class="section-title">Opção de Entrega</label>
+    <div class="shipping-option" id="shipping-express">
+        <div class="shipping-badge">Mais Rápido</div>
+        <div class="left">
+            <div class="selection-circle"></div>
+            <div class="time-container">
+                <span class="time"><i class="fas fa-bolt"></i> Em até 20 minutos</span>
+                <span class="sub-text">Entrega prioritária</span>
+            </div>
+        </div>
+        <div class="price-tag">
+            <span class="price">Grátis</span>
+        </div>
+    </div>
+</div>
+
 
                     <button type="button" class="cta-button" id="btn-finalizar">
                         Finalizar Pedido <i class="fas fa-check"></i>
@@ -781,8 +783,8 @@
                 options.forEach(opt => opt.classList.remove('selected'));
                 if (radio.checked) {
                     radio.parentElement.classList.add('selected');
-                    btnContinuar.classList.add('enabled');
                     btnContinuar.disabled = false;
+                    btnContinuar.classList.add('enabled');
                 }
             });
         });
@@ -793,10 +795,9 @@
                 miniImg.src = selected.dataset.img;
                 miniName.textContent = selected.dataset.name;
                 miniPrice.textContent = selected.dataset.price;
-                
                 stepSelection.style.display = 'none';
                 stepShipping.style.display = 'block';
-                window.scrollTo(0, 0);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
 
@@ -806,70 +807,74 @@
                 value = value.substring(0, 5) + '-' + value.substring(5, 8);
             }
             e.target.value = value;
-
             if (value.length === 9) {
-                fetchAddress(value.replace('-', ''));
+                cepInput.blur();
+                simularBuscaCEP(value.replace('-', ''));
+            } else {
+                addressDetails.style.display = 'none';
+                loadingCep.style.display = 'none';
             }
         });
 
-        async function fetchAddress(cep) {
-            loadingCep.style.display = 'flex';
+        async function simularBuscaCEP(cep) {
             addressDetails.style.display = 'none';
+            loadingCep.style.display = 'flex';
             
             try {
-                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-                const data = await response.json();
+                const fetchPromise = fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json());
+                const delayPromise = new Promise(resolve => setTimeout(resolve, 2000));
                 
-                if (!data.erro) {
-                    streetInput.value = data.logradouro;
-                    neighborhoodInput.value = data.bairro;
-                    cityInput.value = data.localidade;
-                    ufInput.value = data.uf;
+                const [data] = await Promise.all([fetchPromise, delayPromise]);
+                
+                loadingCep.style.display = 'none';
+
+                if (data.erro) {
+                    alert('CEP não encontrado.');
+                } else {
+                    streetInput.value = data.logradouro || '';
+                    neighborhoodInput.value = data.bairro || '';
+                    cityInput.value = data.localidade || '';
+                    ufInput.value = data.uf || '';
                     
-                    loadingCep.style.display = 'none';
                     addressDetails.style.display = 'block';
                     
-                    setTimeout(() => {
-                        document.getElementById('number').focus();
-                        document.getElementById('number').classList.add('input-alert');
-                    }, 500);
-                } else {
-                    alert('CEP não encontrado.');
-                    loadingCep.style.display = 'none';
+                    const numInput = document.getElementById('number');
+                    numInput.classList.add('input-alert');
+                    
+                    numInput.addEventListener('input', () => {
+                        numInput.classList.remove('input-alert');
+                    }, { once: true });
                 }
             } catch (error) {
-                console.error('Erro ao buscar CEP:', error);
                 loadingCep.style.display = 'none';
+                alert('Erro ao buscar CEP.');
+            }
+        }
+
+        shippingOption.addEventListener('click', () => {
+            shippingOption.classList.toggle('selected');
+            updateFinalButton();
+        });
+
+        function updateFinalButton() {
+            if (shippingOption.classList.contains('selected')) {
+                btnFinalizar.classList.add('enabled');
+            } else {
+                btnFinalizar.classList.remove('enabled');
             }
         }
 
         btnFinalizar.addEventListener('click', () => {
-            const gas = document.querySelector('input[name="gas_type"]:checked').dataset.name;
-            const price = document.querySelector('input[name="gas_type"]:checked').dataset.price;
-            const cep = cepInput.value;
-            const rua = streetInput.value;
-            const num = document.getElementById('number').value;
-            const bairro = neighborhoodInput.value;
-            const cidade = cityInput.value;
-            const uf = ufInput.value;
-            const comp = document.getElementById('complement').value;
-
-            if (!num) {
-                alert('Por favor, preencha o número do endereço.');
+            if (!shippingOption.classList.contains('selected')) {
+                alert('Por favor, selecione uma opção de entrega.');
+                return;
+            }
+            if(!document.getElementById('number').value) {
+                alert('Por favor, insira o número da residência.');
                 document.getElementById('number').focus();
                 return;
             }
-
-            const mensagem = `*Novo Pedido de Gás*%0A%0A` +
-                `*Produto:* ${gas}%0A` +
-                `*Valor:* ${price}%0A%0A` +
-                `*Endereço de Entrega:*%0A` +
-                `${rua}, ${num}${comp ? ' - ' + comp : ''}%0A` +
-                `${bairro} - ${cidade}/${uf}%0A` +
-                `CEP: ${cep}%0A%0A` +
-                `*Entrega:* Em até 20 minutos (Grátis)`;
-
-            window.location.href = `https://wa.me/5511999999999?text=${mensagem}`;
+            alert('Pedido finalizado com sucesso!');
         });
     </script>
 </body>
