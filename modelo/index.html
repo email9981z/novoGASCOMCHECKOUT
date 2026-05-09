@@ -36,17 +36,23 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        html, body {
+            width: 100%;
+            overflow-x: hidden; /* Prevent horizontal scroll on the whole page */
+            position: relative;
+        }
+
         body {
             background-color: var(--bg-light);
             color: var(--text-main);
             line-height: 1.4;
-            overflow-x: hidden;
         }
 
         .container {
             max-width: 1140px;
             margin: 0 auto;
             padding: 0 32px;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
@@ -62,6 +68,7 @@
             border-bottom: 1px solid var(--border);
             color: #666;
             letter-spacing: 0.02em;
+            width: 100%;
         }
 
         .top-bar strong { color: var(--brand-primary); }
@@ -73,6 +80,7 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            width: 100%;
         }
 
         .main-header { 
@@ -128,6 +136,8 @@
             padding: 12px 0;
             border-bottom: 1px solid var(--border);
             background: #fff;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         .nav-scroll::-webkit-scrollbar { display: none; }
@@ -144,7 +154,7 @@
         .nav-scroll a.active { color: var(--brand-primary); }
 
         /* Breadcrumb */
-        .breadcrumb { padding: 16px 0; font-size: 11px; color: #9ca3af; }
+        .breadcrumb { padding: 16px 0; font-size: 11px; color: #9ca3af; width: 100%; }
         .breadcrumb a { text-decoration: none; color: inherit; }
         .breadcrumb span { margin: 0 6px; }
 
@@ -154,6 +164,7 @@
             grid-template-columns: 1fr;
             gap: 32px;
             padding-bottom: 48px;
+            width: 100%;
         }
 
         @media (min-width: 768px) {
@@ -164,10 +175,12 @@
         .gallery-container {
             position: relative;
             width: 100%;
+            max-width: 100%;
+            overflow: hidden; /* Crucial to prevent horizontal leakage */
         }
 
         @media (min-width: 768px) {
-            .gallery-container { position: sticky; top: 140px; height: fit-content; }
+            .gallery-container { position: sticky; top: 140px; height: fit-content; overflow: visible; }
         }
 
         .main-image-wrapper {
@@ -176,6 +189,7 @@
             border-radius: var(--radius);
             border: 1px solid var(--border);
             background: var(--bg-soft);
+            width: 100%;
         }
 
         .main-image-slider {
@@ -185,6 +199,8 @@
             overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         .main-image-slider::-webkit-scrollbar {
@@ -193,6 +209,7 @@
 
         .main-image-item {
             flex: 0 0 100%;
+            width: 100%;
             scroll-snap-align: start;
             display: flex;
             justify-content: center;
@@ -214,21 +231,20 @@
             gap: 10px;
             margin-top: 12px;
             overflow-x: auto;
-            padding-bottom: 4px;
-            scrollbar-width: thin;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         .thumbnails-container::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .thumbnails-container::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 10px;
+            display: none;
         }
 
         .thumb-item {
             flex: 0 0 70px;
+            width: 70px;
             aspect-ratio: 1 / 1;
             border: 2px solid transparent;
             border-radius: 8px;
@@ -250,6 +266,10 @@
         }
 
         /* Product Info */
+        .product-content {
+            width: 100%;
+        }
+
         .product-content h1 {
             font-size: 24px;
             font-weight: 800;
@@ -261,12 +281,12 @@
 
         @media (min-width: 768px) { .product-content h1 { font-size: 34px; } }
 
-        .badge-row { display: flex; gap: 10px; margin-bottom: 20px; }
+        .badge-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
         .badge-stock { background: #ecfdf5; color: #065f46; }
         .badge-shipping { background: #eff6ff; color: #1e40af; }
 
-        .rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; font-size: 13px; color: var(--text-muted); }
+        .rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
         .stars { color: #fbbf24; font-size: 12px; }
 
         /* Netshoes Pricing Section */
@@ -274,6 +294,7 @@
             border-top: 1px solid var(--ns-border);
             padding-top: 16px;
             margin-bottom: 20px;
+            width: 100%;
         }
 
         .old-price-row {
@@ -322,6 +343,7 @@
             flex-direction: column;
             gap: 12px;
             margin-bottom: 32px;
+            width: 100%;
         }
 
         .btn-buy {
@@ -353,7 +375,7 @@
         }
 
         /* Options */
-        .options-grid { display: grid; gap: 12px; margin-bottom: 28px; }
+        .options-grid { display: grid; gap: 12px; margin-bottom: 28px; width: 100%; }
         .option-card {
             border: 1px solid var(--border);
             padding: 16px;
@@ -364,6 +386,7 @@
             align-items: center;
             background: #fff;
             transition: all 0.2s ease;
+            width: 100%;
         }
 
         .option-card:hover { border-color: var(--brand-accent); }
@@ -376,28 +399,32 @@
 
         /* Description Section */
         .description-section {
-            padding: 80px 0;
+            padding: 60px 0;
             background: var(--bg-light);
+            width: 100%;
         }
 
         .description-section h2 {
-            font-size: 30px;
+            font-size: 26px;
             font-weight: 800;
-            margin-bottom: 48px;
+            margin-bottom: 40px;
             color: var(--text-main);
             text-align: center;
             letter-spacing: -0.5px;
         }
 
+        @media (min-width: 768px) { .description-section h2 { font-size: 30px; } }
+
         .description-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 60px;
+            gap: 40px;
             align-items: start;
+            width: 100%;
         }
 
         @media (min-width: 768px) {
-            .description-grid { grid-template-columns: 1fr 1fr; }
+            .description-grid { grid-template-columns: 1fr 1fr; gap: 60px; }
         }
 
         .tech-table {
@@ -416,14 +443,15 @@
         footer {
             background: #080808;
             color: #fff;
-            padding: 80px 0 40px;
+            padding: 60px 0 40px;
+            width: 100%;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 50px;
-            margin-bottom: 60px;
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
         .footer-bottom {
@@ -630,8 +658,16 @@
         function updateActiveThumb(index) {
             const thumbs = document.querySelectorAll('.thumb-item');
             thumbs.forEach((thumb, i) => {
-                if (i === index) thumb.classList.add('active');
-                else thumb.classList.remove('active');
+                if (i === index) {
+                    thumb.classList.add('active');
+                    // Scroll thumbnails container to keep active thumb visible
+                    thumb.parentElement.scrollTo({
+                        left: thumb.offsetLeft - (thumb.parentElement.offsetWidth / 2) + (thumb.offsetWidth / 2),
+                        behavior: 'smooth'
+                    });
+                } else {
+                    thumb.classList.remove('active');
+                }
             });
         }
 
@@ -670,8 +706,10 @@
         document.getElementById('imageSlider').addEventListener('scroll', function() {
             const scrollLeft = this.scrollLeft;
             const width = this.offsetWidth;
-            const index = Math.round(scrollLeft / width);
-            updateActiveThumb(index);
+            if (width > 0) {
+                const index = Math.round(scrollLeft / width);
+                updateActiveThumb(index);
+            }
         });
 
         // Initial render
