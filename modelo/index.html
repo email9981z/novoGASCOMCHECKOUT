@@ -1,1200 +1,657 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Disk Gás Rápido - Entrega de gás em até 20 minutos. Pague na entrega, entrega grátis e atendimento 24h.">
-    <meta name="keywords" content="gás, entrega rápida, botijão, revenda de gás">
-    <title>Revenda de Gás | Entrega Rápida e Segura</title>
-    <link rel="canonical" href="https://seusite.com.br/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jaqueta Adidas Tiro Preta e Branca - Preto | Netshoes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0055ff;
-            --primary-dark: #003db3;
-            --primary-light: #e6eeff;
-            --secondary: #ff6b00;
-            --bg-light: #f8fafc;
-            --text-dark: #0f172a;
-            --text-gray: #475569;
-            --white: #ffffff;
-            --success: #10b981;
-            --success-dark: #059669;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --disabled: #cbd5e1;
-            --input-bg: #f1f5f9;
+            --brand-primary: #000066;
+            --brand-accent: #2563eb;
+            --success: #16a34a;
+            --bg-light: #ffffff;
+            --bg-soft: #f9fafb;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --border: #f1f5f9;
+            --radius: 12px;
+            --pix-color: #00bfa5;
+            /* Netshoes Variables */
+            --ns-purple: #30006b;
+            --ns-text: #161718;
+            --ns-gray: #707070;
+            --ns-border: #e0e0e0;
+            --ns-green: #008a17;
+            --ns-bg-green: #e6f7e9;
+            --ns-link: #5c00cc;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-light);
-            background-image: radial-gradient(circle at 100% 0%, var(--primary-light) 0%, transparent 25%), 
-                              radial-gradient(circle at 0% 100%, var(--primary-light) 0%, transparent 25%);
-            color: var(--text-dark);
-            line-height: 1.5;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
-        .header {
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px;
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: #f8f9fa;
+            padding: 8px 0;
+            font-size: 11px;
             text-align: center;
+            border-bottom: 1px solid var(--border);
+            color: #666;
+            letter-spacing: 0.02em;
+        }
+
+        .top-bar strong { color: var(--brand-primary); }
+
+        /* Header */
+        header {
+            background: #fff;
             position: sticky;
             top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .main-header { 
+            padding: 18px 0;
+        }
+
+        .header-flex {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .logo::before {
-            content: "\f13d";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            font-size: 1.4rem;
-        }
-
-        .hero {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .card {
-            background: var(--white);
-            max-width: 540px;
-            width: 100%;
-            padding: 40px 32px;
-            border-radius: 24px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s ease;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        h1 {
-            font-size: 1.75rem;
-            margin-bottom: 24px;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            color: var(--text-dark);
-            line-height: 1.2;
-        }
-
-        /* Seção 1: Seleção de Produtos */
-        #step-selection {
-            display: block;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 32px;
-        }
-
-        .product-option {
-            border: 2px solid #f1f5f9;
-            border-radius: 20px;
-            padding: 24px 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            position: relative;
-            background: #fdfdfd;
-            height: 100%;
-            min-height: 220px;
+            gap: 30px;
         }
 
-        .product-option:hover {
-            border-color: var(--primary-light);
-            background: var(--white);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
-        }
+        .logo img { height: 32px; width: auto; }
 
-        .product-option.selected {
-            border-color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        .product-option img {
-            width: 100%;
-            max-width: 110px;
-            height: 120px;
-            margin-bottom: 16px;
-            object-fit: contain;
-            display: block;
-        }
-
-        .product-option span {
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            text-align: center;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .product-price {
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--primary);
-            display: block;
-        }
-
-        .radio-input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        /* Seção 2: Cálculo de Envio */
-        #step-shipping {
+        .search-bar {
+            flex: 1;
+            max-width: 450px;
             display: none;
-            text-align: left;
         }
 
-        .step-header {
-            display: flex;
+        @media (min-width: 768px) {
+            .search-bar { display: flex; }
+            .logo img { height: 38px; }
+        }
+
+        .user-actions { 
+            display: flex; 
+            gap: 24px; 
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
+            padding-right: 4px;
         }
 
-        .step-header h1 {
-            margin-bottom: 0;
-        }
-
-        .mini-cart {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: #f8fafc;
-            padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 24px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .mini-cart img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-        }
-
-        .mini-cart .info {
-            flex: 1;
-        }
-
-        .mini-cart .info h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 2px;
-        }
-
-        .mini-cart .info .price {
+        .icon-link { color: var(--brand-primary); font-size: 20px; text-decoration: none; position: relative; }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: var(--pix-color);
+            color: #fff;
+            font-size: 10px;
             font-weight: 800;
-            color: var(--primary);
-            font-size: 0.95rem;
+            padding: 2px 6px;
+            border-radius: 12px;
+            border: 2px solid #fff;
         }
 
-        .form-group {
-            margin-bottom: 16px;
+        /* Nav Scroll */
+        .nav-scroll {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            background: #fff;
         }
 
-        .form-group label {
-            display: block;
+        .nav-scroll::-webkit-scrollbar { display: none; }
+        .nav-scroll a {
+            display: inline-block;
+            padding: 0 16px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 12px;
             font-weight: 700;
-            font-size: 0.8rem;
-            margin-bottom: 6px;
-            color: var(--text-gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+        .nav-scroll a.active { color: var(--brand-primary); }
 
-        .form-control {
+        /* Breadcrumb */
+        .breadcrumb { padding: 16px 0; font-size: 11px; color: #9ca3af; }
+        .breadcrumb a { text-decoration: none; color: inherit; }
+        .breadcrumb span { margin: 0 6px; }
+
+        /* Product Layout */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            padding-bottom: 48px;
+        }
+
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: 1fr 1fr; gap: 60px; padding-top: 24px; }
+        }
+
+        /* Gallery */
+        .gallery-container {
+            position: relative;
             width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            transition: all 0.2s;
-            background: var(--white);
-            color: var(--text-dark);
-            font-weight: 600;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
+        @media (min-width: 768px) {
+            .gallery-container { position: sticky; top: 140px; height: fit-content; }
         }
 
-        .input-alert {
-            border-color: var(--primary) !important;
-            background-color: #f0f7ff !important;
-            box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.08);
-            transition: all 0.3s ease;
-        }
-
-        .form-control:disabled {
-            background: var(--input-bg);
-            border-color: #e2e8f0;
-            color: var(--text-gray);
-            cursor: not-allowed;
-        }
-
-        #loading-cep {
-            display: none;
-            align-items: center;
-            gap: 10px;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .status-badge {
-            background: #f0fdf4;
-            color: #166534;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 16px;
-            border: 1px solid #bbf7d0;
-        }
-
-        .address-row {
-            display: flex !important;
-            flex-direction: row !important;
-            gap: 12px;
-            width: 100%;
-            margin-bottom: 0;
-        }
-
-        .col-70 { flex: 0 0 calc(70% - 6px); }
-        .col-30 { flex: 0 0 calc(30% - 6px); }
-        .col-80 { flex: 0 0 calc(80% - 6px); }
-        .col-20 { flex: 0 0 calc(20% - 6px); }
-
-        #address-details {
-            display: none;
-            animation: fadeIn 0.4s ease;
-            margin-top: 24px;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 24px;
-        }
-
-        .shipping-options-container {
-            margin-top: 32px;
-            margin-bottom: 24px;
-            padding: 24px;
-            background-color: #f8fafc;
-            border-radius: 24px;
-            border: 1px solid #e2e8f0;
-            position: relative;
-        }
-
-        .shipping-options-container label.section-title {
+        .main-image {
+            background: var(--bg-soft);
+            border-radius: var(--radius);
+            padding: 30px;
             display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            margin-bottom: 16px;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            justify-content: center;
+            border: 1px solid var(--border);
+            aspect-ratio: 1 / 1;
         }
 
-        .shipping-option {
-            background: var(--white);
-            border: 2px solid #e2e8f0;
-            border-radius: 20px;
-            padding: 24px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-        }
+        .main-image img { max-width: 100%; height: auto; object-fit: contain; mix-blend-mode: multiply; }
 
-        .shipping-option:hover {
-            border-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-        }
-
-        .shipping-option.selected {
-            border-color: var(--primary);
-            background: linear-gradient(to right, #f0f7ff, #ffffff);
-            box-shadow: 0 10px 20px -5px rgba(0, 85, 255, 0.1);
-        }
-
-        .shipping-option .left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .selection-circle {
-            width: 22px;
-            height: 22px;
-            border: 2px solid #cbd5e1;
-            border-radius: 50%;
-            position: relative;
-            transition: all 0.2s;
-            background: var(--white);
-        }
-
-        .shipping-option.selected .selection-circle {
-            border-color: var(--primary);
-            background: var(--primary);
-        }
-
-        .shipping-option.selected .selection-circle::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background: var(--white);
-            border-radius: 50%;
-        }
-
-        .time-container {
+        /* Netshoes Style Product Info */
+        .product-content {
             display: flex;
             flex-direction: column;
         }
 
-        .shipping-option .time {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .shipping-option .time i {
-            color: var(--secondary);
-        }
-
-        .sub-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 2px;
-        }
-
-        .sub-text {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            font-weight: 600;
-        }
-
-        .shipping-option .price {
-            font-weight: 800;
-            color: var(--success);
-            font-size: 0.85rem;
-            background: #ecfdf5;
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
-        .shipping-badge {
-            position: absolute;
-            top: -14px;
-            right: 24px;
-            background: linear-gradient(135deg, #ff6b00 0%, #ff9500 100%);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            box-shadow: 0 8px 16px -4px rgba(255, 107, 0, 0.4);
-            border: 2px solid var(--white);
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .shipping-badge::before {
-            content: "\f017";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            font-size: 0.8rem;
-        }
-
-        .cta-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: var(--disabled);
-            color: white;
-            text-decoration: none;
-            padding: 18px 32px;
-            border-radius: 16px;
-            font-size: 1.15rem;
+        .product-title {
+            font-size: 20px;
             font-weight: 700;
-            width: 100%;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            z-index: 1;
-            cursor: not-allowed;
-            border: none;
-        }
-
-        .cta-button.enabled {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            box-shadow: 0 10px 15px -3px rgba(0, 85, 255, 0.3);
-            cursor: pointer;
-        }
-
-        .cta-button.enabled:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(0, 85, 255, 0.4);
-            filter: brightness(1.1);
-        }
-
-        /* Botão Voltar Sutil */
-        .btn-back-subtle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            background: transparent;
-            color: var(--text-gray);
-            border: none;
-            padding: 8px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            opacity: 0.7;
-        }
-
-        .btn-back-subtle:hover {
-            opacity: 1;
-            color: var(--primary);
-        }
-
-        .btn-back-footer {
-            margin: 12px auto 0;
-        }
-
-        /* --- MODAL REFINADO --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(8px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: var(--white);
-            width: 100%;
-            max-width: 480px;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes modalIn {
-            from { transform: scale(0.95) translateY(10px); opacity: 0; }
-            to { transform: scale(1) translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            padding: 24px 32px;
-            background: #f8fafc;
-            border-bottom: 1px solid #f1f5f9;
-            text-align: center;
-        }
-
-        .modal-header h2 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .modal-header h2 i {
-            color: var(--success);
-        }
-
-        .modal-body {
-            padding: 32px;
-        }
-
-        .modal-product-card {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background: var(--primary-light);
-            padding: 16px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-        }
-
-        .modal-product-img {
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-            background: white;
-            border-radius: 12px;
-            padding: 5px;
-        }
-
-        .modal-product-info h3 {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--text-dark);
+            color: var(--ns-text);
+            line-height: 1.2;
             margin-bottom: 4px;
         }
 
-        .modal-product-info .price {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--primary);
+        .product-ref {
+            font-size: 12px;
+            color: var(--ns-gray);
+            margin-bottom: 12px;
         }
 
-        .summary-group {
+        .product-color {
+            font-size: 14px;
             margin-bottom: 20px;
         }
 
-        .summary-group label {
-            display: block;
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .summary-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 16px;
-        }
-
-        .summary-row {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .summary-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .summary-row i {
-            color: var(--primary);
-            margin-top: 3px;
-            width: 16px;
-        }
-
-        .summary-text {
-            color: var(--text-dark);
-            font-weight: 600;
-            line-height: 1.4;
-        }
-
-        .modal-footer {
-            padding: 0 32px 32px;
-        }
-
-        .modal-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .btn-modal-back {
-            background: #f1f5f9;
-            color: var(--text-gray);
-            border: none;
-            padding: 16px;
-            border-radius: 16px;
+        .product-color span {
             font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.95rem;
         }
 
-        .btn-modal-back:hover {
-            background: #e2e8f0;
-            color: var(--text-dark);
+        /* Size Selector */
+        .size-section {
+            margin-bottom: 24px;
         }
 
-        .btn-modal-confirm {
-            background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 16px;
-            font-weight: 800;
+        .size-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .size-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .size-item {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--ns-border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+        }
+
+        .size-item.active {
+            border: 2px solid var(--ns-purple);
+        }
+
+        .size-helpers {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .helper-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--ns-link);
             text-decoration: none;
-            text-align: center;
-            font-size: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
+            font-weight: 600;
+        }
+
+        /* Pricing Section */
+        .price-box {
+            border-top: 1px solid var(--ns-border);
+            padding-top: 16px;
+            margin-bottom: 20px;
+        }
+
+        .old-price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .old-price {
+            font-size: 14px;
+            color: var(--ns-gray);
+            text-decoration: line-through;
+        }
+
+        .discount-tag {
+            background: var(--ns-bg-green);
+            color: var(--ns-green);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .main-price {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--ns-text);
+            margin-bottom: 2px;
+        }
+
+        .pix-text {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .installment-text {
+            font-size: 14px;
+            color: var(--ns-gray);
+            margin-bottom: 12px;
+        }
+
+        /* Shipping & Seller */
+        .shipping-info {
+            background: #f4f4f4;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .free-shipping {
+            color: var(--ns-green);
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .delivery-estimate {
+            font-size: 13px;
+            color: var(--ns-text);
+        }
+
+        .delivery-estimate strong {
+            font-weight: 700;
+        }
+
+        .delivery-options-link {
+            display: block;
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--ns-link);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .seller-info {
+            font-size: 13px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .seller-info div {
+            margin-bottom: 4px;
+        }
+
+        .seller-name {
+            font-weight: 700;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--ns-gray);
+            font-size: 12px;
+        }
+
+        .stars-mini {
+            color: #ffb400;
+        }
+
+        /* CTA Buttons */
+        .cta-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .btn-buy {
+            background: var(--ns-purple);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .btn-cart {
+            background: #fff;
+            color: var(--ns-purple);
+            border: 1px solid var(--ns-purple);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            cursor: pointer;
         }
 
-        .btn-modal-confirm:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.3);
-            filter: brightness(1.1);
-        }
-
-        .features {
+        /* Trust Bar */
+        .trust-bar {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
-            margin-top: 40px;
-            text-align: left;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 32px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-gray);
-        }
-
-        .feature-item i {
-            color: var(--success);
-            font-size: 1.1rem;
-        }
-
-        .footer {
-            padding: 40px 20px;
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
             text-align: center;
-            font-size: 0.875rem;
-            color: var(--text-gray);
-            background: var(--white);
-            border-top: 1px solid #f1f5f9;
         }
 
-        .footer-links {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+        .trust-item i { font-size: 18px; color: var(--brand-primary); margin-bottom: 6px; }
+        .trust-item span { font-size: 10px; font-weight: 800; display: block; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Description Section */
+        .description-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
         }
 
-        .footer-links a {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s;
+        .description-section h2 {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 48px;
+            color: var(--text-main);
+            text-align: center;
+            letter-spacing: -0.5px;
         }
 
-        .footer-links a:hover {
-            color: var(--primary);
+        .description-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 60px;
+            align-items: start;
         }
 
-        .footer p {
-            margin-bottom: 8px;
-            font-size: 0.875rem;
+        @media (min-width: 768px) {
+            .description-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        .footer p:last-child {
-            margin-bottom: 0;
-            opacity: 0.6;
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .tech-table td, .tech-table th {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
         }
 
-        @media (max-width: 480px) {
-            .card {
-                padding: 32px 20px;
-            }
-            .products-grid {
-                gap: 12px;
-            }
-            .product-option img {
-                width: 80px;
-            }
-            .features {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .address-row {
-                gap: 8px;
-            }
-            .shipping-options-container {
-                padding: 20px 16px;
-            }
-            .shipping-option {
-                padding: 16px;
-            }
-            .shipping-option .time {
-                font-size: 1rem;
-            }
-            .shipping-badge {
-                right: 16px;
-                font-size: 0.65rem;
-                padding: 5px 12px;
-                top: -12px;
-            }
-            .modal-body {
-                padding: 24px;
-            }
-            .modal-footer {
-                padding: 0 24px 24px;
-            }
-            .modal-buttons {
-                grid-template-columns: 1fr 1fr;
-            }
+        /* Footer */
+        footer {
+            background: #080808;
+            color: #fff;
+            padding: 80px 0 40px;
         }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1f1f1f;
+            padding-top: 40px;
+            text-align: center;
+            font-size: 13px;
+            color: #71717a;
+        }
+
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <div class="logo">Disk Gás Rápido</div>
-    </header>
-
-    <main class="hero">
-        <div class="card">
-            <!-- Passo 1: Seleção -->
-            <div id="step-selection">
-                <h1>Escolha seu Gás</h1>
-                
-                <div class="products-grid">
-                    <label class="product-option" for="gas-p13">
-                        <input type="radio" name="gas_type" id="gas-p13" value="p13" class="radio-input" data-name="Gás Residencial - P13" data-price="R$ 89,90" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png">
-                        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png" alt="Gás Residencial P13">
-                        <span>Gás Residencial - P13</span>
-                        <div class="product-price">R$ 89,90</div>
-                    </label>
-
-                    <label class="product-option" for="gas-p45">
-                        <input type="radio" name="gas_type" id="gas-p45" value="p45" class="radio-input" data-name="Gás Comercial - P45" data-price="R$ 395,90" data-img="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png">
-                        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png" alt="Gás Comercial P45">
-                        <span>Gás Comercial - P45</span>
-                        <div class="product-price">R$ 395,90</div>
-                    </label>
-                </div>
-                
-                <button type="button" class="cta-button" id="btn-continuar" disabled>
-                    Continuar <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-
-            <!-- Passo 2: Envio -->
-            <div id="step-shipping">
-                <div class="step-header">
-                    <h1>Calcular Envio</h1>
-                    <button type="button" class="btn-back-subtle" id="btn-voltar-cep">
-                        <i class="fas fa-chevron-left"></i> Voltar
-                    </button>
-                </div>
-                
-                <div class="mini-cart">
-                    <img src="" id="mini-img" alt="Produto">
-                    <div class="info">
-                        <h3 id="mini-name">Produto</h3>
-                        <div class="price" id="mini-price">R$ 0,00</div>
-                        <p style="margin:0; font-size:0.8rem; color: var(--text-gray);">1 Unidade</p>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="cep">CEP de Entrega</label>
-                    <input type="text" id="cep" class="form-control" placeholder="00000-000" maxlength="9" inputmode="numeric">
-                    <div id="loading-cep">
-                        <i class="fas fa-spinner fa-spin"></i> Buscando endereço...
-                    </div>
-                </div>
-
-                <!-- Detalhes do Endereço -->
-                <div id="address-details">
-                    <div class="status-badge">
-                        <i class="fas fa-check-circle"></i> Endereço Atendido
-                    </div>
-
-                    <div class="form-group">
-                        <label for="street">Logradouro / Rua</label>
-                        <input type="text" id="street" class="form-control" disabled>
-                    </div>
-
-                    <div class="address-row">
-                        <div class="form-group col-70">
-                            <label for="neighborhood">Bairro</label>
-                            <input type="text" id="neighborhood" class="form-control" disabled>
-                        </div>
-                        <div class="form-group col-30">
-                            <label for="number">Número</label>
-                            <input type="text" id="number" class="form-control" placeholder="123" inputmode="numeric">
-                        </div>
-                    </div>
-
-                    <div class="address-row">
-                        <div class="form-group col-80">
-                            <label for="city">Cidade</label>
-                            <input type="text" id="city" class="form-control" disabled>
-                        </div>
-                        <div class="form-group col-20">
-                            <label for="uf">UF</label>
-                            <input type="text" id="uf" class="form-control" disabled>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="complement">Complemento (Opcional)</label>
-                        <input type="text" id="complement" class="form-control" placeholder="Apto, Bloco...">
-                    </div>
-
-                    <div class="shipping-options-container">
-                        <label class="section-title">Opção de Entrega</label>
-                        <div class="shipping-option selected" id="shipping-express">
-                            <div class="shipping-badge">Receba em 20 Minutos</div>
-                            <div class="left">
-                                <div class="selection-circle"></div>
-                                <div class="time-container">
-                                    <span class="time"><i class="fas fa-bolt"></i> Envio Rápido</span>
-                                    <div class="sub-row">
-                                        <span class="sub-text">Entrega prioritária</span>
-                                        <span class="price">Grátis</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="button" class="cta-button" id="btn-finalizar">
-                        Finalizar Pedido <i class="fas fa-check"></i>
-                    </button>
-
-                    <button type="button" class="btn-back-subtle btn-back-footer" id="btn-voltar-finalizar">
-                        <i class="fas fa-chevron-left"></i> Alterar endereço ou produto
-                    </button>
-                </div>
-            </div>
-
-            <div class="features">
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Entrega Grátis</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Pague na Entrega</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Atendimento 24h</div>
-            </div>
+    <div class="top-bar">
+        <div class="container">
+            Aproveite: <strong>FRETE GRÁTIS</strong> para todo o Brasil hoje!
         </div>
-    </main>
+    </div>
 
-    <!-- Modal de Confirmação Refinado -->
-    <div class="modal-overlay" id="modal-confirmacao">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-shopping-cart"></i> Resumo do Pedido</h2>
-            </div>
-            
-            <div class="modal-body">
-                <!-- Card do Produto -->
-                <div class="modal-product-card">
-                    <img src="" id="modal-img" class="modal-product-img" alt="Produto">
-                    <div class="modal-product-info">
-                        <h3 id="modal-product-name">-</h3>
-                        <div class="price" id="modal-product-price">-</div>
-                    </div>
+    <header>
+        <div class="container main-header">
+            <div class="header-flex">
+                <div class="logo">
+                    <img src="https://images.tcdn.com.br/img/themes/1370019/logo.png?1740685044" alt="Hub Suplementos">
                 </div>
-
-                <!-- Endereço -->
-                <div class="summary-group">
-                    <label>Endereço de Entrega</label>
-                    <div class="summary-box">
-                        <div class="summary-row">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span class="summary-text" id="modal-address-full">-</span>
-                        </div>
-                        <div class="summary-row">
-                            <i class="fas fa-city"></i>
-                            <span class="summary-text" id="modal-address-city">-</span>
-                        </div>
-                    </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="O que você está procurando?" style="width: 100%; padding: 12px 24px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; background: var(--bg-soft);">
                 </div>
-
-                <!-- Envio -->
-                <div class="summary-group">
-                    <label>Forma de Envio</label>
-                    <div class="summary-box">
-                        <div class="summary-row">
-                            <i class="fas fa-bolt"></i>
-                            <span class="summary-text">Entrega Expressa (Até 20 min)</span>
-                        </div>
-                        <div class="summary-row">
-                            <i class="fas fa-truck"></i>
-                            <span class="summary-text" style="color: var(--success);">Frete Grátis</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <div class="modal-buttons">
-                    <button type="button" class="btn-modal-back" id="btn-modal-voltar">Voltar</button>
-                    <a href="https://checkout.exemplo.com.br/finalizar" class="btn-modal-confirm" id="btn-modal-finalizar">
-                        Confirmar <i class="fas fa-chevron-right"></i>
+                <div class="user-actions">
+                    <a href="#" class="icon-link" title="Minha Conta"><i class="far fa-user"></i></a>
+                    <a href="#" class="icon-link" title="Carrinho">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count">0</span>
                     </a>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
 
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="politica-privacidade.html" title="Leia nossa Política de Privacidade">Política de Privacidade</a>
-            <a href="termos-uso.html" title="Leia nossos Termos de Uso">Termos de Uso</a>
+    <main class="container">
+        <div class="breadcrumb">
+            <a href="#">Home</a> <span>/</span> <a href="#">Jaquetas</a> <span>/</span> Adidas Tiro
         </div>
-        <p>&copy; Disk Gás Rápido LTDA - Todos os direitos reservados.</p>
-        <p>CNPJ: 55.943.174/0001-80</p>
+
+        <div class="product-grid">
+            <div class="gallery-container">
+                <div class="main-image">
+                    <img src="https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png" alt="Jaqueta Adidas Tiro">
+                </div>
+                <div class="trust-bar">
+                    <div class="trust-item">
+                        <i class="fas fa-certificate"></i>
+                        <span>ORIGINAL</span>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>ENVIO 24H</span>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fas fa-shield-check"></i>
+                        <span>GARANTIA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-content">
+                <h1 class="product-title">Jaqueta Adidas Tiro Preta e Branca - Preto</h1>
+                <p class="product-ref">Ref.: FBA-6043-006-02</p>
+                <p class="product-color">Cor: <span>Preto</span></p>
+
+                <div class="size-section">
+                    <span class="size-label">tamanho</span>
+                    <div class="size-grid">
+                        <div class="size-item" onclick="selectSize(this)">P</div>
+                        <div class="size-item active" onclick="selectSize(this)">M</div>
+                        <div class="size-item" onclick="selectSize(this)">G</div>
+                        <div class="size-item" onclick="selectSize(this)">GG</div>
+                    </div>
+                    
+                    <div class="size-helpers">
+                        <a href="#" class="helper-link">
+                            <i class="fas fa-tshirt"></i> Descubra seu tamanho
+                        </a>
+                        <a href="#" class="helper-link">
+                            <i class="fas fa-ruler-horizontal"></i> Tabela de medidas
+                        </a>
+                    </div>
+                </div>
+
+                <div class="price-box">
+                    <div class="old-price-row">
+                        <span class="old-price">R$ 349,99</span>
+                        <span class="discount-tag">28% OFF</span>
+                    </div>
+                    <div class="main-price">
+                        R$ 224,99 <span class="pix-text">no Pix</span>
+                    </div>
+                    <div class="installment-text">
+                        ou R$ 249,99 em até 3x sem juros
+                    </div>
+                </div>
+
+                <div class="shipping-info">
+                    <span class="free-shipping">Frete grátis</span>
+                    <p class="delivery-estimate">Chega dia <strong>15 de maio</strong> ao escolher a opção de entrega Normal</p>
+                    <a href="#" class="delivery-options-link">Opções de entrega</a>
+                </div>
+
+                <div class="seller-info">
+                    <div>Enviado por <span class="seller-name">Netshoes</span></div>
+                    <div>Vendido por <span class="seller-name" style="color: var(--ns-link);">Adidas</span></div>
+                    <div class="rating-summary">
+                        <div class="stars-mini">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        (4.45) Avaliada por 42655 clientes
+                    </div>
+                </div>
+
+                <div class="cta-group">
+                    <button class="btn-buy">Comprar</button>
+                    <button class="btn-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Adicionar ao carrinho
+                    </button>
+                </div>
+
+                <p style="font-size: 12px; color: var(--ns-gray); text-align: center; margin-top: 24px;">
+                    <i class="fas fa-lock" style="margin-right: 4px;"></i> Pagamento 100% Seguro e Criptografado
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <section class="description-section">
+        <div class="container">
+            <h2>Excelência em Vestuário Esportivo</h2>
+            <div class="description-grid">
+                <div class="desc-text-block">
+                    <h3>Ciência Aplicada ao Conforto</h3>
+                    <p>A <strong>Jaqueta Adidas Tiro</strong> representa o equilíbrio perfeito entre estilo e performance. Desenvolvida com tecnologia de ponta para garantir respirabilidade e liberdade de movimento.</p>
+                </div>
+                <div class="desc-tech-block">
+                    <h3>Especificações Técnicas</h3>
+                    <table class="tech-table">
+                        <tr><td><strong>Fabricante</strong></td><td>Adidas</td></tr>
+                        <tr><td><strong>Material</strong></td><td>100% Poliéster Reciclado</td></tr>
+                        <tr><td><strong>Indicado para</strong></td><td>Treino / Dia a Dia</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4 style="margin-bottom: 20px; font-size: 14px;">HUB SUPLEMENTOS</h4>
+                    <p style="font-size: 13px; color: #a1a1aa;">Sua loja de confiança para produtos premium.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Hub Suplementos. Todos os direitos reservados.
+            </div>
+        </div>
     </footer>
 
     <script>
-        const stepSelection = document.getElementById('step-selection');
-        const stepShipping = document.getElementById('step-shipping');
-        const btnContinuar = document.getElementById('btn-continuar');
-        const btnFinalizar = document.getElementById('btn-finalizar');
-        const radios = document.querySelectorAll('input[name="gas_type"]');
-        const options = document.querySelectorAll('.product-option');
-        
-        const miniImg = document.getElementById('mini-img');
-        const miniName = document.getElementById('mini-name');
-        const miniPrice = document.getElementById('mini-price');
-        const cepInput = document.getElementById('cep');
-        const loadingCep = document.getElementById('loading-cep');
-        const addressDetails = document.getElementById('address-details');
-        
-        const streetInput = document.getElementById('street');
-        const neighborhoodInput = document.getElementById('neighborhood');
-        const cityInput = document.getElementById('city');
-        const ufInput = document.getElementById('uf');
-        const numberInput = document.getElementById('number');
-        const complementInput = document.getElementById('complement');
-
-        const shippingOption = document.getElementById('shipping-express');
-
-        // Novos botões de voltar
-        const btnVoltarCep = document.getElementById('btn-voltar-cep');
-        const btnVoltarFinalizar = document.getElementById('btn-voltar-finalizar');
-
-        // Modal Elements
-        const modalConfirmacao = document.getElementById('modal-confirmacao');
-        const btnModalVoltar = document.getElementById('btn-modal-voltar');
-        
-        const modalImg = document.getElementById('modal-img');
-        const modalProductName = document.getElementById('modal-product-name');
-        const modalProductPrice = document.getElementById('modal-product-price');
-        const modalAddressFull = document.getElementById('modal-address-full');
-        const modalAddressCity = document.getElementById('modal-address-city');
-
-        radios.forEach(radio => {
-            radio.addEventListener('change', () => {
-                options.forEach(opt => opt.classList.remove('selected'));
-                if (radio.checked) {
-                    radio.parentElement.classList.add('selected');
-                    btnContinuar.disabled = false;
-                    btnContinuar.classList.add('enabled');
-                }
+        function selectSize(element) {
+            document.querySelectorAll('.size-item').forEach(item => {
+                item.classList.remove('active');
             });
-        });
-
-        btnContinuar.addEventListener('click', () => {
-            const selected = document.querySelector('input[name="gas_type"]:checked');
-            if (selected) {
-                miniImg.src = selected.dataset.img;
-                miniName.textContent = selected.dataset.name;
-                miniPrice.textContent = selected.dataset.price;
-                stepSelection.style.display = 'none';
-                stepShipping.style.display = 'block';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-
-        function voltarParaSelecao() {
-            stepShipping.style.display = 'none';
-            stepSelection.style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            element.classList.add('active');
         }
-
-        btnVoltarCep.addEventListener('click', voltarParaSelecao);
-        btnVoltarFinalizar.addEventListener('click', voltarParaSelecao);
-
-        cepInput.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 5) {
-                value = value.substring(0, 5) + '-' + value.substring(5, 8);
-            }
-            e.target.value = value;
-            if (value.length === 9) {
-                cepInput.blur();
-                simularBuscaCEP(value.replace('-', ''));
-            } else {
-                addressDetails.style.display = 'none';
-                loadingCep.style.display = 'none';
-            }
-        });
-
-        async function simularBuscaCEP(cep) {
-            addressDetails.style.display = 'none';
-            loadingCep.style.display = 'flex';
-            
-            try {
-                const fetchPromise = fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json());
-                const delayPromise = new Promise(resolve => setTimeout(resolve, 1200));
-                
-                const [data] = await Promise.all([fetchPromise, delayPromise]);
-                
-                loadingCep.style.display = 'none';
-
-                if (data.erro) {
-                    alert('CEP não encontrado.');
-                } else {
-                    streetInput.value = data.logradouro || '';
-                    neighborhoodInput.value = data.bairro || '';
-                    cityInput.value = data.localidade || '';
-                    ufInput.value = data.uf || '';
-                    
-                    addressDetails.style.display = 'block';
-                    numberInput.classList.add('input-alert');
-                    numberInput.addEventListener('input', () => {
-                        numberInput.classList.remove('input-alert');
-                    }, { once: true });
-                }
-            } catch (error) {
-                loadingCep.style.display = 'none';
-                alert('Erro ao buscar CEP.');
-            }
-        }
-
-        shippingOption.addEventListener('click', () => {
-            shippingOption.classList.toggle('selected');
-            updateFinalButton();
-        });
-
-        function updateFinalButton() {
-            if (shippingOption.classList.contains('selected')) {
-                btnFinalizar.classList.add('enabled');
-            } else {
-                btnFinalizar.classList.remove('enabled');
-            }
-        }
-
-        btnFinalizar.addEventListener('click', () => {
-            if (!shippingOption.classList.contains('selected')) {
-                alert('Por favor, selecione uma opção de entrega.');
-                return;
-            }
-            if(!numberInput.value) {
-                alert('Por favor, insira o número da residência.');
-                numberInput.focus();
-                return;
-            }
-
-            const selectedGas = document.querySelector('input[name="gas_type"]:checked');
-            modalImg.src = selectedGas.dataset.img;
-            modalProductName.textContent = selectedGas.dataset.name;
-            modalProductPrice.textContent = selectedGas.dataset.price;
-            
-            modalAddressFull.textContent = `${streetInput.value}, ${numberInput.value} ${complementInput.value ? '- ' + complementInput.value : ''}`;
-            modalAddressCity.textContent = `${neighborhoodInput.value}, ${cityInput.value} - ${ufInput.value}`;
-
-            modalConfirmacao.style.display = 'flex';
-        });
-
-        btnModalVoltar.addEventListener('click', () => {
-            modalConfirmacao.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === modalConfirmacao) {
-                modalConfirmacao.style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
