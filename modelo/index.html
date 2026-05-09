@@ -188,8 +188,9 @@
             overflow: hidden;
             border-radius: var(--radius);
             border: 1px solid var(--border);
-            background: var(--bg-soft);
+            background: #ffffff;
             width: 100%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .main-image-slider {
@@ -214,22 +215,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 30px;
+            padding: 40px;
             aspect-ratio: 1 / 1;
         }
 
         .main-image-item img { 
-            max-width: 100%; 
+            max-width: 85%;
             height: auto; 
-            object-fit: contain; 
-            mix-blend-mode: multiply; 
+            object-fit: contain;
         }
 
-        /* Thumbnails */
+        /* Thumbnails - MELHORIAS APLICADAS */
         .thumbnails-container {
             display: flex;
-            gap: 10px;
-            margin-top: 12px;
+            gap: 12px;
+            margin-top: 16px;
             overflow-x: auto;
             padding-bottom: 8px;
             scrollbar-width: none;
@@ -243,26 +243,47 @@
         }
 
         .thumb-item {
-            flex: 0 0 70px;
-            width: 70px;
+            flex: 0 0 80px;
+            width: 80px;
             aspect-ratio: 1 / 1;
             border: 2px solid transparent;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
             cursor: pointer;
-            background: var(--bg-soft);
-            transition: all 0.2s ease;
+            background: #ffffff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .thumb-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            border-color: var(--brand-accent);
         }
 
         .thumb-item.active {
             border-color: var(--brand-primary);
+            box-shadow: 0 4px 12px rgba(0,0,102,0.15);
+            background: #f0f4ff;
         }
 
         .thumb-item img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            mix-blend-mode: multiply;
+            padding: 8px;
+        }
+
+        /* Indicador de imagem ativa */
+        .thumb-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--brand-primary), var(--brand-accent));
         }
 
         /* Product Info */
@@ -356,12 +377,19 @@
             font-weight: 700;
             width: 100%;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-buy:hover {
+            background: #1a003d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(48, 0, 107, 0.2);
         }
 
         .btn-cart {
             background: #fff;
             color: var(--ns-purple);
-            border: 1px solid var(--ns-purple);
+            border: 2px solid var(--ns-purple);
             border-radius: 8px;
             padding: 16px;
             font-size: 16px;
@@ -372,6 +400,13 @@
             justify-content: center;
             gap: 8px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cart:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(48, 0, 107, 0.1);
         }
 
         /* Options */
@@ -385,12 +420,21 @@
             justify-content: space-between;
             align-items: center;
             background: #fff;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             width: 100%;
         }
 
-        .option-card:hover { border-color: var(--brand-accent); }
-        .option-card.active { border-color: var(--brand-primary); background: #f0f4ff; box-shadow: 0 4px 12px rgba(0,0,102,0.05); }
+        .option-card:hover { 
+            border-color: var(--brand-accent);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+        }
+
+        .option-card.active { 
+            border-color: var(--brand-primary); 
+            background: #f0f4ff; 
+            box-shadow: 0 4px 12px rgba(0,0,102,0.1);
+        }
+
         .option-info .title { font-weight: 700; font-size: 15px; display: block; margin-bottom: 2px; }
         .option-info .desc { font-size: 12px; color: var(--text-muted); }
         .option-price { text-align: right; }
@@ -678,13 +722,13 @@
             
             slider.innerHTML = variant.images.map(img => `
                 <div class="main-image-item">
-                    <img src="${img}" alt="Minoxidil Kirkland">
+                    <img src="${img}" alt="Minoxidil Kirkland" loading="lazy">
                 </div>
             `).join('');
 
             thumbsContainer.innerHTML = variant.images.map((img, i) => `
-                <div class="thumb-item ${i === 0 ? 'active' : ''}" onclick="scrollToImage(${i})">
-                    <img src="${img}" alt="Thumbnail ${i + 1}">
+                <div class="thumb-item ${i === 0 ? 'active' : ''}" onclick="scrollToImage(${i})" title="Imagem ${i + 1}">
+                    <img src="${img}" alt="Miniatura ${i + 1}" loading="lazy">
                 </div>
             `).join('');
 
