@@ -208,25 +208,45 @@
             mix-blend-mode: multiply; 
         }
 
-        /* Pagination Pills */
-        .slider-pagination {
+        /* Thumbnails */
+        .thumbnails-container {
             display: flex;
-            justify-content: center;
-            gap: 6px;
-            padding: 12px 0;
+            gap: 10px;
+            margin-top: 12px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: thin;
         }
 
-        .pill {
-            width: 20px;
+        .thumbnails-container::-webkit-scrollbar {
             height: 4px;
-            background: #e2e8f0;
-            border-radius: 10px;
-            transition: all 0.3s ease;
         }
 
-        .pill.active {
-            background: var(--brand-primary);
-            width: 30px;
+        .thumbnails-container::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .thumb-item {
+            flex: 0 0 70px;
+            aspect-ratio: 1 / 1;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--bg-soft);
+            transition: all 0.2s ease;
+        }
+
+        .thumb-item.active {
+            border-color: var(--brand-primary);
+        }
+
+        .thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
         }
 
         /* Product Info */
@@ -465,8 +485,8 @@
                         <!-- Images will be injected here by JS -->
                     </div>
                 </div>
-                <div class="slider-pagination" id="sliderPagination">
-                    <!-- Pills will be injected here by JS -->
+                <div class="thumbnails-container" id="thumbnailsContainer">
+                    <!-- Thumbnails will be injected here by JS -->
                 </div>
             </div>
 
@@ -597,9 +617,27 @@
 
         let currentVariant = 0;
 
+        function scrollToImage(index) {
+            const slider = document.getElementById('imageSlider');
+            const width = slider.offsetWidth;
+            slider.scrollTo({
+                left: width * index,
+                behavior: 'smooth'
+            });
+            updateActiveThumb(index);
+        }
+
+        function updateActiveThumb(index) {
+            const thumbs = document.querySelectorAll('.thumb-item');
+            thumbs.forEach((thumb, i) => {
+                if (i === index) thumb.classList.add('active');
+                else thumb.classList.remove('active');
+            });
+        }
+
         function renderGallery(variantIndex) {
             const slider = document.getElementById('imageSlider');
-            const pagination = document.getElementById('sliderPagination');
+            const thumbsContainer = document.getElementById('thumbnailsContainer');
             const variant = variants[variantIndex];
             
             slider.innerHTML = variant.images.map(img => `
@@ -608,8 +646,10 @@
                 </div>
             `).join('');
 
-            pagination.innerHTML = variant.images.map((_, i) => `
-                <div class="pill ${i === 0 ? 'active' : ''}"></div>
+            thumbsContainer.innerHTML = variant.images.map((img, i) => `
+                <div class="thumb-item ${i === 0 ? 'active' : ''}" onclick="scrollToImage(${i})">
+                    <img src="${img}" alt="Thumbnail ${i + 1}">
+                </div>
             `).join('');
 
             // Reset scroll position
@@ -626,17 +666,12 @@
             renderGallery(index);
         }
 
-        // Handle scroll for pagination
+        // Handle scroll to update active thumbnail
         document.getElementById('imageSlider').addEventListener('scroll', function() {
             const scrollLeft = this.scrollLeft;
             const width = this.offsetWidth;
             const index = Math.round(scrollLeft / width);
-            
-            const pills = document.querySelectorAll('.pill');
-            pills.forEach((pill, i) => {
-                if (i === index) pill.classList.add('active');
-                else pill.classList.remove('active');
-            });
+            updateActiveThumb(index);
         });
 
         // Initial render
