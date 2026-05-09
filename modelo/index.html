@@ -38,7 +38,7 @@
 
         html, body {
             width: 100%;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevent horizontal scroll on the whole page */
             position: relative;
         }
 
@@ -176,7 +176,7 @@
             position: relative;
             width: 100%;
             max-width: 100%;
-            overflow: hidden;
+            overflow: hidden; /* Crucial to prevent horizontal leakage */
         }
 
         @media (min-width: 768px) {
@@ -225,14 +225,13 @@
             mix-blend-mode: multiply; 
         }
 
-        /* Updated Thumbnails Section */
+        /* --- UPDATED THUMBNAILS CSS --- */
         .thumbnails-outer-container {
             position: relative;
             display: flex;
             align-items: center;
             margin-top: 16px;
             gap: 8px;
-            padding: 0 4px;
         }
 
         .thumbnails-container {
@@ -244,7 +243,7 @@
             width: 100%;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            padding: 2px;
+            padding: 2px 0;
         }
 
         .thumbnails-container::-webkit-scrollbar {
@@ -266,10 +265,6 @@
             padding: 4px;
         }
 
-        .thumb-item:hover {
-            border-color: #cbd5e1;
-        }
-
         .thumb-item.active {
             border-color: var(--brand-primary);
             box-shadow: 0 0 0 1px var(--brand-primary);
@@ -286,28 +281,23 @@
             background: #fff;
             border: 1px solid var(--border);
             border-radius: 50%;
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: var(--brand-primary);
-            font-size: 10px;
+            font-size: 12px;
             transition: all 0.2s ease;
-            z-index: 2;
+            z-index: 10;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             flex-shrink: 0;
         }
 
         .thumb-nav-btn:hover {
-            background: var(--bg-soft);
             border-color: var(--brand-primary);
-            transform: scale(1.05);
-        }
-
-        .thumb-nav-btn:active {
-            transform: scale(0.95);
+            background: var(--bg-soft);
         }
 
         .thumb-nav-btn.disabled {
@@ -315,6 +305,7 @@
             cursor: not-allowed;
             pointer-events: none;
         }
+        /* --- END UPDATED THUMBNAILS CSS --- */
 
         /* Product Info */
         .product-content {
@@ -524,7 +515,7 @@
                     </div>
                 </div>
                 
-                <!-- Updated Thumbnails HTML -->
+                <!-- --- UPDATED THUMBNAILS HTML --- -->
                 <div class="thumbnails-outer-container">
                     <button class="thumb-nav-btn" id="prevThumb" onclick="scrollThumbs(-1)">
                         <i class="fas fa-chevron-left"></i>
@@ -536,6 +527,7 @@
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
+                <!-- --- END UPDATED THUMBNAILS HTML --- -->
             </div>
 
             <div class="product-content">
@@ -646,13 +638,13 @@
                     "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
                     "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
                     "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
                     "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png"
                 ]
             },
             {
                 id: 1,
                 images: [
+                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
                     "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
                     "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
                     "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
@@ -678,7 +670,7 @@
             thumbs.forEach((thumb, i) => {
                 if (i === index) {
                     thumb.classList.add('active');
-                    // Ensure the active thumb is scrolled into view within its container
+                    // Ensure active thumb is visible
                     const container = thumb.parentElement;
                     const scrollLeft = thumb.offsetLeft - (container.offsetWidth / 2) + (thumb.offsetWidth / 2);
                     container.scrollTo({
@@ -692,9 +684,10 @@
             updateNavButtons();
         }
 
+        /* --- UPDATED THUMBNAILS JS --- */
         function scrollThumbs(direction) {
             const container = document.getElementById('thumbnailsContainer');
-            const scrollAmount = container.offsetWidth * 0.8; // Scroll 80% of visible area
+            const scrollAmount = container.offsetWidth * 0.8;
             container.scrollBy({
                 left: direction * scrollAmount,
                 behavior: 'smooth'
@@ -707,6 +700,8 @@
             const prevBtn = document.getElementById('prevThumb');
             const nextBtn = document.getElementById('nextThumb');
             
+            if (!container || !prevBtn || !nextBtn) return;
+
             if (container.scrollLeft <= 5) {
                 prevBtn.classList.add('disabled');
             } else {
@@ -740,8 +735,8 @@
             // Reset scroll position
             slider.scrollLeft = 0;
             thumbsContainer.scrollLeft = 0;
-            
-            // Hide arrows if not enough thumbnails
+
+            // Show/hide arrows based on count
             const navBtns = document.querySelectorAll('.thumb-nav-btn');
             if (variant.images.length <= 4) {
                 navBtns.forEach(btn => btn.style.display = 'none');
@@ -750,6 +745,7 @@
                 updateNavButtons();
             }
         }
+        /* --- END UPDATED THUMBNAILS JS --- */
 
         function updateVariant(index, price, oldPrice, element) {
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('active'));
@@ -776,16 +772,6 @@
 
         // Initial render
         renderGallery(0);
-        
-        // Resize observer to update layout on window resize
-        window.addEventListener('resize', () => {
-            updateNavButtons();
-            const activeThumb = document.querySelector('.thumb-item.active');
-            if (activeThumb) {
-                const index = Array.from(activeThumb.parentElement.children).indexOf(activeThumb);
-                scrollToImage(index);
-            }
-        });
     </script>
 </body>
 </html>
