@@ -1370,19 +1370,21 @@
                 const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
                 
                 if (selectedDelivery && cart.length > 0) {
-                    if (cartFooter) {
-                        const isHidden = cartFooter.style.display === 'none';
-                        cartFooter.style.display = 'block';
-                        if (isHidden) {
-                            const scrollContainer = cartItemsContainer.parentElement;
+                    const isFooterHidden = cartFooter && cartFooter.style.display === 'none';
+                    if (cartFooter) cartFooter.style.display = 'block';
+                    
+                    if (isFooterHidden) {
+                        const scrollContainer = document.querySelector('#cartSidebar > div[style*="overflow-y: auto"]');
+                        if (scrollContainer) {
                             setTimeout(() => {
                                 scrollContainer.scrollTo({
                                     top: scrollContainer.scrollHeight,
                                     behavior: 'smooth'
                                 });
-                            }, 100);
+                            }, 150);
                         }
                     }
+                    
                     const shippingCost = parseFloat(selectedDelivery.value);
                     const finalTotal = total + shippingCost;
                     cartTotalValue.innerText = `R$ ${finalTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
