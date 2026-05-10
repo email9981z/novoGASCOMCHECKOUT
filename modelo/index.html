@@ -825,6 +825,19 @@
         .form-group label { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; display: block; text-align: left; }
         .form-group input { width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; background: #fff; }
         .form-group input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(0, 0, 102, 0.1); }
+        
+        .checkout-summary-box { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .summary-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 13px; color: var(--text-main); }
+        .summary-item i { color: var(--brand-primary); margin-top: 3px; font-size: 14px; width: 16px; text-align: center; }
+        .summary-item .label { color: var(--text-muted); font-weight: 600; min-width: 60px; }
+        .summary-item .value { font-weight: 700; flex: 1; }
+
+        .checkout-pricing { border-top: 1px dashed var(--border); margin-top: 15px; padding-top: 15px; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 14px; }
+        .price-row.total { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+        .price-row.total span:last-child { font-size: 20px; font-weight: 800; color: var(--brand-primary); }
+        .price-row .label { color: var(--text-muted); font-weight: 600; }
+        .price-row .value { font-weight: 700; color: var(--text-main); }
     </style>
 </head>
 <body>
@@ -1048,8 +1061,20 @@
             
             <!-- Seção de Dados Pessoais -->
             <div id="personalDataSection" class="personal-data-section">
+                <!-- Resumo do Pedido -->
+                <div class="checkout-summary-box">
+                    <div class="summary-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="value" id="summaryAddress">Carregando endereço...</div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fas fa-truck"></i>
+                        <div class="value" id="summaryShipping">Frete não selecionado</div>
+                    </div>
+                </div>
+
                 <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-user" style="color: var(--brand-primary); font-size: 14px;"></i> Dados Pessoais
+                    <i class="fas fa-user" style="color: var(--brand-primary); font-size: 14px;"></i> Seus Dados
                 </h3>
                 <div class="form-group">
                     <label>Nome Completo</label>
@@ -1069,7 +1094,22 @@
                         <input type="email" placeholder="seu@email.com">
                     </div>
                 </div>
-                <button class="btn-checkout" style="margin-top: 10px;">Prosseguir</button>
+                <!-- Detalhamento de Preços -->
+                <div class="checkout-pricing">
+                    <div class="price-row">
+                        <span class="label">Subtotal</span>
+                        <span class="value" id="checkoutSubtotal">R$ 0,00</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="label">Frete</span>
+                        <span class="value" id="checkoutShipping">R$ 0,00</span>
+                    </div>
+                    <div class="price-row total">
+                        <span class="label">Total</span>
+                        <span class="value" id="checkoutTotal">R$ 0,00</span>
+                    </div>
+                </div>
+                <button class="btn-checkout" style="margin-top: 15px;">Prosseguir</button>
             </div>
         </div>
 
@@ -1615,6 +1655,30 @@
             document.addEventListener('click', function(e) {
                 const btn = e.target.closest('.btn-checkout');
                 if (btn && btn.innerText.trim().toUpperCase() === 'FINALIZAR COMPRA') {
+                    // Capturar dados para o resumo
+                    const street = document.getElementById('addressStreet').innerText;
+                    const number = document.getElementById('addressNumber').value;
+                    const city = document.getElementById('addressCity').innerText;
+                    const state = document.getElementById('addressState').innerText;
+                    
+                    const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
+                    const deliveryName = selectedDelivery ? selectedDelivery.parentElement.querySelector('strong').innerText : 'Não selecionado';
+                    const deliveryPrice = selectedDelivery ? parseFloat(selectedDelivery.value) : 0;
+                    
+                    // Calcular subtotal (total atual menos o frete)
+                    const totalValueText = document.getElementById('cartTotalValue').innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
+                    const totalValue = parseFloat(totalValueText);
+                    const subtotal = totalValue - deliveryPrice;
+
+                    // Preencher resumo
+                    document.getElementById('summaryAddress').innerText = `${street}${number ? ', ' + number : ''} - ${city}/${state}`;
+                    document.getElementById('summaryShipping').innerText = deliveryName;
+                    
+                    // Preencher preços
+                    document.getElementById('checkoutSubtotal').innerText = `R$ ${subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                    document.getElementById('checkoutShipping').innerText = deliveryPrice === 0 ? 'GRÁTIS' : `R$ ${deliveryPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                    document.getElementById('checkoutTotal').innerText = `R$ ${totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+
                     cartSidebar.classList.add('checkout-active');
                     const scrollContainer = cartSidebar.querySelector('div[style*="overflow-y: auto"]');
                     if (scrollContainer) scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
