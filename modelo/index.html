@@ -1329,13 +1329,16 @@
                 }
             }
 
-            function updateCartUI() {
+            window.updateCartUI = function() {
                 const cepSection = document.querySelector('.cep-section');
+                const cartFooter = document.querySelector('.cart-footer');
+                
                 if (cart.length === 0) {
                     cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Seu carrinho está vazio.</div>';
                     cartTotalValue.innerText = 'R$ 0,00';
                     cartCountBadge.innerText = '0';
                     if (cepSection) cepSection.classList.remove('show');
+                    if (cartFooter) cartFooter.style.display = 'none';
                     return;
                 }
 
@@ -1365,15 +1368,14 @@
                 }).join('');
 
                 const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
-                const cartFooter = document.querySelector('.cart-footer');
                 
                 if (selectedDelivery && cart.length > 0) {
-                    cartFooter.style.display = 'block';
+                    if (cartFooter) cartFooter.style.display = 'block';
                     const shippingCost = parseFloat(selectedDelivery.value);
                     const finalTotal = total + shippingCost;
                     cartTotalValue.innerText = `R$ ${finalTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                 } else {
-                    cartFooter.style.display = 'none';
+                    if (cartFooter) cartFooter.style.display = 'none';
                     cartTotalValue.innerText = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                 }
                 cartCountBadge.innerText = count;
@@ -1403,7 +1405,7 @@
                     });
                 }
 
-                updateCartUI();
+                window.updateCartUI();
                 if (!cartSidebar.classList.contains('active')) toggleCart();
             }
 
@@ -1411,7 +1413,7 @@
             window.increaseQty = function(index) {
                 if (index >= 0 && index < cart.length) {
                     cart[index].quantity += 1;
-                    updateCartUI();
+                    window.updateCartUI();
                 }
             };
 
@@ -1419,10 +1421,10 @@
                 if (index >= 0 && index < cart.length) {
                     if (cart[index].quantity > 1) {
                         cart[index].quantity -= 1;
-                        updateCartUI();
+                        window.updateCartUI();
                     } else {
                         cart.splice(index, 1);
-                        updateCartUI();
+                        window.updateCartUI();
                     }
                 }
             };
