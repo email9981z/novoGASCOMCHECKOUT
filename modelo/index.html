@@ -778,7 +778,7 @@
 .address-block.show { display: block; }
 .address-block p { font-size: 13px; color: var(--text-main); margin-bottom: 8px; display: flex; justify-content: space-between; }
 .address-block p strong { color: var(--text-muted); font-weight: 600; }
-.address-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.address-fields { display: grid; grid-template-columns: 80px 1fr; gap: 12px; }
 .address-fields input { padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; }
 .address-fields input:focus { border-color: var(--brand-primary); }
 .delivery-option-card { display: flex; align-items: center; gap: 12px; padding: 14px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; background: #fff; transition: all 0.2s; position: relative; }
@@ -976,7 +976,7 @@
                 </h3>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                     <label class="delivery-option-card active">
-                        <input type="radio" name="delivery" checked onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active');">
+                        <input type="radio" name="delivery" value="0" checked onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI();">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
                                 <strong style="font-size: 14px; color: var(--brand-primary);">Frete Grátis</strong>
@@ -986,7 +986,7 @@
                         </div>
                     </label>
                     <label class="delivery-option-card">
-                        <input type="radio" name="delivery" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active');">
+                        <input type="radio" name="delivery" value="9.9" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI();">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
                                 <strong style="font-size: 14px; color: var(--brand-primary);">Entrega Expressa</strong>
@@ -1364,7 +1364,10 @@
                     `;
                 }).join('');
 
-                cartTotalValue.innerText = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
+                const shippingCost = selectedDelivery ? parseFloat(selectedDelivery.value) : 0;
+                const finalTotal = total + shippingCost;
+                cartTotalValue.innerText = `R$ ${finalTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                 cartCountBadge.innerText = count;
             }
 
