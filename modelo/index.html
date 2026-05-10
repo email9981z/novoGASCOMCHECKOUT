@@ -1565,8 +1565,9 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 }).join('');
 
                 const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
+                const deliveryOptionsVisible = document.getElementById('deliveryOptions').style.display === 'block';
                 
-                if (selectedDelivery && cart.length > 0) {
+                if (deliveryOptionsVisible && cart.length > 0) {
                     const isFooterHidden = cartFooter && cartFooter.style.display === 'none';
                     if (cartFooter) cartFooter.style.display = 'block';
                     
@@ -1582,7 +1583,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                         }
                     }
                     
-                    const shippingCost = parseFloat(selectedDelivery.value);
+                    const shippingCost = selectedDelivery ? parseFloat(selectedDelivery.value) : 0;
                     const finalTotal = total + shippingCost;
                     if (cartTotalValue) cartTotalValue.innerText = `R$ ${finalTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                 } else {
@@ -1702,6 +1703,9 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                         // Success state for button
                         searchBtn.style.background = 'var(--success)';
                         searchBtn.innerHTML = '<i class="fas fa-check"></i>';
+
+                        // Atualiza UI para mostrar o botão de checkout
+                        window.updateCartUI();
                     }
                 } catch (error) {
                     searchBtn.innerHTML = 'Buscar';
