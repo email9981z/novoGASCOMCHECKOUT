@@ -762,7 +762,8 @@
 .cart-total { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 800; font-size: 18px; }
 .btn-checkout { background: var(--ns-purple); color: #fff; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; text-align: center; text-decoration: none; display: block; }
 .empty-cart-msg { text-align: center; padding: 40px 20px; color: var(--text-muted); }
-.cep-section { padding: 20px; border-top: 1px solid var(--border); }
+.cep-section { padding: 20px; border-top: 1px solid var(--border); display: none; }
+.cep-section.show { display: block; }
 .cep-input-group { display: flex; gap: 8px; margin-bottom: 12px; }
 .cep-input-group input { flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.2s; }
 .cep-input-group input:focus { border-color: var(--brand-primary); }
@@ -937,10 +938,11 @@
             <h2>Meu Carrinho</h2>
             <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
         </div>
-        <div class="cart-items" id="cartItemsContainer">
-            <div class="empty-cart-msg">Seu carrinho está vazio.</div>
-        </div>
-        <div class="cep-section">
+        <div style="flex: 1; overflow-y: auto;">
+            <div class="cart-items" id="cartItemsContainer">
+                <div class="empty-cart-msg">Seu carrinho está vazio.</div>
+            </div>
+            <div class="cep-section">
             <div class="cep-input-group">
                 <input type="text" id="cepInput" placeholder="Digite seu CEP" maxlength="8">
                 <button id="searchCepBtn" onclick="window.searchCEP()">Buscar</button>
@@ -974,6 +976,7 @@
                             <span style="color: var(--text-muted);">Com entrega amanhã</span>
                         </div>
                     </label>
+                </div>
                 </div>
             </div>
         </div>
@@ -1308,13 +1311,16 @@
             }
 
             function updateCartUI() {
+                const cepSection = document.querySelector('.cep-section');
                 if (cart.length === 0) {
                     cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Seu carrinho está vazio.</div>';
                     cartTotalValue.innerText = 'R$ 0,00';
                     cartCountBadge.innerText = '0';
+                    if (cepSection) cepSection.classList.remove('show');
                     return;
                 }
 
+                if (cepSection) cepSection.classList.add('show');
                 let total = 0;
                 let count = 0;
                 cartItemsContainer.innerHTML = cart.map((item, index) => {
