@@ -1613,7 +1613,8 @@
 
             // Lógica de Transição para Dados Pessoais
             document.addEventListener('click', function(e) {
-                if (e.target && e.target.classList.contains('btn-checkout') && e.target.innerText === 'Finalizar Compra') {
+                const btn = e.target.closest('.btn-checkout');
+                if (btn && btn.innerText.trim().toUpperCase() === 'FINALIZAR COMPRA') {
                     cartSidebar.classList.add('checkout-active');
                     const scrollContainer = cartSidebar.querySelector('div[style*="overflow-y: auto"]');
                     if (scrollContainer) scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
