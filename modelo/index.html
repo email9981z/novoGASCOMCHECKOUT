@@ -957,6 +957,25 @@
                 <input type="text" id="addressNumber" placeholder="Numero" style="display: none;">
                 <input type="text" id="addressComplement" placeholder="Complemento (opcional)" style="display: none;">
             </div>
+            <div id="deliveryOptions" style="display: none; margin-top: 20px;">
+                <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">Opções de Entrega</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; background: #f9fafb;">
+                        <input type="radio" name="delivery" checked>
+                        <div style="font-size: 13px;">
+                            <strong style="display: block; color: var(--brand-primary);">Frete Grátis</strong>
+                            <span style="color: var(--text-muted);">com entrega em 03 dias</span>
+                        </div>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; background: #f9fafb;">
+                        <input type="radio" name="delivery">
+                        <div style="font-size: 13px;">
+                            <strong style="display: block; color: var(--brand-primary);">Entrega Expressa</strong>
+                            <span style="color: var(--text-muted);">Com entrega amanhã</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="cart-footer">
             <div class="cart-total">
@@ -1405,6 +1424,7 @@
                         addressBlock.classList.remove('show');
                         addressNumber.style.display = 'none';
                         addressComplement.style.display = 'none';
+                        document.getElementById('deliveryOptions').style.display = 'none';
                     } else {
                         document.getElementById('addressStreet').textContent = data.logradouro || 'N/A';
                         document.getElementById('addressNeighborhood').textContent = data.bairro || 'N/A';
@@ -1413,6 +1433,7 @@
                         addressBlock.classList.add('show');
                         addressNumber.style.display = 'block';
                         addressComplement.style.display = 'block';
+                        document.getElementById('deliveryOptions').style.display = 'block';
                         addressNumber.value = '';
                         addressComplement.value = '';
                     }
@@ -1422,6 +1443,7 @@
                     addressBlock.classList.remove('show');
                     addressNumber.style.display = 'none';
                     addressComplement.style.display = 'none';
+                    document.getElementById('deliveryOptions').style.display = 'none';
                 } finally {
                     cepLoading.classList.remove('show');
                     searchBtn.disabled = false;
