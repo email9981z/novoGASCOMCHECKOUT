@@ -1571,18 +1571,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                     const isFooterHidden = cartFooter && (cartFooter.style.display === 'none' || !cartFooter.style.display);
                     if (cartFooter) cartFooter.style.display = 'block';
                     
-                    if (isFooterHidden) {
-                        const scrollContainer = cartSidebar.querySelector('div[style*="overflow-y: auto"]');
-                        const deliveryOptions = document.getElementById('deliveryOptions');
-                        if (scrollContainer && deliveryOptions) {
-                            setTimeout(() => {
-                                scrollContainer.scrollTo({
-                                    top: deliveryOptions.offsetTop,
-                                    behavior: 'smooth'
-                                });
-                            }, 300);
-                        }
-                    }
+                    // Rolagem automática removida conforme solicitação
                     
                     const shippingCost = selectedDelivery ? parseFloat(selectedDelivery.value) : 0;
                     const finalTotal = total + shippingCost;
@@ -1768,11 +1757,6 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                     
                     if (!selectedDelivery) {
                         alert('Por favor, selecione uma opção de entrega.');
-                        const deliveryOptions = document.getElementById('deliveryOptions');
-                        const scrollContainer = cartSidebar.querySelector('div[style*="overflow-y: auto"]');
-                        if (scrollContainer && deliveryOptions) {
-                            scrollContainer.scrollTo({ top: deliveryOptions.offsetTop, behavior: 'smooth' });
-                        }
                         return;
                     }
                     
