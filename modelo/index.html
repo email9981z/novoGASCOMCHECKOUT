@@ -335,8 +335,7 @@
         .price-box {
             border-top: 1px solid var(--ns-border);
             padding-top: 16px;
-            margin-bottom: 20px;
-            width: 100%;
+            margin-bottom: 12px;
         }
 
         .old-price-row {
@@ -379,6 +378,50 @@
             margin-bottom: 12px;
         }
 
+        /* Netshoes Seller & Rating Info */
+        .ns-seller-info {
+            font-size: 13px;
+            color: var(--ns-text);
+            margin-bottom: 8px;
+        }
+
+        .ns-seller-info strong {
+            color: var(--ns-text);
+            font-weight: 700;
+        }
+
+        .ns-rating-container {
+            margin-bottom: 20px;
+        }
+
+        .ns-rating-bar {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .ns-rating-fill {
+            height: 100%;
+            background: #8cc63f;
+            width: 95%;
+        }
+
+        .ns-rating-details {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--ns-gray);
+        }
+
+        .ns-rating-details i {
+            color: var(--ns-gray);
+            font-size: 10px;
+        }
+
         /* Netshoes Buttons */
         .cta-group {
             display: flex;
@@ -392,7 +435,7 @@
             background: var(--ns-purple);
             color: #fff;
             border: none;
-            padding: 16px;
+            padding: 18px;
             border-radius: 4px;
             font-size: 18px;
             font-weight: 800;
@@ -400,6 +443,9 @@
             text-transform: uppercase;
             width: 100%;
             transition: background 0.2s;
+            display: block;
+            text-align: center;
+            text-decoration: none;
         }
 
         .btn-buy:hover { background: #40008c; }
@@ -407,10 +453,10 @@
         .btn-cart {
             background: #fff;
             color: var(--ns-purple);
-            border: 1px solid var(--ns-purple);
-            padding: 14px;
+            border: 2px solid var(--ns-purple);
+            padding: 16px;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             width: 100%;
@@ -418,6 +464,11 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-cart:hover {
+            background: #f8f0ff;
         }
 
         /* Option Cards */
@@ -581,6 +632,18 @@
                     </div>
                 </div>
 
+                <div class="ns-seller-info">
+                    Vendido e enviado por <strong>Hub Suplementos</strong>
+                </div>
+                <div class="ns-rating-container">
+                    <div class="ns-rating-bar">
+                        <div class="ns-rating-fill"></div>
+                    </div>
+                    <div class="ns-rating-details">
+                        <i class="fas fa-star"></i> (4.9) Avaliada por 1.983 clientes
+                    </div>
+                </div>
+
                 <div class="cta-group">
                     <button class="btn-buy">Comprar</button>
                     <button class="btn-cart">
@@ -609,6 +672,8 @@
                     <table class="tech-table">
                         <tr><td><strong>Fabricante</strong></td><td>Kirkland Signature (EUA)</td></tr>
                         <tr><td><strong>Ativo Principal</strong></td><td>Minoxidil 5% USP</td></tr>
+                        <tr><td><strong>Volume Total</strong></td><td>180ml (3x 60ml)</td></tr>
+                        <tr><td><strong>Duração Kit</strong></td><td>90 dias de tratamento</td></tr>
                     </table>
                 </div>
             </div>
@@ -619,8 +684,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <h4 style="margin-bottom: 24px;">HUB SUPLEMENTOS</h4>
-                    <p style="font-size: 14px; color: #a1a1aa;">Sua loja de confiança para tratamentos capilares.</p>
+                    <img src="https://i.postimg.cc/0jX0X1zY/hub-logo.png" alt="Hub Suplementos" style="height: 30px; filter: brightness(0) invert(1); margin-bottom: 20px;">
+                    <p style="color: #a1a1aa; font-size: 14px; max-width: 300px;">Sua fonte confiável para suplementação premium e cuidados pessoais.</p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -630,148 +695,86 @@
     </footer>
 
     <script>
-        const variants = [
-            {
-                id: 0,
-                images: [
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png"
-                ]
-            },
-            {
-                id: 1,
-                images: [
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-                    "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png"
-                ]
-            }
+        const productImages = [
+            "https://i.postimg.cc/tCvX480y/kirkland-3.png",
+            "https://i.postimg.cc/7Z9Z7Z9Z/kirkland-box.png",
+            "https://i.postimg.cc/8Y8Y8Y8Y/kirkland-bottle.png",
+            "https://i.postimg.cc/9X9X9X9X/kirkland-seal.png"
         ];
 
-        let currentVariant = 0;
+        let currentImgIndex = 0;
 
-        function scrollToImage(index) {
+        function initGallery() {
             const slider = document.getElementById('imageSlider');
-            const width = slider.offsetWidth;
-            slider.scrollTo({
-                left: width * index,
-                behavior: 'smooth'
-            });
-            updateActiveThumb(index);
-        }
-
-        function updateActiveThumb(index) {
-            const thumbs = document.querySelectorAll('.thumb-item');
-            thumbs.forEach((thumb, i) => {
-                if (i === index) {
-                    thumb.classList.add('active');
-                    // Ensure active thumb is visible
-                    const container = thumb.parentElement;
-                    const scrollLeft = thumb.offsetLeft - (container.offsetWidth / 2) + (thumb.offsetWidth / 2);
-                    container.scrollTo({
-                        left: scrollLeft,
-                        behavior: 'smooth'
-                    });
-                } else {
-                    thumb.classList.remove('active');
-                }
-            });
-            updateNavButtons();
-        }
-
-        /* --- UPDATED THUMBNAILS JS --- */
-        function scrollThumbs(direction) {
-            const container = document.getElementById('thumbnailsContainer');
-            const scrollAmount = container.offsetWidth * 0.8;
-            container.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
-            setTimeout(updateNavButtons, 300);
-        }
-
-        function updateNavButtons() {
-            const container = document.getElementById('thumbnailsContainer');
-            const prevBtn = document.getElementById('prevThumb');
-            const nextBtn = document.getElementById('nextThumb');
+            const thumbContainer = document.getElementById('thumbnailsContainer');
             
-            if (!container || !prevBtn || !nextBtn) return;
-
-            if (container.scrollLeft <= 5) {
-                prevBtn.classList.add('disabled');
-            } else {
-                prevBtn.classList.remove('disabled');
-            }
-            
-            if (container.scrollLeft + container.offsetWidth >= container.scrollWidth - 5) {
-                nextBtn.classList.add('disabled');
-            } else {
-                nextBtn.classList.remove('disabled');
-            }
-        }
-
-        function renderGallery(variantIndex) {
-            const slider = document.getElementById('imageSlider');
-            const thumbsContainer = document.getElementById('thumbnailsContainer');
-            const variant = variants[variantIndex];
-            
-            slider.innerHTML = variant.images.map(img => `
+            slider.innerHTML = productImages.map(img => `
                 <div class="main-image-item">
                     <img src="${img}" alt="Minoxidil Kirkland">
                 </div>
             `).join('');
 
-            thumbsContainer.innerHTML = variant.images.map((img, i) => `
-                <div class="thumb-item ${i === 0 ? 'active' : ''}" onclick="scrollToImage(${i})">
-                    <img src="${img}" alt="Thumbnail ${i + 1}">
+            thumbContainer.innerHTML = productImages.map((img, idx) => `
+                <div class="thumb-item ${idx === 0 ? 'active' : ''}" onclick="goToImage(${idx})">
+                    <img src="${img}" alt="Thumbnail">
                 </div>
             `).join('');
-
-            // Reset scroll position
-            slider.scrollLeft = 0;
-            thumbsContainer.scrollLeft = 0;
-
-            // Show/hide arrows based on count
-            const navBtns = document.querySelectorAll('.thumb-nav-btn');
-            if (variant.images.length <= 4) {
-                navBtns.forEach(btn => btn.style.display = 'none');
-            } else {
-                navBtns.forEach(btn => btn.style.display = 'flex');
-                updateNavButtons();
-            }
+            
+            updateThumbNav();
         }
-        /* --- END UPDATED THUMBNAILS JS --- */
+
+        function goToImage(index) {
+            currentImgIndex = index;
+            const slider = document.getElementById('imageSlider');
+            slider.scrollTo({
+                left: slider.offsetWidth * index,
+                behavior: 'smooth'
+            });
+
+            document.querySelectorAll('.thumb-item').forEach((thumb, idx) => {
+                thumb.classList.toggle('active', idx === index);
+            });
+            
+            // Auto-scroll thumbnails to keep active one visible
+            const activeThumb = document.querySelectorAll('.thumb-item')[index];
+            activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
+        function scrollThumbs(direction) {
+            const container = document.getElementById('thumbnailsContainer');
+            const scrollAmount = container.offsetWidth * 0.8;
+            container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            setTimeout(updateThumbNav, 300);
+        }
+
+        function updateThumbNav() {
+            const container = document.getElementById('thumbnailsContainer');
+            document.getElementById('prevThumb').classList.toggle('disabled', container.scrollLeft <= 0);
+            document.getElementById('nextThumb').classList.toggle('disabled', container.scrollLeft + container.offsetWidth >= container.scrollWidth - 5);
+        }
 
         function updateVariant(index, price, oldPrice, element) {
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('active'));
             element.classList.add('active');
-            document.getElementById('mainPrice').innerText = price.toFixed(2).replace('.', ',');
-            document.getElementById('oldPrice').innerText = oldPrice.toFixed(2).replace('.', ',');
             
-            currentVariant = index;
-            renderGallery(index);
+            document.getElementById('mainPrice').innerText = price.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            document.getElementById('oldPrice').innerText = oldPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         }
 
-        // Handle scroll to update active thumbnail
-        document.getElementById('imageSlider').addEventListener('scroll', function() {
-            const scrollLeft = this.scrollLeft;
-            const width = this.offsetWidth;
-            if (width > 0) {
-                const index = Math.round(scrollLeft / width);
-                updateActiveThumb(index);
+        // Initialize on load
+        window.onload = initGallery;
+        
+        // Listen for scroll on main slider to sync thumbnails
+        document.getElementById('imageSlider').addEventListener('scroll', () => {
+            const slider = document.getElementById('imageSlider');
+            const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+            if (index !== currentImgIndex) {
+                currentImgIndex = index;
+                document.querySelectorAll('.thumb-item').forEach((thumb, idx) => {
+                    thumb.classList.toggle('active', idx === index);
+                });
             }
         });
-
-        // Update nav buttons on thumbnail scroll
-        document.getElementById('thumbnailsContainer').addEventListener('scroll', updateNavButtons);
-
-        // Initial render
-        renderGallery(0);
     </script>
 </body>
 </html>
