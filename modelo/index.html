@@ -975,14 +975,14 @@
                     <i class="fas fa-truck" style="color: var(--brand-primary); font-size: 14px;"></i> Opções de Entrega
                 </h3>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <label class="delivery-option-card active">
-                        <input type="radio" name="delivery" value="0" checked onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI();">
+                    <label class="delivery-option-card">
+                        <input type="radio" name="delivery" value="0" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI();">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
                                 <strong style="font-size: 14px; color: var(--brand-primary);">Frete Grátis</strong>
                                 <span style="font-size: 12px; font-weight: 800; color: var(--success);">GRÁTIS</span>
                             </div>
-                            <span style="font-size: 12px; color: var(--text-muted);">Entrega em até 03 dias úteis</span>
+                            <div style="font-size: 11px; color: var(--text-muted);">Entrega em até 7 dias úteis</div>
                         </div>
                     </label>
                     <label class="delivery-option-card">
@@ -999,7 +999,7 @@
             </div>
             </div>
         </div>
-        <div class="cart-footer">
+        <div class="cart-footer" style="display: none;">
             <div class="cart-total">
                 <span>Total:</span>
                 <span id="cartTotalValue">R$ 0,00</span>
@@ -1365,9 +1365,17 @@
                 }).join('');
 
                 const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
-                const shippingCost = selectedDelivery ? parseFloat(selectedDelivery.value) : 0;
-                const finalTotal = total + shippingCost;
-                cartTotalValue.innerText = `R$ ${finalTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                const cartFooter = document.querySelector('.cart-footer');
+                
+                if (selectedDelivery) {
+                    cartFooter.style.display = 'block';
+                    const shippingCost = parseFloat(selectedDelivery.value);
+                    const finalTotal = total + shippingCost;
+                    cartTotalValue.innerText = `R$ ${finalTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                } else {
+                    cartFooter.style.display = 'none';
+                    cartTotalValue.innerText = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                }
                 cartCountBadge.innerText = count;
             }
 
@@ -1473,10 +1481,6 @@
                         // Success state for button
                         searchBtn.style.background = 'var(--success)';
                         searchBtn.innerHTML = '<i class="fas fa-check"></i>';
-                        setTimeout(() => {
-                            searchBtn.style.background = '';
-                            searchBtn.innerHTML = 'Buscar';
-                        }, 3000);
                     }
                 } catch (error) {
                     searchBtn.innerHTML = 'Buscar';
@@ -1501,6 +1505,13 @@
                         value = value.substring(0, 5) + '-' + value.substring(5, 8);
                     }
                     e.target.value = value;
+
+                    // Reset search button state when user types
+                    const searchBtn = document.getElementById('searchCepBtn');
+                    if (searchBtn) {
+                        searchBtn.style.background = '';
+                        searchBtn.innerHTML = 'Buscar';
+                    }
 
                     if (value.length === 9) {
                         cepInput.blur();
