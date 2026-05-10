@@ -729,6 +729,16 @@
         @media (min-width: 768px) {
             .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 60px; }
         }
+
+        /* No seu CSS */
+.review-card {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
     </style>
 </head>
 <body>
@@ -1133,18 +1143,26 @@
         }
 
         function renderPagination(activePage) {
-            const pagination = document.getElementById('pagination');
-            if(!pagination) return;
-            pagination.innerHTML = '';
-            for (let i = 1; i <= 3; i++) { // Exemplo com 3 páginas
-                const btn = document.createElement('button');
-                btn.className = `page-btn ${activePage === i ? 'active' : ''}`;
-                btn.textContent = i;
-                btn.onclick = () => { currentPage = i; renderReviews(i); };
-                pagination.appendChild(btn);
-            }
-        }
+    const pagination = document.getElementById('pagination');
+    if(!pagination) return;
+    
+    const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
+    pagination.innerHTML = '';
 
+    // Se houver muitas páginas, mostre "..." para indicar volume
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = `page-btn ${activePage === i ? 'active' : ''}`;
+        btn.textContent = i;
+        btn.onclick = () => { 
+            currentPage = i; 
+            renderReviews(i);
+            // Scroll suave de volta para o topo das avaliações ao trocar de página
+            document.getElementById('reviewsGrid').scrollIntoView({behavior: 'smooth'});
+        };
+        pagination.appendChild(btn);
+    }
+}
         function openTab(evt, tabName) {
             const tabcontent = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; tabcontent[i].classList.remove("active"); }
