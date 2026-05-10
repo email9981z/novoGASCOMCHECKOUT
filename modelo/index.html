@@ -671,6 +671,48 @@
             .reviews-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
         }
 
+        /* Newsletter Section */
+        .newsletter-section { padding: 60px 0; background: #fff; border-top: 1px solid var(--border); }
+        .newsletter-container { 
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: #fff;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 102, 0.15);
+        }
+        .newsletter-container h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+        .newsletter-container p { font-size: 16px; opacity: 0.9; margin-bottom: 30px; }
+        .newsletter-form { display: flex; gap: 12px; max-width: 500px; margin: 0 auto; }
+        .newsletter-form input { 
+            flex: 1; 
+            padding: 14px 20px; 
+            border-radius: 10px; 
+            border: none; 
+            outline: none; 
+            font-size: 14px;
+        }
+        .newsletter-form button { 
+            padding: 14px 28px; 
+            border-radius: 10px; 
+            border: none; 
+            background: #fff; 
+            color: var(--brand-primary); 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .newsletter-form button:hover { background: #f0f4ff; transform: scale(1.02); }
+        
+        @media (max-width: 600px) {
+            .newsletter-form { flex-direction: column; }
+            .newsletter-container { padding: 30px 20px; }
+            .newsletter-container h2 { font-size: 22px; }
+        }
+
 
         /* Footer */
         footer { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 80px 0 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
@@ -908,6 +950,19 @@
         </div>
     </section>
 
+    <!-- SEÇÃO DE NEWSLETTER -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-container">
+                <h2>Receba Ofertas Exclusivas</h2>
+                <p>Cadastre seu e-mail para receber descontos especiais e dicas de tratamento.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Obrigado por se inscrever!');">
+                    <input type="email" placeholder="Seu melhor e-mail" required>
+                    <button type="submit">Inscrever-se</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="container">
