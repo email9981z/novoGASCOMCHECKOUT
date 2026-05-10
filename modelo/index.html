@@ -791,28 +791,28 @@
 .delivery-option-card.active { border-color: var(--brand-primary); background: #f0f7ff; box-shadow: 0 0 0 1px var(--brand-primary); }
 .cep-error { color: #dc2626; font-size: 13px; margin-top: 8px; display: none; font-weight: 600; }
 .cep-error.show { display: block; }
-.cep-loading { 
-    display: none; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 10px;
-    padding: 16px; 
-    color: var(--brand-primary); 
+.cep-loading {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    color: #64748b;
     font-size: 14px; 
-    font-weight: 700;
-    background: #f0f4ff;
-    border-radius: 10px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #f0f4ff 0%, #f8fbff 100%);
+    border-radius: 12px;
+    padding: 14px 16px;
     margin-top: 12px;
-    border: 1px dashed var(--brand-primary);
+    border: 1px solid #e0e7ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 102, 0.06);
 }
 .cep-loading.show { display: flex; }
 .spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(0, 0, 102, 0.1);
-    border-top: 2px solid var(--brand-primary);
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 0, 102, 0.08);
+    border-top: 3px solid var(--brand-primary);
     border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    animation: spin 0.9s linear infinite;
 }
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -1113,7 +1113,8 @@
                     </div>
                 </div>
 
-                <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                <div style="padding-top: 24px; margin-top: 24px; border-top: 2px solid #e2e8f0;"></div>
+                <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 20px; margin-top: 24px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
                     <i class="fas fa-user" style="color: var(--brand-primary); font-size: 14px;"></i> Seus Dados
                 </h3>
                 <div class="form-group">
