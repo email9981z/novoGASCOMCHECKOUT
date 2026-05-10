@@ -787,8 +787,33 @@
 .delivery-option-card.active { border-color: var(--brand-primary); background: #f0f4ff; box-shadow: 0 0 0 1px var(--brand-primary); }
 .cep-error { color: #dc2626; font-size: 13px; margin-top: 8px; display: none; font-weight: 600; }
 .cep-error.show { display: block; }
-.cep-loading { display: none; text-align: center; padding: 12px; color: var(--brand-primary); font-size: 13px; font-weight: 600; }
-.cep-loading.show { display: block; }
+.cep-loading { 
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px;
+    padding: 16px; 
+    color: var(--brand-primary); 
+    font-size: 14px; 
+    font-weight: 700;
+    background: #f0f4ff;
+    border-radius: 10px;
+    margin-top: 12px;
+    border: 1px dashed var(--brand-primary);
+}
+.cep-loading.show { display: flex; }
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0, 0, 102, 0.1);
+    border-top: 2px solid var(--brand-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
     </style>
 </head>
@@ -958,7 +983,10 @@
                 <input type="text" id="cepInput" placeholder="Digite seu CEP" maxlength="9" inputmode="numeric">
                 <button id="searchCepBtn" onclick="window.searchCEP()">Buscar</button>
             </div>
-            <div class="cep-loading" id="cepLoading">Buscando endereco...</div>
+            <div class="cep-loading" id="cepLoading">
+                <div class="spinner"></div>
+                <span>Buscando endereço...</span>
+            </div>
             <div class="cep-error" id="cepError"></div>
             <div class="address-block" id="addressBlock">
                 <p><strong>Rua:</strong> <span id="addressStreet"></span></p>
