@@ -1598,7 +1598,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 const variantName = activeOption.querySelector('.title').innerText;
                 const priceText = activeOption.querySelector('.val').innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
                 const price = parseFloat(priceText);
-                const image = productImages[0];
+                const image = variantImages[currentVariantIndex][0];
 
                 const itemId = `${productName}-${variantName}`;
                 const existingItem = cart.find(item => item.id === itemId);
