@@ -1367,7 +1367,7 @@
                 const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
                 const cartFooter = document.querySelector('.cart-footer');
                 
-                if (selectedDelivery) {
+                if (selectedDelivery && cart.length > 0) {
                     cartFooter.style.display = 'block';
                     const shippingCost = parseFloat(selectedDelivery.value);
                     const finalTotal = total + shippingCost;
