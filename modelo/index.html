@@ -1024,16 +1024,19 @@
                         </div>
                     </label>
                 </div>
+
+                <!-- Botão e Total movidos para cá -->
+                <div class="cart-footer-inline" style="display: none; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);">
+                    <div class="cart-total" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <span style="font-size: 14px; color: var(--text-muted); font-weight: 600;">Total:</span>
+                        <span id="cartTotalValue" style="font-size: 22px; font-weight: 800; color: var(--brand-primary);">R$ 0,00</span>
+                    </div>
+                    <button class="btn-checkout">Finalizar Compra</button>
+                </div>
             </div>
             </div>
         </div>
-        <div class="cart-footer" style="display: none;">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cartTotalValue">R$ 0,00</span>
-            </div>
-            <button class="btn-checkout">Finalizar Compra</button>
-        </div>
+
     </div>
 
     <div class="tabs-container">
@@ -1359,11 +1362,12 @@
 
             window.updateCartUI = function() {
                 const cepSection = document.querySelector('.cep-section');
-                const cartFooter = document.querySelector('.cart-footer');
+                const cartFooter = document.querySelector('.cart-footer-inline');
+                const cartTotalValue = document.getElementById('cartTotalValue');
                 
                 if (cart.length === 0) {
                     cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Seu carrinho está vazio.</div>';
-                    cartTotalValue.innerText = 'R$ 0,00';
+                    if (cartTotalValue) cartTotalValue.innerText = 'R$ 0,00';
                     cartCountBadge.innerText = '0';
                     if (cepSection) cepSection.classList.remove('show');
                     if (cartFooter) cartFooter.style.display = 'none';
@@ -1415,10 +1419,10 @@
                     
                     const shippingCost = parseFloat(selectedDelivery.value);
                     const finalTotal = total + shippingCost;
-                    cartTotalValue.innerText = `R$ ${finalTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                    if (cartTotalValue) cartTotalValue.innerText = `R$ ${finalTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                 } else {
                     if (cartFooter) cartFooter.style.display = 'none';
-                    cartTotalValue.innerText = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                    if (cartTotalValue) cartTotalValue.innerText = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                 }
                 cartCountBadge.innerText = count;
             }
