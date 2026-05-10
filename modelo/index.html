@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -349,156 +348,6 @@
             font-size: 12px;
             transition: all 0.2s ease;
             z-index: 10;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            flex-shrink: 0;
-        }
-
-        .thumb-nav-btn:hover {
-            border-color: var(--brand-primary);
-            background: var(--bg-soft);
-        }
-
-        .thumb-nav-btn.disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        /* --- END UPDATED THUMBNAILS CSS --- */
-
-        /* Product Info */
-        .product-content {
-            width: 100%;
-        }
-
-        .product-content h1 {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 12px;
-            line-height: 1.2;
-            color: var(--text-main);
-        }
-
-        @media (min-width: 768px) { .product-content h1 { font-size: 34px; } }
-
-        .badge-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
-        .badge-stock { background: #ecfdf5; color: #065f46; }
-        .badge-shipping { background: #eff6ff; color: #1e40af; }
-
-        .rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
-        .stars { color: #fbbf24; font-size: 12px; }
-
-        /* Netshoes Pricing Section */
-        .price-box {
-            border-top: 1px solid var(--ns-border);
-            padding-top: 16px;
-            margin-bottom: 12px;
-        }
-
-        .old-price-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .old-price {
-            font-size: 14px;
-            color: var(--ns-gray);
-            text-decoration: line-through;
-        }
-
-        .discount-tag {
-            background: var(--ns-bg-green);
-            color: var(--ns-green);
-            font-size: 12px;
-            font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 2px;
-        }
-
-        .main-price {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--ns-text);
-            margin-bottom: 2px;
-        }
-
-        .pix-text {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .installment-text {
-            font-size: 14px;
-            color: var(--ns-gray);
-            margin-bottom: 12px;
-        }
-
-        /* Netshoes Seller & Rating Info */
-        .ns-seller-info {
-            font-size: 13px;
-            color: var(--ns-text);
-            margin-bottom: 8px;
-        }
-
-        .ns-seller-info strong {
-            color: var(--ns-text);
-            font-weight: 700;
-        }
-
-        .ns-rating-container {
-            margin-bottom: 16px;
-        }
-
-        .ns-rating-bar {
-            width: 100%;
-            height: 4px;
-            background: #e0e0e0;
-            border-radius: 2px;
-            margin-bottom: 8px;
-            overflow: hidden;
-        }
-
-        .ns-rating-fill {
-            height: 100%;
-            background: #8cc63f;
-            width: 95%;
-        }
-
-        .ns-rating-details {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--ns-gray);
-        }
-
-        .ns-rating-details i {
-            color: var(--ns-gray);
-            font-size: 10px;
-        }
-
-        /* Netshoes Shipping Info */
-        .ns-shipping-info {
-            margin-bottom: 24px;
-            padding-top: 16px;
-            border-top: 1px solid var(--ns-border);
-        }
-
-        .ns-shipping-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--ns-green);
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .ns-shipping-desc {
-            font-size: 13px;
-            color: var(--ns-gray);
-            line-height: 1.4;
         }
 
         /* Netshoes Buttons */
@@ -673,8 +522,8 @@
         }
 
         /* Newsletter Section */
-        .newsletter-section { padding: 60px 0; background: #fff; border-top: 1px solid var(--border); }
-        .newsletter-container { 
+        .newsletter-section { padding: 60px 0; background: #f9fafb; }
+        .newsletter-container {
             background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
             border-radius: 20px;
             padding: 40px;
@@ -731,6 +580,160 @@
             .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 60px; }
         }
 
+        /* --- SLIDING CART STYLES (ISOLATED) --- */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background: #fff;
+            z-index: 2001;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--brand-primary);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cart-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .cart-item-variant {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .cart-item-price {
+            font-weight: 800;
+            color: var(--brand-primary);
+            font-size: 15px;
+        }
+
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-soft);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .btn-checkout {
+            background: var(--ns-purple);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-checkout:hover {
+            background: #40008c;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
         /* --- SLIDING CART STYLES --- */
 .cart-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -764,39 +767,39 @@
 </head>
 <body>
     <div class="top-bar">
-<div class="container">
+        <div class="container">
             Falta apenas <strong>R$ 199,00</strong> para obter <strong>Frete Grátis</strong> em SP.
         </div>
-</div>
-<header>
-<div class="main-header">
-<div class="container header-flex">
-<div class="logo">
-<img alt="Hub Suplementos" src="https://images.tcdn.com.br/img/themes/1370019/logo.png?1740685044"/>
-</div>
-<div class="search-bar">
-<input   placeholder="O que você procura?" style="" type="text"/>
-<button  ><i class="fas fa-search"></i></button>
-</div>
-<div class="user-actions">
-<a class="icon-link"   href="#"><i class="far fa-user"></i></a>
-<a class="icon-link" href="#" id="cart-trigger">
-<i class="fas fa-shopping-cart"></i>
-<span class="cart-count">0</span>
-</a>
-</div>
-</div>
-</div>
-<nav class="nav-scroll">
-<div class="container">
-<a   href="#">Cabelo e Barba</a>
-<a class="active"   href="#">Minoxidil</a>
-<a   href="#">Vitaminas</a>
-<a   href="#">Kits</a>
-<a   href="#">Outlet</a>
-</div>
-</nav>
-</header>
+    </div>
+    <header>
+        <div class="main-header">
+            <div class="container header-flex">
+                <div class="logo">
+                    <img alt="Hub Suplementos" src="https://images.tcdn.com.br/img/themes/1370019/logo.png?1740685044"/>
+                </div>
+                <div class="search-bar">
+                    <input placeholder="O que você procura?" type="text"/>
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-actions">
+                    <a class="icon-link" href="#"><i class="far fa-user"></i></a>
+                    <a class="icon-link" href="#" id="cart-trigger">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <nav class="nav-scroll">
+            <div class="container">
+                <a href="#">Cabelo e Barba</a>
+                <a class="active" href="#">Minoxidil</a>
+                <a href="#">Vitaminas</a>
+                <a href="#">Kits</a>
+                <a href="#">Outlet</a>
+            </div>
+        </nav>
+    </header>
 
     <main class="container">
         <div class="breadcrumb">
@@ -832,7 +835,7 @@
                     <span class="badge badge-shipping">Frete Grátis</span>
                 </div>
 
-                <h1>Kit 3 Frascos Minoxidil Kirkland 5% Signature</h1>
+                <h1 id="main-product-title">Kit 3 Frascos Minoxidil Kirkland 5% Signature</h1>
                 
                 <div class="rating-row">
                     <div class="stars">
@@ -909,7 +912,25 @@
         </div>
     </main>
 
-        <!-- SEÇÃO DE DESCRIÇÃO COM TABS -->
+    <!-- CARRINHO DESLIZANTE (ISOLADO) -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Meu Carrinho</h2>
+            <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer">
+            <div class="empty-cart-msg">Seu carrinho está vazio.</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotalValue">R$ 0,00</span>
+            </div>
+            <button class="btn-checkout">Finalizar Compra</button>
+        </div>
+    </div>
+
     <div class="tabs-container">
         <div class="tabs-header">
             <button class="tab-btn active" onclick="openTab(event, 'desc')">Descrição</button>
@@ -925,10 +946,6 @@
                 <div class="info-card">
                     <h3><i class="fas fa-award" style="margin-right: 8px;"></i>Qualidade Premium</h3>
                     <p>Marca líder nos EUA com mais de 30 anos de experiência. Fabricado sob rigorosos padrões de qualidade internacionais, garantindo máxima eficácia e segurança.</p>
-                </div>
-                <div class="info-card">
-                    <h3><i class="fas fa-chart-line" style="margin-right: 8px;"></i>Resultados Reais</h3>
-                    <p>Interrompe a queda e estimula o crescimento em até 85% dos casos com uso consistente. Resultados visíveis a partir de 3-4 meses de tratamento contínuo.</p>
                 </div>
                 <div class="info-card">
                     <h3><i class="fas fa-flask" style="margin-right: 8px;"></i>Clinicamente Testado</h3>
@@ -963,7 +980,6 @@
         </div>
     </div>
 
-    <!-- SEÇÃO DE AVALIAÇÕES -->
     <section class="reviews-section">
         <div class="container">
             <div class="reviews-header">
@@ -981,7 +997,6 @@
         </div>
     </section>
 
-    <!-- SEÇÃO DE NEWSLETTER -->
     <section class="newsletter-section">
         <div class="container">
             <div class="newsletter-container">
@@ -1128,8 +1143,7 @@
         });
 
                 // LÓGICA DAS AVALIAÇÕES E TABS
-        const allReviews = [{'name': 'Gustavo Martins', 'date': '04/05/2024', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Lucas Gomes', 'date': '01/05/2024', 'rating': 5, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor.'}, {'name': 'Rodrigo Pedro', 'date': '26/04/2024', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Vinícius Rocha', 'date': '17/04/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'João Costa', 'date': '14/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Rodrigo Oliveira', 'date': '13/04/2024', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Diego Santos', 'date': '11/04/2024', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Alexandre Teixeira', 'date': '10/04/2024', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Mateus Costa', 'date': '07/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Thiago S.', 'date': '02/04/2024', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Diego Almeida', 'date': '20/03/2024', 'rating': 5, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis.'}, {'name': 'Samuel Lima', 'date': '17/03/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 5 meses e as falhas sumiram.'}, {'name': 'Lucas Pedro', 'date': '14/03/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'Bruno Melo', 'date': '08/03/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Gabriel Barbosa', 'date': '07/03/2024', 'rating': 5, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Thiago Pedro', 'date': '01/03/2024', 'rating': 5, 'content': 'Comprei o kit de 6 meses e o desconto foi ótimo.'}, {'name': 'Gustavo Ribeiro', 'date': '04/02/2024', 'rating': 4, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Thiago Costa', 'date': '02/02/2024', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Vinícius Ribeiro', 'date': '02/02/2024', 'rating': 4, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Leonardo Costa', 'date': '02/02/2024', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Felipe Cardoso', 'date': '01/02/2024', 'rating': 5, 'content': 'Minha barba era muito falhada, agora está fechando tudo.'}, {'name': 'Gabriel Santos', 'date': '31/01/2024', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Ricardo Almeida', 'date': '26/01/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 4 meses e as falhas sumiram.'}, {'name': 'Eduardo Silva', 'date': '15/01/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 4 meses e as falhas sumiram.'}, {'name': 'Lucas Gomes', 'date': '10/01/2024', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Thiago Silva', 'date': '09/01/2024', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Daniel S.', 'date': '04/01/2024', 'rating': 5, 'content': 'Surpreso com a velocidade da entrega. Produto 100% original.'}, {'name': 'Marcelo Carvalho', 'date': '27/12/2023', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Vinícius Barbosa', 'date': '22/12/2023', 'rating': 5, 'content': 'A melhor solução para quem quer barba cheia.'}, {'name': 'Gustavo Melo', 'date': '20/12/2023', 'rating': 5, 'content': 'O produto não deixa o cabelo oleoso, o que é um diferencial.'}, {'name': 'André Teixeira', 'date': '14/12/2023', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Daniel Melo', 'date': '14/12/2023', 'rating': 5, 'content': 'Comprei o kit de 6 meses e o desconto foi ótimo.'}, {'name': 'Thiago Gomes', 'date': '12/12/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Daniel Barbosa', 'date': '11/12/2023', 'rating': 4, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis.'}, {'name': 'Ricardo Rocha', 'date': '08/12/2023', 'rating': 5, 'content': 'Produto excelente! Estou usando há 4 meses e as falhas sumiram.'}, {'name': 'Marcos S.', 'date': '08/12/2023', 'rating': 5, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Rodrigo Cardoso', 'date': '04/12/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Diego Pedro', 'date': '30/11/2023', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'Ricardo Silva', 'date': '22/11/2023', 'rating': 5, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Daniel Oliveira', 'date': '14/11/2023', 'rating': 4, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Marcos Silva', 'date': '04/11/2023', 'rating': 5, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Marcelo Santos', 'date': '02/11/2023', 'rating': 4, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Gustavo Cardoso', 'date': '28/10/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Marcelo Ferreira', 'date': '26/10/2023', 'rating': 4, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Marcos Silva', 'date': '13/10/2023', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Bruno Rocha', 'date': '13/10/2023', 'rating': 4, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Mateus Gomes', 'date': '11/10/2023', 'rating': 4, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor.'}, {'name': 'Daniel Barbosa', 'date': '11/10/2023', 'rating': 5, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis.'}, {'name': 'Fernando Santos', 'date': '04/10/2023', 'rating': 4, 'content': 'Uso para manter o cabelo e nunca decepciona. Loja super confiável.'}, {'name': 'Leonardo Teixeira', 'date': '23/09/2023', 'rating': 4, 'content': 'Minha barba era muito falhada, agora está fechando tudo.'}, {'name': 'Vinícius Lima', 'date': '09/09/2023', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Marcos Lima', 'date': '30/08/2023', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Vinícius Gomes', 'date': '24/08/2023', 'rating': 5, 'content': 'Comprei o kit de 6 meses e o desconto foi ótimo.'}, {'name': 'Vinícius Almeida', 'date': '23/08/2023', 'rating': 5, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Fernando Ferreira', 'date': '06/08/2023', 'rating': 5, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Alexandre Rocha', 'date': '01/08/2023', 'rating': 4, 'content': 'A melhor solução para quem quer barba cheia.'}, {'name': 'Carlos Gomes', 'date': '22/07/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Marcos Teixeira', 'date': '20/07/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'João Rocha', 'date': '18/07/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Vinícius Almeida', 'date': '10/07/2023', 'rating': 5, 'content': 'A melhor solução para quem quer barba cheia.'}, {'name': 'Samuel Ribeiro', 'date': '10/07/2023', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Felipe Santos', 'date': '10/07/2023', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Gustavo Ferreira', 'date': '08/07/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Fernando Melo', 'date': '05/07/2023', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Marcelo Ferreira', 'date': '29/06/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Diego Teixeira', 'date': '28/06/2023', 'rating': 4, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Vitor Barbosa', 'date': '14/06/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Gustavo Araújo', 'date': '12/06/2023', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Leonardo Teixeira', 'date': '09/06/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Bruno S.', 'date': '07/06/2023', 'rating': 5, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Marcelo Santos', 'date': '07/06/2023', 'rating': 5, 'content': 'Uso para manter o cabelo e nunca decepciona. Loja super confiável.'}, {'name': 'Lucas Barbosa', 'date': '03/06/2023', 'rating': 4, 'content': 'O produto não deixa o cabelo oleoso, o que é um diferencial.'}, {'name': 'Leonardo Santos', 'date': '27/05/2023', 'rating': 4, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Ricardo Melo', 'date': '14/05/2023', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Fernando Barbosa', 'date': '10/05/2023', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Renato Melo', 'date': '06/05/2023', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Leonardo Ferreira', 'date': '06/05/2023', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Felipe Teixeira', 'date': '04/05/2023', 'rating': 4, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'Bruno Araújo', 'date': '04/05/2023', 'rating': 4, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Fernando Almeida', 'date': '28/04/2023', 'rating': 5, 'content': 'A melhor solução para quem quer barba cheia.'}, {'name': 'Marcos M.', 'date': '27/04/2023', 'rating': 4, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Lucas Silva', 'date': '24/04/2023', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Vinícius Gomes', 'date': '22/04/2023', 'rating': 4, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor.'}, {'name': 'Alexandre Ferreira', 'date': '20/04/2023', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Mateus M.', 'date': '16/04/2023', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Gabriel Cardoso', 'date': '05/04/2023', 'rating': 4, 'content': 'Surpreso com a velocidade da entrega. Produto 100% original.'}, {'name': 'Lucas Ribeiro', 'date': '02/04/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Vitor Costa', 'date': '31/03/2023', 'rating': 4, 'content': 'Minha barba era muito falhada, agora está fechando tudo.'}, {'name': 'Carlos Melo', 'date': '23/03/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Bruno Cardoso', 'date': '17/03/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Carlos Teixeira', 'date': '06/03/2023', 'rating': 5, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Leonardo Cardoso', 'date': '01/03/2023', 'rating': 5, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Bruno Ferreira', 'date': '27/02/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Vitor Araújo', 'date': '12/02/2023', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Samuel Barbosa', 'date': '10/02/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Carlos Lima', 'date': '08/02/2023', 'rating': 5, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Vinícius M.', 'date': '26/01/2023', 'rating': 5, 'content': 'Uso para manter o cabelo e nunca decepciona. Loja super confiável.'}, {'name': 'João Gomes', 'date': '13/01/2023', 'rating': 5, 'content': 'Comprei o kit de 6 meses e o desconto foi ótimo.'}, {'name': 'Gustavo Pedro', 'date': '07/01/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Mateus Barbosa', 'date': '02/01/2023', 'rating': 5, 'content': 'A melhor solução para quem quer barba cheia.'}];
-
+        const allReviews = [{'name': 'Gustavo Martins', 'date': '04/05/2024', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Lucas Gomes', 'date': '01/05/2024', 'rating': 5, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor.'}, {'name': 'Rodrigo Pedro', 'date': '26/04/2024', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Vinícius Rocha', 'date': '17/04/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'João Costa', 'date': '14/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Rodrigo Oliveira', 'date': '13/04/2024', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Diego Santos', 'date': '11/04/2024', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Alexandre Teixeira', 'date': '10/04/2024', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Mateus Costa', 'date': '07/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Thiago S.', 'date': '02/04/2024', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Diego Almeida', 'date': '20/03/2024', 'rating': 5, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis.'}, {'name': 'Samuel Lima', 'date': '17/03/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 5 meses e as falhas sumiram.'}, {'name': 'Lucas Pedro', 'date': '14/03/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'Bruno Melo', 'date': '10/03/2024', 'rating': 5, 'content': 'Melhor preço que encontrei para o kit de 6 meses.'}];
         let currentPage = 1;
         const reviewsPerPage = 4;
 
@@ -1157,40 +1171,22 @@
             pagination.innerHTML = '';
             const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
             
-            // Mostrar no máximo 5 botões de página
-
             let startPage = Math.max(1, activePage - 2);
-
             let endPage = Math.min(totalPages, startPage + 4);
-
             if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
 
-
-
             if (startPage > 1) {
-
                 const firstBtn = document.createElement('button');
-
                 firstBtn.className = 'page-btn';
-
                 firstBtn.textContent = '1';
-
                 firstBtn.onclick = () => { currentPage = 1; renderReviews(1); window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); };
-
                 pagination.appendChild(firstBtn);
-
                 if (startPage > 2) {
-
                     const dots = document.createElement('span');
-
                     dots.textContent = '...';
-
                     dots.style.alignSelf = 'center';
-
                     pagination.appendChild(dots);
-
                 }
-
             }
             for (let i = startPage; i <= endPage; i++) {
                 const btn = document.createElement('button');
@@ -1229,99 +1225,102 @@
             evt.currentTarget.classList.add("active");
         }
 
-        (function() {
-    let cart = [];
-    const elements = {
-        overlay: document.getElementById('cartOverlay'),
-        sidebar: document.getElementById('cartSidebar'),
-        container: document.getElementById('cartItemsContainer'),
-        total: document.getElementById('cartTotalValue'),
-        badge: document.querySelector('.cart-count'),
-        trigger: document.getElementById('cart-trigger'),
-        close: document.getElementById('closeCart'),
-        buyBtn: document.getElementById('buy-now-btn'),
-        addBtn: document.getElementById('add-to-cart-btn')
-    };
-
-    function toggleCart() {
-        elements.sidebar.classList.toggle('active');
-        elements.overlay.classList.toggle('active');
-    }
-
-    function updateUI() {
-        if (cart.length === 0) {
-            elements.container.innerHTML = '<div class="empty-cart-msg">Seu carrinho está vazio.</div>';
-            elements.total.innerText = 'R$ 0,00';
-            elements.badge.innerText = '0';
-            return;
-        }
-        let total = 0, count = 0;
-        elements.container.innerHTML = cart.map(item => {
-            total += item.price * item.quantity;
-            count += item.quantity;
-            return `<div class="cart-item">
-                <div class="cart-item-img"><img src="${item.image}"></div>
-                <div class="cart-item-info">
-                    <span class="cart-item-name">${item.name}</span>
-                    <span class="cart-item-variant">${item.variant}</span>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span class="cart-item-price">R$ ${item.price.toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>
-                        <span style="font-size:12px; color:gray;">Qtd: ${item.quantity}</span>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
-        elements.total.innerText = `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
-        elements.badge.innerText = count;
-    }
-
-    function addItem() {
-        const active = document.querySelector('.option-card.active');
-        const price = parseFloat(active.querySelector('.val').innerText.replace('R$ ','').replace('.','').replace(',','.'));
-        const item = {
-            id: active.querySelector('.title').innerText,
-            name: document.querySelector('h1').innerText,
-            variant: active.querySelector('.title').innerText,
-            price: price,
-            image: typeof productImages !== 'undefined' ? productImages[0] : '',
-            quantity: 1
-        };
-        const existing = cart.find(i => i.id === item.id);
-        if (existing) existing.quantity++; else cart.push(item);
-        updateUI();
-        if (!elements.sidebar.classList.contains('active')) toggleCart();
-    }
-
-    elements.trigger.addEventListener('click', (e) => { e.preventDefault(); toggleCart(); });
-    elements.close.addEventListener('click', toggleCart);
-    elements.overlay.addEventListener('click', toggleCart);
-    elements.buyBtn.addEventListener('click', addItem);
-    elements.addBtn.addEventListener('click', addItem);
-})();
-
-
         // Inicializar avaliações ao carregar
         window.addEventListener('DOMContentLoaded', () => { renderReviews(1); });
 
+        /* --- LÓGICA DO CARRINHO (ISOLADA) --- */
+        (function() {
+            let cart = [];
+            const cartOverlay = document.getElementById('cartOverlay');
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const cartTotalValue = document.getElementById('cartTotalValue');
+            const cartCountBadge = document.querySelector('.cart-count');
+            const cartTrigger = document.getElementById('cart-trigger');
+            const closeCartBtn = document.getElementById('closeCart');
+            const buyNowBtn = document.getElementById('buy-now-btn');
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+
+            function toggleCart() {
+                const isActive = cartSidebar.classList.contains('active');
+                if (isActive) {
+                    cartSidebar.classList.remove('active');
+                    cartOverlay.classList.remove('active');
+                } else {
+                    cartOverlay.classList.add('active');
+                    cartSidebar.classList.add('active');
+                }
+            }
+
+            function updateCartUI() {
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Seu carrinho está vazio.</div>';
+                    cartTotalValue.innerText = 'R$ 0,00';
+                    cartCountBadge.innerText = '0';
+                    return;
+                }
+
+                let total = 0;
+                let count = 0;
+                cartItemsContainer.innerHTML = cart.map(item => {
+                    total += item.price * item.quantity;
+                    count += item.quantity;
+                    return `
+                        <div class="cart-item">
+                            <div class="cart-item-img">
+                                <img src="${item.image}" alt="${item.name}">
+                            </div>
+                            <div class="cart-item-info">
+                                <span class="cart-item-name">${item.name}</span>
+                                <span class="cart-item-variant">${item.variant}</span>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span class="cart-item-price">R$ ${item.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                    <span style="font-size: 12px; color: var(--text-muted);">Qtd: ${item.quantity}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                cartTotalValue.innerText = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                cartCountBadge.innerText = count;
+            }
+
+            function addItem() {
+                const activeOption = document.querySelector('.option-card.active');
+                const productName = document.getElementById('main-product-title').innerText;
+                const variantName = activeOption.querySelector('.title').innerText;
+                const priceText = activeOption.querySelector('.val').innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
+                const price = parseFloat(priceText);
+                const image = productImages[0];
+
+                const itemId = `${productName}-${variantName}`;
+                const existingItem = cart.find(item => item.id === itemId);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: itemId,
+                        name: productName,
+                        variant: variantName,
+                        price: price,
+                        image: image,
+                        quantity: 1
+                    });
+                }
+
+                updateCartUI();
+                if (!cartSidebar.classList.contains('active')) toggleCart();
+            }
+
+            // Listeners
+            if (cartTrigger) cartTrigger.addEventListener('click', (e) => { e.preventDefault(); toggleCart(); });
+            if (closeCartBtn) closeCartBtn.addEventListener('click', toggleCart);
+            if (cartOverlay) cartOverlay.addEventListener('click', toggleCart);
+            if (buyNowBtn) buyNowBtn.addEventListener('click', addItem);
+            if (addToCartBtn) addToCartBtn.addEventListener('click', addItem);
+        })();
     </script>
-
-    <div class="cart-overlay" id="cartOverlay"></div>
-<div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header">
-        <h2>Meu Carrinho</h2>
-        <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="cart-items" id="cartItemsContainer">
-        <div class="empty-cart-msg">Seu carrinho está vazio.</div>
-    </div>
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span>Total:</span>
-            <span id="cartTotalValue">R$ 0,00</span>
-        </div>
-        <button class="btn-checkout">Finalizar Compra</button>
-    </div>
-</div>
-
 </body>
 </html>
