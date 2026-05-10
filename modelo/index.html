@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -815,6 +816,15 @@
     100% { transform: rotate(360deg); }
 }
 
+
+        /* --- ESTILOS DADOS PESSOAIS --- */
+        .personal-data-section { padding: 20px; border-top: 1px solid var(--border); background: #f9fafb; display: none; }
+        .cart-sidebar.checkout-active .cep-section { display: none !important; }
+        .cart-sidebar.checkout-active .personal-data-section { display: block !important; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; display: block; text-align: left; }
+        .form-group input { width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; background: #fff; }
+        .form-group input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(0, 0, 102, 0.1); }
     </style>
 </head>
 <body>
@@ -1034,6 +1044,32 @@
                     <button class="btn-checkout">Finalizar Compra</button>
                 </div>
             </div>
+            </div>
+            
+            <!-- Seção de Dados Pessoais -->
+            <div id="personalDataSection" class="personal-data-section">
+                <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-user" style="color: var(--brand-primary); font-size: 14px;"></i> Dados Pessoais
+                </h3>
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" placeholder="Digite seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label>CPF</label>
+                    <input type="text" placeholder="000.000.000-00">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" placeholder="(00) 00000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" placeholder="seu@email.com">
+                    </div>
+                </div>
+                <button class="btn-checkout" style="margin-top: 10px;">Prosseguir</button>
             </div>
         </div>
 
@@ -1574,6 +1610,20 @@
             if (cartOverlay) cartOverlay.addEventListener('click', toggleCart);
             if (buyNowBtn) buyNowBtn.addEventListener('click', addItem);
             if (addToCartBtn) addToCartBtn.addEventListener('click', addItem);
+
+            // Lógica de Transição para Dados Pessoais
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('btn-checkout') && e.target.innerText === 'Finalizar Compra') {
+                    cartSidebar.classList.add('checkout-active');
+                    const scrollContainer = cartSidebar.querySelector('div[style*="overflow-y: auto"]');
+                    if (scrollContainer) scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            // Resetar estado ao fechar o carrinho
+            const resetCheckout = () => cartSidebar.classList.remove('checkout-active');
+            if (closeCartBtn) closeCartBtn.addEventListener('click', resetCheckout);
+            if (cartOverlay) cartOverlay.addEventListener('click', resetCheckout);
         })();
     </script>
 </body>
