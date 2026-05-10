@@ -739,47 +739,55 @@
 .cart-overlay.active { display: block; opacity: 1; }
 .cart-sidebar {
     position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px;
-    height: 100%; background: #fff; z-index: 2001; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-    transition: right 0.3s ease; display: flex; flex-direction: column;
+    height: 100%; background: #fff; z-index: 2001; box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column;
 }
 .cart-sidebar.active { right: 0; }
-.cart-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.cart-header h2 { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
-.close-cart { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
-.cart-items { flex: 1; overflow-y: auto; padding: 20px; }
-.cart-item { display: flex; gap: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
-.cart-item-img { width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; flex-shrink: 0; }
-.cart-item-img img { width: 100%; height: 100%; object-fit: contain; }
-.cart-item-info { flex: 1; }
-.cart-item-name { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; display: block; }
-.cart-item-variant { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: block; }
-.cart-item-price { font-weight: 800; color: var(--brand-primary); font-size: 15px; }
-.cart-item-quantity-control { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-.qty-btn { background: var(--border); border: none; width: 28px; height: 28px; border-radius: 4px; cursor: pointer; color: var(--text-main); font-weight: 700; transition: all 0.2s ease; }
+.cart-header { padding: 24px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #fff; }
+.cart-header h2 { font-size: 20px; font-weight: 800; color: var(--brand-primary); letter-spacing: -0.5px; }
+.close-cart { background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
+.close-cart:hover { background: #e5e7eb; color: var(--text-main); transform: rotate(90deg); }
+.cart-items { padding: 20px; }
+.cart-item { display: flex; gap: 16px; padding: 16px; background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; transition: transform 0.2s; }
+.cart-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.cart-item-img { width: 90px; height: 90px; border-radius: 10px; background: var(--bg-soft); overflow: hidden; flex-shrink: 0; padding: 8px; }
+.cart-item-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.cart-item-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.cart-item-name { font-size: 14px; font-weight: 700; color: var(--text-main); line-height: 1.4; margin-bottom: 4px; }
+.cart-item-variant { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+.cart-item-price { font-weight: 800; color: var(--brand-primary); font-size: 16px; }
+.cart-item-quantity-control { display: flex; align-items: center; background: #f3f4f6; border-radius: 8px; padding: 4px; width: fit-content; margin-top: 10px; }
+.qty-btn { background: #fff; border: none; width: 24px; height: 24px; border-radius: 6px; cursor: pointer; color: var(--text-main); font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: all 0.2s; }
 .qty-btn:hover { background: var(--brand-primary); color: #fff; }
-.qty-display { font-size: 14px; font-weight: 700; color: var(--text-main); min-width: 30px; text-align: center; }
-.cart-footer { padding: 20px; border-top: 1px solid var(--border); background: var(--bg-soft); }
-.cart-total { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 800; font-size: 18px; }
-.btn-checkout { background: var(--ns-purple); color: #fff; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; text-align: center; text-decoration: none; display: block; }
-.empty-cart-msg { text-align: center; padding: 40px 20px; color: var(--text-muted); }
-.cep-section { padding: 20px; border-top: 1px solid var(--border); display: none; }
+.qty-display { font-size: 13px; font-weight: 700; color: var(--text-main); min-width: 32px; text-align: center; }
+.cart-footer { padding: 24px 20px; border-top: 1px solid var(--border); background: #fff; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
+.cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.cart-total span:first-child { font-size: 14px; color: var(--text-muted); font-weight: 600; }
+.cart-total span:last-child { font-size: 22px; font-weight: 800; color: var(--brand-primary); }
+.btn-checkout { background: linear-gradient(135deg, var(--ns-purple) 0%, #40008c 100%); color: #fff; border: none; padding: 18px; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; text-align: center; transition: all 0.3s; box-shadow: 0 4px 15px rgba(48, 0, 107, 0.3); }
+.btn-checkout:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(48, 0, 107, 0.4); filter: brightness(1.1); }
+.empty-cart-msg { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 15px; }
+.cep-section { padding: 20px; border-top: 1px solid var(--border); background: #f9fafb; display: none; }
 .cep-section.show { display: block; }
-.cep-input-group { display: flex; gap: 8px; margin-bottom: 12px; }
-.cep-input-group input { flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.2s; }
-.cep-input-group input:focus { border-color: var(--brand-primary); }
-.cep-input-group button { padding: 10px 16px; background: var(--brand-primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; transition: all 0.2s; }
-.cep-input-group button:hover { background: #00004d; }
-.cep-input-group button:disabled { background: #ccc; cursor: not-allowed; }
-.address-block { background: var(--bg-soft); padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px; display: none; }
+.cep-input-group { display: flex; gap: 10px; margin-bottom: 16px; }
+.cep-input-group input { flex: 1; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; background: #fff; }
+.cep-input-group input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(0, 0, 102, 0.1); }
+.cep-input-group button { padding: 12px 20px; background: var(--brand-primary); color: #fff; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 14px; transition: all 0.2s; }
+.cep-input-group button:hover { background: #00004d; transform: translateY(-1px); }
+.address-block { background: #fff; padding: 16px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; display: none; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 .address-block.show { display: block; }
-.address-block p { font-size: 13px; color: var(--text-main); margin-bottom: 6px; }
-.address-block p strong { font-weight: 700; }
-.address-fields { display: flex; flex-direction: column; gap: 10px; }
-.address-fields input { padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; outline: none; }
+.address-block p { font-size: 13px; color: var(--text-main); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.address-block p strong { color: var(--text-muted); font-weight: 600; }
+.address-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.address-fields input { padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; }
 .address-fields input:focus { border-color: var(--brand-primary); }
-.cep-error { color: #dc2626; font-size: 13px; margin-top: 8px; display: none; }
+.delivery-option-card { display: flex; align-items: center; gap: 12px; padding: 14px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; background: #fff; transition: all 0.2s; position: relative; }
+.delivery-option-card:hover { border-color: var(--brand-primary); background: #f0f4ff; }
+.delivery-option-card input[type="radio"] { width: 18px; height: 18px; accent-color: var(--brand-primary); }
+.delivery-option-card.active { border-color: var(--brand-primary); background: #f0f4ff; box-shadow: 0 0 0 1px var(--brand-primary); }
+.cep-error { color: #dc2626; font-size: 13px; margin-top: 8px; display: none; font-weight: 600; }
 .cep-error.show { display: block; }
-.cep-loading { display: none; text-align: center; padding: 12px; color: var(--text-muted); font-size: 13px; }
+.cep-loading { display: none; text-align: center; padding: 12px; color: var(--brand-primary); font-size: 13px; font-weight: 600; }
 .cep-loading.show { display: block; }
 
     </style>
@@ -959,25 +967,33 @@
                 <input type="text" id="addressNumber" placeholder="Numero" style="display: none;">
                 <input type="text" id="addressComplement" placeholder="Complemento (opcional)" style="display: none;">
             </div>
-            <div id="deliveryOptions" style="display: none; margin-top: 20px;">
-                <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">Opções de Entrega</h3>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; background: #f9fafb;">
-                        <input type="radio" name="delivery" checked>
-                        <div style="font-size: 13px;">
-                            <strong style="display: block; color: var(--brand-primary);">Frete Grátis</strong>
-                            <span style="color: var(--text-muted);">com entrega em 03 dias</span>
+            <div id="deliveryOptions" style="display: none; margin-top: 24px;">
+                <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-truck" style="color: var(--brand-primary); font-size: 14px;"></i> Opções de Entrega
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <label class="delivery-option-card active">
+                        <input type="radio" name="delivery" checked onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active');">
+                        <div style="flex: 1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                                <strong style="font-size: 14px; color: var(--brand-primary);">Frete Grátis</strong>
+                                <span style="font-size: 12px; font-weight: 800; color: var(--success);">GRÁTIS</span>
+                            </div>
+                            <span style="font-size: 12px; color: var(--text-muted);">Entrega em até 03 dias úteis</span>
                         </div>
                     </label>
-                    <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; background: #f9fafb;">
-                        <input type="radio" name="delivery">
-                        <div style="font-size: 13px;">
-                            <strong style="display: block; color: var(--brand-primary);">Entrega Expressa</strong>
-                            <span style="color: var(--text-muted);">Com entrega amanhã</span>
+                    <label class="delivery-option-card">
+                        <input type="radio" name="delivery" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active');">
+                        <div style="flex: 1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                                <strong style="font-size: 14px; color: var(--brand-primary);">Entrega Expressa</strong>
+                                <span style="font-size: 14px; font-weight: 800; color: var(--text-main);">R$ 9,90</span>
+                            </div>
+                            <span style="font-size: 12px; color: var(--text-muted);">Receba amanhã</span>
                         </div>
                     </label>
                 </div>
-                </div>
+            </div>
             </div>
         </div>
         <div class="cart-footer">
