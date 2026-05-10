@@ -1166,7 +1166,7 @@
                 }
                 const lastBtn = document.createElement('button');
                 lastBtn.className = 'page-btn';
-                lastBtn.textContent = totalPages;
+                lastBtn.textContent = '99+';
                 lastBtn.onclick = () => { currentPage = totalPages; renderReviews(totalPages); window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); };
                 pagination.appendChild(lastBtn);
             }
