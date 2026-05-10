@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -729,6 +730,36 @@
         @media (min-width: 768px) {
             .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 60px; }
         }
+
+        /* --- SLIDING CART STYLES --- */
+.cart-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); z-index: 2000; display: none; opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.cart-overlay.active { display: block; opacity: 1; }
+.cart-sidebar {
+    position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px;
+    height: 100%; background: #fff; z-index: 2001; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease; display: flex; flex-direction: column;
+}
+.cart-sidebar.active { right: 0; }
+.cart-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.cart-header h2 { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
+.close-cart { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
+.cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+.cart-item { display: flex; gap: 15px; padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.cart-item-img { width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; flex-shrink: 0; }
+.cart-item-img img { width: 100%; height: 100%; object-fit: contain; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; display: block; }
+.cart-item-variant { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: block; }
+.cart-item-price { font-weight: 800; color: var(--brand-primary); font-size: 15px; }
+.cart-footer { padding: 20px; border-top: 1px solid var(--border); background: var(--bg-soft); }
+.cart-total { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 800; font-size: 18px; }
+.btn-checkout { background: var(--ns-purple); color: #fff; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 800; cursor: pointer; text-transform: uppercase; width: 100%; text-align: center; text-decoration: none; display: block; }
+.empty-cart-msg { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+
     </style>
 </head>
 <body>
@@ -749,7 +780,7 @@
 </div>
 <div class="user-actions">
 <a class="icon-link"   href="#"><i class="far fa-user"></i></a>
-<a class="icon-link"   href="#">
+<a class="icon-link" href="#" id="cart-trigger">
 <i class="fas fa-shopping-cart"></i>
 <span class="cart-count">0</span>
 </a>
@@ -864,8 +895,8 @@
                 </div>
 
                 <div class="cta-group">
-                    <button class="btn-buy">Comprar</button>
-                    <button class="btn-cart">
+                    <button class="btn-buy" id="buy-now-btn">Comprar</button>
+                    <button class="btn-cart" id="add-to-cart-btn">
                         <i class="fas fa-shopping-cart"></i>
                         Adicionar ao carrinho
                     </button>
@@ -1198,9 +1229,99 @@
             evt.currentTarget.classList.add("active");
         }
 
+        (function() {
+    let cart = [];
+    const elements = {
+        overlay: document.getElementById('cartOverlay'),
+        sidebar: document.getElementById('cartSidebar'),
+        container: document.getElementById('cartItemsContainer'),
+        total: document.getElementById('cartTotalValue'),
+        badge: document.querySelector('.cart-count'),
+        trigger: document.getElementById('cart-trigger'),
+        close: document.getElementById('closeCart'),
+        buyBtn: document.getElementById('buy-now-btn'),
+        addBtn: document.getElementById('add-to-cart-btn')
+    };
+
+    function toggleCart() {
+        elements.sidebar.classList.toggle('active');
+        elements.overlay.classList.toggle('active');
+    }
+
+    function updateUI() {
+        if (cart.length === 0) {
+            elements.container.innerHTML = '<div class="empty-cart-msg">Seu carrinho está vazio.</div>';
+            elements.total.innerText = 'R$ 0,00';
+            elements.badge.innerText = '0';
+            return;
+        }
+        let total = 0, count = 0;
+        elements.container.innerHTML = cart.map(item => {
+            total += item.price * item.quantity;
+            count += item.quantity;
+            return `<div class="cart-item">
+                <div class="cart-item-img"><img src="${item.image}"></div>
+                <div class="cart-item-info">
+                    <span class="cart-item-name">${item.name}</span>
+                    <span class="cart-item-variant">${item.variant}</span>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span class="cart-item-price">R$ ${item.price.toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>
+                        <span style="font-size:12px; color:gray;">Qtd: ${item.quantity}</span>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+        elements.total.innerText = `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits:2})}`;
+        elements.badge.innerText = count;
+    }
+
+    function addItem() {
+        const active = document.querySelector('.option-card.active');
+        const price = parseFloat(active.querySelector('.val').innerText.replace('R$ ','').replace('.','').replace(',','.'));
+        const item = {
+            id: active.querySelector('.title').innerText,
+            name: document.querySelector('h1').innerText,
+            variant: active.querySelector('.title').innerText,
+            price: price,
+            image: typeof productImages !== 'undefined' ? productImages[0] : '',
+            quantity: 1
+        };
+        const existing = cart.find(i => i.id === item.id);
+        if (existing) existing.quantity++; else cart.push(item);
+        updateUI();
+        if (!elements.sidebar.classList.contains('active')) toggleCart();
+    }
+
+    elements.trigger.addEventListener('click', (e) => { e.preventDefault(); toggleCart(); });
+    elements.close.addEventListener('click', toggleCart);
+    elements.overlay.addEventListener('click', toggleCart);
+    elements.buyBtn.addEventListener('click', addItem);
+    elements.addBtn.addEventListener('click', addItem);
+})();
+
+
         // Inicializar avaliações ao carregar
         window.addEventListener('DOMContentLoaded', () => { renderReviews(1); });
 
     </script>
+
+    <div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h2>Meu Carrinho</h2>
+        <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer">
+        <div class="empty-cart-msg">Seu carrinho está vazio.</div>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotalValue">R$ 0,00</span>
+        </div>
+        <button class="btn-checkout">Finalizar Compra</button>
+    </div>
+</div>
+
 </body>
 </html>
