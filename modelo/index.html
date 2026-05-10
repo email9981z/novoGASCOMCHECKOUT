@@ -852,17 +852,18 @@
         .form-group input { width: 100%; padding: 14px 18px; border: 1.5px solid #e2e8f0; border-radius: 12px; font-size: 15px; outline: none; transition: all 0.3s ease; background: #fff; }
         .form-group input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(0, 0, 102, 0.08); }
         
-        .checkout-summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-        .summary-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; font-size: 14px; color: var(--text-main); }
+        .checkout-summary-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .summary-item { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 13px; color: #475569; background: #f8fafc; padding: 10px 14px; border-radius: 10px; border: 1px solid #f1f5f9; }
         .summary-item:last-child { margin-bottom: 0; }
-        .summary-item i { color: var(--brand-primary); margin-top: 4px; font-size: 16px; width: 20px; text-align: center; }
-        .summary-item .label { color: #64748b; font-weight: 600; min-width: 70px; }
-        .summary-item .value { font-weight: 700; flex: 1; line-height: 1.4; }
+        .summary-item i { color: var(--brand-primary); font-size: 14px; width: 16px; }
+        .summary-item .value { font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .checkout-pricing { border-top: 2px dashed #f1f5f9; margin-top: 20px; padding-top: 20px; }
-        .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 15px; }
-        .price-row.total { margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; }
-        .price-row.total span:last-child { font-size: 24px; font-weight: 800; color: var(--brand-primary); }
+        .checkout-pricing { background: #f8fafc; border-radius: 16px; padding: 20px; margin-top: 24px; border: 1px solid #f1f5f9; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; }
+        .price-row:last-child { margin-bottom: 0; }
+        .price-row.total { margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0; }
+        .price-row.total .label { font-size: 16px; color: var(--text-main); font-weight: 800; }
+        .price-row.total .value { font-size: 24px; font-weight: 800; color: var(--brand-primary); }
         .price-row .label { color: #64748b; font-weight: 600; }
         .price-row .value { font-weight: 700; color: var(--text-main); }
     </style>
@@ -1093,11 +1094,14 @@
             <!-- Seção de Dados Pessoais -->
             <div id="personalDataSection" class="personal-data-section">
                 <!-- Resumo do Pedido -->
+                <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-shopping-bag" style="color: var(--brand-primary); font-size: 14px;"></i> Resumo do Pedido
+                </h3>
                 <div class="checkout-summary-box">
                     <div id="checkoutItemsContainer">
                         <!-- Itens do carrinho serão injetados aqui -->
                     </div>
-                    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                    <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
                         <div class="summary-item">
                             <i class="fas fa-map-marker-alt"></i>
                             <div class="value" id="summaryAddress">Carregando endereço...</div>
@@ -1750,20 +1754,23 @@
                     const checkoutItemsContainer = document.getElementById('checkoutItemsContainer');
                     if (checkoutItemsContainer) {
                         checkoutItemsContainer.innerHTML = cart.map(item => `
-                            <div class="cart-item" style="margin-bottom: 12px; padding: 12px; background: #fff; border: 1px solid #f1f5f9; border-radius: 12px; display: flex; gap: 12px; position: relative;">
-                                <div class="cart-item-img" style="width: 60px; height: 60px; padding: 4px;">
-                                    <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: contain;">
+                            <div class="checkout-item" style="display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f1f5f9;">
+                                <div style="width: 48px; height: 48px; border-radius: 8px; background: #f8fafc; padding: 4px; border: 1px solid #f1f5f9; flex-shrink: 0;">
+                                    <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply;">
                                 </div>
-                                <div class="cart-item-info">
-                                    <span class="cart-item-name" style="font-size: 13px; margin-bottom: 2px;">${item.name}</span>
-                                    <span class="cart-item-variant" style="font-size: 11px; margin-bottom: 4px;">${item.variant}</span>
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span class="cart-item-price" style="font-size: 14px;">R$ ${item.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                        <span style="font-size: 12px; font-weight: 700; color: #64748b; background: #f1f5f9; padding: 2px 8px; border-radius: 6px;">${item.quantity}x</span>
-                                    </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="font-size: 13px; font-weight: 700; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name}</div>
+                                    <div style="font-size: 11px; color: #64748b;">${item.variant} • ${item.quantity}x</div>
+                                </div>
+                                <div style="font-size: 13px; font-weight: 800; color: var(--brand-primary); white-space: nowrap;">
+                                    R$ ${(item.price * item.quantity).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                 </div>
                             </div>
                         `).join('');
+                        // Remover borda do último item
+                        if (checkoutItemsContainer.lastElementChild) {
+                            checkoutItemsContainer.lastElementChild.style.borderBottom = 'none';
+                        }
                     }
                     
                     // Preencher preços
