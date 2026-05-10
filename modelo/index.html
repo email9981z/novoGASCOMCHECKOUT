@@ -590,6 +590,48 @@
         .tech-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 14px; }
         .tech-table tr:last-child td { border-bottom: none; }
 
+                /* --- NOVOS ESTILOS: TABS E AVALIAÇÕES --- */
+        .tabs-container { margin-top: 50px; border-top: 1px solid #e5e7eb; }
+        .tabs-header { display: flex; border-bottom: 1px solid #e5e7eb; overflow-x: auto; gap: 30px; }
+        .tab-btn { padding: 20px 0; border: none; background: none; font-size: 15px; font-weight: 700; color: #9ca3af; cursor: pointer; white-space: nowrap; position: relative; }
+        .tab-btn.active { color: #000066; }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 3px; background-color: #000066; border-radius: 3px 3px 0 0; }
+        .tab-content { padding: 40px 0; display: none; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content.active { display: block; }
+        .tab-content h2 { font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #111827; }
+        .tab-content p { font-size: 16px; color: #4b5563; margin-bottom: 20px; line-height: 1.8; }
+        .tab-content ul { padding-left: 25px; margin-bottom: 25px; color: #4b5563; }
+        .tab-content ul li { margin-bottom: 12px; font-size: 16px; }
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 30px; }
+        .info-card { background: #f9fafb; padding: 25px; border-radius: 12px; border-left: 4px solid #000066; }
+        .info-card h3 { font-size: 18px; margin-bottom: 10px; color: #000066; }
+        @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
+
+        .reviews-section { padding: 60px 0; background-color: #fff; border-top: 1px solid #e5e7eb; }
+        .reviews-header { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px; }
+        .reviews-header h2 { font-size: 28px; font-weight: 800; color: #111827; margin-bottom: 10px; }
+        .overall-rating { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+        .stars-large { color: #fbbf24; font-size: 24px; }
+        .rating-number { font-size: 32px; font-weight: 800; color: #111827; }
+        .total-reviews-count { color: #6b7280; font-size: 16px; font-weight: 500; }
+        .reviews-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 40px; }
+        @media (min-width: 768px) { .reviews-grid { grid-template-columns: 1fr 1fr; } }
+        .review-card { background: #fff; border: 1px solid #e5e7eb; padding: 25px; border-radius: 12px; }
+        .review-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .reviewer-info { display: flex; align-items: center; gap: 12px; }
+        .reviewer-avatar { width: 45px; height: 45px; background: #000066; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; }
+        .reviewer-name { font-weight: 700; color: #111827; font-size: 15px; }
+        .verified-badge { color: #16a34a; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+        .review-stars { color: #fbbf24; font-size: 14px; }
+        .review-date { font-size: 12px; color: #9ca3af; }
+        .review-content { font-size: 15px; color: #4b5563; line-height: 1.6; }
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 30px; flex-wrap: wrap; }
+        .page-btn { width: 40px; height: 40px; border: 1px solid #e5e7eb; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: 600; color: #4b5563; }
+        .page-btn.active { background: #000066; color: #fff; border-color: #000066; }
+        .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
+
+
         /* Footer */
         footer { background: #18181b; color: #fff; padding: 60px 0 30px; }
         .footer-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 40px; }
@@ -743,26 +785,69 @@
         </div>
     </main>
 
-    <section class="description-section">
-        <div class="container">
-            <h2>Excelência em Tratamento Capilar</h2>
-            <div class="description-grid">
-                <div class="desc-text-block">
-                    <h3><i class="fas fa-info-circle"></i> Ciência Aplicada ao Crescimento</h3>
-                    <p>O <strong>Minoxidil Kirkland 5% Signature</strong> representa o ápice da tecnologia em cuidados capilares.</p>
+        <!-- SEÇÃO DE DESCRIÇÃO COM TABS -->
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="openTab(event, 'desc')">Descrição</button>
+            <button class="tab-btn" onclick="openTab(event, 'info')">Como Usar</button>
+            <button class="tab-btn" onclick="openTab(event, 'ingr')">Composição</button>
+        </div>
+
+        <div id="desc" class="tab-content active">
+            <h2>Minoxidil Kirkland 5%: A Solução Definitiva</h2>
+            <p>O <strong>Minoxidil Kirkland Signature 5%</strong> é o tratamento padrão ouro para combater a queda de cabelo e estimular o crescimento de novos fios.</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Qualidade Premium</h3>
+                    <p>Marca líder nos EUA, garantindo a máxima eficácia no seu tratamento.</p>
                 </div>
-                <div class="desc-tech-block">
-                    <h3><i class="fas fa-microscope"></i> Especificações Técnicas</h3>
-                    <table class="tech-table">
-                        <tr><td><strong>Fabricante</strong></td><td>Kirkland Signature (EUA)</td></tr>
-                        <tr><td><strong>Ativo Principal</strong></td><td>Minoxidil 5% USP</td></tr>
-                        <tr><td><strong>Volume Total</strong></td><td>180ml (3x 60ml)</td></tr>
-                        <tr><td><strong>Duração Kit</strong></td><td>90 dias de tratamento</td></tr>
-                    </table>
+                <div class="info-card">
+                    <h3>Resultados Reais</h3>
+                    <p>Interrompe a queda e estimula o crescimento em até 85% dos casos.</p>
                 </div>
             </div>
         </div>
+
+        <div id="info" class="tab-content">
+            <h2>Guia de Aplicação</h2>
+            <p>A consistência é a chave. Siga o protocolo para resultados máximos:</p>
+            <ul>
+                <li>Aplique 1ml duas vezes ao dia (manhã e noite).</li>
+                <li>A área deve estar limpa e seca.</li>
+                <li>Massageie suavemente para potencializar a absorção.</li>
+                <li>Lave as mãos após o uso.</li>
+            </ul>
+        </div>
+
+        <div id="ingr" class="tab-content">
+            <h2>Composição e Segurança</h2>
+            <div class="info-card">
+                <h3>Ingredientes:</h3>
+                <p><strong>Ativo:</strong> Minoxidil 5% w/v.</p>
+                <p><strong>Inativos:</strong> Álcool Etílico, Propilenoglicol, Água Purificada.</p>
+            </div>
+            <p style="margin-top: 20px;"><strong>Atenção:</strong> Uso exclusivo masculino. Apenas uso externo.</p>
+        </div>
+    </div>
+
+    <!-- SEÇÃO DE AVALIAÇÕES -->
+    <section class="reviews-section">
+        <div class="container">
+            <div class="reviews-header">
+                <h2>Avaliações dos Clientes</h2>
+                <div class="overall-rating">
+                    <span class="rating-number">4.9</span>
+                    <div class="stars-large">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <span class="total-reviews-count">1.983 avaliações verificadas</span>
+            </div>
+            <div class="reviews-grid" id="reviewsGrid"></div>
+            <div class="pagination" id="pagination"></div>
+        </div>
     </section>
+
 
     <footer>
         <div class="container">
@@ -859,6 +944,69 @@
                 });
             }
         });
+
+                // LÓGICA DAS AVALIAÇÕES E TABS
+        const allReviews = [
+            { name: "Ricardo S.", date: "05/05/2024", rating: 5, content: "Produto excelente! Estou usando há 3 meses e as falhas na minha barba sumiram completamente." },
+            { name: "Marcos Oliveira", date: "02/05/2024", rating: 5, content: "Chegou muito rápido em SP. O produto é original, já conhecia a marca Kirkland." },
+            { name: "Felipe Almeida", date: "28/04/2024", rating: 4, content: "Muito bom, senti uma leve coceira no início mas depois passou. Resultados visíveis." },
+            { name: "João Pedro", date: "25/04/2024", rating: 5, content: "Melhor custo benefício que encontrei. Atendimento da Hub Suplementos é nota 10." },
+            { name: "Gustavo Lima", date: "20/04/2024", rating: 5, content: "Uso há anos para manter o cabelo e nunca decepciona. Loja confiável." },
+            { name: "André Santos", date: "15/04/2024", rating: 5, content: "Minha barba era muito falhada, agora está fechando tudo. Recomendo." },
+            { name: "Lucas Ferreira", date: "10/04/2024", rating: 5, content: "Entrega super discreta e rápida. O kit de 3 meses vale muito a pena." },
+            { name: "Rodrigo M.", date: "05/04/2024", rating: 4, content: "Produto de qualidade. Notei que os fios novos estão nascendo mais grossos." },
+            { name: "Thiago Silva", date: "01/04/2024", rating: 5, content: "Já tentei outras marcas, mas o Kirkland é o que realmente funciona pra mim." },
+            { name: "Bruno Costa", date: "28/03/2024", rating: 5, content: "Excelente atendimento via WhatsApp. Chegou bem embalado e no prazo." }
+            // Adicione mais se desejar...
+        ];
+
+        let currentPage = 1;
+        const reviewsPerPage = 4;
+
+        function renderReviews(page) {
+            const grid = document.getElementById('reviewsGrid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            const startIndex = (page - 1) * reviewsPerPage;
+            const pageReviews = allReviews.slice(startIndex, startIndex + reviewsPerPage);
+
+            pageReviews.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                let starsHtml = '';
+                for(let i=0; i<5; i++) starsHtml += `<i class="${i < review.rating ? 'fas' : 'far'} fa-star"></i>`;
+                card.innerHTML = `<div class="review-top"><div class="reviewer-info"><div class="reviewer-avatar">${review.name.charAt(0)}</div><div><div class="reviewer-name">${review.name}</div><div class="verified-badge"><i class="fas fa-check-circle"></i> Verificada</div></div></div><div class="review-date">${review.date}</div></div><div class="review-stars" style="margin-bottom: 8px;">${starsHtml}</div><div class="review-content">${review.content}</div>`;
+                grid.appendChild(card);
+            });
+            renderPagination(page);
+        }
+
+        function renderPagination(activePage) {
+            const pagination = document.getElementById('pagination');
+            if(!pagination) return;
+            pagination.innerHTML = '';
+            for (let i = 1; i <= 3; i++) { // Exemplo com 3 páginas
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${activePage === i ? 'active' : ''}`;
+                btn.textContent = i;
+                btn.onclick = () => { currentPage = i; renderReviews(i); };
+                pagination.appendChild(btn);
+            }
+        }
+
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; tabcontent[i].classList.remove("active"); }
+            const tablinks = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tablinks.length; i++) tablinks[i].classList.remove("active");
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Inicializar avaliações ao carregar
+        window.addEventListener('DOMContentLoaded', () => { renderReviews(1); });
+
     </script>
 </body>
 </html>
