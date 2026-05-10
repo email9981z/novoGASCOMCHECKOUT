@@ -1396,7 +1396,9 @@
         }
 
         // Initialize on load
-        window.onload = initGallery;
+        window.onload = function() {
+            initGallery(0); // Inicia com a primeira variante (3 meses)
+        };
         
         // Listen for scroll on main slider to sync thumbnails
         document.getElementById('imageSlider').addEventListener('scroll', () => {
