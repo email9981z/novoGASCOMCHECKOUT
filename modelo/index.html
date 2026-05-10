@@ -955,7 +955,7 @@
                 <i class="fas fa-map-marker-alt" style="color: var(--brand-primary); font-size: 14px;"></i> Frete e Envio
             </h3>
             <div class="cep-input-group">
-                <input type="text" id="cepInput" placeholder="Digite seu CEP" maxlength="8">
+                <input type="text" id="cepInput" placeholder="Digite seu CEP" maxlength="9" inputmode="numeric">
                 <button id="searchCepBtn" onclick="window.searchCEP()">Buscar</button>
             </div>
             <div class="cep-loading" id="cepLoading">Buscando endereco...</div>
@@ -967,7 +967,7 @@
                 <p><strong>UF:</strong> <span id="addressState"></span></p>
             </div>
             <div class="address-fields">
-                <input type="text" id="addressNumber" placeholder="Numero" style="display: none;">
+                <input type="text" id="addressNumber" placeholder="Numero" style="display: none;" inputmode="numeric">
                 <input type="text" id="addressComplement" placeholder="Complemento (opcional)" style="display: none;">
             </div>
             <div id="deliveryOptions" style="display: none; margin-top: 24px;">
@@ -1477,6 +1477,23 @@
                     searchBtn.disabled = false;
                 }
             };
+
+            // CEP Auto-format and Auto-search
+            const cepInput = document.getElementById('cepInput');
+            if (cepInput) {
+                cepInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 5) {
+                        value = value.substring(0, 5) + '-' + value.substring(5, 8);
+                    }
+                    e.target.value = value;
+
+                    if (value.length === 9) {
+                        cepInput.blur();
+                        window.searchCEP();
+                    }
+                });
+            }
 
             // Listeners
             if (cartTrigger) cartTrigger.addEventListener('click', (e) => { e.preventDefault(); toggleCart(); });
