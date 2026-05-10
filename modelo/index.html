@@ -1568,18 +1568,19 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 const deliveryOptionsVisible = document.getElementById('deliveryOptions').style.display === 'block';
                 
                 if (deliveryOptionsVisible && cart.length > 0) {
-                    const isFooterHidden = cartFooter && cartFooter.style.display === 'none';
+                    const isFooterHidden = cartFooter && (cartFooter.style.display === 'none' || !cartFooter.style.display);
                     if (cartFooter) cartFooter.style.display = 'block';
                     
                     if (isFooterHidden) {
-                        const scrollContainer = document.querySelector('#cartSidebar > div[style*="overflow-y: auto"]');
-                        if (scrollContainer) {
+                        const scrollContainer = cartSidebar.querySelector('div[style*="overflow-y: auto"]');
+                        const deliveryOptions = document.getElementById('deliveryOptions');
+                        if (scrollContainer && deliveryOptions) {
                             setTimeout(() => {
                                 scrollContainer.scrollTo({
-                                    top: scrollContainer.scrollHeight,
+                                    top: deliveryOptions.offsetTop,
                                     behavior: 'smooth'
                                 });
-                            }, 150);
+                            }, 300);
                         }
                     }
                     
@@ -1755,16 +1756,40 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
             // Lógica de Transição para Dados Pessoais
             document.addEventListener('click', function(e) {
                 const btn = e.target.closest('.btn-checkout');
-                if (btn && btn.innerText.trim().toUpperCase() === 'FINALIZAR COMPRA') {
+                // Verifica se é o botão de finalizar compra (seja pelo texto ou classe)
+                if (btn && (btn.innerText.includes('Finalizar Compra') || btn.innerText.includes('FINALIZAR COMPRA'))) {
+                    
+                    // Se já estiver no checkout, não aplicar esta validação de endereço aqui
+                    if (cartSidebar.classList.contains('checkout-active')) return;
+
+                    // Validação
+                    const numberInput = document.getElementById('addressNumber');
+                    const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
+                    
+                    if (!selectedDelivery) {
+                        alert('Por favor, selecione uma opção de entrega.');
+                        const deliveryOptions = document.getElementById('deliveryOptions');
+                        const scrollContainer = cartSidebar.querySelector('div[style*="overflow-y: auto"]');
+                        if (scrollContainer && deliveryOptions) {
+                            scrollContainer.scrollTo({ top: deliveryOptions.offsetTop, behavior: 'smooth' });
+                        }
+                        return;
+                    }
+                    
+                    if (!numberInput || !numberInput.value.trim()) {
+                        alert('Por favor, preencha o número do endereço.');
+                        if (numberInput) numberInput.focus();
+                        return;
+                    }
+
                     // Capturar dados para o resumo
                     const street = document.getElementById('addressStreet').innerText;
-                    const number = document.getElementById('addressNumber').value;
+                    const number = numberInput.value;
                     const neighborhood = document.getElementById('addressNeighborhood').innerText;
                     const city = document.getElementById('addressCity').innerText;
                     const state = document.getElementById('addressState').innerText;
                     const complement = document.getElementById('addressComplement').value;
                     
-                    const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
                     const deliveryName = selectedDelivery ? selectedDelivery.parentElement.querySelector('strong').innerText : 'Não selecionado';
                     const deliveryPrice = selectedDelivery ? parseFloat(selectedDelivery.value) : 0;
                     
