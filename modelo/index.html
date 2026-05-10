@@ -92,7 +92,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .logo img { height: 32px; width: auto; }
@@ -101,7 +102,9 @@
             flex: 1;
             max-width: 500px;
             position: relative;
-            display: none;
+            order: 3;
+            width: 100%;
+            margin-top: 15px;
         }
 
         .search-bar input {
@@ -134,7 +137,11 @@
         }
 
         @media (min-width: 768px) {
-            .search-bar { display: block; }
+            .search-bar { 
+                display: block; 
+                order: 2;
+                margin-top: 0;
+            }
             .logo img { height: 38px; }
         }
 
