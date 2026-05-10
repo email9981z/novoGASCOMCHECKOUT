@@ -1056,7 +1056,7 @@
                 </h3>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                     <label class="delivery-option-card">
-                        <input type="radio" name="delivery" value="0" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI();">
+                        <input type="radio" name="delivery" value="0" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI(); const scrollContainer = document.querySelector('#cartSidebar > div[style*=\'overflow-y: auto\']'); if(scrollContainer) { setTimeout(() => { scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' }); }, 100); }">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
                                 <strong style="font-size: 14px; color: var(--brand-primary);">Frete Grátis</strong>
@@ -1066,7 +1066,7 @@
                         </div>
                     </label>
                     <label class="delivery-option-card">
-                        <input type="radio" name="delivery" value="9.9" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI();">
+                        <input type="radio" name="delivery" value="9.9" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI(); const scrollContainer = document.querySelector('#cartSidebar > div[style*=\'overflow-y: auto\']'); if(scrollContainer) { setTimeout(() => { scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' }); }, 100); }">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
                                 <strong style="font-size: 14px; color: var(--brand-primary);">Entrega Expressa</strong>
