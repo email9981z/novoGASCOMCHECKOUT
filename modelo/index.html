@@ -1126,24 +1126,34 @@
             pagination.innerHTML = '';
             const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
             
-            // Mostrar no máximo 5 botões de página
-            let startPage = Math.max(1, activePage - 2);
-            let endPage = Math.min(totalPages, startPage + 4);
-            if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
+            // Mostrar no máximo 4 botões de página
+let startPage = Math.max(1, activePage - 1);
+let endPage = Math.min(totalPages, startPage + 3);
 
-            if (startPage > 1) {
-                const firstBtn = document.createElement('button');
-                firstBtn.className = 'page-btn';
-                firstBtn.textContent = '1';
-                firstBtn.onclick = () => { currentPage = 1; renderReviews(1); window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); };
-                pagination.appendChild(firstBtn);
-                if (startPage > 2) {
-                    const dots = document.createElement('span');
-                    dots.textContent = '...';
-                    dots.style.alignSelf = 'center';
-                    pagination.appendChild(dots);
-                }
-            }
+// Ajusta o início caso estejamos nas últimas páginas para manter 4 botões
+if (endPage - startPage < 3) {
+    startPage = Math.max(1, endPage - 3);
+}
+
+// Lógica para o botão "1" e reticências
+if (startPage > 1) {
+    const firstBtn = document.createElement('button');
+    firstBtn.className = 'page-btn';
+    firstBtn.textContent = '1';
+    firstBtn.onclick = () => { 
+        currentPage = 1; 
+        renderReviews(1); 
+        window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); 
+    };
+    pagination.appendChild(firstBtn);
+
+    if (startPage > 2) {
+        const dots = document.createElement('span');
+        dots.textContent = '...';
+        dots.style.alignSelf = 'center';
+        pagination.appendChild(dots);
+    }
+}
 
             for (let i = startPage; i <= endPage; i++) {
                 const btn = document.createElement('button');
@@ -1166,7 +1176,7 @@
                 }
                 const lastBtn = document.createElement('button');
                 lastBtn.className = 'page-btn';
-                lastBtn.textContent = '99+';
+                lastBtn.textContent = '+';
                 lastBtn.onclick = () => { currentPage = totalPages; renderReviews(totalPages); window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); };
                 pagination.appendChild(lastBtn);
             }
