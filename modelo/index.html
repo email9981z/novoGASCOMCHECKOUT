@@ -748,16 +748,16 @@
 .close-cart { background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.2s; }
 .close-cart:hover { background: #e5e7eb; color: var(--text-main); transform: rotate(90deg); }
 .cart-items { padding: 20px; }
-.cart-item { display: flex; gap: 16px; padding: 16px; background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; transition: transform 0.2s; }
-.cart-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-.cart-item-img { width: 90px; height: 90px; border-radius: 10px; background: var(--bg-soft); overflow: hidden; flex-shrink: 0; padding: 8px; }
+.cart-item { display: flex; gap: 12px; padding: 12px; background: #fff; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; transition: all 0.2s; }
+.cart-item:hover { border-color: var(--brand-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.cart-item-img { width: 70px; height: 70px; border-radius: 8px; background: var(--bg-soft); overflow: hidden; flex-shrink: 0; padding: 4px; }
 .cart-item-img img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
-.cart-item-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-.cart-item-name { font-size: 14px; font-weight: 700; color: var(--text-main); line-height: 1.4; margin-bottom: 4px; }
-.cart-item-variant { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
-.cart-item-price { font-weight: 800; color: var(--brand-primary); font-size: 16px; }
-.cart-item-quantity-control { display: flex; align-items: center; background: #f3f4f6; border-radius: 8px; padding: 4px; width: fit-content; margin-top: 10px; }
-.qty-btn { background: #fff; border: none; width: 24px; height: 24px; border-radius: 6px; cursor: pointer; color: var(--text-main); font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: all 0.2s; }
+.cart-item-info { flex: 1; display: flex; flex-direction: column; }
+.cart-item-name { font-size: 13px; font-weight: 700; color: var(--text-main); line-height: 1.3; margin-bottom: 2px; }
+.cart-item-variant { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+.cart-item-price { font-weight: 800; color: var(--brand-primary); font-size: 14px; }
+.cart-item-quantity-control { display: flex; align-items: center; background: #f3f4f6; border-radius: 6px; padding: 2px; width: fit-content; margin-top: 6px; }
+.qty-btn { background: #fff; border: none; width: 20px; height: 20px; border-radius: 4px; cursor: pointer; color: var(--text-main); font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s; font-size: 12px; }
 .qty-btn:hover { background: var(--brand-primary); color: #fff; }
 .qty-display { font-size: 13px; font-weight: 700; color: var(--text-main); min-width: 32px; text-align: center; }
 .cart-footer { padding: 24px 20px; border-top: 1px solid var(--border); background: #fff; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
@@ -951,6 +951,9 @@
                 <div class="empty-cart-msg">Seu carrinho está vazio.</div>
             </div>
             <div class="cep-section">
+            <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 16px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-map-marker-alt" style="color: var(--brand-primary); font-size: 14px;"></i> Frete e Envio
+            </h3>
             <div class="cep-input-group">
                 <input type="text" id="cepInput" placeholder="Digite seu CEP" maxlength="8">
                 <button id="searchCepBtn" onclick="window.searchCEP()">Buscar</button>
