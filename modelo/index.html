@@ -1311,16 +1311,29 @@
     </footer>
 
     <script>
-        const productImages = [
-            "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
-            "https://i.postimg.cc/7Z9Z7Z9Z/kirkland-box.png",
-            "https://i.postimg.cc/8Y8Y8Y8Y/kirkland-bottle.png",
-            "https://i.postimg.cc/9X9X9X9X/kirkland-seal.png"
-        ];
+        // Imagens para cada variante
+        const variantImages = {
+            0: [ // Tratamento 3 Meses
+                "https://i.postimg.cc/tCvX480y/kirkland-3.png",
+                "https://i.postimg.cc/7Z9Z7Z9Z/kirkland-box.png",
+                "https://i.postimg.cc/8Y8Y8Y8Y/kirkland-bottle.png",
+                "https://i.postimg.cc/9X9X9X9X/kirkland-seal.png"
+            ],
+            1: [ // Tratamento 6 Meses
+                "https://i.postimg.cc/tCvX480y/kirkland-6.png",
+                "https://i.postimg.cc/7Z9Z7Z9Z/kirkland-box-6.png",
+                "https://i.postimg.cc/8Y8Y8Y8Y/kirkland-bottle-6.png",
+                "https://i.postimg.cc/9X9X9X9X/kirkland-seal-6.png"
+            ]
+        };
 
+        let currentVariantIndex = 0;
         let currentImgIndex = 0;
 
-        function initGallery() {
+        function initGallery(variantIndex = 0) {
+            currentVariantIndex = variantIndex;
+            currentImgIndex = 0;
+            const productImages = variantImages[variantIndex];
             const slider = document.getElementById('imageSlider');
             const thumbContainer = document.getElementById('thumbnailsContainer');
             
@@ -1336,6 +1349,8 @@
                 </div>
             `).join('');
             
+            // Reset scroll position
+            slider.scrollLeft = 0;
             updateThumbNav();
         }
 
@@ -1375,6 +1390,9 @@
             
             document.getElementById('mainPrice').innerText = price.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
             document.getElementById('oldPrice').innerText = oldPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            
+            // Atualizar galeria com imagens da variante selecionada
+            initGallery(index);
         }
 
         // Initialize on load
