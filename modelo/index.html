@@ -348,6 +348,156 @@
             font-size: 12px;
             transition: all 0.2s ease;
             z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .thumb-nav-btn:hover {
+            border-color: var(--brand-primary);
+            background: var(--bg-soft);
+        }
+
+        .thumb-nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        /* --- END UPDATED THUMBNAILS CSS --- */
+
+        /* Product Info */
+        .product-content {
+            width: 100%;
+        }
+
+        .product-content h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        @media (min-width: 768px) { .product-content h1 { font-size: 34px; } }
+
+        .badge-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
+        .badge-stock { background: #ecfdf5; color: #065f46; }
+        .badge-shipping { background: #eff6ff; color: #1e40af; }
+
+        .rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+        .stars { color: #fbbf24; font-size: 12px; }
+
+        /* Netshoes Pricing Section */
+        .price-box {
+            border-top: 1px solid var(--ns-border);
+            padding-top: 16px;
+            margin-bottom: 12px;
+        }
+
+        .old-price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .old-price {
+            font-size: 14px;
+            color: var(--ns-gray);
+            text-decoration: line-through;
+        }
+
+        .discount-tag {
+            background: var(--ns-bg-green);
+            color: var(--ns-green);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .main-price {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--ns-text);
+            margin-bottom: 2px;
+        }
+
+        .pix-text {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .installment-text {
+            font-size: 14px;
+            color: var(--ns-gray);
+            margin-bottom: 12px;
+        }
+
+        /* Netshoes Seller & Rating Info */
+        .ns-seller-info {
+            font-size: 13px;
+            color: var(--ns-text);
+            margin-bottom: 8px;
+        }
+
+        .ns-seller-info strong {
+            color: var(--ns-text);
+            font-weight: 700;
+        }
+
+        .ns-rating-container {
+            margin-bottom: 16px;
+        }
+
+        .ns-rating-bar {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .ns-rating-fill {
+            height: 100%;
+            background: #8cc63f;
+            width: 95%;
+        }
+
+        .ns-rating-details {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--ns-gray);
+        }
+
+        .ns-rating-details i {
+            color: var(--ns-gray);
+            font-size: 10px;
+        }
+
+        /* Netshoes Shipping Info */
+        .ns-shipping-info {
+            margin-bottom: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--ns-border);
+        }
+
+        .ns-shipping-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ns-green);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .ns-shipping-desc {
+            font-size: 13px;
+            color: var(--ns-gray);
+            line-height: 1.4;
         }
 
         /* Netshoes Buttons */
@@ -522,8 +672,8 @@
         }
 
         /* Newsletter Section */
-        .newsletter-section { padding: 60px 0; background: #f9fafb; }
-        .newsletter-container {
+        .newsletter-section { padding: 60px 0; background: #fff; border-top: 1px solid var(--border); }
+        .newsletter-container { 
             background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
             border-radius: 20px;
             padding: 40px;
@@ -578,160 +728,6 @@
         
         @media (min-width: 768px) {
             .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 60px; }
-        }
-
-        /* --- SLIDING CART STYLES (ISOLATED) --- */
-        .cart-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .cart-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 100%;
-            max-width: 400px;
-            height: 100%;
-            background: #fff;
-            z-index: 2001;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            transition: right 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cart-sidebar.active {
-            right: 0;
-        }
-
-        .cart-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-header h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--brand-primary);
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 15px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 20px;
-        }
-
-        .cart-item-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .cart-item-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .cart-item-variant {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .cart-item-price {
-            font-weight: 800;
-            color: var(--brand-primary);
-            font-size: 15px;
-        }
-
-        .cart-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border);
-            background: var(--bg-soft);
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            font-weight: 800;
-            font-size: 18px;
-        }
-
-        .btn-checkout {
-            background: var(--ns-purple);
-            color: #fff;
-            border: none;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            text-transform: uppercase;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-        }
-
-        .btn-checkout:hover {
-            background: #40008c;
-        }
-
-        .empty-cart-msg {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
         }
 
         /* --- SLIDING CART STYLES --- */
