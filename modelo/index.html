@@ -729,16 +729,6 @@
         @media (min-width: 768px) {
             .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 60px; }
         }
-
-        /* No seu CSS */
-.review-card {
-    animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
     </style>
 </head>
 <body>
@@ -1107,19 +1097,7 @@
         });
 
                 // LÓGICA DAS AVALIAÇÕES E TABS
-        const allReviews = [
-            { name: "Ricardo S.", date: "05/05/2024", rating: 5, content: "Produto excelente! Estou usando há 3 meses e as falhas na minha barba sumiram completamente." },
-            { name: "Marcos Oliveira", date: "02/05/2024", rating: 5, content: "Chegou muito rápido em SP. O produto é original, já conhecia a marca Kirkland." },
-            { name: "Felipe Almeida", date: "28/04/2024", rating: 4, content: "Muito bom, senti uma leve coceira no início mas depois passou. Resultados visíveis." },
-            { name: "João Pedro", date: "25/04/2024", rating: 5, content: "Melhor custo benefício que encontrei. Atendimento da Hub Suplementos é nota 10." },
-            { name: "Gustavo Lima", date: "20/04/2024", rating: 5, content: "Uso há anos para manter o cabelo e nunca decepciona. Loja confiável." },
-            { name: "André Santos", date: "15/04/2024", rating: 5, content: "Minha barba era muito falhada, agora está fechando tudo. Recomendo." },
-            { name: "Lucas Ferreira", date: "10/04/2024", rating: 5, content: "Entrega super discreta e rápida. O kit de 3 meses vale muito a pena." },
-            { name: "Rodrigo M.", date: "05/04/2024", rating: 4, content: "Produto de qualidade. Notei que os fios novos estão nascendo mais grossos." },
-            { name: "Thiago Silva", date: "01/04/2024", rating: 5, content: "Já tentei outras marcas, mas o Kirkland é o que realmente funciona pra mim." },
-            { name: "Bruno Costa", date: "28/03/2024", rating: 5, content: "Excelente atendimento via WhatsApp. Chegou bem embalado e no prazo." }
-            // Adicione mais se desejar...
-        ];
+        const allReviews = [{'name': 'Gustavo Martins', 'date': '04/05/2024', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Lucas Gomes', 'date': '01/05/2024', 'rating': 5, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor.'}, {'name': 'Rodrigo Pedro', 'date': '26/04/2024', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Vinícius Rocha', 'date': '17/04/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'João Costa', 'date': '14/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Rodrigo Oliveira', 'date': '13/04/2024', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Diego Santos', 'date': '11/04/2024', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Alexandre Teixeira', 'date': '10/04/2024', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Mateus Costa', 'date': '07/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Thiago S.', 'date': '02/04/2024', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Diego Almeida', 'date': '20/03/2024', 'rating': 5, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis.'}, {'name': 'Samuel Lima', 'date': '17/03/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 5 meses e as falhas sumiram.'}, {'name': 'Lucas Pedro', 'date': '14/03/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'Bruno Melo', 'date': '08/03/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Gabriel Barbosa', 'date': '07/03/2024', 'rating': 5, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Thiago Pedro', 'date': '01/03/2024', 'rating': 5, 'content': 'Comprei o kit de 6 meses e o desconto foi ótimo.'}, {'name': 'Gustavo Ribeiro', 'date': '04/02/2024', 'rating': 4, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Thiago Costa', 'date': '02/02/2024', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Vinícius Ribeiro', 'date': '02/02/2024', 'rating': 4, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Leonardo Costa', 'date': '02/02/2024', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Felipe Cardoso', 'date': '01/02/2024', 'rating': 5, 'content': 'Minha barba era muito falhada, agora está fechando tudo.'}, {'name': 'Gabriel Santos', 'date': '31/01/2024', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Ricardo Almeida', 'date': '26/01/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 4 meses e as falhas sumiram.'}, {'name': 'Eduardo Silva', 'date': '15/01/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 4 meses e as falhas sumiram.'}, {'name': 'Lucas Gomes', 'date': '10/01/2024', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Thiago Silva', 'date': '09/01/2024', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Daniel S.', 'date': '04/01/2024', 'rating': 5, 'content': 'Surpreso com a velocidade da entrega. Produto 100% original.'}, {'name': 'Marcelo Carvalho', 'date': '27/12/2023', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Vinícius Barbosa', 'date': '22/12/2023', 'rating': 5, 'content': 'A melhor solução para quem quer barba cheia.'}, {'name': 'Gustavo Melo', 'date': '20/12/2023', 'rating': 5, 'content': 'O produto não deixa o cabelo oleoso, o que é um diferencial.'}, {'name': 'André Teixeira', 'date': '14/12/2023', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Daniel Melo', 'date': '14/12/2023', 'rating': 5, 'content': 'Comprei o kit de 6 meses e o desconto foi ótimo.'}, {'name': 'Thiago Gomes', 'date': '12/12/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Daniel Barbosa', 'date': '11/12/2023', 'rating': 4, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis.'}, {'name': 'Ricardo Rocha', 'date': '08/12/2023', 'rating': 5, 'content': 'Produto excelente! Estou usando há 4 meses e as falhas sumiram.'}, {'name': 'Marcos S.', 'date': '08/12/2023', 'rating': 5, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Rodrigo Cardoso', 'date': '04/12/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Diego Pedro', 'date': '30/11/2023', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'Ricardo Silva', 'date': '22/11/2023', 'rating': 5, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Daniel Oliveira', 'date': '14/11/2023', 'rating': 4, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Marcos Silva', 'date': '04/11/2023', 'rating': 5, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Marcelo Santos', 'date': '02/11/2023', 'rating': 4, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Gustavo Cardoso', 'date': '28/10/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Marcelo Ferreira', 'date': '26/10/2023', 'rating': 4, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Marcos Silva', 'date': '13/10/2023', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Bruno Rocha', 'date': '13/10/2023', 'rating': 4, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Mateus Gomes', 'date': '11/10/2023', 'rating': 4, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor.'}, {'name': 'Daniel Barbosa', 'date': '11/10/2023', 'rating': 5, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis.'}, {'name': 'Fernando Santos', 'date': '04/10/2023', 'rating': 4, 'content': 'Uso para manter o cabelo e nunca decepciona. Loja super confiável.'}, {'name': 'Leonardo Teixeira', 'date': '23/09/2023', 'rating': 4, 'content': 'Minha barba era muito falhada, agora está fechando tudo.'}, {'name': 'Vinícius Lima', 'date': '09/09/2023', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Marcos Lima', 'date': '30/08/2023', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Vinícius Gomes', 'date': '24/08/2023', 'rating': 5, 'content': 'Comprei o kit de 6 meses e o desconto foi ótimo.'}, {'name': 'Vinícius Almeida', 'date': '23/08/2023', 'rating': 5, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Fernando Ferreira', 'date': '06/08/2023', 'rating': 5, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Alexandre Rocha', 'date': '01/08/2023', 'rating': 4, 'content': 'A melhor solução para quem quer barba cheia.'}, {'name': 'Carlos Gomes', 'date': '22/07/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Marcos Teixeira', 'date': '20/07/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'João Rocha', 'date': '18/07/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Vinícius Almeida', 'date': '10/07/2023', 'rating': 5, 'content': 'A melhor solução para quem quer barba cheia.'}, {'name': 'Samuel Ribeiro', 'date': '10/07/2023', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Felipe Santos', 'date': '10/07/2023', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Gustavo Ferreira', 'date': '08/07/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Fernando Melo', 'date': '05/07/2023', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Marcelo Ferreira', 'date': '29/06/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Diego Teixeira', 'date': '28/06/2023', 'rating': 4, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Vitor Barbosa', 'date': '14/06/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Gustavo Araújo', 'date': '12/06/2023', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Leonardo Teixeira', 'date': '09/06/2023', 'rating': 5, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Bruno S.', 'date': '07/06/2023', 'rating': 5, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Marcelo Santos', 'date': '07/06/2023', 'rating': 5, 'content': 'Uso para manter o cabelo e nunca decepciona. Loja super confiável.'}, {'name': 'Lucas Barbosa', 'date': '03/06/2023', 'rating': 4, 'content': 'O produto não deixa o cabelo oleoso, o que é um diferencial.'}, {'name': 'Leonardo Santos', 'date': '27/05/2023', 'rating': 4, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Ricardo Melo', 'date': '14/05/2023', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Fernando Barbosa', 'date': '10/05/2023', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Renato Melo', 'date': '06/05/2023', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Leonardo Ferreira', 'date': '06/05/2023', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Felipe Teixeira', 'date': '04/05/2023', 'rating': 4, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'Bruno Araújo', 'date': '04/05/2023', 'rating': 4, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Fernando Almeida', 'date': '28/04/2023', 'rating': 5, 'content': 'A melhor solução para quem quer barba cheia.'}, {'name': 'Marcos M.', 'date': '27/04/2023', 'rating': 4, 'content': 'Em 2 meses já notei uma diferença absurda na densidade do cabelo.'}, {'name': 'Lucas Silva', 'date': '24/04/2023', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Vinícius Gomes', 'date': '22/04/2023', 'rating': 4, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor.'}, {'name': 'Alexandre Ferreira', 'date': '20/04/2023', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Mateus M.', 'date': '16/04/2023', 'rating': 5, 'content': 'Recomendo a todos que sofrem com calvície, mudou minha autoestima.'}, {'name': 'Gabriel Cardoso', 'date': '05/04/2023', 'rating': 4, 'content': 'Surpreso com a velocidade da entrega. Produto 100% original.'}, {'name': 'Lucas Ribeiro', 'date': '02/04/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Vitor Costa', 'date': '31/03/2023', 'rating': 4, 'content': 'Minha barba era muito falhada, agora está fechando tudo.'}, {'name': 'Carlos Melo', 'date': '23/03/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Bruno Cardoso', 'date': '17/03/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Carlos Teixeira', 'date': '06/03/2023', 'rating': 5, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Leonardo Cardoso', 'date': '01/03/2023', 'rating': 5, 'content': 'Já tentei outras marcas, mas o Kirkland é o que realmente funciona.'}, {'name': 'Bruno Ferreira', 'date': '27/02/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Vitor Araújo', 'date': '12/02/2023', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Samuel Barbosa', 'date': '10/02/2023', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Carlos Lima', 'date': '08/02/2023', 'rating': 5, 'content': 'Melhor custo benefício que encontrei. Atendimento nota 10.'}, {'name': 'Vinícius M.', 'date': '26/01/2023', 'rating': 5, 'content': 'Uso para manter o cabelo e nunca decepciona. Loja super confiável.'}, {'name': 'João Gomes', 'date': '13/01/2023', 'rating': 5, 'content': 'Comprei o kit de 6 meses e o desconto foi ótimo.'}, {'name': 'Gustavo Pedro', 'date': '07/01/2023', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Mateus Barbosa', 'date': '02/01/2023', 'rating': 5, 'content': 'A melhor solução para quem quer barba cheia.'}];
 
         let currentPage = 1;
         const reviewsPerPage = 4;
@@ -1143,26 +1121,57 @@
         }
 
         function renderPagination(activePage) {
-    const pagination = document.getElementById('pagination');
-    if(!pagination) return;
-    
-    const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
-    pagination.innerHTML = '';
+            const pagination = document.getElementById('pagination');
+            if(!pagination) return;
+            pagination.innerHTML = '';
+            const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
+            
+            // Mostrar no máximo 5 botões de página
+            let startPage = Math.max(1, activePage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
 
-    // Se houver muitas páginas, mostre "..." para indicar volume
-    for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.className = `page-btn ${activePage === i ? 'active' : ''}`;
-        btn.textContent = i;
-        btn.onclick = () => { 
-            currentPage = i; 
-            renderReviews(i);
-            // Scroll suave de volta para o topo das avaliações ao trocar de página
-            document.getElementById('reviewsGrid').scrollIntoView({behavior: 'smooth'});
-        };
-        pagination.appendChild(btn);
-    }
-}
+            if (startPage > 1) {
+                const firstBtn = document.createElement('button');
+                firstBtn.className = 'page-btn';
+                firstBtn.textContent = '1';
+                firstBtn.onclick = () => { currentPage = 1; renderReviews(1); window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); };
+                pagination.appendChild(firstBtn);
+                if (startPage > 2) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.style.alignSelf = 'center';
+                    pagination.appendChild(dots);
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${activePage === i ? 'active' : ''}`;
+                btn.textContent = i;
+                btn.onclick = () => { 
+                    currentPage = i; 
+                    renderReviews(i);
+                    window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'});
+                };
+                pagination.appendChild(btn);
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.style.alignSelf = 'center';
+                    pagination.appendChild(dots);
+                }
+                const lastBtn = document.createElement('button');
+                lastBtn.className = 'page-btn';
+                lastBtn.textContent = totalPages;
+                lastBtn.onclick = () => { currentPage = totalPages; renderReviews(totalPages); window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); };
+                pagination.appendChild(lastBtn);
+            }
+        }
+
         function openTab(evt, tabName) {
             const tabcontent = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; tabcontent[i].classList.remove("active"); }
