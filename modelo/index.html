@@ -995,10 +995,51 @@
                     </div>
                 </div>
 
-                <div class="ns-shipping-info">
-                    <span class="ns-shipping-title">Frete grátis</span>
-                    <p class="ns-shipping-desc">Chega dia 14 de maio ao escolher a opção de entrega Normal</p>
-                </div>
+                <!--INICIO CÓDIGO FRETE-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 
+<script>
+ 
+  function convertDate(e ) {
+      var t, o = new Date(e);
+      return [(t = o.getDate(), t < 10 ? "0" + t : t)].join("/")
+  }
+ 
+  function getMesExtenso(e) {
+      var t = new Array(12);
+      return t[0] = "janeiro", t[1] = "fevereiro", t[2] = "março", t[3] = "abril", t[4] = "maio", t[5] = "junho", t[6] = "julho", t[7] = "agosto", t[8] = "setembro", t[9] = "outubro", t[10] = "novembro", t[11] = "dezembro", t[e]
+  }
+  jQuery(document).ready(function(e) {
+      var t = new Date,
+          o = t.setDate(t.getDate() + 15),
+          n = t.setDate(t.getDate() - 7),
+          r = getMesExtenso(t.getMonth());
+      if (convertDate(o) > convertDate(n)) var a = "<strong>" + convertDate(n) + "</strong> e <strong>" + convertDate(o) + " de " + r + "</strong>";
+      else {
+          if (null == (s = getMesExtenso(t.getMonth() + 1))) var s = getMesExtenso(t.getMonth() - 11);
+          a = "<strong>" + convertDate(n) + " de " + r + "</strong> e <strong>" + convertDate(o) + " de " + s + "</strong>"
+      }
+      e.getJSON("https://wtfismyip.com/json", function(t ) {
+          var o = (t = t.YourFuckingLocation).replace(", Brazil", "");
+          e(".custom-address").html("<font color='#2C9400'><b>Frete Grátis</b></font> para <strong><font color='#2C9400'>" + o + " e Região</font></strong>"), e(".shipping-estimated").html("Entrega estimada entre " + a + "."), e(".shipping-preview-loading").hide()
+      })
+  });
+ 
+</script>
+ 
+<div class="shipping-preview-line" style="position: relative;margin-left: -20px; margin-top: 20px; margin-bottom: 25px;">
+ 
+    <img style="height: 20px;width: 32px;position: absolute;left: 22px;top: 10px;" src="https://cdn.shopify.com/s/files/1/0655/7165/1835/files/Logo_Aviao_SVG.svg?v=1664478300" class="shipping-country-flag fadeIn lazyloaded " alt="brazil">
+ 
+    <p class="shipping-preview-loading" style="text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 60px;font-size: 13px !important;margin: -15px 0 30px 0;display:block;">Carregando, aguarde...</p>
+ 
+    <p style="text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 60px;font-size: 13px !important;margin: -15px 0 0 0;" class="custom-address"></p>
+ 
+    <p style="margin:-0.5px;text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 60px;font-size: 13px !important;margin: -7px 0 0 0;" class="shipping-estimated"></p>
+ 
+</div>
+<!--FINAL CÓDIGO FRETE-->
+
 
                 <div class="cta-group">
                     <button class="btn-buy" id="buy-now-btn">Comprar</button>
