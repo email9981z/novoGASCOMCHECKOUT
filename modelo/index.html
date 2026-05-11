@@ -961,7 +961,80 @@
         .main-content-wrapper.visible {
             opacity: 1;
         }
-        /* --- END PRELOADER STYLES --- */
+
+        /* Estilização do FAQ */
+.faq-section {
+    padding: 60px 0;
+    background-color: #f9f9f9; /* Um tom levemente diferente para separar as seções */
+}
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.faq-header h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.faq-grid {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 20px;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: left;
+}
+
+.faq-question:hover {
+    background-color: #f0f0f0;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #fff;
+}
+
+.faq-answer p {
+    padding: 0 20px 20px 20px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Classe ativa para o JavaScript */
+.faq-item.active .faq-answer {
+    max-height: 200px; /* Ajuste conforme o tamanho do texto */
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}
     
     </style>
 
@@ -1446,6 +1519,46 @@
             <div class="pagination" id="pagination"></div>
         </div>
     </section>
+
+        <!-- Seção FAQ -->
+<section class="faq-section">
+    <div class="container">
+        <div class="faq-header">
+            <h2>Dúvidas Frequentes</h2>
+            <p>Tudo o que você precisa saber sobre nossos produtos e entrega.</p>
+        </div>
+        
+        <div class="faq-grid">
+            <div class="faq-item">
+                <button class="faq-question">Qual o prazo de entrega? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>O prazo médio de entrega para o Brasil é de 7 a 15 dias úteis, dependendo da sua região. Você receberá um código de rastreamento em até 3 dias após a confirmação do pagamento.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Os produtos possuem garantia? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>Sim! Oferecemos garantia de satisfação de 30 dias. Se você não estiver satisfeito com o resultado, devolvemos seu dinheiro conforme nossa política de trocas.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Como posso rastrear meu pedido? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>Assim que seu pedido for despachado, enviaremos o código de rastreio para o seu e-mail e WhatsApp. Você poderá acompanhar cada etapa da entrega pelo nosso site.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Quais as formas de pagamento? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>Aceitamos Pix (com aprovação imediata), Boleto Bancário e Cartão de Crédito em até 12x.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <section class="newsletter-section">
         <div class="container">
@@ -2065,6 +2178,20 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                     if (scrollContainer) scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
+
+            document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+        const faqItem = button.parentElement;
+        
+        // Fecha outros itens abertos (opcional - comportamento sanfona)
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (item !== faqItem) item.classList.remove('active');
+        });
+
+        // Alterna o item clicado
+        faqItem.classList.toggle('active');
+    });
+});
 
             // Resetar estado ao fechar o carrinho
             const resetCheckout = () => cartSidebar.classList.remove('checkout-active');
