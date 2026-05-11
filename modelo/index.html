@@ -677,11 +677,7 @@
         .review-date { font-size: 13px; color: var(--text-muted); }
         .review-stars { margin-bottom: 12px; color: #fbbf24; font-size: 14px; display: flex; gap: 2px; }
         .review-content { font-size: 14px; line-height: 1.7; color: var(--text-muted); }
-        .reviews-navigation { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 32px; }
-        .nav-arrow { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--brand-primary); background: #fff; color: var(--brand-primary); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-weight: 600; }
-        .nav-arrow:hover:not(:disabled) { background: var(--brand-primary); color: #fff; transform: scale(1.05); }
-        .nav-arrow:disabled { opacity: 0.4; cursor: not-allowed; }
-        .pagination { display: flex; gap: 8px; margin-top: 0; justify-content: center; }
+        .pagination { display: flex; gap: 8px; margin-top: 32px; justify-content: center; }
         .page-btn { width: 40px; height: 40px; font-size: 14px; border-radius: 8px; border: 1px solid var(--border); background: #fff; color: var(--text-muted); cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
         .page-btn:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
         .page-btn.active { background: var(--brand-primary); color: #fff; border-color: var(--brand-primary); }
@@ -1615,7 +1611,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
         });
 
                 // LÓGICA DAS AVALIAÇÕES E TABS
-        const allReviews = [{'name': 'Gustavo Martins', 'date': '04/05/2024', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento. Recomendo para todos que buscam qualidade.'}, {'name': 'Lucas Gomes', 'date': '01/05/2024', 'rating': 5, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor custo-benefício do mercado. Muito satisfeito!'}, {'name': 'Rodrigo Pedro', 'date': '26/04/2024', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos. Excelente embalagem.'}, {'name': 'Vinícius Rocha', 'date': '17/04/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira, sem desperdício. Muito prático e eficiente.'}, {'name': 'João Costa', 'date': '14/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos. Já é a terceira compra.'}, {'name': 'Rodrigo Oliveira', 'date': '13/04/2024', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida e produto de qualidade verificada.'}, {'name': 'Diego Santos', 'date': '11/04/2024', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado e com nota fiscal. Confiável demais!'}, {'name': 'Alexandre Teixeira', 'date': '10/04/2024', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes. Resultados reais e comprovados.'}, {'name': 'Mateus Costa', 'date': '07/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos. Melhor que outras lojas.'}, {'name': 'Thiago S.', 'date': '02/04/2024', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa. Preço justo e entrega dentro do prazo prometido.'}, {'name': 'Diego Almeida', 'date': '20/03/2024', 'rating': 5, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis. Recomendo fortemente!'}, {'name': 'Samuel Lima', 'date': '17/03/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 5 meses e as falhas sumiram completamente. Muito feliz.'}, {'name': 'Lucas Pedro', 'date': '14/03/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira, sem complicações. Muito bom mesmo!'}, {'name': 'Bruno Melo', 'date': '10/03/2024', 'rating': 5, 'content': 'Melhor preço que encontrei para o kit de 6 meses. Qualidade garantida e entrega rápida.'}, {'name': 'Felipe Ribeiro', 'date': '08/03/2024', 'rating': 5, 'content': 'Comecei a usar há 3 meses e já vejo diferença. O produto é realmente eficaz e confiável.'}, {'name': 'Marcelo Souza', 'date': '05/03/2024', 'rating': 4, 'content': 'Ótima qualidade, entrega rápida e segura. Recomendo para quem quer um produto de verdade.'}, {'name': 'Rafael Costa', 'date': '02/03/2024', 'rating': 5, 'content': 'Já comprei várias vezes e sempre é perfeito. Hub Suplementos é confiável, recomendo muito!'}, {'name': 'Carlos Mendes', 'date': '28/02/2024', 'rating': 5, 'content': 'Produto original, bem embalado e chegou no prazo. Excelente atendimento ao cliente também.'}, {'name': 'Antonio Ferreira', 'date': '25/02/2024', 'rating': 5, 'content': 'Estou muito satisfeito com a compra. Produto de qualidade e preço competitivo. Voltarei a comprar.'}, {'name': 'Fabio Alves', 'date': '22/02/2024', 'rating': 5, 'content': 'Excelente! Produto original, entrega rápida e segura. Recomendo para todos os meus amigos.'}];
+        const allReviews = [{'name': 'Gustavo Martins', 'date': '04/05/2024', 'rating': 5, 'content': 'Resultados visíveis em pouco tempo. Vale muito a pena o investimento.'}, {'name': 'Lucas Gomes', 'date': '01/05/2024', 'rating': 5, 'content': 'Entrega discreta e rápida. O kit de 3 meses é o melhor.'}, {'name': 'Rodrigo Pedro', 'date': '26/04/2024', 'rating': 4, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Vinícius Rocha', 'date': '17/04/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'João Costa', 'date': '14/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Rodrigo Oliveira', 'date': '13/04/2024', 'rating': 4, 'content': 'Sempre compro na Hub, nunca tive problemas. Entrega garantida.'}, {'name': 'Diego Santos', 'date': '11/04/2024', 'rating': 5, 'content': 'Excelente atendimento via WhatsApp. Chegou bem embalado.'}, {'name': 'Alexandre Teixeira', 'date': '10/04/2024', 'rating': 5, 'content': 'Notei que os fios novos estão nascendo mais grossos e fortes.'}, {'name': 'Mateus Costa', 'date': '07/04/2024', 'rating': 5, 'content': 'Chegou muito rápido. O produto é original, recomendo a Hub Suplementos.'}, {'name': 'Thiago S.', 'date': '02/04/2024', 'rating': 5, 'content': 'Ótimo produto, original e com validade longa.'}, {'name': 'Diego Almeida', 'date': '20/03/2024', 'rating': 5, 'content': 'Uso duas vezes ao dia conforme o guia e os resultados são incríveis.'}, {'name': 'Samuel Lima', 'date': '17/03/2024', 'rating': 5, 'content': 'Produto excelente! Estou usando há 5 meses e as falhas sumiram.'}, {'name': 'Lucas Pedro', 'date': '14/03/2024', 'rating': 5, 'content': 'O conta-gotas facilita muito a aplicação. Sem sujeira.'}, {'name': 'Bruno Melo', 'date': '10/03/2024', 'rating': 5, 'content': 'Melhor preço que encontrei para o kit de 6 meses.'}];
         let currentPage = 1;
         const reviewsPerPage = 4;
 
@@ -1643,28 +1639,6 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
             pagination.innerHTML = '';
             const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
             
-            // Create navigation arrows container
-            const navContainer = document.createElement('div');
-            navContainer.className = 'reviews-navigation';
-            
-            // Previous arrow
-            const prevBtn = document.createElement('button');
-            prevBtn.className = 'nav-arrow';
-            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-            prevBtn.disabled = activePage === 1;
-            prevBtn.onclick = () => { 
-                if(currentPage > 1) { 
-                    currentPage--; 
-                    renderReviews(currentPage); 
-                    window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); 
-                } 
-            };
-            navContainer.appendChild(prevBtn);
-            
-            // Page numbers
-            const paginationDiv = document.createElement('div');
-            paginationDiv.className = 'pagination';
-            
             let startPage = Math.max(1, activePage - 2);
             let endPage = Math.min(totalPages, startPage + 4);
             if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
@@ -1674,58 +1648,13 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 firstBtn.className = 'page-btn';
                 firstBtn.textContent = '1';
                 firstBtn.onclick = () => { currentPage = 1; renderReviews(1); window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); };
-                paginationDiv.appendChild(firstBtn);
+                pagination.appendChild(firstBtn);
                 if (startPage > 2) {
                     const dots = document.createElement('span');
                     dots.textContent = '...';
                     dots.style.alignSelf = 'center';
-                    paginationDiv.appendChild(dots);
+                    pagination.appendChild(dots);
                 }
-            }
-            for (let i = startPage; i <= endPage; i++) {
-                const btn = document.createElement('button');
-                btn.className = `page-btn ${activePage === i ? 'active' : ''}`;
-                btn.textContent = i;
-                btn.onclick = () => { 
-                    currentPage = i; 
-                    renderReviews(i);
-                    window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'});
-                };
-                paginationDiv.appendChild(btn);
-            }
-
-            if (endPage < totalPages) {
-                if (endPage < totalPages - 1) {
-                    const dots = document.createElement('span');
-                    dots.textContent = '...';
-                    dots.style.alignSelf = 'center';
-                    paginationDiv.appendChild(dots);
-                }
-                const lastBtn = document.createElement('button');
-                lastBtn.className = 'page-btn';
-                lastBtn.textContent = 'Ver mais';
-                lastBtn.onclick = () => { currentPage = totalPages; renderReviews(totalPages); window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); };
-                paginationDiv.appendChild(lastBtn);
-            }
-            
-            navContainer.appendChild(paginationDiv);
-            
-            // Next arrow
-            const nextBtn = document.createElement('button');
-            nextBtn.className = 'nav-arrow';
-            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-            nextBtn.disabled = activePage === totalPages;
-            nextBtn.onclick = () => { 
-                if(currentPage < totalPages) { 
-                    currentPage++; 
-                    renderReviews(currentPage); 
-                    window.scrollTo({top: document.getElementById('reviewsGrid').offsetTop - 150, behavior: 'smooth'}); 
-                } 
-            };
-            navContainer.appendChild(nextBtn);
-            
-            pagination.appendChild(navContainer);
-        }
             }
             for (let i = startPage; i <= endPage; i++) {
                 const btn = document.createElement('button');
