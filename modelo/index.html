@@ -995,50 +995,54 @@
                     </div>
                 </div>
 
-                <!--INICIO CÓDIGO FRETE-->
+                <!--INICIO CÓDIGO FRETE OTIMIZADO-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- 
 <script>
- 
   function convertDate(e ) {
       var t, o = new Date(e);
       return [(t = o.getDate(), t < 10 ? "0" + t : t)].join("/")
   }
- 
   function getMesExtenso(e) {
-      var t = new Array(12);
-      return t[0] = "janeiro", t[1] = "fevereiro", t[2] = "março", t[3] = "abril", t[4] = "maio", t[5] = "junho", t[6] = "julho", t[7] = "agosto", t[8] = "setembro", t[9] = "outubro", t[10] = "novembro", t[11] = "dezembro", t[e]
+      var t = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+      return t[e];
   }
   jQuery(document).ready(function(e) {
       var t = new Date,
-          o = t.setDate(t.getDate() + 15),
-          n = t.setDate(t.getDate() - 7),
-          r = getMesExtenso(t.getMonth());
-      if (convertDate(o) > convertDate(n)) var a = "<strong>" + convertDate(n) + "</strong> e <strong>" + convertDate(o) + " de " + r + "</strong>";
-      else {
-          if (null == (s = getMesExtenso(t.getMonth() + 1))) var s = getMesExtenso(t.getMonth() - 11);
-          a = "<strong>" + convertDate(n) + " de " + r + "</strong> e <strong>" + convertDate(o) + " de " + s + "</strong>"
-      }
+          o = new Date().setDate(t.getDate() + 15),
+          n = new Date().setDate(t.getDate() + 7),
+          r = getMesExtenso(new Date(n).getMonth());
+      
+      var dataEntrega = "<strong>" + convertDate(n) + "</strong> e <strong>" + convertDate(o) + " de " + r + "</strong>";
+      
       e.getJSON("https://wtfismyip.com/json", function(t ) {
-          var o = (t = t.YourFuckingLocation).replace(", Brazil", "");
-          e(".custom-address").html("<font color='#2C9400'><b>Frete Grátis</b></font> para <strong><font color='#2C9400'>" + o + " e Região</font></strong>"), e(".shipping-estimated").html("Entrega estimada entre " + a + "."), e(".shipping-preview-loading").hide()
-      })
+          var local = (t.YourFuckingLocation || "sua região").replace(", Brazil", "");
+          e(".custom-address").html("Frete Grátis para <span style='color: var(--success); font-weight: 700;'>" + local + " e Região</span>");
+          e(".shipping-estimated").html("Entrega estimada entre " + dataEntrega);
+          e(".shipping-preview-loading").hide();
+          e(".shipping-content").fadeIn().css("display", "flex");
+      });
   });
- 
 </script>
- 
-<div class="shipping-preview-line" style="position: relative;margin-left: -20px; margin-top: 20px; margin-bottom: 25px;">
- 
-    <img style="height: 20px;width: 32px;position: absolute;left: 22px;top: 10px;" src="https://cdn.shopify.com/s/files/1/0655/7165/1835/files/Logo_Aviao_SVG.svg?v=1664478300" class="shipping-country-flag fadeIn lazyloaded " alt="brazil">
- 
-    <p class="shipping-preview-loading" style="text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 60px;font-size: 13px !important;margin: -15px 0 30px 0;display:block;">Carregando, aguarde...</p>
- 
-    <p style="text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 60px;font-size: 13px !important;margin: -15px 0 0 0;" class="custom-address"></p>
- 
-    <p style="margin:-0.5px;text-align: left !important;color: #4a4a4a !important;padding: 0 0 0 60px;font-size: 13px !important;margin: -7px 0 0 0;" class="shipping-estimated"></p>
- 
+
+<div class="ns-shipping-info" style="background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin: 20px 0; min-height: 70px;">
+    <!-- Loading State -->
+    <p class="shipping-preview-loading" style="font-size: 13px; color: var(--text-muted); margin: 0; display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-circle-notch fa-spin"></i> Calculando frete para sua região...
+    </p>
+    
+    <!-- Content State (Hidden initially) -->
+    <div class="shipping-content" style="display: none; align-items: flex-start; gap: 12px;">
+        <div style="background: #e6f7e9; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <i class="fas fa-truck" style="color: var(--success); font-size: 16px;"></i>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+            <p class="custom-address" style="font-size: 14px; color: var(--text-main); margin: 0; line-height: 1.2;"></p>
+            <p class="shipping-estimated" style="font-size: 12px; color: var(--text-muted); margin: 0; line-height: 1.2;"></p>
+        </div>
+    </div>
 </div>
-<!--FINAL CÓDIGO FRETE-->
+<!--FINAL CÓDIGO FRETE OTIMIZADO-->
+
 
 
                 <div class="cta-group">
