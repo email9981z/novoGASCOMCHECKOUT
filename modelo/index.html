@@ -1144,20 +1144,20 @@
                         <input type="radio" name="delivery" value="0" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI(); const scrollContainer = document.querySelector('#cartSidebar > div[style*=\'overflow-y: auto\']'); if(scrollContainer) { setTimeout(() => { scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' }); }, 100); }">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                                <strong style="font-size: 14px; color: var(--brand-primary);">Frete Grátis</strong>
+                                <strong style="font-size: 14px; color: var(--brand-primary);">Entrega em até 03 Dias
                                 <span style="font-size: 12px; font-weight: 800; color: var(--success);">GRÁTIS</span>
                             </div>
-                            <div style="font-size: 11px; color: var(--text-muted);">Entrega em até 7 dias úteis</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Entrega rastreada</div>
                         </div>
                     </label>
                     <label class="delivery-option-card">
                         <input type="radio" name="delivery" value="9.9" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI(); const scrollContainer = document.querySelector('#cartSidebar > div[style*=\'overflow-y: auto\']'); if(scrollContainer) { setTimeout(() => { scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' }); }, 100); }">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                                <strong style="font-size: 14px; color: var(--brand-primary);">Entrega Expressa</strong>
+                                <strong style="font-size: 14px; color: var(--brand-primary);">Receba Amanhã</strong>
                                 <span style="font-size: 14px; font-weight: 800; color: var(--text-main);">R$ 9,90</span>
                             </div>
-                            <span style="font-size: 12px; color: var(--text-muted);">Receba amanhã</span>
+                            <span style="font-size: 12px; color: var(--text-muted);">Entrega Expressa</span>
                         </div>
                     </label>
                 </div>
