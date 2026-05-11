@@ -802,7 +802,7 @@
 .cep-input-group button:hover { background: #00004d; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 .address-block { background: #fff; padding: 20px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
 .address-block.show { display: block; }
-.address-block p { font-size: 14px; color: var(--text-main); margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #f8fafc; padding-bottom: 8px; }
+.address-block p { font-size: 14px; color: var(--text-main); margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #f8fafc; padding-bottom: 8px; gap: 12px; }
 .address-block p:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 .address-block p strong { color: #64748b; font-weight: 600; }
 .address-fields { display: grid; grid-template-columns: 90px 1fr; gap: 12px; }
@@ -1021,36 +1021,26 @@
                     </div>
                 </div>
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <!--INICIO CÓDIGO FRETE OTIMIZADO-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-  function convertDate(e) {
+  function convertDate(e ) {
       var t, o = new Date(e);
-      // Retorna apenas o dia com zero à esquerda se necessário
       return [(t = o.getDate(), t < 10 ? "0" + t : t)].join("/")
   }
-
   function getMesExtenso(e) {
       var t = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
       return t[e];
   }
-
   jQuery(document).ready(function(e) {
-      var hoje = new Date();
-      
-      // n = Segundo dia após hoje (Hoje + 2)
-      var n = new Date();
-      n.setDate(hoje.getDate() + 2);
-      
-      // o = Terceiro dia após hoje (Hoje + 3)
-      var o = new Date();
-      o.setDate(hoje.getDate() + 3);
-
-      // Pegamos o mês da data final (o) para exibir no texto
-      var r = getMesExtenso(o.getMonth());
+      var t = new Date,
+          o = new Date().setDate(t.getDate() + 15),
+          n = new Date().setDate(t.getDate() + 7),
+          r = getMesExtenso(new Date(n).getMonth());
       
       var dataEntrega = "<strong>" + convertDate(n) + "</strong> e <strong>" + convertDate(o) + " de " + r + "</strong>";
       
-      e.getJSON("https://wtfismyip.com/json", function(t) {
+      e.getJSON("https://wtfismyip.com/json", function(t ) {
           var local = (t.YourFuckingLocation || "sua região").replace(", Brazil", "");
           e(".custom-address").html("Frete Grátis para <span style='color: var(--success); font-weight: 700;'>" + local + " e Região</span>");
           e(".shipping-estimated").html("Entrega estimada entre " + dataEntrega);
