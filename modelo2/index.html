@@ -601,100 +601,6 @@
         .option-price .val { font-weight: 800; color: var(--brand-primary); }
         .option-price .tag { font-size: 9px; background: var(--brand-primary); color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
 
-        /* Gatilhos de Conversão Premium */
-        .conversion-booster {
-            margin-bottom: 24px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        .urgency-timer-box {
-            background: #111827;
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 14px;
-        }
-
-        .timer-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            color: #9ca3af;
-        }
-
-        .timer-values {
-            font-family: monospace;
-            color: #fbbf24;
-            font-weight: 700;
-            font-size: 18px;
-            letter-spacing: 1px;
-        }
-
-        .scarcity-status-box {
-            background: #fff;
-            border: 1px solid #fee2e2;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-
-        .scarcity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #dc2626;
-            text-transform: uppercase;
-        }
-
-        .dot-pulse {
-            width: 8px;
-            height: 8px;
-            background: #dc2626;
-            border-radius: 50%;
-            animation: pulse-dot 1.5s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
-        }
-
-        .stock-count {
-            font-size: 13px;
-            color: #4b5563;
-        }
-
-        .stock-count strong { color: #111827; }
-
-        .progress-bar-container {
-            height: 6px;
-            background: #f3f4f6;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ef4444, #dc2626);
-            width: 12%;
-            border-radius: 10px;
-        }
-
         /* Description */
         .description-section { padding: 80px 0; background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); border-top: 1px solid var(--border); }
         .description-section h2 { font-size: 32px; font-weight: 800; margin-bottom: 48px; text-align: center; color: var(--text-main); letter-spacing: -0.5px; }
@@ -1264,28 +1170,15 @@
                     <span>4.9 (1.983 avaliações)</span>
                 </div>
 
-                <!-- Gatilhos de Conversão -->
-                <div class="conversion-booster">
-                    <div class="urgency-timer-box">
-                        <div class="timer-label">
-                            <i class="fas fa-bolt"></i>
-                            <span>Oferta por tempo limitado</span>
+                </div>
+                    <div class="option-card" onclick="updateVariant(1, 199, 699.99, this)">
+                        <div class="option-info">
+                            <span class="title">Tratamento 6 Meses</span>
+                            <span class="desc">6 Frascos + Aplicador</span>
                         </div>
-                        <div class="timer-values" id="promo-timer">09:47</div>
-                    </div>
-
-                    <div class="scarcity-status-box">
-                        <div class="scarcity-header">
-                            <div class="live-indicator">
-                                <div class="dot-pulse"></div>
-                                <span>18 pessoas vendo agora</span>
-                            </div>
-                            <div class="stock-count">
-                                Restam apenas <strong>6 unidades</strong>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill"></div>
+                        <div class="option-price">
+                            <span class="val">R$ 199,00</span><br>
+                            <span class="tag">ECONOMIA</span>
                         </div>
                     </div>
                 </div>
@@ -1734,22 +1627,14 @@
 
     <script>
         // Substitua o antigo 'const productImages' por este:
-const variantImages = {
-    0: [ // Imagens para o Kit 3 Frascos
+const productImages = [
+        // Imagens para o Kit 3 Frascos
         "https://i.postimg.cc/qqGv7Cbj/Chat-GPT-Image-19-de-abr-de-2026-16-36-27.png",
         "https://i.postimg.cc/631sJcyX/minoxidil-kirkland-1-mes-69a859ff2ef16-large.png",
         "https://i.postimg.cc/PxqGR9fS/minoxidil-kirkland-1-mes-69a859ff3152e-large.png",
         "https://i.postimg.cc/pTdN64VD/minoxidil-kirkland-1-mes-69a859fe8085c-large.png"
-    ],
-    1: [ // Imagens para o Kit 6 Frascos
-        "https://i.postimg.cc/k45rpzMt/minoxidil-kirkland-6-meses-69e0efec75c8b-large.png",
-        "https://i.postimg.cc/631sJcyX/minoxidil-kirkland-1-mes-69a859ff2ef16-large.png",
-        "https://i.postimg.cc/PxqGR9fS/minoxidil-kirkland-1-mes-69a859ff3152e-large.png",
-        "https://i.postimg.cc/pTdN64VD/minoxidil-kirkland-1-mes-69a859fe8085c-large.png"
-    ]
-};
+    ];
 
-let currentVariantIndex = 0; // Adicione esta variável para controlar a variante atual
 
 
         function initGallery() {
@@ -1757,7 +1642,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
     const thumbContainer = document.getElementById('thumbnailsContainer');
     
     // Pega as imagens da variante atual
-    const images = variantImages[currentVariantIndex];
+    const images = productImages;
     
     slider.innerHTML = images.map(img => `
         <div class="main-image-item">
@@ -1809,15 +1694,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
             document.getElementById('nextThumb').classList.toggle('disabled', container.scrollLeft + container.offsetWidth >= container.scrollWidth - 5);
         }
 
-        function updateVariant(index, price, oldPrice, element) {
-            currentVariantIndex = index; // Adicione esta linha
-            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('active'));
-            element.classList.add('active');
-            
-            document.getElementById('mainPrice').innerText = price.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-            document.getElementById('oldPrice').innerText = oldPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-            initGallery(); // Adicione esta linha para atualizar as imagens
-        }
+
 
         // Initialize on load
         window.onload = initGallery;
@@ -2016,7 +1893,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                             </div>
                             <div class="cart-item-info">
                                 <span class="cart-item-name" style="padding-right: 20px;">${item.name}</span>
-                                <span class="cart-item-variant">${item.variant}</span>
+                                ${item.variant ? `<span class="cart-item-variant">${item.variant}</span>` : ""}
                                 <span class="cart-item-price">R$ ${item.price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                 <div class="cart-item-quantity-control">
                                     <button class="qty-btn" onclick="window.decreaseQty(${index})">−</button>
@@ -2047,13 +1924,13 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 cartCountBadge.innerText = count;
             }
 
-            function addItem() {
+                        function addItem() {
                 const productName = document.getElementById('main-product-title').innerText;
-                const price = 105.00;
-                const variantName = "Kit 3 Frascos";
+                const priceText = document.getElementById('mainPrice').innerText.replace('.', '').replace(',', '.');
+                const price = parseFloat(priceText);
                 const image = productImages[0];
 
-                const itemId = "minoxidil-kit-3";
+                const itemId = productName;
                 const existingItem = cart.find(item => item.id === itemId);
 
                 if (existingItem) {
@@ -2062,7 +1939,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                     cart.push({
                         id: itemId,
                         name: productName,
-                        variant: variantName,
+                        variant: "",
                         price: price,
                         image: image,
                         quantity: 1
@@ -2072,23 +1949,6 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 window.updateCartUI();
                 if (!cartSidebar.classList.contains('active')) toggleCart();
             }
-
-            // Lógica do Cronômetro de Urgência
-            (function() {
-                let timeInSeconds = 587; // 9 minutos e 47 segundos
-                const display = document.getElementById('promo-timer');
-                if (display) {
-                    const timer = setInterval(function() {
-                        const minutes = Math.floor(timeInSeconds / 60);
-                        const seconds = timeInSeconds % 60;
-                        display.textContent = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
-                        if (--timeInSeconds < 0) {
-                            clearInterval(timer);
-                            display.textContent = "00:00";
-                        }
-                    }, 1000);
-                }
-            })();
 
             // Expose quantity control functions globally
             window.increaseQty = function(index) {
@@ -2279,7 +2139,7 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                                 </div>
                                 <div style="flex: 1; min-width: 0;">
                                     <div style="font-size: 13px; font-weight: 700; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name}</div>
-                                    <div style="font-size: 11px; color: #64748b;">${item.variant} • ${item.quantity}x</div>
+                                    <div style="font-size: 11px; color: #64748b;">${item.variant ? item.variant + " • " : ""}${item.quantity}x</div>
                                 </div>
                                 <div style="font-size: 13px; font-weight: 800; color: var(--brand-primary); white-space: nowrap;">
                                     R$ ${(item.price * item.quantity).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
