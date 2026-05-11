@@ -601,6 +601,100 @@
         .option-price .val { font-weight: 800; color: var(--brand-primary); }
         .option-price .tag { font-size: 9px; background: var(--brand-primary); color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
 
+        /* Gatilhos de Conversão Premium */
+        .conversion-booster {
+            margin-bottom: 24px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .urgency-timer-box {
+            background: #111827;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .timer-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: #9ca3af;
+        }
+
+        .timer-values {
+            font-family: monospace;
+            color: #fbbf24;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .scarcity-status-box {
+            background: #fff;
+            border: 1px solid #fee2e2;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .scarcity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #dc2626;
+            text-transform: uppercase;
+        }
+
+        .dot-pulse {
+            width: 8px;
+            height: 8px;
+            background: #dc2626;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+        }
+
+        .stock-count {
+            font-size: 13px;
+            color: #4b5563;
+        }
+
+        .stock-count strong { color: #111827; }
+
+        .progress-bar-container {
+            height: 6px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            width: 12%;
+            border-radius: 10px;
+        }
+
         /* Description */
         .description-section { padding: 80px 0; background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); border-top: 1px solid var(--border); }
         .description-section h2 { font-size: 32px; font-weight: 800; margin-bottom: 48px; text-align: center; color: var(--text-main); letter-spacing: -0.5px; }
@@ -1081,102 +1175,6 @@
     align-items: center;
     justify-content: space-between;
 }
-
-        /* Gatilhos de Conversão Premium */
-.conversion-booster {
-    margin-bottom: 24px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-/* Timer de Urgência */
-.urgency-timer-box {
-    background: #111827;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    font-size: 14px;
-}
-
-.timer-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    color: #9ca3af;
-}
-
-.timer-values {
-    font-family: monospace;
-    color: #fbbf24;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 1px;
-}
-
-/* Banner de Escassez */
-.scarcity-status-box {
-    background: #fff;
-    border: 1px solid #fee2e2;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.scarcity-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.live-indicator {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #dc2626;
-    text-transform: uppercase;
-}
-
-.dot-pulse {
-    width: 8px;
-    height: 8px;
-    background: #dc2626;
-    border-radius: 50%;
-    animation: pulse-dot 1.5s infinite;
-}
-
-@keyframes pulse-dot {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
-}
-
-.stock-count {
-    font-size: 13px;
-    color: #4b5563;
-}
-
-.stock-count strong { color: #111827; }
-
-.progress-bar-container {
-    height: 6px;
-    background: #f3f4f6;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #ef4444, #dc2626);
-    width: 12%; /* Simulação de estoque crítico */
-    border-radius: 10px;
-}
 </style>
 </head>
 <body>
@@ -1266,33 +1264,31 @@
                     <span>4.9 (1.983 avaliações)</span>
                 </div>
 
-<!-- Gatilhos de Conversão -->
-<div class="conversion-booster">
-    <!-- Timer -->
-    <div class="urgency-timer-box">
-        <div class="timer-label">
-            <i class="fas fa-bolt"></i>
-            <span>Oferta por tempo limitado</span>
-        </div>
-        <div class="timer-values" id="promo-timer">09:47</div>
-    </div>
+                <!-- Gatilhos de Conversão -->
+                <div class="conversion-booster">
+                    <div class="urgency-timer-box">
+                        <div class="timer-label">
+                            <i class="fas fa-bolt"></i>
+                            <span>Oferta por tempo limitado</span>
+                        </div>
+                        <div class="timer-values" id="promo-timer">09:47</div>
+                    </div>
 
-    <!-- Escassez -->
-    <div class="scarcity-status-box">
-        <div class="scarcity-header">
-            <div class="live-indicator">
-                <div class="dot-pulse"></div>
-                <span>18 pessoas vendo agora</span>
-            </div>
-            <div class="stock-count">
-                Restam apenas <strong>6 unidades</strong>
-            </div>
-        </div>
-        <div class="progress-bar-container">
-            <div class="progress-bar-fill"></div>
-        </div>
-    </div>
-</div>
+                    <div class="scarcity-status-box">
+                        <div class="scarcity-header">
+                            <div class="live-indicator">
+                                <div class="dot-pulse"></div>
+                                <span>18 pessoas vendo agora</span>
+                            </div>
+                            <div class="stock-count">
+                                Restam apenas <strong>6 unidades</strong>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="price-box">
                     <div class="old-price-row">
@@ -2052,14 +2048,12 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
             }
 
             function addItem() {
-                const activeOption = document.querySelector('.option-card.active');
                 const productName = document.getElementById('main-product-title').innerText;
-                const variantName = activeOption.querySelector('.title').innerText;
-                const priceText = activeOption.querySelector('.val').innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
-                const price = parseFloat(priceText);
-                const image = variantImages[currentVariantIndex][0];
+                const price = 105.00;
+                const variantName = "Kit 3 Frascos";
+                const image = productImages[0];
 
-                const itemId = `${productName}-${variantName}`;
+                const itemId = "minoxidil-kit-3";
                 const existingItem = cart.find(item => item.id === itemId);
 
                 if (existingItem) {
@@ -2078,6 +2072,23 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 window.updateCartUI();
                 if (!cartSidebar.classList.contains('active')) toggleCart();
             }
+
+            // Lógica do Cronômetro de Urgência
+            (function() {
+                let timeInSeconds = 587; // 9 minutos e 47 segundos
+                const display = document.getElementById('promo-timer');
+                if (display) {
+                    const timer = setInterval(function() {
+                        const minutes = Math.floor(timeInSeconds / 60);
+                        const seconds = timeInSeconds % 60;
+                        display.textContent = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                        if (--timeInSeconds < 0) {
+                            clearInterval(timer);
+                            display.textContent = "00:00";
+                        }
+                    }, 1000);
+                }
+            })();
 
             // Expose quantity control functions globally
             window.increaseQty = function(index) {
@@ -2447,28 +2458,6 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
             }, 1000);
         });
     </script>
-
-    <script>
-    // Lógica do Cronômetro de Urgência
-    (function() {
-        let timeInSeconds = 587; // 9 minutos e 47 segundos
-        const display = document.getElementById('promo-timer');
-        
-        const timer = setInterval(function() {
-            const minutes = Math.floor(timeInSeconds / 60);
-            const seconds = timeInSeconds % 60;
-
-            display.textContent = 
-                (minutes < 10 ? "0" + minutes : minutes) + ":" + 
-                (seconds < 10 ? "0" + seconds : seconds);
-
-            if (--timeInSeconds < 0) {
-                clearInterval(timer);
-                display.textContent = "00:00";
-            }
-        }, 1000);
-    })();
-</script>
     
 </body>
 </html>
