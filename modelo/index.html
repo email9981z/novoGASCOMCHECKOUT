@@ -1331,7 +1331,7 @@
                         <span class="value" id="checkoutTotal">R$ 0,00</span>
                     </div>
                 </div>
-                <button class="btn-checkout" style="margin-top: 20px;">
+                <button class="btn-checkout" style="margin-top: 20px;" onclick="handlePaymentRedirect()">
                     <span>Prosseguir para Pagamento</span>
                     <i class="fas fa-shield-alt"></i>
                 </button>
@@ -2047,6 +2047,23 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                     e.target.value = value;
                 });
             }
+
+            window.handlePaymentRedirect = function() {
+                const subtotal = document.getElementById('checkoutSubtotal').innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
+                const address = document.getElementById('summaryAddress').innerText;
+                const cep = document.getElementById('cepInput').value;
+                const deliveryTime = document.getElementById('summaryShipping').innerText;
+                
+                const baseUrl = 'https://exemplo.com/';
+                const params = new URLSearchParams({
+                    subtotal: subtotal,
+                    address: address,
+                    cep: cep,
+                    delivery_time: deliveryTime
+                });
+                
+                window.location.href = `${baseUrl}?${params.toString()}`;
+            };
         })();
     </script>
     </div>
