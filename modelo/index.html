@@ -890,6 +890,39 @@
         .price-row .label { color: #64748b; font-weight: 600; }
         .price-row .value { font-weight: 700; color: var(--text-main); }
     </style>
+
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@900&display=swap');
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.text-logo {
+    font-family: 'Roboto Slab', serif; /* Fonte que se assemelha ao estilo da Havan */
+    font-size: 28px; /* Ajuste conforme necessário */
+    font-weight: 900;
+    color: #004a94; /* Azul característico da Havan */
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: -1px; /* Aproxima as letras como no logo original */
+    line-height: 1;
+    display: inline-block;
+    transition: opacity 0.3s;
+}
+
+.text-logo:hover {
+    opacity: 0.8;
+}
+
+/* Ajuste para o header-flex se necessário */
+.header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+</style>
 </head>
 <body>
     <div class="top-bar">
@@ -900,9 +933,10 @@
     <header>
         <div class="main-header">
             <div class="container header-flex">
-                <div class="logo">
-                    <img alt="Hub Suplementos" src="https://i.postimg.cc/kXgctC1b/havan-logo-0.png"/>
-                </div>
+                <!-- Substitua o bloco da logo no seu HTML por este: -->
+<div class="logo">
+    <a href="/" class="text-logo">HAVAN ONLINE</a>
+</div>
                 <div class="search-bar">
                     <input placeholder="O que você procura?" type="text"/>
                     <button><i class="fas fa-search"></i></button>
