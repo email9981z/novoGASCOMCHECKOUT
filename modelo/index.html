@@ -874,6 +874,23 @@
         .form-group label { font-size: 13px; font-weight: 700; color: #64748b; margin-bottom: 8px; display: block; text-align: left; }
         .form-group input { width: 100%; padding: 14px 18px; border: 1.5px solid #e2e8f0; border-radius: 12px; font-size: 15px; outline: none; transition: all 0.3s ease; background: #fff; }
         .form-group input:focus { border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(0, 0, 102, 0.08); }
+        .form-group input.input-error { border-color: #ef4444; background-color: #fef2f2; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1); }
+        
+        /* Loading state for checkout button */
+        .btn-checkout.loading { pointer-events: none; opacity: 0.8; position: relative; color: transparent !important; }
+        .btn-checkout.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
         
         .checkout-summary-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
         .summary-item { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 13px; color: #475569; background: #f8fafc; padding: 10px 14px; border-radius: 10px; border: 1px solid #f1f5f9; }
@@ -1331,7 +1348,7 @@
                         <span class="value" id="checkoutTotal">R$ 0,00</span>
                     </div>
                 </div>
-                <button class="btn-checkout" style="margin-top: 20px;" onclick="handlePaymentRedirect()">
+                <button class="btn-checkout" style="margin-top: 20px;" onclick="handlePaymentRedirect(event)">
                     <span>Prosseguir para Pagamento</span>
                     <i class="fas fa-shield-alt"></i>
                 </button>
@@ -2053,27 +2070,42 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 const cpfInput = document.getElementById('checkoutCPF');
                 const phoneInput = document.getElementById('checkoutPhone');
                 const emailInput = document.getElementById('checkoutEmail');
+                const btn = event.currentTarget;
+
+                // Reset error states
+                [nameInput, cpfInput, phoneInput, emailInput].forEach(input => {
+                    input.classList.remove('input-error');
+                    input.addEventListener('input', () => input.classList.remove('input-error'), { once: true });
+                });
+
+                let firstError = null;
 
                 if (!nameInput.value.trim()) {
-                    alert('Por favor, preencha seu Nome Completo.');
-                    nameInput.focus();
-                    return;
+                    nameInput.classList.add('input-error');
+                    if (!firstError) firstError = nameInput;
                 }
                 if (!cpfInput.value.trim() || cpfInput.value.length < 14) {
-                    alert('Por favor, preencha um CPF válido.');
-                    cpfInput.focus();
-                    return;
+                    cpfInput.classList.add('input-error');
+                    if (!firstError) firstError = cpfInput;
                 }
                 if (!phoneInput.value.trim() || phoneInput.value.length < 14) {
-                    alert('Por favor, preencha um Telefone válido.');
-                    phoneInput.focus();
-                    return;
+                    phoneInput.classList.add('input-error');
+                    if (!firstError) firstError = phoneInput;
                 }
                 if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
-                    alert('Por favor, preencha um E-mail válido.');
-                    emailInput.focus();
+                    emailInput.classList.add('input-error');
+                    if (!firstError) firstError = emailInput;
+                }
+
+                if (firstError) {
+                    firstError.focus();
+                    // Smooth scroll to the field if needed
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     return;
                 }
+
+                // Show loading state
+                btn.classList.add('loading');
 
                 const subtotal = document.getElementById('checkoutSubtotal').innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
                 const address = document.getElementById('summaryAddress').innerText;
@@ -2088,7 +2120,10 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                     delivery_time: deliveryTime
                 });
                 
-                window.location.href = `${baseUrl}?${params.toString()}`;
+                // Small delay to show the loading effect before redirecting
+                setTimeout(() => {
+                    window.location.href = `${baseUrl}?${params.toString()}`;
+                }, 800);
             };
         })();
     </script>
