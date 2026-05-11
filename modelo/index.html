@@ -2126,6 +2126,10 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                 // Small delay to show the loading effect before redirecting
                 setTimeout(() => {
                     window.location.href = `${baseUrl}?${params.toString()}`;
+                    
+                    // Fallback: if the user stays on the page (e.g. pop-up blocked or slow redirect), 
+                    // reset after a few seconds so the button isn't stuck forever
+                    setTimeout(() => btn.classList.remove('loading'), 5000);
                 }, 800);
             };
         })();
@@ -2134,9 +2138,15 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
 
     <script>
         window.addEventListener('pageshow', function(event) {
-            // Reset checkout button loading state if user comes back
-            const checkoutBtn = document.querySelector('.btn-checkout');
-            if (checkoutBtn) checkoutBtn.classList.remove('loading');
+            // Reset checkout button loading state if user comes back (including from bfcache)
+            const checkoutBtns = document.querySelectorAll('.btn-checkout');
+            checkoutBtns.forEach(btn => {
+                btn.classList.remove('loading');
+                // Force a repaint to ensure visual update
+                btn.style.display = 'none';
+                btn.offsetHeight; 
+                btn.style.display = '';
+            });
         });
 
         window.addEventListener('load', function() {
