@@ -1959,8 +1959,11 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
                     }
                     
                     if (!numberInput || !numberInput.value.trim()) {
-                        alert('Por favor, preencha o número do endereço.');
-                        if (numberInput) numberInput.focus();
+                        if (numberInput) {
+                            numberInput.classList.add('input-error');
+                            numberInput.focus();
+                            numberInput.addEventListener('input', () => numberInput.classList.remove('input-error'), { once: true });
+                        }
                         return;
                     }
 
@@ -2130,6 +2133,12 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
     </div>
 
     <script>
+        window.addEventListener('pageshow', function(event) {
+            // Reset checkout button loading state if user comes back
+            const checkoutBtn = document.querySelector('.btn-checkout');
+            if (checkoutBtn) checkoutBtn.classList.remove('loading');
+        });
+
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const preloader = document.getElementById('preloader');
