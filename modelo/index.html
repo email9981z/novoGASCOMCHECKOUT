@@ -1300,7 +1300,7 @@
                 </h3>
                 <div class="form-group">
                     <label>Nome Completo</label>
-                    <input type="text" placeholder="Digite seu nome completo">
+                    <input type="text" id="checkoutName" placeholder="Digite seu nome completo">
                 </div>
                 <div class="form-group">
                     <label>CPF</label>
@@ -1313,7 +1313,7 @@
                     </div>
                     <div class="form-group">
                         <label>E-mail</label>
-                        <input type="email" placeholder="seu@email.com">
+                        <input type="email" id="checkoutEmail" placeholder="seu@email.com">
                     </div>
                 </div>
                 <!-- Detalhamento de Preços -->
@@ -2049,6 +2049,32 @@ let currentVariantIndex = 0; // Adicione esta variável para controlar a variant
             }
 
             window.handlePaymentRedirect = function() {
+                const nameInput = document.getElementById('checkoutName');
+                const cpfInput = document.getElementById('checkoutCPF');
+                const phoneInput = document.getElementById('checkoutPhone');
+                const emailInput = document.getElementById('checkoutEmail');
+
+                if (!nameInput.value.trim()) {
+                    alert('Por favor, preencha seu Nome Completo.');
+                    nameInput.focus();
+                    return;
+                }
+                if (!cpfInput.value.trim() || cpfInput.value.length < 14) {
+                    alert('Por favor, preencha um CPF válido.');
+                    cpfInput.focus();
+                    return;
+                }
+                if (!phoneInput.value.trim() || phoneInput.value.length < 14) {
+                    alert('Por favor, preencha um Telefone válido.');
+                    phoneInput.focus();
+                    return;
+                }
+                if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
+                    alert('Por favor, preencha um E-mail válido.');
+                    emailInput.focus();
+                    return;
+                }
+
                 const subtotal = document.getElementById('checkoutSubtotal').innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
                 const address = document.getElementById('summaryAddress').innerText;
                 const cep = document.getElementById('cepInput').value;
