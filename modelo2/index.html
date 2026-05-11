@@ -1199,15 +1199,6 @@
 </style>
 </head>
 <body>
-
-    <div class="live-notification" id="liveNotification">
-    <img src="https://i.pravatar.cc/100?u=1" alt="User" id="notifAvatar">
-    <div class="live-notification-text">
-        <span id="notifName"><strong>Ricardo M.</strong></span> de <span id="notifCity">São Paulo</span>  
-
-        acabou de garantir o <strong>Kit 3 Frascos</strong>!
-    </div>
-</div>
     
     <!-- PRELOADER -->
     <div id="preloader">
@@ -1988,36 +1979,11 @@ function startTimer(duration, display) {
     }, 1000);
 }
 
-// 2. Notificações de Vendas
-const names = ["Ricardo M.", "Ana Paula S.", "Marcos V.", "Juliana F.", "Carlos E.", "Beatriz L."];
-const cities = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador", "Porto Alegre"];
-
-function showNotification() {
-    const notif = document.getElementById('liveNotification');
-    if(!notif) return;
-    
-    const randomName = names[Math.floor(Math.random() * names.length)];
-    const randomCity = cities[Math.floor(Math.random() * cities.length)];
-    const randomId = Math.floor(Math.random() * 70);
-    
-    document.getElementById('notifName').innerHTML = `<strong>${randomName}</strong>`;
-    document.getElementById('notifCity').textContent = randomCity;
-    document.getElementById('notifAvatar').src = `https://i.pravatar.cc/100?u=${randomId}`;
-    
-    notif.classList.add('show' );
-    setTimeout(() => notif.classList.remove('show'), 5000);
-}
-
 // Inicialização
 window.addEventListener('load', function() {
     // Iniciar Timer (15 min)
     const display = document.querySelector('#countdown');
     if(display) startTimer(60 * 15, display);
-
-    // Iniciar Notificações
-    setTimeout(showNotification, 4000);
-    setInterval(showNotification, 15000);
-});
 
         /* --- LÓGICA DO CARRINHO (ISOLADA) --- */
         (function() {
