@@ -802,7 +802,7 @@
 .cep-input-group button:hover { background: #00004d; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 .address-block { background: #fff; padding: 20px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
 .address-block.show { display: block; }
-.address-block p { font-size: 14px; color: var(--text-main); margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #f8fafc; padding-bottom: 8px; gap: 12px; }
+.address-block p { font-size: 14px; color: var(--text-main); margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #f8fafc; padding-bottom: 8px; }
 .address-block p:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 .address-block p strong { color: #64748b; font-weight: 600; }
 .address-fields { display: grid; grid-template-columns: 90px 1fr; gap: 12px; }
@@ -1133,20 +1133,20 @@
                         <input type="radio" name="delivery" value="0" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI(); const scrollContainer = document.querySelector('#cartSidebar > div[style*=\'overflow-y: auto\']'); if(scrollContainer) { setTimeout(() => { scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' }); }, 100); }">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                                <strong style="font-size: 14px; color: var(--brand-primary);">Receba em até 03 ias</strong>
+                                <strong style="font-size: 14px; color: var(--brand-primary);">Frete Grátis</strong>
                                 <span style="font-size: 12px; font-weight: 800; color: var(--success);">GRÁTIS</span>
                             </div>
-                            <div style="font-size: 11px; color: var(--text-muted);">Entrega rastreada</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Entrega em até 7 dias úteis</div>
                         </div>
                     </label>
                     <label class="delivery-option-card">
                         <input type="radio" name="delivery" value="9.9" onchange="this.parentElement.parentElement.querySelectorAll('.delivery-option-card').forEach(c => c.classList.remove('active')); this.parentElement.classList.add('active'); window.updateCartUI(); const scrollContainer = document.querySelector('#cartSidebar > div[style*=\'overflow-y: auto\']'); if(scrollContainer) { setTimeout(() => { scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'smooth' }); }, 100); }">
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                                <strong style="font-size: 14px; color: var(--brand-primary);">Receba Amanhã</strong>
+                                <strong style="font-size: 14px; color: var(--brand-primary);">Entrega Expressa</strong>
                                 <span style="font-size: 14px; font-weight: 800; color: var(--text-main);">R$ 9,90</span>
                             </div>
-                            <span style="font-size: 12px; color: var(--text-muted);">Entrega Expressa</span>
+                            <span style="font-size: 12px; color: var(--text-muted);">Receba amanhã</span>
                         </div>
                     </label>
                 </div>
