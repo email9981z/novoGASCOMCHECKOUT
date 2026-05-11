@@ -1062,15 +1062,14 @@
     position: relative; /* Necessário para o posicionamento da linha */
 }
 
-/* Criando a linha abaixo da logo */
 .text-logo::after {
     content: '';
     display: block;
-    width: 100%;          /* A linha terá a largura exata do texto */
-    height: 4px;          /* Espessura da linha */
-    background-color: #e31d1a; /* Vermelho vibrante para contraste (estilo Havan) */
-    margin-top: 5px;      /* Distância entre o texto e a linha */
-    border-radius: 2px;   /* Pontas levemente arredondadas */
+    width: 100%;          /* Largura total */
+    height: 2px;          /* Espessura fina = Profissional */
+    background-color: #444; /* Cor neutra profissional */
+    margin-top: 4px;
+    transition: width 0.3s ease; /* Efeito suave se você quiser animar no hover */
 }
 
 .text-logo:hover {
