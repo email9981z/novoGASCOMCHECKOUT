@@ -8,6 +8,122 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+
+        /* --- NOVOS ESTILOS DE ESCASSEZ --- */
+:root {
+    --scarcity-red: #dc2626;
+    --scarcity-bg: #fef2f2;
+}
+
+/* Banner de Oferta Relâmpago */
+.scarcity-banner {
+    background: var(--scarcity-bg);
+    border: 1px dashed var(--scarcity-red);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+    0% { border-color: var(--scarcity-red); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.2); }
+    50% { border-color: transparent; box-shadow: 0 0 0 4px rgba(220, 38, 38, 0); }
+    100% { border-color: var(--scarcity-red); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.2); }
+}
+
+.scarcity-timer {
+    font-weight: 800;
+    color: var(--scarcity-red);
+    font-variant-numeric: tabular-nums;
+    font-size: 18px;
+}
+
+/* Barra de Estoque */
+.stock-bar-container {
+    margin: 20px 0;
+    background: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #f1f5f9;
+}
+
+.stock-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.stock-bar {
+    height: 10px;
+    background: #f1f5f9;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.stock-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #dc2626, #ef4444);
+    width: 12%; /* Simulação de estoque baixo */
+    border-radius: 5px;
+    position: relative;
+}
+
+/* Notificação de Vendas */
+.live-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    transform: translateX(-150%);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid #f1f5f9;
+    max-width: 280px;
+}
+
+.live-notification.show { transform: translateX(0); }
+.live-notification img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #000066; }
+
+/* Contador de Visualizações */
+.viewing-count {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-radius: 6px;
+    width: fit-content;
+}
+
+.viewing-count i { color: #ef4444; animation: blink 1.5s infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* Melhoria no Botão de Compra */
+.btn-buy {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.btn-buy:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(22, 163, 74, 0.5) !important;
+}
+        
         :root {
             --brand-primary: #000066;
             --brand-accent: #2563eb;
@@ -1081,125 +1197,9 @@
     align-items: center;
     justify-content: space-between;
 }
-
-        /* --- NOVOS ESTILOS DE ESCASSEZ --- */
-:root {
-    --scarcity-red: #dc2626;
-    --scarcity-bg: #fef2f2;
-}
-
-/* Banner de Oferta Relâmpago */
-.scarcity-banner {
-    background: var(--scarcity-bg);
-    border: 1px dashed var(--scarcity-red);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    animation: pulse-border 2s infinite;
-}
-
-@keyframes pulse-border {
-    0% { border-color: var(--scarcity-red); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.2); }
-    50% { border-color: transparent; box-shadow: 0 0 0 4px rgba(220, 38, 38, 0); }
-    100% { border-color: var(--scarcity-red); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.2); }
-}
-
-.scarcity-timer {
-    font-weight: 800;
-    color: var(--scarcity-red);
-    font-variant-numeric: tabular-nums;
-    font-size: 18px;
-}
-
-/* Barra de Estoque */
-.stock-bar-container {
-    margin: 20px 0;
-    background: #fff;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #f1f5f9;
-}
-
-.stock-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    margin-bottom: 8px;
-    font-weight: 700;
-}
-
-.stock-bar {
-    height: 10px;
-    background: #f1f5f9;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.stock-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #dc2626, #ef4444);
-    width: 12%; /* Simulação de estoque baixo */
-    border-radius: 5px;
-    position: relative;
-}
-
-/* Notificação de Vendas */
-.live-notification {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: #fff;
-    padding: 10px 15px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    z-index: 9999;
-    transform: translateX(-150%);
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid #f1f5f9;
-    max-width: 280px;
-}
-
-.live-notification.show { transform: translateX(0); }
-.live-notification img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #000066; }
-
-/* Contador de Visualizações */
-.viewing-count {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: #6b7280;
-    margin-top: 12px;
-    padding: 8px 12px;
-    background: #f8fafc;
-    border-radius: 6px;
-    width: fit-content;
-}
-
-.viewing-count i { color: #ef4444; animation: blink 1.5s infinite; }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-/* Melhoria no Botão de Compra */
-.btn-buy {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-}
-
-.btn-buy:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 25px rgba(22, 163, 74, 0.5) !important;
-}
 </style>
 </head>
 <body>
-    
     <!-- PRELOADER -->
     <div id="preloader">
         <div class="spinner"></div>
@@ -1979,11 +1979,36 @@ function startTimer(duration, display) {
     }, 1000);
 }
 
+// 2. Notificações de Vendas
+const names = ["Ricardo M.", "Ana Paula S.", "Marcos V.", "Juliana F.", "Carlos E.", "Beatriz L."];
+const cities = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador", "Porto Alegre"];
+
+function showNotification() {
+    const notif = document.getElementById('liveNotification');
+    if(!notif) return;
+    
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    const randomCity = cities[Math.floor(Math.random() * cities.length)];
+    const randomId = Math.floor(Math.random() * 70);
+    
+    document.getElementById('notifName').innerHTML = `<strong>${randomName}</strong>`;
+    document.getElementById('notifCity').textContent = randomCity;
+    document.getElementById('notifAvatar').src = `https://i.pravatar.cc/100?u=${randomId}`;
+    
+    notif.classList.add('show' );
+    setTimeout(() => notif.classList.remove('show'), 5000);
+}
+
 // Inicialização
 window.addEventListener('load', function() {
     // Iniciar Timer (15 min)
     const display = document.querySelector('#countdown');
     if(display) startTimer(60 * 15, display);
+
+    // Iniciar Notificações
+    setTimeout(showNotification, 4000);
+    setInterval(showNotification, 15000);
+});
 
         /* --- LÓGICA DO CARRINHO (ISOLADA) --- */
         (function() {
