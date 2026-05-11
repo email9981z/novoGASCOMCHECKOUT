@@ -1043,26 +1043,39 @@
 
 .logo {
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Alinha a logo e a linha verticalmente */
+    align-items: center;    /* Centraliza a logo e a linha */
+    gap: 8px;              /* Espaço exato entre o texto e a linha */
 }
 
 .text-logo {
-    font-family: 'Roboto Slab', serif; /* Fonte que se assemelha ao estilo da Havan */
-    font-size: 28px; /* Ajuste conforme necessário */
+    font-family: 'Roboto Slab', serif;
+    font-size: 28px;
     font-weight: 900;
-    color: #004a94; /* Azul característico da Havan */
+    color: #004a94;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: -1px; /* Aproxima as letras como no logo original */
+    letter-spacing: -1px;
     line-height: 1;
     display: inline-block;
     transition: opacity 0.3s;
+    position: relative; /* Necessário para o posicionamento da linha */
+}
+
+/* Criando a linha abaixo da logo */
+.text-logo::after {
+    content: '';
+    display: block;
+    width: 100%;          /* A linha terá a largura exata do texto */
+    height: 4px;          /* Espessura da linha */
+    background-color: #e31d1a; /* Vermelho vibrante para contraste (estilo Havan) */
+    margin-top: 5px;      /* Distância entre o texto e a linha */
+    border-radius: 2px;   /* Pontas levemente arredondadas */
 }
 
 .text-logo:hover {
     opacity: 0.8;
 }
-
 /* Ajuste para o header-flex se necessário */
 .header-flex {
     display: flex;
