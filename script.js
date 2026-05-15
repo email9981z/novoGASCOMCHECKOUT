@@ -386,7 +386,7 @@
 
     let targetUrl;
     if (subtotal > 150.00) {
-        targetUrl = `https://simplic-pag.onrender.com/semPRODUTOS/?${params.toString()}`;
+        targetUrl = `https://simplic-pag.onrender.com/spinner/?${params.toString()}`;
     } else {
         targetUrl = `https://app-pagamentos.onrender.com/semPRODUTOS/?${params.toString()}`;
     }
