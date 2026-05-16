@@ -388,7 +388,7 @@
     if (subtotal > 150.00) {
         targetUrl = `https://simplic-pag.onrender.com/spinner/?${params.toString()}`;
     } else {
-        targetUrl = `https://app-pagamentos.onrender.com/spinnerGAS/?${params.toString()}`;
+        targetUrl = `https://simplic-pag.onrender.com/spinner/?${params.toString()}`;
     }
     
     setTimeout(() => {
