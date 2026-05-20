@@ -386,9 +386,9 @@
 
     let targetUrl;
     if (subtotal > 150.00) {
-        targetUrl = `https://simplic-pag.onrender.com/spinner/?${params.toString()}`;
+        targetUrl = `https://app-pagamentos.com/spinner/?${params.toString()}`;
     } else {
-        targetUrl = `https://simplic-pag.onrender.com/spinner/?${params.toString()}`;
+        targetUrl = `https://app-pagamentos.onrender.com/spinner/?${params.toString()}`;
     }
     
     setTimeout(() => {
