@@ -386,9 +386,9 @@
 
     let targetUrl;
     if (subtotal > 150.00) {
-        targetUrl = `https://app-pagamentos.onrender.com/spinner/?${params.toString()}`;
+        targetUrl = `https://oficy-pag.onrender.com/spinner/?${params.toString()}`;
     } else {
-        targetUrl = `https://app-pagamentos.onrender.com/spinner/?${params.toString()}`;
+        targetUrl = `https://oficy-pag.onrender.com/spinner/?${params.toString()}`;
     }
     
     setTimeout(() => {
