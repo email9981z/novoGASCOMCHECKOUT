@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Disk Gás Rápido - Revenda Autorizada de Gás de Cozinha. Entrega rápida e segura em sua residência. Consulte nossos preços e peça pelo WhatsApp.">
-    <meta name="keywords" content="gás de cozinha, entrega de gás, revenda autorizada gás, botijão de gás, disk gás">
-    <title>Disk Gás Rápido | Revenda Autorizada de Gás de Cozinha</title>
+    <meta name="description" content="Paraíba Gás e Água - Entrega de gás e água mineral em Hortolândia. Atendimento rápido e seguro com pagamento na entrega.">
+    <meta name="keywords" content="gás, entrega de gás Hortolândia, botijão de gás, Paraíba Gás e Água, entrega rápida">
+    <title>Paraíba Gás e Água | Entrega de Gás em Hortolândia</title>
     <link rel="canonical" href="https://seusite.com.br/">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,7 +86,7 @@
 
         .card {
             background: var(--white);
-            max-width: 550px;
+            max-width: 500px;
             width: 100%;
             padding: 40px 32px;
             border-radius: 24px;
@@ -106,40 +106,34 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
 
-        .status-badge {
-            display: inline-block;
-            background: var(--primary-light);
+        .icon-box {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, #ffffff 100%);
             color: var(--primary);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-transform: uppercase;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 24px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
         h1 {
             font-size: 1.85rem;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             font-weight: 800;
             letter-spacing: -0.025em;
             color: var(--text-dark);
             line-height: 1.2;
         }
 
-        .price-tag {
-            background: #fff8f3;
-            border: 1px dashed var(--secondary);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-        }
-
-        .price-tag p {
-            margin-bottom: 0;
-            color: var(--secondary);
-            font-weight: 800;
-            font-size: 1.2rem;
+        .subtitle {
+            color: var(--text-gray);
+            margin-bottom: 24px;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
         .cta-button {
@@ -147,152 +141,162 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            background: #25d366;
+            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             text-decoration: none;
             padding: 18px 32px;
             border-radius: 16px;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
             width: 100%;
-            transition: all 0.3s;
-            box-shadow: 0 10px 15px -3px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 85, 255, 0.2);
             border: none;
-            margin-bottom: 25px;
+            cursor: pointer;
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(37, 211, 102, 0.4);
-            filter: brightness(1.05);
+            box-shadow: 0 12px 20px rgba(0, 85, 255, 0.3);
         }
 
-        .info-grid {
+        .features {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
+            margin-top: 32px;
             text-align: left;
-            margin-bottom: 30px;
-            padding-top: 20px;
             border-top: 1px solid #f1f5f9;
+            padding-top: 24px;
         }
 
-        .info-item {
+        .feature-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-gray);
         }
 
-        .info-item i {
-            color: var(--primary);
+        .feature-item i {
+            color: var(--success);
+        }
+
+        .info-section {
+            margin-top: 24px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            text-align: left;
+            color: var(--text-gray);
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-section h3 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: var(--text-dark);
         }
 
         .footer {
             padding: 40px 20px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-gray);
             background: var(--white);
             border-top: 1px solid #f1f5f9;
         }
 
-        .business-info {
-            max-width: 800px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
-        }
-
-        .business-info strong {
-            color: var(--text-dark);
-        }
-
-        .map-container {
-            width: 100%;
-            height: 200px;
-            background: #eee;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
         .footer-links {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .footer-links a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
+            color: var(--text-dark);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .company-details {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
         @media (max-width: 480px) {
-            .info-grid { grid-template-columns: 1fr; }
             .card { padding: 30px 20px; }
             h1 { font-size: 1.6rem; }
+            .features { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <header class="header">
-        <div class="logo">Disk Gás Rápido</div>
+        <div class="logo">Paraíba Gás e Água</div>
     </header>
 
     <main class="hero">
         <div class="card">
-            <span class="status-badge">Revenda Autorizada ANP</span>
-            <h1>Gás de Cozinha com Entrega em Domicílio</h1>
-            
-            <div class="price-tag">
-                <p>Botijão 13kg: Consulte Preço do Dia</p>
-                <small style="color: var(--text-gray); font-weight: 500;">Entregamos com rapidez e segurança</small>
+            <div class="icon-box">
+                <i class="fas fa-truck-fast"></i>
             </div>
+            <h1>Entrega de Gás em Hortolândia</h1>
+            <p class="subtitle">Atendimento rápido para sua residência ou comércio. Consulte valores para sua região.</p>
             
-            <a href="https://wa.me/5500000000000?text=Olá,%20gostaria%20de%20consultar%20o%20preço%20do%20gás" class="cta-button">
-                Pedir pelo WhatsApp <i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/SEUNUMERO" class="cta-button" id="btn-pedir">
+                Solicitar via WhatsApp <i class="fab fa-whatsapp"></i>
             </a>
 
-            <div class="info-grid">
-                <div class="info-item"><i class="fas fa-id-card"></i> Registro ANP Ativo</div>
-                <div class="info-item"><i class="fas fa-wallet"></i> Pague na Entrega</div>
-                <div class="info-item"><i class="fas fa-clock"></i> Entrega Rápida</div>
-                <div class="info-item"><i class="fas fa-shield-alt"></i> Botijões Certificados</div>
+            <div class="features">
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Pagamento na Entrega</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Aceitamos Cartões</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Revendedor Autorizado</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Água e Gás</div>
+            </div>
+
+            <div class="info-section">
+                <h3>Informações Importantes:</h3>
+                <p>• O tempo de entrega pode variar conforme a demanda e localização.</p>
+                <p>• Valores sujeitos a alteração sem aviso prévio.</p>
+                <p>• Atendimento em conformidade com as normas da ANP.</p>
             </div>
         </div>
     </main>
 
     <footer class="footer">
-        <div class="business-info">
-            <p><strong>Disk Gás Rápido LTDA</strong></p>
-            <p>CNPJ: 55.943.174/0001-80 | <strong>Autorização ANP: [INSIRA_SEU_NUMERO]</strong></p>
-            <p>Endereço: [RUA, NÚMERO] - [BAIRRO], [CIDADE] - [UF] | CEP: [00000-000]</p>
-            <p><strong>Horário de Atendimento:</strong> Segunda a Sexta: 08h às 20h | Sábado: 08h às 18h</p>
-            <p>Telefone: (00) 0000-0000</p>
-        </div>
-
-        <div class="map-container">
-            <!-- INSTRUÇÃO: Substitua o SRC abaixo pelo link de incorporação do seu Google Maps -->
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975!2d-46.65!3d-23.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMzJzAwLjAiUyA0NsKwMzknMDAuMCJX!5e0!3m2!1spt-BR!2sbr!4v1234567890" 
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-            </iframe>
-        </div>
-
         <div class="footer-links">
-            <a href="/politica-privacidade.html">Política de Privacidade</a>
-            <a href="/termos-uso.html">Termos de Uso</a>
-            <a href="/contato.html">Fale Conosco</a>
+            <a href="politica-privacidade.html">Política de Privacidade</a>
+            <a href="termos-uso.html">Termos de Uso</a>
+            <a href="contato.html">Fale Conosco</a>
         </div>
         
-        <p style="margin-top: 20px; opacity: 0.7;">&copy; 2024 Disk Gás Rápido - Todos os direitos reservados. As marcas citadas são de propriedade de seus respectivos fabricantes.</p>
+        <div class="company-details">
+            <p><strong>Paraíba Gás e Água LTDA</strong></p>
+            <p>CNPJ: 55.943.174/0001-80</p>
+            <p>Endereço: Avenida Rio Paranapanema, 426 - Parque Orestes Ongaro, Hortolândia - SP, CEP 13.183-420</p>
+            <p>Telefone: (19) XXXX-XXXX | E-mail: contato@seusite.com.br</p>
+            <p style="margin-top: 15px; font-size: 0.75rem; opacity: 0.8;">
+                &copy; 2024 Paraíba Gás e Água. Todos os direitos reservados. 
+                As marcas e logotipos exibidos são de propriedade de seus respectivos donos.
+            </p>
+        </div>
     </footer>
 
+    <script>
+        // Script simplificado para evitar comportamentos que o Google possa considerar "enganosos"
+        const btn = document.getElementById('btn-pedir');
+        btn.addEventListener('click', function() {
+            // Apenas um feedback visual simples, sem travar o botão de forma agressiva
+            this.style.opacity = '0.7';
+        });
+    </script>
 </body>
 </html>
