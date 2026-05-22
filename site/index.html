@@ -387,19 +387,5 @@
             </p>
         </div>
     </footer>
-
-    <script>
-        const btn = document.getElementById('btn-pedir');
-        window.addEventListener('pageshow', function() {
-            btn.innerHTML = 'Pedir Agora <i class="fab fa-whatsapp"></i>';
-            btn.style.pointerEvents = 'auto';
-            btn.style.opacity = '1';
-        });
-
-        btn.addEventListener('click', function() {
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aguarde...';
-            // Note: In a real scenario, the navigation to WhatsApp happens immediately
-        });
-    </script>
 </body>
 </html>
