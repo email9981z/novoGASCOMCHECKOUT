@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Disk Gás Rápido - Revenda Autorizada de Gás de Cozinha. Entrega rápida e segura em sua residência. Consulte nossos preços e peça pelo WhatsApp.">
+    <meta name="keywords" content="gás de cozinha, entrega de gás, revenda autorizada gás, botijão de gás, disk gás">
+    <title>Disk Gás Rápido | Revenda Autorizada de Gás de Cozinha</title>
+    <link rel="canonical" href="https://seusite.com.br/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0055ff;
+            --primary-dark: #003db3;
+            --primary-light: #e6eeff;
+            --secondary: #ff6b00;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-gray: #475569;
+            --white: #ffffff;
+            --success: #10b981;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            background-image: radial-gradient(circle at 100% 0%, var(--primary-light) 0%, transparent 25%), 
+                              radial-gradient(circle at 0% 100%, var(--primary-light) 0%, transparent 25%);
+            color: var(--text-dark);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .logo::before {
+            content: "\f13d";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 1.4rem;
+        }
+
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .card {
+            background: var(--white);
+            max-width: 550px;
+            width: 100%;
+            padding: 40px 32px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 1.85rem;
+            margin-bottom: 16px;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .price-tag {
+            background: #fff8f3;
+            border: 1px dashed var(--secondary);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .price-tag p {
+            margin-bottom: 0;
+            color: var(--secondary);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 18px 32px;
+            border-radius: 16px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 10px 15px -3px rgba(37, 211, 102, 0.3);
+            border: none;
+            margin-bottom: 25px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(37, 211, 102, 0.4);
+            filter: brightness(1.05);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            text-align: left;
+            margin-bottom: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+
+        .info-item i {
+            color: var(--primary);
+        }
+
+        .footer {
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            background: var(--white);
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .business-info {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .business-info strong {
+            color: var(--text-dark);
+        }
+
+        .map-container {
+            width: 100%;
+            height: 200px;
+            background: #eee;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .card { padding: 30px 20px; }
+            h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">Disk Gás Rápido</div>
+    </header>
+
+    <main class="hero">
+        <div class="card">
+            <span class="status-badge">Revenda Autorizada ANP</span>
+            <h1>Gás de Cozinha com Entrega em Domicílio</h1>
+            
+            <div class="price-tag">
+                <p>Botijão 13kg: Consulte Preço do Dia</p>
+                <small style="color: var(--text-gray); font-weight: 500;">Entregamos com rapidez e segurança</small>
+            </div>
+            
+            <a href="https://wa.me/5500000000000?text=Olá,%20gostaria%20de%20consultar%20o%20preço%20do%20gás" class="cta-button">
+                Pedir pelo WhatsApp <i class="fab fa-whatsapp"></i>
+            </a>
+
+            <div class="info-grid">
+                <div class="info-item"><i class="fas fa-id-card"></i> Registro ANP Ativo</div>
+                <div class="info-item"><i class="fas fa-wallet"></i> Pague na Entrega</div>
+                <div class="info-item"><i class="fas fa-clock"></i> Entrega Rápida</div>
+                <div class="info-item"><i class="fas fa-shield-alt"></i> Botijões Certificados</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="business-info">
+            <p><strong>Disk Gás Rápido LTDA</strong></p>
+            <p>CNPJ: 55.943.174/0001-80 | <strong>Autorização ANP: [INSIRA_SEU_NUMERO]</strong></p>
+            <p>Endereço: [RUA, NÚMERO] - [BAIRRO], [CIDADE] - [UF] | CEP: [00000-000]</p>
+            <p><strong>Horário de Atendimento:</strong> Segunda a Sexta: 08h às 20h | Sábado: 08h às 18h</p>
+            <p>Telefone: (00) 0000-0000</p>
+        </div>
+
+        <div class="map-container">
+            <!-- INSTRUÇÃO: Substitua o SRC abaixo pelo link de incorporação do seu Google Maps -->
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975!2d-46.65!3d-23.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMzJzAwLjAiUyA0NsKwMzknMDAuMCJX!5e0!3m2!1spt-BR!2sbr!4v1234567890" 
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="footer-links">
+            <a href="/politica-privacidade.html">Política de Privacidade</a>
+            <a href="/termos-uso.html">Termos de Uso</a>
+            <a href="/contato.html">Fale Conosco</a>
+        </div>
+        
+        <p style="margin-top: 20px; opacity: 0.7;">&copy; 2024 Disk Gás Rápido - Todos os direitos reservados. As marcas citadas são de propriedade de seus respectivos fabricantes.</p>
+    </footer>
+
+</body>
+</html>
