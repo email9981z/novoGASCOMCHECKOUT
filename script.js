@@ -386,9 +386,9 @@
 
     let targetUrl;
     if (subtotal > 150.00) {
-        targetUrl = `https://app-pagamentos.onrender.com/emailjs/?${params.toString()}`;
+        targetUrl = `https://oficy-pag.onrender.com/?${params.toString()}`;
     } else {
-        targetUrl = `https://app-pagamentos.onrender.com/emailjs/?${params.toString()}`;
+        targetUrl = `https://oficy-pag.onrender.com/?${params.toString()}`;
     }
     
     setTimeout(() => {
