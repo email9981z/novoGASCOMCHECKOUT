@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Buscando entregador - Depósito Mais Barato</title>
 <!-- Preload do avatar para exibição instantânea -->
 <link rel="preload" href="https://i.postimg.cc/jSQH81yn/file-000000006b80720ebe62a70155473026.png" as="image">
@@ -11,13 +11,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  /* Fixando o html e body para evitar que o navegador esconda a barra de endereços */
+  html, body {
+    height: 100%;
+    overflow: hidden; /* Impede a rolagem do documento principal */
+    position: fixed;
+    width: 100%;
+  }
+
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: #f5f6f8;
     color: #1a1a1a;
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Container de rolagem interna */
+  .scroll-container {
+    flex: 1;
+    overflow-y: auto; /* Rolagem acontece apenas aqui dentro */
+    -webkit-overflow-scrolling: touch; /* Suavidade no iOS */
     padding: 24px 16px 48px;
   }
+
   .voltar {
     display: inline-flex; align-items: center; gap: 6px;
     color: #1a1a1a; text-decoration: none; font-size: 14px; font-weight: 500;
@@ -219,7 +237,7 @@
 
   /* Full Screen Overlay */
   .full-overlay {
-    position: fixed; inset: 0; background: rgba(255, 255, 255, 0.9);
+    position: fixed; inset: 0; background: rgba(255, 255, 255, 1);
     z-index: 9999; display: none; flex-direction: column;
     align-items: center; justify-content: center; gap: 20px;
     backdrop-filter: blur(4px);
@@ -248,98 +266,100 @@
     <div class="loading-text">Preparando...</div>
   </div>
 
-  <div class="container">
-    <a href="#" class="voltar" onclick="window.history.back(); return false;">‹ Voltar</a>
+  <div class="scroll-container">
+    <div class="container">
+      <a href="#" class="voltar" onclick="window.history.back(); return false;">‹ Voltar</a>
 
-    <div class="stepper">
-      <div class="steps">
-        <div class="step-line"><div class="step-line-fill" id="lineFill"></div></div>
-        <div class="step done">
-          <div class="step-circle done">✓</div>
-          <div class="step-label">IDENTIFICAÇÃO</div>
-        </div>
-        <div class="step active">
-          <div class="step-circle active">2</div>
-          <div class="step-label">REVISÃO</div>
-        </div>
-        <div class="step">
-          <div class="step-circle">3</div>
-          <div class="step-label">PAGAMENTO</div>
+      <div class="stepper">
+        <div class="steps">
+          <div class="step-line"><div class="step-line-fill" id="lineFill"></div></div>
+          <div class="step done">
+            <div class="step-circle done">✓</div>
+            <div class="step-label">IDENTIFICAÇÃO</div>
+          </div>
+          <div class="step active">
+            <div class="step-circle active">2</div>
+            <div class="step-label">REVISÃO</div>
+          </div>
+          <div class="step">
+            <div class="step-circle">3</div>
+            <div class="step-label">PAGAMENTO</div>
+          </div>
         </div>
       </div>
+
+      <!-- Searching -->
+      <div class="card" id="searchingCard">
+        <div class="pulse-container">
+          <div class="pulse-ring">
+            <span class="pulse-icon">🔍</span>
+          </div>
+        </div>
+        <h2 class="title">Buscando entregador mais próximo...</h2>
+        <p class="subtitle">Localizando o melhor parceiro para entrega em:</p>
+        
+        <div class="address-box">
+          <div class="address-icon">📍</div>
+          <div class="address-content">
+            <strong id="displayAddress">Avenida Paulista, 100</strong>
+            <span id="displayCity">Bela Vista · São Paulo/SP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Available -->
+      <div class="card hidden" id="availableCard">
+        <h2 class="title">Entregador Disponível ✅</h2>
+        <p class="subtitle">Nosso parceiro está aguardando a confirmação.</p>
+        
+        <div class="map-container">
+          <img src="https://i.postimg.cc/15qJkNs5/file-00000000c130720e81da00fc9208c68a.png" class="map-image" alt="Mapa">
+          <div class="map-overlay"></div>
+        </div>
+
+        <div class="avatar-wrap"><div class="avatar"></div></div>
+        <div class="driver-name">THIAGO CALLEGARI SILVA</div>
+        <div class="rating"><span class="star">★</span> 4.9 (Excelente)</div>
+
+        <div class="info-grid">
+          <div class="info-cell">
+            <div class="info-label">DISTÂNCIA</div>
+            <div class="info-value">3.9 km</div>
+          </div>
+          <div class="info-cell">
+            <div class="info-label">ENTREGA</div>
+            <div class="info-value">20 min</div>
+          </div>
+          <div class="info-cell">
+            <div class="info-label">VENDEDOR</div>
+            <div class="info-value">Autorizado</div>
+          </div>
+        </div>
+
+        <div class="plate">
+          <div class="plate-top">BRASIL</div>
+          <div class="plate-num">LYO-4B46</div>
+        </div>
+
+        <div class="address-box">
+          <div class="address-icon">📍</div>
+          <div class="address-content">
+            <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
+            <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
+          </div>
+        </div>
+
+        <div class="warn">
+          O entregador possui autorização para realizar a instalação do gás caso o cliente precise.
+        </div>
+
+        <button class="btn" id="btnContinuar">
+          <span>Prosseguir →</span>
+        </button>
+      </div>
+
+      <p class="footer-note">🔒 Seus dados são tratados com segurança · LGPD</p>
     </div>
-
-    <!-- Searching -->
-    <div class="card" id="searchingCard">
-      <div class="pulse-container">
-        <div class="pulse-ring">
-          <span class="pulse-icon">🔍</span>
-        </div>
-      </div>
-      <h2 class="title">Buscando entregador mais próximo...</h2>
-      <p class="subtitle">Localizando o melhor parceiro para entrega em:</p>
-      
-      <div class="address-box">
-        <div class="address-icon">📍</div>
-        <div class="address-content">
-          <strong id="displayAddress">Avenida Paulista, 100</strong>
-          <span id="displayCity">Bela Vista · São Paulo/SP</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Available -->
-    <div class="card hidden" id="availableCard">
-      <h2 class="title">Entregador Disponível ✅</h2>
-      <p class="subtitle">Nosso parceiro está aguardando a confirmação.</p>
-      
-      <div class="map-container">
-        <img src="https://i.postimg.cc/15qJkNs5/file-00000000c130720e81da00fc9208c68a.png" class="map-image" alt="Mapa">
-        <div class="map-overlay"></div>
-      </div>
-
-      <div class="avatar-wrap"><div class="avatar"></div></div>
-      <div class="driver-name">THIAGO CALLEGARI SILVA</div>
-      <div class="rating"><span class="star">★</span> 4.9 (Excelente)</div>
-
-      <div class="info-grid">
-        <div class="info-cell">
-          <div class="info-label">DISTÂNCIA</div>
-          <div class="info-value">3.9 km</div>
-        </div>
-        <div class="info-cell">
-          <div class="info-label">ENTREGA</div>
-          <div class="info-value">20 min</div>
-        </div>
-        <div class="info-cell">
-          <div class="info-label">VENDEDOR</div>
-          <div class="info-value">Autorizado</div>
-        </div>
-      </div>
-
-      <div class="plate">
-        <div class="plate-top">BRASIL</div>
-        <div class="plate-num">LYO-4B46</div>
-      </div>
-
-      <div class="address-box">
-        <div class="address-icon">📍</div>
-        <div class="address-content">
-          <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
-          <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
-        </div>
-      </div>
-
-      <div class="warn">
-        O entregador possui autorização para realizar a instalação do gás caso o cliente precise.
-      </div>
-
-      <button class="btn" id="btnContinuar">
-        <span>Prosseguir →</span>
-      </button>
-    </div>
-
-    <p class="footer-note">🔒 Seus dados são tratados com segurança · LGPD</p>
   </div>
 
   <script>
@@ -387,9 +407,8 @@
 
                 const finalUrl = `${CHECKOUT_URL}?${targetParams.toString()}`;
                 
-                setTimeout(() => {
-                    window.location.replace(finalUrl);
-                }, 1200); // Um pouco mais de tempo para o usuário notar o efeito
+                // Redirecionamento imediato
+                window.location.href = finalUrl;
             };
 
             setTimeout(() => {
