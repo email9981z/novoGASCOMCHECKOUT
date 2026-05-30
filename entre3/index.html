@@ -140,19 +140,7 @@
     position: absolute; inset: 0;
     background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 40%);
   }
-  .pin {
-    position: absolute; top: 45%; left: 50%; transform: translate(-50%, -100%);
-    width: 38px; height: 38px; border-radius: 50% 50% 50% 0;
-    background: #ef4444; transform-origin: bottom;
-    transform: translate(-50%, -100%) rotate(-45deg);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    z-index: 5;
-    border: 2px solid #fff;
-  }
-  .pin::after {
-    content: ''; position: absolute; width: 14px; height: 14px;
-    background: #fff; border-radius: 50%; top: 10px; left: 10px;
-  }
+
 
   .avatar-wrap {
     position: relative; display: flex; justify-content: center;
@@ -272,7 +260,7 @@
           <span class="pulse-icon">🔍</span>
         </div>
       </div>
-      <h2 class="title">Buscando entregador...</h2>
+      <h2 class="title">Buscando entregador mais próximo...</h2>
       <p class="subtitle">Localizando o melhor parceiro para entrega em:</p>
       
       <div class="address-box">
@@ -292,11 +280,10 @@
       <div class="map-container">
         <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1000&auto=format&fit=crop" class="map-image" alt="Mapa">
         <div class="map-overlay"></div>
-        <div class="pin"></div>
       </div>
 
       <div class="avatar-wrap"><div class="avatar"></div></div>
-      <div class="driver-name">LEANDRO BATISTA MOREIRA</div>
+      <div class="driver-name">THIAGO CALLEGARI SILVA</div>
       <div class="rating"><span class="star">★</span> 4.9</div>
 
       <div class="info-grid">
@@ -305,8 +292,8 @@
           <div class="info-value">3.9 km</div>
         </div>
         <div class="info-cell">
-          <div class="info-label">TEMPO ESTIMADO</div>
-          <div class="info-value">~9 min</div>
+          <div class="info-label">ENTREGA</div>
+          <div class="info-value">20 min</div>
         </div>
         <div class="info-cell">
           <div class="info-label">VEÍCULO</div>
@@ -315,8 +302,8 @@
       </div>
 
       <div class="plate">
-        <div class="plate-top">BRASIL</div>
-        <div class="plate-num">LYO-4B46</div>
+        <div class="plate-top">VENDEDOR</div>
+        <div class="plate-num">AUTORIZADO</div>
       </div>
 
       <div class="address-box">
@@ -328,11 +315,11 @@
       </div>
 
       <div class="warn">
-        A localização é aproximada por segurança. O entregador receberá os detalhes completos após o pagamento.
+        O entregador possui autorização para realizar a instalação do gás caso o cliente precise.
       </div>
 
       <button class="btn" id="btnContinuar">
-        <span id="btnText">Continuar para Pagamento →</span>
+        <span id="btnText">Prosseguir →</span>
         <div class="spinner" id="btnSpinner"></div>
       </button>
     </div>
@@ -380,7 +367,7 @@
                 btn.disabled = true;
                 spinner.style.display = 'block';
                 btnText.style.opacity = '0.7';
-                btnText.textContent = 'Processando...';
+                btnText.textContent = 'Aguarde...';
 
                 const targetParams = new URLSearchParams();
                 targetParams.set('subtotal', subtotal || '0.00');
