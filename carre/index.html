@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -183,51 +182,14 @@
     .map-area {
       position: relative;
       height: 160px;
-      background: linear-gradient(135deg, #dbe7f7 0%, #c5d8ef 50%, #dbe7f7 100%);
+      background: #e5e7eb;
       overflow: hidden;
     }
 
-    .map-area::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 60%, rgba(11, 95, 217, 0.20) 0%, transparent 60%),
-        radial-gradient(ellipse at 70% 40%, rgba(22, 163, 74, 0.12) 0%, transparent 55%);
-    }
-
-    .map-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(15, 30, 52, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 30, 52, 0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-
-    .map-pin {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 3;
-    }
-
-    .map-pin svg {
-      width: 32px;
-      height: 32px;
-      filter: drop-shadow(0 4px 14px rgba(11, 95, 217, 0.45));
-    }
-
-    .route-line {
-      position: absolute;
-      top: 45%;
-      left: 20%;
-      width: 60%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0.4;
-      transform: rotate(-8deg);
+    .map-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .available-badge {
@@ -244,6 +206,7 @@
       border-radius: 20px;
       box-shadow: 0 4px 16px var(--success-glow);
       animation: badgeSlide 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+      z-index: 10;
     }
 
     .driver-info {
@@ -261,15 +224,16 @@
       width: 56px;
       height: 56px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #2f80ed, #1a4f9c);
+      background: var(--surface-elevated);
       border: 2px solid var(--border-strong);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #ffffff;
+      overflow: hidden;
       flex-shrink: 0;
+    }
+
+    .driver-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .driver-meta {
@@ -582,19 +546,14 @@
     <!-- AVAILABLE STATE -->
     <div class="available-card" id="availableCard">
       <div class="map-area">
-        <div class="map-grid"></div>
-        <div class="route-line"></div>
-        <div class="map-pin">
-          <svg viewBox="0 0 32 32" fill="none">
-            <circle cx="16" cy="16" r="14" fill="rgba(0,200,150,0.15)" stroke="var(--accent)" stroke-width="2"/>
-            <circle cx="16" cy="16" r="5" fill="var(--accent)"/>
-          </svg>
-        </div>
+        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80&w=480&h=160" alt="Mapa de entrega">
         <div class="available-badge">Disponível</div>
       </div>
       <div class="driver-info">
         <div class="driver-header">
-          <div class="driver-avatar">LB</div>
+          <div class="driver-avatar">
+            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=100&h=100" alt="Leandro Batista Moreira">
+          </div>
           <div class="driver-meta">
             <div class="driver-name">Leandro Batista Moreira</div>
             <div class="driver-rating">
