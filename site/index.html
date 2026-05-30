@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Disk G.a.s Entregas LTDA - Entrega de gás. Pague na entrega, entrega grátis e atendimento 24 Horas.">
     <meta name="keywords" content="gás, entrega rápida, botijão, revenda de gás, Disk G.a.s Entregas LTDA">
-    <title>DISK GAS ENTREDGAS LTDA</title>
+    <title>DISK GAS ENTREGAS LTDA</title>
     <link rel="canonical" href="https://veja-gasdisk.onrender.com/">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -187,10 +187,10 @@
             filter: brightness(1.1);
         }
 
-        /* Efeito de Carregamento */
+        /* Efeito de Carregamento Refinado */
         .cta-button.loading {
             pointer-events: none;
-            opacity: 0.9;
+            color: transparent !important;
         }
 
         .cta-button.loading i {
@@ -199,13 +199,13 @@
 
         .cta-button.loading::after {
             content: "";
-            width: 20px;
-            height: 20px;
+            position: absolute;
+            width: 24px;
+            height: 24px;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 0.8s linear infinite;
-            margin-left: 10px;
         }
 
         @keyframes spin {
@@ -425,19 +425,30 @@
     </footer>
 
     <script>
+        // Função para resetar o botão
+        function resetBtn() {
+            const btn = document.getElementById('btn-pedir');
+            if (btn) btn.classList.remove('loading');
+        }
+
+        // Garante que o botão resete ao voltar para a página (Back-Forward Cache)
+        window.addEventListener('pageshow', function(event) {
+            resetBtn();
+        });
+
         document.getElementById('btn-pedir').addEventListener('click', function(e) {
-            e.preventDefault();
             const btn = this;
             const href = btn.getAttribute('href');
             
-            // Adiciona classe de carregamento e altera texto
+            // Adiciona classe de carregamento (apenas spinner via CSS)
             btn.classList.add('loading');
-            btn.childNodes[0].textContent = 'Aguarde... ';
             
-            // Simula um pequeno delay de carregamento antes de redirecionar
-            setTimeout(function() {
-                window.location.href = href;
-            }, 1500);
+            // Para não quebrar o rastreamento do Google Ads, não usamos e.preventDefault()
+            // Em vez disso, deixamos o navegador seguir o link naturalmente.
+            // O spinner aparecerá enquanto a nova página carrega.
+            
+            // Caso o navegador demore a mudar de página, garantimos um timeout de segurança
+            // mas deixamos o comportamento padrão do link agir para o Google Ads.
         });
     </script>
 </body>
