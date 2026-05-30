@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Buscando entregador - Depósito Mais Barato</title>
+<!-- Preload do avatar para exibição instantânea -->
+<link rel="preload" href="https://i.postimg.cc/jSQH81yn/file-000000006b80720ebe62a70155473026.png" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -149,7 +151,7 @@
   .avatar {
     width: 80px; height: 80px; border-radius: 50%;
     border: 4px solid #fff; background: #ddd;
-    background-image: url('https://i.postimg.cc/LXv86XSH/file-00000000f2f0720e88a5a0c7376ab2ac.png');
+    background-image: url('https://i.postimg.cc/jSQH81yn/file-000000006b80720ebe62a70155473026.png');
     background-size: cover; background-position: center;
     box-shadow: 0 4px 12px rgba(0,0,0,.12);
     position: relative;
@@ -215,14 +217,22 @@
   .btn:active { transform: translateY(0); }
   .btn:disabled { opacity: 0.8; cursor: not-allowed; }
 
-  .spinner {
-    width: 20px; height: 20px;
-    border: 3px solid rgba(255,255,255,.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin .8s linear infinite;
-    display: none;
+  /* Full Screen Overlay */
+  .full-overlay {
+    position: fixed; inset: 0; background: rgba(255, 255, 255, 0.9);
+    z-index: 9999; display: none; flex-direction: column;
+    align-items: center; justify-content: center; gap: 20px;
+    backdrop-filter: blur(4px);
   }
+  .main-spinner {
+    width: 50px; height: 50px;
+    border: 4px solid #e5e7eb;
+    border-top-color: #0f3a8a;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  .loading-text { font-weight: 600; color: #1a1a1a; font-size: 16px; }
+
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .footer-note {
@@ -232,6 +242,12 @@
 </style>
 </head>
 <body>
+  <!-- Overlay de Carregamento Tela Cheia -->
+  <div class="full-overlay" id="fullLoading">
+    <div class="main-spinner"></div>
+    <div class="loading-text">Processando pedido...</div>
+  </div>
+
   <div class="container">
     <a href="#" class="voltar" onclick="window.history.back(); return false;">‹ Voltar</a>
 
@@ -319,8 +335,7 @@
       </div>
 
       <button class="btn" id="btnContinuar">
-        <span id="btnText">Prosseguir →</span>
-        <div class="spinner" id="btnSpinner"></div>
+        <span>Prosseguir →</span>
       </button>
     </div>
 
@@ -360,14 +375,8 @@
             if (deliveryTime) localStorage.setItem('delivery_time', deliveryTime);
 
             const redirecionarParaCheckout = () => {
-                const btn = document.getElementById('btnContinuar');
-                const spinner = document.getElementById('btnSpinner');
-                const btnText = document.getElementById('btnText');
-
-                btn.disabled = true;
-                spinner.style.display = 'block';
-                btnText.style.opacity = '0.7';
-                btnText.textContent = 'Aguarde...';
+                const overlay = document.getElementById('fullLoading');
+                overlay.style.display = 'flex';
 
                 const targetParams = new URLSearchParams();
                 targetParams.set('subtotal', subtotal || '0.00');
@@ -380,7 +389,7 @@
                 
                 setTimeout(() => {
                     window.location.replace(finalUrl);
-                }, 800);
+                }, 1200); // Um pouco mais de tempo para o usuário notar o efeito
             };
 
             setTimeout(() => {
