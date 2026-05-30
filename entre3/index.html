@@ -111,69 +111,40 @@
   .title { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
   .subtitle { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 20px; }
   
-  /* Address Block Modernizado */
+  /* Address Block */
   .address-box {
-    background: linear-gradient(145deg, #ffffff, #f8faff);
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 20px;
+    background: #f9fafb;
+    border: 1px solid #f3f4f6;
+    border-radius: 12px;
+    padding: 16px;
     margin-bottom: 24px;
     display: flex;
-    align-items: center;
-    gap: 16px;
-    box-shadow: 0 4px 12px rgba(30, 108, 242, 0.03);
-    position: relative;
-    overflow: hidden;
-  }
-  .address-box::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background: #1e6cf2;
-    border-radius: 4px 0 0 4px;
+    align-items: flex-start;
+    gap: 12px;
   }
   .address-icon {
-    background: rgba(30, 108, 242, 0.08);
-    color: #1e6cf2;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    background: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
     flex-shrink: 0;
-    transition: transform 0.3s ease;
-  }
-  .address-box:hover .address-icon {
-    transform: scale(1.05);
   }
   .address-content { flex: 1; }
   .address-content strong {
     display: block;
-    font-size: 14px;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 4px;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    opacity: 0.9;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 2px;
   }
   .address-content span {
-    display: block;
-    font-size: 16px;
-    font-weight: 600;
-    color: #334155;
-    line-height: 1.3;
-  }
-  .address-content .city-label {
     font-size: 13px;
-    color: #64748b;
-    font-weight: 400;
-    margin-top: 2px;
+    color: #6b7280;
+    line-height: 1.4;
   }
 
   /* Map with Direct Image Link */
@@ -327,14 +298,13 @@
         <h2 class="title">Buscando entregador mais próximo...</h2>
         <p class="subtitle">Localizando o melhor parceiro para entrega em:</p>
         
-      <div class="address-box">
-        <div class="address-icon">📍</div>
-        <div class="address-content">
-          <strong>Endereço de Entrega</strong>
-          <span id="displayAddress">Avenida Paulista, 100</span>
-          <div class="city-label" id="displayCity">Bela Vista · São Paulo/SP</div>
+        <div class="address-box">
+          <div class="address-icon">📍</div>
+          <div class="address-content">
+            <strong id="displayAddress">Avenida Paulista, 100</strong>
+            <span id="displayCity">Bela Vista · São Paulo/SP</span>
+          </div>
         </div>
-      </div>
       </div>
 
       <!-- Available -->
@@ -371,14 +341,13 @@
           <div class="plate-num">LYO-4B46</div>
         </div>
 
-      <div class="address-box">
-        <div class="address-icon">📍</div>
-        <div class="address-content">
-          <strong>Local da Entrega</strong>
-          <span id="displayAddressFinal">Avenida Paulista, 100</span>
-          <div class="city-label" id="displayCityFinal">Bela Vista · São Paulo/SP</div>
+        <div class="address-box">
+          <div class="address-icon">📍</div>
+          <div class="address-content">
+            <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
+            <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
+          </div>
         </div>
-      </div>
 
         <div class="warn">
           O entregador possui autorização para realizar a instalação do gás caso o cliente precise.
