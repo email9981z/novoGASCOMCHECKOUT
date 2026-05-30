@@ -8,21 +8,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f1115;
-      --surface: #161920;
-      --surface-elevated: #1e222b;
-      --surface-highlight: #252a35;
-      --text-primary: #f0f2f5;
-      --text-secondary: #9aa0a8;
-      --text-tertiary: #5c6270;
-      --accent: #00c896;
-      --accent-dim: rgba(0, 200, 150, 0.12);
-      --accent-glow: rgba(0, 200, 150, 0.35);
-      --border: rgba(255, 255, 255, 0.06);
-      --border-strong: rgba(255, 255, 255, 0.10);
-      --warning: #f5a623;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-      --shadow-md: 0 8px 24px rgba(0,0,0,0.35);
+      --bg: #f3f6fb;
+      --surface: #ffffff;
+      --surface-elevated: #f5f8fc;
+      --surface-highlight: #eef3fa;
+      --text-primary: #0f1e34;
+      --text-secondary: #5b6b80;
+      --text-tertiary: #8a97a8;
+      --accent: #0b5fd9;
+      --accent-hover: #0a52bd;
+      --accent-dim: rgba(11, 95, 217, 0.10);
+      --accent-glow: rgba(11, 95, 217, 0.30);
+      --success: #16a34a;
+      --success-dim: rgba(22, 163, 74, 0.10);
+      --success-glow: rgba(22, 163, 74, 0.30);
+      --border: rgba(15, 30, 52, 0.08);
+      --border-strong: rgba(15, 30, 52, 0.14);
+      --warning: #d97706;
+      --shadow-sm: 0 1px 3px rgba(15, 30, 52, 0.06);
+      --shadow-md: 0 12px 32px rgba(15, 30, 52, 0.10);
     }
 
     * {
@@ -179,7 +183,7 @@
     .map-area {
       position: relative;
       height: 160px;
-      background: linear-gradient(135deg, #1a2a3a 0%, #243447 50%, #1a2a3a 100%);
+      background: linear-gradient(135deg, #dbe7f7 0%, #c5d8ef 50%, #dbe7f7 100%);
       overflow: hidden;
     }
 
@@ -188,16 +192,16 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 30% 60%, rgba(0, 200, 150, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 70% 40%, rgba(0, 150, 200, 0.1) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 60%, rgba(11, 95, 217, 0.20) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 40%, rgba(22, 163, 74, 0.12) 0%, transparent 55%);
     }
 
     .map-grid {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+        linear-gradient(rgba(15, 30, 52, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 30, 52, 0.05) 1px, transparent 1px);
       background-size: 40px 40px;
     }
 
@@ -212,7 +216,7 @@
     .map-pin svg {
       width: 32px;
       height: 32px;
-      filter: drop-shadow(0 4px 12px rgba(0, 200, 150, 0.4));
+      filter: drop-shadow(0 4px 14px rgba(11, 95, 217, 0.45));
     }
 
     .route-line {
@@ -230,15 +234,15 @@
       position: absolute;
       top: 16px;
       right: 16px;
-      background: var(--accent);
-      color: #000;
+      background: var(--success);
+      color: #ffffff;
       font-size: 0.6875rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       padding: 6px 14px;
       border-radius: 20px;
-      box-shadow: 0 4px 16px var(--accent-glow);
+      box-shadow: 0 4px 16px var(--success-glow);
       animation: badgeSlide 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
     }
 
@@ -257,14 +261,14 @@
       width: 56px;
       height: 56px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #2a3a4a, #1a2a3a);
+      background: linear-gradient(135deg, #2f80ed, #1a4f9c);
       border: 2px solid var(--border-strong);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.25rem;
       font-weight: 600;
-      color: var(--accent);
+      color: #ffffff;
       flex-shrink: 0;
     }
 
@@ -302,12 +306,12 @@
       gap: 4px;
       margin-top: 6px;
       padding: 3px 10px;
-      background: var(--accent-dim);
-      border: 1px solid rgba(0, 200, 150, 0.2);
+      background: var(--success-dim);
+      border: 1px solid rgba(22, 163, 74, 0.25);
       border-radius: 8px;
       font-size: 0.6875rem;
       font-weight: 600;
-      color: var(--accent);
+      color: var(--success);
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
@@ -406,8 +410,8 @@
     .delivery-box {
       margin-top: 20px;
       padding: 14px 18px;
-      background: linear-gradient(135deg, rgba(0, 200, 150, 0.08), rgba(0, 150, 200, 0.05));
-      border: 1px solid rgba(0, 200, 150, 0.15);
+      background: linear-gradient(135deg, rgba(11, 95, 217, 0.07), rgba(22, 163, 74, 0.05));
+      border: 1px solid rgba(11, 95, 217, 0.15);
       border-radius: 16px;
       display: flex;
       align-items: center;
@@ -435,8 +439,8 @@
     .warning-box {
       margin-top: 20px;
       padding: 14px 18px;
-      background: rgba(245, 166, 35, 0.06);
-      border: 1px solid rgba(245, 166, 35, 0.12);
+      background: rgba(217, 119, 6, 0.07);
+      border: 1px solid rgba(217, 119, 6, 0.18);
       border-radius: 16px;
       display: flex;
       align-items: flex-start;
