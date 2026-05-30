@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status do Pedido - Depósito Mais Barato</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-blue: #0057B7;
+            --brand-blue-dark: #004494;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        /* Loading State */
+        .searching-view {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .radar-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 28px;
+        }
+
+        .radar-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--brand-blue);
+            border-radius: 50%;
+            opacity: 0;
+            animation: radar-pulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        .radar-circle:nth-child(2) { animation-delay: 0.8s; }
+        .radar-circle:nth-child(3) { animation-delay: 1.6s; }
+
+        .radar-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            background: var(--brand-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 87, 183, 0.4);
+            z-index: 5;
+        }
+
+        @keyframes radar-pulse {
+            0% { width: 40px; height: 40px; opacity: 0.6; }
+            100% { width: 140px; height: 140px; opacity: 0; }
+        }
+
+        .title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin: 0 0 10px 0;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0 0 24px 0;
+        }
+
+        /* Driver Found State */
+        .found-view {
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge-success {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ecfdf5;
+            color: var(--success-green);
+            padding: 6px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .driver-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-light);
+            border-radius: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .driver-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .driver-meta h3 {
+            margin: 0 0 4px 0;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .rating-chip {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .star { color: var(--warning-amber); fill: currentColor; }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            padding: 16px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .address-footer {
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .address-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .address-box {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .pin-icon { color: var(--brand-blue); flex-shrink: 0; }
+
+        .btn-action {
+            width: 100%;
+            background: var(--brand-blue);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(0, 87, 183, 0.25);
+        }
+
+        .btn-action:hover {
+            background: var(--brand-blue-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Utilities */
+        .icon { width: 20px; height: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card" id="main-card">
+            
+            <!-- VIEW: SEARCHING -->
+            <div class="searching-view" id="view-searching">
+                <div class="radar-container">
+                    <div class="radar-circle"></div>
+                    <div class="radar-circle"></div>
+                    <div class="radar-circle"></div>
+                    <div class="radar-center">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="title">Buscando entregador</h1>
+                <p class="subtitle">Estamos conectando você ao parceiro mais próximo para garantir agilidade total.</p>
+                
+                <div style="width:100%; background:#f3f4f6; height:6px; border-radius:10px; overflow:hidden;">
+                    <div id="progress-bar" style="width:0%; background:var(--brand-blue); height:100%; transition: width 3s linear;"></div>
+                </div>
+            </div>
+
+            <!-- VIEW: FOUND -->
+            <div class="found-view" id="view-found">
+                <div class="badge-success">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Conexão Estabelecida
+                </div>
+                
+                <h1 class="title" style="text-align:left; margin-bottom:20px;">Entregador à caminho</h1>
+
+                <div class="driver-profile">
+                    <img src="https://i.pravatar.cc/150?u=driver12" alt="Foto" class="driver-avatar">
+                    <div class="driver-meta">
+                        <h3>Ricardo Oliveira</h3>
+                        <div class="rating-chip">
+                            <svg class="star icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <span>4.9 • Parceiro Ouro</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <span class="metric-label">Chegada em</span>
+                        <div class="metric-value">
+                            <svg class="icon" style="color:var(--success-green)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            20 min
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Transporte</span>
+                        <div class="metric-value">
+                            <svg class="icon" style="color:var(--brand-blue)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            Moto
+                        </div>
+                    </div>
+                </div>
+
+                <div class="address-footer">
+                    <span class="address-label">Local de entrega</span>
+                    <div class="address-box">
+                        <svg class="pin-icon icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <div class="address-text">
+                            <strong>Praça da Sé, 100</strong><br>
+                            Sé, São Paulo - SP
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-action">Acompanhar Pedido</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const progressBar = document.getElementById('progress-bar');
+            const viewSearching = document.getElementById('view-searching');
+            const viewFound = document.getElementById('view-found');
+
+            // Inicia progresso visual
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 100);
+
+            // Simula tempo de busca profissional (3.5s)
+            setTimeout(() => {
+                viewSearching.style.display = 'none';
+                viewFound.style.display = 'block';
+            }, 3500);
+        };
+    </script>
+</body>
+</html>
