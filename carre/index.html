@@ -1,654 +1,531 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buscando Entregador</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f3f6fb;
-      --surface: #ffffff;
-      --surface-elevated: #f5f8fc;
-      --surface-highlight: #eef3fa;
-      --text-primary: #0f1e34;
-      --text-secondary: #5b6b80;
-      --text-tertiary: #8a97a8;
-      --accent: #0b5fd9;
-      --accent-hover: #0a52bd;
-      --accent-dim: rgba(11, 95, 217, 0.10);
-      --accent-glow: rgba(11, 95, 217, 0.30);
-      --success: #16a34a;
-      --success-dim: rgba(22, 163, 74, 0.10);
-      --success-glow: rgba(22, 163, 74, 0.30);
-      --border: rgba(15, 30, 52, 0.08);
-      --border-strong: rgba(15, 30, 52, 0.14);
-      --warning: #d97706;
-      --shadow-sm: 0 1px 3px rgba(15, 30, 52, 0.06);
-      --shadow-md: 0 12px 32px rgba(15, 30, 52, 0.10);
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Buscando entregador · Depósito Mais Barato</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e5e7eb;
+  --primary: #0d4ea6;
+  --primary-dark: #093f87;
+  --success: #16a34a;
+  --orange: #f59e0b;
+  --warn-bg: #fef7e6;
+  --warn-border: #f5d589;
+  --warn-text: #92660b;
+}
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text-primary);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-    }
+.topbar {
+  padding: 18px 20px;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 4px;
+}
+.back:hover { color: var(--primary); }
 
-    /* ========== SEARCHING STATE ========== */
-    .searching-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 48px 32px;
-      text-align: center;
-      animation: fadeIn 0.6s ease-out;
-      box-shadow: var(--shadow-md);
-    }
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 8px 16px 48px;
+}
 
-    .pulse-container {
-      width: 96px;
-      height: 96px;
-      margin: 0 auto 32px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* Stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-circle.active { background: var(--primary); color: #fff; }
+.step-circle.done { background: var(--success); color: #fff; }
+.step-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+}
+.step-label.active { color: var(--primary); }
+.step-label.done { color: var(--success); }
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: #e5e7eb;
+  margin: 0 4px 22px;
+  border-radius: 2px;
+}
+.step-line.done { background: var(--success); }
 
-    .pulse-ring {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 3px solid var(--accent);
-      opacity: 0;
-      animation: pulseRing 2.5s ease-out infinite;
-    }
+/* Card base */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 30px 24px;
+  text-align: center;
+}
+.hidden { display: none; }
 
-    .pulse-ring:nth-child(2) {
-      animation-delay: 0.8s;
-    }
+/* Searching state */
+.searching-card { padding: 44px 24px 38px; }
 
-    .pulse-ring:nth-child(3) {
-      animation-delay: 1.6s;
-    }
+.pulse {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 4px auto 26px;
+}
+.pulse-dot {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--orange);
+}
+.pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--orange);
+  opacity: 0.25;
+  animation: pulse 1.8s ease-out infinite;
+}
+.pulse-ring.r2 { animation-delay: 0.9s; }
+@keyframes pulse {
+  0%   { transform: scale(0.4); opacity: 0.45; }
+  70%  { transform: scale(1);   opacity: 0.12; }
+  100% { transform: scale(1);   opacity: 0;    }
+}
 
-    .pulse-core {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--accent-dim);
-      border: 2px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
-      animation: pulseCore 2s ease-in-out infinite;
-    }
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.dots span {
+  display: inline-block;
+  animation: blink 1.4s infinite;
+  opacity: 0.2;
+}
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 1; }
+}
 
-    .pulse-core svg {
-      width: 28px;
-      height: 28px;
-      stroke: var(--accent);
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
 
-    .searching-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
-    }
+.address-plain p { font-size: 14px; line-height: 1.6; }
+.addr-line-1 { font-weight: 600; }
+.addr-line-2 { color: var(--muted); }
 
-    .searching-subtitle {
-      font-size: 0.9375rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-      line-height: 1.5;
-    }
+/* Available state */
+.available-card { padding: 28px 22px 22px; }
 
-    .address-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 20px;
-      padding: 8px 16px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 0.8125rem;
-      color: var(--text-secondary);
-    }
+.title-found {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
 
-    .address-chip svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-      color: var(--accent);
-    }
+.map {
+  position: relative;
+  margin: 18px 0 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #e5e7eb;
+  aspect-ratio: 16 / 9;
+}
+.map-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.map-pin {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+}
 
-    .searching-dots {
-      margin-top: 32px;
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-    }
+.driver-avatar {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.driver-avatar img {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  border: 3px solid #fff;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.avatar-check {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 22px;
+  height: 22px;
+  background: var(--success);
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--text-tertiary);
-      animation: dotBounce 1.4s ease-in-out infinite;
-    }
+.driver-name {
+  margin-top: 42px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 6px 0 18px;
+  font-size: 14px;
+  color: var(--text);
+}
 
-    .dot:nth-child(1) { animation-delay: 0s; }
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.info-box {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 8px;
+}
+.info-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.info-value {
+  font-size: 14px;
+  font-weight: 700;
+}
 
-    /* ========== AVAILABLE STATE ========== */
-    .available-card {
-      display: none;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    }
+/* License plate */
+.plate {
+  width: 200px;
+  margin: 0 auto 14px;
+  border: 2px solid #0a0a0a;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.plate-top {
+  background: var(--primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 4px 0;
+}
+.plate-number {
+  font-family: "Courier New", monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  padding: 8px 0;
+}
 
-    .map-area {
-      position: relative;
-      height: 160px;
-      background: #e5e7eb;
-      overflow: hidden;
-    }
+.verified {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.verified strong { color: var(--success); font-weight: 600; }
+.verified-check { color: var(--success); display: inline-flex; }
+.dot-sep { color: #cbd5e1; }
 
-    .map-area img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+.deliver-to {
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.deliver-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.deliver-addr-1 { font-weight: 700; font-size: 14px; }
+.deliver-addr-2 { color: var(--muted); font-size: 13px; margin-top: 2px; }
 
-    .available-badge {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: var(--success);
-      color: #ffffff;
-      font-size: 0.6875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 6px 14px;
-      border-radius: 20px;
-      box-shadow: 0 4px 16px var(--success-glow);
-      animation: badgeSlide 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
-      z-index: 10;
-    }
+.warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--warn-text);
+  font-size: 12.5px;
+  line-height: 1.45;
+  margin-bottom: 18px;
+}
+.warning svg { flex-shrink: 0; margin-top: 1px; }
 
-    .driver-info {
-      padding: 28px 28px 24px;
-    }
+.btn-primary {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s ease;
+}
+.btn-primary:hover { background: var(--primary-dark); }
 
-    .driver-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
+.secure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 18px;
+}
 
-    .driver-avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--surface-elevated);
-      border: 2px solid var(--border-strong);
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .driver-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .driver-meta {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .driver-name {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.01em;
-    }
-
-    .driver-rating {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 4px;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .driver-rating svg {
-      width: 16px;
-      height: 16px;
-      color: #f5a623;
-      fill: #f5a623;
-    }
-
-    .verified-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 6px;
-      padding: 3px 10px;
-      background: var(--success-dim);
-      border: 1px solid rgba(22, 163, 74, 0.25);
-      border-radius: 8px;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      color: var(--success);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .verified-badge svg {
-      width: 12px;
-      height: 12px;
-    }
-
-    .driver-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .stat {
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px 12px;
-      text-align: center;
-      transition: background 0.2s ease;
-    }
-
-    .stat:hover {
-      background: var(--surface-highlight);
-    }
-
-    .stat-icon {
-      width: 24px;
-      height: 24px;
-      margin: 0 auto 8px;
-      color: var(--accent);
-    }
-
-    .stat-value {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-
-    .stat-label {
-      font-size: 0.6875rem;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-top: 2px;
-    }
-
-    .vehicle-section {
-      margin-top: 20px;
-      padding: 16px 20px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .vehicle-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: var(--accent-dim);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .vehicle-icon svg {
-      width: 22px;
-      height: 22px;
-      color: var(--accent);
-    }
-
-    .vehicle-details {
-      flex: 1;
-    }
-
-    .vehicle-name {
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-
-    .vehicle-plate {
-      font-size: 0.8125rem;
-      color: var(--text-secondary);
-      margin-top: 2px;
-      font-family: 'SF Mono', Monaco, monospace;
-      letter-spacing: 0.05em;
-    }
-
-    .delivery-box {
-      margin-top: 20px;
-      padding: 14px 18px;
-      background: linear-gradient(135deg, rgba(11, 95, 217, 0.07), rgba(22, 163, 74, 0.05));
-      border: 1px solid rgba(11, 95, 217, 0.15);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .delivery-box svg {
-      width: 20px;
-      height: 20px;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .delivery-box p {
-      font-size: 0.8125rem;
-      color: var(--text-secondary);
-      line-height: 1.45;
-    }
-
-    .delivery-box p strong {
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-
-    .continue-btn {
-      width: 100%;
-      margin-top: 20px;
-      padding: 14px 20px;
-      background: var(--accent);
-      color: #ffffff;
-      font-family: inherit;
-      font-size: 0.9375rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: 0 4px 14px var(--accent-glow);
-      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-    }
-
-    .continue-btn:hover {
-      background: var(--accent-hover);
-      box-shadow: 0 6px 20px var(--accent-glow);
-    }
-
-    .continue-btn:active {
-      transform: scale(0.98);
-    }
-
-    .address-box {
-      margin-top: 20px;
-      padding: 14px 18px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .address-box svg {
-      width: 20px;
-      height: 20px;
-      color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .address-box .address-content {
-      flex: 1;
-    }
-
-    .address-box .address-label {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 4px;
-    }
-
-    .address-box .address-text {
-      font-size: 0.875rem;
-      color: var(--text-primary);
-      font-weight: 500;
-      line-height: 1.4;
-    }
-
-    .address-box .address-detail {
-      font-size: 0.8125rem;
-      color: var(--text-secondary);
-      line-height: 1.4;
-      margin-top: 2px;
-    }
-
-    /* ========== ANIMATIONS ========== */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.98); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulseRing {
-      0% { transform: scale(0.6); opacity: 0.6; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
-
-    @keyframes pulseCore {
-      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-      50% { box-shadow: 0 0 20px 8px var(--accent-glow); }
-    }
-
-    @keyframes dotBounce {
-      0%, 80%, 100% { transform: translateY(0); opacity: 0.3; }
-      40% { transform: translateY(-6px); opacity: 1; }
-    }
-
-    @keyframes badgeSlide {
-      from { opacity: 0; transform: translateX(20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 520px) {
-      body { padding: 16px; }
-      .searching-card { padding: 36px 24px; }
-      .driver-info { padding: 24px 20px 20px; }
-      .driver-stats { gap: 8px; }
-      .stat { padding: 14px 8px; }
-    }
-  </style>
+@media (max-width: 420px) {
+  .info-grid { grid-template-columns: 1fr 1fr; }
+  .info-box:last-child { grid-column: span 2; }
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <!-- SEARCHING STATE -->
-    <div class="searching-card" id="searchingCard">
-      <div class="pulse-container">
-        <div class="pulse-ring"></div>
-        <div class="pulse-ring"></div>
-        <div class="pulse-ring"></div>
-        <div class="pulse-core">
-          <svg viewBox="0 0 24 24">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
+  <header class="topbar">
+    <button class="back" type="button" aria-label="Voltar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar
+    </button>
+  </header>
+
+  <main class="container">
+    <!-- Stepper -->
+    <section class="stepper" aria-label="Etapas do checkout">
+      <div class="step" data-step="1">
+        <div class="step-circle done">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="step-label done">IDENTIFICAÇÃO</span>
+      </div>
+      <div class="step-line done"></div>
+      <div class="step" data-step="2">
+        <div class="step-circle active">2</div>
+        <span class="step-label active">REVISÃO</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" data-step="3">
+        <div class="step-circle">3</div>
+        <span class="step-label">PAGAMENTO</span>
+      </div>
+    </section>
+
+    <!-- Estado 1: Buscando entregador -->
+    <section id="searching" class="card searching-card" aria-live="polite">
+      <div class="pulse">
+        <span class="pulse-ring r1"></span>
+        <span class="pulse-ring r2"></span>
+        <span class="pulse-dot"></span>
+      </div>
+      <h1 class="title">Buscando o entregador mais próximo<span class="dots"><span>.</span><span>.</span><span>.</span></span></h1>
+      <p class="subtitle">Estamos localizando o melhor entregador para o seu endereço:</p>
+      <div class="address-plain">
+        <p class="addr-line-1">Avenida Paulista, 100</p>
+        <p class="addr-line-2">Bela Vista · São Paulo/SP</p>
+      </div>
+    </section>
+
+    <!-- Estado 2: Entregador disponível -->
+    <section id="available" class="card available-card hidden" aria-live="polite">
+      <h1 class="title-found">Entregador disponível!</h1>
+      <p class="subtitle">Nosso parceiro está aguardando a confirmação do pagamento.</p>
+
+      <div class="map">
+        <img class="map-img" alt="Mapa com a localização aproximada do entregador" src="https://staticmap.openstreetmap.de/staticmap.php?center=-23.5613,-46.6562&zoom=15&size=900x320&maptype=mapnik" />
+        <div class="map-pin" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="#f59e0b" stroke="#fff" stroke-width="1.5"><path d="M12 2C8 2 5 5 5 9c0 5.5 7 13 7 13s7-7.5 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff"/></svg>
+        </div>
+        <div class="driver-avatar" aria-hidden="true">
+          <img src="https://i.pravatar.cc/120?img=33" alt="" />
+          <span class="avatar-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
         </div>
       </div>
-      <h2 class="searching-title">Buscando o entregador mais próximo</h2>
-      <p class="searching-subtitle">Aguarde enquanto encontramos o melhor profissional para você</p>
-      <div class="address-chip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-          <circle cx="12" cy="10" r="3"/>
-        </svg>
-        Avenida Paulista, 100, Bela Vista &middot; São Paulo/SP
+
+      <h2 class="driver-name">LEANDRO BATISTA MOREIRA</h2>
+      <div class="rating">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5b301"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9"/></svg>
+        <span>4.9</span>
       </div>
-      <div class="searching-dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+
+      <div class="info-grid">
+        <div class="info-box">
+          <div class="info-label">DISTÂNCIA</div>
+          <div class="info-value">3.9 km</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">TEMPO ESTIMADO</div>
+          <div class="info-value">~9 min</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">VEÍCULO</div>
+          <div class="info-value">Honda CG 160</div>
+        </div>
       </div>
-    </div>
 
-    <!-- AVAILABLE STATE -->
-    <div class="available-card" id="availableCard">
-      <div class="map-area">
-        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80&w=480&h=160" alt="Mapa de entrega">
-        <div class="available-badge">Disponível</div>
+      <div class="plate">
+        <div class="plate-top">BRASIL</div>
+        <div class="plate-number">LYO-4B46</div>
       </div>
-      <div class="driver-info">
-        <div class="driver-header">
-          <div class="driver-avatar">
-            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=100&h=100" alt="Leandro Batista Moreira">
-          </div>
-          <div class="driver-meta">
-            <div class="driver-name">Leandro Batista Moreira</div>
-            <div class="driver-rating">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-              <span>4.9</span>
-            </div>
-            <div class="verified-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              Verificado
-            </div>
-          </div>
-        </div>
 
-        <div class="driver-stats">
-          <div class="stat">
-            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-            <div class="stat-value">~9 min</div>
-            <div class="stat-label">Chegada</div>
-          </div>
-          <div class="stat">
-            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            <div class="stat-value">3.9 km</div>
-            <div class="stat-label">Distância</div>
-          </div>
-          <div class="stat">
-            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-            </svg>
-            <div class="stat-value">1.247</div>
-            <div class="stat-label">Entregas</div>
-          </div>
-        </div>
+      <p class="verified">
+        <span class="verified-check">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+        </span>
+        <strong>Distribuidor Verificado</strong>
+        <span class="dot-sep">·</span>
+        <span class="cnpj">CNPJ 01.875.479/0001-72</span>
+      </p>
 
-        <div class="vehicle-section">
-          <div class="vehicle-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="6" cy="17" r="3"/>
-              <circle cx="18" cy="17" r="3"/>
-              <path d="M6 14h12l-1-5H7l-1 5z"/>
-              <path d="M7 9l-2-3h4"/>
-              <path d="M17 9l2-3h-4"/>
-            </svg>
-          </div>
-          <div class="vehicle-details">
-            <div class="vehicle-name">Honda CG 160</div>
-            <div class="vehicle-plate">LYO-4B46</div>
-          </div>
-        </div>
-
-        <div class="delivery-box">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-            <line x1="12" y1="22.08" x2="12" y2="12"/>
-          </svg>
-          <p>Seu pedido será entregue por <strong>Leandro Batista Moreira</strong></p>
-        </div>
-
-        <div class="address-box">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
-          <div class="address-content">
-            <div class="address-label">Endereço de entrega</div>
-            <div class="address-text">Avenida Paulista, 100, Bela Vista</div>
-            <div class="address-detail">São Paulo/SP · CEP 01310-000</div>
-          </div>
-        </div>
-
-        <button class="continue-btn" type="button">Continuar</button>
+      <div class="deliver-to">
+        <div class="deliver-label">ENTREGAR EM:</div>
+        <div class="deliver-addr-1">Avenida Paulista, 100</div>
+        <div class="deliver-addr-2">Bela Vista · São Paulo/SP</div>
       </div>
-    </div>
-  </div>
 
-  <script>
-    // Simulate state transition after 4 seconds
-    setTimeout(() => {
-      const searchingCard = document.getElementById('searchingCard');
-      const availableCard = document.getElementById('availableCard');
+      <div class="warning">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>A localização exibida é aproximada. O entregador receberá o endereço completo com número e complemento.</p>
+      </div>
 
-      searchingCard.style.display = 'none';
-      availableCard.style.display = 'block';
-    }, 4000);
-  </script>
+      <button class="btn-primary" type="button" id="continueBtn">
+        Continuar
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </section>
+
+    <footer class="secure">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Seus dados são tratados com segurança · LGPD
+    </footer>
+  </main>
+
+<script>
+// Simula o fluxo do checkout: após "Confirmar Endereço" exibimos a busca
+// pelo entregador mais próximo e, em seguida, o entregador disponível.
+
+const searchingEl = document.getElementById('searching');
+const availableEl = document.getElementById('available');
+const continueBtn = document.getElementById('continueBtn');
+
+const SEARCH_DURATION_MS = 3000;
+
+function showAvailable() {
+  searchingEl.classList.add('hidden');
+  availableEl.classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showSearching() {
+  availableEl.classList.add('hidden');
+  searchingEl.classList.remove('hidden');
+  setTimeout(showAvailable, SEARCH_DURATION_MS);
+}
+
+// Inicia automaticamente o ciclo (como acontece após o "Confirmar Endereço")
+setTimeout(showAvailable, SEARCH_DURATION_MS);
+
+// Botão "Continuar" reinicia a demonstração
+continueBtn.addEventListener('click', () => {
+  showSearching();
+});
+</script>
 </body>
 </html>
