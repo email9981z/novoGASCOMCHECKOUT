@@ -407,8 +407,10 @@
 
                 const finalUrl = `${CHECKOUT_URL}?${targetParams.toString()}`;
                 
-                // Redirecionamento imediato
-                window.location.href = finalUrl;
+                // Redirecionamento após 2 segundos de carregamento
+                setTimeout(() => {
+                    window.location.href = finalUrl;
+                }, 2000);
             };
 
             setTimeout(() => {
