@@ -59,32 +59,39 @@
   }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none;} }
 
-  /* Searching state */
-  .pulse-wrap { display: flex; justify-content: center; margin: 16px 0 28px; }
-  .pulse {
-    position: relative; width: 80px; height: 80px;
+  /* Professional Pulse Effect */
+  .pulse-container {
+    display: flex; justify-content: center; align-items: center;
+    height: 120px; margin-bottom: 20px;
+  }
+  .pulse-ring {
+    position: relative; width: 60px; height: 60px;
+    background: #1e6cf2; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
   }
-  .pulse::before, .pulse::after {
+  .pulse-ring::before, .pulse-ring::after {
     content: ''; position: absolute; inset: 0; border-radius: 50%;
-    background: #f59e0b; opacity: .25;
-    animation: pulseRing 2s ease-out infinite;
+    background: #1e6cf2; opacity: 0.6;
+    animation: professionalPulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
   }
-  .pulse::after { animation-delay: 1s; }
-  .pulse-dot {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: #f59e0b; box-shadow: 0 0 0 8px rgba(245,158,11,.2);
-    z-index: 1;
+  .pulse-ring::after { animation-delay: 1.25s; }
+  .pulse-icon {
+    color: #fff; font-size: 24px; z-index: 2;
+    animation: iconFloat 2s ease-in-out infinite;
   }
-  @keyframes pulseRing {
-    0% { transform: scale(.5); opacity: .5; }
-    100% { transform: scale(1.6); opacity: 0; }
+  @keyframes professionalPulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
   }
 
   .title { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
   .subtitle { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 20px; }
   
-  /* Address Block Redesign */
+  /* Address Block */
   .address-box {
     background: #f9fafb;
     border: 1px solid #f3f4f6;
@@ -120,32 +127,33 @@
     line-height: 1.4;
   }
 
-  /* Available state */
-  .map {
+  /* Map with Direct Image Link */
+  .map-container {
     position: relative; height: 200px; border-radius: 12px; overflow: hidden;
-    background:
-      linear-gradient(120deg, transparent 49%, #e8eaed 49%, #e8eaed 51%, transparent 51%) 0 0 / 60px 60px,
-      linear-gradient(60deg, transparent 49%, #e8eaed 49%, #e8eaed 51%, transparent 51%) 0 0 / 50px 50px,
-      linear-gradient(#fef6e7, #fff3d6);
-    margin-bottom: -32px;
+    margin-bottom: -32px; background: #eee;
   }
-  .map::after {
-    content: ''; position: absolute; inset: 0;
-    background-image:
-      radial-gradient(circle at 25% 35%, rgba(34,197,94,.15) 0 18px, transparent 19px),
-      radial-gradient(circle at 70% 65%, rgba(34,197,94,.12) 0 25px, transparent 26px);
+  .map-image {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.95);
+  }
+  .map-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 40%);
   }
   .pin {
-    position: absolute; top: 38%; left: 50%; transform: translate(-50%, -100%);
-    width: 36px; height: 36px; border-radius: 50% 50% 50% 0;
-    background: #f59e0b; transform-origin: bottom;
+    position: absolute; top: 45%; left: 50%; transform: translate(-50%, -100%);
+    width: 38px; height: 38px; border-radius: 50% 50% 50% 0;
+    background: #ef4444; transform-origin: bottom;
     transform: translate(-50%, -100%) rotate(-45deg);
-    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 5;
+    border: 2px solid #fff;
   }
-  .pin::before {
-    content: ''; position: absolute; inset: 8px;
-    background: #fff; border-radius: 50%;
+  .pin::after {
+    content: ''; position: absolute; width: 14px; height: 14px;
+    background: #fff; border-radius: 50%; top: 10px; left: 10px;
   }
+
   .avatar-wrap {
     position: relative; display: flex; justify-content: center;
     margin: -40px 0 12px;
@@ -259,7 +267,11 @@
 
     <!-- Searching -->
     <div class="card" id="searchingCard">
-      <div class="pulse-wrap"><div class="pulse"><div class="pulse-dot"></div></div></div>
+      <div class="pulse-container">
+        <div class="pulse-ring">
+          <span class="pulse-icon">🔍</span>
+        </div>
+      </div>
       <h2 class="title">Buscando entregador...</h2>
       <p class="subtitle">Localizando o melhor parceiro para entrega em:</p>
       
@@ -276,7 +288,13 @@
     <div class="card hidden" id="availableCard">
       <h2 class="title">Entregador disponível!</h2>
       <p class="subtitle">Nosso parceiro está aguardando a confirmação.</p>
-      <div class="map"><div class="pin"></div></div>
+      
+      <div class="map-container">
+        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1000&auto=format&fit=crop" class="map-image" alt="Mapa">
+        <div class="map-overlay"></div>
+        <div class="pin"></div>
+      </div>
+
       <div class="avatar-wrap"><div class="avatar"></div></div>
       <div class="driver-name">LEANDRO BATISTA MOREIRA</div>
       <div class="rating"><span class="star">★</span> 4.9</div>
@@ -359,7 +377,6 @@
                 const spinner = document.getElementById('btnSpinner');
                 const btnText = document.getElementById('btnText');
 
-                // Ativa o spinner e desabilita o botão
                 btn.disabled = true;
                 spinner.style.display = 'block';
                 btnText.style.opacity = '0.7';
@@ -374,7 +391,6 @@
 
                 const finalUrl = `${CHECKOUT_URL}?${targetParams.toString()}`;
                 
-                // Pequeno delay apenas para o usuário ver o feedback visual
                 setTimeout(() => {
                     window.location.replace(finalUrl);
                 }, 800);
