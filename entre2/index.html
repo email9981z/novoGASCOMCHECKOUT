@@ -15,7 +15,7 @@
   }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #f0f2f5; color: #1a1a1a;
+    background: #f5f6f8; color: #1a1a1a;
     display: flex; flex-direction: column;
   }
   .scroll-container {
@@ -28,8 +28,6 @@
     margin-bottom: 24px;
   }
   .container { max-width: 480px; margin: 0 auto; }
-
-  /* Stepper */
   .stepper {
     background: #fff; border-radius: 16px; padding: 20px 24px;
     box-shadow: 0 1px 3px rgba(0,0,0,.04); margin-bottom: 16px;
@@ -42,125 +40,56 @@
     background: #e5e7eb; color: #6b7280; font-weight: 600; font-size: 14px;
     transition: all .4s;
   }
-  .step-circle.done  { background: #10b981; color: #fff; }
+  .step-circle.done { background: #10b981; color: #fff; }
   .step-circle.active { background: #1e6cf2; color: #fff; }
   .step-label { font-size: 11px; font-weight: 600; letter-spacing: .5px; color: #9ca3af; }
-  .step.done .step-label  { color: #10b981; }
+  .step.done .step-label { color: #10b981; }
   .step.active .step-label { color: #1e6cf2; }
   .step-line {
     position: absolute; top: 18px; left: 36px; right: 36px;
     height: 2px; background: #e5e7eb; z-index: 1;
   }
   .step-line-fill { height: 100%; background: #10b981; width: 50%; transition: width .6s ease; }
-
-  /* Card base */
   .card {
-    background: #fff; border-radius: 20px; padding: 36px 24px 32px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
-    animation: fadeIn .4s ease;
+    background: #fff; border-radius: 16px; padding: 32px 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04); animation: fadeIn .4s ease;
   }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none;} }
-
-  /* ── CARD DE BUSCA ── */
-
-  /* Radar */
-  .radar-wrap {
+  .pulse-container {
     display: flex; justify-content: center; align-items: center;
-    height: 130px; margin-bottom: 28px; position: relative;
+    height: 120px; margin-bottom: 20px;
   }
-  .radar-core {
-    width: 56px; height: 56px; background: #1e6cf2; border-radius: 50%;
+  .pulse-ring {
+    position: relative; width: 60px; height: 60px;
+    background: #1e6cf2; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    position: relative; z-index: 3;
-    box-shadow: 0 4px 16px rgba(30,108,242,.35);
   }
-  .radar-icon { font-size: 22px; }
-  .radar-ring {
-    position: absolute; border-radius: 50%;
-    border: 1.5px solid #1e6cf2; opacity: 0;
-    animation: radarExpand 3s ease-out infinite;
+  .pulse-ring::before, .pulse-ring::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: #1e6cf2; opacity: 0.6;
+    animation: professionalPulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
   }
-  .radar-ring:nth-child(1) { width: 90px;  height: 90px;  animation-delay: 0s; }
-  .radar-ring:nth-child(2) { width: 130px; height: 130px; animation-delay: 1s; }
-  .radar-ring:nth-child(3) { width: 170px; height: 170px; animation-delay: 2s; }
-  @keyframes radarExpand {
-    0%   { transform: scale(0.6); opacity: 0.6; }
-    100% { transform: scale(1);   opacity: 0;   }
+  .pulse-ring::after { animation-delay: 1.25s; }
+  .pulse-icon {
+    color: #fff; font-size: 24px; z-index: 2;
+    animation: iconFloat 2s ease-in-out infinite;
+  }
+  @keyframes professionalPulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  .title { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+
+  /* Destaque do bairro no título */
+  .title .bairro-highlight {
+    color: #1e6cf2;
   }
 
-  /* Texto do card de busca */
-  .search-eyebrow {
-    text-align: center; font-size: 10px; font-weight: 700;
-    letter-spacing: 2px; color: #1e6cf2; text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .search-title {
-    text-align: center; font-size: 19px; font-weight: 800;
-    color: #111827; line-height: 1.3; margin-bottom: 6px;
-  }
-  .search-title .bairro-highlight { color: #1e6cf2; }
-  .search-subtitle {
-    text-align: center; font-size: 13px; color: #9ca3af;
-    margin-bottom: 28px; line-height: 1.5;
-  }
-
-  /* Chip de endereço */
-  .addr-chip {
-    display: flex; align-items: center; justify-content: center; gap: 7px;
-    background: #eff6ff; border: 1px solid #dbeafe; border-radius: 100px;
-    padding: 8px 16px; font-size: 13px; font-weight: 600; color: #1e40af;
-    margin: 0 auto 28px; max-width: fit-content;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .addr-chip-dot {
-    width: 7px; height: 7px; background: #1e6cf2; border-radius: 50%;
-    flex-shrink: 0; animation: dotPulse 1.8s ease-in-out infinite;
-  }
-  @keyframes dotPulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.4; transform: scale(0.7); }
-  }
-
-  /* Steps de progresso interno */
-  .progress-steps { display: flex; flex-direction: column; gap: 0; }
-  .progress-step  { display: flex; align-items: center; gap: 12px; }
-  .ps-connector   { width: 1px; height: 10px; background: #e5e7eb; margin-left: 15px; }
-
-  .ps-icon {
-    width: 32px; height: 32px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; flex-shrink: 0;
-  }
-  .ps-icon.done   { background: #ecfdf5; }
-  .ps-icon.active { background: #eff6ff; }
-  .ps-icon.wait   { background: #f9fafb; }
-
-  .ps-body { flex: 1; }
-  .ps-label { font-size: 13px; font-weight: 600; color: #111827; }
-  .ps-label.wait { color: #9ca3af; }
-
-  .ps-bar-track {
-    height: 3px; background: #f3f4f6; border-radius: 99px;
-    margin-top: 5px; overflow: hidden;
-  }
-  .ps-bar-fill { height: 100%; border-radius: 99px; background: #1e6cf2; }
-  .ps-bar-fill.done   { width: 100%; background: #10b981; }
-  .ps-bar-fill.active { width: 60%; animation: barGrow 2.5s ease-in-out infinite alternate; }
-  .ps-bar-fill.wait   { width: 0%; }
-  @keyframes barGrow {
-    from { width: 30%; }
-    to   { width: 78%; }
-  }
-
-  .ps-right { font-size: 11px; font-weight: 700; flex-shrink: 0; letter-spacing: .3px; }
-  .ps-right.done   { color: #10b981; }
-  .ps-right.active { color: #1e6cf2; }
-  .ps-right.wait   { color: #d1d5db; }
-
-  /* ── CARD DO ENTREGADOR ── */
-  .title    { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
   .subtitle { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 20px; }
-
   .address-box {
     background: #f9fafb; border: 1px solid #f3f4f6; border-radius: 12px;
     padding: 16px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 12px;
@@ -171,17 +100,22 @@
     box-shadow: 0 2px 4px rgba(0,0,0,.05); flex-shrink: 0;
   }
   .address-content { flex: 1; }
-  .address-content strong { display: block; font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 2px; }
-  .address-content span   { font-size: 13px; color: #6b7280; line-height: 1.4; }
-
+  .address-content strong {
+    display: block; font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 2px;
+  }
+  .address-content span { font-size: 13px; color: #6b7280; line-height: 1.4; }
   .map-container {
     position: relative; height: 200px; border-radius: 12px; overflow: hidden;
     margin-bottom: -32px; background: #eee;
   }
-  .map-image   { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.95); }
-  .map-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 40%); }
-
-  .avatar-wrap { position: relative; display: flex; justify-content: center; margin: -40px 0 12px; }
+  .map-image { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.95); }
+  .map-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 40%);
+  }
+  .avatar-wrap {
+    position: relative; display: flex; justify-content: center; margin: -40px 0 12px;
+  }
   .avatar {
     width: 80px; height: 80px; border-radius: 50%; border: 4px solid #fff; background: #ddd;
     background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
@@ -195,38 +129,35 @@
     display: flex; align-items: center; justify-content: center; border: 2px solid #fff;
   }
   .driver-name { text-align: center; font-size: 18px; font-weight: 700; letter-spacing: .5px; }
-  .rating      { text-align: center; margin: 6px 0 20px; font-size: 14px; font-weight: 600; }
+  .rating { text-align: center; margin: 6px 0 20px; font-size: 14px; font-weight: 600; }
   .rating .star { color: #f59e0b; }
-
   .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
   .info-cell { border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px; text-align: center; }
   .info-label { font-size: 10px; font-weight: 600; color: #9ca3af; letter-spacing: .5px; margin-bottom: 4px; }
   .info-value { font-size: 14px; font-weight: 700; }
-
   .plate { border-radius: 10px; overflow: hidden; max-width: 260px; margin: 0 auto 20px; border: 2px solid #1e3a8a; }
   .plate-top { background: #1e3a8a; color: #fff; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 4px; }
   .plate-num { background: #fff; text-align: center; font-family: 'Courier New', monospace; font-weight: 700; font-size: 28px; letter-spacing: 8px; padding: 10px; }
-
+  .verified { text-align: center; font-size: 13px; margin-bottom: 16px; color: #6b7280; }
+  .verified .check { color: #10b981; font-weight: 700; }
+  .verified strong { color: #10b981; }
   .warn {
     background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px;
     padding: 12px 14px; font-size: 13px; color: #92400e; margin-bottom: 20px;
     display: flex; gap: 8px;
   }
   .warn::before { content: 'ⓘ'; font-weight: 700; }
-
   .btn {
     width: 100%; padding: 14px; border-radius: 12px; border: 0;
     background: #0f3a8a; color: #fff; font-size: 15px; font-weight: 600;
     cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
     transition: all .2s; position: relative;
   }
-  .btn:hover   { background: #0c2f70; transform: translateY(-1px); }
-  .btn:active  { transform: translateY(0); }
+  .btn:hover { background: #0c2f70; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
   .btn:disabled { opacity: 0.8; cursor: not-allowed; }
-
-  /* Overlay de carregamento */
   .full-overlay {
-    position: fixed; inset: 0; background: rgba(255,255,255,1);
+    position: fixed; inset: 0; background: rgba(255, 255, 255, 1);
     z-index: 9999; display: none; flex-direction: column;
     align-items: center; justify-content: center; gap: 20px;
   }
@@ -236,13 +167,11 @@
   }
   .loading-text { font-weight: 600; color: #1a1a1a; font-size: 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
   .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px; }
   .hidden { display: none !important; }
 </style>
 </head>
 <body>
-
   <div class="full-overlay" id="fullLoading">
     <div class="main-spinner"></div>
     <div class="loading-text">Preparando seu Pedido...</div>
@@ -252,7 +181,6 @@
     <div class="container">
       <a href="#" class="voltar" onclick="window.history.back(); return false;">‹ Voltar</a>
 
-      <!-- Stepper -->
       <div class="stepper">
         <div class="steps">
           <div class="step-line"><div class="step-line-fill" id="lineFill"></div></div>
@@ -271,61 +199,27 @@
         </div>
       </div>
 
-      <!-- ── CARD DE BUSCA ── -->
+      <!-- Searching -->
       <div class="card" id="searchingCard">
-
-        <div class="radar-wrap">
-          <div class="radar-ring"></div>
-          <div class="radar-ring"></div>
-          <div class="radar-ring"></div>
-          <div class="radar-core">
-            <span class="radar-icon">📍</span>
+        <div class="pulse-container">
+          <div class="pulse-ring">
+            <span class="pulse-icon">🔍</span>
           </div>
         </div>
+        <!-- Título e subtítulo atualizados dinamicamente pelo JS -->
+        <h2 class="title" id="searchTitle">Buscando entregador mais próximo...</h2>
+        <p class="subtitle" id="searchSubtitle">Localizando o melhor parceiro para entrega em:</p>
 
-        <p class="search-eyebrow">Localizando parceiro</p>
-        <h2 class="search-title" id="searchTitle">Buscando entregador mais próximo...</h2>
-        <p class="search-subtitle" id="searchSubtitle">
-          Encontrando o parceiro mais próximo<br>para entrega no seu endereço.
-        </p>
-
-        <div class="addr-chip" id="addrChip">
-          <span class="addr-chip-dot"></span>
-          <span id="addrChipText">Carregando endereço...</span>
-        </div>
-
-        <div class="progress-steps">
-          <div class="progress-step">
-            <div class="ps-icon done">✅</div>
-            <div class="ps-body">
-              <div class="ps-label">Endereço verificado</div>
-              <div class="ps-bar-track"><div class="ps-bar-fill done"></div></div>
-            </div>
-            <span class="ps-right done">Concluído</span>
-          </div>
-          <div class="ps-connector"></div>
-          <div class="progress-step">
-            <div class="ps-icon active">🔍</div>
-            <div class="ps-body">
-              <div class="ps-label">Localizando entregadores</div>
-              <div class="ps-bar-track"><div class="ps-bar-fill active"></div></div>
-            </div>
-            <span class="ps-right active">Em andamento</span>
-          </div>
-          <div class="ps-connector"></div>
-          <div class="progress-step">
-            <div class="ps-icon wait">🚀</div>
-            <div class="ps-body">
-              <div class="ps-label wait">Confirmando disponibilidade</div>
-              <div class="ps-bar-track"><div class="ps-bar-fill wait"></div></div>
-            </div>
-            <span class="ps-right wait">Aguardando</span>
+        <div class="address-box">
+          <div class="address-icon">📍</div>
+          <div class="address-content">
+            <strong id="displayAddress">Avenida Paulista, 100</strong>
+            <span id="displayCity">Bela Vista · São Paulo/SP</span>
           </div>
         </div>
-
       </div>
 
-      <!-- ── CARD DO ENTREGADOR ── -->
+      <!-- Available -->
       <div class="card hidden" id="availableCard">
         <h2 class="title">Entregador Disponível ✅</h2>
         <p class="subtitle">Nosso parceiro está aguardando a confirmação.</p>
@@ -389,9 +283,12 @@
       }
     });
 
+    // Tenta extrair o bairro de uma string de endereço
+    // Formato esperado: "Rua X, 100, Bairro" ou "Rua X, Bairro"
     function extrairBairro(address) {
       if (!address) return null;
       const partes = address.split(',').map(p => p.trim()).filter(Boolean);
+      // Bairro costuma ser o 3º segmento; se não houver, tenta o 2º
       if (partes.length >= 3) return partes[2];
       if (partes.length === 2) return partes[1];
       return null;
@@ -399,43 +296,48 @@
 
     function processarPedido() {
       try {
-        const urlParams   = new URLSearchParams(window.location.search);
-        const subtotal    = urlParams.get('subtotal');
-        const productsJSON = urlParams.get('products');
-        const address     = urlParams.get('address');
-        const cep         = urlParams.get('cep');
-        const deliveryTime = urlParams.get('delivery_time');
+        const urlParams = new URLSearchParams(window.location.search);
+        const subtotal      = urlParams.get('subtotal');
+        const productsJSON  = urlParams.get('products');
+        const address       = urlParams.get('address');
+        const cep           = urlParams.get('cep');
+        const deliveryTime  = urlParams.get('delivery_time');
 
         if (address) {
+          document.getElementById('displayAddress').textContent     = address;
           document.getElementById('displayAddressFinal').textContent = address;
 
-          // Atualiza chip de endereço
-          document.getElementById('addrChipText').textContent = address;
-
-          // Título com bairro em destaque
+          // Atualiza o título de busca com o bairro extraído
           const bairro = extrairBairro(address);
           if (bairro) {
             document.getElementById('searchTitle').innerHTML =
-              'Buscando entregador em<br><span class="bairro-highlight">' + bairro + '</span>';
+              'Buscando entregador em <span class="bairro-highlight">' + bairro + '</span>';
+            document.getElementById('searchSubtitle').textContent =
+              'Localizando o melhor parceiro para sua entrega.';
           }
 
           if (cep) {
-            document.getElementById('displayCityFinal').textContent = 'CEP: ' + cep;
+            const cityText = 'CEP: ' + cep;
+            document.getElementById('displayCity').textContent     = cityText;
+            document.getElementById('displayCityFinal').textContent = cityText;
           }
         }
 
-        if (productsJSON) localStorage.setItem('cart_products', productsJSON);
-        if (address)      localStorage.setItem('delivery_address', address);
-        if (deliveryTime) localStorage.setItem('delivery_time', deliveryTime);
+        if (productsJSON)  localStorage.setItem('cart_products',    productsJSON);
+        if (address)       localStorage.setItem('delivery_address', address);
+        if (deliveryTime)  localStorage.setItem('delivery_time',    deliveryTime);
 
         const redirecionarParaCheckout = () => {
-          document.getElementById('fullLoading').style.display = 'flex';
+          const overlay = document.getElementById('fullLoading');
+          overlay.style.display = 'flex';
+
           const targetParams = new URLSearchParams();
           targetParams.set('subtotal', subtotal || '0.00');
-          if (address)      targetParams.set('address',       address);
-          if (cep)          targetParams.set('cep',           cep);
-          if (deliveryTime) targetParams.set('delivery_time', deliveryTime);
-          if (productsJSON) targetParams.set('products',      productsJSON);
+          if (address)       targetParams.set('address',       address);
+          if (cep)           targetParams.set('cep',           cep);
+          if (deliveryTime)  targetParams.set('delivery_time', deliveryTime);
+          if (productsJSON)  targetParams.set('products',      productsJSON);
+
           setTimeout(() => {
             window.location.href = CHECKOUT_URL + '?' + targetParams.toString();
           }, 2000);
