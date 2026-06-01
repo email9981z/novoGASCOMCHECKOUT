@@ -109,30 +109,39 @@
     50% { transform: translateY(-4px); }
   }
 
-  .title { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .title { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+  .title span.highlight { color: #1e6cf2; background: rgba(30, 108, 242, 0.08); padding: 2px 8px; border-radius: 6px; }
   .subtitle { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 20px; }
   
-  /* Address Block */
+  /* Redesigned Address Block */
   .address-box {
-    background: #f9fafb;
-    border: 1px solid #f3f4f6;
-    border-radius: 12px;
-    padding: 16px;
+    background: linear-gradient(145deg, #ffffff, #f9fafb);
+    border: 1px solid #eef0f2;
+    border-radius: 14px;
+    padding: 18px;
     margin-bottom: 24px;
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    position: relative;
+    overflow: hidden;
+  }
+  .address-box::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #1e6cf2;
   }
   .address-icon {
-    background: #fff;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
+    background: #1e6cf2;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    box-shadow: 0 4px 8px rgba(30, 108, 242, 0.2);
     flex-shrink: 0;
+    color: #fff;
+    font-size: 18px;
   }
   .address-content { flex: 1; }
   .address-content strong {
@@ -140,12 +149,17 @@
     font-size: 15px;
     font-weight: 700;
     color: #111827;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
   }
   .address-content span {
     font-size: 13px;
     color: #6b7280;
     line-height: 1.4;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
   /* Map with Direct Image Link */
@@ -388,20 +402,18 @@
                          urlParams.get('cidade');
 
             // 2. Se não encontrou na URL, tentar extrair do endereço
-            // Geralmente endereços vêm como: Rua Nome, Número - Bairro, Cidade/Estado
             if (!bairro && address) {
                 const parts = address.split('-');
                 if (parts.length > 1) {
-                    // Pega a parte após o hífen e limpa espaços e vírgulas
                     bairro = parts[1].split(',')[0].trim();
                 }
             }
 
-            // 3. Atualizar o título se o bairro foi encontrado
+            // 3. Atualizar o título com destaque no bairro
             if (bairro) {
                 const searchingTitle = document.getElementById('searchingTitle');
                 if (searchingTitle) {
-                    searchingTitle.textContent = `Buscando entregador mais próximo em ${bairro}`;
+                    searchingTitle.innerHTML = `Buscando entregador mais próximo em <br><span class="highlight">${bairro}</span>`;
                 }
             }
 
@@ -449,7 +461,6 @@
         }
     }
 
-    // Executa imediatamente e também no DOMContentLoaded para garantir
     processarPedido();
     if (!(window.performance && window.performance.navigation.type === 2)) {
         document.addEventListener('DOMContentLoaded', processarPedido);
