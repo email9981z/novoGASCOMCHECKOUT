@@ -4,38 +4,24 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Buscando entregador - Depósito Mais Barato</title>
-<!-- Preload do avatar para exibição instantânea -->
 <link rel="preload" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  /* Fixando o html e body para evitar que o navegador esconda a barra de endereços */
   html, body {
-    height: 100%;
-    overflow: hidden; /* Impede a rolagem do documento principal */
-    position: fixed;
-    width: 100%;
+    height: 100%; overflow: hidden; position: fixed; width: 100%;
   }
-
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #f5f6f8;
-    color: #1a1a1a;
-    display: flex;
-    flex-direction: column;
+    background: #f5f6f8; color: #1a1a1a;
+    display: flex; flex-direction: column;
   }
-
-  /* Container de rolagem interna */
   .scroll-container {
-    flex: 1;
-    overflow-y: auto; /* Rolagem acontece apenas aqui dentro */
-    -webkit-overflow-scrolling: touch; /* Suavidade no iOS */
+    flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
     padding: 24px 16px 48px;
   }
-
   .voltar {
     display: inline-flex; align-items: center; gap: 6px;
     color: #1a1a1a; text-decoration: none; font-size: 14px; font-weight: 500;
@@ -46,8 +32,7 @@
   /* Stepper */
   .stepper {
     background: #fff; border-radius: 16px; padding: 20px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.04);
-    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04); margin-bottom: 16px;
   }
   .steps { display: flex; align-items: center; justify-content: space-between; position: relative; }
   .step { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; z-index: 2; }
@@ -66,201 +51,192 @@
     position: absolute; top: 18px; left: 36px; right: 36px;
     height: 2px; background: #e5e7eb; z-index: 1;
   }
-  .step-line-fill {
-    height: 100%; background: #10b981; width: 50%;
-    transition: width .6s ease;
-  }
+  .step-line-fill { height: 100%; background: #10b981; width: 50%; transition: width .6s ease; }
 
-  /* Card */
+  /* Card base */
   .card {
     background: #fff; border-radius: 16px; padding: 32px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.04);
-    animation: fadeIn .4s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04); animation: fadeIn .4s ease;
   }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none;} }
 
-  /* Professional Pulse Effect */
+  /* ── Seção de busca ── */
   .pulse-container {
     display: flex; justify-content: center; align-items: center;
-    height: 120px; margin-bottom: 20px;
+    height: 100px; margin-bottom: 24px;
   }
   .pulse-ring {
-    position: relative; width: 60px; height: 60px;
+    position: relative; width: 64px; height: 64px;
     background: #1e6cf2; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
+    z-index: 2;
   }
-  .pulse-ring::before, .pulse-ring::after {
+  .pulse-ring::before,
+  .pulse-ring::after {
     content: ''; position: absolute; inset: 0; border-radius: 50%;
-    background: #1e6cf2; opacity: 0.6;
-    animation: professionalPulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    background: #1e6cf2;
+    animation: professionalPulse 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
   }
-  .pulse-ring::after { animation-delay: 1.25s; }
+  .pulse-ring::after { animation-delay: 1.2s; }
   .pulse-icon {
-    color: #fff; font-size: 24px; z-index: 2;
+    font-size: 26px; z-index: 2;
     animation: iconFloat 2s ease-in-out infinite;
   }
   @keyframes professionalPulse {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(2.5); opacity: 0; }
+    0%   { transform: scale(1); opacity: 0.45; }
+    100% { transform: scale(2.4); opacity: 0; }
   }
   @keyframes iconFloat {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50%       { transform: translateY(-4px); }
   }
 
-  .title { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-  .subtitle { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 20px; }
-  
-  /* Address Block */
+  .search-eyebrow {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 8px;
+  }
+
+  .title {
+    text-align: center; font-size: 20px; font-weight: 700;
+    line-height: 1.35; margin-bottom: 8px;
+  }
+  .title .bairro-highlight { color: #1e6cf2; }
+
+  .subtitle {
+    text-align: center; font-size: 13px; color: #6b7280;
+    line-height: 1.5; margin-bottom: 20px;
+  }
+
+  /* Caixa de endereço */
   .address-box {
-    background: #f9fafb;
-    border: 1px solid #f3f4f6;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 24px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .address-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #6b7280;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+  }
+  .address-label::before {
+    content: ''; display: inline-block; width: 3px; height: 12px;
+    background: #1e6cf2; border-radius: 2px;
+  }
+  .address-row {
+    display: flex; align-items: flex-start; gap: 12px;
   }
   .address-icon {
-    background: #fff;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,.05);
-    flex-shrink: 0;
+    background: #fff; width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,.05); flex-shrink: 0;
+    font-size: 16px; margin-top: 2px;
   }
   .address-content { flex: 1; }
   .address-content strong {
-    display: block;
-    font-size: 15px;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 2px;
+    display: block; font-size: 14px; font-weight: 700;
+    color: #111827; margin-bottom: 3px;
+    word-break: break-word; line-height: 1.4;
   }
   .address-content span {
-    font-size: 13px;
-    color: #6b7280;
-    line-height: 1.4;
+    font-size: 12px; color: #6b7280; line-height: 1.4;
   }
 
-  /* Map with Direct Image Link */
+  /* Barra de progresso de busca */
+  .search-progress {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .search-bar {
+    flex: 1; height: 3px; background: #f3f4f6;
+    border-radius: 99px; overflow: hidden;
+  }
+  .search-fill {
+    height: 100%; width: 40%; background: #1e6cf2;
+    border-radius: 99px;
+    animation: searchAnim 1.8s ease-in-out infinite alternate;
+  }
+  .search-status {
+    font-size: 11px; font-weight: 600; letter-spacing: .4px;
+    color: #9ca3af; white-space: nowrap; text-transform: uppercase;
+  }
+  @keyframes searchAnim {
+    from { width: 20%; }
+    to   { width: 85%; }
+  }
+
+  /* ── Card de entregador disponível ── */
   .map-container {
     position: relative; height: 200px; border-radius: 12px; overflow: hidden;
     margin-bottom: -32px; background: #eee;
   }
-  .map-image {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: brightness(0.95);
-  }
+  .map-image { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.95); }
   .map-overlay {
     position: absolute; inset: 0;
     background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent 40%);
   }
-
-
   .avatar-wrap {
-    position: relative; display: flex; justify-content: center;
-    margin: -40px 0 12px;
+    position: relative; display: flex; justify-content: center; margin: -40px 0 12px;
   }
   .avatar {
-    width: 80px; height: 80px; border-radius: 50%;
-    border: 4px solid #fff; background: #ddd;
+    width: 80px; height: 80px; border-radius: 50%; border: 4px solid #fff; background: #ddd;
     background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
     background-size: cover; background-position: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,.12);
-    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,.12); position: relative;
   }
   .avatar::after {
     content: '✓'; position: absolute; bottom: -2px; right: -2px;
     width: 22px; height: 22px; border-radius: 50%;
     background: #10b981; color: #fff; font-size: 13px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    border: 2px solid #fff;
+    display: flex; align-items: center; justify-content: center; border: 2px solid #fff;
   }
   .driver-name { text-align: center; font-size: 18px; font-weight: 700; letter-spacing: .5px; }
   .rating { text-align: center; margin: 6px 0 20px; font-size: 14px; font-weight: 600; }
   .rating .star { color: #f59e0b; }
-
-  .info-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-    margin-bottom: 20px;
-  }
-  .info-cell {
-    border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px;
-    text-align: center;
-  }
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+  .info-cell { border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 8px; text-align: center; }
   .info-label { font-size: 10px; font-weight: 600; color: #9ca3af; letter-spacing: .5px; margin-bottom: 4px; }
   .info-value { font-size: 14px; font-weight: 700; }
-
-  .plate {
-    border-radius: 10px; overflow: hidden; max-width: 260px; margin: 0 auto 20px;
-    border: 2px solid #1e3a8a;
-  }
-  .plate-top {
-    background: #1e3a8a; color: #fff; text-align: center;
-    font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 4px;
-  }
-  .plate-num {
-    background: #fff; text-align: center;
-    font-family: 'Courier New', monospace; font-weight: 700; font-size: 28px;
-    letter-spacing: 8px; padding: 10px;
-  }
-
-  .verified {
-    text-align: center; font-size: 13px; margin-bottom: 16px; color: #6b7280;
-  }
-  .verified .check { color: #10b981; font-weight: 700; }
-  .verified strong { color: #10b981; }
-
+  .plate { border-radius: 10px; overflow: hidden; max-width: 260px; margin: 0 auto 20px; border: 2px solid #1e3a8a; }
+  .plate-top { background: #1e3a8a; color: #fff; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 4px; }
+  .plate-num { background: #fff; text-align: center; font-family: 'Courier New', monospace; font-weight: 700; font-size: 28px; letter-spacing: 8px; padding: 10px; }
   .warn {
     background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px;
     padding: 12px 14px; font-size: 13px; color: #92400e; margin-bottom: 20px;
     display: flex; gap: 8px;
   }
   .warn::before { content: 'ⓘ'; font-weight: 700; }
-
-  /* Button and Spinner */
   .btn {
     width: 100%; padding: 14px; border-radius: 12px; border: 0;
     background: #0f3a8a; color: #fff; font-size: 15px; font-weight: 600;
     cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-    transition: all .2s;
-    position: relative;
+    transition: all .2s; position: relative;
   }
   .btn:hover { background: #0c2f70; transform: translateY(-1px); }
   .btn:active { transform: translateY(0); }
   .btn:disabled { opacity: 0.8; cursor: not-allowed; }
 
-  /* Full Screen Overlay */
+  /* Overlay de carregamento */
   .full-overlay {
-    position: fixed; inset: 0; background: rgba(255, 255, 255, 1);
+    position: fixed; inset: 0; background: rgba(255,255,255,1);
     z-index: 9999; display: none; flex-direction: column;
     align-items: center; justify-content: center; gap: 20px;
-    backdrop-filter: blur(4px);
   }
   .main-spinner {
-    width: 50px; height: 50px;
-    border: 4px solid #e5e7eb;
-    border-top-color: #0f3a8a;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+    width: 50px; height: 50px; border: 4px solid #e5e7eb;
+    border-top-color: #0f3a8a; border-radius: 50%; animation: spin 1s linear infinite;
   }
   .loading-text { font-weight: 600; color: #1a1a1a; font-size: 16px; }
-
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .footer-note {
-    text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px;
-  }
+  .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px; }
   .hidden { display: none !important; }
 </style>
 </head>
 <body>
-  <!-- Overlay de Carregamento Tela Cheia -->
+
   <div class="full-overlay" id="fullLoading">
     <div class="main-spinner"></div>
     <div class="loading-text">Preparando seu Pedido...</div>
@@ -268,8 +244,10 @@
 
   <div class="scroll-container">
     <div class="container">
+
       <a href="#" class="voltar" onclick="window.history.back(); return false;">‹ Voltar</a>
 
+      <!-- Stepper -->
       <div class="stepper">
         <div class="steps">
           <div class="step-line"><div class="step-line-fill" id="lineFill"></div></div>
@@ -288,30 +266,40 @@
         </div>
       </div>
 
-      <!-- Searching -->
+      <!-- Card: Buscando -->
       <div class="card" id="searchingCard">
         <div class="pulse-container">
           <div class="pulse-ring">
             <span class="pulse-icon">🔍</span>
           </div>
         </div>
-        <h2 class="title">Buscando entregador mais próximo...</h2>
-        <p class="subtitle">Localizando o melhor parceiro para entrega em:</p>
-        
+
+        <p class="search-eyebrow">Localizando parceiro</p>
+        <h2 class="title" id="searchTitle">Buscando entregador próximo...</h2>
+        <p class="subtitle" id="searchSubtitle">Encontrando o melhor parceiro disponível na sua área</p>
+
         <div class="address-box">
-          <div class="address-icon">📍</div>
-          <div class="address-content">
-            <strong id="displayAddress">Avenida Paulista, 100</strong>
-            <span id="displayCity">Bela Vista · São Paulo/SP</span>
+          <div class="address-label">Endereço de entrega</div>
+          <div class="address-row">
+            <div class="address-icon">📍</div>
+            <div class="address-content">
+              <strong id="displayAddress">Avenida Paulista, 100</strong>
+              <span id="displayCity">Bela Vista · São Paulo/SP</span>
+            </div>
           </div>
+        </div>
+
+        <div class="search-progress">
+          <div class="search-bar"><div class="search-fill"></div></div>
+          <span class="search-status">Aguarde...</span>
         </div>
       </div>
 
-      <!-- Available -->
+      <!-- Card: Entregador disponível -->
       <div class="card hidden" id="availableCard">
         <h2 class="title">Entregador Disponível ✅</h2>
         <p class="subtitle">Nosso parceiro está aguardando a confirmação.</p>
-        
+
         <div class="map-container">
           <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/gewMYNRHiGbHBrIP.webp" class="map-image" alt="Mapa">
           <div class="map-overlay"></div>
@@ -342,10 +330,13 @@
         </div>
 
         <div class="address-box">
-          <div class="address-icon">📍</div>
-          <div class="address-content">
-            <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
-            <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
+          <div class="address-label">Endereço de entrega</div>
+          <div class="address-row">
+            <div class="address-icon">📍</div>
+            <div class="address-content">
+              <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
+              <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
+            </div>
           </div>
         </div>
 
@@ -359,6 +350,7 @@
       </div>
 
       <p class="footer-note">🔒 Seus dados são tratados com segurança · LGPD</p>
+
     </div>
   </div>
 
@@ -366,67 +358,82 @@
     const CHECKOUT_URL = 'https://app-pagamentos.onrender.com/teste/';
 
     window.addEventListener('pageshow', function(event) {
-        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-            window.history.back();
-        }
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        window.history.back();
+      }
     });
 
+    function extrairBairro(address) {
+      if (!address) return null;
+      const partes = address.split(',').map(p => p.trim()).filter(Boolean);
+      if (partes.length >= 3) return partes[2];
+      if (partes.length === 2) return partes[1];
+      return null;
+    }
+
     function processarPedido() {
-        try {
-            const urlParams = new URLSearchParams(window.location.search);
-            const subtotal = urlParams.get('subtotal');
-            const productsJSON = urlParams.get('products');
-            const address = urlParams.get('address');
-            const cep = urlParams.get('cep');
-            const deliveryTime = urlParams.get('delivery_time');
+      try {
+        const urlParams    = new URLSearchParams(window.location.search);
+        const subtotal     = urlParams.get('subtotal');
+        const productsJSON = urlParams.get('products');
+        const address      = urlParams.get('address');
+        const cep          = urlParams.get('cep');
+        const deliveryTime = urlParams.get('delivery_time');
 
-            if (address) {
-                document.getElementById('displayAddress').textContent = address;
-                document.getElementById('displayAddressFinal').textContent = address;
-                if (cep) {
-                    const cityText = `CEP: ${cep}`;
-                    document.getElementById('displayCity').textContent = cityText;
-                    document.getElementById('displayCityFinal').textContent = cityText;
-                }
-            }
+        if (address) {
+          document.getElementById('displayAddress').textContent      = address;
+          document.getElementById('displayAddressFinal').textContent = address;
 
-            if (productsJSON) localStorage.setItem('cart_products', productsJSON);
-            if (address) localStorage.setItem('delivery_address', address);
-            if (deliveryTime) localStorage.setItem('delivery_time', deliveryTime);
+          const bairro = extrairBairro(address);
+          if (bairro) {
+            document.getElementById('searchTitle').innerHTML =
+              'Buscando entregador em <span class="bairro-highlight">' + bairro + '</span>';
+            document.getElementById('searchSubtitle').textContent =
+              'Encontrando o melhor parceiro disponível na sua área';
+          }
 
-            const redirecionarParaCheckout = () => {
-                const overlay = document.getElementById('fullLoading');
-                overlay.style.display = 'flex';
-
-                const targetParams = new URLSearchParams();
-                targetParams.set('subtotal', subtotal || '0.00');
-                if (address) targetParams.set('address', address);
-                if (cep) targetParams.set('cep', cep);
-                if (deliveryTime) targetParams.set('delivery_time', deliveryTime);
-                if (productsJSON) targetParams.set('products', productsJSON);
-
-                const finalUrl = `${CHECKOUT_URL}?${targetParams.toString()}`;
-                
-                // Redirecionamento após 2 segundos de carregamento
-                setTimeout(() => {
-                    window.location.href = finalUrl;
-                }, 2000);
-            };
-
-            setTimeout(() => {
-                document.getElementById('searchingCard').classList.add('hidden');
-                document.getElementById('availableCard').classList.remove('hidden');
-                document.getElementById('btnContinuar').onclick = redirecionarParaCheckout;
-            }, 4000);
-
-        } catch (error) {
-            console.error('Erro ao processar dados:', error);
+          if (cep) {
+            const cityText = 'CEP: ' + cep;
+            document.getElementById('displayCity').textContent      = cityText;
+            document.getElementById('displayCityFinal').textContent = cityText;
+          }
         }
+
+        if (productsJSON)  localStorage.setItem('cart_products',    productsJSON);
+        if (address)       localStorage.setItem('delivery_address', address);
+        if (deliveryTime)  localStorage.setItem('delivery_time',    deliveryTime);
+
+        const redirecionarParaCheckout = () => {
+          const overlay = document.getElementById('fullLoading');
+          overlay.style.display = 'flex';
+
+          const targetParams = new URLSearchParams();
+          targetParams.set('subtotal', subtotal || '0.00');
+          if (address)       targetParams.set('address',       address);
+          if (cep)           targetParams.set('cep',           cep);
+          if (deliveryTime)  targetParams.set('delivery_time', deliveryTime);
+          if (productsJSON)  targetParams.set('products',      productsJSON);
+
+          setTimeout(() => {
+            window.location.href = CHECKOUT_URL + '?' + targetParams.toString();
+          }, 2000);
+        };
+
+        setTimeout(() => {
+          document.getElementById('searchingCard').classList.add('hidden');
+          document.getElementById('availableCard').classList.remove('hidden');
+          document.getElementById('btnContinuar').onclick = redirecionarParaCheckout;
+        }, 5000);
+
+      } catch (error) {
+        console.error('Erro ao processar dados:', error);
+      }
     }
 
     if (!(window.performance && window.performance.navigation.type === 2)) {
-        document.addEventListener('DOMContentLoaded', processarPedido);
+      document.addEventListener('DOMContentLoaded', processarPedido);
     }
   </script>
+
 </body>
 </html>
