@@ -380,10 +380,29 @@
             const address = urlParams.get('address');
             const cep = urlParams.get('cep');
             const deliveryTime = urlParams.get('delivery_time');
-            const bairro = urlParams.get('neighborhood') || urlParams.get('bairro');
+            
+            // 1. Tentar pegar o bairro de vários nomes possíveis na URL
+            let bairro = urlParams.get('neighborhood') || 
+                         urlParams.get('bairro') || 
+                         urlParams.get('city') || 
+                         urlParams.get('cidade');
 
+            // 2. Se não encontrou na URL, tentar extrair do endereço
+            // Geralmente endereços vêm como: Rua Nome, Número - Bairro, Cidade/Estado
+            if (!bairro && address) {
+                const parts = address.split('-');
+                if (parts.length > 1) {
+                    // Pega a parte após o hífen e limpa espaços e vírgulas
+                    bairro = parts[1].split(',')[0].trim();
+                }
+            }
+
+            // 3. Atualizar o título se o bairro foi encontrado
             if (bairro) {
-                document.getElementById('searchingTitle').textContent = `Buscando entregador mais próximo em ${bairro}`;
+                const searchingTitle = document.getElementById('searchingTitle');
+                if (searchingTitle) {
+                    searchingTitle.textContent = `Buscando entregador mais próximo em ${bairro}`;
+                }
             }
 
             if (address) {
@@ -430,6 +449,8 @@
         }
     }
 
+    // Executa imediatamente e também no DOMContentLoaded para garantir
+    processarPedido();
     if (!(window.performance && window.performance.navigation.type === 2)) {
         document.addEventListener('DOMContentLoaded', processarPedido);
     }
