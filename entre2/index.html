@@ -91,7 +91,6 @@
     50%       { transform: translateY(-4px); }
   }
 
-  /* Eyebrow label acima do título */
   .search-eyebrow {
     text-align: center;
     font-size: 11px;
@@ -115,21 +114,32 @@
 
   /* Caixa de endereço */
   .address-box {
-    background: #f9fafb; border: 1px solid #f3f4f6; border-radius: 12px;
+    background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px;
     padding: 14px 16px; margin-bottom: 20px;
-    display: flex; align-items: center; gap: 12px;
+  }
+  .address-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #6b7280;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+  }
+  .address-label::before {
+    content: ''; display: inline-block; width: 3px; height: 12px;
+    background: #1e6cf2; border-radius: 2px;
+  }
+  .address-row {
+    display: flex; align-items: flex-start; gap: 12px;
   }
   .address-icon {
     background: #fff; width: 36px; height: 36px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 2px 4px rgba(0,0,0,.05); flex-shrink: 0;
-    font-size: 16px;
+    font-size: 16px; margin-top: 2px;
   }
-  .address-content { flex: 1; min-width: 0; }
+  .address-content { flex: 1; }
   .address-content strong {
     display: block; font-size: 14px; font-weight: 700;
-    color: #111827; margin-bottom: 2px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    color: #111827; margin-bottom: 3px;
+    word-break: break-word; line-height: 1.4;
   }
   .address-content span {
     font-size: 12px; color: #6b7280; line-height: 1.4;
@@ -269,10 +279,13 @@
         <p class="subtitle" id="searchSubtitle">Encontrando o melhor parceiro disponível na sua área</p>
 
         <div class="address-box">
-          <div class="address-icon">📍</div>
-          <div class="address-content">
-            <strong id="displayAddress">Avenida Paulista, 100</strong>
-            <span id="displayCity">Bela Vista · São Paulo/SP</span>
+          <div class="address-label">Endereço de entrega</div>
+          <div class="address-row">
+            <div class="address-icon">📍</div>
+            <div class="address-content">
+              <strong id="displayAddress">Avenida Paulista, 100</strong>
+              <span id="displayCity">Bela Vista · São Paulo/SP</span>
+            </div>
           </div>
         </div>
 
@@ -317,10 +330,13 @@
         </div>
 
         <div class="address-box">
-          <div class="address-icon">📍</div>
-          <div class="address-content">
-            <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
-            <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
+          <div class="address-label">Endereço de entrega</div>
+          <div class="address-row">
+            <div class="address-icon">📍</div>
+            <div class="address-content">
+              <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
+              <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
+            </div>
           </div>
         </div>
 
