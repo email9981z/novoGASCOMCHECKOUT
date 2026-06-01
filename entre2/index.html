@@ -28,6 +28,8 @@
     margin-bottom: 24px;
   }
   .container { max-width: 480px; margin: 0 auto; }
+
+  /* Stepper */
   .stepper {
     background: #fff; border-radius: 16px; padding: 20px 24px;
     box-shadow: 0 1px 3px rgba(0,0,0,.04); margin-bottom: 16px;
@@ -50,60 +52,112 @@
     height: 2px; background: #e5e7eb; z-index: 1;
   }
   .step-line-fill { height: 100%; background: #10b981; width: 50%; transition: width .6s ease; }
+
+  /* Card base */
   .card {
     background: #fff; border-radius: 16px; padding: 32px 24px;
     box-shadow: 0 1px 3px rgba(0,0,0,.04); animation: fadeIn .4s ease;
   }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none;} }
+
+  /* ── Seção de busca ── */
   .pulse-container {
     display: flex; justify-content: center; align-items: center;
-    height: 120px; margin-bottom: 20px;
+    height: 100px; margin-bottom: 24px;
   }
   .pulse-ring {
-    position: relative; width: 60px; height: 60px;
+    position: relative; width: 64px; height: 64px;
     background: #1e6cf2; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
+    z-index: 2;
   }
-  .pulse-ring::before, .pulse-ring::after {
+  .pulse-ring::before,
+  .pulse-ring::after {
     content: ''; position: absolute; inset: 0; border-radius: 50%;
-    background: #1e6cf2; opacity: 0.6;
-    animation: professionalPulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    background: #1e6cf2;
+    animation: professionalPulse 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
   }
-  .pulse-ring::after { animation-delay: 1.25s; }
+  .pulse-ring::after { animation-delay: 1.2s; }
   .pulse-icon {
-    color: #fff; font-size: 24px; z-index: 2;
+    font-size: 26px; z-index: 2;
     animation: iconFloat 2s ease-in-out infinite;
   }
   @keyframes professionalPulse {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(2.5); opacity: 0; }
+    0%   { transform: scale(1); opacity: 0.45; }
+    100% { transform: scale(2.4); opacity: 0; }
   }
   @keyframes iconFloat {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
-  .title { text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-
-  /* Destaque do bairro no título */
-  .title .bairro-highlight {
-    color: #1e6cf2;
+    50%       { transform: translateY(-4px); }
   }
 
-  .subtitle { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 20px; }
+  /* Eyebrow label acima do título */
+  .search-eyebrow {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 8px;
+  }
+
+  .title {
+    text-align: center; font-size: 20px; font-weight: 700;
+    line-height: 1.35; margin-bottom: 8px;
+  }
+  .title .bairro-highlight { color: #1e6cf2; }
+
+  .subtitle {
+    text-align: center; font-size: 13px; color: #6b7280;
+    line-height: 1.5; margin-bottom: 20px;
+  }
+
+  /* Caixa de endereço */
   .address-box {
     background: #f9fafb; border: 1px solid #f3f4f6; border-radius: 12px;
-    padding: 16px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 16px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
   }
   .address-icon {
     background: #fff; width: 36px; height: 36px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 2px 4px rgba(0,0,0,.05); flex-shrink: 0;
+    font-size: 16px;
   }
-  .address-content { flex: 1; }
+  .address-content { flex: 1; min-width: 0; }
   .address-content strong {
-    display: block; font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 2px;
+    display: block; font-size: 14px; font-weight: 700;
+    color: #111827; margin-bottom: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .address-content span { font-size: 13px; color: #6b7280; line-height: 1.4; }
+  .address-content span {
+    font-size: 12px; color: #6b7280; line-height: 1.4;
+  }
+
+  /* Barra de progresso de busca */
+  .search-progress {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .search-bar {
+    flex: 1; height: 3px; background: #f3f4f6;
+    border-radius: 99px; overflow: hidden;
+  }
+  .search-fill {
+    height: 100%; width: 40%; background: #1e6cf2;
+    border-radius: 99px;
+    animation: searchAnim 1.8s ease-in-out infinite alternate;
+  }
+  .search-status {
+    font-size: 11px; font-weight: 600; letter-spacing: .4px;
+    color: #9ca3af; white-space: nowrap; text-transform: uppercase;
+  }
+  @keyframes searchAnim {
+    from { width: 20%; }
+    to   { width: 85%; }
+  }
+
+  /* ── Card de entregador disponível ── */
   .map-container {
     position: relative; height: 200px; border-radius: 12px; overflow: hidden;
     margin-bottom: -32px; background: #eee;
@@ -138,9 +192,6 @@
   .plate { border-radius: 10px; overflow: hidden; max-width: 260px; margin: 0 auto 20px; border: 2px solid #1e3a8a; }
   .plate-top { background: #1e3a8a; color: #fff; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 4px; }
   .plate-num { background: #fff; text-align: center; font-family: 'Courier New', monospace; font-weight: 700; font-size: 28px; letter-spacing: 8px; padding: 10px; }
-  .verified { text-align: center; font-size: 13px; margin-bottom: 16px; color: #6b7280; }
-  .verified .check { color: #10b981; font-weight: 700; }
-  .verified strong { color: #10b981; }
   .warn {
     background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px;
     padding: 12px 14px; font-size: 13px; color: #92400e; margin-bottom: 20px;
@@ -156,8 +207,10 @@
   .btn:hover { background: #0c2f70; transform: translateY(-1px); }
   .btn:active { transform: translateY(0); }
   .btn:disabled { opacity: 0.8; cursor: not-allowed; }
+
+  /* Overlay de carregamento */
   .full-overlay {
-    position: fixed; inset: 0; background: rgba(255, 255, 255, 1);
+    position: fixed; inset: 0; background: rgba(255,255,255,1);
     z-index: 9999; display: none; flex-direction: column;
     align-items: center; justify-content: center; gap: 20px;
   }
@@ -167,11 +220,13 @@
   }
   .loading-text { font-weight: 600; color: #1a1a1a; font-size: 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
+
   .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px; }
   .hidden { display: none !important; }
 </style>
 </head>
 <body>
+
   <div class="full-overlay" id="fullLoading">
     <div class="main-spinner"></div>
     <div class="loading-text">Preparando seu Pedido...</div>
@@ -179,8 +234,10 @@
 
   <div class="scroll-container">
     <div class="container">
+
       <a href="#" class="voltar" onclick="window.history.back(); return false;">‹ Voltar</a>
 
+      <!-- Stepper -->
       <div class="stepper">
         <div class="steps">
           <div class="step-line"><div class="step-line-fill" id="lineFill"></div></div>
@@ -199,16 +256,17 @@
         </div>
       </div>
 
-      <!-- Searching -->
+      <!-- Card: Buscando -->
       <div class="card" id="searchingCard">
         <div class="pulse-container">
           <div class="pulse-ring">
             <span class="pulse-icon">🔍</span>
           </div>
         </div>
-        <!-- Título e subtítulo atualizados dinamicamente pelo JS -->
-        <h2 class="title" id="searchTitle">Buscando entregador mais próximo...</h2>
-        <p class="subtitle" id="searchSubtitle">Localizando o melhor parceiro para entrega em:</p>
+
+        <p class="search-eyebrow">Localizando parceiro</p>
+        <h2 class="title" id="searchTitle">Buscando entregador próximo...</h2>
+        <p class="subtitle" id="searchSubtitle">Encontrando o melhor parceiro disponível na sua área</p>
 
         <div class="address-box">
           <div class="address-icon">📍</div>
@@ -217,9 +275,14 @@
             <span id="displayCity">Bela Vista · São Paulo/SP</span>
           </div>
         </div>
+
+        <div class="search-progress">
+          <div class="search-bar"><div class="search-fill"></div></div>
+          <span class="search-status">Aguarde...</span>
+        </div>
       </div>
 
-      <!-- Available -->
+      <!-- Card: Entregador disponível -->
       <div class="card hidden" id="availableCard">
         <h2 class="title">Entregador Disponível ✅</h2>
         <p class="subtitle">Nosso parceiro está aguardando a confirmação.</p>
@@ -271,6 +334,7 @@
       </div>
 
       <p class="footer-note">🔒 Seus dados são tratados com segurança · LGPD</p>
+
     </div>
   </div>
 
@@ -283,12 +347,9 @@
       }
     });
 
-    // Tenta extrair o bairro de uma string de endereço
-    // Formato esperado: "Rua X, 100, Bairro" ou "Rua X, Bairro"
     function extrairBairro(address) {
       if (!address) return null;
       const partes = address.split(',').map(p => p.trim()).filter(Boolean);
-      // Bairro costuma ser o 3º segmento; se não houver, tenta o 2º
       if (partes.length >= 3) return partes[2];
       if (partes.length === 2) return partes[1];
       return null;
@@ -296,29 +357,28 @@
 
     function processarPedido() {
       try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const subtotal      = urlParams.get('subtotal');
-        const productsJSON  = urlParams.get('products');
-        const address       = urlParams.get('address');
-        const cep           = urlParams.get('cep');
-        const deliveryTime  = urlParams.get('delivery_time');
+        const urlParams    = new URLSearchParams(window.location.search);
+        const subtotal     = urlParams.get('subtotal');
+        const productsJSON = urlParams.get('products');
+        const address      = urlParams.get('address');
+        const cep          = urlParams.get('cep');
+        const deliveryTime = urlParams.get('delivery_time');
 
         if (address) {
-          document.getElementById('displayAddress').textContent     = address;
+          document.getElementById('displayAddress').textContent      = address;
           document.getElementById('displayAddressFinal').textContent = address;
 
-          // Atualiza o título de busca com o bairro extraído
           const bairro = extrairBairro(address);
           if (bairro) {
             document.getElementById('searchTitle').innerHTML =
               'Buscando entregador em <span class="bairro-highlight">' + bairro + '</span>';
             document.getElementById('searchSubtitle').textContent =
-              'Localizando o melhor parceiro para sua entrega.';
+              'Encontrando o melhor parceiro disponível na sua área';
           }
 
           if (cep) {
             const cityText = 'CEP: ' + cep;
-            document.getElementById('displayCity').textContent     = cityText;
+            document.getElementById('displayCity').textContent      = cityText;
             document.getElementById('displayCityFinal').textContent = cityText;
           }
         }
@@ -358,5 +418,6 @@
       document.addEventListener('DOMContentLoaded', processarPedido);
     }
   </script>
+
 </body>
 </html>
