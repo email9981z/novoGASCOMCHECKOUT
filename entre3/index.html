@@ -297,7 +297,7 @@
 
       <!-- Card: Entregador disponível -->
       <div class="card hidden" id="availableCard">
-        <h2 class="title">Entregador Disponível ✅</h2>
+        <h2 class="title">Entregador Autorizado ✅</h2>
         <p class="subtitle">Nosso parceiro está aguardando a confirmação.</p>
 
         <div class="map-container">
@@ -387,7 +387,7 @@
           const bairro = extrairBairro(address);
           if (bairro) {
             document.getElementById('searchTitle').innerHTML =
-              'Buscando entregador em <span class="bairro-highlight">' + bairro + '</span>';
+              'Buscando entregador próximo em <span class="bairro-highlight">' + bairro + '</span>';
             document.getElementById('searchSubtitle').textContent =
               'Encontrando o melhor parceiro disponível na sua área';
           }
