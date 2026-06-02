@@ -386,9 +386,11 @@
 
           const bairro = extrairBairro(address);
           const uf = address.includes('/') ? address.split('/').pop().trim() : '';
+          
           if (bairro) {
+            const localizacaoTexto = bairro + (uf ? '/' + uf : '');
             document.getElementById('searchTitle').innerHTML =
-              'Buscando entregador próximo em <span class="bairro-highlight">' + bairro + (uf ? '/' + uf : '') + '</span>';
+              'Buscando entregador próximo em <span class="bairro-highlight">' + localizacaoTexto + '</span>';
             document.getElementById('searchSubtitle').textContent =
               'Encontrando o melhor parceiro disponível na sua área';
           }
