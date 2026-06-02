@@ -167,84 +167,121 @@
     to   { width: 85%; }
   }
 
-  /* ── Card de entregador disponível (compacto) ── */
+  /* ── Card de entregador disponível ── */
   .available-card {
-    background: #fff; border-radius: 16px; padding: 20px 20px 24px;
+    background: #fff; border-radius: 16px; padding: 20px 20px 22px;
     box-shadow: 0 1px 3px rgba(0,0,0,.04); animation: fadeIn .4s ease;
   }
 
-  /* Cabeçalho: avatar + info lado a lado */
-  .driver-header {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 16px;
+  /* Cabeçalho do card */
+  .ac-head {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 16px; padding-bottom: 16px;
+    border-bottom: 1px solid #f0f2f5;
   }
-  .avatar {
-    width: 64px; height: 64px; border-radius: 50%;
-    border: 3px solid #fff;
-    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
-    background-size: cover; background-position: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,.12); position: relative; flex-shrink: 0;
+  .ac-head-badge {
+    flex: 1; font-size: 13px; font-weight: 700; color: #111827;
   }
-  .avatar::after {
-    content: '✓'; position: absolute; bottom: -2px; right: -2px;
-    width: 20px; height: 20px; border-radius: 50%;
-    background: #10b981; color: #fff; font-size: 11px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; border: 2px solid #fff;
+  .ac-head-badge span {
+    display: inline-block; background: #edfaf4; color: #0a6640;
+    border: 1px solid #a7f0cc; border-radius: 20px;
+    font-size: 11px; font-weight: 600; padding: 2px 10px; letter-spacing: .2px;
   }
-  .driver-info { flex: 1; min-width: 0; }
-  .driver-name { font-size: 15px; font-weight: 700; letter-spacing: .3px; margin-bottom: 3px; }
-  .rating { font-size: 13px; font-weight: 600; }
-  .rating .star { color: #f59e0b; }
-  .driver-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0;
-    border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 600;
-    margin-top: 4px;
+  .ac-head-status {
+    font-size: 11px; color: #6b7280; font-weight: 500;
   }
 
-  /* Grid de informações compacto */
-  .info-grid {
+  /* Bloco do motorista */
+  .driver-block {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 14px;
+  }
+  .avatar {
+    width: 60px; height: 60px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid #e5e7eb;
+    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
+    background-size: cover; background-position: center;
+    position: relative;
+  }
+  .avatar::after {
+    content: '✓'; position: absolute; bottom: -1px; right: -1px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #10b981; color: #fff; font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; border: 2px solid #fff;
+  }
+  .driver-meta { flex: 1; min-width: 0; }
+  .driver-name {
+    font-size: 14px; font-weight: 700; color: #111827;
+    letter-spacing: .2px; margin-bottom: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .driver-rating {
+    font-size: 12px; color: #6b7280; font-weight: 500; margin-bottom: 5px;
+  }
+  .driver-rating .star { color: #f59e0b; }
+  .driver-plate {
+    display: inline-flex; align-items: stretch;
+    border: 1.5px solid #1e3a8a; border-radius: 6px; overflow: hidden;
+  }
+  .plate-flag {
+    background: #1e3a8a; color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    writing-mode: vertical-rl; text-orientation: mixed;
+    transform: rotate(180deg);
+    padding: 4px 3px; display: flex; align-items: center; justify-content: center;
+  }
+  .plate-num {
+    background: #fff; color: #111827;
+    font-family: 'Courier New', monospace; font-weight: 700;
+    font-size: 15px; letter-spacing: 2px;
+    padding: 5px 8px; display: flex; align-items: center;
+  }
+
+  /* Grid de métricas */
+  .metrics-row {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
     margin-bottom: 14px;
   }
-  .info-cell {
-    border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px 8px; text-align: center;
+  .metric {
+    background: #f9fafb; border-radius: 10px; padding: 9px 8px; text-align: center;
   }
-  .info-label { font-size: 10px; font-weight: 600; color: #9ca3af; letter-spacing: .5px; margin-bottom: 3px; }
-  .info-value { font-size: 13px; font-weight: 700; }
+  .metric-label {
+    font-size: 10px; font-weight: 600; color: #9ca3af;
+    letter-spacing: .6px; text-transform: uppercase; margin-bottom: 3px;
+  }
+  .metric-value { font-size: 14px; font-weight: 700; color: #111827; }
+  .metric-value.green { color: #0a6640; }
 
-  /* Placa compacta */
-  .plate {
-    border-radius: 8px; overflow: hidden; max-width: 220px;
-    margin: 0 auto 14px; border: 2px solid #1e3a8a;
-  }
-  .plate-top {
-    background: #1e3a8a; color: #fff; text-align: center;
-    font-size: 10px; font-weight: 700; letter-spacing: 2px; padding: 3px;
-  }
-  .plate-num {
-    background: #fff; text-align: center;
-    font-family: 'Courier New', monospace; font-weight: 700;
-    font-size: 22px; letter-spacing: 6px; padding: 7px;
-  }
-
-  /* Endereço compacto */
-  .address-box-sm {
+  /* Endereço */
+  .dest-row {
+    display: flex; align-items: flex-start; gap: 10px;
     background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px;
-    padding: 10px 14px; margin-bottom: 14px;
+    padding: 10px 12px; margin-bottom: 14px;
   }
-  .address-box-sm .address-label { margin-bottom: 6px; }
-  .address-box-sm .address-icon { width: 30px; height: 30px; font-size: 14px; }
-  .address-box-sm .address-content strong { font-size: 13px; }
-  .address-box-sm .address-content span { font-size: 11px; }
+  .dest-pin {
+    width: 28px; height: 28px; border-radius: 8px; background: #e8f0fe;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; margin-top: 1px;
+  }
+  .dest-content strong {
+    display: block; font-size: 13px; font-weight: 700;
+    color: #111827; line-height: 1.4; margin-bottom: 1px;
+  }
+  .dest-content span { font-size: 11px; color: #6b7280; }
 
-  /* Aviso compacto */
+  /* Aviso */
   .warn {
+    display: flex; align-items: flex-start; gap: 8px;
     background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px;
-    padding: 10px 12px; font-size: 12px; color: #92400e; margin-bottom: 16px;
-    display: flex; gap: 8px; line-height: 1.4;
+    padding: 10px 12px; font-size: 12px; color: #78350f;
+    line-height: 1.5; margin-bottom: 14px;
   }
-  .warn::before { content: 'ⓘ'; font-weight: 700; flex-shrink: 0; }
+  .warn-icon {
+    flex-shrink: 0; width: 16px; height: 16px; border-radius: 50%;
+    background: #f59e0b; color: #fff;
+    font-size: 10px; font-weight: 700; display: flex;
+    align-items: center; justify-content: center; margin-top: 1px;
+  }
 
   .btn {
     width: 100%; padding: 14px; border-radius: 12px; border: 0;
@@ -333,61 +370,63 @@
         </div>
       </div>
 
-      <!-- Card: Entregador disponível (compacto) -->
+      <!-- Card: Entregador disponível -->
       <div class="available-card hidden" id="availableCard">
 
-        <h2 class="title" style="margin-bottom: 4px;">Entregador Autorizado ✅</h2>
-        <p class="subtitle" style="margin-bottom: 16px;">Nosso parceiro está aguardando a confirmação.</p>
+        <!-- Cabeçalho -->
+        <div class="ac-head">
+          <div class="ac-head-badge">
+            Entregador encontrado &nbsp;<span>✓ Autorizado</span>
+          </div>
+          <div class="ac-head-status">Aguardando confirmação</div>
+        </div>
 
-        <!-- Cabeçalho do motorista -->
-        <div class="driver-header">
+        <!-- Motorista -->
+        <div class="driver-block">
           <div class="avatar"></div>
-          <div class="driver-info">
+          <div class="driver-meta">
             <div class="driver-name">THIAGO CALLEGARI SILVA</div>
-            <div class="rating"><span class="star">★</span> 4.9 (Excelente)</div>
-            <div class="driver-badge">✓ Vendedor Autorizado</div>
-          </div>
-          <div class="plate">
-            <div class="plate-top">BRASIL</div>
-            <div class="plate-num">LYO-4B46</div>
-          </div>
-        </div>
-
-        <!-- Infos -->
-        <div class="info-grid">
-          <div class="info-cell">
-            <div class="info-label">DISTÂNCIA</div>
-            <div class="info-value">3.9 km</div>
-          </div>
-          <div class="info-cell">
-            <div class="info-label">ENTREGA</div>
-            <div class="info-value">20 min</div>
-          </div>
-          <div class="info-cell">
-            <div class="info-label">AVALIAÇÃO</div>
-            <div class="info-value">4.9 ★</div>
-          </div>
-        </div>
-
-        <!-- Endereço -->
-        <div class="address-box-sm">
-          <div class="address-label">Endereço de entrega</div>
-          <div class="address-row">
-            <div class="address-icon">📍</div>
-            <div class="address-content">
-              <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
-              <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
+            <div class="driver-rating"><span class="star">★</span> 4.9 &nbsp;·&nbsp; Excelente</div>
+            <div class="driver-plate">
+              <div class="plate-flag">BRASIL</div>
+              <div class="plate-num">LYO-4B46</div>
             </div>
+          </div>
+        </div>
+
+        <!-- Métricas -->
+        <div class="metrics-row">
+          <div class="metric">
+            <div class="metric-label">Distância</div>
+            <div class="metric-value">3,9 km</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Previsão</div>
+            <div class="metric-value">20 min</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Instalação</div>
+            <div class="metric-value green">Inclusa</div>
+          </div>
+        </div>
+
+        <!-- Endereço de entrega -->
+        <div class="dest-row">
+          <div class="dest-pin">📍</div>
+          <div class="dest-content">
+            <strong id="displayAddressFinal">Avenida Paulista, 100</strong>
+            <span id="displayCityFinal">Bela Vista · São Paulo/SP</span>
           </div>
         </div>
 
         <!-- Aviso -->
         <div class="warn">
-          O entregador possui autorização para realizar a instalação do gás caso o cliente precise.
+          <div class="warn-icon">i</div>
+          <span>O entregador está autorizado a realizar a instalação do gás, se necessário.</span>
         </div>
 
         <button class="btn" id="btnContinuar">
-          <span>Prosseguir →</span>
+          <span>Prosseguir para pagamento →</span>
         </button>
       </div>
 
