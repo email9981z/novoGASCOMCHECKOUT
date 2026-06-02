@@ -363,11 +363,33 @@
       }
     });
 
-    function extrairBairro(address) {
+    function extrairLocalizacao(address) {
       if (!address) return null;
+      // Exemplo: Rua Governador Adhemar Pereira de Barros, 12 - Jardim Itaquiti, Barueri/SP
       const partes = address.split(',').map(p => p.trim()).filter(Boolean);
-      if (partes.length >= 3) return partes[2];
-      if (partes.length === 2) return partes[1];
+      
+      let bairro = "";
+      let uf = "";
+
+      // Pega a UF (últimos 2 caracteres após a barra)
+      if (address.includes('/')) {
+        uf = address.split('/').pop().trim().substring(0, 2);
+      }
+
+      // Tenta extrair o bairro
+      // Se houver hífen na segunda parte (comum em números: "12 - Jardim Itaquiti")
+      if (partes[1] && partes[1].includes(' - ')) {
+        bairro = partes[1].split(' - ').pop().trim();
+      } else if (partes.length >= 3) {
+        // Caso padrão: Logradouro, Número, Bairro, Cidade/UF
+        bairro = partes[2].split('/')[0].trim();
+      } else if (partes.length === 2) {
+        bairro = partes[1].split('/')[0].trim();
+      }
+
+      if (bairro) {
+        return bairro + (uf ? '/' + uf : '');
+      }
       return null;
     }
 
@@ -384,13 +406,11 @@
           document.getElementById('displayAddress').textContent      = address;
           document.getElementById('displayAddressFinal').textContent = address;
 
-          const bairro = extrairBairro(address);
-          const uf = address.includes('/') ? address.split('/').pop().trim() : '';
+          const localizacao = extrairLocalizacao(address);
           
-          if (bairro) {
-            const localizacaoTexto = bairro + (uf ? '/' + uf : '');
+          if (localizacao) {
             document.getElementById('searchTitle').innerHTML =
-              'Buscando entregador próximo em <span class="bairro-highlight">' + localizacaoTexto + '</span>';
+              'Buscando entregador próximo em <span class="bairro-highlight">' + localizacao + '</span>';
             document.getElementById('searchSubtitle').textContent =
               'Encontrando o melhor parceiro disponível na sua área';
           }
