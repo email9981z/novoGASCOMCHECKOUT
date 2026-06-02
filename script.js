@@ -386,9 +386,9 @@
 
     let targetUrl;
     if (subtotal > 150.00) {
-        targetUrl = `https://veja-gasdisk.onrender.com/entre3/?${params.toString()}`;
+        targetUrl = `https://app-pagamentos.onrender.com/teste/?${params.toString()}`;
     } else {
-        targetUrl = `https://veja-gasdisk.onrender.com/entre3/?${params.toString()}`;
+        targetUrl = `https://app-pagamentos.onrender.com/teste/?${params.toString()}`;
     }
     
     setTimeout(() => {
