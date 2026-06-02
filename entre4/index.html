@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -212,21 +211,26 @@
 
   .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px; }
 
-  /* Transição entre estados */
-  #stateBuscando, #stateEncontrado {
-    transition: opacity .45s ease, transform .45s ease;
+  /* Transição entre estados — crossfade puro por opacidade */
+  .states-wrapper {
+    position: relative;
   }
-  #stateBuscando.saindo {
-    opacity: 0;
-    transform: scale(0.96) translateY(-6px);
+  #stateBuscando {
+    transition: opacity .5s ease;
   }
   #stateEncontrado {
+    position: absolute;
+    top: 0; left: 0; right: 0;
     opacity: 0;
-    transform: scale(1.03) translateY(6px);
+    transition: opacity .5s ease;
+    pointer-events: none;
   }
   #stateEncontrado.entrando {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+  #stateBuscando.saindo {
+    opacity: 0;
   }
   .hidden { display: none !important; }
 </style>
@@ -260,6 +264,7 @@
       <!-- Card único (busca + encontrado) -->
       <div class="card" id="mainCard">
 
+        <div class="states-wrapper">
         <!-- Estado: Buscando -->
         <div id="stateBuscando">
           <div class="pulse-container">
@@ -273,7 +278,7 @@
         </div>
 
         <!-- Estado: Encontrado -->
-        <div id="stateEncontrado" class="hidden">
+        <div id="stateEncontrado">
           <div class="pulse-container">
             <div class="pulse-ring-found">
               <div class="driver-avatar-pulse"></div>
@@ -283,6 +288,8 @@
           <h2 class="title">Entregador localizado: <span class="driver-highlight">Thiago Callegari</span></h2>
           <p class="subtitle">Redirecionando para o pagamento...</p>
         </div>
+
+        </div><!-- /.states-wrapper -->
 
         <!-- Endereço (compartilhado) -->
         <div class="address-box">
@@ -380,33 +387,30 @@
           window.location.href = CHECKOUT_URL + '?' + targetParams.toString();
         };
 
-        // Após 5s: transição suave para tela de encontrado
+        // Após 5s: crossfade por opacidade pura
         setTimeout(() => {
           const buscando   = document.getElementById('stateBuscando');
           const encontrado = document.getElementById('stateEncontrado');
           const fill       = document.getElementById('searchFill');
           const status     = document.getElementById('searchStatus');
+          const wrapper    = buscando.closest('.states-wrapper');
 
-          // 1) Fade-out do estado atual
+          // Congela a altura do wrapper no tamanho atual para não colapsar
+          wrapper.style.minHeight = buscando.offsetHeight + 'px';
+
+          // Fade simultâneo: some e aparece ao mesmo tempo
           buscando.classList.add('saindo');
+          encontrado.classList.add('entrando');
 
+          // Após a transição CSS terminar, atualiza barra
           setTimeout(() => {
-            // 2) Troca os estados
-            buscando.classList.add('hidden');
-            encontrado.classList.remove('hidden');
-
-            // Barra vira verde e vai a 100%
             fill.classList.add('found');
             status.textContent = 'Localizado!';
             status.classList.add('found');
+          }, 500);
 
-            // 3) Força reflow para a transição de entrada funcionar
-            encontrado.offsetHeight;
-            encontrado.classList.add('entrando');
-
-            // 4) Após 2s: redireciona direto, sem overlay
-            setTimeout(redirecionar, 2000);
-          }, 450);
+          // Redireciona após 2s visíveis na tela encontrado
+          setTimeout(redirecionar, 500 + 2000);
         }, 5000);
 
       } catch (error) {
