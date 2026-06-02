@@ -79,24 +79,6 @@
   .pulse-ring::after { animation-delay: 1.2s; }
   .pulse-icon { font-size: 28px; z-index: 2; animation: float 2s ease-in-out infinite; }
 
-  /* Encontrado: anel verde com foto */
-  .pulse-ring-found {
-    position: relative; width: 68px; height: 68px;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2;
-  }
-  .pulse-ring-found::before, .pulse-ring-found::after {
-    content: ''; position: absolute; inset: 0; border-radius: 50%;
-    background: #10b981;
-    animation: ripple 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-  }
-  .pulse-ring-found::after { animation-delay: 1.2s; }
-  .driver-avatar-pulse {
-    width: 68px; height: 68px; border-radius: 50%; z-index: 2; position: relative;
-    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
-    background-size: cover; background-position: center;
-    border: 3px solid #fff;
-    box-shadow: 0 0 0 3px #10b981;
-  }
 
   @keyframes ripple {
     0%   { transform: scale(1); opacity: .4; }
@@ -114,7 +96,6 @@
     margin-bottom: 8px;
   }
   .eyebrow.searching { color: #9ca3af; }
-  .eyebrow.found     { color: #10b981; }
 
   /* Título e subtitle */
   .title {
@@ -122,7 +103,6 @@
     line-height: 1.35; margin-bottom: 6px;
   }
   .title .bairro-highlight { color: #1e6cf2; }
-  .title .driver-highlight { color: #059669; }
   .subtitle {
     text-align: center; font-size: 13px; color: #6b7280;
     line-height: 1.5; margin-bottom: 22px;
@@ -190,15 +170,54 @@
   /* ── Crossfade entre estados ── */
   .states-wrapper { position: relative; }
   #stateBuscando  { transition: opacity .55s ease; }
-  #stateEncontrado {
-    position: absolute; top: 0; left: 0; right: 0;
-    opacity: 0; transition: opacity .55s ease; pointer-events: none;
-  }
   #stateBuscando.saindo   { opacity: 0; }
-  #stateEncontrado.entrando { opacity: 1; pointer-events: auto; }
+
+  /* ── Overlay de carregamento ── */
+  #loadingOverlay {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  #loadingOverlay.visivel {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #1e6cf2;
+    border-radius: 50%;
+    animation: spin .75s linear infinite;
+  }
+  .loading-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+    letter-spacing: .2px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 </style>
 </head>
 <body>
+
+  <!-- Overlay de carregamento -->
+  <div id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <span class="loading-text">Preparando Pedido</span>
+  </div>
+
   <div class="scroll-container">
     <div class="container">
 
@@ -238,18 +257,6 @@
             <p class="eyebrow searching">Localizando parceiro</p>
             <h2 class="title" id="searchTitle">Buscando entregador próximo...</h2>
             <p class="subtitle">Encontrando o melhor parceiro disponível na sua área</p>
-          </div>
-
-          <!-- Estado: Encontrado -->
-          <div id="stateEncontrado">
-            <div class="pulse-container">
-              <div class="pulse-ring-found">
-                <div class="driver-avatar-pulse"></div>
-              </div>
-            </div>
-            <p class="eyebrow found">✔ Parceiro localizado</p>
-            <h2 class="title">Entregador localizado: <span class="driver-highlight">Thiago Callegari</span></h2>
-            <p class="subtitle" id="subtitleFound">Redirecionando para o pagamento...</p>
           </div>
 
         </div><!-- /.states-wrapper -->
@@ -303,6 +310,14 @@
       return bairro ? bairro + (uf ? '/' + uf : '') : null;
     }
 
+    function mostrarOverlayERedireicionar(url) {
+      const overlay = document.getElementById('loadingOverlay');
+      overlay.classList.add('visivel');
+      setTimeout(function() {
+        window.location.href = url;
+      }, 1000);
+    }
+
     function processarPedido() {
       try {
         const p          = new URLSearchParams(window.location.search);
@@ -329,38 +344,29 @@
         if (address)   localStorage.setItem('delivery_address', address);
         if (delivery)  localStorage.setItem('delivery_time',    delivery);
 
-        const redirecionar = () => {
+        const montarUrl = function() {
           const tp = new URLSearchParams();
           tp.set('subtotal', subtotal || '0.00');
           if (address)  tp.set('address',       address);
           if (cep)      tp.set('cep',           cep);
           if (delivery) tp.set('delivery_time', delivery);
           if (products) tp.set('products',      products);
-          window.location.href = CHECKOUT_URL + '?' + tp.toString();
+          return CHECKOUT_URL + '?' + tp.toString();
         };
 
-        // ── Após 5s: crossfade fluido ──
-        setTimeout(() => {
-          const buscando   = document.getElementById('stateBuscando');
-          const encontrado = document.getElementById('stateEncontrado');
-          const fill       = document.getElementById('searchFill');
-          const status     = document.getElementById('searchStatus');
-          const wrapper    = document.querySelector('.states-wrapper');
+        // Após 5s: barra completa + overlay + redireciona
+        setTimeout(function() {
+          const fill   = document.getElementById('searchFill');
+          const status = document.getElementById('searchStatus');
 
-          // Trava altura para não colapsar durante crossfade
-          wrapper.style.minHeight = buscando.offsetHeight + 'px';
-
-          // Barra completa + verde antes do fade (feedback imediato)
           fill.classList.add('found');
           status.textContent = 'Localizado!';
           status.classList.add('found');
 
-          // Crossfade simultâneo
-          buscando.classList.add('saindo');
-          encontrado.classList.add('entrando');
+          setTimeout(function() {
+            mostrarOverlayERedireicionar(montarUrl());
+          }, 400);
 
-          // Redireciona após 2s visíveis na tela de encontrado
-          setTimeout(redirecionar, 550 + 2000);
         }, 5000);
 
       } catch (err) {
