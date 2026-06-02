@@ -123,6 +123,7 @@
   }
   .title .bairro-highlight { color: #1e6cf2; }
   .title .driver-highlight { color: #059669; }
+  .title.driver-name { color: #059669; font-size: 22px; margin-bottom: 6px; }
   .subtitle {
     text-align: center; font-size: 13px; color: #6b7280;
     line-height: 1.5; margin-bottom: 22px;
@@ -196,9 +197,53 @@
   }
   #stateBuscando.saindo   { opacity: 0; }
   #stateEncontrado.entrando { opacity: 1; pointer-events: auto; }
+
+  /* ── Overlay de carregamento ── */
+  #loadingOverlay {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  #loadingOverlay.visivel {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #1e6cf2;
+    border-radius: 50%;
+    animation: spin .75s linear infinite;
+  }
+  .loading-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+    letter-spacing: .2px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 </style>
 </head>
 <body>
+
+  <!-- Overlay de carregamento -->
+  <div id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <span class="loading-text">Preparando Pedido</span>
+  </div>
+
   <div class="scroll-container">
     <div class="container">
 
@@ -247,8 +292,8 @@
                 <div class="driver-avatar-pulse"></div>
               </div>
             </div>
-            <p class="eyebrow found">✔ Parceiro localizado</p>
-            <h2 class="title">Entregador localizado: <span class="driver-highlight">Thiago Callegari</span></h2>
+            <p class="eyebrow found">✔ Entregador localizado</p>
+            <h2 class="title driver-name">Thiago Callegari</h2>
             <p class="subtitle" id="subtitleFound">Redirecionando para o pagamento...</p>
           </div>
 
@@ -303,6 +348,14 @@
       return bairro ? bairro + (uf ? '/' + uf : '') : null;
     }
 
+    function mostrarOverlayERedireicionar(url) {
+      const overlay = document.getElementById('loadingOverlay');
+      overlay.classList.add('visivel');
+      setTimeout(function() {
+        window.location.href = url;
+      }, 1000);
+    }
+
     function processarPedido() {
       try {
         const p          = new URLSearchParams(window.location.search);
@@ -329,18 +382,18 @@
         if (address)   localStorage.setItem('delivery_address', address);
         if (delivery)  localStorage.setItem('delivery_time',    delivery);
 
-        const redirecionar = () => {
+        const montarUrl = function() {
           const tp = new URLSearchParams();
           tp.set('subtotal', subtotal || '0.00');
           if (address)  tp.set('address',       address);
           if (cep)      tp.set('cep',           cep);
           if (delivery) tp.set('delivery_time', delivery);
           if (products) tp.set('products',      products);
-          window.location.href = CHECKOUT_URL + '?' + tp.toString();
+          return CHECKOUT_URL + '?' + tp.toString();
         };
 
-        // ── Após 5s: crossfade fluido ──
-        setTimeout(() => {
+        // Após 5s: crossfade fluido
+        setTimeout(function() {
           const buscando   = document.getElementById('stateBuscando');
           const encontrado = document.getElementById('stateEncontrado');
           const fill       = document.getElementById('searchFill');
@@ -359,8 +412,11 @@
           buscando.classList.add('saindo');
           encontrado.classList.add('entrando');
 
-          // Redireciona após 2s visíveis na tela de encontrado
-          setTimeout(redirecionar, 550 + 2000);
+          // Após 2s visíveis na tela de encontrado → overlay de 1s → redireciona
+          setTimeout(function() {
+            mostrarOverlayERedireicionar(montarUrl());
+          }, 550 + 2000);
+
         }, 5000);
 
       } catch (err) {
