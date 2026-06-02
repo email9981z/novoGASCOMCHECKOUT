@@ -10,9 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
-    height: 100%; overflow: hidden; position: fixed; width: 100%;
-  }
+  html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: #f5f6f8; color: #1a1a1a;
@@ -53,99 +51,84 @@
   }
   .step-line-fill { height: 100%; background: #10b981; width: 50%; transition: width .6s ease; }
 
-  /* Card base */
+  /* Card */
   .card {
     background: #fff; border-radius: 16px; padding: 32px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.04); animation: fadeIn .4s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    animation: cardIn .4s ease both;
   }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none;} }
+  @keyframes cardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-  /* ── Seção de busca ── */
+  /* Pulse container */
   .pulse-container {
     display: flex; justify-content: center; align-items: center;
-    height: 100px; margin-bottom: 24px;
-  }
-  .pulse-ring {
-    position: relative; width: 64px; height: 64px;
-    background: #1e6cf2; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 2;
-  }
-  .pulse-ring::before,
-  .pulse-ring::after {
-    content: ''; position: absolute; inset: 0; border-radius: 50%;
-    background: #1e6cf2;
-    animation: professionalPulse 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-  }
-  .pulse-ring::after { animation-delay: 1.2s; }
-  .pulse-icon {
-    font-size: 26px; z-index: 2;
-    animation: iconFloat 2s ease-in-out infinite;
+    height: 110px; margin-bottom: 20px;
   }
 
-  /* ── Foto do entregador no pulse ring ── */
-  .pulse-ring-found {
-    position: relative; width: 64px; height: 64px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 2;
+  /* Buscando: anel azul com lupa */
+  .pulse-ring {
+    position: relative; width: 68px; height: 68px;
+    background: #1e6cf2; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; z-index: 2;
   }
-  .pulse-ring-found::before,
-  .pulse-ring-found::after {
+  .pulse-ring::before, .pulse-ring::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: #1e6cf2;
+    animation: ripple 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+  .pulse-ring::after { animation-delay: 1.2s; }
+  .pulse-icon { font-size: 28px; z-index: 2; animation: float 2s ease-in-out infinite; }
+
+  /* Encontrado: anel verde com foto */
+  .pulse-ring-found {
+    position: relative; width: 68px; height: 68px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2;
+  }
+  .pulse-ring-found::before, .pulse-ring-found::after {
     content: ''; position: absolute; inset: 0; border-radius: 50%;
     background: #10b981;
-    animation: professionalPulse 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    animation: ripple 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
   }
   .pulse-ring-found::after { animation-delay: 1.2s; }
   .driver-avatar-pulse {
-    width: 64px; height: 64px; border-radius: 50%; z-index: 2; position: relative;
+    width: 68px; height: 68px; border-radius: 50%; z-index: 2; position: relative;
     background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
     background-size: cover; background-position: center;
-    border: 3px solid #10b981;
-    box-shadow: 0 0 0 3px #fff;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 3px #10b981;
   }
 
-  @keyframes professionalPulse {
-    0%   { transform: scale(1); opacity: 0.45; }
-    100% { transform: scale(2.4); opacity: 0; }
+  @keyframes ripple {
+    0%   { transform: scale(1); opacity: .4; }
+    100% { transform: scale(2.5); opacity: 0; }
   }
-  @keyframes iconFloat {
+  @keyframes float {
     0%, 100% { transform: translateY(0); }
     50%       { transform: translateY(-4px); }
   }
 
-  .search-eyebrow {
-    text-align: center;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: #9ca3af;
+  /* Eyebrow */
+  .eyebrow {
+    text-align: center; font-size: 11px; font-weight: 700;
+    letter-spacing: 1.4px; text-transform: uppercase;
     margin-bottom: 8px;
   }
-  .found-eyebrow {
-    text-align: center;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: #10b981;
-    margin-bottom: 8px;
-  }
+  .eyebrow.searching { color: #9ca3af; }
+  .eyebrow.found     { color: #10b981; }
 
+  /* Título e subtitle */
   .title {
     text-align: center; font-size: 20px; font-weight: 700;
-    line-height: 1.35; margin-bottom: 8px;
+    line-height: 1.35; margin-bottom: 6px;
   }
   .title .bairro-highlight { color: #1e6cf2; }
-  .title .driver-highlight { color: #10b981; }
-
+  .title .driver-highlight { color: #059669; }
   .subtitle {
     text-align: center; font-size: 13px; color: #6b7280;
-    line-height: 1.5; margin-bottom: 20px;
+    line-height: 1.5; margin-bottom: 22px;
   }
 
-  /* Caixa de endereço */
+  /* Endereço */
   .address-box {
     background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px;
     padding: 14px 16px; margin-bottom: 20px;
@@ -159,9 +142,7 @@
     content: ''; display: inline-block; width: 3px; height: 12px;
     background: #1e6cf2; border-radius: 2px;
   }
-  .address-row {
-    display: flex; align-items: flex-start; gap: 12px;
-  }
+  .address-row { display: flex; align-items: flex-start; gap: 12px; }
   .address-icon {
     background: #fff; width: 36px; height: 36px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
@@ -171,72 +152,53 @@
   .address-content { flex: 1; }
   .address-content strong {
     display: block; font-size: 14px; font-weight: 700;
-    color: #111827; margin-bottom: 3px;
-    word-break: break-word; line-height: 1.4;
+    color: #111827; margin-bottom: 3px; word-break: break-word; line-height: 1.4;
   }
-  .address-content span {
-    font-size: 12px; color: #6b7280; line-height: 1.4;
-  }
+  .address-content span { font-size: 12px; color: #6b7280; line-height: 1.4; }
 
-  /* Barra de progresso de busca */
-  .search-progress {
-    display: flex; align-items: center; gap: 10px;
-  }
+  /* Barra de progresso */
+  .search-progress { display: flex; align-items: center; gap: 10px; }
   .search-bar {
-    flex: 1; height: 3px; background: #f3f4f6;
+    flex: 1; height: 4px; background: #f3f4f6;
     border-radius: 99px; overflow: hidden;
   }
   .search-fill {
-    height: 100%; width: 40%; background: #1e6cf2;
-    border-radius: 99px;
-    animation: searchAnim 1.8s ease-in-out infinite alternate;
+    height: 100%; background: #1e6cf2; border-radius: 99px;
+    width: 20%;
+    animation: scanning 1.8s ease-in-out infinite alternate;
+    transition: width .8s ease, background .5s ease;
   }
   .search-fill.found {
+    width: 100% !important;
     background: #10b981;
     animation: none;
-    width: 100%;
-    transition: width .6s ease;
   }
   .search-status {
     font-size: 11px; font-weight: 600; letter-spacing: .4px;
     color: #9ca3af; white-space: nowrap; text-transform: uppercase;
+    transition: color .4s ease;
   }
-  .search-status.found {
-    color: #10b981;
-  }
-  @keyframes searchAnim {
-    from { width: 20%; }
-    to   { width: 85%; }
+  .search-status.found { color: #10b981; }
+  @keyframes scanning {
+    from { width: 18%; margin-left: 0; }
+    to   { width: 70%; margin-left: 0; }
   }
 
+  /* Footer */
   .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px; }
 
-  /* Transição entre estados — crossfade puro por opacidade */
-  .states-wrapper {
-    position: relative;
-  }
-  #stateBuscando {
-    transition: opacity .5s ease;
-  }
+  /* ── Crossfade entre estados ── */
+  .states-wrapper { position: relative; }
+  #stateBuscando  { transition: opacity .55s ease; }
   #stateEncontrado {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    opacity: 0;
-    transition: opacity .5s ease;
-    pointer-events: none;
+    position: absolute; top: 0; left: 0; right: 0;
+    opacity: 0; transition: opacity .55s ease; pointer-events: none;
   }
-  #stateEncontrado.entrando {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  #stateBuscando.saindo {
-    opacity: 0;
-  }
-  .hidden { display: none !important; }
+  #stateBuscando.saindo   { opacity: 0; }
+  #stateEncontrado.entrando { opacity: 1; pointer-events: auto; }
 </style>
 </head>
 <body>
-
   <div class="scroll-container">
     <div class="container">
 
@@ -245,7 +207,7 @@
       <!-- Stepper -->
       <div class="stepper">
         <div class="steps">
-          <div class="step-line"><div class="step-line-fill" id="lineFill"></div></div>
+          <div class="step-line"><div class="step-line-fill"></div></div>
           <div class="step done">
             <div class="step-circle done">✓</div>
             <div class="step-label">IDENTIFICAÇÃO</div>
@@ -261,37 +223,38 @@
         </div>
       </div>
 
-      <!-- Card único (busca + encontrado) -->
+      <!-- Card principal -->
       <div class="card" id="mainCard">
 
         <div class="states-wrapper">
-        <!-- Estado: Buscando -->
-        <div id="stateBuscando">
-          <div class="pulse-container">
-            <div class="pulse-ring">
-              <span class="pulse-icon">🔍</span>
-            </div>
-          </div>
-          <p class="search-eyebrow">Localizando parceiro</p>
-          <h2 class="title" id="searchTitle">Buscando entregador próximo...</h2>
-          <p class="subtitle">Encontrando o melhor parceiro disponível na sua área</p>
-        </div>
 
-        <!-- Estado: Encontrado -->
-        <div id="stateEncontrado">
-          <div class="pulse-container">
-            <div class="pulse-ring-found">
-              <div class="driver-avatar-pulse"></div>
+          <!-- Estado: Buscando -->
+          <div id="stateBuscando">
+            <div class="pulse-container">
+              <div class="pulse-ring">
+                <span class="pulse-icon">🔍</span>
+              </div>
             </div>
+            <p class="eyebrow searching">Localizando parceiro</p>
+            <h2 class="title" id="searchTitle">Buscando entregador próximo...</h2>
+            <p class="subtitle">Encontrando o melhor parceiro disponível na sua área</p>
           </div>
-          <p class="found-eyebrow">✅ Parceiro localizado</p>
-          <h2 class="title">Entregador localizado: <span class="driver-highlight">Thiago Callegari</span></h2>
-          <p class="subtitle">Redirecionando para o pagamento...</p>
-        </div>
+
+          <!-- Estado: Encontrado -->
+          <div id="stateEncontrado">
+            <div class="pulse-container">
+              <div class="pulse-ring-found">
+                <div class="driver-avatar-pulse"></div>
+              </div>
+            </div>
+            <p class="eyebrow found">✔ Parceiro localizado</p>
+            <h2 class="title">Entregador localizado: <span class="driver-highlight">Thiago Callegari</span></h2>
+            <p class="subtitle" id="subtitleFound">Redirecionando para o pagamento...</p>
+          </div>
 
         </div><!-- /.states-wrapper -->
 
-        <!-- Endereço (compartilhado) -->
+        <!-- Endereço compartilhado -->
         <div class="address-box">
           <div class="address-label">Endereço de entrega</div>
           <div class="address-row">
@@ -303,7 +266,7 @@
           </div>
         </div>
 
-        <!-- Barra de progresso (compartilhada) -->
+        <!-- Barra de progresso compartilhada -->
         <div class="search-progress">
           <div class="search-bar"><div class="search-fill" id="searchFill"></div></div>
           <span class="search-status" id="searchStatus">Aguarde...</span>
@@ -319,8 +282,8 @@
   <script>
     const CHECKOUT_URL = 'https://app-pagamentos.onrender.com/teste/';
 
-    window.addEventListener('pageshow', function(event) {
-      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+    window.addEventListener('pageshow', function(e) {
+      if (e.persisted || (window.performance && window.performance.navigation.type === 2)) {
         window.history.back();
       }
     });
@@ -328,13 +291,8 @@
     function extrairLocalizacao(address) {
       if (!address) return null;
       const partes = address.split(',').map(p => p.trim()).filter(Boolean);
-      let bairro = "";
-      let uf = "";
-
-      if (address.includes('/')) {
-        uf = address.split('/').pop().trim().substring(0, 2);
-      }
-
+      let bairro = '', uf = '';
+      if (address.includes('/')) uf = address.split('/').pop().trim().substring(0, 2);
       if (partes[1] && partes[1].includes(' - ')) {
         bairro = partes[1].split(' - ').pop().trim();
       } else if (partes.length >= 3) {
@@ -342,79 +300,71 @@
       } else if (partes.length === 2) {
         bairro = partes[1].split('/')[0].trim();
       }
-
-      if (bairro) {
-        return bairro + (uf ? '/' + uf : '');
-      }
-      return null;
+      return bairro ? bairro + (uf ? '/' + uf : '') : null;
     }
 
     function processarPedido() {
       try {
-        const urlParams    = new URLSearchParams(window.location.search);
-        const subtotal     = urlParams.get('subtotal');
-        const productsJSON = urlParams.get('products');
-        const address      = urlParams.get('address');
-        const cep          = urlParams.get('cep');
-        const deliveryTime = urlParams.get('delivery_time');
+        const p          = new URLSearchParams(window.location.search);
+        const subtotal   = p.get('subtotal');
+        const products   = p.get('products');
+        const address    = p.get('address');
+        const cep        = p.get('cep');
+        const delivery   = p.get('delivery_time');
 
         if (address) {
           document.getElementById('displayAddress').textContent = address;
-
-          const localizacao = extrairLocalizacao(address);
-          if (localizacao) {
+          const loc = extrairLocalizacao(address);
+          if (loc) {
             document.getElementById('searchTitle').innerHTML =
-              'Buscando entregador próximo em <span class="bairro-highlight">' + localizacao + '</span>';
+              'Buscando entregador próximo em <span class="bairro-highlight">' + loc + '</span>';
           }
-
           if (cep) {
-            const cityText = 'CEP: ' + cep;
-            document.getElementById('displayCity').textContent = cityText;
+            const ct = 'CEP: ' + cep;
+            document.getElementById('displayCity').textContent = ct;
           }
         }
 
-        if (productsJSON)  localStorage.setItem('cart_products',    productsJSON);
-        if (address)       localStorage.setItem('delivery_address', address);
-        if (deliveryTime)  localStorage.setItem('delivery_time',    deliveryTime);
+        if (products)  localStorage.setItem('cart_products',    products);
+        if (address)   localStorage.setItem('delivery_address', address);
+        if (delivery)  localStorage.setItem('delivery_time',    delivery);
 
         const redirecionar = () => {
-          const targetParams = new URLSearchParams();
-          targetParams.set('subtotal', subtotal || '0.00');
-          if (address)       targetParams.set('address',       address);
-          if (cep)           targetParams.set('cep',           cep);
-          if (deliveryTime)  targetParams.set('delivery_time', deliveryTime);
-          if (productsJSON)  targetParams.set('products',      productsJSON);
-          window.location.href = CHECKOUT_URL + '?' + targetParams.toString();
+          const tp = new URLSearchParams();
+          tp.set('subtotal', subtotal || '0.00');
+          if (address)  tp.set('address',       address);
+          if (cep)      tp.set('cep',           cep);
+          if (delivery) tp.set('delivery_time', delivery);
+          if (products) tp.set('products',      products);
+          window.location.href = CHECKOUT_URL + '?' + tp.toString();
         };
 
-        // Após 5s: crossfade por opacidade pura
+        // ── Após 5s: crossfade fluido ──
         setTimeout(() => {
           const buscando   = document.getElementById('stateBuscando');
           const encontrado = document.getElementById('stateEncontrado');
           const fill       = document.getElementById('searchFill');
           const status     = document.getElementById('searchStatus');
-          const wrapper    = buscando.closest('.states-wrapper');
+          const wrapper    = document.querySelector('.states-wrapper');
 
-          // Congela a altura do wrapper no tamanho atual para não colapsar
+          // Trava altura para não colapsar durante crossfade
           wrapper.style.minHeight = buscando.offsetHeight + 'px';
 
-          // Fade simultâneo: some e aparece ao mesmo tempo
+          // Barra completa + verde antes do fade (feedback imediato)
+          fill.classList.add('found');
+          status.textContent = 'Localizado!';
+          status.classList.add('found');
+
+          // Crossfade simultâneo
           buscando.classList.add('saindo');
           encontrado.classList.add('entrando');
 
-          // Após a transição CSS terminar, atualiza barra
-          setTimeout(() => {
-            fill.classList.add('found');
-            status.textContent = 'Localizado!';
-            status.classList.add('found');
-          }, 500);
-
-          // Redireciona após 2s visíveis na tela encontrado
-          setTimeout(redirecionar, 500 + 2000);
+          // Redireciona após 2s visíveis na tela de encontrado
+          setTimeout(redirecionar, 550 + 2000);
         }, 5000);
 
-      } catch (error) {
-        console.error('Erro ao processar dados:', error);
+      } catch (err) {
+        console.error('Erro:', err);
       }
     }
 
@@ -422,6 +372,5 @@
       document.addEventListener('DOMContentLoaded', processarPedido);
     }
   </script>
-
 </body>
 </html>
