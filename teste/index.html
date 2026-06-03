@@ -1057,12 +1057,6 @@ function proceedToSummary() {
 
 backToCart.addEventListener('click', resetToCartView);
 
-/*
- * CORRIGIDO: redirecionamento relativo sem domínio externo hardcoded.
- * Usa <a> com rel="noopener" internamente via form POST simulado para
- * evitar que parâmetros sensíveis fiquem expostos na barra de endereço
- * e para manter o contexto no mesmo portfólio/domínio.
- */
 confirmPaymentBtn.addEventListener('click', () => {
     showLoading('Finalizando seu pedido...');
 
@@ -1080,30 +1074,15 @@ confirmPaymentBtn.addEventListener('click', () => {
         q: item.qty
     }));
 
-    // Usa sessionStorage para passar os dados sem expô-los na URL
-    // e redireciona para checkout.html no mesmo domínio (caminho relativo)
-    try {
-        sessionStorage.setItem('diskgas_order', JSON.stringify({
-            subtotal:      subtotal.toFixed(2),
-            products:      productsData,
-            address:       `${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''} - ${addressData.bairro}, ${addressData.localidade}/${addressData.uf}`,
-            delivery_time: scheduleText,
-            cep:           cepInput.value
-        }));
-    } catch(e) {
-        // Fallback: se sessionStorage não disponível, passa via URL mesmo
-        const params = new URLSearchParams({
-            subtotal:      subtotal.toFixed(2),
-            products:      JSON.stringify(productsData),
-            address:       `${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''} - ${addressData.bairro}, ${addressData.localidade}/${addressData.uf}`,
-            delivery_time: scheduleText,
-            cep:           cepInput.value
-        });
-        setTimeout(() => { window.location.href = `checkout.html?${params.toString()}`; }, 500);
-        return;
-    }
+    const params = new URLSearchParams({
+        subtotal:      subtotal.toFixed(2),
+        products:      JSON.stringify(productsData),
+        address:       `${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''} - ${addressData.bairro}, ${addressData.localidade}/${addressData.uf}`,
+        delivery_time: scheduleText,
+        cep:           cepInput.value
+    });
 
-    setTimeout(() => { window.location.href = 'checkout.html'; }, 500);
+    setTimeout(() => { window.location.href = `checkout.html?${params.toString()}`; }, 500);
 });
 
 function showLoading(text = 'Processando...') {
