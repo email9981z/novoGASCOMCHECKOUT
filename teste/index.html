@@ -383,13 +383,13 @@
             <span class="logo-text">DISKGÁS</span>
             <span class="logo-tagline">Gás Online</span>
         </div>
-        <div class="header-actions">
+        <div class="header-actions" style="display:flex; align-items:center; gap:12px;">
+            <a href="tel:5140109018" class="icon-btn" title="Ligar Agora">
+                <i class="fas fa-phone-alt"></i>
+            </a>
             <button class="icon-btn" id="cart-trigger">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="badge" id="cart-badge">0</span>
-            </button>
-            <button class="icon-btn">
-                <i class="fas fa-bars"></i>
             </button>
         </div>
     </header>
@@ -408,7 +408,7 @@
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span>Entrega Grátis</span>
+            <span>Entrega Rápida e Grátis</span>
         </div>
     </section>
 
@@ -453,9 +453,9 @@
                 <div><i class="fas fa-check-circle"></i><span>Instalação Grátis e Segura</span></div>
                 <div style="flex-direction:column;align-items:flex-start!important;gap:2px!important;">
                     <div style="display:flex;align-items:center;gap:8px;">
-                        <i class="fas fa-shipping-fast"></i><span>Entrega em até 20 minutos</span>
+                        <i class="fas fa-shipping-fast"></i><span>Entrega Ágil para sua Região</span>
                     </div>
-                    <p class="inline-disclaimer" style="padding-left:24px;">* Prazo médio. Pode variar conforme demanda, horário e distância.</p>
+                    <p class="inline-disclaimer" style="padding-left:24px;">* Consulte o prazo médio de entrega para o seu endereço no checkout.</p>
                 </div>
             </div>
         </div>
@@ -514,7 +514,7 @@
         </div>
         <div class="faq-item">
             <div class="faq-question">Quanto tempo leva a entrega? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-answer">Em média entregamos em até 20 minutos em algumas regiões. O prazo pode variar de acordo com a demanda do dia e a sua distância do nosso depósito.</div>
+            <div class="faq-answer">Trabalhamos com entrega ágil para Capão da Canoa e região. O prazo exato depende da sua localização e demanda do dia, sendo informado no momento do seu pedido.</div>
         </div>
         <div class="faq-item">
             <div class="faq-question">Como cancelar meu pedido? <i class="fas fa-chevron-down"></i></div>
@@ -609,7 +609,7 @@
                             <i class="fas fa-bolt"></i>
                             <div class="shipping-info">
                                 <span class="shipping-name">Entrega Rápida</span>
-                                <span class="shipping-time">Receba em 20 Minutos</span>
+                                <span class="shipping-time">Receba o mais breve possível</span>
                             </div>
                             <span class="shipping-price">GRÁTIS</span>
                         </div>
@@ -902,7 +902,7 @@ function proceedToSummary() {
         const time = document.getElementById('schedule-time').value;
         if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
         scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
-    } else { scheduleText = 'Entrega Rápida (Receba em 20 minutos)'; }
+    } else { scheduleText = 'Entrega Rápida (Ágil para sua região)'; }
 
     let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
     let itemsHtml = cart.map(item => `
@@ -965,7 +965,7 @@ confirmPaymentBtn.addEventListener('click', () => {
     const addrComplement = document.getElementById('addr-complement').value || '';
     const scheduleText   = selectedShipping === 'scheduled'
         ? `${document.getElementById('schedule-day').value.split('-').reverse().join('/')} às ${document.getElementById('schedule-time').value}`
-        : 'Entrega Rápida (Receba em 20 minutos)';
+        : 'Entrega Rápida (Ágil para sua região)';
 
     const productsData = cart.map(item => ({
         n: `Botijão de Gás (Cheio) ${item.variant}`,
