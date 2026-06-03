@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DISKGÁS – Entrega de Gás Rápida</title>
-    <meta name="description" content="Peça seu botijão de gás com entrega e instalação grátis para Capão da Canoa e região. DISK GÁS E ÁGUA LTDA. Pague na entrega.">
+    <meta name="description" content="Peça seu botijão de gás com entrega e instalação grátis. DISK GÁS E ÁGUA LTDA. Pague na entrega.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,10 +98,15 @@
             color: white;
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
         }
-        /* CORREÇÃO 1: título mais amplo, sem prometer prazo no H1 */
         .hero-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 8px; }
-        /* CORREÇÃO 2: subtítulo reformulado — prazo como info, não como garantia */
         .hero-subtitle { font-size: 0.9rem; opacity: 0.9; margin-bottom: 6px; }
+        /* Disclaimer visível logo abaixo da promessa principal */
+        .hero-disclaimer {
+            font-size: 12px;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
         .location-widget {
             display: flex; align-items: center; justify-content: center;
             gap: 6px; margin: 10px 0; color: #7ee56b;
@@ -189,6 +194,7 @@
         .payment-info { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--border-color); padding-top: 12px; }
         .payment-info div { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-gray); font-weight: 500; }
         .payment-info i { color: var(--primary); width: 16px; text-align: center; }
+        /* Disclaimer inline em tamanho legível, logo abaixo da promessa de prazo */
         .inline-disclaimer {
             font-size: 12px;
             color: var(--text-light);
@@ -367,30 +373,6 @@
             color: #4F7942; font-size: 13px; font-weight: 500;
             text-align: center; margin: 10px 0; letter-spacing: 0.3px;
         }
-        /* CORREÇÃO 3: banner de cookies / LGPD */
-        .cookie-banner {
-            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 100%; max-width: 480px;
-            background: #1a1a1a; color: #fff;
-            padding: 14px 20px; z-index: 9999;
-            display: flex; flex-direction: column; gap: 10px;
-            font-size: 0.75rem; line-height: 1.5;
-            box-shadow: 0 -4px 16px rgba(0,0,0,0.2);
-        }
-        .cookie-banner.hidden { display: none; }
-        .cookie-banner p { color: #ccc; }
-        .cookie-banner a { color: #ffb400; text-decoration: underline; }
-        .cookie-banner-btns { display: flex; gap: 10px; }
-        .cookie-accept {
-            background: var(--success); color: white; border: none;
-            padding: 8px 18px; border-radius: 6px; font-weight: 700;
-            font-size: 0.8rem; cursor: pointer; flex: 1;
-        }
-        .cookie-reject {
-            background: transparent; color: #aaa; border: 1px solid #444;
-            padding: 8px 18px; border-radius: 6px; font-weight: 600;
-            font-size: 0.8rem; cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -418,10 +400,9 @@
         <span><i class="fas fa-screwdriver-wrench"></i> Instalação Grátis</span>
     </div>
 
-    <!-- CORREÇÃO 1 & 2: H1 amplo sem prometer prazo; prazo movido para o card do produto -->
     <section class="hero">
-        <h1 class="hero-title">Entrega de Gás para Capão da Canoa e Região</h1>
-        <p class="hero-subtitle">Pedido simples, entrega ágil, instalação inclusa</p>
+        <h1 class="hero-title">Entrega Rápida de Gás</h1>
+        <p class="hero-subtitle">Entrega ágil para sua Região</p>
         <div class="location-widget">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -461,19 +442,18 @@
             <div class="price-row">
                 <span class="price-title" id="price-product-title">Botijão de Gás - Cheio (P13)</span>
                 <div class="price-main">
-                    <span class="price-from-label">a partir de</span>
+                    <span class="price-from-label">Valor</span>
                     <span class="current-price" id="current-price-display">R$ 89,90</span>
                 </div>
             </div>
             <div class="payment-info">
                 <div><i class="fas fa-credit-card"></i><span>Pague na entrega (Cartão, Pix ou Dinheiro)</span></div>
                 <div><i class="fas fa-check-circle"></i><span>Instalação Grátis e Segura</span></div>
-                <!-- Prazo mantido aqui, ao lado do disclaimer visível -->
                 <div style="flex-direction:column;align-items:flex-start!important;gap:2px!important;">
                     <div style="display:flex;align-items:center;gap:8px;">
-                        <i class="fas fa-shipping-fast"></i><span>Prazo médio de entrega: 20 minutos*</span>
+                        <i class="fas fa-shipping-fast"></i><span>Entrega em até 20 minutos</span>
                     </div>
-                    <p class="inline-disclaimer" style="padding-left:24px;">* Prazo médio para Capão da Canoa e região. Pode variar conforme demanda, horário e distância.</p>
+                    <p class="inline-disclaimer" style="padding-left:24px;">* Prazo médio. Pode variar conforme demanda, horário e distância.</p>
                 </div>
             </div>
         </div>
@@ -488,7 +468,7 @@
 
         <p class="delivery-status">
             <i class="fas fa-map-marker-alt" style="opacity:0.8;"></i>
-            Atendemos <strong>Capão da Canoa e Região</strong>
+            Atendemos <strong>toda a Região</strong>
         </p>
     </div>
 
@@ -532,7 +512,7 @@
         </div>
         <div class="faq-item">
             <div class="faq-question">Quanto tempo leva a entrega? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-answer">O prazo médio é de 20 minutos para Capão da Canoa e região. O tempo pode variar conforme a demanda do dia, o horário e a sua distância do nosso depósito.</div>
+            <div class="faq-answer">Em média entregamos em até 20 minutos em algumas regiões. O prazo pode variar de acordo com a demanda do dia e a sua distância do nosso depósito.</div>
         </div>
         <div class="faq-item">
             <div class="faq-question">Como cancelar meu pedido? <i class="fas fa-chevron-down"></i></div>
@@ -560,7 +540,6 @@
             <div class="footer-column">
                 <h3>Institucional</h3>
                 <ul>
-                    <!-- CORREÇÃO 4: links de política visíveis no rodapé -->
                     <li><a href="politica-privacidade.html">Política de Privacidade</a></li>
                     <li><a href="termos-uso.html">Termos de Uso</a></li>
                     <li><a href="sobre.html">Sobre Nós</a></li>
@@ -574,8 +553,7 @@
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <!-- CORREÇÃO 5: endereço completo com CEP -->
-                            <span class="dias-texto">Rua 8, nº 123, Capão da Canoa – RS, CEP 95555-000</span>
+                            <span class="dias-texto">Rua 8, Capão da Canoa – RS</span>
                         </div>
                     </li>
                     <li>
@@ -590,10 +568,8 @@
         </div>
         <div class="footer-bottom">
             <p>© 2026 DISK GÁS E ÁGUA LTDA. Todos os direitos reservados.</p>
-            <p>CNPJ: 38.211.002/0001-00 &nbsp;|&nbsp; Rua 8, nº 123, Capão da Canoa – RS, CEP 95555-000</p>
+            <p>CNPJ: 38.211.002/0001-00 &nbsp;|&nbsp; Rua 8, Capão da Canoa – RS</p>
             <p style="margin-top:8px;font-size:0.72rem;color:#666;">* Prazo médio de entrega para Capão da Canoa e região. Pode variar conforme demanda, horário e distância. Direito de arrependimento: 7 dias corridos (Art. 49, CDC).</p>
-            <!-- CORREÇÃO 4: link de privacidade também no footer-bottom para crawlers -->
-            <p style="margin-top:6px;"><a href="politica-privacidade.html" style="color:#888;text-decoration:underline;font-size:0.72rem;">Política de Privacidade</a> &nbsp;|&nbsp; <a href="termos-uso.html" style="color:#888;text-decoration:underline;font-size:0.72rem;">Termos de Uso</a></p>
         </div>
     </footer>
 
@@ -631,7 +607,7 @@
                             <i class="fas fa-bolt"></i>
                             <div class="shipping-info">
                                 <span class="shipping-name">Entrega Rápida</span>
-                                <span class="shipping-time">Prazo médio de 20 min*</span>
+                                <span class="shipping-time">Receba em 20 Minutos</span>
                             </div>
                             <span class="shipping-price">GRÁTIS</span>
                         </div>
@@ -664,11 +640,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- CORREÇÃO 4: link de privacidade dentro do modal/carrinho -->
-                <p style="font-size:0.7rem;color:var(--text-light);margin-top:16px;text-align:center;">
-                    Ao prosseguir, você concorda com nossa
-                    <a href="politica-privacidade.html" target="_blank" style="color:var(--primary);text-decoration:underline;">Política de Privacidade</a>.
-                </p>
             </div>
         </div>
         <div id="order-summary-content" style="flex:1;display:none;overflow-y:auto;padding:20px;background:var(--bg-light);">
@@ -702,28 +673,19 @@
     <p id="loading-text" style="margin-top:15px;font-weight:700;color:var(--primary);">Processando...</p>
 </div>
 
-<!-- CORREÇÃO 3: banner de consentimento LGPD / cookies -->
-<div class="cookie-banner" id="cookie-banner">
-    <p>Utilizamos cookies para melhorar sua experiência e medir o desempenho de anúncios. Ao aceitar, você concorda com nossa <a href="politica-privacidade.html">Política de Privacidade</a>.</p>
-    <div class="cookie-banner-btns">
-        <button class="cookie-accept" id="cookie-accept">Aceitar</button>
-        <button class="cookie-reject" id="cookie-reject">Recusar</button>
-    </div>
-</div>
-
 <script>
-// CORREÇÃO 6: abas Casa / Comércio com produtos diferenciados
 const products = {
     casa: [
-        { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
-        { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' },
+        { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
+        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' },
         { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
-        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' }
+        { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' }
     ],
     comercio: [
-        // Comercial: somente P20 e P45, voltados para maior demanda
-        { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 184.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
-        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 389.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' }
+        { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
+        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' },
+        { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
+        { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' }
     ]
 };
 
@@ -950,7 +912,7 @@ function proceedToSummary() {
         const time = document.getElementById('schedule-time').value;
         if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
         scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
-    } else { scheduleText = 'Entrega Rápida (prazo médio de 20 min*)'; }
+    } else { scheduleText = 'Entrega Rápida (Receba em 20 minutos)'; }
 
     let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
     let itemsHtml = cart.map(item => `
@@ -1013,7 +975,7 @@ confirmPaymentBtn.addEventListener('click', () => {
     const addrComplement = document.getElementById('addr-complement').value || '';
     const scheduleText   = selectedShipping === 'scheduled'
         ? `${document.getElementById('schedule-day').value.split('-').reverse().join('/')} às ${document.getElementById('schedule-time').value}`
-        : 'Entrega Rápida (prazo médio de 20 min*)';
+        : 'Entrega Rápida (Receba em 20 minutos)';
 
     const productsData = cart.map(item => ({
         n: `Botijão de Gás (Cheio) ${item.variant}`,
@@ -1048,25 +1010,6 @@ document.querySelectorAll('.faq-question').forEach(q => {
 });
 
 window.addEventListener('pageshow', (e) => { if (e.persisted) hideLoading(); });
-
-// CORREÇÃO 3: lógica do banner de cookies
-const cookieBanner  = document.getElementById('cookie-banner');
-const cookieAccept  = document.getElementById('cookie-accept');
-const cookieReject  = document.getElementById('cookie-reject');
-
-if (localStorage.getItem('cookie_consent')) {
-    cookieBanner.classList.add('hidden');
-}
-cookieAccept.addEventListener('click', () => {
-    localStorage.setItem('cookie_consent', 'accepted');
-    cookieBanner.classList.add('hidden');
-    // Aqui você pode disparar gtag consent update se usar Google Tag
-    // gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'granted' });
-});
-cookieReject.addEventListener('click', () => {
-    localStorage.setItem('cookie_consent', 'rejected');
-    cookieBanner.classList.add('hidden');
-});
 </script>
 </body>
 </html>
