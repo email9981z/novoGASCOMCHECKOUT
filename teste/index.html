@@ -99,20 +99,19 @@
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
         }
         .hero-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 8px; }
-        .hero-subtitle { font-size: 0.9rem; opacity: 0.9; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 0.9rem; opacity: 0.9; margin-bottom: 6px; }
+        /* Disclaimer visível logo abaixo da promessa principal */
+        .hero-disclaimer {
+            font-size: 12px;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
         .location-widget {
             display: flex; align-items: center; justify-content: center;
             gap: 6px; margin: 10px 0; color: #7ee56b;
             font-size: 14px; font-weight: bold; width: 100%;
         }
-        .hero-reviews {
-            display: flex; justify-content: center; align-items: center;
-            margin-top: 15px; margin-bottom: 20px;
-            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;
-        }
-        .reviews-left { display: flex; align-items: center; gap: 8px; }
-        .stars { color: #ffb400; font-size: 1.1rem; display: flex; gap: 2px; }
-        .rating-score { font-weight: bold; color: #fff; }
         .product-card {
             background: white; border-radius: var(--radius-md); padding: 20px;
             margin-top: -15px; box-shadow: var(--shadow-md); position: relative;
@@ -190,15 +189,18 @@
         .price-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
         .price-title { font-size: 0.85rem; font-weight: 700; color: var(--text-gray); }
         .price-main { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-        .old-price { font-size: 0.9rem; color: var(--text-light); text-decoration: line-through; }
+        .price-from-label { font-size: 0.8rem; color: var(--text-light); font-weight: 500; }
         .current-price { font-size: 1.8rem; font-weight: 900; color: var(--primary); line-height: 1; }
-        .discount-tag {
-            background-color: var(--accent); color: var(--primary-dark);
-            font-size: 0.75rem; font-weight: 800; padding: 2px 8px; border-radius: 4px;
-        }
         .payment-info { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--border-color); padding-top: 12px; }
         .payment-info div { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-gray); font-weight: 500; }
         .payment-info i { color: var(--primary); width: 16px; text-align: center; }
+        /* Disclaimer inline em tamanho legível, logo abaixo da promessa de prazo */
+        .inline-disclaimer {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
         .btn-primary {
             width: 100%; padding: 16px; border: none; border-radius: var(--radius-md);
             font-size: 1rem; font-weight: 800; color: white; cursor: pointer;
@@ -226,26 +228,6 @@
         }
         .feature-content h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 2px; }
         .feature-content p { font-size: 0.8rem; color: var(--text-gray); }
-        .reviews-section { padding: 30px 20px; background-color: var(--bg-light); }
-        .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; text-align: center; }
-        .review-card {
-            background: white; padding: 15px; border-radius: var(--radius-md);
-            margin-bottom: 15px; box-shadow: var(--shadow-sm);
-        }
-        .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .user-info { display: flex; gap: 10px; align-items: center; }
-        .user-avatar {
-            width: 35px; height: 35px; background: var(--primary); color: white;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 0.8rem;
-        }
-        .user-name { font-size: 0.85rem; font-weight: 700; display: block; }
-        .review-text { font-size: 0.85rem; color: var(--text-gray); font-style: italic; line-height: 1.5; }
-        .reviews-source-note {
-            font-size: 0.72rem; color: var(--text-light); text-align: center;
-            margin-top: 5px; margin-bottom: 10px;
-        }
-        .reviews-source-note a { color: var(--primary); }
         .benefits-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
             padding: 20px; background: var(--primary); color: white;
@@ -253,21 +235,6 @@
         .benefit-item { text-align: center; padding: 15px 5px; }
         .benefit-item i { font-size: 1.5rem; margin-bottom: 8px; color: var(--accent); }
         .benefit-item span { display: block; font-size: 0.75rem; font-weight: 600; }
-        .newsletter-section {
-            padding: 30px 20px; background: var(--bg-white);
-            text-align: center; border-top: 1px solid var(--border-color);
-        }
-        .newsletter-section h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; }
-        .newsletter-section p { font-size: 0.85rem; color: var(--text-gray); margin-bottom: 15px; }
-        .newsletter-form { display: flex; gap: 8px; }
-        .newsletter-input {
-            flex: 1; padding: 12px; border: 1px solid var(--border-color);
-            border-radius: 8px; font-size: 0.9rem;
-        }
-        .newsletter-btn {
-            background: var(--primary); color: white; border: none;
-            padding: 0 20px; border-radius: 8px; font-weight: 700; cursor: pointer;
-        }
         .faq-section { padding: 30px 20px; background: var(--bg-light); }
         .faq-item {
             background: white; border-radius: 8px; margin-bottom: 10px;
@@ -280,6 +247,7 @@
         .faq-answer { padding: 0 15px 15px; font-size: 0.85rem; color: var(--text-gray); display: none; }
         .faq-item.active .faq-answer { display: block; }
         .faq-item.active .fa-chevron-down { transform: rotate(180deg); }
+        .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; text-align: center; }
         .footer { background-color: #1a1a1a; color: #fff; padding: 50px 20px 20px; }
         .footer-container {
             max-width: 1100px; margin: 0 auto;
@@ -428,13 +396,14 @@
 
     <div class="trust-bar">
         <span><i class="fas fa-shield-alt"></i> Site Seguro</span>
-        <span><i class="fas fa-star"></i> 4.9/5 Avaliações</span>
         <span><i class="fas fa-truck"></i> Entrega Ágil</span>
+        <span><i class="fas fa-screwdriver-wrench"></i> Instalação Grátis</span>
     </div>
 
     <section class="hero">
         <h1 class="hero-title">Entrega Rápida de Gás</h1>
-        <p class="hero-subtitle">Entrega e instalação grátis — em média em 20 min*</p>
+        <p class="hero-subtitle">Entrega e instalação grátis — em média 20 min*</p>
+        <p class="hero-disclaimer">* Prazo médio para Capão da Canoa e região. Pode variar conforme demanda, horário e distância do depósito.</p>
         <div class="location-widget">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -442,14 +411,6 @@
             </svg>
             <span>Entrega Grátis</span>
         </div>
-        <!-- CORRIGIDO: removida contagem de avaliações, mantidas apenas as estrelas e nota -->
-        <div class="hero-reviews">
-            <div class="reviews-left">
-                <span class="stars">★★★★★</span>
-                <span class="rating-score" style="margin-left:6px;">4.9 no Google</span>
-            </div>
-        </div>
-        <p style="font-size:0.62rem;opacity:0.6;margin-top:-10px;">*Prazo médio para Capão da Canoa e região. Pode variar conforme demanda e distância.</p>
     </section>
 
     <div class="product-card">
@@ -482,15 +443,19 @@
             <div class="price-row">
                 <span class="price-title" id="price-product-title">Botijão de Gás - Cheio (P13)</span>
                 <div class="price-main">
-                    <span class="old-price" id="old-price-display">R$ 110,00</span>
+                    <span class="price-from-label">a partir de</span>
                     <span class="current-price" id="current-price-display">R$ 89,90</span>
-                    <span class="discount-tag">-18%</span>
                 </div>
             </div>
             <div class="payment-info">
                 <div><i class="fas fa-credit-card"></i><span>Pague na entrega (Cartão, Pix ou Dinheiro)</span></div>
                 <div><i class="fas fa-check-circle"></i><span>Instalação Grátis e Segura</span></div>
-                <div><i class="fas fa-shipping-fast"></i><span>Entrega geralmente em até 20 minutos*</span></div>
+                <div style="flex-direction:column;align-items:flex-start!important;gap:2px!important;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <i class="fas fa-shipping-fast"></i><span>Entrega em média de 20 min*</span>
+                    </div>
+                    <p class="inline-disclaimer" style="padding-left:24px;">* Prazo médio para Capão da Canoa e região. Pode variar conforme demanda, horário e distância.</p>
+                </div>
             </div>
         </div>
 
@@ -525,70 +490,11 @@
         </div>
     </section>
 
-    <section class="reviews-section">
-        <h2 class="section-title">O que dizem nossos clientes</h2>
-        <p class="reviews-source-note">Avaliações verificadas via <a href="https://g.page/r/diskgas" target="_blank" rel="noopener">Google Meu Negócio ↗</a></p>
-        <div class="review-card">
-            <div class="review-header">
-                <div class="user-info">
-                    <div class="user-avatar">JS</div>
-                    <div>
-                        <span class="user-name">João Silva</span>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <span style="font-size:0.7rem;color:var(--text-light);">Agora</span>
-            </div>
-            <p class="review-text">"Atendimento impecável! O entregador chegou rapidinho e fez a instalação com todo cuidado. Recomendo muito."</p>
-        </div>
-        <div class="review-card">
-            <div class="review-header">
-                <div class="user-info">
-                    <div class="user-avatar">MA</div>
-                    <div>
-                        <span class="user-name">Maria Almeida</span>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <span style="font-size:0.7rem;color:var(--text-light);">Há 1 hora</span>
-            </div>
-            <p class="review-text">"Preço justo e botijão com lacre. O atendimento pelo site foi muito prático."</p>
-        </div>
-        <div class="review-card">
-            <div class="review-header">
-                <div class="user-info">
-                    <div class="user-avatar">RC</div>
-                    <div>
-                        <span class="user-name">Ricardo Costa</span>
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <span style="font-size:0.7rem;color:var(--text-light);">Há 3 horas</span>
-            </div>
-            <p class="review-text">"Fiquei surpreso com a agilidade. Chegou muito rápido e já estava com o gás novo instalado. Nota 10!"</p>
-        </div>
-    </section>
-
     <section class="benefits-grid">
         <div class="benefit-item"><i class="fas fa-truck-fast"></i><span>Entrega Grátis</span></div>
         <div class="benefit-item"><i class="fas fa-screwdriver-wrench"></i><span>Instalação Inclusa</span></div>
         <div class="benefit-item"><i class="fas fa-shield-halved"></i><span>Pagamento Seguro</span></div>
         <div class="benefit-item"><i class="fas fa-hand-holding-dollar"></i><span>Ótimo Custo-Benefício</span></div>
-    </section>
-
-    <section class="newsletter-section">
-        <h3>Ofertas Exclusivas</h3>
-        <p>Receba descontos e avisos sobre o preço do gás no seu e-mail.</p>
-        <div class="newsletter-form">
-            <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail">
-            <button class="newsletter-btn">OK</button>
-        </div>
     </section>
 
     <section class="faq-section">
@@ -609,13 +515,20 @@
             <div class="faq-question">Quanto tempo leva a entrega? <i class="fas fa-chevron-down"></i></div>
             <div class="faq-answer">Em média entregamos em até 20 minutos em Capão da Canoa e região. O prazo pode variar de acordo com a demanda do dia e a sua distância do nosso depósito.</div>
         </div>
+        <div class="faq-item">
+            <div class="faq-question">Como cancelar meu pedido? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">
+                <p style="margin-bottom:8px;">Você pode cancelar seu pedido entrando em contato conosco pelo telefone <strong>(51) 4010-9018</strong> ou pelo e-mail <strong>contato@diskgas.com.br</strong>.</p>
+                <p style="margin-bottom:8px;"><strong>Direito de arrependimento (compras online):</strong> De acordo com o Art. 49 do Código de Defesa do Consumidor (Lei nº 8.078/1990), você tem o direito de desistir de qualquer compra realizada fora do estabelecimento comercial — incluindo compras pela internet — em até <strong>7 dias corridos</strong> a partir da data do recebimento do produto, sem custo algum.</p>
+                <p>Para exercer esse direito, basta nos contatar dentro do prazo. O produto deve ser devolvido em boas condições e o valor será reembolsado integralmente.</p>
+            </div>
+        </div>
     </section>
 
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
                 <div class="footer-logo">DISKGÁS</div>
-                <!-- CORRIGIDO: removidos ícones de redes sociais -->
                 <p class="footer-description">Distribuidor autorizado com entrega e instalação rápida residencial e comercial em Capão da Canoa e região.</p>
             </div>
             <div class="footer-column">
@@ -637,7 +550,6 @@
                 <h3>Contato</h3>
                 <ul class="contact-info">
                     <li><i class="fas fa-envelope"></i><span>contato@diskgas.com.br</span></li>
-                    <!-- CORRIGIDO: DDD 51 (Rio Grande do Sul) -->
                     <li><i class="fas fa-phone-alt"></i><span>(51) 4010-9018</span></li>
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
@@ -658,6 +570,7 @@
         <div class="footer-bottom">
             <p>© 2026 DISK GÁS E ÁGUA LTDA. Todos os direitos reservados.</p>
             <p>CNPJ: 38.211.002/0001-00 &nbsp;|&nbsp; Rua 8, Capão da Canoa – RS</p>
+            <p style="margin-top:8px;font-size:0.72rem;color:#666;">* Prazo médio de entrega para Capão da Canoa e região. Pode variar conforme demanda, horário e distância. Direito de arrependimento: 7 dias corridos (Art. 49, CDC).</p>
         </div>
     </footer>
 
@@ -695,7 +608,7 @@
                             <i class="fas fa-bolt"></i>
                             <div class="shipping-info">
                                 <span class="shipping-name">Entrega Rápida</span>
-                                <span class="shipping-time">Geralmente em até 20 minutos*</span>
+                                <span class="shipping-time">Em média de 20 min*</span>
                             </div>
                             <span class="shipping-price">GRÁTIS</span>
                         </div>
@@ -708,6 +621,7 @@
                             <span class="shipping-price">GRÁTIS</span>
                         </div>
                     </div>
+                    <p style="font-size:12px;color:var(--text-light);margin-top:6px;">* Prazo médio para Capão da Canoa e região. Pode variar conforme demanda e distância.</p>
                     <div id="schedule-fields" style="display:none;margin-top:15px;">
                         <div class="form-row">
                             <div class="form-group">
@@ -764,16 +678,16 @@
 <script>
 const products = {
     casa: [
-        { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, old: 110.00, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
-        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, old: 450.00, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' },
-        { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, old: 220.00, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
-        { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  old: 85.00,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' }
+        { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
+        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' },
+        { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
+        { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' }
     ],
     comercio: [
-        { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, old: 110.00, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
-        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, old: 450.00, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' },
-        { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, old: 220.00, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
-        { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  old: 85.00,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' }
+        { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
+        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' },
+        { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
+        { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' }
     ]
 };
 
@@ -789,7 +703,6 @@ const variantGrid         = document.getElementById('variant-grid-container');
 const variantSpinner      = document.getElementById('variant-spinner');
 const productNameDisplay  = document.getElementById('display-product-name');
 const priceProductTitle   = document.getElementById('price-product-title');
-const oldPriceDisplay     = document.getElementById('old-price-display');
 const currentPriceDisplay = document.getElementById('current-price-display');
 const addToCartBtn        = document.getElementById('add-to-cart-btn');
 const cartBadge           = document.getElementById('cart-badge');
@@ -847,7 +760,6 @@ function updateDisplay() {
         const name = `Botijão de Gás (Cheio) ${currentVariant.variant}`;
         productNameDisplay.textContent  = name;
         priceProductTitle.textContent   = name;
-        oldPriceDisplay.textContent     = `R$ ${currentVariant.old.toFixed(2).replace('.', ',')}`;
         currentPriceDisplay.textContent = `R$ ${currentVariant.price.toFixed(2).replace('.', ',')}`;
     }, 400);
 }
@@ -1002,7 +914,7 @@ function proceedToSummary() {
         const time = document.getElementById('schedule-time').value;
         if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
         scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
-    } else { scheduleText = 'Entrega Rápida (em média até 20 min)'; }
+    } else { scheduleText = 'Entrega Rápida (em média de 20 min*)'; }
 
     let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
     let itemsHtml = cart.map(item => `
@@ -1065,7 +977,7 @@ confirmPaymentBtn.addEventListener('click', () => {
     const addrComplement = document.getElementById('addr-complement').value || '';
     const scheduleText   = selectedShipping === 'scheduled'
         ? `${document.getElementById('schedule-day').value.split('-').reverse().join('/')} às ${document.getElementById('schedule-time').value}`
-        : 'Entrega Rápida (em média até 20 min)';
+        : 'Entrega Rápida (em média de 20 min*)';
 
     const productsData = cart.map(item => ({
         n: `Botijão de Gás (Cheio) ${item.variant}`,
