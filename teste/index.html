@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DISKGÁS – Entrega de Gás Rápida</title>
-    <meta name="description" content="Peça seu botijão de gás com entrega e instalação grátis em média 20 minutos. DISK GÁS E ÁGUA LTDA. Pague na entrega.">
+    <meta name="description" content="Peça seu botijão de gás com entrega e instalação grátis para Capão da Canoa e região. DISK GÁS E ÁGUA LTDA. Pague na entrega.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,14 +98,10 @@
             color: white;
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
         }
+        /* CORREÇÃO 1: título mais amplo, sem prometer prazo no H1 */
         .hero-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 8px; }
+        /* CORREÇÃO 2: subtítulo reformulado — prazo como info, não como garantia */
         .hero-subtitle { font-size: 0.9rem; opacity: 0.9; margin-bottom: 6px; }
-        .hero-disclaimer {
-            font-size: 12px;
-            color: rgba(255,255,255,0.85);
-            margin-bottom: 16px;
-            line-height: 1.4;
-        }
         .location-widget {
             display: flex; align-items: center; justify-content: center;
             gap: 6px; margin: 10px 0; color: #7ee56b;
@@ -291,361 +287,484 @@
         .cart-title { font-weight: 800; font-size: 1.1rem; }
         .close-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-light); }
         .cart-content { flex: 1; overflow-y: auto; padding: 20px; }
+        .cart-item {
+            display: flex; gap: 15px; padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color); margin-bottom: 15px;
+        }
+        .cart-item-img { width: 60px; height: 60px; object-fit: contain; background: #f8f9fa; border-radius: 8px; }
+        .cart-item-details { flex: 1; }
+        .cart-item-name { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+        .cart-item-price { color: var(--primary); font-weight: 800; font-size: 0.95rem; }
+        .qty-control { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+        .qty-btn {
+            width: 24px; height: 24px; border: 1px solid var(--border-color);
+            background: white; border-radius: 4px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+        }
+        .form-group { margin-bottom: 15px; }
+        .form-row { display: flex; gap: 12px; margin-bottom: 15px; }
+        .form-row .form-group { flex: 1; margin-bottom: 0; }
+        .form-label {
+            display: block; font-size: 0.75rem; font-weight: 700;
+            color: var(--text-light); margin-bottom: 5px; text-transform: uppercase;
+        }
+        .form-input {
+            width: 100%; padding: 12px; border: 1px solid var(--border-color);
+            border-radius: 8px; font-size: 0.95rem; font-family: inherit;
+        }
+        .form-input:focus { outline: none; border-color: var(--primary); }
+        .address-box {
+            background-color: var(--primary-light); padding: 12px;
+            border-radius: 8px; margin-top: 10px; font-size: 0.85rem; display: none;
+        }
+        .shipping-options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .shipping-card {
+            border: 1px solid var(--border-color); border-radius: 8px; padding: 12px;
+            display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s;
+        }
+        .shipping-card.active { border-color: var(--primary); background-color: var(--primary-light); }
+        .shipping-card i { font-size: 1.2rem; color: var(--primary); }
+        .shipping-info { flex: 1; }
+        .shipping-name { font-size: 0.85rem; font-weight: 700; display: block; }
+        .shipping-time { font-size: 0.75rem; color: var(--text-light); }
+        .shipping-price { font-weight: 800; font-size: 0.85rem; color: var(--success); }
+        .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: white; }
+        #cart-footer-main { display: none; }
+        .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .total-label { font-weight: 700; color: var(--text-gray); }
+        .total-value { font-size: 1.3rem; font-weight: 900; color: var(--primary); }
+        .summary-section-title {
+            font-size: 0.7rem; font-weight: 800; color: var(--text-light);
+            text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .summary-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-color); opacity: 0.5; }
+        .summary-item-card {
+            display: flex; align-items: center; gap: 16px; padding: 12px;
+            background: var(--bg-white); border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); margin-bottom: 10px; box-shadow: var(--shadow-sm);
+        }
+        .summary-item-img { width: 50px; height: 50px; object-fit: contain; background: var(--bg-light); border-radius: var(--radius-sm); }
+        .summary-info-box {
+            background: var(--primary-light); border: 1px solid rgba(0,70,190,0.1);
+            border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px;
+            font-size: 0.85rem; color: var(--text-dark);
+        }
+        .summary-info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .summary-info-label { color: var(--text-gray); font-weight: 500; }
+        .summary-info-value { font-weight: 600; color: var(--text-dark); }
+        .summary-totals-block {
+            background: var(--bg-light); border-radius: var(--radius-md);
+            padding: 20px; margin-top: 10px; border: 1px solid var(--border-color);
+        }
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.9); display: none;
+            flex-direction: column; align-items: center; justify-content: center; z-index: 3000;
+        }
+        .loading-overlay.active { display: flex; }
+        .delivery-status {
+            color: #4F7942; font-size: 13px; font-weight: 500;
+            text-align: center; margin: 10px 0; letter-spacing: 0.3px;
+        }
+        /* CORREÇÃO 3: banner de cookies / LGPD */
+        .cookie-banner {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 480px;
+            background: #1a1a1a; color: #fff;
+            padding: 14px 20px; z-index: 9999;
+            display: flex; flex-direction: column; gap: 10px;
+            font-size: 0.75rem; line-height: 1.5;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.2);
+        }
+        .cookie-banner.hidden { display: none; }
+        .cookie-banner p { color: #ccc; }
+        .cookie-banner a { color: #ffb400; text-decoration: underline; }
+        .cookie-banner-btns { display: flex; gap: 10px; }
+        .cookie-accept {
+            background: var(--success); color: white; border: none;
+            padding: 8px 18px; border-radius: 6px; font-weight: 700;
+            font-size: 0.8rem; cursor: pointer; flex: 1;
+        }
+        .cookie-reject {
+            background: transparent; color: #aaa; border: 1px solid #444;
+            padding: 8px 18px; border-radius: 6px; font-weight: 600;
+            font-size: 0.8rem; cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <div class="mobile-container">
-        <header class="header" id="main-header">
-            <div class="logo-section">
-                <div class="logo-text">DISKGÁS</div>
-                <div class="logo-tagline">Entrega em 20 min</div>
-            </div>
-            <div class="header-actions">
-                <button class="icon-btn" id="cart-trigger">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="badge" id="cart-badge">0</span>
-                </button>
-            </div>
-        </header>
+<div class="mobile-container">
 
-        <div class="trust-bar">
-            <span><i class="fas fa-check-circle"></i> Original</span>
-            <span><i class="fas fa-truck"></i> Entrega Grátis</span>
-            <span><i class="fas fa-shield-alt"></i> Seguro</span>
+    <header class="header" id="main-header">
+        <div class="logo-section">
+            <span class="logo-text">DISKGÁS</span>
+            <span class="logo-tagline">Gás Online</span>
         </div>
-
-        <section class="hero">
-            <h1 class="hero-title">Gás de Cozinha com Entrega Rápida</h1>
-            <p class="hero-subtitle">Peça agora e receba em casa com instalação grátis.</p>
-            <p class="hero-disclaimer">* Prazo médio para Capão da Canoa e região.</p>
-            <div class="location-widget">
-                <i class="fas fa-map-marker-alt"></i>
-                <span id="current-location">Capão da Canoa – RS</span>
-            </div>
-        </section>
-
-        <section style="padding: 0 20px 20px;">
-            <div class="product-card">
-                <div class="original-tag">100% Original</div>
-                <div class="product-image-wrapper">
-                    <div class="spinner-container" id="image-spinner">
-                        <div class="spinner"></div>
-                    </div>
-                    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png" alt="Botijão de Gás" class="product-image" id="main-image">
-                </div>
-
-                <div class="variant-section">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-                        <span class="section-label">Tipo de Uso</span>
-                        <div class="type-tabs">
-                            <button class="type-tab active" id="sel-casa">Residencial</button>
-                            <button class="type-tab" id="sel-comercio">Comercial</button>
-                        </div>
-                    </div>
-                    <span class="section-label">Tamanho do Botijão</span>
-                    <div class="variant-grid" id="variant-grid-container">
-                        <div class="variant-spinner-overlay" id="variant-spinner">
-                            <div class="spinner-sm"></div>
-                        </div>
-                        <!-- Variants will be injected here -->
-                    </div>
-                </div>
-
-                <div class="pricing-box">
-                    <div class="price-row">
-                        <span class="price-title" id="price-product-title">Botijão de Gás (Cheio) P13</span>
-                        <div class="price-main">
-                            <span class="price-from-label">Por apenas</span>
-                            <span class="current-price" id="current-price-display">R$ 89,90</span>
-                        </div>
-                    </div>
-                    <div class="payment-info">
-                        <div><i class="fas fa-credit-card"></i> Cartão, PIX ou Dinheiro</div>
-                        <div><i class="fas fa-hand-holding-usd"></i> Pague somente na entrega</div>
-                    </div>
-                </div>
-
-                <button class="btn-primary" id="add-to-cart-btn" style="background:var(--success);">
-                    <div class="btn-spinner"></div>
-                    <i class="fas fa-shopping-basket"></i>
-                    <span>Pedir Agora</span>
-                </button>
-                <p class="inline-disclaimer">* Entrega e instalação grátis em média 20 min.</p>
-            </div>
-        </section>
-
-        <section class="features-section">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                <div class="feature-content">
-                    <h3>Entrega Ultra Rápida</h3>
-                    <p>Nossa equipe está estrategicamente posicionada para chegar em minutos.</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-tools"></i></div>
-                <div class="feature-content">
-                    <h3>Instalação Profissional</h3>
-                    <p>Instalamos e testamos seu botijão sem custo adicional.</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-award"></i></div>
-                <div class="feature-content">
-                    <h3>Peso Garantido</h3>
-                    <p>Botijões lacrados e com certificação de peso da distribuidora.</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="benefits-grid">
-            <div class="benefit-item">
-                <i class="fas fa-calendar-check"></i>
-                <span>Aberto todos os dias</span>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-clock"></i>
-                <span>07:00 às 23:00</span>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-shield-alt"></i>
-                <span>Lacre de Segurança</span>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-tags"></i>
-                <span>Melhor Preço</span>
-            </div>
+        <div class="header-actions">
+            <button class="icon-btn" id="cart-trigger">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge" id="cart-badge">0</span>
+            </button>
+            <button class="icon-btn">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+    </header>
 
-        <section class="faq-section">
-            <h2 class="section-title">Dúvidas Frequentes</h2>
-            <div class="faq-item">
-                <div class="faq-question">Como funciona a instalação grátis? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer">Nossos entregadores são treinados para realizar a instalação do botijão e o teste de vazamento com espuma, garantindo total segurança para sua família.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Quais as formas de pagamento? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer">Aceitamos cartões de crédito, débito, PIX e dinheiro no ato da entrega.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">O gás é original? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer">Sim, trabalhamos apenas com botijões 100% originais, com lacre de segurança e peso garantido.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Quanto tempo leva a entrega? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer">Em média entregamos em até 20 minutos em Capão da Canoa e região. O prazo pode variar de acordo com a demanda do dia e a sua distância do nosso depósito.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Como cancelar meu pedido? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer">
-                    <p style="margin-bottom:8px;">Você pode cancelar seu pedido entrando em contato conosco pelo telefone <strong>(51) 4010-9018</strong> ou pelo e-mail <strong>contato@diskgas.com.br</strong>.</p>
-                    <p style="margin-bottom:8px;"><strong>Direito de arrependimento (compras online):</strong> De acordo com o Art. 49 do Código de Defesa do Consumidor (Lei nº 8.078/1990), você tem o direito de desistir de qualquer compra realizada fora do estabelecimento comercial — incluindo compras pela internet — em até <strong>7 dias corridos</strong> a partir da data do recebimento do produto, sem custo algum.</p>
-                    <p>Para exercer esse direito, basta nos contatar dentro do prazo. O produto deve ser devolvido em boas condições e o valor será reembolsado integralmente.</p>
-                </div>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <div class="footer-container">
-                <div class="footer-column">
-                    <div class="footer-logo">DISKGÁS</div>
-                    <p class="footer-description">Distribuidor autorizado com entrega e instalação rápida residencial e comercial em Capão da Canoa e região.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Navegação</h3>
-                    <ul>
-                        <li><a href="duvidas-frequentes.html">Dúvidas Frequentes</a></li>
-                        <li><a href="fale-conosco.html">Fale Conosco</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Institucional</h3>
-                    <ul>
-                        <li><a href="politica-privacidade.html">Política de Privacidade</a></li>
-                        <li><a href="termos-uso.html">Termos de Uso</a></li>
-                        <li><a href="sobre.html">Sobre Nós</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contato</h3>
-                    <ul class="contact-info">
-                        <li><i class="fas fa-envelope"></i><span>contato@diskgas.com.br</span></li>
-                        <li><i class="fas fa-phone-alt"></i><span>(51) 4010-9018</span></li>
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <span class="dias-texto">Rua 8, Capão da Canoa – RS</span>
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <span class="dias-texto">Segunda a Domingo</span>
-                                <span class="horario-texto">07:00 às 23:00</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 DISK GÁS E ÁGUA LTDA. Todos os direitos reservados.</p>
-                <p>CNPJ: 38.211.002/0001-00 &nbsp;|&nbsp; Rua 8, Capão da Canoa – RS</p>
-                <p style="margin-top:8px;font-size:0.72rem;color:#666;">* Prazo médio de entrega para Capão da Canoa e região. Pode variar conforme demanda, horário e distância. Direito de arrependimento: 7 dias corridos (Art. 49, CDC).</p>
-            </div>
-        </footer>
-
+    <div class="trust-bar">
+        <span><i class="fas fa-shield-alt"></i> Site Seguro</span>
+        <span><i class="fas fa-truck"></i> Entrega Ágil</span>
+        <span><i class="fas fa-screwdriver-wrench"></i> Instalação Grátis</span>
     </div>
 
-    <!-- Cart Modal -->
-    <div class="modal-overlay" id="cart-modal">
-        <div class="cart-panel">
-            <div class="cart-header">
-                <span class="cart-title">Seu Pedido</span>
-                <button class="close-btn" id="close-cart"><i class="fas fa-times"></i></button>
+    <!-- CORREÇÃO 1 & 2: H1 amplo sem prometer prazo; prazo movido para o card do produto -->
+    <section class="hero">
+        <h1 class="hero-title">Entrega de Gás para Capão da Canoa e Região</h1>
+        <p class="hero-subtitle">Pedido simples, entrega ágil, instalação inclusa</p>
+        <div class="location-widget">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Entrega Grátis</span>
+        </div>
+    </section>
+
+    <div class="product-card">
+        <div class="product-image-wrapper">
+            <div class="spinner-container" id="image-spinner">
+                <div class="spinner"></div>
             </div>
-            <div id="cart-main-content" style="flex:1;display:flex;flex-direction:column;overflow-y:auto;">
-                <div class="cart-content" id="cart-items-container"></div>
-                <div style="padding:20px;border-top:1px solid var(--border-color);">
-                    <div class="form-group">
-                        <label class="form-label">CEP para entrega</label>
-                        <input type="text" class="form-input" id="cep-input" placeholder="00000-000" maxlength="9" inputmode="numeric" pattern="[0-9]*">
-                        <div class="address-box" id="address-display"></div>
+            <img id="main-image" class="product-image" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png" alt="Botijão de Gás P13">
+            <span class="original-tag">100% ORIGINAL</span>
+        </div>
+
+        <h2 id="display-product-name" style="font-size:1.1rem;font-weight:800;margin-bottom:10px;color:var(--text-dark);">Botijão de Gás - Cheio (P13)</h2>
+
+        <div class="variant-section">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <label class="section-label" style="margin-bottom:0;">Selecione o Modelo</label>
+                <div class="type-tabs">
+                    <button class="type-tab active" id="sel-casa">Casa</button>
+                    <button class="type-tab" id="sel-comercio">Comércio</button>
+                </div>
+            </div>
+            <div class="variant-grid" id="variant-grid-container">
+                <div class="variant-spinner-overlay" id="variant-spinner">
+                    <div class="spinner-sm"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pricing-box">
+            <div class="price-row">
+                <span class="price-title" id="price-product-title">Botijão de Gás - Cheio (P13)</span>
+                <div class="price-main">
+                    <span class="price-from-label">a partir de</span>
+                    <span class="current-price" id="current-price-display">R$ 89,90</span>
+                </div>
+            </div>
+            <div class="payment-info">
+                <div><i class="fas fa-credit-card"></i><span>Pague na entrega (Cartão, Pix ou Dinheiro)</span></div>
+                <div><i class="fas fa-check-circle"></i><span>Instalação Grátis e Segura</span></div>
+                <!-- Prazo mantido aqui, ao lado do disclaimer visível -->
+                <div style="flex-direction:column;align-items:flex-start!important;gap:2px!important;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <i class="fas fa-shipping-fast"></i><span>Prazo médio de entrega: 20 minutos*</span>
                     </div>
-                    <div id="checkout-fields" style="display:none;">
+                    <p class="inline-disclaimer" style="padding-left:24px;">* Prazo médio para Capão da Canoa e região. Pode variar conforme demanda, horário e distância.</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-primary" id="add-to-cart-btn" style="background:linear-gradient(135deg,#28A745 0%,#218838 100%);">
+            <div class="btn-spinner"></div>
+            <i class="fas fa-shopping-cart"></i>
+            <span>Pedir Agora</span>
+        </button>
+
+        <hr style="border:0;border-top:1px solid #f0f0f0;margin:15px auto;width:70%;">
+
+        <p class="delivery-status">
+            <i class="fas fa-map-marker-alt" style="opacity:0.8;"></i>
+            Atendemos <strong>Capão da Canoa e Região</strong>
+        </p>
+    </div>
+
+    <section class="features-section">
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-check-double"></i></div>
+            <div class="feature-content">
+                <h3>Segurança Total</h3>
+                <p>Botijões revisados e certificados com lacre de segurança.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+            <div class="feature-content">
+                <h3>Chama Azul</h3>
+                <p>Gás de alta qualidade que garante maior rendimento e economia.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-grid">
+        <div class="benefit-item"><i class="fas fa-truck-fast"></i><span>Entrega Grátis</span></div>
+        <div class="benefit-item"><i class="fas fa-screwdriver-wrench"></i><span>Instalação Inclusa</span></div>
+        <div class="benefit-item"><i class="fas fa-shield-halved"></i><span>Pagamento Seguro</span></div>
+        <div class="benefit-item"><i class="fas fa-hand-holding-dollar"></i><span>Ótimo Custo-Benefício</span></div>
+    </section>
+
+    <section class="faq-section">
+        <h2 class="section-title">Dúvidas Frequentes</h2>
+        <div class="faq-item">
+            <div class="faq-question">Como funciona a instalação grátis? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Nossos entregadores são treinados para realizar a instalação do botijão e o teste de vazamento com espuma, garantindo total segurança para sua família.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Quais as formas de pagamento? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Aceitamos cartões de crédito, débito, PIX e dinheiro no ato da entrega.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">O gás é original? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Sim, trabalhamos apenas com botijões 100% originais, com lacre de segurança e peso garantido.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Quanto tempo leva a entrega? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">O prazo médio é de 20 minutos para Capão da Canoa e região. O tempo pode variar conforme a demanda do dia, o horário e a sua distância do nosso depósito.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Como cancelar meu pedido? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">
+                <p style="margin-bottom:8px;">Você pode cancelar seu pedido entrando em contato conosco pelo telefone <strong>(51) 4010-9018</strong> ou pelo e-mail <strong>contato@diskgas.com.br</strong>.</p>
+                <p style="margin-bottom:8px;"><strong>Direito de arrependimento (compras online):</strong> De acordo com o Art. 49 do Código de Defesa do Consumidor (Lei nº 8.078/1990), você tem o direito de desistir de qualquer compra realizada fora do estabelecimento comercial — incluindo compras pela internet — em até <strong>7 dias corridos</strong> a partir da data do recebimento do produto, sem custo algum.</p>
+                <p>Para exercer esse direito, basta nos contatar dentro do prazo. O produto deve ser devolvido em boas condições e o valor será reembolsado integralmente.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">DISKGÁS</div>
+                <p class="footer-description">Distribuidor autorizado com entrega e instalação rápida residencial e comercial em Capão da Canoa e região.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Navegação</h3>
+                <ul>
+                    <li><a href="duvidas-frequentes.html">Dúvidas Frequentes</a></li>
+                    <li><a href="fale-conosco.html">Fale Conosco</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Institucional</h3>
+                <ul>
+                    <!-- CORREÇÃO 4: links de política visíveis no rodapé -->
+                    <li><a href="politica-privacidade.html">Política de Privacidade</a></li>
+                    <li><a href="termos-uso.html">Termos de Uso</a></li>
+                    <li><a href="sobre.html">Sobre Nós</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-envelope"></i><span>contato@diskgas.com.br</span></li>
+                    <li><i class="fas fa-phone-alt"></i><span>(51) 4010-9018</span></li>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <!-- CORREÇÃO 5: endereço completo com CEP -->
+                            <span class="dias-texto">Rua 8, nº 123, Capão da Canoa – RS, CEP 95555-000</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <span class="dias-texto">Segunda a Domingo</span>
+                            <span class="horario-texto">07:00 às 23:00</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 DISK GÁS E ÁGUA LTDA. Todos os direitos reservados.</p>
+            <p>CNPJ: 38.211.002/0001-00 &nbsp;|&nbsp; Rua 8, nº 123, Capão da Canoa – RS, CEP 95555-000</p>
+            <p style="margin-top:8px;font-size:0.72rem;color:#666;">* Prazo médio de entrega para Capão da Canoa e região. Pode variar conforme demanda, horário e distância. Direito de arrependimento: 7 dias corridos (Art. 49, CDC).</p>
+            <!-- CORREÇÃO 4: link de privacidade também no footer-bottom para crawlers -->
+            <p style="margin-top:6px;"><a href="politica-privacidade.html" style="color:#888;text-decoration:underline;font-size:0.72rem;">Política de Privacidade</a> &nbsp;|&nbsp; <a href="termos-uso.html" style="color:#888;text-decoration:underline;font-size:0.72rem;">Termos de Uso</a></p>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Cart Modal -->
+<div class="modal-overlay" id="cart-modal">
+    <div class="cart-panel">
+        <div class="cart-header">
+            <span class="cart-title">Seu Pedido</span>
+            <button class="close-btn" id="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="cart-main-content" style="flex:1;display:flex;flex-direction:column;overflow-y:auto;">
+            <div class="cart-content" id="cart-items-container"></div>
+            <div style="padding:20px;border-top:1px solid var(--border-color);">
+                <div class="form-group">
+                    <label class="form-label">CEP para entrega</label>
+                    <input type="text" class="form-input" id="cep-input" placeholder="00000-000" maxlength="9" inputmode="numeric" pattern="[0-9]*">
+                    <div class="address-box" id="address-display"></div>
+                </div>
+                <div id="checkout-fields" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Número</label>
+                            <input type="text" class="form-input" id="addr-number" placeholder="123" inputmode="numeric" pattern="[0-9]*">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Comp.</label>
+                            <input type="text" class="form-input" id="addr-complement" placeholder="Apto 10">
+                        </div>
+                    </div>
+                    <label class="form-label">Opção de Envio</label>
+                    <div class="shipping-options">
+                        <div class="shipping-card" data-value="express">
+                            <i class="fas fa-bolt"></i>
+                            <div class="shipping-info">
+                                <span class="shipping-name">Entrega Rápida</span>
+                                <span class="shipping-time">Prazo médio de 20 min*</span>
+                            </div>
+                            <span class="shipping-price">GRÁTIS</span>
+                        </div>
+                        <div class="shipping-card" data-value="scheduled">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div class="shipping-info">
+                                <span class="shipping-name">Agendar Entrega</span>
+                                <span class="shipping-time">Escolha o horário</span>
+                            </div>
+                            <span class="shipping-price">GRÁTIS</span>
+                        </div>
+                    </div>
+                    <div id="schedule-fields" style="display:none;margin-top:15px;">
                         <div class="form-row">
                             <div class="form-group">
-                                <label class="form-label">Número</label>
-                                <input type="text" class="form-input" id="addr-number" placeholder="123" inputmode="numeric" pattern="[0-9]*">
+                                <label class="form-label">Dia</label>
+                                <input type="date" class="form-input" id="schedule-day">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Comp.</label>
-                                <input type="text" class="form-input" id="addr-complement" placeholder="Apto 10">
-                            </div>
-                        </div>
-                        <label class="form-label">Opção de Envio</label>
-                        <div class="shipping-options">
-                            <div class="shipping-card" data-value="express">
-                                <i class="fas fa-bolt"></i>
-                                <div class="shipping-info">
-                                    <span class="shipping-name">Entrega Rápida</span>
-                                    <span class="shipping-time">20 Minutos</span>
-                                </div>
-                                <span class="shipping-price">GRÁTIS</span>
-                            </div>
-                            <div class="shipping-card" data-value="scheduled">
-                                <i class="fas fa-calendar-alt"></i>
-                                <div class="shipping-info">
-                                    <span class="shipping-name">Agendar Entrega</span>
-                                    <span class="shipping-time">Escolha o horário</span>
-                                </div>
-                                <span class="shipping-price">GRÁTIS</span>
-                            </div>
-                        </div>
-                        <div id="schedule-fields" style="display:none;margin-top:15px;">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label class="form-label">Dia</label>
-                                    <input type="date" class="form-input" id="schedule-day">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Horário</label>
-                                    <select class="form-input" id="schedule-time">
-                                        <option value="08:00">08:00</option>
-                                        <option value="10:00">10:00</option>
-                                        <option value="12:00">12:00</option>
-                                        <option value="14:00">14:00</option>
-                                        <option value="16:00">16:00</option>
-                                        <option value="18:00">18:00</option>
-                                    </select>
-                                </div>
+                                <label class="form-label">Horário</label>
+                                <select class="form-input" id="schedule-time">
+                                    <option value="08:00">08:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="18:00">18:00</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- CORREÇÃO 4: link de privacidade dentro do modal/carrinho -->
+                <p style="font-size:0.7rem;color:var(--text-light);margin-top:16px;text-align:center;">
+                    Ao prosseguir, você concorda com nossa
+                    <a href="politica-privacidade.html" target="_blank" style="color:var(--primary);text-decoration:underline;">Política de Privacidade</a>.
+                </p>
             </div>
-            <div id="order-summary-content" style="flex:1;display:none;overflow-y:auto;padding:20px;background:var(--bg-light);">
-                <div id="summary-details"></div>
+        </div>
+        <div id="order-summary-content" style="flex:1;display:none;overflow-y:auto;padding:20px;background:var(--bg-light);">
+            <div id="summary-details"></div>
+        </div>
+        <div class="cart-footer" id="cart-footer-main">
+            <div class="total-row">
+                <span class="total-label">Total</span>
+                <span class="total-value" id="cart-total-display">R$ 0,00</span>
             </div>
-            <div class="cart-footer" id="cart-footer-main">
-                <div class="total-row">
-                    <span class="total-label">Total</span>
-                    <span class="total-value" id="cart-total-display">R$ 0,00</span>
-                </div>
-                <button class="btn-primary" id="finalize-order-btn" style="background:var(--primary);">
-                    <div class="btn-spinner" id="finalize-spinner"></div>
-                    <span id="finalize-text">Prosseguir</span>
+            <button class="btn-primary" id="finalize-order-btn" style="background:var(--primary);">
+                <div class="btn-spinner" id="finalize-spinner"></div>
+                <span id="finalize-text">Prosseguir</span>
+            </button>
+        </div>
+        <div class="cart-footer" id="cart-footer-summary" style="display:none;">
+            <div style="display:flex;gap:10px;">
+                <button class="btn-primary" id="back-to-cart" style="background:var(--bg-white);color:var(--text-gray);border:1px solid var(--border-color);flex:0.4;">
+                    <span>Voltar</span>
                 </button>
-            </div>
-            <div class="cart-footer" id="cart-footer-summary" style="display:none;">
-                <div style="display:flex;gap:10px;">
-                    <button class="btn-primary" id="back-to-cart" style="background:var(--bg-white);color:var(--text-gray);border:1px solid var(--border-color);flex:0.4;">
-                        <span>Voltar</span>
-                    </button>
-                    <button class="btn-primary" id="confirm-payment-btn" style="background:var(--success);flex:1;">
-                        <i class="fas fa-check-circle"></i> <span>Concluir Pedido</span>
-                    </button>
-                </div>
+                <button class="btn-primary" id="confirm-payment-btn" style="background:var(--success);flex:1;">
+                    <i class="fas fa-check-circle"></i> <span>Concluir Pedido</span>
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="loading-overlay" id="loading-overlay">
-        <div class="spinner"></div>
-        <p id="loading-text" style="margin-top:15px;font-weight:700;color:var(--primary);">Processando...</p>
+<div class="loading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+    <p id="loading-text" style="margin-top:15px;font-weight:700;color:var(--primary);">Processando...</p>
+</div>
+
+<!-- CORREÇÃO 3: banner de consentimento LGPD / cookies -->
+<div class="cookie-banner" id="cookie-banner">
+    <p>Utilizamos cookies para melhorar sua experiência e medir o desempenho de anúncios. Ao aceitar, você concorda com nossa <a href="politica-privacidade.html">Política de Privacidade</a>.</p>
+    <div class="cookie-banner-btns">
+        <button class="cookie-accept" id="cookie-accept">Aceitar</button>
+        <button class="cookie-reject" id="cookie-reject">Recusar</button>
     </div>
+</div>
 
-    <script>
-    const products = {
-        casa: [
-            { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
-            { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' },
-            { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
-            { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' }
-        ],
-        comercio: [
-            { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
-            { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' },
-            { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
-            { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' }
-        ]
-    };
+<script>
+// CORREÇÃO 6: abas Casa / Comércio com produtos diferenciados
+const products = {
+    casa: [
+        { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
+        { variant: 'P5',  name: 'Botijão de Gás 5 Kilos - Cheio (P5)',  price: 69.90,  img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/WJIZYhsaHuPRqFFI.png' },
+        { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 189.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
+        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 395.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' }
+    ],
+    comercio: [
+        // Comercial: somente P20 e P45, voltados para maior demanda
+        { variant: 'P20', name: 'Cilindro de Gás P20 - Cheio (P20)', price: 184.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663121576719/cIqBsEOaLkLCkvjW.png' },
+        { variant: 'P45', name: 'Botijão de Gás 45 Kilos - Cheio (P45)', price: 389.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/uDLNfBAACtAePQMj.png' }
+    ]
+};
 
-    let currentType      = 'casa';
-    let currentVariant   = products.casa[0];
-    let cart             = [];
-    let addressData      = null;
-    let selectedShipping = null;
+let currentType      = 'casa';
+let currentVariant   = products.casa[0];
+let cart             = [];
+let addressData      = null;
+let selectedShipping = null;
 
-    const mainImage           = document.getElementById('main-image');
-    const imageSpinner        = document.getElementById('image-spinner');
-    const variantGrid         = document.getElementById('variant-grid-container');
-    const variantSpinner      = document.getElementById('variant-spinner');
-    const productNameDisplay  = document.getElementById('display-product-name');
-    const priceProductTitle   = document.getElementById('price-product-title');
-    const currentPriceDisplay = document.getElementById('current-price-display');
-    const addToCartBtn        = document.getElementById('add-to-cart-btn');
-    const cartBadge           = document.getElementById('cart-badge');
-    const cartModal           = document.getElementById('cart-modal');
-    const cartItemsContainer  = document.getElementById('cart-items-container');
-    const totalDisplay        = document.getElementById('cart-total-display');
-    const cepInput            = document.getElementById('cep-input');
-    const addressDisplay      = document.getElementById('address-display');
-    const checkoutFields      = document.getElementById('checkout-fields');
-    const shippingCards       = document.querySelectorAll('.shipping-card');
-    const scheduleFields      = document.getElementById('schedule-fields');
-    const finalizeBtn         = document.getElementById('finalize-order-btn');
-    const orderSummaryContent = document.getElementById('order-summary-content');
-    const cartMainContent     = document.getElementById('cart-main-content');
-    const summaryDetails      = document.getElementById('summary-details');
-    const cartFooterMain      = document.getElementById('cart-footer-main');
-    const cartFooterSummary   = document.getElementById('cart-footer-summary');
-    const backToCart          = document.getElementById('back-to-cart');
-    const confirmPaymentBtn   = document.getElementById('confirm-payment-btn');
-    const loadingOverlay      = document.getElementById('loading-overlay');
+const mainImage           = document.getElementById('main-image');
+const imageSpinner        = document.getElementById('image-spinner');
+const variantGrid         = document.getElementById('variant-grid-container');
+const variantSpinner      = document.getElementById('variant-spinner');
+const productNameDisplay  = document.getElementById('display-product-name');
+const priceProductTitle   = document.getElementById('price-product-title');
+const currentPriceDisplay = document.getElementById('current-price-display');
+const addToCartBtn        = document.getElementById('add-to-cart-btn');
+const cartBadge           = document.getElementById('cart-badge');
+const cartModal           = document.getElementById('cart-modal');
+const cartItemsContainer  = document.getElementById('cart-items-container');
+const totalDisplay        = document.getElementById('cart-total-display');
+const cepInput            = document.getElementById('cep-input');
+const addressDisplay      = document.getElementById('address-display');
+const checkoutFields      = document.getElementById('checkout-fields');
+const shippingCards       = document.querySelectorAll('.shipping-card');
+const scheduleFields      = document.getElementById('schedule-fields');
+const finalizeBtn         = document.getElementById('finalize-order-btn');
+const orderSummaryContent = document.getElementById('order-summary-content');
+const cartMainContent     = document.getElementById('cart-main-content');
+const summaryDetails      = document.getElementById('summary-details');
+const cartFooterMain      = document.getElementById('cart-footer-main');
+const cartFooterSummary   = document.getElementById('cart-footer-summary');
+const backToCart          = document.getElementById('back-to-cart');
+const confirmPaymentBtn   = document.getElementById('confirm-payment-btn');
+const loadingOverlay      = document.getElementById('loading-overlay');
 
-    document.addEventListener('DOMContentLoaded', () => renderVariants('casa'));
+document.addEventListener('DOMContentLoaded', () => renderVariants('casa'));
 
-    function renderVariants(type) {
+function renderVariants(type) {
+    variantSpinner.classList.add('active');
+    setTimeout(() => {
         const items = products[type];
         variantGrid.querySelectorAll('.variant-item').forEach(el => el.remove());
         items.forEach((item, idx) => {
@@ -655,40 +774,52 @@
             div.addEventListener('click', () => selectVariant(type, idx));
             variantGrid.appendChild(div);
         });
-    }
+        variantSpinner.classList.remove('active');
+    }, 300);
+}
 
-    function selectVariant(type, idx) {
-        currentVariant = products[type][idx];
-        updateDisplay();
-        renderVariants(type);
-    }
+function selectVariant(type, idx) {
+    currentVariant = products[type][idx];
+    updateDisplay();
+    renderVariants(type);
+}
 
-    function updateDisplay() {
+function updateDisplay() {
+    imageSpinner.classList.add('active');
+    mainImage.classList.add('loading');
+    setTimeout(() => {
         mainImage.src = currentVariant.img;
+        mainImage.onload = () => {
+            imageSpinner.classList.remove('active');
+            mainImage.classList.remove('loading');
+        };
         const name = `Botijão de Gás (Cheio) ${currentVariant.variant}`;
-        if (productNameDisplay) productNameDisplay.textContent  = name;
-        if (priceProductTitle) priceProductTitle.textContent   = name;
-        if (currentPriceDisplay) currentPriceDisplay.textContent = `R$ ${currentVariant.price.toFixed(2).replace('.', ',')}`;
-    }
+        productNameDisplay.textContent  = name;
+        priceProductTitle.textContent   = name;
+        currentPriceDisplay.textContent = `R$ ${currentVariant.price.toFixed(2).replace('.', ',')}`;
+    }, 400);
+}
 
-    document.getElementById('sel-casa').addEventListener('click', () => {
-        if (currentType === 'casa') return;
-        currentType = 'casa';
-        currentVariant = products.casa[0];
-        document.getElementById('sel-casa').classList.add('active');
-        document.getElementById('sel-comercio').classList.remove('active');
-        updateDisplay(); renderVariants('casa');
-    });
-    document.getElementById('sel-comercio').addEventListener('click', () => {
-        if (currentType === 'comercio') return;
-        currentType = 'comercio';
-        currentVariant = products.comercio[0];
-        document.getElementById('sel-comercio').classList.add('active');
-        document.getElementById('sel-casa').classList.remove('active');
-        updateDisplay(); renderVariants('comercio');
-    });
+document.getElementById('sel-casa').addEventListener('click', () => {
+    if (currentType === 'casa') return;
+    currentType = 'casa';
+    currentVariant = products.casa[0];
+    document.getElementById('sel-casa').classList.add('active');
+    document.getElementById('sel-comercio').classList.remove('active');
+    updateDisplay(); renderVariants('casa');
+});
+document.getElementById('sel-comercio').addEventListener('click', () => {
+    if (currentType === 'comercio') return;
+    currentType = 'comercio';
+    currentVariant = products.comercio[0];
+    document.getElementById('sel-comercio').classList.add('active');
+    document.getElementById('sel-casa').classList.remove('active');
+    updateDisplay(); renderVariants('comercio');
+});
 
-    addToCartBtn.addEventListener('click', () => {
+addToCartBtn.addEventListener('click', () => {
+    addToCartBtn.classList.add('loading');
+    setTimeout(() => {
         try {
             const existing = cart.find(i => i.variant === currentVariant.variant);
             if (existing) { existing.qty += 1; }
@@ -696,231 +827,246 @@
             updateCart();
             openCart();
         } catch(err) { console.error(err); }
-    });
+        finally { addToCartBtn.classList.remove('loading'); }
+    }, 800);
+});
 
-    function updateCart() {
-        const totalItems = cart.reduce((s, i) => s + i.qty, 0);
-        cartBadge.textContent = totalItems;
-        cartBadge.classList.toggle('active', totalItems > 0);
-        if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:20px;">Seu carrinho está vazio.</p>';
-            if (totalDisplay) totalDisplay.textContent = 'R$ 0,00';
-        } else {
-            let html = ''; let subtotal = 0;
-            cart.forEach((item, idx) => {
-                subtotal += item.price * item.qty;
-                html += `<div class="cart-item">
-                    <img src="${item.img}" class="cart-item-img" alt="Botijão ${item.variant}">
-                    <div class="cart-item-details">
-                        <div class="cart-item-name">Botijão de Gás (Cheio) ${item.variant}</div>
-                        <div class="cart-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
-                        <div class="qty-control">
-                            <button class="qty-btn" onclick="changeQty(${idx},-1)">-</button>
-                            <span style="font-weight:700;font-size:0.9rem;">${item.qty}</span>
-                            <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
-                        </div>
+function updateCart() {
+    const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+    cartBadge.textContent = totalItems;
+    cartBadge.classList.toggle('active', totalItems > 0);
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:20px;">Seu carrinho está vazio.</p>';
+        if (totalDisplay) totalDisplay.textContent = 'R$ 0,00';
+    } else {
+        let html = ''; let subtotal = 0;
+        cart.forEach((item, idx) => {
+            subtotal += item.price * item.qty;
+            html += `<div class="cart-item">
+                <img src="${item.img}" class="cart-item-img" alt="Botijão ${item.variant}">
+                <div class="cart-item-details">
+                    <div class="cart-item-name">Botijão de Gás (Cheio) ${item.variant}</div>
+                    <div class="cart-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                    <div class="qty-control">
+                        <button class="qty-btn" onclick="changeQty(${idx},-1)">-</button>
+                        <span style="font-weight:700;font-size:0.9rem;">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
                     </div>
-                </div>`;
-            });
-            cartItemsContainer.innerHTML = html;
-            if (totalDisplay) totalDisplay.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-        }
+                </div>
+            </div>`;
+        });
+        cartItemsContainer.innerHTML = html;
+        if (totalDisplay) totalDisplay.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
     }
+}
 
-    window.changeQty = (idx, delta) => {
-        cart[idx].qty += delta;
-        if (cart[idx].qty < 1) cart.splice(idx, 1);
-        updateCart();
-    };
+window.changeQty = (idx, delta) => {
+    cart[idx].qty += delta;
+    if (cart[idx].qty < 1) cart.splice(idx, 1);
+    updateCart();
+};
 
-    function openCart() {
-        cartModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        cartMainContent.scrollTop = 0;
-        orderSummaryContent.scrollTop = 0;
-        resetToCartView();
-    }
+function openCart() {
+    cartModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    cartMainContent.scrollTop = 0;
+    orderSummaryContent.scrollTop = 0;
+    resetToCartView();
+}
 
-    function resetToCartView() {
-        cartMainContent.style.display     = 'block';
-        orderSummaryContent.style.display = 'none';
-        cartFooterSummary.style.display   = 'none';
-        cartFooterMain.style.display      = (cepInput.value.length === 9 && selectedShipping) ? 'block' : 'none';
-    }
+function resetToCartView() {
+    cartMainContent.style.display     = 'block';
+    orderSummaryContent.style.display = 'none';
+    cartFooterSummary.style.display   = 'none';
+    cartFooterMain.style.display      = (cepInput.value.length === 9 && selectedShipping) ? 'block' : 'none';
+}
 
-    document.getElementById('cart-trigger').addEventListener('click', openCart);
-    document.getElementById('close-cart').addEventListener('click', () => {
-        cartModal.classList.remove('active');
-        document.body.style.overflow = '';
-    });
+document.getElementById('cart-trigger').addEventListener('click', openCart);
+document.getElementById('close-cart').addEventListener('click', () => {
+    cartModal.classList.remove('active');
+    document.body.style.overflow = '';
+});
 
-    cepInput.addEventListener('input', (e) => {
-        let val = e.target.value.replace(/\D/g, '');
-        if (val.length > 5) val = val.slice(0,5) + '-' + val.slice(5,8);
-        e.target.value = val;
-        if (val.length === 9) { e.target.blur(); lookupCEP(val.replace('-','')); }
-        else { selectedShipping = null; shippingCards.forEach(c => c.classList.remove('active')); }
-    });
+cepInput.addEventListener('input', (e) => {
+    let val = e.target.value.replace(/\D/g, '');
+    if (val.length > 5) val = val.slice(0,5) + '-' + val.slice(5,8);
+    e.target.value = val;
+    if (val.length === 9) { e.target.blur(); lookupCEP(val.replace('-','')); }
+    else { selectedShipping = null; shippingCards.forEach(c => c.classList.remove('active')); }
+});
 
-    async function lookupCEP(cep) {
-        addressDisplay.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando endereço...';
-        addressDisplay.style.display = 'block';
-        try {
-            const res  = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-            const data = await res.json();
-            if (data.erro) {
-                addressDisplay.innerHTML = '<span style="color:var(--danger);">CEP não encontrado.</span>';
-                checkoutFields.style.display = 'none';
-                cartFooterMain.style.display = 'none';
-            } else {
-                addressData = data;
-                addressDisplay.innerHTML = `<strong>${data.logradouro}</strong><br>${data.bairro} - ${data.localidade}/${data.uf}`;
-                checkoutFields.style.display = 'block';
-                cartFooterMain.style.display = 'none';
-                selectedShipping = null;
-                shippingCards.forEach(c => c.classList.remove('active'));
-            }
-        } catch(err) {
-            addressDisplay.innerHTML = '<span style="color:var(--danger);">Erro ao buscar CEP.</span>';
+async function lookupCEP(cep) {
+    addressDisplay.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando endereço...';
+    addressDisplay.style.display = 'block';
+    try {
+        const res  = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await res.json();
+        if (data.erro) {
+            addressDisplay.innerHTML = '<span style="color:var(--danger);">CEP não encontrado.</span>';
+            checkoutFields.style.display = 'none';
             cartFooterMain.style.display = 'none';
-        }
-    }
-
-    shippingCards.forEach(card => {
-        card.addEventListener('click', () => {
+        } else {
+            addressData = data;
+            addressDisplay.innerHTML = `<strong>${data.logradouro}</strong><br>${data.bairro} - ${data.localidade}/${data.uf}`;
+            checkoutFields.style.display = 'block';
+            cartFooterMain.style.display = 'none';
+            selectedShipping = null;
             shippingCards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            selectedShipping = card.dataset.value;
-            scheduleFields.style.display = selectedShipping === 'scheduled' ? 'block' : 'none';
-            cartFooterMain.style.display = 'block';
+        }
+    } catch(err) {
+        addressDisplay.innerHTML = '<span style="color:var(--danger);">Erro ao buscar CEP.</span>';
+        cartFooterMain.style.display = 'none';
+    }
+}
+
+shippingCards.forEach(card => {
+    card.addEventListener('click', () => {
+        shippingCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        selectedShipping = card.dataset.value;
+        scheduleFields.style.display = selectedShipping === 'scheduled' ? 'block' : 'none';
+        cartFooterMain.style.display = 'block';
+        setTimeout(() => {
             if (cartMainContent) cartMainContent.scrollTo({ top: cartMainContent.scrollHeight, behavior: 'smooth' });
-        });
+        }, 100);
     });
+});
 
-    finalizeBtn.addEventListener('click', () => {
-        if (cart.length === 0)           return alert('Adicione um produto ao carrinho.');
-        if (cepInput.value.length < 9)   return alert('Informe um CEP válido.');
-        if (!document.getElementById('addr-number').value) return alert('Informe o número do endereço.');
-        if (!selectedShipping)           return alert('Selecione uma opção de envio.');
-        proceedToSummary();
-    });
+finalizeBtn.addEventListener('click', () => {
+    if (cart.length === 0)           return alert('Adicione um produto ao carrinho.');
+    if (cepInput.value.length < 9)   return alert('Informe um CEP válido.');
+    if (!document.getElementById('addr-number').value) return alert('Informe o número do endereço.');
+    if (!selectedShipping)           return alert('Selecione uma opção de envio.');
+    showLoading('Preparando seu pedido...');
+    setTimeout(() => { hideLoading(); proceedToSummary(); }, 1500);
+});
 
-    function proceedToSummary() {
-        const addrNumber     = document.getElementById('addr-number').value;
-        const addrComplement = document.getElementById('addr-complement').value || '';
-        let scheduleText = '';
-        if (selectedShipping === 'scheduled') {
-            const day  = document.getElementById('schedule-day').value;
-            const time = document.getElementById('schedule-time').value;
-            if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
-            scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
-        } else { scheduleText = 'Entrega Rápida (em média de 20 min*)'; }
+function proceedToSummary() {
+    const addrNumber     = document.getElementById('addr-number').value;
+    const addrComplement = document.getElementById('addr-complement').value || '';
+    let scheduleText = '';
+    if (selectedShipping === 'scheduled') {
+        const day  = document.getElementById('schedule-day').value;
+        const time = document.getElementById('schedule-time').value;
+        if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
+        scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
+    } else { scheduleText = 'Entrega Rápida (prazo médio de 20 min*)'; }
 
-        let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
-        let itemsHtml = cart.map(item => `
-            <div class="summary-item-card">
-                <img src="${item.img}" class="summary-item-img" alt="Botijão ${item.variant}">
-                <div style="flex:1;">
-                    <div style="font-weight:700;font-size:0.85rem;color:var(--text-dark);margin-bottom:2px;">Botijão de Gás (Cheio) ${item.variant}</div>
-                    <div style="font-size:0.75rem;color:var(--text-light);">${item.qty} unidade${item.qty > 1 ? 's' : ''}</div>
+    let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+    let itemsHtml = cart.map(item => `
+        <div class="summary-item-card">
+            <img src="${item.img}" class="summary-item-img" alt="Botijão ${item.variant}">
+            <div style="flex:1;">
+                <div style="font-weight:700;font-size:0.85rem;color:var(--text-dark);margin-bottom:2px;">Botijão de Gás (Cheio) ${item.variant}</div>
+                <div style="font-size:0.75rem;color:var(--text-light);">${item.qty} unidade${item.qty > 1 ? 's' : ''}</div>
+            </div>
+            <div style="font-weight:800;color:var(--text-dark);font-size:0.9rem;text-align:right;">R$ ${(item.price*item.qty).toFixed(2).replace('.',',')}</div>
+        </div>`).join('');
+
+    summaryDetails.innerHTML = `
+        <div class="summary-section-title">Produtos</div>
+        <div style="margin-bottom:24px;">${itemsHtml}</div>
+        <div class="summary-section-title">Endereço de Entrega</div>
+        <div class="summary-info-box">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="background:var(--primary);color:white;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-map-marker-alt" style="font-size:0.9rem;"></i>
                 </div>
-                <div style="font-weight:800;color:var(--text-dark);font-size:0.9rem;text-align:right;">R$ ${(item.price*item.qty).toFixed(2).replace('.',',')}</div>
-            </div>`).join('');
-
-        summaryDetails.innerHTML = `
-            <div class="summary-section-title">Produtos</div>
-            <div style="margin-bottom:24px;">${itemsHtml}</div>
-            <div class="summary-section-title">Endereço de Entrega</div>
-            <div class="summary-info-box">
-                <div style="display:flex;gap:12px;align-items:flex-start;">
-                    <div style="background:var(--primary);color:white;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <i class="fas fa-map-marker-alt" style="font-size:0.9rem;"></i>
-                    </div>
-                    <div>
-                        <div style="font-weight:700;color:var(--text-dark);font-size:0.9rem;margin-bottom:2px;">${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''}</div>
-                        <div style="font-size:0.8rem;color:var(--text-gray);opacity:0.8;">${addressData.bairro} - ${addressData.localidade}/${addressData.uf}</div>
-                    </div>
-                </div>
-                <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(0,70,190,0.1);display:flex;align-items:center;gap:8px;color:var(--primary);font-weight:700;font-size:0.85rem;">
-                    <i class="fas fa-clock"></i> <span>${scheduleText}</span>
+                <div>
+                    <div style="font-weight:700;color:var(--text-dark);font-size:0.9rem;margin-bottom:2px;">${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''}</div>
+                    <div style="font-size:0.8rem;color:var(--text-gray);opacity:0.8;">${addressData.bairro} - ${addressData.localidade}/${addressData.uf}</div>
                 </div>
             </div>
-            <div class="summary-section-title">Resumo de Valores</div>
-            <div class="summary-totals-block">
-                <div class="summary-info-row">
-                    <span class="summary-info-label">Subtotal</span>
-                    <span class="summary-info-value">R$ ${subtotal.toFixed(2).replace('.',',')}</span>
-                </div>
-                <div class="summary-info-row">
-                    <span class="summary-info-label">Frete e Instalação</span>
-                    <span class="summary-info-value" style="color:var(--success);font-weight:700;">GRÁTIS</span>
-                </div>
-                <div class="summary-info-row" style="border-top:1px solid var(--border-color);margin-top:12px;padding-top:12px;">
-                    <span style="font-weight:800;font-size:1rem;color:var(--text-dark);">Total a pagar</span>
-                    <span style="font-weight:900;font-size:1.2rem;color:var(--primary);">R$ ${subtotal.toFixed(2).replace('.',',')}</span>
-                </div>
+            <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(0,70,190,0.1);display:flex;align-items:center;gap:8px;color:var(--primary);font-weight:700;font-size:0.85rem;">
+                <i class="fas fa-clock"></i> <span>${scheduleText}</span>
             </div>
-            <div style="margin-top:20px;padding:15px;background:#fff9e6;border-radius:12px;border:1px solid #ffeeba;display:flex;gap:12px;">
-                <i class="fas fa-info-circle" style="color:#856404;margin-top:2px;"></i>
-                <p style="font-size:0.75rem;color:#856404;line-height:1.4;">O pagamento será realizado diretamente ao entregador no ato do recebimento.</p>
+        </div>
+        <div class="summary-section-title">Resumo de Valores</div>
+        <div class="summary-totals-block">
+            <div class="summary-info-row">
+                <span class="summary-info-label">Subtotal</span>
+                <span class="summary-info-value">R$ ${subtotal.toFixed(2).replace('.',',')}</span>
             </div>
-        `;
-        cartMainContent.style.display     = 'none';
-        orderSummaryContent.style.display = 'block';
-        cartFooterMain.style.display      = 'none';
-        cartFooterSummary.style.display   = 'block';
-    }
+            <div class="summary-info-row">
+                <span class="summary-info-label">Frete e Instalação</span>
+                <span class="summary-info-value" style="color:var(--success);font-weight:700;">GRÁTIS</span>
+            </div>
+            <div class="summary-info-row" style="border-top:1px solid var(--border-color);margin-top:12px;padding-top:12px;">
+                <span style="font-weight:800;font-size:1rem;color:var(--text-dark);">Total a pagar</span>
+                <span style="font-weight:900;font-size:1.2rem;color:var(--primary);">R$ ${subtotal.toFixed(2).replace('.',',')}</span>
+            </div>
+        </div>`;
 
-    backToCart.addEventListener('click', resetToCartView);
+    cartMainContent.style.display     = 'none';
+    orderSummaryContent.style.display = 'block';
+    cartFooterMain.style.display      = 'none';
+    cartFooterSummary.style.display   = 'block';
+}
 
-    confirmPaymentBtn.addEventListener('click', () => {
-        showLoading('Finalizando seu pedido...');
-        const addrNumber     = document.getElementById('addr-number').value;
-        const addrComplement = document.getElementById('addr-complement').value || '';
-        const scheduleDay    = document.getElementById('schedule-day').value;
-        const scheduleTime   = document.getElementById('schedule-time').value;
+backToCart.addEventListener('click', resetToCartView);
 
-        const orderData = {
-            items: cart,
-            address: { ...addressData, number: addrNumber, complement: addrComplement },
-            shipping: selectedShipping,
-            schedule: selectedShipping === 'scheduled' ? { day: scheduleDay, time: scheduleTime } : null,
-            total: cart.reduce((s,i) => s + i.price * i.qty, 0)
-        };
+confirmPaymentBtn.addEventListener('click', () => {
+    showLoading('Finalizando seu pedido...');
 
-        const msg = encodeURIComponent(`*NOVO PEDIDO - DISKGÁS*\n\n` +
-            `*Produtos:* \n${cart.map(i => `- ${i.qty}x ${i.variant} (R$ ${i.price})`).join('\n')}\n\n` +
-            `*Endereço:* ${orderData.address.logradouro}, ${orderData.address.number}${orderData.address.complement ? ` - ${orderData.address.complement}` : ''}\n` +
-            `*Bairro:* ${orderData.address.bairro}\n` +
-            `*CEP:* ${cepInput.value}\n\n` +
-            `*Entrega:* ${selectedShipping === 'scheduled' ? `Agendado para ${scheduleDay} às ${scheduleTime}` : 'Entrega Rápida'}\n` +
-            `*Total:* R$ ${orderData.total.toFixed(2).replace('.',',')}`);
+    const subtotal       = cart.reduce((s,i) => s + i.price * i.qty, 0);
+    const addrNumber     = document.getElementById('addr-number').value;
+    const addrComplement = document.getElementById('addr-complement').value || '';
+    const scheduleText   = selectedShipping === 'scheduled'
+        ? `${document.getElementById('schedule-day').value.split('-').reverse().join('/')} às ${document.getElementById('schedule-time').value}`
+        : 'Entrega Rápida (prazo médio de 20 min*)';
 
-        window.location.href = `https://wa.me/555140109018?text=${msg}`;
+    const productsData = cart.map(item => ({
+        n: `Botijão de Gás (Cheio) ${item.variant}`,
+        p: item.img,
+        v: item.price,
+        q: item.qty
+    }));
+
+    const params = new URLSearchParams({
+        subtotal:      subtotal.toFixed(2),
+        products:      JSON.stringify(productsData),
+        address:       `${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''} - ${addressData.bairro}, ${addressData.localidade}/${addressData.uf}`,
+        delivery_time: scheduleText,
+        cep:           cepInput.value
     });
 
-    function showLoading(text) {
-        loadingOverlay.classList.add('active');
-        document.getElementById('loading-text').textContent = text;
-    }
-    function hideLoading() {
-        loadingOverlay.classList.remove('active');
-    }
+    setTimeout(() => { window.location.href = `checkout.html?${params.toString()}`; }, 500);
+});
 
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        item.querySelector('.faq-question').addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-            faqItems.forEach(i => i.classList.remove('active'));
-            if (!isActive) item.classList.add('active');
-        });
-    });
+function showLoading(text = 'Processando...') {
+    document.getElementById('loading-text').innerText = text;
+    loadingOverlay.classList.add('active');
+}
+function hideLoading() { loadingOverlay.classList.remove('active'); }
 
-    window.addEventListener('scroll', () => {
-        const header = document.getElementById('main-header');
-        if (window.scrollY > 10) header.classList.add('sticky');
-        else header.classList.remove('sticky');
-    });
-    </script>
+window.addEventListener('scroll', () => {
+    document.getElementById('main-header').classList.toggle('sticky', window.scrollY > 50);
+});
+
+document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => q.parentElement.classList.toggle('active'));
+});
+
+window.addEventListener('pageshow', (e) => { if (e.persisted) hideLoading(); });
+
+// CORREÇÃO 3: lógica do banner de cookies
+const cookieBanner  = document.getElementById('cookie-banner');
+const cookieAccept  = document.getElementById('cookie-accept');
+const cookieReject  = document.getElementById('cookie-reject');
+
+if (localStorage.getItem('cookie_consent')) {
+    cookieBanner.classList.add('hidden');
+}
+cookieAccept.addEventListener('click', () => {
+    localStorage.setItem('cookie_consent', 'accepted');
+    cookieBanner.classList.add('hidden');
+    // Aqui você pode disparar gtag consent update se usar Google Tag
+    // gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'granted' });
+});
+cookieReject.addEventListener('click', () => {
+    localStorage.setItem('cookie_consent', 'rejected');
+    cookieBanner.classList.add('hidden');
+});
+</script>
 </body>
 </html>
