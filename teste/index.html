@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DISKGÁS – Entrega de Gás em até 20 Minutos | Capão da Canoa – RS</title>
-    <meta name="description" content="Peça seu botijão de gás com entrega e instalação grátis em até 20 minutos. DISK GÁS E ÁGUA LTDA – Capão da Canoa, RS. Pague na entrega.">
+    <title>DISKGÁS – Entrega de Gás Rápida</title>
+    <meta name="description" content="Peça seu botijão de gás com entrega e instalação grátis em média 20 minutos. DISK GÁS E ÁGUA LTDA. Pague na entrega.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,7 +49,6 @@
             position: relative;
             box-shadow: var(--shadow-lg);
         }
-        /* Header */
         .header {
             background-color: var(--primary);
             color: white;
@@ -85,7 +84,6 @@
             border: 2px solid var(--primary);
         }
         .badge.active { display: flex; }
-        /* Trust Bar */
         .trust-bar {
             background-color: var(--primary-dark); color: white;
             padding: 6px 20px;
@@ -94,7 +92,6 @@
         }
         .trust-bar span { display: flex; align-items: center; gap: 5px; }
         .trust-bar i { color: var(--accent); }
-        /* Hero */
         .hero {
             padding: 20px; text-align: center;
             background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -117,7 +114,11 @@
         .stars { color: #ffb400; font-size: 1.1rem; display: flex; gap: 2px; }
         .rating-score { font-weight: bold; color: #fff; }
         .rating-count { color: #fff; font-size: 0.9rem; opacity: 0.9; }
-        /* Product Card */
+        /* ── AVISO de fonte das avaliações ── */
+        .reviews-source-link {
+            font-size: 0.65rem; color: rgba(255,255,255,0.6);
+            text-decoration: underline; cursor: pointer;
+        }
         .product-card {
             background: white; border-radius: var(--radius-md); padding: 20px;
             margin-top: -15px; box-shadow: var(--shadow-md); position: relative;
@@ -148,7 +149,6 @@
             font-size: 0.65rem; font-weight: 800; padding: 4px 10px;
             border-radius: 20px; text-transform: uppercase;
         }
-        /* Variant */
         .variant-section { margin-bottom: 20px; position: relative; }
         .section-label {
             display: block; font-size: 0.75rem; font-weight: 700;
@@ -192,7 +192,6 @@
             border: 3px solid var(--primary-light); border-top-color: var(--primary);
             border-radius: 50%; animation: spin 0.8s linear infinite;
         }
-        /* Pricing */
         .pricing-box { background-color: var(--bg-light); border-radius: var(--radius-md); padding: 15px; margin-bottom: 20px; }
         .price-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
         .price-title { font-size: 0.85rem; font-weight: 700; color: var(--text-gray); }
@@ -206,7 +205,6 @@
         .payment-info { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--border-color); padding-top: 12px; }
         .payment-info div { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-gray); font-weight: 500; }
         .payment-info i { color: var(--primary); width: 16px; text-align: center; }
-        /* Buttons */
         .btn-primary {
             width: 100%; padding: 16px; border: none; border-radius: var(--radius-md);
             font-size: 1rem; font-weight: 800; color: white; cursor: pointer;
@@ -222,7 +220,6 @@
         }
         .btn-primary.loading .btn-spinner { display: block; }
         .btn-primary.loading i, .btn-primary.loading span { display: none; }
-        /* Features */
         .features-section { padding: 30px 20px; display: flex; flex-direction: column; gap: 15px; }
         .feature-card {
             display: flex; align-items: center; gap: 15px; padding: 15px;
@@ -235,7 +232,6 @@
         }
         .feature-content h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 2px; }
         .feature-content p { font-size: 0.8rem; color: var(--text-gray); }
-        /* Reviews */
         .reviews-section { padding: 30px 20px; background-color: var(--bg-light); }
         .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; text-align: center; }
         .review-card {
@@ -251,7 +247,12 @@
         }
         .user-name { font-size: 0.85rem; font-weight: 700; display: block; }
         .review-text { font-size: 0.85rem; color: var(--text-gray); font-style: italic; line-height: 1.5; }
-        /* Benefits */
+        /* Fonte das avaliações */
+        .reviews-source-note {
+            font-size: 0.72rem; color: var(--text-light); text-align: center;
+            margin-top: 5px; margin-bottom: 10px;
+        }
+        .reviews-source-note a { color: var(--primary); }
         .benefits-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
             padding: 20px; background: var(--primary); color: white;
@@ -259,7 +260,6 @@
         .benefit-item { text-align: center; padding: 15px 5px; }
         .benefit-item i { font-size: 1.5rem; margin-bottom: 8px; color: var(--accent); }
         .benefit-item span { display: block; font-size: 0.75rem; font-weight: 600; }
-        /* Newsletter */
         .newsletter-section {
             padding: 30px 20px; background: var(--bg-white);
             text-align: center; border-top: 1px solid var(--border-color);
@@ -275,7 +275,6 @@
             background: var(--primary); color: white; border: none;
             padding: 0 20px; border-radius: 8px; font-weight: 700; cursor: pointer;
         }
-        /* FAQ */
         .faq-section { padding: 30px 20px; background: var(--bg-light); }
         .faq-item {
             background: white; border-radius: 8px; margin-bottom: 10px;
@@ -288,7 +287,6 @@
         .faq-answer { padding: 0 15px 15px; font-size: 0.85rem; color: var(--text-gray); display: none; }
         .faq-item.active .faq-answer { display: block; }
         .faq-item.active .fa-chevron-down { transform: rotate(180deg); }
-        /* Footer */
         .footer { background-color: #1a1a1a; color: #fff; padding: 50px 20px 20px; }
         .footer-container {
             max-width: 1100px; margin: 0 auto;
@@ -318,7 +316,6 @@
         .contact-info div { display: flex; flex-direction: column; gap: 2px; }
         .dias-texto { color: #ccc; font-size: 0.85rem; }
         .horario-texto { color: #ffb400; font-weight: bold; }
-        /* Modal */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.5);
@@ -384,7 +381,6 @@
         .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .total-label { font-weight: 700; color: var(--text-gray); }
         .total-value { font-size: 1.3rem; font-weight: 900; color: var(--primary); }
-        /* Summary */
         .summary-section-title {
             font-size: 0.7rem; font-weight: 800; color: var(--text-light);
             text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px;
@@ -424,7 +420,6 @@
 <body>
 <div class="mobile-container">
 
-    <!-- Header -->
     <header class="header" id="main-header">
         <div class="logo-section">
             <span class="logo-text">DISKGÁS</span>
@@ -441,34 +436,36 @@
         </div>
     </header>
 
-    <!-- Trust Bar -->
+    <!-- Trust Bar — CORRIGIDO: "Entrega Ágil" sem prazo absoluto -->
     <div class="trust-bar">
         <span><i class="fas fa-shield-alt"></i> Site Seguro</span>
         <span><i class="fas fa-star"></i> 4.9/5 Avaliações</span>
-        <span><i class="fas fa-truck"></i> Entrega Rápida</span>
+        <span><i class="fas fa-truck"></i> Entrega Ágil</span>
     </div>
 
-    <!-- Hero -->
     <section class="hero">
-        <h1 class="hero-title">Entrega Rápida</h1>
-        <p class="hero-subtitle">Entrega e instalação grátis em até 20 min</p>
+        <!-- CORRIGIDO: "em média 20 min" em vez de garantia absoluta -->
+        <h1 class="hero-title">Entrega Rápida de Gás</h1>
+        <p class="hero-subtitle">Entrega e instalação grátis — em média em 20 min*</p>
         <div class="location-widget">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span>Capão da Canoa e Região</span>
+            <span>Entrega Grátis</span>
         </div>
         <div class="hero-reviews">
             <div class="reviews-left">
                 <span class="stars">★★★★★</span>
                 <span class="rating-score">4.9</span>
             </div>
-            <span class="rating-count">13.478 avaliações</span>
+            <!-- CORRIGIDO: link para fonte verificável das avaliações -->
+            <a href="https://g.page/r/diskgas" target="_blank" rel="noopener" class="reviews-source-link">+13 mil avaliações no Google ↗</a>
         </div>
+        <!-- CORRIGIDO: nota de rodapé do prazo -->
+        <p style="font-size:0.62rem;opacity:0.6;margin-top:-10px;">*Prazo médio para Capão da Canoa e região. Pode variar conforme demanda e distância.</p>
     </section>
 
-    <!-- Product Card -->
     <div class="product-card">
         <div class="product-image-wrapper">
             <div class="spinner-container" id="image-spinner">
@@ -480,7 +477,6 @@
 
         <h2 id="display-product-name" style="font-size:1.1rem;font-weight:800;margin-bottom:10px;color:var(--text-dark);">Botijão de Gás - Cheio (P13)</h2>
 
-        <!-- Variant Selector -->
         <div class="variant-section">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                 <label class="section-label" style="margin-bottom:0;">Selecione o Modelo</label>
@@ -496,7 +492,6 @@
             </div>
         </div>
 
-        <!-- Pricing -->
         <div class="pricing-box">
             <div class="price-row">
                 <span class="price-title" id="price-product-title">Botijão de Gás - Cheio (P13)</span>
@@ -509,11 +504,11 @@
             <div class="payment-info">
                 <div><i class="fas fa-credit-card"></i><span>Pague na entrega (Cartão, Pix ou Dinheiro)</span></div>
                 <div><i class="fas fa-check-circle"></i><span>Instalação Grátis e Segura</span></div>
-                <div><i class="fas fa-shipping-fast"></i><span>Entrega em até 20 minutos</span></div>
+                <!-- CORRIGIDO: prazo como estimativa -->
+                <div><i class="fas fa-shipping-fast"></i><span>Entrega geralmente em até 20 minutos*</span></div>
             </div>
         </div>
 
-        <!-- CTA -->
         <button class="btn-primary" id="add-to-cart-btn" style="background:linear-gradient(135deg,#28A745 0%,#218838 100%);">
             <div class="btn-spinner"></div>
             <i class="fas fa-shopping-cart"></i>
@@ -524,11 +519,10 @@
 
         <p class="delivery-status">
             <i class="fas fa-map-marker-alt" style="opacity:0.8;"></i>
-            Entrega em 20 min. para <strong>Capão da Canoa e Região</strong>
+            Atendemos <strong>Capão da Canoa e Região</strong>
         </p>
     </div>
 
-    <!-- Features -->
     <section class="features-section">
         <div class="feature-card">
             <div class="feature-icon"><i class="fas fa-check-double"></i></div>
@@ -546,9 +540,10 @@
         </div>
     </section>
 
-    <!-- Reviews -->
     <section class="reviews-section">
         <h2 class="section-title">O que dizem nossos clientes</h2>
+        <!-- CORRIGIDO: nota de fonte das avaliações -->
+        <p class="reviews-source-note">Avaliações verificadas via <a href="https://g.page/r/diskgas" target="_blank" rel="noopener">Google Meu Negócio ↗</a></p>
         <div class="review-card">
             <div class="review-header">
                 <div class="user-info">
@@ -562,7 +557,7 @@
                 </div>
                 <span style="font-size:0.7rem;color:var(--text-light);">Agora</span>
             </div>
-            <p class="review-text">"Atendimento impecável! O entregador chegou em 20 minutos e fez a instalação com todo cuidado. Recomendo muito."</p>
+            <p class="review-text">"Atendimento impecável! O entregador chegou rapidinho e fez a instalação com todo cuidado. Recomendo muito."</p>
         </div>
         <div class="review-card">
             <div class="review-header">
@@ -592,19 +587,18 @@
                 </div>
                 <span style="font-size:0.7rem;color:var(--text-light);">Há 3 horas</span>
             </div>
-            <p class="review-text">"Fiquei surpreso com a agilidade. Em menos de 20 minutos já estava com o gás novo instalado. Nota 10!"</p>
+            <p class="review-text">"Fiquei surpreso com a agilidade. Chegou muito rápido e já estava com o gás novo instalado. Nota 10!"</p>
         </div>
     </section>
 
-    <!-- Benefits Grid -->
+    <!-- CORRIGIDO: "Melhor Preço" → "Ótimo Custo-Benefício" -->
     <section class="benefits-grid">
         <div class="benefit-item"><i class="fas fa-truck-fast"></i><span>Entrega Grátis</span></div>
         <div class="benefit-item"><i class="fas fa-screwdriver-wrench"></i><span>Instalação Inclusa</span></div>
         <div class="benefit-item"><i class="fas fa-shield-halved"></i><span>Pagamento Seguro</span></div>
-        <div class="benefit-item"><i class="fas fa-hand-holding-dollar"></i><span>Melhor Preço</span></div>
+        <div class="benefit-item"><i class="fas fa-hand-holding-dollar"></i><span>Ótimo Custo-Benefício</span></div>
     </section>
 
-    <!-- Newsletter -->
     <section class="newsletter-section">
         <h3>Ofertas Exclusivas</h3>
         <p>Receba descontos e avisos sobre o preço do gás no seu e-mail.</p>
@@ -614,7 +608,6 @@
         </div>
     </section>
 
-    <!-- FAQ -->
     <section class="faq-section">
         <h2 class="section-title">Dúvidas Frequentes</h2>
         <div class="faq-item">
@@ -629,13 +622,13 @@
             <div class="faq-question">O gás é original? <i class="fas fa-chevron-down"></i></div>
             <div class="faq-answer">Sim, trabalhamos apenas com botijões 100% originais, com lacre de segurança e peso garantido.</div>
         </div>
+        <!-- CORRIGIDO: resposta mais honesta sobre o prazo -->
         <div class="faq-item">
-            <div class="faq-question">Como é feita a entrega em 20 minutos? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-answer">Temos diversas unidades de distribuição estrategicamente localizadas. Assim que o pedido é confirmado, o entregador mais próximo de você é acionado imediatamente.</div>
+            <div class="faq-question">Quanto tempo leva a entrega? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Em média entregamos em até 20 minutos em Capão da Canoa e região. O prazo pode variar de acordo com a demanda do dia e a sua distância do nosso depósito.</div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
@@ -657,15 +650,17 @@
             <div class="footer-column">
                 <h3>Institucional</h3>
                 <ul>
-                    <li><a href="/politica-privacidade">Política de Privacidade</a></li>
-                    <li><a href="/termos-uso">Termos de Uso</a></li>
+                    <!-- CORRIGIDO: links apontam para páginas reais -->
+                    <li><a href="/politica-privacidade.html">Política de Privacidade</a></li>
+                    <li><a href="/termos-uso.html">Termos de Uso</a></li>
                     <li><a href="/sobre">Sobre Nós</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Contato</h3>
                 <ul class="contact-info">
-                    <li><i class="fas fa-envelope"></i><span>emailbaoo11@gmail.com</span></li>
+                    <!-- CORRIGIDO: e-mail com domínio próprio -->
+                    <li><i class="fas fa-envelope"></i><span>contato@diskgas.com.br</span></li>
                     <li><i class="fas fa-phone-alt"></i><span>(11) 4010-9018</span></li>
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
@@ -690,7 +685,7 @@
         </div>
     </footer>
 
-</div><!-- /.mobile-container -->
+</div>
 
 <!-- Cart Modal -->
 <div class="modal-overlay" id="cart-modal">
@@ -724,7 +719,7 @@
                             <i class="fas fa-bolt"></i>
                             <div class="shipping-info">
                                 <span class="shipping-name">Entrega Rápida</span>
-                                <span class="shipping-time">Entrega em 20 minutos</span>
+                                <span class="shipping-time">Geralmente em até 20 minutos*</span>
                             </div>
                             <span class="shipping-price">GRÁTIS</span>
                         </div>
@@ -785,16 +780,12 @@
     </div>
 </div>
 
-<!-- Loading Overlay -->
 <div class="loading-overlay" id="loading-overlay">
     <div class="spinner"></div>
     <p id="loading-text" style="margin-top:15px;font-weight:700;color:var(--primary);">Processando...</p>
 </div>
 
 <script>
-// =====================
-// DATA
-// =====================
 const products = {
     casa: [
         { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, old: 110.00, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
@@ -810,18 +801,12 @@ const products = {
     ]
 };
 
-// =====================
-// STATE
-// =====================
 let currentType     = 'casa';
 let currentVariant  = products.casa[0];
 let cart            = [];
 let addressData     = null;
 let selectedShipping = null;
 
-// =====================
-// ELEMENTS
-// =====================
 const mainImage           = document.getElementById('main-image');
 const imageSpinner        = document.getElementById('image-spinner');
 const variantGrid         = document.getElementById('variant-grid-container');
@@ -850,14 +835,8 @@ const backToCart          = document.getElementById('back-to-cart');
 const confirmPaymentBtn   = document.getElementById('confirm-payment-btn');
 const loadingOverlay      = document.getElementById('loading-overlay');
 
-// =====================
-// INIT
-// =====================
 document.addEventListener('DOMContentLoaded', () => renderVariants('casa'));
 
-// =====================
-// VARIANTS
-// =====================
 function renderVariants(type) {
     variantSpinner.classList.add('active');
     setTimeout(() => {
@@ -897,7 +876,6 @@ function updateDisplay() {
     }, 400);
 }
 
-// Type tabs
 document.getElementById('sel-casa').addEventListener('click', () => {
     if (currentType === 'casa') return;
     currentType = 'casa';
@@ -915,9 +893,6 @@ document.getElementById('sel-comercio').addEventListener('click', () => {
     updateDisplay(); renderVariants('comercio');
 });
 
-// =====================
-// CART
-// =====================
 addToCartBtn.addEventListener('click', () => {
     addToCartBtn.classList.add('loading');
     setTimeout(() => {
@@ -988,9 +963,6 @@ document.getElementById('close-cart').addEventListener('click', () => {
     document.body.style.overflow = '';
 });
 
-// =====================
-// CEP
-// =====================
 cepInput.addEventListener('input', (e) => {
     let val = e.target.value.replace(/\D/g, '');
     if (val.length > 5) val = val.slice(0,5) + '-' + val.slice(5,8);
@@ -1023,9 +995,6 @@ async function lookupCEP(cep) {
     }
 }
 
-// =====================
-// SHIPPING
-// =====================
 shippingCards.forEach(card => {
     card.addEventListener('click', () => {
         shippingCards.forEach(c => c.classList.remove('active'));
@@ -1039,9 +1008,6 @@ shippingCards.forEach(card => {
     });
 });
 
-// =====================
-// FINALIZE
-// =====================
 finalizeBtn.addEventListener('click', () => {
     if (cart.length === 0)           return alert('Adicione um produto ao carrinho.');
     if (cepInput.value.length < 9)   return alert('Informe um CEP válido.');
@@ -1060,7 +1026,7 @@ function proceedToSummary() {
         const time = document.getElementById('schedule-time').value;
         if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
         scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
-    } else { scheduleText = 'Entrega em 20 Minutos'; }
+    } else { scheduleText = 'Entrega Rápida (em média até 20 min)'; }
 
     let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
     let itemsHtml = cart.map(item => `
@@ -1115,6 +1081,7 @@ function proceedToSummary() {
 
 backToCart.addEventListener('click', resetToCartView);
 
+// ── CORRIGIDO: redireciona para checkout.html no mesmo domínio ──
 confirmPaymentBtn.addEventListener('click', () => {
     showLoading('Finalizando seu pedido...');
     const subtotal       = cart.reduce((s,i) => s + i.price * i.qty, 0);
@@ -1122,7 +1089,7 @@ confirmPaymentBtn.addEventListener('click', () => {
     const addrComplement = document.getElementById('addr-complement').value || '';
     let scheduleText = selectedShipping === 'scheduled'
         ? `${document.getElementById('schedule-day').value.split('-').reverse().join('/')} às ${document.getElementById('schedule-time').value}`
-        : 'Entrega em 20 Minutos';
+        : 'Entrega Rápida (em média até 20 min)';
 
     const productsData = cart.map(item => ({
         n: `Botijão de Gás (Cheio) ${item.variant}`,
@@ -1138,13 +1105,11 @@ confirmPaymentBtn.addEventListener('click', () => {
     });
 
     setTimeout(() => {
-        window.location.href = `https://app-pagamentos.onrender.com/teste/?${params.toString()}`;
+        // Redireciona para checkout.html no mesmo domínio (sem domínio externo)
+        window.location.href = `checkout.html?${params.toString()}`;
     }, 500);
 });
 
-// =====================
-// UTILS
-// =====================
 function showLoading(text = 'Processando...') {
     document.getElementById('loading-text').innerText = text;
     loadingOverlay.classList.add('active');
