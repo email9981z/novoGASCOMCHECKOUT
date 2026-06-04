@@ -220,7 +220,7 @@
   .driver-card {
     background: #fff; border: 1.5px solid #eef2f6; border-radius: 20px;
     padding: 18px 20px;
-    display: flex; align-items: center; gap: 16px;
+    display: flex; flex-direction: column; gap: 12px;
     width: min(340px, calc(100vw - 48px));
     opacity: 0; transform: translateY(12px);
     transition: opacity .4s ease .8s, transform .4s ease .8s;
@@ -228,6 +228,7 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.03);
   }
   #confirmOverlay.visivel .driver-card { opacity: 1; transform: translateY(0); }
+  .driver-main-info { display: flex; align-items: center; gap: 16px; width: 100%; }
   .driver-avatar-container { position: relative; }
   .driver-avatar {
     width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
@@ -246,10 +247,25 @@
   .driver-name-ov { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 2px; }
   .driver-meta { font-size: 12px; color: #6b7280; display: flex; align-items: center; gap: 6px; }
   .driver-rating { color: #f59e0b; font-weight: 700; display: flex; align-items: center; gap: 2px; }
-  .driver-eta {
+  
+  .driver-badge-oficial {
     margin-left: auto;
-    background: #f0fdf4; color: #166534; font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 8px;
+    background: #eff6ff; color: #1e6cf2; font-size: 10px; font-weight: 800;
+    padding: 4px 10px; border-radius: 8px; text-transform: uppercase;
+    letter-spacing: 0.5px; border: 1px solid #dbeafe;
+  }
+
+  .driver-footer-meta {
+    border-top: 1px solid #f3f4f6;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .driver-eta-box {
+    display: flex; align-items: center; gap: 6px;
+    color: #166534; font-size: 12px; font-weight: 700;
+    background: #f0fdf4; padding: 6px 14px; border-radius: 10px;
   }
 
   /* Credibilidade Minimalista */
@@ -330,19 +346,27 @@
     
     <!-- Card do Entregador -->
     <div class="driver-card">
-      <div class="driver-avatar-container">
-        <div class="driver-avatar"></div>
-        <div class="driver-badge-verified">✓</div>
+      <div class="driver-main-info">
+        <div class="driver-avatar-container">
+          <div class="driver-avatar"></div>
+          <div class="driver-badge-verified">✓</div>
+        </div>
+        <div class="driver-info">
+          <p class="driver-name-ov">Thiago Callegari</p>
+          <div class="driver-meta">
+            <span class="driver-rating">★ 4.9</span>
+            <span>·</span>
+            <span>238 entregas</span>
+          </div>
+        </div>
+        <span class="driver-badge-oficial">Oficial</span>
       </div>
-      <div class="driver-info">
-        <p class="driver-name-ov">Thiago Callegari</p>
-        <div class="driver-meta">
-          <span class="driver-rating">★ 4.9</span>
-          <span>·</span>
-          <span>238 entregas</span>
+      <div class="driver-footer-meta">
+        <div class="driver-eta-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Entrega em ~30 min
         </div>
       </div>
-      <span class="driver-eta">~30 min</span>
     </div>
 
     <!-- Seção de Credibilidade Simplificada -->
@@ -452,7 +476,6 @@
       const partes = full.split(',');
       if (partes.length > 0) {
         const ultimaParte = partes[partes.length - 1].trim();
-        // Tenta pegar a sigla do estado (ex: "São Paulo - SP" ou apenas "SP")
         const match = ultimaParte.match(/\b([A-Z]{2})\b/);
         if (match) return match[1];
       }
