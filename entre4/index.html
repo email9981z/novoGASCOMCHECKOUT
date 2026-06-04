@@ -432,19 +432,27 @@
 
     function extrairLocalizacao(full) {
       if (!full) return '';
-      let loc = full;
-      const partesHifen = full.split('-');
-      if (partesHifen.length >= 2) {
-        loc = partesHifen[1].split(',')[0].trim();
-      } else {
-        const partesVirgula = full.split(',');
-        if (partesVirgula.length >= 3) {
-          loc = partesVirgula[2].trim();
-        } else if (partesVirgula.length >= 2) {
-          loc = partesVirgula[1].trim();
+      let bairro = '';
+      let uf = '';
+      
+      // Tenta extrair a UF (geralmente os últimos 2 caracteres antes do CEP ou no fim)
+      const matchUF = full.match(/,\s*([A-Z]{2})(\s*[,-]|$)/);
+      if (matchUF) uf = matchUF[1];
+
+      const partesVirgula = full.split(',');
+      if (partesVirgula.length >= 2) {
+        // Assume que o bairro é a segunda ou terceira parte, dependendo do formato
+        // Formato comum: Rua, Número - Bairro, Cidade - UF
+        let parteBairro = partesVirgula[1].includes('-') ? partesVirgula[1].split('-')[1] : partesVirgula[1];
+        if (partesVirgula.length >= 3 && !parteBairro.trim()) {
+           parteBairro = partesVirgula[2];
         }
+        bairro = parteBairro.trim().replace(/^[0-9\sºnN.]+/g, '');
       }
-      return loc.replace(/^[0-9\sºnN.]+/g, '').trim() || full;
+
+      if (!bairro) bairro = full.split('-')[0].trim();
+      
+      return uf ? (bairro + '/' + uf) : bairro;
     }
 
     function atualizarBarra(pct) {
