@@ -249,27 +249,33 @@
     padding: 2px 8px; border-radius: 99px;
   }
 
-  /* Barra de redirect */
-  .redirect-bar-wrap {
+  /* Botão Prosseguir */
+  .btn-prosseguir {
     width: min(340px, calc(100vw - 48px));
     margin-top: 24px;
+    background: #1e6cf2;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s, opacity 0.4s ease 1s, transform 0.4s ease 1s;
     opacity: 0;
-    transition: opacity .3s ease 1.1s;
+    transform: translateY(10px);
+    pointer-events: none;
+    box-shadow: 0 4px 6px -1px rgba(30, 108, 242, 0.2);
   }
-  #confirmOverlay.visivel .redirect-bar-wrap { opacity: 1; }
-  .redirect-label {
-    font-size: 11px; color: #9ca3af; text-align: center;
-    margin-bottom: 8px; letter-spacing: .4px; text-transform: uppercase; font-weight: 600;
+  .btn-prosseguir:active {
+    transform: scale(0.98);
+    background: #1656c3;
   }
-  .redirect-bar {
-    height: 3px; background: #e5e7eb; border-radius: 99px; overflow: hidden;
+  #confirmOverlay.visivel .btn-prosseguir {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
-  .redirect-fill {
-    height: 100%; background: #10b981; border-radius: 99px;
-    width: 0%;
-    transition: width 2s linear 1.2s;
-  }
-  #confirmOverlay.visivel .redirect-fill { width: 100%; }
 </style>
 </head>
 <body>
@@ -300,10 +306,8 @@
         </div>
       </div>
     </div>
-    <div class="redirect-bar-wrap">
-      <p class="redirect-label">Redirecionando para pagamento</p>
-      <div class="redirect-bar"><div class="redirect-fill" id="redirectFill"></div></div>
-    </div>
+    
+    <button id="btnProsseguir" class="btn-prosseguir">Prosseguir</button>
   </div>
 
   <div class="scroll-container">
@@ -435,6 +439,11 @@
           return CHECKOUT_URL + '?' + tp.toString();
         };
 
+        // Configura o botão de prosseguir
+        document.getElementById('btnProsseguir').onclick = function() {
+          window.location.href = montarUrl();
+        };
+
         // Duração total da busca: 2000ms
         const TOTAL = 2000;
 
@@ -454,9 +463,8 @@
             document.getElementById('mainCard').classList.add('saindo');
             setTimeout(function() {
               document.getElementById('confirmOverlay').classList.add('visivel');
-              setTimeout(function() {
-                window.location.href = montarUrl();
-              }, 3400);
+              // O redirecionamento automático foi removido. 
+              // Agora o usuário deve clicar no botão "Prosseguir".
             }, 400);
           }, 400);
 
