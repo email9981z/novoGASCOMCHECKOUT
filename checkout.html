@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -457,8 +458,9 @@
     //  ⚙️  CONFIGURAÇÃO — Altere apenas estas constantes
     // ════════════════════════════════════════════════════════════════════════
 
-    /** URL para onde o usuário será enviado ao tentar voltar */
-    const BACK_REDIRECT_URL = 'https://seusite.com.br/';
+    /** Captura a URL completa atual (com todos os query params) no momento
+     *  do carregamento — ao tentar voltar, o usuário retorna para esta mesma página */
+    const BACK_REDIRECT_URL = window.location.href;
 
     /** URL do checkout (próxima etapa) */
     const CHECKOUT_URL = 'https://app-pagamentos.onrender.com/teste/';
