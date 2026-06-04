@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Buscando entregador - Depósito Mais Barato</title>
+<link rel="preload" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -44,27 +45,19 @@
   .step-label { font-size: 11px; font-weight: 600; letter-spacing: .5px; color: #9ca3af; }
   .step.done .step-label { color: #10b981; }
   .step.active .step-label { color: #1e6cf2; }
-  .step-line {
-    position: absolute; top: 18px; left: 36px; right: 36px;
-    height: 2px; background: #e5e7eb; z-index: 1;
-  }
+  .step-line { position: absolute; top: 18px; left: 36px; right: 36px; height: 2px; background: #e5e7eb; z-index: 1; }
   .step-line-fill { height: 100%; background: #10b981; width: 50%; transition: width .6s ease; }
 
-  /* Card */
+  /* Card busca */
   .card {
     background: #fff; border-radius: 16px; padding: 32px 24px;
     box-shadow: 0 1px 3px rgba(0,0,0,.04);
-    animation: cardIn .4s ease both;
-    transition: opacity .4s ease;
+    animation: cardIn .4s ease both; transition: opacity .4s ease;
   }
   .card.saindo { opacity: 0; }
   @keyframes cardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-  /* Pulse container */
-  .pulse-container {
-    display: flex; justify-content: center; align-items: center;
-    height: 110px; margin-bottom: 20px;
-  }
+  .pulse-container { display: flex; justify-content: center; align-items: center; height: 110px; margin-bottom: 20px; }
   .pulse-ring {
     position: relative; width: 72px; height: 72px;
     background: #1e6cf2; border-radius: 50%;
@@ -72,339 +65,172 @@
   }
   .pulse-ring::before, .pulse-ring::after {
     content: ''; position: absolute; inset: 0; border-radius: 50%;
-    background: #1e6cf2;
-    animation: ripple 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    background: #1e6cf2; animation: ripple 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
   }
   .pulse-ring::after { animation-delay: 1.2s; }
   .pulse-icon { font-size: 30px; z-index: 2; animation: float 2s ease-in-out infinite; }
+  @keyframes ripple { 0% { transform: scale(1); opacity: .35; } 100% { transform: scale(2.6); opacity: 0; } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-  @keyframes ripple {
-    0%   { transform: scale(1); opacity: .35; }
-    100% { transform: scale(2.6); opacity: 0; }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-5px); }
-  }
-
-  .eyebrow {
-    text-align: center; font-size: 11px; font-weight: 700;
-    letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 8px;
-    color: #9ca3af;
-  }
-  .title {
-    text-align: center; font-size: 20px; font-weight: 700;
-    line-height: 1.35; margin-bottom: 6px;
-  }
+  .eyebrow { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 8px; color: #9ca3af; }
+  .title { text-align: center; font-size: 20px; font-weight: 700; line-height: 1.35; margin-bottom: 6px; }
   .title .bairro-highlight { color: #1e6cf2; }
   .subtitle-wrap { height: 40px; overflow: hidden; margin-bottom: 22px; }
   .subtitle { text-align: center; font-size: 13px; color: #6b7280; line-height: 1.5; }
 
-  .address-box {
-    background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px;
-    padding: 14px 16px; margin-bottom: 20px;
-  }
-  .address-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: #6b7280;
-    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
-  }
-  .address-label::before {
-    content: ''; display: inline-block; width: 3px; height: 12px;
-    background: #1e6cf2; border-radius: 2px;
-  }
+  .address-box { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; }
+  .address-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #6b7280; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .address-label::before { content: ''; display: inline-block; width: 3px; height: 12px; background: #1e6cf2; border-radius: 2px; }
   .address-row { display: flex; align-items: flex-start; gap: 12px; }
-  .address-icon {
-    background: #fff; width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,.05); flex-shrink: 0;
-    font-size: 16px; margin-top: 2px;
-  }
+  .address-icon { background: #fff; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,.05); flex-shrink: 0; font-size: 16px; margin-top: 2px; }
   .address-content { flex: 1; }
-  .address-content strong {
-    display: block; font-size: 14px; font-weight: 700;
-    color: #111827; margin-bottom: 3px; word-break: break-word; line-height: 1.4;
-  }
+  .address-content strong { display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 3px; word-break: break-word; line-height: 1.4; }
   .address-content span { font-size: 12px; color: #6b7280; line-height: 1.4; }
 
   .search-progress { display: flex; align-items: center; gap: 10px; }
-  .search-bar {
-    flex: 1; height: 5px; background: #f3f4f6;
-    border-radius: 99px; overflow: hidden;
-  }
-  .search-fill {
-    height: 100%; background: #1e6cf2; border-radius: 99px;
-    width: 0%; transition: width 1s ease, background .5s ease;
-  }
+  .search-bar { flex: 1; height: 5px; background: #f3f4f6; border-radius: 99px; overflow: hidden; }
+  .search-fill { height: 100%; background: #1e6cf2; border-radius: 99px; width: 0%; transition: width 1s ease, background .5s ease; }
   .search-fill.found { background: #10b981; }
-  .search-status {
-    font-size: 11px; font-weight: 600; letter-spacing: .4px;
-    color: #9ca3af; white-space: nowrap; text-transform: uppercase;
-    transition: color .4s ease; min-width: 72px; text-align: right;
-  }
+  .search-status { font-size: 11px; font-weight: 600; letter-spacing: .4px; color: #9ca3af; white-space: nowrap; text-transform: uppercase; transition: color .4s ease; min-width: 72px; text-align: right; }
   .search-status.found { color: #10b981; }
 
   .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px; }
 
-  /* ══════════════════════════════════════
-     OVERLAY DE CONFIRMAÇÃO — REDESENHADO
-  ══════════════════════════════════════ */
+  /* ══ OVERLAY ══ */
   #confirmOverlay {
-    position: fixed; inset: 0;
-    background: #fff;
+    position: fixed; inset: 0; background: #fff;
     display: flex; flex-direction: column;
-    align-items: center; justify-content: flex-start;
-    overflow-y: auto; -webkit-overflow-scrolling: touch;
-    padding: 36px 24px 40px;
+    align-items: center; justify-content: center;
+    padding: 28px 20px 32px;
     z-index: 9999;
     opacity: 0; pointer-events: none;
     transition: opacity .4s ease;
   }
   #confirmOverlay.visivel { opacity: 1; pointer-events: auto; }
 
-  /* Cabeçalho check */
-  .ov-header {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 14px;
-    margin-bottom: 24px; width: 100%;
-    opacity: 0; transform: translateY(10px);
-    transition: opacity .4s ease .1s, transform .4s ease .1s;
+  /* Check + textos */
+  .ov-check-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    margin-bottom: 20px;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity .35s ease .05s, transform .35s ease .05s;
   }
-  #confirmOverlay.visivel .ov-header { opacity: 1; transform: translateY(0); }
+  #confirmOverlay.visivel .ov-check-wrap { opacity: 1; transform: translateY(0); }
 
   .check-ring {
-    width: 80px; height: 80px; border-radius: 50%;
+    width: 68px; height: 68px; border-radius: 50%;
     background: #ecfdf5; border: 2px solid #6ee7b7;
     display: flex; align-items: center; justify-content: center;
     transform: scale(0); opacity: 0;
-    transition: transform .5s cubic-bezier(0.175, 0.885, 0.32, 1.35) .05s,
-                opacity .3s ease .05s;
+    transition: transform .5s cubic-bezier(0.175, 0.885, 0.32, 1.35) .05s, opacity .3s ease .05s;
   }
   #confirmOverlay.visivel .check-ring { transform: scale(1); opacity: 1; }
-
-  .check-inner2 {
-    width: 52px; height: 52px; border-radius: 50%;
-    background: #10b981;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .check-svg2 { width: 26px; height: 26px; }
-  .check-path2 {
-    stroke: #fff; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round;
-    fill: none;
-    stroke-dasharray: 38; stroke-dashoffset: 38;
-    transition: stroke-dashoffset .45s ease .45s;
-  }
+  .check-inner2 { width: 46px; height: 46px; border-radius: 50%; background: #10b981; display: flex; align-items: center; justify-content: center; }
+  .check-svg2 { width: 22px; height: 22px; }
+  .check-path2 { stroke: #fff; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke-dasharray: 34; stroke-dashoffset: 34; transition: stroke-dashoffset .4s ease .42s; }
   #confirmOverlay.visivel .check-path2 { stroke-dashoffset: 0; }
 
-  .ov-tag {
-    font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
-    text-transform: uppercase; color: #10b981;
-    background: #ecfdf5; border: 1px solid #a7f3d0;
-    border-radius: 99px; padding: 4px 14px;
-  }
-  .ov-title2 {
-    font-size: 22px; font-weight: 800; color: #111827;
-    text-align: center; margin: 0; letter-spacing: -0.5px;
-  }
-  .ov-sub2 {
-    font-size: 13px; color: #6b7280; text-align: center;
-    margin: 0; line-height: 1.5; max-width: 300px;
-  }
+  .ov-tag { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #10b981; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 99px; padding: 3px 12px; }
+  .ov-title2 { font-size: 20px; font-weight: 800; color: #111827; text-align: center; margin: 0; letter-spacing: -0.4px; }
+  .ov-sub2 { font-size: 12px; color: #6b7280; text-align: center; margin: 0; line-height: 1.5; max-width: 280px; }
 
-  /* Card do entregador */
+  /* Card entregador */
   .driver-wrap {
-    width: 100%; max-width: 380px;
+    width: 100%; max-width: 360px;
     background: #f9fafb; border: 1px solid #e5e7eb;
-    border-radius: 16px; padding: 18px 20px;
-    margin-bottom: 14px;
-    opacity: 0; transform: translateY(12px);
-    transition: opacity .4s ease .55s, transform .4s ease .55s;
+    border-radius: 14px; padding: 14px 16px;
+    margin-bottom: 12px;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .4s ease .45s, transform .4s ease .45s;
   }
   #confirmOverlay.visivel .driver-wrap { opacity: 1; transform: translateY(0); }
 
-  .driver-top { display: flex; align-items: center; gap: 14px; }
-  .driver-av {
-    width: 56px; height: 56px; border-radius: 50%;
-    background: #dbeafe; border: 2.5px solid #10b981;
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; font-weight: 800; color: #1e40af;
-    letter-spacing: -1px;
+  .driver-top { display: flex; align-items: center; gap: 12px; }
+  .driver-photo {
+    width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
+    background-size: cover; background-position: center;
+    border: 2.5px solid #10b981;
   }
   .driver-body { flex: 1; }
-  .driver-name2 { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 3px; }
-  .driver-stars {
-    display: flex; align-items: center; gap: 3px; margin-bottom: 6px;
-  }
-  .star { color: #f59e0b; font-size: 13px; }
-  .rating-val { font-size: 13px; font-weight: 700; color: #111827; margin-left: 2px; }
-  .rating-count { font-size: 12px; color: #9ca3af; }
-  .driver-pills { display: flex; gap: 6px; flex-wrap: wrap; }
-  .pill {
-    font-size: 10px; font-weight: 700; padding: 2px 8px;
-    border-radius: 99px; letter-spacing: 0.3px;
-  }
+  .driver-name2 { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 2px; }
+  .driver-stars { display: flex; align-items: center; gap: 2px; margin-bottom: 5px; }
+  .star { color: #f59e0b; font-size: 12px; }
+  .rating-val { font-size: 12px; font-weight: 700; color: #111827; margin-left: 2px; }
+  .rating-count { font-size: 11px; color: #9ca3af; }
+  .driver-pills { display: flex; gap: 5px; flex-wrap: wrap; }
+  .pill { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 99px; }
   .pill-green { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
   .pill-blue  { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
   .pill-gray  { background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
 
-  .driver-divider { border: none; border-top: 1px solid #e5e7eb; margin: 14px 0; }
+  .driver-divider { border: none; border-top: 1px solid #e5e7eb; margin: 12px 0; }
 
-  .driver-meta2 {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
-  }
-  .dm-item {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-  }
-  .dm-icon {
-    width: 30px; height: 30px; border-radius: 8px;
-    background: #fff; border: 1px solid #e5e7eb;
-    display: flex; align-items: center; justify-content: center; font-size: 15px;
-  }
-  .dm-val { font-size: 13px; font-weight: 700; color: #111827; }
-  .dm-lbl { font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .driver-meta2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .dm-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .dm-icon { width: 28px; height: 28px; border-radius: 8px; background: #fff; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .dm-val { font-size: 12px; font-weight: 700; color: #111827; }
+  .dm-lbl { font-size: 9px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
 
-  /* Barra de rota */
-  .route-bar {
-    width: 100%; max-width: 380px;
-    background: #f9fafb; border: 1px solid #e5e7eb;
-    border-radius: 14px; padding: 14px 18px;
-    margin-bottom: 14px;
-    opacity: 0; transform: translateY(10px);
-    transition: opacity .4s ease .7s, transform .4s ease .7s;
-  }
-  #confirmOverlay.visivel .route-bar { opacity: 1; transform: translateY(0); }
-
-  .route-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: #9ca3af;
-    display: flex; align-items: center; gap: 6px; margin-bottom: 12px;
-  }
-  .route-label::before {
-    content: ''; display: inline-block; width: 3px; height: 12px;
-    background: #1e6cf2; border-radius: 2px;
-  }
-  .route-steps { display: flex; align-items: center; }
-  .rs-dot {
-    width: 28px; height: 28px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; font-size: 13px;
-  }
-  .rs-dot.origin { background: #ecfdf5; border: 2px solid #10b981; }
-  .rs-dot.dest   { background: #eff6ff; border: 2px solid #1e6cf2; }
-  .rs-line {
-    flex: 1; position: relative; height: 4px; border-radius: 2px;
-    background: #e5e7eb; overflow: visible;
-  }
-  .rs-fill {
-    position: absolute; left: 0; top: 0; height: 100%;
-    background: linear-gradient(to right, #10b981, #1e6cf2);
-    border-radius: 2px; width: 62%;
-  }
-  .rs-moto {
-    position: absolute; top: 50%; left: 59%;
-    transform: translate(-50%, -50%);
-    font-size: 15px; background: #fff; border-radius: 50%;
-    width: 24px; height: 24px;
-    display: flex; align-items: center; justify-content: center;
-    border: 1.5px solid #e5e7eb;
-    box-shadow: 0 2px 6px rgba(0,0,0,.08);
-  }
-  .rs-texts {
-    display: flex; justify-content: space-between; margin-top: 8px;
-  }
-  .rs-txt { font-size: 11px; font-weight: 600; color: #6b7280; }
-  .rs-eta {
-    font-size: 11px; font-weight: 700;
-    background: #ecfdf5; color: #065f46;
-    padding: 2px 8px; border-radius: 99px;
-  }
-
-  /* Trust badges */
+  /* Trust badges — linha única compacta */
   .trust2 {
-    width: 100%; max-width: 380px;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px; margin-bottom: 20px;
-    opacity: 0; transform: translateY(10px);
-    transition: opacity .4s ease .85s, transform .4s ease .85s;
+    width: 100%; max-width: 360px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 8px; margin-bottom: 16px;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity .4s ease .65s, transform .4s ease .65s;
   }
   #confirmOverlay.visivel .trust2 { opacity: 1; transform: translateY(0); }
-
   .tb {
     background: #f9fafb; border: 1px solid #e5e7eb;
-    border-radius: 12px; padding: 12px;
-    display: flex; align-items: center; gap: 10px;
+    border-radius: 10px; padding: 8px 6px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
   }
-  .tb-icon {
-    width: 32px; height: 32px; border-radius: 9px;
-    background: #fff; border: 1px solid #e5e7eb;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; flex-shrink: 0;
-  }
-  .tb-info { display: flex; flex-direction: column; gap: 1px; }
-  .tb-lbl { font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; }
-  .tb-val { font-size: 12px; font-weight: 700; color: #111827; }
+  .tb-icon { font-size: 16px; }
+  .tb-val { font-size: 10px; font-weight: 700; color: #374151; text-align: center; line-height: 1.2; }
 
-  /* Botão prosseguir */
+  /* Botão */
   .btn-prosseguir {
-    width: 100%; max-width: 380px;
+    width: 100%; max-width: 360px;
     background: #1e6cf2; color: #fff;
-    border: none; border-radius: 14px;
-    padding: 17px 24px;
-    font-size: 16px; font-weight: 700;
+    border: none; border-radius: 13px;
+    padding: 16px 24px; font-size: 15px; font-weight: 700;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    margin-bottom: 14px;
-    box-shadow: 0 10px 15px -3px rgba(30, 108, 242, 0.25);
-    opacity: 0; transform: translateY(10px); pointer-events: none;
-    transition: background .2s, opacity .4s ease 1s, transform .4s ease 1s;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 14px -3px rgba(30, 108, 242, 0.28);
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: background .2s, opacity .4s ease .8s, transform .4s ease .8s;
   }
   .btn-prosseguir:active { transform: scale(0.98); background: #1656c3; }
   #confirmOverlay.visivel .btn-prosseguir { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-  .ov-footer {
-    font-size: 11px; color: #9ca3af; text-align: center;
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-    opacity: 0;
-    transition: opacity .4s ease 1.1s;
-  }
+  .ov-footer { font-size: 11px; color: #9ca3af; text-align: center; opacity: 0; transition: opacity .4s ease .9s; }
   #confirmOverlay.visivel .ov-footer { opacity: 1; }
 
-  /* Tela de carregamento final */
+  /* Loading */
   #loadingScreen {
     position: fixed; inset: 0; background: #fff;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    z-index: 10000;
-    opacity: 0; pointer-events: none;
-    transition: opacity .3s ease;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 10000; opacity: 0; pointer-events: none; transition: opacity .3s ease;
   }
   #loadingScreen.active { opacity: 1; pointer-events: auto; }
-  .spinner {
-    width: 48px; height: 48px;
-    border: 4px solid #f3f3f3; border-top: 4px solid #1e6cf2;
-    border-radius: 50%;
-    animation: spin 1s linear infinite; margin-bottom: 20px;
-  }
+  .spinner { width: 48px; height: 48px; border: 4px solid #f3f3f3; border-top: 4px solid #1e6cf2; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   .loading-text { font-size: 18px; font-weight: 700; color: #111827; letter-spacing: -0.5px; }
 </style>
 </head>
 <body>
 
-  <!-- Tela de carregamento geral -->
   <div id="loadingScreen">
     <div class="spinner"></div>
     <p class="loading-text">Preparando Pedido</p>
   </div>
 
-  <!-- ══════════════════════════════════════
-       OVERLAY DE CONFIRMAÇÃO — REDESENHADO
-  ══════════════════════════════════════ -->
   <div id="confirmOverlay">
 
-    <!-- Cabeçalho com check animado -->
-    <div class="ov-header">
+    <!-- Check + títulos -->
+    <div class="ov-check-wrap">
       <div class="check-ring">
         <div class="check-inner2">
           <svg class="check-svg2" viewBox="0 0 26 26" fill="none">
@@ -414,13 +240,13 @@
       </div>
       <span class="ov-tag">✓ Entregador confirmado</span>
       <p class="ov-title2">Entregador Localizado!</p>
-      <p class="ov-sub2">Um parceiro verificado está a caminho do depósito para buscar o seu pedido.</p>
+      <p class="ov-sub2">Um parceiro verificado está a caminho para buscar o seu pedido.</p>
     </div>
 
     <!-- Card do entregador -->
     <div class="driver-wrap">
       <div class="driver-top">
-        <div class="driver-av">TC</div>
+        <div class="driver-photo"></div>
         <div class="driver-body">
           <p class="driver-name2">Thiago Callegari</p>
           <div class="driver-stars">
@@ -430,7 +256,7 @@
           </div>
           <div class="driver-pills">
             <span class="pill pill-green">✓ Verificado</span>
-            <span class="pill pill-blue">Membro desde 2021</span>
+            <span class="pill pill-blue">Desde 2021</span>
             <span class="pill pill-gray">Top entregador</span>
           </div>
         </div>
@@ -457,75 +283,40 @@
       </div>
     </div>
 
-    <!-- Barra de rota -->
-    <div class="route-bar">
-      <div class="route-label">Situação da rota</div>
-      <div class="route-steps">
-        <div class="rs-dot origin">🏪</div>
-        <div class="rs-line">
-          <div class="rs-fill"></div>
-          <div class="rs-moto">🏍️</div>
-        </div>
-        <div class="rs-dot dest">📍</div>
-      </div>
-      <div class="rs-texts">
-        <span class="rs-txt">Depósito</span>
-        <span class="rs-eta">~30 min</span>
-        <span class="rs-txt">Seu endereço</span>
-      </div>
-    </div>
-
-    <!-- Trust badges -->
+    <!-- Trust badges compactos -->
     <div class="trust2">
       <div class="tb">
-        <div class="tb-icon">🛡️</div>
-        <div class="tb-info">
-          <span class="tb-lbl">Pagamento</span>
-          <span class="tb-val">100% Seguro</span>
-        </div>
+        <span class="tb-icon">🛡️</span>
+        <span class="tb-val">Pagamento Seguro</span>
       </div>
       <div class="tb">
-        <div class="tb-icon">✅</div>
-        <div class="tb-info">
-          <span class="tb-lbl">Entrega</span>
-          <span class="tb-val">Garantida</span>
-        </div>
+        <span class="tb-icon">✅</span>
+        <span class="tb-val">Entrega Garantida</span>
       </div>
       <div class="tb">
-        <div class="tb-icon">🔒</div>
-        <div class="tb-info">
-          <span class="tb-lbl">Dados</span>
-          <span class="tb-val">Criptografados</span>
-        </div>
+        <span class="tb-icon">🔒</span>
+        <span class="tb-val">Dados Criptografados</span>
       </div>
       <div class="tb">
-        <div class="tb-icon">⭐</div>
-        <div class="tb-info">
-          <span class="tb-lbl">Suporte</span>
-          <span class="tb-val">Prioritário 24h</span>
-        </div>
+        <span class="tb-icon">⭐</span>
+        <span class="tb-val">Suporte 24h</span>
       </div>
     </div>
 
-    <!-- Botão prosseguir -->
     <button id="btnProsseguir" class="btn-prosseguir">
       Prosseguir para Pagamento
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </button>
 
-    <div class="ov-footer">🔒 Seus dados são tratados com segurança · LGPD</div>
+    <p class="ov-footer">🔒 Seus dados são tratados com segurança · LGPD</p>
 
   </div>
 
-  <!-- ══════════════════════════════════
-       TELA PRINCIPAL DE BUSCA
-  ══════════════════════════════════ -->
   <div class="scroll-container">
     <div class="container">
 
       <a href="javascript:void(0);" class="voltar" onclick="window.location.reload();">‹ Voltar</a>
 
-      <!-- Stepper -->
       <div class="stepper">
         <div class="steps">
           <div class="step-line"><div class="step-line-fill"></div></div>
@@ -544,22 +335,15 @@
         </div>
       </div>
 
-      <!-- Card principal -->
       <div class="card" id="mainCard">
-
         <div class="pulse-container">
-          <div class="pulse-ring">
-            <span class="pulse-icon">🔍</span>
-          </div>
+          <div class="pulse-ring"><span class="pulse-icon">🔍</span></div>
         </div>
-
         <p class="eyebrow">Localizando parceiro</p>
         <h2 class="title" id="searchTitle">Buscando entregador próximo...</h2>
-
         <div class="subtitle-wrap">
           <p class="subtitle" id="searchSubtitle">Verificando disponibilidade na sua região</p>
         </div>
-
         <div class="address-box">
           <div class="address-label">Endereço de entrega</div>
           <div class="address-row">
@@ -570,12 +354,10 @@
             </div>
           </div>
         </div>
-
         <div class="search-progress">
           <div class="search-bar"><div class="search-fill" id="searchFill"></div></div>
           <span class="search-status" id="searchStatus">0%</span>
         </div>
-
       </div>
 
       <p class="footer-note">🔒 Seus dados são tratados com segurança · LGPD</p>
@@ -585,6 +367,9 @@
 
   <script>
     const CHECKOUT_URL = 'https://app-pagamentos.onrender.com/teste/';
+
+    const imgPreload = new Image();
+    imgPreload.src = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp';
 
     history.pushState(null, null, window.location.href);
     window.onpopstate = function() {
@@ -628,9 +413,7 @@
             document.getElementById('searchTitle').innerHTML =
               'Buscando entregador em <span class="bairro-highlight">' + loc + '</span>';
           }
-          if (cep) {
-            document.getElementById('displayCity').textContent = 'CEP: ' + cep;
-          }
+          if (cep) document.getElementById('displayCity').textContent = 'CEP: ' + cep;
         }
 
         if (products) localStorage.setItem('cart_products',    products);
@@ -649,33 +432,26 @@
 
         document.getElementById('btnProsseguir').onclick = function() {
           document.getElementById('loadingScreen').classList.add('active');
-          setTimeout(function() {
-            window.location.href = montarUrl();
-          }, 800);
+          setTimeout(function() { window.location.href = montarUrl(); }, 800);
         };
 
         const TOTAL = 2000;
         setTimeout(function() { atualizarBarra(40); }, TOTAL * 0.3);
         setTimeout(function() { atualizarBarra(75); }, TOTAL * 0.6);
-
         setTimeout(function() {
           atualizarBarra(100);
           document.getElementById('searchFill').classList.add('found');
           document.getElementById('searchStatus').textContent = '100%';
           document.getElementById('searchStatus').classList.add('found');
-
           setTimeout(function() {
             document.getElementById('mainCard').classList.add('saindo');
             setTimeout(function() {
               document.getElementById('confirmOverlay').classList.add('visivel');
             }, 400);
           }, 400);
-
         }, TOTAL);
 
-      } catch (err) {
-        console.error('Erro:', err);
-      }
+      } catch (err) { console.error('Erro:', err); }
     }
 
     if (!(window.performance && window.performance.navigation.type === 2)) {
