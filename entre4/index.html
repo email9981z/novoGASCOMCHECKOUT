@@ -560,9 +560,16 @@
       }
     }
 
-    if (!(window.performance && window.performance.navigation.type === 2)) {
-      document.addEventListener('DOMContentLoaded', processarPedido);
-    }
+    document.addEventListener('DOMContentLoaded', processarPedido);
+
+    window.addEventListener('pageshow', function(event) {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+          loadingScreen.classList.remove('active');
+        }
+      }
+    });
   </script>
 </body>
 </html>
