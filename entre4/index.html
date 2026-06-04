@@ -341,7 +341,7 @@
         </div>
       </div>
     </div>
-    <p class="ov-title" id="confirmTitle">Entregador Localizado!</p>
+    <p class="ov-title">Entregador Localizado!</p>
     <p class="ov-sub">Seu pedido está pronto para envio</p>
     
     <!-- Card do Entregador -->
@@ -508,9 +508,6 @@
             }
             document.getElementById('searchTitle').innerHTML =
               'Buscando entregador em <span class="bairro-highlight">' + textoExibicao + '</span>';
-            
-            // Atualiza também o título do overlay final
-            document.getElementById('confirmTitle').textContent = 'Entregador localizado em ' + textoExibicao;
           }
           if (cep) {
             document.getElementById('displayCity').textContent = 'CEP: ' + cep;
