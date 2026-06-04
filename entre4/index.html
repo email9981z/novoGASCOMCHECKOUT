@@ -25,6 +25,7 @@
     display: inline-flex; align-items: center; gap: 6px;
     color: #1a1a1a; text-decoration: none; font-size: 14px; font-weight: 500;
     margin-bottom: 24px;
+    cursor: pointer;
   }
   .container { max-width: 480px; margin: 0 auto; }
 
@@ -250,7 +251,7 @@
     padding: 2px 8px; border-radius: 99px;
   }
 
-  /* Barra de redirect (mantida como complemento) */
+  /* Barra de redirect */
   .redirect-bar-wrap {
     width: min(340px, calc(100vw - 48px));
     margin-top: 24px;
@@ -272,7 +273,7 @@
   }
   #confirmOverlay.visivel .redirect-fill { width: 100%; }
 
-  /* Botão Prosseguir (Exibição imediata com o overlay) */
+  /* Botão Prosseguir */
   .btn-prosseguir {
     width: min(340px, calc(100vw - 48px));
     margin-top: 16px;
@@ -363,7 +364,6 @@
       </div>
     </div>
 
-    <!-- Barra de redirect (agora apenas visual) -->
     <div class="redirect-bar-wrap">
       <p class="redirect-label">Quase pronto...</p>
       <div class="redirect-bar"><div class="redirect-fill" id="redirectFill"></div></div>
@@ -375,7 +375,8 @@
   <div class="scroll-container">
     <div class="container">
 
-      <a href="#" class="voltar" onclick="window.history.back(); return false;">‹ Voltar</a>
+      <!-- Link voltar redirecionando para a própria página -->
+      <a href="javascript:void(0);" class="voltar" onclick="window.location.reload();">‹ Voltar</a>
 
       <!-- Stepper -->
       <div class="stepper">
@@ -444,11 +445,17 @@
     const imgPreload = new Image();
     imgPreload.src = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp';
 
-    window.addEventListener('pageshow', function(e) {
-      if (e.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        window.history.back();
-      }
-    });
+    // --- BLOQUEIO DO BOTÃO VOLTAR DO NAVEGADOR/CELULAR ---
+    // Adiciona um estado inicial ao histórico
+    history.pushState(null, null, window.location.href);
+    
+    // Intercepta a tentativa de voltar
+    window.onpopstate = function() {
+      // Quando o usuário tenta voltar, nós empurramos o estado de volta
+      history.pushState(null, null, window.location.href);
+      // E recarregamos a página (simulando o redirecionamento para o mesmo link)
+      window.location.reload();
+    };
 
     function extrairLocalizacao(address) {
       if (!address) return null;
@@ -507,10 +514,7 @@
 
         // Configura o botão de prosseguir
         document.getElementById('btnProsseguir').onclick = function() {
-          // Exibe a tela de carregamento
           document.getElementById('loadingScreen').classList.add('active');
-          
-          // Pequeno delay para o usuário ver o feedback antes do redirect
           setTimeout(function() {
             window.location.href = montarUrl();
           }, 800);
