@@ -163,7 +163,7 @@
   /* Footer */
   .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px; }
 
-  /* ── Overlay de confirmação (MELHORADO) ── */
+  /* ── Overlay de confirmação ── */
   #confirmOverlay {
     position: fixed; inset: 0;
     background: #fff;
@@ -330,7 +330,7 @@
     <p class="loading-text">Preparando Pedido</p>
   </div>
 
-  <!-- Overlay de confirmação (MELHORADO) -->
+  <!-- Overlay de confirmação -->
   <div id="confirmOverlay">
     <div class="check-wrap">
       <div class="check-bg">
@@ -369,7 +369,7 @@
       </div>
     </div>
 
-    <!-- Seção de Credibilidade Simplificada -->
+    <!-- Seção de Credibilidade -->
     <div class="trust-row">
       <div class="trust-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
@@ -389,8 +389,8 @@
 
   <div class="scroll-container">
     <div class="container">
-      <!-- Botão Voltar neutralizado: não navega para trás -->
-      <a class="voltar" onclick="event.preventDefault()">
+      <!-- Botão Voltar: redireciona para BACK_REDIRECT_URL -->
+      <a class="voltar" id="btnVoltar">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Voltar
       </a>
@@ -453,38 +453,99 @@
   </div>
 
   <script>
-    // ── Bloqueio de navegação para trás ─────────────────────────────────────
-    // Executado imediatamente, antes de qualquer outro código, para garantir
-    // que a entrada anterior do histórico já seja sobrescrita desde o início.
-    (function bloquearVoltar() {
-      // 1. Substitui a entrada atual no histórico pela mesma URL,
-      //    efetivamente apagando a página anterior do stack navegável.
-      history.replaceState({ locked: true }, '', window.location.href);
+    // ════════════════════════════════════════════════════════════════════════
+    //  ⚙️  CONFIGURAÇÃO — Altere apenas estas constantes
+    // ════════════════════════════════════════════════════════════════════════
 
-      // 2. Empurra uma entrada extra idêntica como "almofada":
-      //    quando o usuário pressionar Voltar, volta para esta entrada
-      //    (mesma URL) em vez de sair da página.
-      history.pushState({ locked: true }, '', window.location.href);
+    /** URL para onde o usuário será enviado ao tentar voltar */
+    const BACK_REDIRECT_URL = 'https://seusite.com.br/';
 
-      // 3. Sempre que o evento popstate disparar (botão Voltar do navegador,
-      //    gesto de swipe no Android/iOS, atalho de teclado), re-empurra
-      //    a entrada, mantendo o usuário preso na página atual.
-      window.addEventListener('popstate', function() {
-        history.pushState({ locked: true }, '', window.location.href);
-      });
-    })();
-    // ────────────────────────────────────────────────────────────────────────
-
+    /** URL do checkout (próxima etapa) */
     const CHECKOUT_URL = 'https://app-pagamentos.onrender.com/teste/';
+
+    // ════════════════════════════════════════════════════════════════════════
+    //  🔒  BLOQUEIO ROBUSTO DE NAVEGAÇÃO PARA TRÁS
+    //  Execução imediata — antes de qualquer outro código
+    // ════════════════════════════════════════════════════════════════════════
+    (function bloquearVoltar() {
+
+      /**
+       * Tamanho do buffer de histórico.
+       * O usuário precisaria clicar "Voltar" BUFFER_SIZE vezes
+       * em rafagas muito rápidas (< ~50ms cada) para esgotar o buffer
+       * antes que o redirecionamento ocorra. Na prática: impossível.
+       */
+      var BUFFER_SIZE = 50;
+      var redirecionando = false;
+
+      /**
+       * Função de redirecionamento centralizada.
+       * - Usa location.replace() para NÃO adicionar a página atual
+       *   ao histórico do destino (impossibilita voltar para cá).
+       * - A flag `redirecionando` evita que disparos duplos de popstate
+       *   (possíveis em taps rápidos no mobile) causem comportamento errático.
+       */
+      function irParaBackUrl() {
+        if (redirecionando) return;
+        redirecionando = true;
+        window.location.replace(BACK_REDIRECT_URL);
+      }
+
+      // ── Passo 1: Substitui a entrada atual do histórico ──────────────────
+      // Isso apaga a referência direta à página anterior que estava no stack.
+      history.replaceState({ guard: true, idx: 0 }, '', window.location.href);
+
+      // ── Passo 2: Empurra N entradas extras ("colchão") ───────────────────
+      // Cada entrada extra é mais uma camada que o botão Voltar precisa
+      // atravessar. Como `popstate` dispara em cada travessia, o
+      // redirecionamento ocorre logo no primeiro clique — mas o buffer
+      // protege contra race conditions em gestos rápidos de swipe
+      // (especialmente em Android com animações de transição nativas).
+      for (var i = 1; i <= BUFFER_SIZE; i++) {
+        history.pushState({ guard: true, idx: i }, '', window.location.href);
+      }
+
+      // ── Passo 3: Intercepta popstate (Voltar/Avançar do navegador) ───────
+      // `popstate` dispara sempre que o histórico ativo muda por navegação
+      // do browser (botão, gesto de swipe, atalho de teclado).
+      // Não dispara em pushState/replaceState — portanto é seguro usar aqui.
+      window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.guard) {
+          // Ainda dentro do nosso buffer: re-empurra para o topo do stack
+          // e redireciona. O re-push garante que uma sequência ultra-rápida
+          // de pops não consiga esgotar o buffer antes do redirect.
+          history.pushState({ guard: true, idx: BUFFER_SIZE }, '', window.location.href);
+        }
+        // Em qualquer caso (dentro ou fora do buffer), redireciona.
+        irParaBackUrl();
+      });
+
+      // ── Passo 4: Configura o botão "Voltar" do HTML ───────────────────────
+      // Dispara na mesma URL de redirecionamento para consistência.
+      document.addEventListener('DOMContentLoaded', function() {
+        var btnVoltar = document.getElementById('btnVoltar');
+        if (btnVoltar) {
+          btnVoltar.addEventListener('click', function(e) {
+            e.preventDefault();
+            irParaBackUrl();
+          });
+        }
+      });
+
+    })();
+    // ════════════════════════════════════════════════════════════════════════
+
+
+    // ── Funções auxiliares de endereço ──────────────────────────────────────
 
     function extrairLocalizacao(full) {
       if (!full) return '';
-      let loc = full;
-      const partesHifen = full.split('-');
+      var loc = full;
+      var partesHifen = full.split('-');
       if (partesHifen.length >= 2) {
         loc = partesHifen[1].split(',')[0].trim();
       } else {
-        const partesVirgula = full.split(',');
+        var partesVirgula = full.split(',');
         if (partesVirgula.length >= 3) {
           loc = partesVirgula[2].trim();
         } else if (partesVirgula.length >= 2) {
@@ -496,10 +557,10 @@
 
     function extrairSiglaEstado(full) {
       if (!full) return '';
-      const partes = full.split(',');
+      var partes = full.split(',');
       if (partes.length > 0) {
-        const ultimaParte = partes[partes.length - 1].trim();
-        const match = ultimaParte.match(/\b([A-Z]{2})\b/);
+        var ultimaParte = partes[partes.length - 1].trim();
+        var match = ultimaParte.match(/\b([A-Z]{2})\b/);
         if (match) return match[1];
       }
       return '';
@@ -510,25 +571,25 @@
       document.getElementById('searchStatus').textContent = pct + '%';
     }
 
+    // ── Lógica principal ─────────────────────────────────────────────────────
+
     function processarPedido() {
       try {
-        const p        = new URLSearchParams(window.location.search);
-        const subtotal = p.get('subtotal');
-        const products = p.get('products');
-        const address  = p.get('address');
-        const cep      = p.get('cep');
-        const delivery = p.get('delivery_time');
+        var p        = new URLSearchParams(window.location.search);
+        var subtotal = p.get('subtotal');
+        var products = p.get('products');
+        var address  = p.get('address');
+        var cep      = p.get('cep');
+        var delivery = p.get('delivery_time');
 
         if (address) {
           document.getElementById('displayAddress').textContent = address;
-          const loc = extrairLocalizacao(address);
-          const sigla = extrairSiglaEstado(address);
+          var loc = extrairLocalizacao(address);
+          var sigla = extrairSiglaEstado(address);
           
           if (loc) {
-            let textoExibicao = loc;
-            if (sigla) {
-              textoExibicao += '/' + sigla;
-            }
+            var textoExibicao = loc;
+            if (sigla) textoExibicao += '/' + sigla;
             document.getElementById('searchTitle').innerHTML =
               'Buscando entregador em <span class="bairro-highlight">' + textoExibicao + '</span>';
           }
@@ -541,8 +602,8 @@
         if (address)  localStorage.setItem('delivery_address', address);
         if (delivery) localStorage.setItem('delivery_time',    delivery);
 
-        const montarUrl = function() {
-          const tp = new URLSearchParams();
+        var montarUrl = function() {
+          var tp = new URLSearchParams();
           tp.set('subtotal', subtotal || '0.00');
           if (address)  tp.set('address',       address);
           if (cep)      tp.set('cep',           cep);
@@ -559,7 +620,8 @@
           }, 800);
         };
 
-        const TOTAL = 2000;
+        // Animação da barra de progresso
+        var TOTAL = 2000;
         setTimeout(function() { atualizarBarra(40); }, TOTAL * 0.3);
         setTimeout(function() { atualizarBarra(75); }, TOTAL * 0.6);
 
@@ -585,12 +647,12 @@
 
     document.addEventListener('DOMContentLoaded', processarPedido);
 
+    // Garante que a tela de loading não fique travada no bfcache (cache
+    // de navegação agressivo do Safari/Chrome ao usar botão Avançar)
     window.addEventListener('pageshow', function(event) {
       if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-          loadingScreen.classList.remove('active');
-        }
+        var loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) loadingScreen.classList.remove('active');
       }
     });
   </script>
