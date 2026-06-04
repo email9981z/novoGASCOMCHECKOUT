@@ -549,7 +549,7 @@
             <div class="footer-column">
                 <h3>Contato</h3>
                 <ul class="contact-info">
-                    <li><i class="fas fa-envelope"></i><span>contato@diskgas.com.br</span></li>
+                    <li><i class="fas fa-envelope"></i><span>contatosupo@diskgaseaguas.com</span></li>
                     <li><i class="fas fa-phone-alt"></i><span>(51) 4010-9018</span></li>
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
@@ -608,7 +608,7 @@
                             <i class="fas fa-bolt"></i>
                             <div class="shipping-info">
                                 <span class="shipping-name">Entrega Rápida</span>
-                                <span class="shipping-time">20-30 min</span>
+                                <span class="shipping-time">20-30 minutos</span>
                             </div>
                             <span class="shipping-price">GRÁTIS</span>
                         </div>
@@ -901,7 +901,7 @@ function proceedToSummary() {
         const time = document.getElementById('schedule-time').value;
         if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
         scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
-    } else { scheduleText = 'Entrega Rápida (20-30 min)'; }
+    } else { scheduleText = 'Entrega Rápida (20-30 minutos)'; }
 
     let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
     let itemsHtml = cart.map(item => `
@@ -964,7 +964,7 @@ confirmPaymentBtn.addEventListener('click', () => {
     const addrComplement = document.getElementById('addr-complement').value || '';
     const scheduleText   = selectedShipping === 'scheduled'
         ? `${document.getElementById('schedule-day').value.split('-').reverse().join('/')} às ${document.getElementById('schedule-time').value}`
-        : 'Entrega Rápida (20-30 min)';
+        : 'Entrega Rápida (20-30 minutos)';
 
     const productsData = cart.map(item => ({
         n: `Botijão de Gás (Cheio) ${item.variant}`,
