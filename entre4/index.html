@@ -393,7 +393,7 @@
       <div id="mainCard" class="card">
         <div class="pulse-container">
           <div class="pulse-ring">
-            <span class="pulse-icon">🛵</span>
+            <span class="pulse-icon">🔍</span>
           </div>
         </div>
 
@@ -432,15 +432,19 @@
 
     function extrairLocalizacao(full) {
       if (!full) return '';
-      const partes = full.split(',');
-      if (partes.length >= 2) {
-        let b = partes[1].trim();
-        if (b.toLowerCase().includes('nº') || b.toLowerCase().includes('numero')) {
-          return partes[0].trim();
+      let loc = full;
+      const partesHifen = full.split('-');
+      if (partesHifen.length >= 2) {
+        loc = partesHifen[1].split(',')[0].trim();
+      } else {
+        const partesVirgula = full.split(',');
+        if (partesVirgula.length >= 3) {
+          loc = partesVirgula[2].trim();
+        } else if (partesVirgula.length >= 2) {
+          loc = partesVirgula[1].trim();
         }
-        return b;
       }
-      return full;
+      return loc.replace(/^[0-9\sºnN.]+/g, '').trim() || full;
     }
 
     function atualizarBarra(pct) {
