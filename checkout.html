@@ -159,6 +159,16 @@
   }
   #confirmOverlay.visivel { opacity: 1; pointer-events: auto; }
 
+  /* Logo DISKGAS */
+  .overlay-logo {
+    font-size: 22px; font-weight: 800; letter-spacing: 3px;
+    color: #1e6cf2; text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    transition: opacity .4s ease .2s;
+  }
+  #confirmOverlay.visivel .overlay-logo { opacity: 1; }
+
   /* Círculo check */
   .check-wrap { margin-bottom: 20px; position: relative; }
   .check-bg {
@@ -339,6 +349,8 @@
 
   <!-- Overlay de confirmação -->
   <div id="confirmOverlay">
+    <div class="overlay-logo">DISKGAS</div>
+
     <div class="check-wrap">
       <div class="check-bg">
         <div class="check-inner">
