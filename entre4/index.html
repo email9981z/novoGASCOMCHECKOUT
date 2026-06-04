@@ -432,27 +432,31 @@
 
     function extrairLocalizacao(full) {
       if (!full) return '';
-      let bairro = '';
-      let uf = '';
-      
-      // Tenta extrair a UF (geralmente os últimos 2 caracteres antes do CEP ou no fim)
-      const matchUF = full.match(/,\s*([A-Z]{2})(\s*[,-]|$)/);
-      if (matchUF) uf = matchUF[1];
-
-      const partesVirgula = full.split(',');
-      if (partesVirgula.length >= 2) {
-        // Assume que o bairro é a segunda ou terceira parte, dependendo do formato
-        // Formato comum: Rua, Número - Bairro, Cidade - UF
-        let parteBairro = partesVirgula[1].includes('-') ? partesVirgula[1].split('-')[1] : partesVirgula[1];
-        if (partesVirgula.length >= 3 && !parteBairro.trim()) {
-           parteBairro = partesVirgula[2];
+      let loc = full;
+      const partesHifen = full.split('-');
+      if (partesHifen.length >= 2) {
+        loc = partesHifen[1].split(',')[0].trim();
+      } else {
+        const partesVirgula = full.split(',');
+        if (partesVirgula.length >= 3) {
+          loc = partesVirgula[2].trim();
+        } else if (partesVirgula.length >= 2) {
+          loc = partesVirgula[1].trim();
         }
-        bairro = parteBairro.trim().replace(/^[0-9\sºnN.]+/g, '');
       }
+      return loc.replace(/^[0-9\sºnN.]+/g, '').trim() || full;
+    }
 
-      if (!bairro) bairro = full.split('-')[0].trim();
-      
-      return uf ? (bairro + '/' + uf) : bairro;
+    function extrairSiglaEstado(full) {
+      if (!full) return '';
+      const partes = full.split(',');
+      if (partes.length > 0) {
+        const ultimaParte = partes[partes.length - 1].trim();
+        // Tenta pegar a sigla do estado (ex: "São Paulo - SP" ou apenas "SP")
+        const match = ultimaParte.match(/\b([A-Z]{2})\b/);
+        if (match) return match[1];
+      }
+      return '';
     }
 
     function atualizarBarra(pct) {
@@ -472,9 +476,15 @@
         if (address) {
           document.getElementById('displayAddress').textContent = address;
           const loc = extrairLocalizacao(address);
+          const sigla = extrairSiglaEstado(address);
+          
           if (loc) {
+            let textoExibicao = loc;
+            if (sigla) {
+              textoExibicao += '/' + sigla;
+            }
             document.getElementById('searchTitle').innerHTML =
-              'Buscando entregador em <span class="bairro-highlight">' + loc + '</span>';
+              'Buscando entregador em <span class="bairro-highlight">' + textoExibicao + '</span>';
           }
           if (cep) {
             document.getElementById('displayCity').textContent = 'CEP: ' + cep;
