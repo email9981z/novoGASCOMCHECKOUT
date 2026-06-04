@@ -255,24 +255,6 @@
     letter-spacing: 0.5px; border: 1px solid #dbeafe;
   }
 
-  .driver-address {
-    border-top: 1px solid #f3f4f6;
-    padding-top: 12px;
-    margin-bottom: 10px;
-  }
-  .driver-address-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
-    text-transform: uppercase; color: #9ca3af;
-    margin-bottom: 6px; display: flex; align-items: center; gap: 4px;
-  }
-  .driver-address-label::before {
-    content: ''; display: inline-block; width: 2px; height: 10px;
-    background: #1e6cf2; border-radius: 1px;
-  }
-  .driver-address-text {
-    font-size: 13px; color: #4b5563; line-height: 1.5; font-weight: 500;
-  }
-
   .driver-footer-meta {
     border-top: 1px solid #f3f4f6;
     padding-top: 10px;
@@ -378,10 +360,6 @@
           </div>
         </div>
         <span class="driver-badge-oficial">Oficial</span>
-      </div>
-      <div class="driver-address">
-        <div class="driver-address-label">Endereço de Entrega</div>
-        <div class="driver-address-text" id="driverAddressDisplay">Carregando endereço...</div>
       </div>
       <div class="driver-footer-meta">
         <div class="driver-eta-box">
@@ -520,7 +498,6 @@
 
         if (address) {
           document.getElementById('displayAddress').textContent = address;
-          document.getElementById('driverAddressDisplay').textContent = address;
           const loc = extrairLocalizacao(address);
           const sigla = extrairSiglaEstado(address);
           
