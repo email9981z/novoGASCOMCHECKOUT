@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Buscando entregador - Depósito Mais Barato</title>
+<!-- Preload da imagem do entregador para garantir que esteja pronta -->
 <link rel="preload" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -249,10 +250,32 @@
     padding: 2px 8px; border-radius: 99px;
   }
 
-  /* Botão Prosseguir */
-  .btn-prosseguir {
+  /* Barra de redirect (mantida como complemento) */
+  .redirect-bar-wrap {
     width: min(340px, calc(100vw - 48px));
     margin-top: 24px;
+    opacity: 0;
+    transition: opacity .3s ease 1.1s;
+  }
+  #confirmOverlay.visivel .redirect-bar-wrap { opacity: 1; }
+  .redirect-label {
+    font-size: 11px; color: #9ca3af; text-align: center;
+    margin-bottom: 8px; letter-spacing: .4px; text-transform: uppercase; font-weight: 600;
+  }
+  .redirect-bar {
+    height: 3px; background: #e5e7eb; border-radius: 99px; overflow: hidden;
+  }
+  .redirect-fill {
+    height: 100%; background: #10b981; border-radius: 99px;
+    width: 0%;
+    transition: width 2s linear 1.2s;
+  }
+  #confirmOverlay.visivel .redirect-fill { width: 100%; }
+
+  /* Botão Prosseguir (Exibição imediata com o overlay) */
+  .btn-prosseguir {
+    width: min(340px, calc(100vw - 48px));
+    margin-top: 16px;
     background: #1e6cf2;
     color: #fff;
     border: none;
@@ -261,7 +284,7 @@
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s, opacity 0.4s ease 1s, transform 0.4s ease 1s;
+    transition: background 0.2s, transform 0.1s, opacity 0.4s ease 1.1s, transform 0.4s ease 1.1s;
     opacity: 0;
     transform: translateY(10px);
     pointer-events: none;
@@ -276,9 +299,42 @@
     transform: translateY(0);
     pointer-events: auto;
   }
+
+  /* ── Tela de carregamento final ── */
+  #loadingScreen {
+    position: fixed; inset: 0;
+    background: #fff;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 10000;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  #loadingScreen.active { opacity: 1; pointer-events: auto; }
+  
+  .spinner {
+    width: 48px; height: 48px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1e6cf2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  
+  .loading-text {
+    font-size: 18px; font-weight: 700; color: #111827;
+    letter-spacing: -0.5px;
+  }
 </style>
 </head>
 <body>
+
+  <!-- Tela de carregamento geral -->
+  <div id="loadingScreen">
+    <div class="spinner"></div>
+    <p class="loading-text">Preparando Pedido</p>
+  </div>
 
   <!-- Overlay de confirmação -->
   <div id="confirmOverlay">
@@ -305,6 +361,12 @@
           <span class="driver-eta">~30 min</span>
         </div>
       </div>
+    </div>
+
+    <!-- Barra de redirect (agora apenas visual) -->
+    <div class="redirect-bar-wrap">
+      <p class="redirect-label">Quase pronto...</p>
+      <div class="redirect-bar"><div class="redirect-fill" id="redirectFill"></div></div>
     </div>
     
     <button id="btnProsseguir" class="btn-prosseguir">Prosseguir</button>
@@ -378,6 +440,10 @@
   <script>
     const CHECKOUT_URL = 'https://app-pagamentos.onrender.com/teste/';
 
+    // Pré-carregamento explícito
+    const imgPreload = new Image();
+    imgPreload.src = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp';
+
     window.addEventListener('pageshow', function(e) {
       if (e.persisted || (window.performance && window.performance.navigation.type === 2)) {
         window.history.back();
@@ -441,30 +507,29 @@
 
         // Configura o botão de prosseguir
         document.getElementById('btnProsseguir').onclick = function() {
-          window.location.href = montarUrl();
+          // Exibe a tela de carregamento
+          document.getElementById('loadingScreen').classList.add('active');
+          
+          // Pequeno delay para o usuário ver o feedback antes do redirect
+          setTimeout(function() {
+            window.location.href = montarUrl();
+          }, 800);
         };
 
-        // Duração total da busca: 2000ms
         const TOTAL = 2000;
-
-        // Barra avança suavemente até 100% durante os 2s
         setTimeout(function() { atualizarBarra(40); }, TOTAL * 0.3);
         setTimeout(function() { atualizarBarra(75); }, TOTAL * 0.6);
 
-        // Conclusão
         setTimeout(function() {
           atualizarBarra(100);
           document.getElementById('searchFill').classList.add('found');
           document.getElementById('searchStatus').textContent = '100%';
           document.getElementById('searchStatus').classList.add('found');
 
-          // Fade out do card, depois exibe overlay
           setTimeout(function() {
             document.getElementById('mainCard').classList.add('saindo');
             setTimeout(function() {
               document.getElementById('confirmOverlay').classList.add('visivel');
-              // O redirecionamento automático foi removido. 
-              // Agora o usuário deve clicar no botão "Prosseguir".
             }, 400);
           }, 400);
 
