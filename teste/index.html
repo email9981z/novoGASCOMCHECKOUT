@@ -518,7 +518,7 @@
         <div class="faq-item">
             <div class="faq-question">Como cancelar meu pedido? <i class="fas fa-chevron-down"></i></div>
             <div class="faq-answer">
-                <p style="margin-bottom:8px;">Você pode cancelar seu pedido entrando em contato conosco pelo telefone <strong>(51) 4010-9018</strong> ou pelo e-mail <strong>contato@diskgas.com.br</strong>.</p>
+                <p style="margin-bottom:8px;">Você pode cancelar seu pedido entrando em contato conosco pelo telefone <strong>(51) 4010-9018</strong> ou pelo e-mail <strong>contatosupo@diskgaseaguas.com</strong>.</p>
                 <p style="margin-bottom:8px;"><strong>Direito de arrependimento (compras online):</strong> De acordo com o Art. 49 do Código de Defesa do Consumidor (Lei nº 8.078/1990), você tem o direito de desistir de qualquer compra realizada fora do estabelecimento comercial — incluindo compras pela internet — em até <strong>7 dias corridos</strong> a partir da data do recebimento do produto, sem custo algum.</p>
                 <p>Para exercer esse direito, basta nos contatar dentro do prazo. O produto deve ser devolvido em boas condições e o valor será reembolsado integralmente.</p>
             </div>
@@ -608,7 +608,7 @@
                             <i class="fas fa-bolt"></i>
                             <div class="shipping-info">
                                 <span class="shipping-name">Entrega Rápida</span>
-                                <span class="shipping-time">Receba o mais breve possível</span>
+                                <span class="shipping-time">20-30 min</span>
                             </div>
                             <span class="shipping-price">GRÁTIS</span>
                         </div>
@@ -901,7 +901,7 @@ function proceedToSummary() {
         const time = document.getElementById('schedule-time').value;
         if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
         scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
-    } else { scheduleText = 'Entrega Rápida (Ágil para sua região)'; }
+    } else { scheduleText = 'Entrega Rápida (20-30 min)'; }
 
     let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
     let itemsHtml = cart.map(item => `
@@ -964,7 +964,7 @@ confirmPaymentBtn.addEventListener('click', () => {
     const addrComplement = document.getElementById('addr-complement').value || '';
     const scheduleText   = selectedShipping === 'scheduled'
         ? `${document.getElementById('schedule-day').value.split('-').reverse().join('/')} às ${document.getElementById('schedule-time').value}`
-        : 'Entrega Rápida (Ágil para sua região)';
+        : 'Entrega Rápida (20-30 min)';
 
     const productsData = cart.map(item => ({
         n: `Botijão de Gás (Cheio) ${item.variant}`,
