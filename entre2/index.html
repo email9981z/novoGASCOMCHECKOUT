@@ -416,13 +416,43 @@
     text-align: right;
   }
 
+  /* Identification Card */
+  .id-card {
+    align-self: flex-start;
+    background: #fff;
+    border: 1.5px solid #eef2f6;
+    border-radius: 16px;
+    padding: 16px;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    animation: msgIn 0.3s ease both;
+  }
+  .id-card-top { display: flex; align-items: center; gap: 12px; }
+  .id-card-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
+    background-size: cover; background-position: center;
+    border: 2px solid #10b981;
+  }
+  .id-card-name { font-size: 14px; font-weight: 700; color: #111827; }
+  .id-card-role { font-size: 11px; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .id-card-badge {
+    background: #f0fdf4; color: #166534; font-size: 10px; font-weight: 800;
+    padding: 4px 8px; border-radius: 6px; align-self: flex-start;
+    border: 1px solid #bbf7d0;
+  }
+
   /* Payment Cards in Chat */
   .payment-options {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 8px;
+    margin-top: 4px;
     width: 100%;
+    animation: msgIn 0.3s ease both;
   }
   .payment-card {
     background: #fff;
@@ -760,6 +790,27 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
+    function addIdCard() {
+      var chatMessages = document.getElementById('chatMessages');
+      var typingIndicator = document.getElementById('typingIndicator');
+      
+      var idCard = document.createElement('div');
+      idCard.className = 'id-card';
+      idCard.innerHTML = `
+        <div class="id-card-top">
+          <div class="id-card-avatar"></div>
+          <div>
+            <div class="id-card-name">Marcos Oliveira</div>
+            <div class="id-card-role">Entregador Autorizado</div>
+          </div>
+        </div>
+        <div class="id-card-badge">✓ DISKGAS OFICIAL</div>
+      `;
+      
+      chatMessages.insertBefore(idCard, typingIndicator);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
     function addPaymentOptions() {
       var chatMessages = document.getElementById('chatMessages');
       var typingIndicator = document.getElementById('typingIndicator');
@@ -790,7 +841,6 @@
     function selectPayment(option) {
       addMessage(option, 'sent');
       
-      // Resposta do entregador após a escolha
       setTimeout(function() {
         showTyping(true);
         setTimeout(function() {
@@ -833,21 +883,21 @@
         showTyping(true);
         setTimeout(function() {
           showTyping(false);
-          addMessage('Olá! Sou o Marcos, seu entregador autorizado.', 'received');
+          addIdCard();
           
           setTimeout(function() {
             showTyping(true);
             setTimeout(function() {
               showTyping(false);
-              addMessage('Como você deseja realizar o pagamento do seu pedido? Você pode pagar agora via Pix para agilizar a entrega ou pagar diretamente comigo na chegada.', 'received');
+              addMessage('Olá! Como você deseja realizar o pagamento do seu pedido? Você pode pagar agora via Pix para agilizar a entrega ou pagar diretamente comigo na chegada.', 'received');
               
               setTimeout(function() {
                 addPaymentOptions();
               }, 800);
-            }, 2500);
-          }, 1500);
-        }, 2000);
-      }, 1000);
+            }, 2000);
+          }, 1200);
+        }, 1500);
+      }, 800);
     }
 
     var montarUrlGlobal = function() { return '#'; };
