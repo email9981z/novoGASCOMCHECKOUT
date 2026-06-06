@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Profissional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f3f4f6;
+            --chat-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --user-msg-bg: #2563eb;
+            --user-msg-text: #ffffff;
+            --bot-msg-bg: #f3f4f6;
+            --bot-msg-text: #1f2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px; /* Adiciona respiro nas bordas da tela */
+        }
+
+        /* Container do Chat */
+        .chat-container {
+            width: 100%;
+            max-width: 400px;
+            height: 80vh; /* Altura relativa para não ultrapassar a tela */
+            max-height: 700px;
+            background: var(--chat-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Cabeçalho */
+        .chat-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #22c55e;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .header-info h2 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header-info p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Área de Mensagens */
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: var(--bot-msg-bg);
+            color: var(--bot-msg-text);
+            border-bottom-left-radius: 2px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: var(--user-msg-bg);
+            color: var(--user-msg-text);
+            border-bottom-right-radius: 2px;
+        }
+
+        .time {
+            font-size: 10px;
+            margin-top: 4px;
+            opacity: 0.6;
+            display: block;
+        }
+
+        /* Indicador de Digitação */
+        .typing {
+            display: none;
+            align-self: flex-start;
+            background: var(--bot-msg-bg);
+            padding: 12px;
+            border-radius: 14px;
+            gap: 4px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #9ca3af;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Rodapé de Entrada */
+        .chat-input-area {
+            padding: 16px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 8px;
+            background: white;
+        }
+
+        input {
+            flex: 1;
+            border: 1px solid #e5e7eb;
+            padding: 10px 14px;
+            border-radius: 24px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .send-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .send-btn:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="avatar">
+                <i class="fas fa-robot"></i>
+                <div class="status-dot"></div>
+            </div>
+            <div class="header-info">
+                <h2>Assistente Virtual</h2>
+                <p>Online agora</p>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                Olá! Sou seu assistente virtual. Como posso ajudar você hoje?
+                <span class="time" id="currentTime"></span>
+            </div>
+        </div>
+
+        <div class="typing" id="typingIndicator">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <form class="chat-input-area" id="chatForm">
+            <input type="text" id="userInput" placeholder="Digite sua mensagem..." autocomplete="off">
+            <button type="submit" class="send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const userInput = document.getElementById('userInput');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const timeSpan = document.getElementById('currentTime');
+
+        // Define a hora inicial
+        function updateTime() {
+            const now = new Date();
+            return now.getHours().toString().padStart(2, '0') + ':' + 
+                   now.getMinutes().toString().padStart(2, '0');
+        }
+        timeSpan.textContent = updateTime();
+
+        // Respostas predefinidas (Simulação de IA)
+        const responses = {
+            "oi": "Olá! Tudo bem? Em que posso ser útil?",
+            "olá": "Olá! Como posso ajudar você hoje?",
+            "quem é você": "Eu sou um chatbot protótipo criado para demonstrar uma interface profissional.",
+            "preço": "Nossos planos começam a partir de R$ 49,90 mensais. Gostaria de saber mais?",
+            "ajuda": "Claro! Você pode perguntar sobre nossos serviços, preços ou suporte técnico.",
+            "obrigado": "Por nada! Se precisar de algo mais, estou à disposição.",
+            "tchau": "Até logo! Tenha um excelente dia!",
+            "default": "Interessante! Pode me contar mais sobre isso? (Este é um chatbot de exemplo)."
+        };
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            
+            const time = updateTime();
+            messageDiv.innerHTML = `${text}<span class="time">${time}</span>`;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getBotResponse(input) {
+            const cleanInput = input.toLowerCase().trim();
+            for (let key in responses) {
+                if (cleanInput.includes(key)) return responses[key];
+            }
+            return responses["default"];
+        }
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = userInput.value;
+            if (!message.trim()) return;
+
+            // Adiciona mensagem do usuário
+            addMessage(message, 'user');
+            userInput.value = '';
+
+            // Simula "digitando..."
+            typingIndicator.style.display = 'flex';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                const response = getBotResponse(message);
+                addMessage(response, 'bot');
+            }, 1500); // 1.5 segundos de delay para parecer real
+        });
+    </script>
+</body>
+</html>
