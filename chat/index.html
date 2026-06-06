@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Clara — Atendimento</title>
+  <title>Diskgas — Entrega de Gás</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --brand:    #1048D8;
-      --brand-dk: #0C35A8;
-      --bg:       #F5F7FA;
+      --brand:    #FF6B35;
+      --brand-dk: #E55A2B;
+      --brand-lt: #FFF4F0;
+      --bg:       #F8F9FA;
       --white:    #FFFFFF;
-      --text:     #111827;
+      --text:     #1A1A1A;
       --muted:    #6B7280;
       --border:   #E5E7EB;
-      --green:    #22C55E;
+      --success:  #10B981;
+      --warning:  #F59E0B;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,7 +26,7 @@
     html, body {
       height: 100%;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #0F1B3C 0%, #1A2F5A 100%);
+      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
       display: flex;
       justify-content: center;
     }
@@ -42,9 +44,9 @@
       box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
     }
 
-    /* ── HEADER (SIMPLIFIED) ───────────────────────── */
+    /* ── HEADER ────────────────────────────────────── */
     .header {
-      background: linear-gradient(135deg, #0A2A9A 0%, #1048D8 100%);
+      background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%);
       padding: 12px 14px;
       display: flex;
       align-items: center;
@@ -52,7 +54,7 @@
       flex-shrink: 0;
       position: relative;
       z-index: 10;
-      box-shadow: 0 2px 12px rgba(16, 72, 216, 0.3);
+      box-shadow: 0 2px 12px rgba(255, 107, 53, 0.3);
     }
 
     .h-agent {
@@ -79,8 +81,8 @@
       right: 0;
       width: 11px;
       height: 11px;
-      background: var(--green);
-      border: 2px solid #1048D8;
+      background: var(--success);
+      border: 2px solid #FF6B35;
       border-radius: 50%;
     }
 
@@ -92,7 +94,7 @@
     }
 
     .h-sub {
-      color: rgba(255,255,255,0.7);
+      color: rgba(255,255,255,0.8);
       font-size: 11.5px;
       margin-top: 2px;
       display: flex;
@@ -135,59 +137,78 @@
       background: var(--bg);
     }
 
-    /* ── AGENT INFO CARD (MINIMAL) ────────────────── */
+    /* ── AGENT INFO CARD (PROFESSIONAL) ────────────── */
     .agent-card {
       background: white;
       border-radius: 12px;
-      padding: 12px;
+      padding: 14px;
       display: flex;
       align-items: center;
       gap: 12px;
       margin-bottom: 8px;
-      border: 1px solid #E5E7EB;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1.5px solid var(--brand-lt);
+      box-shadow: 0 2px 8px rgba(255, 107, 53, 0.08);
       flex-shrink: 0;
     }
 
     .ac-photo {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
-      border: 2px solid #E5E7EB;
+      border: 3px solid var(--brand);
     }
 
     .ac-info h4 {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 14.5px;
+      font-weight: 700;
       color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ac-badge {
+      background: var(--brand);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      letter-spacing: 0.3px;
     }
 
     .ac-title {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 4px;
+      font-weight: 500;
     }
 
     .ac-stats {
       display: flex;
-      gap: 8px;
-      margin-top: 6px;
+      gap: 10px;
+      margin-top: 8px;
       flex-wrap: wrap;
     }
 
     .ac-stat {
       display: flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-      background: #F9FAFB;
-      padding: 2px 6px;
+      color: var(--text);
+      font-weight: 600;
+      background: var(--brand-lt);
+      padding: 3px 8px;
       border-radius: 6px;
     }
+
+    .ac-stat i { font-size: 10px; color: var(--brand); }
 
     /* ── DATE & SYS ─────────────────────────────────── */
     .date-chip {
@@ -252,7 +273,7 @@
       background: var(--brand);
       color: white;
       border-radius: 14px;
-      box-shadow: 0 2px 6px rgba(16,72,216,0.25);
+      box-shadow: 0 2px 6px rgba(255, 107, 53, 0.25);
     }
 
     .bmeta {
@@ -267,9 +288,9 @@
     .bubble.a .btime { color: #9CA3AF; }
     .bubble.u .btime { color: rgba(255,255,255,0.6); }
 
-    .ticks { font-size: 11px; color: #93C5FD; }
+    .ticks { font-size: 11px; color: rgba(255,255,255,0.7); }
 
-    /* ── QUICK REPLIES (REDUCED) ───────────────────── */
+    /* ── QUICK REPLIES (CONVERSION-FOCUSED) ──────────── */
     .qreplies {
       display: flex;
       flex-wrap: wrap;
@@ -279,18 +300,18 @@
 
     .qbtn {
       background: white;
-      border: 1px solid #D1D5DB;
-      color: var(--text);
-      padding: 6px 11px;
-      border-radius: 16px;
+      border: 1.5px solid var(--brand);
+      color: var(--brand);
+      padding: 7px 12px;
+      border-radius: 18px;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       font-family: inherit;
       transition: all .15s;
     }
-    .qbtn:hover  { background: #F3F4F6; border-color: var(--brand); color: var(--brand); }
-    .qbtn:active { background: var(--brand); color: white; border-color: var(--brand); }
+    .qbtn:hover  { background: var(--brand-lt); }
+    .qbtn:active { background: var(--brand); color: white; }
 
     /* ── TYPING ────────────────────────────────────── */
     .typing-row {
@@ -345,7 +366,7 @@
       justify-content: center;
       gap: 4px;
     }
-    .pw-line i { font-size: 9px; color: var(--green); }
+    .pw-line i { font-size: 9px; color: var(--success); }
 
     .input-row {
       display: flex;
@@ -380,7 +401,7 @@
     #msgIn:focus {
       border-color: var(--brand);
       background: white;
-      box-shadow: 0 0 0 2px rgba(16,72,216,.08);
+      box-shadow: 0 0 0 2px rgba(255, 107, 53, .08);
     }
     #msgIn::placeholder { color: #9CA3AF; }
 
@@ -398,7 +419,7 @@
       cursor: pointer;
       flex-shrink: 0;
       transition: all .15s;
-      box-shadow: 0 2px 8px rgba(16,72,216,.25);
+      box-shadow: 0 2px 8px rgba(255, 107, 53, .25);
     }
     .send-btn:hover    { background: var(--brand-dk); transform: scale(1.05); }
     .send-btn:disabled { background: #D1D5DB; box-shadow: none; transform: none; cursor: not-allowed; }
@@ -418,11 +439,11 @@
 
     <div class="h-agent">
       <div class="h-photo-wrap">
-        <img class="h-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Lima">
+        <img class="h-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana">
         <div class="h-online-dot"></div>
       </div>
       <div>
-        <div class="h-name-row">Ana Lima</div>
+        <div class="h-name-row">Mariana</div>
         <div class="h-sub">Online agora</div>
       </div>
     </div>
@@ -435,36 +456,39 @@
   <!-- ── MESSAGES ── -->
   <main class="msgs" id="msgs">
 
-    <!-- Agent info card -->
+    <!-- Agent info card - PROFESSIONAL DISKGAS -->
     <div class="agent-card">
-      <img class="ac-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Lima">
+      <img class="ac-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana">
       <div class="ac-info">
-        <h4>Ana Lima</h4>
-        <p class="ac-title">Especialista em Suporte · Clara</p>
+        <h4>
+          Mariana
+          <span class="ac-badge"><i class="fas fa-check-circle"></i> Diskgas Autorizada</span>
+        </h4>
+        <p class="ac-title">Especialista em Entrega de Gás</p>
         <div class="ac-stats">
-          <span class="ac-stat">⭐ 4.9 (2.1k)</span>
-          <span class="ac-stat">⚡ Responde rápido</span>
+          <span class="ac-stat"><i class="fas fa-star"></i> 4.9 (1.2k)</span>
+          <span class="ac-stat"><i class="fas fa-bolt"></i> Entrega em 30min</span>
         </div>
       </div>
     </div>
 
     <div class="date-chip"><span id="dateLabel">Hoje</span></div>
-    <div class="sys-msg">Ana Lima entrou no atendimento · Protocolo #<span id="protocolNum"></span></div>
+    <div class="sys-msg">Mariana entrou no atendimento · Protocolo #<span id="protocolNum"></span></div>
 
     <!-- Welcome message -->
     <div class="msg-row">
       <img class="msg-av" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
       <div class="bubble a">
-        Olá! Sou a Ana, especialista de suporte da Clara. Como posso te ajudar?
+        Olá! Sou a Mariana, vendedora autorizada Diskgas. Posso ajudar com seu pedido de gás agora?
         <div class="bmeta"><span class="btime" id="wtime"></span></div>
       </div>
     </div>
 
-    <!-- Quick replies -->
+    <!-- Quick replies - CONVERSION FOCUSED -->
     <div class="qreplies" id="qr">
-      <button class="qbtn" onclick="quick('💳 Minha conta')">Minha conta</button>
-      <button class="qbtn" onclick="quick('📦 Meu pedido')">Meu pedido</button>
-      <button class="qbtn" onclick="quick('💸 Pagamentos')">Pagamentos</button>
+      <button class="qbtn" onclick="quick('🛒 Pedir gás agora')">Pedir gás</button>
+      <button class="qbtn" onclick="quick('💰 Tabela de preços')">Preços</button>
+      <button class="qbtn" onclick="quick('⏱️ Tempo de entrega')">Entrega</button>
     </div>
 
     <!-- Typing anchor (always last in DOM) -->
@@ -483,11 +507,11 @@
   <div class="input-area">
     <div class="pw-line">
       <i class="fas fa-lock"></i>
-      Conversa protegida com criptografia
+      Botijão lacrado · Entrega segura · Diskgas
     </div>
     <div class="input-row">
       <button class="emoji-btn">😊</button>
-      <input id="msgIn" type="text" placeholder="Digite sua mensagem..." autocomplete="off">
+      <input id="msgIn" type="text" placeholder="Descreva sua necessidade..." autocomplete="off">
       <button class="send-btn" id="sendBtn">
         <i class="fas fa-paper-plane"></i>
       </button>
@@ -505,15 +529,16 @@
   const qr        = document.getElementById('qr');
   const history   = [];
 
-  // ── System prompt ──────────────────────────────────────────
-  const SYS = `Você é Ana Lima, especialista de suporte ao cliente da Clara, uma fintech brasileira líder em serviços financeiros digitais.
-Você é uma atendente humana: empática, profissional, ágil e próxima ao cliente.
-Responda em português brasileiro natural, como em um chat real de suporte bancário de alta qualidade.
-Seja breve e objetiva: no máximo 2-3 frases por resposta. Use emojis com moderação para humanizar.
-Nunca mencione que é uma IA. Se perguntarem se é humana ou robô, confirme que é a Ana, atendente da Clara.
-Para problemas com conta, pagamentos, segurança ou pedidos, solicite as informações necessárias profissionalmente.
-Trate o cliente sempre com "você". Demonstre empatia real em situações de problemas.
-Inicie respostas de forma variada, nunca repita a mesma saudação.`;
+  // ── System prompt for Diskgas ──────────────────────────────────────────
+  const SYS = `Você é Mariana, vendedora autorizada Diskgas, especialista em entrega de gás de qualidade.
+Você é profissional, ágil, confiável e focada em converter o cliente em uma venda segura.
+Responda em português brasileiro natural, como um vendedor experiente de gás.
+Seja breve e direto: máximo 2-3 frases por resposta. Use emojis raramente.
+Nunca mencione que é uma IA. Se perguntarem, confirme que é a Mariana, vendedora Diskgas.
+Sempre mencione: botijão lacrado, entrega rápida (30-40min), segurança, qualidade.
+Para pedidos, solicite: endereço, tipo de botijão (13kg ou 45kg), forma de pagamento.
+Trate o cliente com "você". Demonstre urgência positiva para fechar o pedido.
+Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
 
   // ── Init ───────────────────────────────────────────────────
   const now    = new Date();
@@ -585,11 +610,11 @@ Inicie respostas de forma variada, nunca repita a mesma saudação.`;
       });
       const data  = await res.json();
       const reply = data.content?.[0]?.text
-        ?? 'Peço desculpas pela instabilidade. Pode tentar novamente?';
+        ?? 'Desculpe, tive um problema. Pode tentar novamente?';
       history.push({ role: 'assistant', content: reply });
       return reply;
     } catch {
-      return 'Peço desculpas pela instabilidade momentânea. Pode tentar novamente em instantes?';
+      return 'Desculpe, tive um problema momentâneo. Pode tentar novamente?';
     }
   }
 
