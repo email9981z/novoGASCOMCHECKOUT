@@ -1,1024 +1,917 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<title>Buscando entregador - Depósito Mais Barato</title>
-<link rel="preload" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" as="image">
+<title>Pedido em andamento · Diskgas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #f5f6f8; color: #1a1a1a;
-    display: flex; flex-direction: column;
-  }
-  .scroll-container {
-    flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
-    padding: 24px 16px 48px;
-  }
-  .voltar {
-    display: inline-flex; align-items: center; gap: 6px;
-    color: #1a1a1a; text-decoration: none; font-size: 14px; font-weight: 500;
-    margin-bottom: 24px; cursor: pointer;
-  }
-  .container { max-width: 480px; margin: 0 auto; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #eef0f3;
+  color: #111827;
+  display: flex; flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+.scroll-container {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 20px 16px 48px;
+}
+.voltar {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: #374151; text-decoration: none; font-size: 14px; font-weight: 500;
+  margin-bottom: 20px; cursor: pointer;
+}
+.container { max-width: 460px; margin: 0 auto; }
 
-  /* Stepper */
-  .stepper {
-    background: #fff; border-radius: 16px; padding: 20px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.04); margin-bottom: 16px;
-  }
-  .steps { display: flex; align-items: center; justify-content: space-between; position: relative; }
-  .step { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; z-index: 2; }
-  .step-circle {
-    width: 36px; height: 36px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: #e5e7eb; color: #6b7280; font-weight: 600; font-size: 14px;
-    transition: all .4s;
-  }
-  .step-circle.done { background: #10b981; color: #fff; }
-  .step-circle.active { background: #1e6cf2; color: #fff; }
-  .step-label { font-size: 11px; font-weight: 600; letter-spacing: .5px; color: #9ca3af; }
-  .step.done .step-label { color: #10b981; }
-  .step.active .step-label { color: #1e6cf2; }
-  .step-line {
-    position: absolute; top: 18px; left: 36px; right: 36px;
-    height: 2px; background: #e5e7eb; z-index: 1;
-  }
-  .step-line-fill { height: 100%; background: #10b981; width: 50%; transition: width .6s ease; }
+/* ── STEPPER ── */
+.stepper {
+  background: #fff; border-radius: 14px; padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05); margin-bottom: 14px;
+}
+.steps { display: flex; align-items: center; justify-content: space-between; position: relative; }
+.step { display: flex; flex-direction: column; align-items: center; gap: 7px; flex: 0 0 auto; z-index: 2; }
+.step-circle {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: #e5e7eb; color: #9ca3af;
+  font-weight: 600; font-size: 13px; transition: all .4s;
+}
+.step-circle.done { background: #16a34a; color: #fff; }
+.step-circle.active { background: #1a56d6; color: #fff; box-shadow: 0 0 0 4px rgba(26,86,214,.12); }
+.step-label { font-size: 10px; font-weight: 600; letter-spacing: .5px; color: #9ca3af; text-transform: uppercase; }
+.step.done .step-label { color: #16a34a; }
+.step.active .step-label { color: #1a56d6; }
+.step-line {
+  position: absolute; top: 17px; left: 38px; right: 38px;
+  height: 2px; background: #e5e7eb; z-index: 1; border-radius: 2px;
+}
+.step-line-fill { height: 100%; background: #16a34a; border-radius: 2px; width: 50%; transition: width .6s ease; }
 
-  /* Card */
-  .card {
-    background: #fff; border-radius: 16px; padding: 32px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.04);
-    animation: cardIn .4s ease both;
-    transition: opacity .4s ease;
-  }
-  .card.saindo { opacity: 0; }
-  @keyframes cardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+/* ── CARD DE BUSCA ── */
+.card {
+  background: #fff; border-radius: 16px; padding: 28px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  animation: cardIn .4s ease both; transition: opacity .4s ease, transform .4s ease;
+}
+.card.saindo { opacity: 0; transform: translateY(-8px); }
+@keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-  /* Pulse container */
-  .pulse-container {
-    display: flex; justify-content: center; align-items: center;
-    height: 110px; margin-bottom: 20px;
-  }
-  .pulse-ring {
-    position: relative; width: 72px; height: 72px;
-    background: #1e6cf2; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; z-index: 2;
-  }
-  .pulse-ring::before, .pulse-ring::after {
-    content: ''; position: absolute; inset: 0; border-radius: 50%;
-    background: #1e6cf2;
-    animation: ripple 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-  }
-  .pulse-ring::after { animation-delay: 1.2s; }
-  .pulse-icon { font-size: 30px; z-index: 2; animation: float 2s ease-in-out infinite; }
-  @keyframes ripple {
-    0%   { transform: scale(1); opacity: .35; }
-    100% { transform: scale(2.6); opacity: 0; }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-5px); }
-  }
+.pulse-container { display: flex; justify-content: center; align-items: center; height: 96px; margin-bottom: 18px; }
+.pulse-ring {
+  position: relative; width: 64px; height: 64px;
+  background: #1a56d6; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.pulse-ring::before, .pulse-ring::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background: #1a56d6;
+  animation: ripple 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+.pulse-ring::after { animation-delay: 1.2s; }
+.pulse-icon { font-size: 26px; z-index: 2; animation: float 2s ease-in-out infinite; }
+@keyframes ripple { 0% { transform: scale(1); opacity: .28; } 100% { transform: scale(2.6); opacity: 0; } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 
-  .eyebrow {
-    text-align: center; font-size: 11px; font-weight: 700;
-    letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 8px;
-    color: #9ca3af;
-  }
-  .title {
-    text-align: center; font-size: 20px; font-weight: 700;
-    line-height: 1.35; margin-bottom: 6px;
-  }
-  .title .bairro-highlight { color: #1e6cf2; }
-  .subtitle-wrap { height: 40px; overflow: hidden; margin-bottom: 22px; }
-  .subtitle { text-align: center; font-size: 13px; color: #6b7280; line-height: 1.5; }
+.eyebrow { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 6px; color: #9ca3af; }
+.title { text-align: center; font-size: 18px; font-weight: 700; line-height: 1.35; margin-bottom: 5px; letter-spacing: -0.3px; }
+.title .bairro-highlight { color: #1a56d6; }
+.subtitle { text-align: center; font-size: 13px; color: #6b7280; line-height: 1.5; margin-bottom: 20px; }
 
-  /* Endereço */
-  .address-box {
-    background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px;
-    padding: 14px 16px; margin-bottom: 20px;
-  }
-  .address-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: #6b7280;
-    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
-  }
-  .address-label::before {
-    content: ''; display: inline-block; width: 3px; height: 12px;
-    background: #1e6cf2; border-radius: 2px;
-  }
-  .address-row { display: flex; align-items: flex-start; gap: 12px; }
-  .address-icon {
-    background: #fff; width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,.05); flex-shrink: 0;
-    font-size: 16px; margin-top: 2px;
-  }
-  .address-content { flex: 1; }
-  .address-content strong {
-    display: block; font-size: 14px; font-weight: 700;
-    color: #111827; margin-bottom: 3px; word-break: break-word; line-height: 1.4;
-  }
-  .address-content span { font-size: 12px; color: #6b7280; line-height: 1.4; }
+.address-box {
+  background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 11px;
+  padding: 12px 14px; margin-bottom: 18px;
+}
+.address-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .7px;
+  text-transform: uppercase; color: #6b7280;
+  margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.address-label::before { content: ''; display: inline-block; width: 3px; height: 11px; background: #1a56d6; border-radius: 2px; }
+.address-row { display: flex; align-items: flex-start; gap: 10px; }
+.address-icon { background: #fff; width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,.06); flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+.address-content strong { display: block; font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 2px; word-break: break-word; line-height: 1.4; }
+.address-content span { font-size: 12px; color: #6b7280; }
 
-  /* Barra de progresso */
-  .search-progress { display: flex; align-items: center; gap: 10px; }
-  .search-bar { flex: 1; height: 5px; background: #f3f4f6; border-radius: 99px; overflow: hidden; }
-  .search-fill {
-    height: 100%; background: #1e6cf2; border-radius: 99px;
-    width: 0%; transition: width 1s ease, background .5s ease;
-  }
-  .search-fill.found { background: #10b981; }
-  .search-status {
-    font-size: 11px; font-weight: 600; letter-spacing: .4px;
-    color: #9ca3af; white-space: nowrap; text-transform: uppercase;
-    transition: color .4s ease; min-width: 72px; text-align: right;
-  }
-  .search-status.found { color: #10b981; }
+.search-progress { display: flex; align-items: center; gap: 10px; }
+.search-bar { flex: 1; height: 4px; background: #f3f4f6; border-radius: 99px; overflow: hidden; }
+.search-fill { height: 100%; background: #1a56d6; border-radius: 99px; width: 0%; transition: width 1s ease, background .5s ease; }
+.search-fill.found { background: #16a34a; }
+.search-status { font-size: 11px; font-weight: 600; color: #9ca3af; white-space: nowrap; min-width: 36px; text-align: right; transition: color .4s; }
+.search-status.found { color: #16a34a; }
 
-  .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 16px; }
+.footer-note { text-align: center; color: #b0b7c3; font-size: 11px; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
-  /* ── CHAT OVERLAY ── */
-  #chatOverlay {
-    position: fixed; inset: 0;
-    background: #fff;
-    display: flex; flex-direction: column;
-    z-index: 9999;
-    opacity: 0; pointer-events: none;
-    transition: opacity .4s ease;
-  }
-  #chatOverlay.visivel { opacity: 1; pointer-events: auto; }
+/* ── MODAL DE SAÍDA ── */
+#exitModal {
+  position: fixed; inset: 0; z-index: 20000;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(0,0,0,0);
+  pointer-events: none; transition: background .3s ease;
+}
+#exitModal.open { background: rgba(0,0,0,0.45); pointer-events: auto; }
+.exit-sheet {
+  background: #fff; border-radius: 22px 22px 0 0;
+  padding: 28px 24px 36px; width: 100%; max-width: 460px;
+  transform: translateY(100%); transition: transform .35s cubic-bezier(0.32, 0.72, 0, 1);
+  text-align: center;
+}
+#exitModal.open .exit-sheet { transform: translateY(0); }
+.exit-warning-icon { font-size: 40px; margin-bottom: 14px; line-height: 1; }
+.exit-title { font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 8px; letter-spacing: -0.3px; }
+.exit-body { font-size: 14px; color: #6b7280; line-height: 1.55; margin-bottom: 22px; }
+.exit-highlight { color: #dc2626; font-weight: 600; }
+.exit-btn-stay {
+  width: 100%; background: #1a56d6; color: #fff; border: none;
+  border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 600;
+  cursor: pointer; margin-bottom: 10px; font-family: 'Inter', sans-serif;
+  transition: background .15s;
+}
+.exit-btn-stay:active { background: #1648b8; }
+.exit-btn-leave {
+  width: 100%; background: none; border: none; color: #9ca3af;
+  font-size: 13px; cursor: pointer; padding: 8px; font-family: 'Inter', sans-serif;
+  transition: color .15s;
+}
+.exit-btn-leave:active { color: #6b7280; }
 
-  /* Chat Header */
-  .chat-header {
-    background: linear-gradient(135deg, #1e6cf2 0%, #1656c3 100%);
-    color: #fff;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 0 4px 12px rgba(30, 108, 242, 0.2);
-  }
+/* ── CHAT OVERLAY ── */
+#chatOverlay {
+  position: fixed; inset: 0;
+  background: #eef0f3;
+  display: flex; flex-direction: column;
+  z-index: 9999; opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+#chatOverlay.visivel { opacity: 1; pointer-events: auto; }
 
-  .chat-header-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
-    background-size: cover;
-    background-position: center;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    flex-shrink: 0;
-    position: relative;
-  }
+/* Status bar simulado */
+.chat-status-bar {
+  background: #154bbf;
+  padding-top: env(safe-area-inset-top, 0px);
+  height: env(safe-area-inset-top, 0px);
+}
 
-  .chat-header-avatar::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-    width: 14px;
-    height: 14px;
-    background: #34d399;
-    border-radius: 50%;
-    border: 2.5px solid #fff;
-    box-shadow: 0 0 0 1px rgba(30, 108, 242, 0.2);
-  }
+/* Header */
+.chat-header {
+  background: #1a56d6; color: #fff;
+  padding: 0;
+}
+.chat-header-inner {
+  padding: 11px 14px 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.chat-back-btn {
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; margin-left: -4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.chat-back-btn svg { display: block; }
+.chat-header-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: #adc8ff; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #1a3a7a;
+  flex-shrink: 0; position: relative;
+  border: 1.5px solid rgba(255,255,255,0.3);
+}
+.online-ring {
+  position: absolute; bottom: -1px; right: -1px;
+  width: 11px; height: 11px; background: #22c55e;
+  border-radius: 50%; border: 2px solid #1a56d6;
+}
+.chat-header-info { flex: 1; min-width: 0; }
+.chat-header-name { font-size: 14px; font-weight: 600; letter-spacing: -0.1px; margin-bottom: 1px; }
+.chat-header-sub {
+  font-size: 11px; opacity: .82;
+  display: flex; align-items: center; gap: 4px;
+}
+.chat-header-sub .dot { width: 5px; height: 5px; background: #22c55e; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.chat-header-actions { display: flex; gap: 2px; }
+.header-action-btn {
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0.7; border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
 
-  .chat-header-info {
-    flex: 1;
-    min-width: 0;
-  }
+/* Faixa de pedido ativo */
+.order-banner {
+  background: #fff7ed; border-bottom: 1px solid #fed7aa;
+  padding: 8px 14px; display: flex; align-items: center; gap: 8px;
+}
+.order-banner-dot { width: 7px; height: 7px; background: #f97316; border-radius: 50%; flex-shrink: 0; animation: blink 1.5s ease-in-out infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+.order-banner-text { font-size: 12px; font-weight: 600; color: #9a3412; flex: 1; }
+.order-banner-time { font-size: 12px; font-weight: 700; color: #ea580c; letter-spacing: -0.2px; }
 
-  .chat-header-name {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 2px;
-  }
+/* Mensagens */
+.chat-messages {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 8px 12px 12px; display: flex; flex-direction: column;
+}
+.chat-messages::-webkit-scrollbar { width: 3px; }
+.chat-messages::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
 
-  .chat-header-status {
-    font-size: 12px;
-    opacity: 0.9;
-  }
+/* Divisor de data */
+.date-divider {
+  display: flex; align-items: center; gap: 8px;
+  margin: 10px 0 8px; padding: 0 2px;
+}
+.date-divider span {
+  font-size: 11px; color: #9ca3af; font-weight: 500;
+  background: #eef0f3; padding: 0 8px; position: relative; z-index: 1; white-space: nowrap;
+}
+.date-divider::before, .date-divider::after {
+  content: ''; flex: 1; height: 1px; background: #e5e7eb;
+}
 
-  /* Chat Messages Container */
-  .chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
-  }
+/* Bloco do entregador */
+.seller-card {
+  background: #1a56d6; border-radius: 14px;
+  padding: 14px; margin: 2px 0 10px;
+  display: flex; gap: 12px; align-items: center;
+  animation: msgIn .35s cubic-bezier(0.34, 1.30, 0.64, 1);
+}
+.seller-card-av {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #adc8ff; display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: #1a3a7a;
+  flex-shrink: 0; position: relative;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+.seller-card-av::after {
+  content: '✓'; position: absolute; bottom: -3px; right: -3px;
+  width: 17px; height: 17px; background: #22c55e;
+  border-radius: 50%; border: 2px solid #1a56d6;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 800; color: #fff; line-height: 1;
+  text-align: center; padding-top: 1px;
+}
+.seller-card-info { flex: 1; }
+.seller-card-name { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 2px; letter-spacing: -0.2px; }
+.seller-card-role { color: rgba(255,255,255,.82); font-size: 11px; line-height: 1.4; margin-bottom: 7px; }
+.seller-card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.seller-badge {
+  background: rgba(255,255,255,.17); color: rgba(255,255,255,.95);
+  font-size: 10px; font-weight: 600; padding: 3px 8px;
+  border-radius: 5px; letter-spacing: .3px;
+}
+.seller-badge.green { background: rgba(34,197,94,.25); color: #bbf7d0; }
 
-  .chat-messages::-webkit-scrollbar {
-    width: 6px;
-  }
+/* Métricas do entregador */
+.seller-metrics {
+  background: #fff; border-radius: 11px; border: 1px solid #e5e7eb;
+  padding: 12px 14px; margin: 0 0 10px;
+  display: flex; gap: 0;
+  animation: msgIn .3s ease;
+}
+.metric-item { flex: 1; text-align: center; }
+.metric-item + .metric-item { border-left: 1px solid #f0f0f0; }
+.metric-val { font-size: 16px; font-weight: 700; color: #111827; letter-spacing: -0.5px; }
+.metric-val span { font-size: 11px; font-weight: 400; color: #6b7280; }
+.metric-label { font-size: 10px; color: #9ca3af; margin-top: 2px; font-weight: 500; }
 
-  .chat-messages::-webkit-scrollbar-track {
-    background: transparent;
-  }
+/* Mensagem */
+.message { display: flex; gap: 7px; animation: msgIn .3s ease; }
+.message.user { justify-content: flex-end; }
+.message + .message { margin-top: 3px; }
+.message-group-gap { margin-top: 8px; }
+@keyframes msgIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 
-  .chat-messages::-webkit-scrollbar-thumb {
-    background: #d1d5db;
-    border-radius: 3px;
-  }
+.msg-av {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #dde3ee; display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: #4b5563; flex-shrink: 0;
+  align-self: flex-end; margin-bottom: 2px;
+}
+.msg-av.hidden { visibility: hidden; }
 
-  /* Bloco de Informação do Vendedor */
-  .seller-info-block {
-    background: linear-gradient(135deg, #1e6cf2 0%, #1656c3 100%);
-    color: #fff;
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 8px;
-    display: flex;
-    gap: 12px;
-    animation: slideIn .5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 16px rgba(30, 108, 242, 0.15);
-  }
+.msg-content { display: flex; flex-direction: column; max-width: 78%; }
+.message.user .msg-content { align-items: flex-end; }
 
-  .seller-info-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
-    background-size: cover;
-    background-position: center;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    flex-shrink: 0;
-    position: relative;
-  }
+.bubble {
+  padding: 9px 13px; font-size: 14px; line-height: 1.45;
+  word-break: break-word; position: relative;
+}
+.bubble.seller {
+  background: #fff; color: #111827;
+  border-radius: 3px 14px 14px 14px;
+  border: 0.5px solid #e9ebee;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.bubble.user {
+  background: #1a56d6; color: #fff;
+  border-radius: 14px 3px 14px 14px;
+}
+.msg-time {
+  font-size: 10px; color: #b0b7c3; margin-top: 2px; padding: 0 3px;
+  display: flex; align-items: center; gap: 3px;
+}
+.message.user .msg-time { justify-content: flex-end; }
+.ticks { color: #60a5fa; font-size: 11px; letter-spacing: -1.5px; line-height: 1; }
 
-  .seller-info-avatar::after {
-    content: '✓';
-    position: absolute;
-    bottom: -4px;
-    right: -4px;
-    width: 20px;
-    height: 20px;
-    background: #10b981;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+/* Bloco de endereço inline */
+.addr-bubble {
+  background: #f0f5ff; border: 1px solid #dbeafe; border-radius: 12px;
+  padding: 11px 13px; margin: 5px 0 3px;
+  display: flex; gap: 10px; align-items: flex-start;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  animation: msgIn .3s ease;
+  max-width: 85%;
+}
+.addr-bubble-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; line-height: 1; }
+.addr-bubble-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: #1a56d6; margin-bottom: 3px; }
+.addr-bubble-street { font-size: 13px; font-weight: 600; color: #111827; line-height: 1.35; margin-bottom: 1px; }
+.addr-bubble-cep { font-size: 11px; color: #6b7280; }
 
-  .seller-info-content {
-    flex: 1;
-  }
+/* Indicador digitando */
+.typing-row { display: flex; gap: 7px; align-items: flex-end; animation: msgIn .3s ease; margin-top: 8px; }
+.typing-bub {
+  background: #fff; border: 0.5px solid #e9ebee; border-radius: 3px 14px 14px 14px;
+  padding: 11px 14px; display: flex; align-items: center; gap: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.tdot { width: 7px; height: 7px; border-radius: 50%; background: #9ca3af; animation: tdot 1.3s infinite; }
+.tdot:nth-child(2) { animation-delay: .16s; }
+.tdot:nth-child(3) { animation-delay: .32s; }
+@keyframes tdot { 0%, 60%, 100% { transform: translateY(0); opacity: .45; } 30% { transform: translateY(-6px); opacity: 1; } }
 
-  .seller-info-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
+/* Input área */
+.chat-input-area {
+  background: #fff; padding: 10px 12px;
+  border-top: 1px solid #e9ebee;
+  display: flex; flex-direction: column; gap: 7px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+}
 
-  .seller-info-subtitle {
-    font-size: 12px;
-    opacity: 0.95;
-    line-height: 1.4;
-  }
+/* Dica de confiança */
+.trust-hint {
+  display: flex; align-items: center; gap: 6px;
+  background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 9px;
+  padding: 8px 12px; margin-bottom: 2px;
+}
+.trust-hint-icon { font-size: 14px; flex-shrink: 0; }
+.trust-hint-text { font-size: 11px; color: #166534; font-weight: 500; line-height: 1.35; }
 
-  .seller-info-badge {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.25);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 8px;
-    margin-top: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(10px);
-  }
+.qbtn {
+  background: #f8f9fb; border: 1px solid #e5e7eb; color: #111827;
+  padding: 11px 14px; border-radius: 11px; font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: background .15s, transform .1s;
+  text-align: left; display: flex; align-items: center; gap: 10px;
+  font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent;
+}
+.qbtn:active { transform: scale(0.98); background: #f0f2f5; }
+.qbtn-icon { font-size: 18px; flex-shrink: 0; width: 22px; text-align: center; line-height: 1; }
+.qbtn-body { flex: 1; }
+.qbtn-label { font-size: 14px; font-weight: 600; color: #111827; line-height: 1.2; display: block; }
+.qbtn-sub { font-size: 11px; color: #6b7280; display: block; margin-top: 2px; }
+.qbtn-arrow { font-size: 18px; color: #d1d5db; flex-shrink: 0; }
+.qbtn.primary {
+  background: #1a56d6; border-color: #1a56d6;
+  box-shadow: 0 3px 10px rgba(26,86,214,.22);
+}
+.qbtn.primary .qbtn-label { color: #fff; }
+.qbtn.primary .qbtn-sub { color: rgba(255,255,255,.72); }
+.qbtn.primary .qbtn-arrow { color: rgba(255,255,255,.55); }
+.qbtn.primary:active { background: #1648b8; }
 
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Mensagem */
-  .message {
-    display: flex;
-    gap: 8px;
-    animation: messageIn .3s ease;
-  }
-
-  @keyframes messageIn {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .message.user {
-    justify-content: flex-end;
-  }
-
-  .message-bubble {
-    max-width: 75%;
-    padding: 11px 15px;
-    border-radius: 18px;
-    font-size: 14px;
-    line-height: 1.4;
-    word-wrap: break-word;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    transition: all .2s ease;
-  }
-
-  .message-bubble.seller {
-    background: #e5e7eb;
-    color: #111827;
-    border-bottom-left-radius: 4px;
-  }
-
-  .message-bubble.user {
-    background: #1e6cf2;
-    color: #fff;
-    border-bottom-right-radius: 4px;
-  }
-
-  .message-bubble.user::after {
-    content: '✓✓';
-    font-size: 11px;
-    margin-left: 4px;
-    opacity: 0.8;
-  }
-
-  /* Typing Indicator */
-  .typing-indicator {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 11px 15px;
-    background: #e5e7eb;
-    border-radius: 18px;
-    width: fit-content;
-    border-bottom-left-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  }
-
-  .typing-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #6b7280;
-    animation: typing 1.4s infinite;
-  }
-
-  .typing-dot:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-
-  .typing-dot:nth-child(3) {
-    animation-delay: 0.4s;
-  }
-
-  @keyframes typing {
-    0%, 60%, 100% {
-      opacity: 0.5;
-      transform: translateY(0);
-    }
-    30% {
-      opacity: 1;
-      transform: translateY(-8px);
-    }
-  }
-
-  /* Chat Input Area */
-  .chat-input-area {
-    background: #fff;
-    padding: 16px;
-    border-top: 1px solid #e5e7eb;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-
-  .quick-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .quick-button {
-    background: #f3f4f6;
-    border: 1px solid #e5e7eb;
-    color: #111827;
-    padding: 13px 16px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all .2s ease;
-    text-align: left;
-  }
-
-  .quick-button:hover {
-    background: #e5e7eb;
-    border-color: #d1d5db;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
-
-  .quick-button:active {
-    transform: scale(0.98);
-  }
-
-  .quick-button.primary {
-    background: linear-gradient(135deg, #1e6cf2 0%, #1656c3 100%);
-    color: #fff;
-    border-color: #1e6cf2;
-    box-shadow: 0 4px 12px rgba(30, 108, 242, 0.2);
-  }
-
-  .quick-button.primary:hover {
-    box-shadow: 0 6px 16px rgba(30, 108, 242, 0.3);
-    transform: translateY(-2px);
-  }
-
-  /* Address Block */
-  .address-block {
-    background: linear-gradient(135deg, #f0f6ff 0%, #f9fafb 100%);
-    border: 1px solid #dbeafe;
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 12px;
-    display: flex;
-    gap: 12px;
-    box-shadow: 0 2px 8px rgba(30, 108, 242, 0.08);
-  }
-
-  .address-block-icon {
-    width: 40px;
-    height: 40px;
-    background: #fff;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-
-  .address-block-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .address-block-label {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #1e6cf2;
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-  }
-
-  .address-block-street {
-    font-size: 13px;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 2px;
-    word-break: break-word;
-  }
-
-  .address-block-cep {
-    font-size: 12px;
-    color: #6b7280;
-  }
-
-  /* Tela de carregamento final */
-  #loadingScreen {
-    position: fixed; inset: 0;
-    background: #fff;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    z-index: 10000;
-    opacity: 0; pointer-events: none;
-    transition: opacity .3s ease;
-  }
-  #loadingScreen.active { opacity: 1; pointer-events: auto; }
-  .spinner {
-    width: 48px; height: 48px;
-    border: 4px solid #f3f3f3; border-top: 4px solid #1e6cf2;
-    border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;
-  }
-  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  .loading-text { font-size: 18px; font-weight: 700; color: #111827; letter-spacing: -0.5px; }
+/* Tela de carregamento final */
+#loadingScreen {
+  position: fixed; inset: 0; background: #fff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 10000; opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+#loadingScreen.active { opacity: 1; pointer-events: auto; }
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid #f3f3f3; border-top: 3px solid #1a56d6;
+  border-radius: 50%; animation: spin .85s linear infinite; margin-bottom: 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.load-title { font-size: 16px; font-weight: 600; color: #111827; }
+.load-sub { font-size: 13px; color: #9ca3af; margin-top: 5px; }
 </style>
 </head>
 <body>
 
-  <!-- Tela de carregamento geral -->
-  <div id="loadingScreen">
-    <div class="spinner"></div>
-    <p class="loading-text">Preparando Pedido</p>
-  </div>
+<!-- Tela de carregamento -->
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <p class="load-title">Preparando pedido</p>
+  <p class="load-sub">Aguarde um momento...</p>
+</div>
 
-  <!-- Chat Overlay -->
-  <div id="chatOverlay">
-    <!-- Header -->
-    <div class="chat-header">
-      <div class="chat-header-avatar"></div>
+<!-- Modal de saída -->
+<div id="exitModal">
+  <div class="exit-sheet">
+    <div class="exit-warning-icon">⚠️</div>
+    <div class="exit-title">Tem certeza que deseja sair?</div>
+    <div class="exit-body">
+      Seu entregador já foi <strong>designado</strong> e está a caminho.<br><br>
+      Ao sair agora, o pedido <span class="exit-highlight">será cancelado</span> e você precisará refazer todo o processo.
+    </div>
+    <button class="exit-btn-stay" id="btnFicar">Continuar meu pedido</button>
+    <button class="exit-btn-leave" id="btnSair">Cancelar pedido e sair</button>
+  </div>
+</div>
+
+<!-- Chat -->
+<div id="chatOverlay">
+  <div class="chat-status-bar"></div>
+  <div class="chat-header">
+    <div class="chat-header-inner">
+      <div class="chat-back-btn" id="chatBackBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </div>
+      <div class="chat-header-avatar">
+        TC
+        <span class="online-ring"></span>
+      </div>
       <div class="chat-header-info">
         <div class="chat-header-name">Thiago Callegari</div>
-        <div class="chat-header-status">Online agora</div>
+        <div class="chat-header-sub">
+          <span class="dot"></span>
+          <span>Online agora · Entregador</span>
+        </div>
       </div>
-    </div>
-
-    <!-- Messages -->
-    <div class="chat-messages" id="chatMessages">
-      <!-- Bloco de informação do vendedor será adicionado aqui -->
-    </div>
-
-    <!-- Input Area -->
-    <div class="chat-input-area" id="chatInputArea">
-      <!-- Opções rápidas serão adicionadas aqui via JavaScript -->
+      <div class="chat-header-actions">
+        <div class="header-action-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.08 2.37 2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"></path></svg>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="scroll-container">
-    <div class="container">
-      <a class="voltar" id="btnVoltar">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        Voltar
-      </a>
-
-      <!-- Stepper -->
-      <div class="stepper">
-        <div class="steps">
-          <div class="step-line"><div class="step-line-fill" id="stepLine"></div></div>
-          <div class="step done">
-            <div class="step-circle done">✓</div>
-            <span class="step-label">PEDIDO</span>
-          </div>
-          <div class="step active">
-            <div class="step-circle active">2</div>
-            <span class="step-label">ENVIO</span>
-          </div>
-          <div class="step">
-            <div class="step-circle">3</div>
-            <span class="step-label">PAGAMENTO</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card Principal -->
-      <div id="mainCard" class="card">
-        <div class="pulse-container">
-          <div class="pulse-ring">
-            <span class="pulse-icon">🔍</span>
-          </div>
-        </div>
-
-        <div class="eyebrow">Aguarde um momento</div>
-        <h1 class="title" id="searchTitle">Buscando entregador...</h1>
-
-        <div class="subtitle-wrap">
-          <p class="subtitle">Estamos localizando o entregador mais próximo de você para garantir agilidade.</p>
-        </div>
-
-        <div class="address-box">
-          <div class="address-label">Local de Entrega</div>
-          <div class="address-row">
-            <div class="address-icon">📍</div>
-            <div class="address-content">
-              <strong id="displayAddress">Carregando endereço...</strong>
-              <span id="displayCity">Verificando localização...</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="search-progress">
-          <div class="search-bar">
-            <div id="searchFill" class="search-fill"></div>
-          </div>
-          <span id="searchStatus" class="search-status">0%</span>
-        </div>
-      </div>
-
-      <p class="footer-note">Sua conexão é segura e criptografada.</p>
-    </div>
+  <!-- Faixa de pedido em andamento -->
+  <div class="order-banner" id="orderBanner">
+    <span class="order-banner-dot"></span>
+    <span class="order-banner-text">Pedido em andamento</span>
+    <span class="order-banner-time" id="bannerTimer">20–30 min</span>
   </div>
 
-  <script>
-    const BACK_REDIRECT_URL = window.location.href;
-    const CHECKOUT_URL = 'https://app-pagamentos.onrender.com/teste/';
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input-area" id="chatInputArea"></div>
+</div>
 
-    let addressData = { address: '', cep: '' };
-    let conversationState = 'initial';
+<!-- Tela de busca -->
+<div class="scroll-container">
+  <div class="container">
+    <a class="voltar" id="btnVoltar">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Voltar
+    </a>
 
-    (function bloquearVoltar() {
-      var BUFFER_SIZE = 50;
-      var redirecionando = false;
-
-      function irParaBackUrl() {
-        if (redirecionando) return;
-        redirecionando = true;
-        window.location.replace(BACK_REDIRECT_URL);
-      }
-
-      history.replaceState({ guard: true, idx: 0 }, '', window.location.href);
-
-      for (var i = 1; i <= BUFFER_SIZE; i++) {
-        history.pushState({ guard: true, idx: i }, '', window.location.href);
-      }
-
-      window.addEventListener('popstate', function(e) {
-        if (e.state && e.state.guard) {
-          history.pushState({ guard: true, idx: BUFFER_SIZE }, '', window.location.href);
-        }
-        irParaBackUrl();
-      });
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var btnVoltar = document.getElementById('btnVoltar');
-        if (btnVoltar) {
-          btnVoltar.addEventListener('click', function(e) {
-            e.preventDefault();
-            irParaBackUrl();
-          });
-        }
-      });
-    })();
-
-    function extrairLocalizacao(full) {
-      if (!full) return '';
-      var loc = full;
-      var partesHifen = full.split('-');
-      if (partesHifen.length >= 2) {
-        loc = partesHifen[1].split(',')[0].trim();
-      } else {
-        var partesVirgula = full.split(',');
-        if (partesVirgula.length >= 3) {
-          loc = partesVirgula[2].trim();
-        } else if (partesVirgula.length >= 2) {
-          loc = partesVirgula[1].trim();
-        }
-      }
-      return loc.replace(/^[0-9\sºnN.]+/g, '').trim() || full;
-    }
-
-    function extrairSiglaEstado(full) {
-      if (!full) return '';
-      var partes = full.split(',');
-      if (partes.length > 0) {
-        var ultimaParte = partes[partes.length - 1].trim();
-        var match = ultimaParte.match(/\b([A-Z]{2})\b/);
-        if (match) return match[1];
-      }
-      return '';
-    }
-
-    function processarEndereco() {
-      var p = new URLSearchParams(window.location.search);
-      var address = p.get('address');
-      var cep = p.get('cep');
-
-      if (address) {
-        addressData.address = address;
-        addressData.cep = cep || '';
-
-        var loc = extrairLocalizacao(address);
-        var sigla = extrairSiglaEstado(address);
-
-        if (loc) {
-          var textoExibicao = loc;
-          if (sigla) textoExibicao += '/' + sigla;
-          document.getElementById('searchTitle').innerHTML =
-            'Buscando entregador em <span class="bairro-highlight">' + textoExibicao + '</span>';
-        }
-
-        document.getElementById('displayAddress').textContent = address;
-        if (cep) {
-          document.getElementById('displayCity').textContent = 'CEP: ' + cep;
-        }
-      }
-    }
-
-    function atualizarBarra(pct) {
-      document.getElementById('searchFill').style.width = pct + '%';
-      document.getElementById('searchStatus').textContent = pct + '%';
-    }
-
-    // Calcula tempo de digitação baseado no tamanho do texto
-    function calcularTempoDigitacao(texto) {
-      const velocidadeMedia = 45; // ms por caractere
-      const minimo = 400;
-      const maximo = 2200;
-      const tempo = Math.min(Math.max(texto.length * velocidadeMedia, minimo), maximo);
-      // Adiciona variação aleatória para parecer mais humano
-      return tempo + Math.random() * 400 - 200;
-    }
-
-    function adicionarMensagem(texto, tipo = 'seller', tempoDelay = 0) {
-      setTimeout(() => {
-        const messagesContainer = document.getElementById('chatMessages');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${tipo}`;
-
-        const bubble = document.createElement('div');
-        bubble.className = `message-bubble ${tipo}`;
-        bubble.textContent = texto;
-
-        messageDiv.appendChild(bubble);
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }, tempoDelay);
-    }
-
-    function mostrarDigitando(duracao = 1000) {
-      return new Promise((resolve) => {
-        const messagesContainer = document.getElementById('chatMessages');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'message seller';
-        messageDiv.id = 'typingIndicator';
-
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'typing-indicator';
-        typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-
-        messageDiv.appendChild(typingDiv);
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-        setTimeout(() => {
-          messageDiv.remove();
-          resolve();
-        }, duracao);
-      });
-    }
-
-    function adicionarBlocoVendedor() {
-      const messagesContainer = document.getElementById('chatMessages');
-      const infoDiv = document.createElement('div');
-      infoDiv.className = 'seller-info-block';
-      infoDiv.innerHTML = `
-        <div class="seller-info-avatar"></div>
-        <div class="seller-info-content">
-          <div class="seller-info-title">Thiago Callegari</div>
-          <div class="seller-info-subtitle">Vendedor Autorizado diskgas designado em Crispim e Regiões próximas</div>
-          <div class="seller-info-badge">Diskgas</div>
+    <div class="stepper">
+      <div class="steps">
+        <div class="step-line"><div class="step-line-fill"></div></div>
+        <div class="step done">
+          <div class="step-circle done">✓</div>
+          <span class="step-label">Pedido</span>
         </div>
-      `;
-      messagesContainer.appendChild(infoDiv);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-
-    function limparOpcoes() {
-      document.getElementById('chatInputArea').innerHTML = '';
-    }
-
-    function adicionarOpcoes(opcoes) {
-      const inputArea = document.getElementById('chatInputArea');
-      inputArea.innerHTML = '';
-
-      opcoes.forEach((opcao) => {
-        const button = document.createElement('button');
-        button.className = `quick-button ${opcao.primary ? 'primary' : ''}`;
-        button.textContent = opcao.texto;
-        button.onclick = opcao.acao;
-        inputArea.appendChild(button);
-      });
-    }
-
-    function adicionarBlocoEndereco() {
-      const inputArea = document.getElementById('chatInputArea');
-      const addressDiv = document.createElement('div');
-      addressDiv.className = 'address-block';
-      addressDiv.innerHTML = `
-        <div class="address-block-icon">📍</div>
-        <div class="address-block-content">
-          <div class="address-block-label">Endereço de Entrega</div>
-          <div class="address-block-street">${addressData.address}</div>
-          <div class="address-block-cep">${addressData.cep ? 'CEP: ' + addressData.cep : ''}</div>
+        <div class="step active">
+          <div class="step-circle active">2</div>
+          <span class="step-label">Envio</span>
         </div>
-      `;
-      inputArea.insertBefore(addressDiv, inputArea.firstChild);
-    }
+        <div class="step">
+          <div class="step-circle">3</div>
+          <span class="step-label">Pagamento</span>
+        </div>
+      </div>
+    </div>
 
-    async function iniciarConversa() {
-      // Adiciona bloco de informação do vendedor
-      adicionarBlocoVendedor();
+    <div id="mainCard" class="card">
+      <div class="pulse-container">
+        <div class="pulse-ring"><span class="pulse-icon">🔍</span></div>
+      </div>
+      <div class="eyebrow">Aguarde um momento</div>
+      <h1 class="title" id="searchTitle">Buscando entregador...</h1>
+      <p class="subtitle">Localizando o entregador mais próximo para garantir agilidade na sua entrega.</p>
+      <div class="address-box">
+        <div class="address-label">Local de entrega</div>
+        <div class="address-row">
+          <div class="address-icon">📍</div>
+          <div class="address-content">
+            <strong id="displayAddress">Carregando endereço...</strong>
+            <span id="displayCity">Verificando localização...</span>
+          </div>
+        </div>
+      </div>
+      <div class="search-progress">
+        <div class="search-bar"><div id="searchFill" class="search-fill"></div></div>
+        <span id="searchStatus" class="search-status">0%</span>
+      </div>
+    </div>
 
-      // Delay inicial para parecer natural (simula tempo de leitura)
-      await new Promise(resolve => setTimeout(resolve, 1200 + Math.random() * 500));
+    <p class="footer-note">🔒 Conexão segura e criptografada</p>
+  </div>
+</div>
 
-      // Primeira mensagem
-      const msg1 = 'O prazo de entrega do gás para o seu endereço é de 20-30 minutos.';
-      await mostrarDigitando(calcularTempoDigitacao(msg1));
-      adicionarMensagem(msg1, 'seller', 100);
+<script>
+  const BACK_REDIRECT_URL = window.location.href;
+  const CHECKOUT_URL = 'https://app-pagamentos.onrender.com/teste/';
 
-      // Delay entre mensagens (simula leitura da própria mensagem)
-      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 300));
+  let addressData = { address: '', cep: '' };
+  let conversationState = 'initial';
+  let chatAtivo = false;
 
-      // Segunda mensagem
-      const msg2 = 'Poderia confirmar o endereço de entrega por gentileza?';
-      await mostrarDigitando(calcularTempoDigitacao(msg2));
-      adicionarMensagem(msg2, 'seller', 100);
-
-      // Delay antes de mostrar o bloco de endereço
-      await new Promise(resolve => setTimeout(resolve, 700 + Math.random() * 400));
-      adicionarBlocoEndereco();
-      adicionarOpcoes([
-        {
-          texto: '✓ Confirmar Endereço',
-          primary: true,
-          acao: confirmarEndereco
-        },
-        {
-          texto: 'Mudar Endereço',
-          primary: false,
-          acao: mudarEndereco
-        }
-      ]);
-    }
-
-    async function confirmarEndereco() {
-      conversationState = 'address_confirmed';
-      limparOpcoes();
-
-      // Simular resposta do usuário
-      adicionarMensagem('Confirmar', 'user');
-
-      // Delay realista antes de responder (simula leitura)
-      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 500));
-
-      // Resposta com digitação
-      const msg = 'Perfeito! Deseja realizar o pagamento agora ou na entrega?';
-      await mostrarDigitando(calcularTempoDigitacao(msg));
-      adicionarMensagem(msg, 'seller', 100);
-
-      // Delay antes de mostrar opções
-      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 300));
-      adicionarOpcoes([
-        {
-          texto: '💳 Pagar Agora - Pix',
-          primary: true,
-          acao: pagarAgora
-        },
-        {
-          texto: '🚚 Pagar na Entrega',
-          primary: false,
-          acao: pagarEntrega
-        }
-      ]);
-    }
-
-    function mudarEndereco() {
+  // ── Bloqueio de voltar + modal de saída ──
+  (function() {
+    var BUFFER = 50;
+    var redirecionando = false;
+    function sair() {
+      if (redirecionando) return;
+      redirecionando = true;
       window.location.replace(BACK_REDIRECT_URL);
     }
 
-    async function pagarAgora() {
-      conversationState = 'payment_selected';
-      adicionarMensagem('Pagar Agora - Pix', 'user');
-      limparOpcoes();
+    history.replaceState({ g: true, i: 0 }, '', window.location.href);
+    for (var i = 1; i <= BUFFER; i++) history.pushState({ g: true, i }, '', window.location.href);
 
-      await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 400));
-
-      const msg1 = 'Ótimo! Redirecionando para pagamento...';
-      await mostrarDigitando(calcularTempoDigitacao(msg1));
-      adicionarMensagem(msg1, 'seller', 100);
-
-      document.getElementById('loadingScreen').classList.add('active');
-      setTimeout(function() {
-        var p = new URLSearchParams(window.location.search);
-        var subtotal = p.get('subtotal');
-        var products = p.get('products');
-        var address = p.get('address');
-        var cep = p.get('cep');
-        var delivery = p.get('delivery_time');
-
-        var tp = new URLSearchParams();
-        tp.set('subtotal', subtotal || '0.00');
-        tp.set('payment_method', 'pix');
-        if (address)  tp.set('address',       address);
-        if (cep)      tp.set('cep',           cep);
-        if (delivery) tp.set('delivery_time', delivery);
-        if (products) tp.set('products',      products);
-        
-        window.location.href = CHECKOUT_URL + '?' + tp.toString();
-      }, 1500);
-    }
-
-    async function pagarEntrega() {
-      conversationState = 'payment_selected';
-      adicionarMensagem('Pagar na Entrega', 'user');
-      limparOpcoes();
-
-      await new Promise(resolve => setTimeout(resolve, 900 + Math.random() * 400));
-
-      const msg1 = 'Perfeito! Seu pedido será entregue em breve.';
-      await mostrarDigitando(calcularTempoDigitacao(msg1));
-      adicionarMensagem(msg1, 'seller', 100);
-
-      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 500));
-
-      const msg2 = 'Você receberá uma confirmação em instantes. Obrigado!';
-      await mostrarDigitando(calcularTempoDigitacao(msg2));
-      adicionarMensagem(msg2, 'seller', 100);
-
-      document.getElementById('loadingScreen').classList.add('active');
-      setTimeout(function() {
-        var p = new URLSearchParams(window.location.search);
-        var subtotal = p.get('subtotal');
-        var products = p.get('products');
-        var address = p.get('address');
-        var cep = p.get('cep');
-        var delivery = p.get('delivery_time');
-
-        var tp = new URLSearchParams();
-        tp.set('subtotal', subtotal || '0.00');
-        tp.set('payment_method', 'delivery');
-        if (address)  tp.set('address',       address);
-        if (cep)      tp.set('cep',           cep);
-        if (delivery) tp.set('delivery_time', delivery);
-        if (products) tp.set('products',      products);
-        
-        window.location.href = CHECKOUT_URL + '?' + tp.toString();
-      }, 1500);
-    }
-
-    function processarPedido() {
-      try {
-        var p        = new URLSearchParams(window.location.search);
-        var subtotal = p.get('subtotal');
-        var products = p.get('products');
-        var address  = p.get('address');
-        var cep      = p.get('cep');
-        var delivery = p.get('delivery_time');
-
-        // Processa e extrai informações do endereço
-        processarEndereco();
-
-        if (products) localStorage.setItem('cart_products',    products);
-        if (address)  localStorage.setItem('delivery_address', address);
-        if (delivery) localStorage.setItem('delivery_time',    delivery);
-
-        var TOTAL = 3000;
-        setTimeout(function() { atualizarBarra(40); }, TOTAL * 0.3);
-        setTimeout(function() { atualizarBarra(75); }, TOTAL * 0.6);
-
-        setTimeout(function() {
-          atualizarBarra(100);
-          document.getElementById('searchFill').classList.add('found');
-          document.getElementById('searchStatus').textContent = '100%';
-          document.getElementById('searchStatus').classList.add('found');
-
-          setTimeout(function() {
-            document.getElementById('mainCard').classList.add('saindo');
-            setTimeout(function() {
-              document.getElementById('chatOverlay').classList.add('visivel');
-              iniciarConversa();
-            }, 400);
-          }, 400);
-
-        }, TOTAL);
-
-      } catch (err) {
-        console.error('Erro:', err);
-        // Tenta processar endereço mesmo em caso de erro
-        processarEndereco();
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', processarPedido);
-
-    window.addEventListener('pageshow', function(event) {
-      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        var loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) loadingScreen.classList.remove('active');
+    window.addEventListener('popstate', function(e) {
+      if (e.state && e.state.g) history.pushState({ g: true, i: BUFFER }, '', window.location.href);
+      if (chatAtivo) {
+        abrirModalSaida();
+      } else {
+        sair();
       }
     });
-  </script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Botão voltar da tela de busca
+      var btnV = document.getElementById('btnVoltar');
+      if (btnV) btnV.addEventListener('click', function(e) { e.preventDefault(); sair(); });
+
+      // Botão voltar do chat → modal
+      var btnB = document.getElementById('chatBackBtn');
+      if (btnB) btnB.addEventListener('click', function() { abrirModalSaida(); });
+
+      // Modal
+      document.getElementById('btnFicar').addEventListener('click', fecharModalSaida);
+      document.getElementById('btnSair').addEventListener('click', sair);
+      document.getElementById('exitModal').addEventListener('click', function(e) {
+        if (e.target === this) fecharModalSaida();
+      });
+    });
+  })();
+
+  function abrirModalSaida() {
+    document.getElementById('exitModal').classList.add('open');
+  }
+  function fecharModalSaida() {
+    document.getElementById('exitModal').classList.remove('open');
+  }
+
+  // ── Helpers ──
+  function horaAtual() {
+    return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  }
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+  function calcDigitando(texto) {
+    return Math.min(Math.max(texto.length * 44, 700), 2200) + rand(-150, 150);
+  }
+
+  function extrairLocalizacao(full) {
+    if (!full) return '';
+    var partesH = full.split('-');
+    if (partesH.length >= 2) return partesH[1].split(',')[0].trim().replace(/^[0-9\sºnN.]+/g, '').trim();
+    var partesV = full.split(',');
+    if (partesV.length >= 3) return partesV[2].trim().replace(/^[0-9\sºnN.]+/g, '').trim();
+    if (partesV.length >= 2) return partesV[1].trim().replace(/^[0-9\sºnN.]+/g, '').trim();
+    return full;
+  }
+  function extrairSiglaEstado(full) {
+    if (!full) return '';
+    var partes = full.split(',');
+    var m = partes[partes.length - 1].trim().match(/\b([A-Z]{2})\b/);
+    return m ? m[1] : '';
+  }
+
+  function atualizarBarra(pct) {
+    document.getElementById('searchFill').style.width = pct + '%';
+    document.getElementById('searchStatus').textContent = pct + '%';
+  }
+
+  // ── Countdown no banner ──
+  var countdown = 28;
+  var countInterval = null;
+  function iniciarCountdown() {
+    countInterval = setInterval(function() {
+      if (countdown > 1) {
+        countdown--;
+        document.getElementById('bannerTimer').textContent = countdown + ' min restantes';
+      } else {
+        clearInterval(countInterval);
+        document.getElementById('bannerTimer').textContent = 'chegando agora';
+        document.querySelector('.order-banner-dot').style.background = '#22c55e';
+      }
+    }, 60000);
+    document.getElementById('bannerTimer').textContent = countdown + ' min restantes';
+  }
+
+  // ── Helpers de chat ──
+  function scroll() {
+    const c = document.getElementById('chatMessages');
+    c.scrollTop = c.scrollHeight;
+  }
+
+  function limparOpcoes() {
+    document.getElementById('chatInputArea').innerHTML = '';
+  }
+
+  function adicionarBlocoVendedor() {
+    const c = document.getElementById('chatMessages');
+
+    const div = document.createElement('div');
+    div.className = 'date-divider';
+    div.innerHTML = '<span>Hoje, ' + horaAtual() + '</span>';
+    c.appendChild(div);
+
+    const card = document.createElement('div');
+    card.className = 'seller-card';
+    card.innerHTML = `
+      <div class="seller-card-av">TC</div>
+      <div class="seller-card-info">
+        <div class="seller-card-name">Thiago Callegari</div>
+        <div class="seller-card-role">Entregador autorizado · Diskgas<br>Palmas e região</div>
+        <div class="seller-card-badges">
+          <span class="seller-badge">⭐ 4.9</span>
+          <span class="seller-badge green">✓ Verificado</span>
+          <span class="seller-badge">842 entregas</span>
+        </div>
+      </div>
+    `;
+    c.appendChild(card);
+
+    const metrics = document.createElement('div');
+    metrics.className = 'seller-metrics';
+    metrics.innerHTML = `
+      <div class="metric-item">
+        <div class="metric-val">4.9<span>/5</span></div>
+        <div class="metric-label">Avaliação</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val">842</div>
+        <div class="metric-label">Entregas</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val">3<span>anos</span></div>
+        <div class="metric-label">Ativo</div>
+      </div>
+    `;
+    c.appendChild(metrics);
+    scroll();
+  }
+
+  function adicionarMensagem(texto, tipo, hora, mostrarAv) {
+    return new Promise(resolve => {
+      const c = document.getElementById('chatMessages');
+      const wrap = document.createElement('div');
+      wrap.className = 'message ' + tipo + ' message-group-gap';
+
+      if (tipo === 'seller') {
+        const av = document.createElement('div');
+        av.className = 'msg-av' + (mostrarAv === false ? ' hidden' : '');
+        av.textContent = 'TC';
+        wrap.appendChild(av);
+      }
+
+      const content = document.createElement('div');
+      content.className = 'msg-content';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble ' + tipo;
+      bubble.textContent = texto;
+      content.appendChild(bubble);
+
+      if (hora) {
+        const meta = document.createElement('div');
+        meta.className = 'msg-time';
+        if (tipo === 'user') {
+          meta.innerHTML = hora + ' <span class="ticks">✓✓</span>';
+        } else {
+          meta.textContent = hora;
+        }
+        content.appendChild(meta);
+      }
+
+      wrap.appendChild(content);
+      c.appendChild(wrap);
+      scroll();
+      setTimeout(resolve, 60);
+    });
+  }
+
+  function mostrarDigitando(duracao) {
+    return new Promise(resolve => {
+      const c = document.getElementById('chatMessages');
+      const row = document.createElement('div');
+      row.className = 'typing-row'; row.id = 'typingRow';
+      const av = document.createElement('div');
+      av.className = 'msg-av'; av.textContent = 'TC';
+      const bub = document.createElement('div');
+      bub.className = 'typing-bub';
+      bub.innerHTML = '<div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>';
+      row.appendChild(av); row.appendChild(bub);
+      c.appendChild(row);
+      scroll();
+      setTimeout(() => {
+        const el = document.getElementById('typingRow');
+        if (el) el.remove();
+        resolve();
+      }, duracao);
+    });
+  }
+
+  function adicionarBlocoEndereco() {
+    const inputArea = document.getElementById('chatInputArea');
+    const div = document.createElement('div');
+    div.className = 'addr-bubble';
+    div.innerHTML = `
+      <div class="addr-bubble-icon">📍</div>
+      <div>
+        <div class="addr-bubble-label">Endereço de entrega</div>
+        <div class="addr-bubble-street">${addressData.address || 'Endereço não informado'}</div>
+        <div class="addr-bubble-cep">${addressData.cep ? 'CEP ' + addressData.cep : ''}</div>
+      </div>
+    `;
+    inputArea.insertBefore(div, inputArea.firstChild);
+  }
+
+  function adicionarTrustHint(texto) {
+    const inputArea = document.getElementById('chatInputArea');
+    const div = document.createElement('div');
+    div.className = 'trust-hint';
+    div.innerHTML = '<span class="trust-hint-icon">🔒</span><span class="trust-hint-text">' + texto + '</span>';
+    inputArea.insertBefore(div, inputArea.firstChild);
+  }
+
+  function adicionarOpcoes(opcoes) {
+    const inputArea = document.getElementById('chatInputArea');
+    inputArea.querySelectorAll('.qbtn').forEach(b => b.remove());
+    opcoes.forEach(op => {
+      const btn = document.createElement('button');
+      btn.className = 'qbtn' + (op.primary ? ' primary' : '');
+      btn.innerHTML = `
+        <span class="qbtn-icon">${op.icone || ''}</span>
+        <div class="qbtn-body">
+          <span class="qbtn-label">${op.texto}</span>
+          ${op.sub ? '<span class="qbtn-sub">' + op.sub + '</span>' : ''}
+        </div>
+        <span class="qbtn-arrow">›</span>
+      `;
+      btn.onclick = op.acao;
+      inputArea.appendChild(btn);
+    });
+  }
+
+  // ── Fluxo de conversa ──
+  async function iniciarConversa() {
+    chatAtivo = true;
+    iniciarCountdown();
+    adicionarBlocoVendedor();
+
+    await delay(rand(900, 1300));
+
+    const m1 = 'Olá! Seu pedido foi recebido e estou a caminho. O prazo de entrega estimado é de 20 a 30 minutos.';
+    await mostrarDigitando(calcDigitando(m1));
+    await adicionarMensagem(m1, 'seller', horaAtual(), true);
+
+    await delay(rand(500, 800));
+
+    const m2 = 'Por favor, confirme o endereço de entrega para eu dar sequência.';
+    await mostrarDigitando(calcDigitando(m2));
+    await adicionarMensagem(m2, 'seller', horaAtual(), false);
+
+    await delay(rand(400, 600));
+
+    adicionarBlocoEndereco();
+    adicionarTrustHint('Pagamento processado com segurança após confirmação do endereço');
+    adicionarOpcoes([
+      { texto: 'Confirmar endereço', sub: 'Entrega no endereço indicado', icone: '✓', primary: true, acao: confirmarEndereco },
+      { texto: 'Alterar endereço', sub: 'Informar novo local de entrega', icone: '✎', primary: false, acao: mudarEndereco }
+    ]);
+  }
+
+  async function confirmarEndereco() {
+    conversationState = 'address_confirmed';
+    limparOpcoes();
+    await adicionarMensagem('Endereço confirmado ✓', 'user', horaAtual());
+
+    await delay(rand(800, 1100));
+
+    const m = 'Ótimo! Endereço confirmado. Qual a forma de pagamento de sua preferência?';
+    await mostrarDigitando(calcDigitando(m));
+    await adicionarMensagem(m, 'seller', horaAtual(), true);
+
+    await delay(rand(350, 550));
+
+    adicionarTrustHint('Transações protegidas · Dados criptografados com SSL');
+    adicionarOpcoes([
+      { texto: 'Pagar agora · Pix', sub: 'Aprovação imediata · mais ágil', icone: '⚡', primary: true, acao: pagarAgora },
+      { texto: 'Pagar na entrega', sub: 'Dinheiro, débito ou crédito', icone: '💵', primary: false, acao: pagarEntrega }
+    ]);
+  }
+
+  function mudarEndereco() {
+    window.location.replace(BACK_REDIRECT_URL);
+  }
+
+  async function pagarAgora() {
+    conversationState = 'payment_pix';
+    limparOpcoes();
+    await adicionarMensagem('Quero pagar via Pix agora', 'user', horaAtual());
+    await delay(rand(600, 900));
+    const m = 'Perfeito! Gerando o código Pix, aguarde um instante...';
+    await mostrarDigitando(calcDigitando(m));
+    await adicionarMensagem(m, 'seller', horaAtual(), true);
+    document.getElementById('loadingScreen').classList.add('active');
+    setTimeout(function() {
+      var p = new URLSearchParams(window.location.search);
+      var tp = new URLSearchParams();
+      tp.set('subtotal', p.get('subtotal') || '0.00');
+      tp.set('payment_method', 'pix');
+      ['address','cep','delivery_time','products'].forEach(k => { if (p.get(k)) tp.set(k, p.get(k)); });
+      window.location.href = CHECKOUT_URL + '?' + tp.toString();
+    }, 1400);
+  }
+
+  async function pagarEntrega() {
+    conversationState = 'payment_delivery';
+    limparOpcoes();
+    await adicionarMensagem('Vou pagar na entrega', 'user', horaAtual());
+    await delay(rand(700, 1000));
+    const m1 = 'Combinado! Seu pedido está confirmado e será entregue em breve.';
+    await mostrarDigitando(calcDigitando(m1));
+    await adicionarMensagem(m1, 'seller', horaAtual(), true);
+    await delay(rand(700, 950));
+    const m2 = 'Prepare o valor exato se possível. Obrigado pela preferência! 👋';
+    await mostrarDigitando(calcDigitando(m2));
+    await adicionarMensagem(m2, 'seller', horaAtual(), false);
+    document.getElementById('loadingScreen').classList.add('active');
+    setTimeout(function() {
+      var p = new URLSearchParams(window.location.search);
+      var tp = new URLSearchParams();
+      tp.set('subtotal', p.get('subtotal') || '0.00');
+      tp.set('payment_method', 'delivery');
+      ['address','cep','delivery_time','products'].forEach(k => { if (p.get(k)) tp.set(k, p.get(k)); });
+      window.location.href = CHECKOUT_URL + '?' + tp.toString();
+    }, 2600);
+  }
+
+  // ── Inicialização ──
+  function processarPedido() {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      var address = p.get('address'), cep = p.get('cep');
+      var products = p.get('products'), delivery = p.get('delivery_time');
+
+      if (address) {
+        document.getElementById('displayAddress').textContent = address;
+        var loc = extrairLocalizacao(address), sigla = extrairSiglaEstado(address);
+        if (loc) {
+          document.getElementById('searchTitle').innerHTML =
+            'Buscando entregador em <span class="bairro-highlight">' + loc + (sigla ? '/' + sigla : '') + '</span>';
+        }
+        if (cep) document.getElementById('displayCity').textContent = 'CEP: ' + cep;
+        addressData.address = address;
+        addressData.cep = cep || '';
+      }
+
+      if (products) localStorage.setItem('cart_products', products);
+      if (address)  localStorage.setItem('delivery_address', address);
+      if (delivery) localStorage.setItem('delivery_time', delivery);
+
+      var TOTAL = 3400;
+      setTimeout(function() { atualizarBarra(32); }, TOTAL * 0.25);
+      setTimeout(function() { atualizarBarra(68); }, TOTAL * 0.55);
+      setTimeout(function() {
+        atualizarBarra(100);
+        document.getElementById('searchFill').classList.add('found');
+        document.getElementById('searchStatus').classList.add('found');
+        setTimeout(function() {
+          document.getElementById('mainCard').classList.add('saindo');
+          setTimeout(function() {
+            document.getElementById('chatOverlay').classList.add('visivel');
+            iniciarConversa();
+          }, 380);
+        }, 500);
+      }, TOTAL);
+
+    } catch(err) { console.error(err); }
+  }
+
+  document.addEventListener('DOMContentLoaded', processarPedido);
+  window.addEventListener('pageshow', function(e) {
+    if (e.persisted || (window.performance && window.performance.navigation.type === 2)) {
+      document.getElementById('loadingScreen').classList.remove('active');
+    }
+  });
+</script>
 </body>
 </html>
