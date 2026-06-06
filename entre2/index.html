@@ -3,819 +3,411 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<title>Buscando entregador - Depósito Mais Barato</title>
-<link rel="preload" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" as="image">
+<title>Depósito Mais Barato - Entrega Rápida</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blue:      #1e6cf2;
-    --blue-dark: #1556cc;
-    --green:     #22c55e;
-    --green-dark:#16a34a;
-    --text-1:    #0f172a;
-    --text-2:    #475569;
-    --text-3:    #94a3b8;
-    --border:    #e8edf4;
-    --surface:   #f8fafc;
-    --white:     #ffffff;
-    --radius-lg: 20px;
-    --radius-md: 14px;
-    --radius-sm: 10px;
-    --shadow-sm: 0 1px 3px rgba(15,23,42,.06), 0 1px 2px rgba(15,23,42,.04);
-    --shadow-md: 0 4px 16px rgba(15,23,42,.08), 0 1px 4px rgba(15,23,42,.05);
-    --shadow-lg: 0 12px 32px rgba(15,23,42,.12), 0 4px 8px rgba(15,23,42,.06);
-    --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-
-    --chat-brand:  #0B5C52;
-    --chat-bubble-in:  #ffffff;
-    --chat-bubble-out: #D9F2E6;
-    --chat-bg:     #EDE9E3;
+    /* Paleta de Cores Otimizada - Foco em Confiança e Ação */
+    --primary:    #2563eb; /* Azul Trust - Melhor para conversão */
+    --primary-dark: #1d4ed8;
+    --success:    #10b981; /* Verde Sucesso */
+    --bg-light:   #f8fafc;
+    --text-main:  #1e293b;
+    --text-muted: #64748b;
+    --border:     #e2e8f0;
+    --white:      #ffffff;
+    
+    /* Chat Colors */
+    --chat-header: #075e54; /* WhatsApp Green para familiaridade */
+    --chat-bg:     #efeae2;
+    --bubble-in:   #ffffff;
+    --bubble-out:  #dcf8c6;
+    
+    /* Design System */
+    --radius: 16px;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; }
-  body { font-family: var(--font); background: var(--surface); color: var(--text-1); display: flex; flex-direction: column; }
+  html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; font-family: var(--font); background: var(--bg-light); color: var(--text-main); }
 
-  .scroll-container { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 24px 16px 48px; }
-  .voltar { display: inline-flex; align-items: center; gap: 6px; color: var(--text-2); text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 24px; cursor: pointer; transition: color 0.2s; }
-  .voltar:active { color: var(--blue); }
-  .container { max-width: 480px; margin: 0 auto; }
+  /* Layout Principal */
+  .scroll-container { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 20px 16px 40px; }
+  .container { max-width: 440px; margin: 0 auto; }
 
-  /* Stepper */
-  .stepper { background: var(--white); border-radius: var(--radius-md); padding: 20px 24px; box-shadow: var(--shadow-sm); margin-bottom: 16px; border: 1px solid var(--border); }
+  /* Voltar Minimalista */
+  .voltar { display: inline-flex; align-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 20px; transition: 0.2s; }
+  .voltar:hover { color: var(--primary); }
+
+  /* Stepper Refinado */
+  .stepper { background: var(--white); border-radius: var(--radius); padding: 16px 20px; box-shadow: var(--shadow); margin-bottom: 16px; border: 1px solid var(--border); }
   .steps { display: flex; align-items: center; justify-content: space-between; position: relative; }
-  .step { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; z-index: 2; }
-  .step-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #eef2f7; color: #8892a6; font-weight: 700; font-size: 14px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
-  .step-circle.done { background: var(--green); color: #fff; }
-  .step-circle.active { background: var(--blue); color: #fff; box-shadow: 0 4px 12px rgba(30,108,242,.3); }
-  .step-label { font-size: 11px; font-weight: 700; letter-spacing: 0.6px; color: #a0aec0; }
-  .step.done .step-label { color: var(--green); }
-  .step.active .step-label { color: var(--blue); }
-  .step-line { position: absolute; top: 18px; left: 36px; right: 36px; height: 2px; background: #eef2f7; z-index: 1; }
-  .step-line-fill { height: 100%; background: var(--green); width: 50%; transition: width 0.6s ease; }
+  .step { display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; }
+  .step-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #f1f5f9; color: #94a3b8; font-weight: 700; font-size: 13px; transition: 0.3s; }
+  .step-circle.done { background: var(--success); color: #fff; }
+  .step-circle.active { background: var(--primary); color: #fff; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+  .step-label { font-size: 10px; font-weight: 800; letter-spacing: 0.5px; color: #94a3b8; text-transform: uppercase; }
+  .step.done .step-label { color: var(--success); }
+  .step.active .step-label { color: var(--primary); }
+  .step-line { position: absolute; top: 16px; left: 32px; right: 32px; height: 2px; background: #f1f5f9; z-index: 1; }
+  .step-line-fill { height: 100%; background: var(--success); width: 50%; transition: width 0.8s ease; }
 
-  /* Card principal */
-  .card { background: var(--white); border-radius: var(--radius-lg); padding: 32px 24px; box-shadow: var(--shadow-md); animation: cardIn 0.4s ease both; transition: opacity 0.4s ease; border: 1px solid var(--border); }
-  .card.saindo { opacity: 0; }
-  @keyframes cardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  .pulse-container { display: flex; justify-content: center; align-items: center; height: 110px; margin-bottom: 20px; }
-  .pulse-ring { position: relative; width: 72px; height: 72px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; box-shadow: 0 8px 24px rgba(30,108,242,.25); }
-  .pulse-ring::before, .pulse-ring::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--blue); animation: ripple 2.4s cubic-bezier(0.215,.61,.355,1) infinite; }
-  .pulse-ring::after { animation-delay: 1.2s; }
-  .pulse-icon { font-size: 30px; z-index: 2; animation: float 2s ease-in-out infinite; }
-  @keyframes ripple { 0% { transform: scale(1); opacity: 0.3; } 100% { transform: scale(2.6); opacity: 0; } }
-  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-  .eyebrow { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px; color: var(--text-3); }
-  .title { text-align: center; font-size: 22px; font-weight: 800; line-height: 1.3; margin-bottom: 6px; color: var(--text-1); }
-  .title .bairro-highlight { color: var(--blue); }
-  .subtitle-wrap { height: 40px; overflow: hidden; margin-bottom: 22px; }
-  .subtitle { text-align: center; font-size: 14px; color: var(--text-2); line-height: 1.5; }
-  .address-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 20px; }
-  .address-label { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-  .address-label::before { content: ''; display: inline-block; width: 3px; height: 12px; background: var(--blue); border-radius: 2px; }
-  .address-row { display: flex; align-items: flex-start; gap: 12px; }
-  .address-icon { background: var(--white); width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); flex-shrink: 0; font-size: 16px; margin-top: 2px; }
-  .address-content { flex: 1; }
-  .address-content strong { display: block; font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 3px; word-break: break-word; line-height: 1.4; }
-  .address-content span { font-size: 12px; color: var(--text-2); line-height: 1.4; }
-  .search-progress { display: flex; align-items: center; gap: 10px; }
-  .search-bar { flex: 1; height: 5px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
-  .search-fill { height: 100%; background: var(--blue); border-radius: 99px; width: 0%; transition: width 1s ease, background 0.5s ease; box-shadow: 0 2px 6px rgba(30,108,242,.3); }
-  .search-fill.found { background: var(--green); box-shadow: 0 2px 6px rgba(34,197,94,.3); }
-  .search-status { font-size: 11px; font-weight: 700; letter-spacing: 0.4px; color: var(--text-3); white-space: nowrap; text-transform: uppercase; transition: color 0.4s ease; min-width: 72px; text-align: right; }
-  .search-status.found { color: var(--green); }
-  .footer-note { text-align: center; color: var(--text-3); font-size: 12px; margin-top: 16px; }
+  /* Card de Busca Otimizado */
+  .card { background: var(--white); border-radius: 24px; padding: 32px 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid var(--border); text-align: center; animation: slideUp 0.5s ease-out; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* Overlay */
-  #confirmOverlay { position: fixed; inset: 0; background: var(--white); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 0 24px; }
-  #confirmOverlay.visivel { opacity: 1; pointer-events: auto; }
-  .overlay-logo { font-size: 22px; font-weight: 800; letter-spacing: 3px; color: var(--blue); text-transform: uppercase; margin-bottom: 28px; opacity: 0; transition: opacity 0.4s ease 0.2s; }
-  #confirmOverlay.visivel .overlay-logo { opacity: 1; }
-  .check-wrap { margin-bottom: 20px; }
-  .check-bg { width: 76px; height: 76px; border-radius: 50%; background: #f0fdf4; display: flex; align-items: center; justify-content: center; transform: scale(0); opacity: 0; transition: transform 0.5s cubic-bezier(0.175,.885,.32,1.35), opacity 0.3s ease; }
-  #confirmOverlay.visivel .check-bg { transform: scale(1); opacity: 1; }
-  .check-inner { width: 52px; height: 52px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; }
-  .check-svg { width: 26px; height: 26px; }
-  .check-path { stroke: #fff; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke-dasharray: 44; stroke-dashoffset: 44; transition: stroke-dashoffset 0.45s ease 0.4s; }
-  #confirmOverlay.visivel .check-path { stroke-dashoffset: 0; }
-  .ov-title { font-size: 22px; font-weight: 800; color: var(--text-1); text-align: center; margin-bottom: 4px; opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease 0.55s, transform 0.35s ease 0.55s; }
-  .ov-sub { font-size: 14px; color: var(--text-2); text-align: center; margin-bottom: 22px; opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease 0.7s, transform 0.35s ease 0.7s; }
-  #confirmOverlay.visivel .ov-title, #confirmOverlay.visivel .ov-sub { opacity: 1; transform: translateY(0); }
-  .driver-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); width: min(360px,calc(100vw - 48px)); overflow: hidden; margin-bottom: 20px; box-shadow: var(--shadow-lg); opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease 0.8s, transform 0.4s ease 0.8s; }
-  #confirmOverlay.visivel .driver-card { opacity: 1; transform: translateY(0); }
-  .driver-top { padding: 20px 22px; display: flex; align-items: center; gap: 14px; }
-  .driver-avatar-container { position: relative; flex-shrink: 0; }
-  .driver-avatar { width: 54px; height: 54px; border-radius: 50%; background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp'); background-size: cover; background-position: center; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--green); }
-  .driver-badge-verified { position: absolute; bottom: -2px; right: -2px; background: var(--green); color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; border: 2px solid #fff; font-weight: 700; }
-  .driver-info { flex: 1; min-width: 0; }
-  .driver-name-ov { font-size: 16px; font-weight: 800; color: var(--text-1); margin-bottom: 3px; }
-  .driver-meta { font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 6px; }
-  .driver-rating { color: #f59e0b; font-weight: 800; }
-  .driver-badge-oficial { flex-shrink: 0; align-self: flex-start; margin-top: 1px; background: #eff6ff; color: var(--blue); font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.6px; border: 1px solid #dbeafe; }
-  .card-divider { height: 1px; background: var(--border); margin: 0 22px; }
-  .driver-address { padding: 16px 22px; display: flex; align-items: flex-start; gap: 12px; }
-  .addr-icon-wrap { width: 36px; height: 36px; border-radius: 12px; background: #f0f6ff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; font-size: 16px; }
-  .addr-label { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-3); margin-bottom: 4px; }
-  .addr-street { font-size: 14px; font-weight: 700; color: var(--text-1); line-height: 1.4; margin-bottom: 2px; word-break: break-word; }
-  .addr-city { font-size: 12px; color: var(--text-2); }
-  .driver-footer-meta { padding: 14px 22px; display: flex; justify-content: center; }
-  .driver-eta-box { display: flex; align-items: center; gap: 7px; color: #166534; font-size: 13px; font-weight: 700; background: #f0fdf4; padding: 8px 16px; border-radius: 10px; border: 1px solid #dcfce7; }
-  .trust-row { width: min(360px,calc(100vw - 48px)); display: flex; justify-content: center; gap: 28px; margin-bottom: 28px; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease 1s, transform 0.4s ease 1s; }
-  #confirmOverlay.visivel .trust-row { opacity: 1; transform: translateY(0); }
-  .trust-item { display: flex; align-items: center; gap: 7px; color: #4b5563; font-size: 13px; font-weight: 700; }
-  .btn-prosseguir { width: min(360px,calc(100vw - 48px)); background: var(--blue); color: #fff; border: none; border-radius: var(--radius-md); padding: 16px 24px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease 1.1s, transform 0.4s ease 1.1s; opacity: 0; transform: translateY(10px); pointer-events: none; box-shadow: 0 8px 20px rgba(30,108,242,.35); display: flex; align-items: center; justify-content: center; gap: 10px; position: relative; overflow: hidden; font-family: var(--font); }
-  .btn-prosseguir:active { transform: scale(0.96); background: var(--blue-dark); }
-  #confirmOverlay.visivel .btn-prosseguir { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  .btn-prosseguir::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent); transform: skewX(-25deg); animation: shine 3s infinite; }
-  @keyframes shine { 0% { left: -100%; } 20% { left: 150%; } 100% { left: 150%; } }
+  .pulse-container { margin-bottom: 24px; display: flex; justify-content: center; }
+  .pulse-ring { position: relative; width: 80px; height: 80px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1; }
+  .pulse-ring::before { content: ''; position: absolute; width: 100%; height: 100%; background: var(--primary); border-radius: 50%; animation: pulse 2s infinite; z-index: -1; }
+  @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(2.2); opacity: 0; } }
+  .pulse-icon { font-size: 32px; }
 
-  /* Loading */
-  #loadingScreen { position: fixed; inset: 0; background: var(--white); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-  #loadingScreen.active { opacity: 1; pointer-events: auto; }
-  .spinner { width: 48px; height: 48px; border: 4px solid var(--border); border-top: 4px solid var(--blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  .loading-text { font-size: 18px; font-weight: 700; color: var(--text-1); }
+  .title { font-size: 20px; font-weight: 800; color: var(--text-main); line-height: 1.2; margin-bottom: 8px; }
+  .bairro-highlight { color: var(--primary); }
+  .subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5; }
 
-  /* ════════════════════════════
-     CHAT — Limpo e Profissional
-  ════════════════════════════ */
-  #chatSection {
-    position: fixed; inset: 0;
-    background: var(--chat-bg);
-    z-index: 10001;
-    display: flex; flex-direction: column;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
+  /* Endereço Minimalista */
+  .address-box { background: #f1f5f9; border-radius: 16px; padding: 16px; margin-bottom: 24px; text-align: left; display: flex; gap: 12px; align-items: center; }
+  .address-icon { font-size: 20px; background: #fff; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+  .address-info strong { display: block; font-size: 14px; color: var(--text-main); }
+  .address-info span { font-size: 12px; color: var(--text-muted); }
+
+  /* Barra de Progresso Clean */
+  .progress-wrap { display: flex; align-items: center; gap: 12px; }
+  .progress-bar { flex: 1; height: 6px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+  .progress-text { font-size: 12px; font-weight: 700; color: var(--primary); min-width: 35px; }
+
+  /* Overlay de Confirmação - Design Premium */
+  #confirmOverlay { position: fixed; inset: 0; background: var(--white); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: 0.4s; }
+  #confirmOverlay.active { opacity: 1; pointer-events: auto; }
+
+  .success-check { width: 72px; height: 72px; background: #ecfdf5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--success); font-size: 32px; margin-bottom: 16px; }
+  .ov-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .ov-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+
+  .driver-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 360px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); margin-bottom: 24px; overflow: hidden; }
+  .driver-header { padding: 16px; display: flex; align-items: center; gap: 12px; background: #f8fafc; }
+  .driver-img { width: 50px; height: 50px; border-radius: 50%; background: #ddd url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp') center/cover; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--success); }
+  .driver-name { font-weight: 700; font-size: 16px; }
+  .driver-rating { font-size: 12px; color: #f59e0b; font-weight: 700; }
+  .driver-eta { padding: 12px; text-align: center; border-top: 1px solid var(--border); font-size: 13px; font-weight: 700; color: #065f46; background: #f0fdf4; }
+
+  .btn-primary { width: 100%; max-width: 360px; background: var(--primary); color: #fff; border: none; padding: 18px; border-radius: 16px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3); }
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* Chatbot Section - Clean WhatsApp Style */
+  #chatSection { position: fixed; inset: 0; background: var(--chat-bg); z-index: 10001; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: 0.3s; }
   #chatSection.active { opacity: 1; pointer-events: auto; }
 
-  /* Header */
-  .chat-header {
-    background: var(--chat-brand);
-    padding: 0 12px;
-    padding-top: env(safe-area-inset-top);
-    display: flex; align-items: center; gap: 10px;
-    height: calc(60px + env(safe-area-inset-top));
-    z-index: 10; position: relative;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.15);
-  }
+  .chat-header { background: var(--chat-header); color: #fff; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
+  .chat-back { cursor: pointer; }
+  .chat-info { flex: 1; }
+  .chat-name { font-weight: 600; font-size: 16px; }
+  .chat-status { font-size: 12px; opacity: 0.8; display: flex; align-items: center; gap: 4px; }
+  .chat-status::before { content: ''; width: 8px; height: 8px; background: #4ade80; border-radius: 50%; display: inline-block; }
 
-  .chat-back {
-    width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,0.85); cursor: pointer;
-    border-radius: 50%; flex-shrink: 0;
-    margin-left: -4px;
-    transition: background 0.15s;
-  }
-  .chat-back:active { background: rgba(255,255,255,0.1); }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 15px; line-height: 1.4; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+  .msg-received { background: var(--bubble-in); align-self: flex-start; border-top-left-radius: 2px; }
+  .msg-sent { background: var(--bubble-out); align-self: flex-end; border-top-right-radius: 2px; }
+  .msg-time { font-size: 10px; color: #888; text-align: right; display: block; margin-top: 4px; }
 
-  .chat-avatar-wrap { position: relative; flex-shrink: 0; }
-  .chat-avatar {
-    width: 42px; height: 42px; border-radius: 50%;
-    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
-    background-size: cover; background-position: center;
-    border: 1.5px solid rgba(255,255,255,0.2);
-  }
-  .chat-avatar-online {
-    position: absolute; bottom: 1px; right: 1px;
-    width: 10px; height: 10px;
-    background: #4ADE80;
-    border-radius: 50%; border: 2px solid var(--chat-brand);
-  }
+  /* Opções de Pagamento - Otimizadas para Conversão */
+  .payment-card { background: #fff; border-radius: 16px; border: 2px solid transparent; padding: 16px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: 0.2s; box-shadow: var(--shadow); margin-bottom: 12px; }
+  .payment-card:hover { border-color: var(--primary); background: #f0f7ff; }
+  .payment-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+  .pix-icon { background: #e6fffa; color: #008080; }
+  .delivery-icon { background: #fffbeb; color: #b45309; }
+  .payment-info { flex: 1; }
+  .payment-title { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+  .payment-sub { font-size: 12px; color: var(--text-muted); }
+  .payment-price { text-align: right; }
+  .price-val { font-weight: 800; font-size: 16px; color: var(--text-main); }
+  .price-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
 
-  .chat-user-info { flex: 1; min-width: 0; }
-  .chat-user-name {
-    font-size: 15px; font-weight: 700; color: #fff;
-    line-height: 1.25; margin-bottom: 2px;
-  }
-  .chat-user-status {
-    font-size: 12px; color: rgba(255,255,255,0.58);
-    display: flex; align-items: center; gap: 5px;
-  }
-  .status-dot {
-    width: 5px; height: 5px; background: #4ADE80;
-    border-radius: 50%; flex-shrink: 0;
-  }
+  /* Footer do Chat */
+  .chat-footer { background: #f0f0f0; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+  .chat-input-box { flex: 1; background: #fff; border-radius: 24px; padding: 10px 16px; font-size: 15px; border: none; outline: none; }
+  .chat-send { width: 40px; height: 40px; background: var(--chat-header); color: #fff; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; }
 
-  .chat-header-actions { display: flex; }
-  .chat-action-btn {
-    width: 38px; height: 38px;
-    display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,0.75); cursor: pointer;
-    border-radius: 50%; transition: background 0.15s;
-  }
-  .chat-action-btn:active { background: rgba(255,255,255,0.1); }
+  /* Loading Screen */
+  #loadingScreen { position: fixed; inset: 0; background: rgba(255,255,255,0.9); z-index: 10002; display: none; flex-direction: column; align-items: center; justify-content: center; }
+  .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-  /* Aviso de criptografia */
-  .security-notice {
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-    padding: 6px 16px;
-    font-size: 11px; font-weight: 500;
-    color: #78909C;
-    background: rgba(0,0,0,0.04);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    z-index: 1; position: relative;
-    letter-spacing: 0.1px;
-  }
+  .id-card { background: #fff; border-radius: 12px; padding: 12px; border-left: 4px solid var(--primary); box-shadow: var(--shadow); margin: 8px 0; }
+  .id-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .id-avatar { width: 40px; height: 40px; border-radius: 50%; background: #eee url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp') center/cover; }
+  .id-name { font-weight: 700; font-size: 14px; }
+  .id-meta { font-size: 11px; color: var(--text-muted); }
+  .id-badge { background: #e0f2fe; color: #0369a1; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
 
-  /* Mensagens */
-  .chat-messages {
-    flex: 1; padding: 12px 10px 10px;
-    overflow-y: auto; display: flex; flex-direction: column; gap: 2px;
-    position: relative; z-index: 1;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .date-separator { display: flex; align-items: center; justify-content: center; margin: 4px 0 14px; animation: msgIn 0.3s ease both; }
-  .date-chip { background: rgba(255,255,255,0.76); color: #607D8B; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 7px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
-
-  .msg {
-    max-width: 78%; padding: 9px 12px 6px;
-    font-size: 14.5px; line-height: 1.5;
-    position: relative; word-wrap: break-word; color: #111;
-    animation: msgIn 0.22s ease both; margin-bottom: 2px;
-  }
-  @keyframes msgIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-
-  .msg-received {
-    align-self: flex-start;
-    background: var(--chat-bubble-in);
-    border-radius: 2px 16px 16px 16px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.09);
-    margin-left: 4px;
-  }
-  .msg-received::before {
-    content: ''; position: absolute; top: 0; left: -7px;
-    border-width: 0 7px 7px 0; border-style: solid;
-    border-color: transparent var(--chat-bubble-in) transparent transparent;
-  }
-
-  .msg-sent {
-    align-self: flex-end;
-    background: var(--chat-bubble-out);
-    border-radius: 16px 2px 16px 16px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.09);
-    margin-right: 4px;
-  }
-  .msg-sent::after {
-    content: ''; position: absolute; top: 0; right: -7px;
-    border-width: 0 0 7px 7px; border-style: solid;
-    border-color: transparent transparent transparent var(--chat-bubble-out);
-  }
-
-  .msg-footer { display: flex; align-items: center; justify-content: flex-end; gap: 3px; margin-top: 3px; }
-  .msg-time { font-size: 10.5px; color: rgba(0,0,0,0.36); }
-  .ticks svg { color: #34b7f1; }
-  .msg-group-gap { margin-bottom: 4px; }
-
-  /* ── ID Card — limpo ── */
-  .id-card {
-    align-self: flex-start;
-    background: var(--white);
-    border-radius: 4px 16px 16px 16px;
-    width: min(278px, 82vw);
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.10), 0 4px 14px rgba(0,0,0,0.07);
-    border: 1px solid rgba(0,0,0,0.055);
-    animation: msgIn 0.3s ease both;
-    margin-bottom: 4px; margin-left: 4px;
-    position: relative;
-  }
-  .id-card::before {
-    content: ''; position: absolute; top: 0; left: -7px;
-    border-width: 0 7px 7px 0; border-style: solid;
-    border-color: transparent var(--white) transparent transparent;
-  }
-
-  /* Linha de acento no topo — única decoração, discreta */
-  .id-card-accent { height: 3px; background: var(--chat-brand); }
-
-  .id-card-body {
-    padding: 14px 15px 13px;
-    display: flex; align-items: center; gap: 13px;
-  }
-
-  .id-card-avatar-wrap { position: relative; flex-shrink: 0; }
-  .id-card-avatar {
-    width: 50px; height: 50px; border-radius: 50%;
-    background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
-    background-size: cover; background-position: center;
-    border: 2px solid var(--white);
-    box-shadow: 0 0 0 2px var(--chat-brand);
-  }
-  .id-card-check {
-    position: absolute; bottom: -1px; right: -1px;
-    background: var(--chat-brand); color: #fff;
-    width: 17px; height: 17px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    border: 2px solid var(--white);
-  }
-
-  .id-card-text { flex: 1; min-width: 0; }
-  .id-card-name { font-size: 14.5px; font-weight: 800; color: #0f172a; margin-bottom: 2px; line-height: 1.2; }
-  .id-card-role { font-size: 11px; color: #94a3b8; font-weight: 500; margin-bottom: 7px; }
-  .id-card-stars { display: flex; align-items: center; gap: 1px; }
-  .star { color: #F59E0B; font-size: 11px; }
-  .rating-val { font-size: 11.5px; font-weight: 700; color: #64748b; margin-left: 5px; }
-
-  /* Rodapé do card — sóbrio */
-  .id-card-footer {
-    padding: 9px 15px;
-    border-top: 1px solid #f1f5f9;
-    display: flex; align-items: center; justify-content: space-between;
-    background: #fafbfd;
-  }
-  .id-card-footer-status { display: flex; align-items: center; gap: 6px; }
-  .id-card-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
-  .id-card-footer-text { font-size: 11px; font-weight: 600; color: #475569; }
-  .id-card-official {
-    font-size: 10px; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.5px; color: var(--chat-brand);
-    background: #E6F4F2; border-radius: 5px; padding: 2px 8px;
-  }
-
-  /* ── Opções de pagamento — Minimalista e Integrada ── */
-  .payment-options {
-    display: flex; flex-direction: column; gap: 0;
-    width: min(280px, 82vw);
-    align-self: flex-start;
-    margin-left: 4px; margin-bottom: 4px;
-    animation: msgIn 0.3s ease 0.15s both;
-    background: var(--white);
-    border-radius: 4px 16px 16px 16px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.06);
-    border: 1px solid rgba(0,0,0,0.05);
-    position: relative;
-  }
-  .payment-options::before {
-    content: ''; position: absolute; top: 0; left: -7px;
-    border-width: 0 7px 7px 0; border-style: solid;
-    border-color: transparent var(--white) transparent transparent;
-  }
-
-  .payment-card {
-    background: var(--white);
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 14px;
-    cursor: pointer;
-    border: none;
-    border-bottom: 1px solid #f1f5f9;
-    box-shadow: none;
-    transition: all 0.15s ease;
-    justify-content: space-between;
-    position: relative;
-  }
-  .payment-card:last-child {
-    border-bottom: none;
-  }
-  .payment-card:active { 
-    background: #fafbfc;
-  }
-  .payment-card:hover {
-    background: #fafbfc;
-  }
-
-  .payment-icon-wrap {
-    width: 36px; height: 36px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0; background: #f8fafc;
-    border: none;
-    box-shadow: none;
-    transition: all 0.15s ease;
-  }
-  .payment-icon-wrap.teal { 
-    background: #e6f4f2;
-  }
-  .payment-icon-wrap.amber { 
-    background: #fef9ee;
-  }
-
-  .payment-card-text { flex: 1; min-width: 0; }
-  .payment-card-title { 
-    font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 2px; line-height: 1.2;
-  }
-  .payment-card-sub { 
-    font-size: 11px; color: #64748b; line-height: 1.3; font-weight: 500;
-  }
-
-  .payment-card-price { 
-    display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; margin-left: 8px;
-  }
-  .payment-price-value { 
-    font-size: 14px; font-weight: 800; color: #0f172a; line-height: 1.2;
-  }
-  .payment-price-label { 
-    font-size: 10px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px;
-  }
-
-  .payment-card-arrow { 
-    color: #cbd5e1; 
-    font-size: 16px; 
-    font-weight: 300; 
-    flex-shrink: 0; 
-    line-height: 1;
-    transition: all 0.15s ease;
-    margin-left: 6px;
-  }
-  .payment-card:hover .payment-card-arrow {
-    color: #94a3b8;
-    transform: translateX(2px);
-  }
-
-  /* Typing */
-  .typing {
-    align-self: flex-start;
-    background: var(--white);
-    padding: 11px 14px;
-    border-radius: 4px 16px 16px 16px;
-    display: none; align-items: center; gap: 5px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    margin-left: 4px; position: relative;
-    border: 1px solid rgba(0,0,0,0.05);
-  }
-  .typing::before {
-    content: ''; position: absolute; top: 0; left: -7px;
-    border-width: 0 7px 7px 0; border-style: solid;
-    border-color: transparent var(--white) transparent transparent;
-  }
-  .typing.active { display: flex; }
-  .dot {
-    width: 6px; height: 6px; background: #CBD5E1;
-    border-radius: 50%;
-    animation: dotPulse 1.3s ease-in-out infinite;
-  }
-  .dot:nth-child(2) { animation-delay: 0.16s; }
-  .dot:nth-child(3) { animation-delay: 0.32s; }
-  @keyframes dotPulse { 0%,100% { transform: scale(1); opacity: 0.45; } 50% { transform: scale(1.3); opacity: 1; } }
-
-  /* Footer */
-  .chat-footer {
-    background: #EBEBEB;
-    padding: 8px 10px;
-    padding-bottom: calc(10px + env(safe-area-inset-bottom));
-    display: flex; align-items: center; gap: 8px;
-    border-top: 1px solid rgba(0,0,0,0.06);
-    z-index: 10; position: relative;
-  }
-
-  .chat-input-wrap {
-    flex: 1; background: var(--white);
-    border-radius: 24px; padding: 10px 14px;
-    display: flex; align-items: center; gap: 8px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-    border: 1px solid rgba(0,0,0,0.06);
-  }
-  .chat-input-emoji { font-size: 21px; cursor: pointer; flex-shrink: 0; opacity: 0.55; line-height: 1; }
-  .chat-input {
-    border: none; background: transparent; flex: 1;
-    font-size: 15px; color: var(--text-1); outline: none;
-    font-family: var(--font); line-height: 1.4;
-    caret-color: var(--chat-brand);
-  }
-  .chat-input::placeholder { color: #9aa1a9; }
-  .chat-input-attach { font-size: 19px; cursor: pointer; flex-shrink: 0; opacity: 0.5; }
-
-  .chat-send-btn {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--chat-brand);
-    color: var(--white); border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(11,92,82,0.35);
-    transition: all 0.15s ease; flex-shrink: 0;
-  }
-  .chat-send-btn:active { transform: scale(0.9); }
+  .typing { display: none; padding: 8px 12px; background: #fff; border-radius: 12px; align-self: flex-start; margin-bottom: 8px; }
+  .typing span { width: 6px; height: 6px; background: #ccc; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 </style>
 </head>
 <body>
 
-  <div id="loadingScreen">
-    <div class="spinner"></div>
-    <p class="loading-text">Preparando Pedido</p>
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <p>Finalizando pedido...</p>
+</div>
+
+<div id="chatSection">
+  <div class="chat-header">
+    <div class="chat-back" onclick="fecharChat()">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+    <div class="driver-img" style="width: 36px; height: 36px; border: none;"></div>
+    <div class="chat-info">
+      <div class="chat-name">Marcos Oliveira</div>
+      <div class="chat-status">online agora</div>
+    </div>
+  </div>
+  
+  <div class="chat-messages" id="chatMessages">
+    <!-- Mensagens serão inseridas aqui -->
+    <div class="typing" id="typingIndicator">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 
-  <div id="confirmOverlay">
-    <div class="overlay-logo">DISKGAS</div>
-    <div class="check-wrap">
-      <div class="check-bg"><div class="check-inner"><svg class="check-svg" viewBox="0 0 32 32"><path class="check-path" d="M7 17 L13 23 L25 10"/></svg></div></div>
-    </div>
-    <p class="ov-title">Entregador Autorizado!</p>
-    <p class="ov-sub">Seu pedido está pronto para envio</p>
-    <div class="driver-card">
-      <div class="driver-top">
-        <div class="driver-avatar-container">
-          <div class="driver-avatar"></div>
-          <div class="driver-badge-verified">✓</div>
-        </div>
-        <div class="driver-info">
-          <div class="driver-name-ov">Marcos Oliveira</div>
-          <div class="driver-meta"><span class="driver-rating">★ 4.9</span><span>• 1.2k entregas</span></div>
-        </div>
-        <div class="driver-badge-oficial">Oficial</div>
-      </div>
-      <div class="card-divider"></div>
-      <div class="driver-address">
-        <div class="addr-icon-wrap">📍</div>
-        <div>
-          <p class="addr-label">Local de entrega</p>
-          <p class="addr-street" id="overlayAddress">Carregando endereço...</p>
-          <p class="addr-city" id="overlayCep"></p>
-        </div>
-      </div>
-      <div class="card-divider"></div>
-      <div class="driver-footer-meta">
-        <div class="driver-eta-box">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-          Chega em 15–25 min
-        </div>
-      </div>
-    </div>
-    <div class="trust-row">
-      <div class="trust-item"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Pagamento Seguro</div>
-      <div class="trust-item"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Entrega Garantida</div>
-    </div>
-    <button class="btn-prosseguir" id="btnProsseguir">
-      Prosseguir
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  <div class="chat-footer">
+    <input type="text" class="chat-input-box" placeholder="Digite uma mensagem..." id="chatInput">
+    <button class="chat-send" id="chatSendBtn">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
   </div>
+</div>
 
-  <!-- CHATBOT -->
-  <div id="chatSection">
-
-    <div class="chat-header">
-      <div class="chat-back" onclick="fecharChat()">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-      </div>
-      <div class="chat-avatar-wrap">
-        <div class="chat-avatar"></div>
-        <div class="chat-avatar-online"></div>
-      </div>
-      <div class="chat-user-info">
-        <div class="chat-user-name">Marcos Oliveira</div>
-        <div class="chat-user-status"><span class="status-dot"></span>online agora</div>
-      </div>
-      <div class="chat-header-actions">
-        <div class="chat-action-btn">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.99 1.18 2 2 0 012.98 0h3a2 2 0 012 1.72c.13 1 .37 1.97.71 2.91a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.17-1.17a2 2 0 012.11-.45c.94.34 1.91.58 2.91.71A2 2 0 0122 16.92z"/></svg>
-        </div>
-        <div class="chat-action-btn">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="transform:rotate(90deg)"><circle cx="12" cy="5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg>
-        </div>
+<div id="confirmOverlay">
+  <div class="success-check">✓</div>
+  <h2 class="ov-title">Entregador Localizado!</h2>
+  <p class="ov-sub">Marcos está pronto para coletar seu pedido.</p>
+  
+  <div class="driver-card">
+    <div class="driver-header">
+      <div class="driver-img"></div>
+      <div class="driver-info">
+        <div class="driver-name">Marcos Oliveira</div>
+        <div class="driver-rating">★ 4.9 (1.2k entregas)</div>
       </div>
     </div>
-
-    <div class="security-notice">
-      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Suas mensagens são protegidas com criptografia
-    </div>
-
-    <div class="chat-messages" id="chatMessages">
-      <div class="date-separator"><div class="date-chip" id="dateChip">Hoje</div></div>
-      <div class="typing" id="typingIndicator">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-      </div>
-    </div>
-
-    <div class="chat-footer">
-      <div class="chat-input-wrap">
-        <span class="chat-input-emoji">😊</span>
-        <input type="text" class="chat-input" placeholder="Mensagem" id="chatInput">
-        <span class="chat-input-attach">📎</span>
-      </div>
-      <button class="chat-send-btn" id="chatSendBtn">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-      </button>
-    </div>
+    <div class="driver-eta">📍 Chega em 15-25 minutos</div>
   </div>
 
-  <!-- Tela principal -->
-  <div class="scroll-container">
-    <div class="container">
-      <a href="#" class="voltar" id="btnVoltar">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-        Voltar
-      </a>
-      <div class="stepper">
-        <div class="steps">
-          <div class="step-line"><div class="step-line-fill" id="stepLine"></div></div>
-          <div class="step done"><div class="step-circle done">✓</div><div class="step-label">PEDIDO</div></div>
-          <div class="step active"><div class="step-circle active" id="stepCircle2">2</div><div class="step-label">BUSCANDO</div></div>
-          <div class="step"><div class="step-circle">3</div><div class="step-label">ENTREGA</div></div>
+  <button class="btn-primary" id="btnProsseguir">
+    Falar com Entregador
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </button>
+</div>
+
+<div class="scroll-container">
+  <div class="container">
+    <a href="#" class="voltar" id="btnVoltar">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </a>
+
+    <div class="stepper">
+      <div class="steps">
+        <div class="step-line"><div class="step-line-fill" id="stepLine"></div></div>
+        <div class="step done">
+          <div class="step-circle done">✓</div>
+          <div class="step-label">Pedido</div>
+        </div>
+        <div class="step active">
+          <div class="step-circle active">2</div>
+          <div class="step-label">Buscando</div>
+        </div>
+        <div class="step">
+          <div class="step-circle">3</div>
+          <div class="step-label">Entrega</div>
         </div>
       </div>
-      <div class="card" id="mainCard">
-        <div class="pulse-container"><div class="pulse-ring"><span class="pulse-icon">🛵</span></div></div>
-        <div class="eyebrow">Localizando entregadores</div>
-        <h1 class="title" id="searchTitle">Buscando entregador próximo...</h1>
-        <div class="subtitle-wrap"><p class="subtitle">Estamos conectando seu pedido ao entregador mais rápido da sua região.</p></div>
-        <div class="address-box">
-          <div class="address-label">Endereço de entrega</div>
-          <div class="address-row">
-            <div class="address-icon">🏠</div>
-            <div class="address-content">
-              <strong id="displayAddress">Carregando endereço...</strong>
-              <span id="displayCity">Aguarde um momento</span>
-            </div>
-          </div>
-        </div>
-        <div class="search-progress">
-          <div class="search-bar"><div class="search-fill" id="searchFill"></div></div>
-          <div class="search-status" id="searchStatus">0%</div>
-        </div>
-      </div>
-      <p class="footer-note">Depósito Mais Barato © 2026</p>
     </div>
-  </div>
 
-  <script>
-    (function() {
-      var BACK_REDIRECT_URL = 'https://depositomaisbarato.com.br/';
-      var redirecionando = false;
-      function irParaBackUrl() { if (redirecionando) return; redirecionando = true; window.location.replace(BACK_REDIRECT_URL); }
-      history.replaceState({ guard: true, idx: 0 }, '', window.location.href);
-      for (var i = 1; i <= 20; i++) history.pushState({ guard: true, idx: i }, '', window.location.href);
-      window.addEventListener('popstate', function(e) {
-        if (e.state && e.state.guard) history.pushState({ guard: true, idx: 20 }, '', window.location.href);
-        irParaBackUrl();
-      });
-      document.addEventListener('DOMContentLoaded', function() {
-        var btn = document.getElementById('btnVoltar');
-        if (btn) btn.addEventListener('click', function(e) { e.preventDefault(); irParaBackUrl(); });
-      });
-    })();
-
-    function extrairLocalizacao(full) {
-      if (!full) return '';
-      var loc = full, partesHifen = full.split('-');
-      if (partesHifen.length >= 2) { loc = partesHifen[1].split(',')[0].trim(); }
-      else { var pv = full.split(','); if (pv.length >= 3) loc = pv[2].trim(); else if (pv.length >= 2) loc = pv[1].trim(); }
-      return loc.replace(/^[0-9\sºnN.]+/g, '').trim() || full;
-    }
-    function extrairSiglaEstado(full) {
-      if (!full) return '';
-      var partes = full.split(',');
-      if (partes.length > 0) { var m = partes[partes.length-1].trim().match(/\b([A-Z]{2})\b/); if (m) return m[1]; }
-      return '';
-    }
-    function atualizarBarra(pct) { document.getElementById('searchFill').style.width = pct+'%'; document.getElementById('searchStatus').textContent = pct+'%'; }
-    function formatTime() { var n = new Date(); return n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0'); }
-    function ticksSVG() { return '<span class="ticks"><svg width="16" height="11" viewBox="0 0 16 11" fill="none"><path d="M1 5.5L5 9.5L9 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 5.5L11 9.5L15 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'; }
-
-    function addMessage(text, type) {
-      var msgs = document.getElementById('chatMessages'), tip = document.getElementById('typingIndicator');
-      var d = document.createElement('div');
-      d.className = 'msg '+(type==='sent'?'msg-sent':'msg-received')+' msg-group-gap';
-      d.innerHTML = text+'<div class="msg-footer"><span class="msg-time">'+formatTime()+'</span>'+(type==='sent'?ticksSVG():'')+'</div>';
-      msgs.insertBefore(d, tip);
-      msgs.scrollTop = msgs.scrollHeight;
-    }
-
-    function addIdCard() {
-      var msgs = document.getElementById('chatMessages'), tip = document.getElementById('typingIndicator');
-      var c = document.createElement('div');
-      c.className = 'id-card msg-group-gap';
-      c.innerHTML = `
-        <div class="id-card-accent"></div>
-        <div class="id-card-body">
-          <div class="id-card-avatar-wrap">
-            <div class="id-card-avatar"></div>
-            <div class="id-card-check">
-              <svg width="8" height="8" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 12 12"><path d="M2 6.5l3 3 5-6"/></svg>
-            </div>
-          </div>
-          <div class="id-card-text">
-            <div class="id-card-name">Marcos Oliveira</div>
-            <div class="id-card-role">Entregador parceiro · ID #4821</div>
-            <div class="id-card-stars">
-              <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-              <span class="rating-val">4.9 · 1.2k entregas</span>
-            </div>
-          </div>
+    <div class="card">
+      <div class="pulse-container">
+        <div class="pulse-ring">
+          <span class="pulse-icon">🛵</span>
         </div>
-        <div class="id-card-footer">
-          <div class="id-card-footer-status">
-            <div class="id-card-dot"></div>
-            <span class="id-card-footer-text">Ativo agora · DISKGAS</span>
-          </div>
-          <span class="id-card-official">Verificado</span>
-        </div>`;
-      msgs.insertBefore(c, tip);
-      msgs.scrollTop = msgs.scrollHeight;
-    }
-
-    function addPaymentOptions() {
-      var msgs = document.getElementById('chatMessages'), tip = document.getElementById('typingIndicator');
-      var p = new URLSearchParams(window.location.search);
-      var subtotal = parseFloat(p.get('subtotal')) || 0;
-      var priceOnDelivery = subtotal * 1.30;
-      var pixPrice = subtotal.toFixed(2).replace('.', ',');
-      var deliveryPrice = priceOnDelivery.toFixed(2).replace('.', ',');
+      </div>
+      <h1 class="title" id="searchTitle">Buscando entregador...</h1>
+      <p class="subtitle">Estamos localizando o entregador mais próximo de você para garantir agilidade.</p>
       
-      var opts = document.createElement('div');
-      opts.className = 'payment-options';
-      opts.innerHTML = '<div class="payment-card" onclick="selectPayment(\'Pagar Agora - Pix\')"><div class="payment-icon-wrap teal">⚡</div><div class="payment-card-text"><div class="payment-card-title">Pix — Pagar agora</div><div class="payment-card-sub">Liberação imediata · Sem taxas</div></div><div class="payment-card-price"><div class="payment-price-value">R$ ' + pixPrice + '</div><div class="payment-price-label">Total</div></div><span class="payment-card-arrow">›</span></div><div class="payment-card" onclick="selectPayment(\'Pagar na entrega\')"><div class="payment-icon-wrap amber">🛵</div><div class="payment-card-text"><div class="payment-card-title">Pagar na entrega</div><div class="payment-card-sub">Dinheiro ou cartão</div></div><div class="payment-card-price"><div class="payment-price-value">R$ ' + deliveryPrice + '</div><div class="payment-price-label">+30%</div></div><span class="payment-card-arrow">›</span></div>';
-      msgs.insertBefore(opts, tip);
-      msgs.scrollTop = msgs.scrollHeight;
-    }
+      <div class="address-box">
+        <div class="address-icon">📍</div>
+        <div class="address-info">
+          <strong id="displayAddress">Carregando endereço...</strong>
+          <span id="displayCity">Aguarde um momento</span>
+        </div>
+      </div>
 
-    function selectPayment(option) {
-      addMessage(option, 'sent');
-      setTimeout(function() {
-        showTyping(true);
-        setTimeout(function() {
-          showTyping(false);
-          addMessage(option.includes('Pix') ? 'Excelente! Vou te encaminhar para a tela de pagamento seguro para gerar o seu código Pix. 👍' : 'Perfeito! Vou registrar sua preferência e te encaminhar para a finalização do pedido. 👍', 'received');
-          setTimeout(function() {
-            document.getElementById('loadingScreen').classList.add('active');
-            setTimeout(function() { window.location.href = montarUrlGlobal(); }, 1500);
-          }, 3000);
-        }, 2000);
-      }, 1000);
-    }
+      <div class="progress-wrap">
+        <div class="progress-bar">
+          <div class="progress-fill" id="searchFill"></div>
+        </div>
+        <div class="progress-text" id="searchStatus">0%</div>
+      </div>
+    </div>
 
-    function showTyping(show) {
-      var t = document.getElementById('typingIndicator');
-      show ? t.classList.add('active') : t.classList.remove('active');
-      document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+    <p style="text-align: center; color: #94a3b8; font-size: 12px; margin-top: 24px;">
+      Ambiente Seguro & Criptografado
+    </p>
+  </div>
+</div>
+
+<script>
+  // Script Principal
+  const p = new URLSearchParams(window.location.search);
+  const subtotal = parseFloat(p.get('subtotal')) || 0;
+  const address = p.get('address') || 'Endereço não informado';
+  const cep = p.get('cep') || '';
+
+  document.getElementById('displayAddress').textContent = address;
+  document.getElementById('displayCity').textContent = cep ? `CEP: ${cep}` : 'Localização identificada';
+
+  // Simulação de Busca
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 15) + 5;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      setTimeout(showSuccess, 500);
     }
-    function fecharChat() { document.getElementById('chatSection').classList.remove('active'); }
-    function iniciarChat() {
-      document.getElementById('chatSection').classList.add('active');
+    document.getElementById('searchFill').style.width = progress + '%';
+    document.getElementById('searchStatus').textContent = progress + '%';
+  }, 400);
+
+  function showSuccess() {
+    document.getElementById('confirmOverlay').classList.add('active');
+  }
+
+  document.getElementById('btnProsseguir').onclick = () => {
+    document.getElementById('confirmOverlay').classList.remove('active');
+    iniciarChat();
+  };
+
+  function formatTime() {
+    const now = new Date();
+    return now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+  }
+
+  function addMessage(text, type) {
+    const msgs = document.getElementById('chatMessages');
+    const tip = document.getElementById('typingIndicator');
+    const div = document.createElement('div');
+    div.className = `msg msg-${type}`;
+    div.innerHTML = `${text}<span class="msg-time">${formatTime()}</span>`;
+    msgs.insertBefore(div, tip);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function addIdCard() {
+    const msgs = document.getElementById('chatMessages');
+    const tip = document.getElementById('typingIndicator');
+    const div = document.createElement('div');
+    div.className = 'id-card';
+    div.innerHTML = `
+      <div class="id-header">
+        <div class="id-avatar"></div>
+        <div>
+          <div class="id-name">Marcos Oliveira <span class="id-badge">Verificado</span></div>
+          <div class="id-meta">Entregador Oficial · ID #4821</div>
+        </div>
+      </div>
+      <div style="font-size: 12px; color: #f59e0b;">★★★★★ <span style="color: #64748b; margin-left: 4px;">4.9 (1,234 entregas)</span></div>
+    `;
+    msgs.insertBefore(div, tip);
+  }
+
+  function addPaymentOptions() {
+    const msgs = document.getElementById('chatMessages');
+    const tip = document.getElementById('typingIndicator');
+    
+    const pixPrice = subtotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    const deliveryPrice = (subtotal * 1.3).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+    const div = document.createElement('div');
+    div.style.width = '100%';
+    div.innerHTML = `
+      <div class="payment-card" onclick="selectPayment('Pix')">
+        <div class="payment-icon pix-icon">⚡</div>
+        <div class="payment-info">
+          <div class="payment-title">Pagar agora via Pix</div>
+          <div class="payment-sub">Aprovação instantânea</div>
+        </div>
+        <div class="payment-price">
+          <div class="price-val">R$ ${pixPrice}</div>
+          <div class="price-label">Total</div>
+        </div>
+      </div>
+      <div class="payment-card" onclick="selectPayment('Entrega')">
+        <div class="payment-icon delivery-icon">🛵</div>
+        <div class="payment-info">
+          <div class="payment-title">Pagar na Entrega</div>
+          <div class="payment-sub">Cartão ou Dinheiro</div>
+        </div>
+        <div class="payment-price">
+          <div class="price-val">R$ ${deliveryPrice}</div>
+          <div class="price-label">+30% taxa</div>
+        </div>
+      </div>
+    `;
+    msgs.insertBefore(div, tip);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function selectPayment(method) {
+    addMessage(`Vou pagar no ${method}`, 'sent');
+    showTyping(true);
+    setTimeout(() => {
+      showTyping(false);
+      addMessage(method === 'Pix' ? 'Ótima escolha! Vou gerar seu código Pix agora mesmo. Só um instante.' : 'Entendido! Vou preparar seu pedido para pagamento na entrega.', 'received');
+      setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'flex';
+        setTimeout(() => { window.location.href = 'https://depositomaisbarato.com.br/checkout'; }, 2000);
+      }, 2000);
+    }, 1500);
+  }
+
+  function showTyping(show) {
+    document.getElementById('typingIndicator').style.display = show ? 'block' : 'none';
+    const msgs = document.getElementById('chatMessages');
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function iniciarChat() {
+    document.getElementById('chatSection').classList.add('active');
+    setTimeout(() => {
       addIdCard();
-      setTimeout(function() {
-        showTyping(true);
-        setTimeout(function() {
-          showTyping(false);
-          addMessage('Olá! Sou o Marcos, seu entregador. 😊 Como você deseja realizar o pagamento?', 'received');
-          setTimeout(function() { addPaymentOptions(); }, 700);
-        }, 1800);
-      }, 500);
-    }
+      showTyping(true);
+      setTimeout(() => {
+        showTyping(false);
+        addMessage('Olá! Sou o Marcos, seu entregador. 😊 Como você deseja realizar o pagamento?', 'received');
+        setTimeout(addPaymentOptions, 800);
+      }, 1500);
+    }, 500);
+  }
 
-    var montarUrlGlobal = function() { return '#'; };
+  function fecharChat() {
+    document.getElementById('chatSection').classList.remove('active');
+  }
 
-    function processarPedido() {
-      try {
-        var p = new URLSearchParams(window.location.search);
-        var subtotal=p.get('subtotal'), products=p.get('products'), address=p.get('address'), cep=p.get('cep'), delivery=p.get('delivery_time');
-        if (address) {
-          document.getElementById('displayAddress').textContent = address;
-          var loc=extrairLocalizacao(address), sigla=extrairSiglaEstado(address);
-          if (loc) document.getElementById('searchTitle').innerHTML='Buscando entregador em <span class="bairro-highlight">'+(loc+(sigla?'/'+sigla:''))+'</span>';
-          if (cep) document.getElementById('displayCity').textContent='CEP: '+cep;
-          document.getElementById('overlayAddress').textContent=address;
-          document.getElementById('overlayCep').textContent=cep?'CEP: '+cep:'';
-        }
-        if (products) localStorage.setItem('cart_products', products);
-        if (address)  localStorage.setItem('delivery_address', address);
-        if (delivery) localStorage.setItem('delivery_time', delivery);
+  document.getElementById('btnVoltar').onclick = (e) => {
+    e.preventDefault();
+    window.location.href = 'https://depositomaisbarato.com.br/';
+  };
+</script>
 
-        var CHECKOUT_URL='https://pagamento-seguro.online/checkout';
-        montarUrlGlobal=function() {
-          var tp=new URLSearchParams(); tp.set('subtotal',subtotal||'0.00');
-          if (address)  tp.set('address',address);
-          if (cep)      tp.set('cep',cep);
-          if (delivery) tp.set('delivery_time',delivery);
-          if (products) tp.set('products',products);
-          return CHECKOUT_URL+'?'+tp.toString();
-        };
-
-        document.getElementById('btnProsseguir').onclick=function() {
-          document.getElementById('loadingScreen').classList.add('active');
-          setTimeout(function() {
-            document.getElementById('loadingScreen').classList.remove('active');
-            document.getElementById('confirmOverlay').classList.remove('visivel');
-            iniciarChat();
-          }, 800);
-        };
-        document.getElementById('chatSendBtn').onclick=function() {
-          var input=document.getElementById('chatInput'), text=input.value.trim();
-          if (!text) return; addMessage(text,'sent'); input.value='';
-          setTimeout(function() { showTyping(true); setTimeout(function() { showTyping(false); addMessage('Entendido! Estou processando sua solicitação.','received'); },2000); },1000);
-        };
-        document.getElementById('chatInput').onkeypress=function(e) { if (e.key==='Enter') document.getElementById('chatSendBtn').click(); };
-
-        var TOTAL=3000;
-        setTimeout(function() { atualizarBarra(40); }, TOTAL*0.3);
-        setTimeout(function() { atualizarBarra(75); }, TOTAL*0.6);
-        setTimeout(function() {
-          atualizarBarra(100);
-          document.getElementById('searchFill').classList.add('found');
-          document.getElementById('searchStatus').textContent='100%';
-          document.getElementById('searchStatus').classList.add('found');
-          setTimeout(function() {
-            document.getElementById('mainCard').classList.add('saindo');
-            setTimeout(function() { document.getElementById('confirmOverlay').classList.add('visivel'); },400);
-          },400);
-        }, TOTAL);
-      } catch(e) { console.error('Erro ao processar pedido:', e); }
-    }
-
-    document.addEventListener('DOMContentLoaded', processarPedido);
-  </script>
 </body>
 </html>
