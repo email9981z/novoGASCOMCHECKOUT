@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversa com Ana - Suporte Especializado</title>
+    <title>Chatbot Profissional - Full Screen</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #0f172a; /* Azul marinho elegante */
-            --accent-color: #3b82f6;
+            --primary-color: #2563eb;
             --bg-color: #ffffff;
-            --chat-bg: #f1f5f9;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --user-msg-bg: #3b82f6;
+            --chat-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --user-msg-bg: #2563eb;
             --user-msg-text: #ffffff;
-            --bot-msg-bg: #ffffff;
-            --bot-msg-text: #1e293b;
-            --header-height: 80px;
-            --input-area-height: 90px;
+            --bot-msg-bg: #f3f4f6;
+            --bot-msg-text: #1f2937;
+            --header-height: 70px;
+            --input-area-height: 80px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body, html {
@@ -34,31 +33,31 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
-            background-color: var(--chat-bg);
         }
 
+        /* Container do Chat Ocupando a Tela Toda */
         .chat-container {
             width: 100%;
             height: 100vh;
-            height: 100dvh;
+            height: 100dvh; /* Usa a altura dinâmica para evitar cortes em mobile */
             background: var(--chat-bg);
             display: flex;
             flex-direction: column;
-            position: fixed;
+            position: fixed; /* Fixa para evitar problemas de scroll do body */
             top: 0;
             left: 0;
         }
 
-        /* Cabeçalho Humanizado */
+        /* Cabeçalho Profissional */
         .chat-header {
             height: var(--header-height);
-            background: white;
-            color: var(--text-main);
+            background: var(--primary-color);
+            color: white;
             padding: 0 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 10;
         }
 
@@ -68,23 +67,23 @@
             gap: 15px;
         }
 
-        .avatar-container {
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
             position: relative;
         }
 
-        .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #e2e8f0;
-        }
-
         .status-dot {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: #22c55e;
-            border: 2px solid white;
+            border: 2px solid var(--primary-color);
             border-radius: 50%;
             position: absolute;
             bottom: 2px;
@@ -93,66 +92,54 @@
 
         .header-info h2 {
             font-size: 18px;
-            font-weight: 700;
-            color: var(--text-main);
+            font-weight: 600;
         }
 
         .header-info p {
             font-size: 13px;
-            color: #22c55e;
-            font-weight: 500;
+            opacity: 0.9;
         }
 
         .header-actions {
             display: flex;
-            gap: 18px;
-            color: var(--text-muted);
-            font-size: 18px;
+            gap: 20px;
+            font-size: 20px;
             cursor: pointer;
-        }
-
-        .header-actions i:hover {
-            color: var(--accent-color);
         }
 
         /* Área de Mensagens */
         .chat-messages {
             flex: 1;
-            padding: 20px 15%;
+            padding: 30px 10%; /* Mais espaço nas laterais para telas grandes */
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Textura leve de fundo */
+            background-color: #f8fafc;
             scroll-behavior: smooth;
         }
 
-        @media (max-width: 1024px) {
-            .chat-messages { padding: 20px 5%; }
-        }
-
+        /* Ajuste para telas menores */
         @media (max-width: 768px) {
-            .chat-messages { padding: 20px 16px; }
-        }
-
-        .message-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            .chat-messages {
+                padding: 20px 16px;
+            }
         }
 
         .message {
-            max-width: 75%;
-            padding: 14px 18px;
-            border-radius: 20px;
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
             font-size: 15px;
-            line-height: 1.6;
+            line-height: 1.5;
             position: relative;
-            animation: fadeIn 0.4s cubic-bezier(0.1, 0.7, 1.0, 0.1);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -161,6 +148,7 @@
             background: white;
             color: var(--bot-msg-text);
             border-bottom-left-radius: 4px;
+            border: 1px solid #e5e7eb;
         }
 
         .user-message {
@@ -172,31 +160,31 @@
 
         .time {
             font-size: 11px;
-            margin-top: 5px;
-            opacity: 0.5;
+            margin-top: 6px;
+            opacity: 0.6;
             display: block;
-        }
-
-        .user-message .time {
             text-align: right;
-            color: rgba(255,255,255,0.8);
         }
 
-        /* Indicador de Digitação Humano */
+        /* Indicador de Digitação */
         .typing {
             display: none;
             align-self: flex-start;
             background: white;
-            padding: 12px 20px;
-            border-radius: 20px;
+            padding: 15px 20px;
+            border-radius: 18px;
             gap: 5px;
-            border-bottom-left-radius: 4px;
-            margin-bottom: 10px;
+            border: 1px solid #e5e7eb;
+            margin-left: 10%;
+        }
+
+        @media (max-width: 768px) {
+            .typing { margin-left: 0; }
         }
 
         .dot {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             background: #cbd5e1;
             border-radius: 50%;
             animation: bounce 1.4s infinite ease-in-out;
@@ -206,84 +194,76 @@
         .dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-            40% { transform: scale(1.1); opacity: 1; }
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
         }
 
         /* Rodapé de Entrada */
         .chat-input-area {
             min-height: var(--input-area-height);
-            padding: 15px 15%;
-            background: white;
-            border-top: 1px solid #e2e8f0;
+            padding: 10px 10%;
+            border-top: 1px solid #e5e7eb;
             display: flex;
             align-items: center;
             gap: 15px;
-            padding-bottom: max(15px, env(safe-area-inset-bottom));
-        }
-
-        @media (max-width: 1024px) {
-            .chat-input-area { padding: 15px 5%; }
+            background: white;
+            padding-bottom: max(10px, env(safe-area-inset-bottom)); /* Respeita áreas seguras de iPhones */
         }
 
         @media (max-width: 768px) {
-            .chat-input-area { padding: 10px 16px; }
+            .chat-input-area {
+                padding: 0 16px;
+            }
         }
 
         .input-wrapper {
             flex: 1;
+            position: relative;
             display: flex;
             align-items: center;
-            background: #f8fafc;
-            border-radius: 30px;
-            padding: 5px 20px;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s;
-        }
-
-        .input-wrapper:focus-within {
-            border-color: var(--accent-color);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
 
         input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 12px 0;
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            padding: 14px 20px;
+            border-radius: 30px;
             outline: none;
             font-size: 16px;
-            color: var(--text-main);
+            transition: all 0.2s;
+            background: #f9fafb;
         }
 
-        .action-icons {
-            display: flex;
-            gap: 15px;
-            color: var(--text-muted);
-            font-size: 18px;
+        input:focus {
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
         .send-btn {
-            background: var(--accent-color);
+            background: var(--primary-color);
             color: white;
             border: none;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            font-size: 20px;
             transition: all 0.2s;
             flex-shrink: 0;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
         }
 
         .send-btn:hover {
-            background: #2563eb;
-            transform: translateY(-2px);
+            background: #1d4ed8;
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -292,29 +272,24 @@
     <div class="chat-container">
         <header class="chat-header">
             <div class="header-left">
-                <div class="avatar-container">
-                    <!-- Imagem de perfil profissional (Unsplash) -->
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150" alt="Ana" class="avatar">
+                <div class="avatar">
+                    <i class="fas fa-robot"></i>
                     <div class="status-dot"></div>
                 </div>
                 <div class="header-info">
-                    <h2>Ana Silva</h2>
-                    <p>Online agora</p>
+                    <h2>Suporte Inteligente</h2>
+                    <p>Atendimento Online</p>
                 </div>
             </div>
             <div class="header-actions">
-                <i class="fas fa-video"></i>
-                <i class="fas fa-phone"></i>
-                <i class="fas fa-info-circle"></i>
+                <i class="fas fa-phone-alt" title="Ligar"></i>
+                <i class="fas fa-ellipsis-v" title="Mais opções"></i>
             </div>
         </header>
 
         <main class="chat-messages" id="chatMessages">
             <div class="message bot-message">
-                Olá! Tudo bem? Meu nome é Ana. 👋
-            </div>
-            <div class="message bot-message">
-                Estou aqui para te ajudar com qualquer dúvida. Como está sendo o seu dia?
+                Olá! Seja bem-vindo ao nosso canal de atendimento. Como posso ajudar você hoje?
                 <span class="time" id="currentTime"></span>
             </div>
         </main>
@@ -326,13 +301,9 @@
         </div>
 
         <footer class="chat-input-area">
-            <div class="action-icons">
-                <i class="far fa-smile"></i>
-                <i class="fas fa-paperclip"></i>
-            </div>
-            <form id="chatForm" style="display: flex; flex: 1; gap: 15px; align-items: center;">
+            <form id="chatForm" style="display: flex; width: 100%; gap: 15px; align-items: center;">
                 <div class="input-wrapper">
-                    <input type="text" id="userInput" placeholder="Escreva sua mensagem..." autocomplete="off">
+                    <input type="text" id="userInput" placeholder="Escreva sua mensagem aqui..." autocomplete="off">
                 </div>
                 <button type="submit" class="send-btn" id="sendBtn">
                     <i class="fas fa-paper-plane"></i>
@@ -346,26 +317,24 @@
         const chatForm = document.getElementById('chatForm');
         const userInput = document.getElementById('userInput');
         const typingIndicator = document.getElementById('typingIndicator');
-        const timeSpans = document.querySelectorAll('.time');
+        const timeSpan = document.getElementById('currentTime');
 
         function updateTime() {
             const now = new Date();
             return now.getHours().toString().padStart(2, '0') + ':' + 
                    now.getMinutes().toString().padStart(2, '0');
         }
-        
-        // Atualiza tempos iniciais
-        timeSpans.forEach(span => span.textContent = updateTime());
+        timeSpan.textContent = updateTime();
 
         const responses = {
-            "oi": "Oi! Tudo ótimo por aqui, e com você? Como posso te ajudar hoje?",
-            "olá": "Olá! Que bom falar com você. O que você está precisando?",
-            "quem é você": "Eu sou a Ana, faço parte da equipe de atendimento. Estou aqui para tornar sua experiência o mais tranquila possível!",
-            "preço": "Olha, os valores variam bastante dependendo da sua necessidade. Você prefere que eu te envie nossa tabela ou quer falar sobre um projeto específico?",
-            "ajuda": "Com certeza! Me conta um pouco mais sobre o que está acontecendo, vou fazer o meu melhor para resolver.",
-            "obrigado": "Imagina, eu que agradeço! Qualquer coisa é só me chamar aqui, tá? 😊",
-            "tchau": "Até mais! Tenha um dia maravilhoso. Tchau tchau!",
-            "default": "Entendi! Deixa eu ver se compreendi bem... você poderia me dar um pouco mais de detalhes sobre isso?"
+            "oi": "Olá! Tudo bem? Em que posso ser útil hoje?",
+            "olá": "Olá! Como posso ajudar você?",
+            "quem é você": "Sou seu assistente virtual de demonstração. Estou aqui para mostrar como uma interface de chat profissional funciona!",
+            "preço": "Nossos serviços são personalizados. Você gostaria de falar com um consultor comercial?",
+            "ajuda": "Estou à disposição! Você pode digitar sobre nossos produtos, suporte ou falar com um humano.",
+            "obrigado": "Eu que agradeço! Tenha um excelente dia.",
+            "tchau": "Até mais! Se precisar de algo, é só chamar.",
+            "default": "Entendi. Poderia me dar mais detalhes? Assim consigo te ajudar melhor."
         };
 
         function addMessage(text, sender) {
@@ -388,11 +357,8 @@
             addMessage(message, 'user');
             userInput.value = '';
 
-            // Simulação de tempo de resposta humano (variável)
             typingIndicator.style.display = 'flex';
             chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            const delay = 1000 + Math.random() * 2000; // Entre 1 e 3 segundos
 
             setTimeout(() => {
                 typingIndicator.style.display = 'none';
@@ -407,7 +373,7 @@
                 }
                 
                 addMessage(response, 'bot');
-            }, delay);
+            }, 1200);
         });
     </script>
 </body>
