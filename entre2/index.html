@@ -337,16 +337,16 @@
     background: #E6F4F2; border-radius: 5px; padding: 2px 8px;
   }
 
-  /* ── Opções de pagamento — REDESENHADAS E INTEGRADAS ── */
+  /* ── Opções de pagamento — Minimalista e Integrada ── */
   .payment-options {
-    display: flex; flex-direction: column; gap: 10px;
+    display: flex; flex-direction: column; gap: 0;
     width: min(280px, 82vw);
     align-self: flex-start;
     margin-left: 4px; margin-bottom: 4px;
     animation: msgIn 0.3s ease 0.15s both;
     background: var(--white);
     border-radius: 4px 16px 16px 16px;
-    padding: 16px 14px;
+    overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.06);
     border: 1px solid rgba(0,0,0,0.05);
     position: relative;
@@ -358,87 +358,72 @@
   }
 
   .payment-card {
-    background: linear-gradient(to bottom, #fafbfc 0%, #f5f7fa 100%);
-    border-radius: 11px;
+    background: var(--white);
     display: flex; align-items: center; gap: 12px;
-    padding: 13px 14px;
+    padding: 14px 14px;
     cursor: pointer;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    border-bottom: 1px solid #f1f5f9;
+    box-shadow: none;
+    transition: all 0.15s ease;
     justify-content: space-between;
     position: relative;
-    overflow: hidden;
   }
-  .payment-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
+  .payment-card:last-child {
+    border-bottom: none;
   }
   .payment-card:active { 
-    transform: scale(0.97); 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-    background: linear-gradient(to bottom, #f0f4f8 0%, #eff2f7 100%);
+    background: #fafbfc;
   }
   .payment-card:hover {
-    background: linear-gradient(to bottom, #f0f4f8 0%, #eff2f7 100%);
-    border-color: #d0d9e6;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    background: #fafbfc;
   }
 
   .payment-icon-wrap {
-    width: 40px; height: 40px; border-radius: 10px;
+    width: 36px; height: 36px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 19px; flex-shrink: 0; background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    transition: all 0.18s ease;
+    font-size: 18px; flex-shrink: 0; background: #f8fafc;
+    border: none;
+    box-shadow: none;
+    transition: all 0.15s ease;
   }
   .payment-icon-wrap.teal { 
-    background: linear-gradient(135deg, #e6f4f2 0%, #d9ede8 100%);
-    border-color: #a8ddd5;
+    background: #e6f4f2;
   }
   .payment-icon-wrap.amber { 
-    background: linear-gradient(135deg, #fef9ee 0%, #fdf2e0 100%);
-    border-color: #f0dfc4;
-  }
-  .payment-card:hover .payment-icon-wrap {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    background: #fef9ee;
   }
 
   .payment-card-text { flex: 1; min-width: 0; }
   .payment-card-title { 
-    font-size: 13.5px; font-weight: 700; color: #0f172a; margin-bottom: 3px; line-height: 1.25;
-    letter-spacing: -0.2px;
+    font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 2px; line-height: 1.2;
   }
   .payment-card-sub { 
-    font-size: 11.5px; color: #64748b; line-height: 1.35; font-weight: 500;
+    font-size: 11px; color: #64748b; line-height: 1.3; font-weight: 500;
   }
 
   .payment-card-price { 
-    display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; margin-left: 10px; padding-left: 10px; border-left: 1px solid #e2e8f0;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; margin-left: 8px;
   }
   .payment-price-value { 
-    font-size: 15px; font-weight: 800; color: #0f172a; line-height: 1.2; letter-spacing: -0.3px;
+    font-size: 14px; font-weight: 800; color: #0f172a; line-height: 1.2;
   }
   .payment-price-label { 
-    font-size: 10.5px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px;
+    font-size: 10px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px;
   }
 
   .payment-card-arrow { 
     color: #cbd5e1; 
     font-size: 16px; 
-    font-weight: 400; 
+    font-weight: 300; 
     flex-shrink: 0; 
     line-height: 1;
-    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.15s ease;
     margin-left: 6px;
   }
   .payment-card:hover .payment-card-arrow {
     color: #94a3b8;
-    transform: translateX(3px);
+    transform: translateX(2px);
   }
 
   /* Typing */
