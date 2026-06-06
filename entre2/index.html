@@ -341,10 +341,9 @@ body {
 
 /* Input área */
 .chat-input-area {
-  background: #fff; padding: 10px 12px;
-  border-top: 1px solid #e9ebee;
-  display: flex; flex-direction: column; gap: 7px;
-  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 8px 0 16px;
+  margin-top: 4px;
 }
 
 /* Dica de confiança */
@@ -454,8 +453,9 @@ body {
     <span class="order-banner-time" id="bannerTimer">20–30 min</span>
   </div>
 
-  <div class="chat-messages" id="chatMessages"></div>
-  <div class="chat-input-area" id="chatInputArea"></div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-input-area" id="chatInputArea"></div>
+  </div>
 </div>
 
 <!-- Tela de busca -->
@@ -617,7 +617,10 @@ body {
   // ── Helpers de chat ──
   function scroll() {
     const c = document.getElementById('chatMessages');
-    c.scrollTop = c.scrollHeight;
+    // Pequeno delay para garantir que o DOM foi atualizado
+    setTimeout(() => {
+      c.scrollTo({ top: c.scrollHeight, behavior: 'smooth' });
+    }, 50);
   }
 
   function limparOpcoes() {
@@ -740,7 +743,8 @@ body {
         <div class="addr-bubble-cep">${addressData.cep ? 'CEP ' + addressData.cep : ''}</div>
       </div>
     `;
-    inputArea.insertBefore(div, inputArea.firstChild);
+    inputArea.appendChild(div);
+    scroll();
   }
 
   function adicionarTrustHint(texto) {
@@ -748,7 +752,8 @@ body {
     const div = document.createElement('div');
     div.className = 'trust-hint';
     div.innerHTML = '<span class="trust-hint-icon">🔒</span><span class="trust-hint-text">' + texto + '</span>';
-    inputArea.insertBefore(div, inputArea.firstChild);
+    inputArea.appendChild(div);
+    scroll();
   }
 
   function adicionarOpcoes(opcoes) {
@@ -766,8 +771,9 @@ body {
         <span class="qbtn-arrow">›</span>
       `;
       btn.onclick = op.acao;
-      inputArea.appendChild(btn);
+    inputArea.appendChild(btn);
     });
+    scroll();
   }
 
   // ── Fluxo de conversa ──
