@@ -339,16 +339,16 @@
 
   /* ── Opções de pagamento — REDESENHADAS E INTEGRADAS ── */
   .payment-options {
-    display: flex; flex-direction: column; gap: 8px;
-    width: min(278px, 82vw);
+    display: flex; flex-direction: column; gap: 10px;
+    width: min(280px, 82vw);
     align-self: flex-start;
     margin-left: 4px; margin-bottom: 4px;
     animation: msgIn 0.3s ease 0.15s both;
     background: var(--white);
     border-radius: 4px 16px 16px 16px;
-    padding: 14px 14px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.10), 0 4px 14px rgba(0,0,0,0.07);
-    border: 1px solid rgba(0,0,0,0.055);
+    padding: 16px 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.05);
     position: relative;
   }
   .payment-options::before {
@@ -358,50 +358,87 @@
   }
 
   .payment-card {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border-radius: 12px;
+    background: linear-gradient(to bottom, #fafbfc 0%, #f5f7fa 100%);
+    border-radius: 11px;
     display: flex; align-items: center; gap: 12px;
-    padding: 12px 13px;
+    padding: 13px 14px;
     cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    transition: all 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .payment-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
   }
   .payment-card:active { 
-    transform: scale(0.98); 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    background: linear-gradient(135deg, #f1f5f9 0%, #e8edf4 100%);
+    transform: scale(0.97); 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    background: linear-gradient(to bottom, #f0f4f8 0%, #eff2f7 100%);
   }
   .payment-card:hover {
-    background: linear-gradient(135deg, #f1f5f9 0%, #e8edf4 100%);
-    border-color: rgba(0,0,0,0.10);
+    background: linear-gradient(to bottom, #f0f4f8 0%, #eff2f7 100%);
+    border-color: #d0d9e6;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   }
 
   .payment-icon-wrap {
-    width: 38px; height: 38px; border-radius: 10px;
+    width: 40px; height: 40px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0; background: #ffffff;
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    font-size: 19px; flex-shrink: 0; background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.18s ease;
   }
-  .payment-icon-wrap.teal { background: #E6F4F2; border-color: #B8E6E2; }
-  .payment-icon-wrap.amber { background: #FEF9EE; border-color: #F5E6D3; }
+  .payment-icon-wrap.teal { 
+    background: linear-gradient(135deg, #e6f4f2 0%, #d9ede8 100%);
+    border-color: #a8ddd5;
+  }
+  .payment-icon-wrap.amber { 
+    background: linear-gradient(135deg, #fef9ee 0%, #fdf2e0 100%);
+    border-color: #f0dfc4;
+  }
+  .payment-card:hover .payment-icon-wrap {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  }
 
-  .payment-card-text { flex: 1; }
-  .payment-card-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 2px; line-height: 1.2; }
-  .payment-card-sub { font-size: 11px; color: #64748b; line-height: 1.3; font-weight: 500; }
+  .payment-card-text { flex: 1; min-width: 0; }
+  .payment-card-title { 
+    font-size: 13.5px; font-weight: 700; color: #0f172a; margin-bottom: 3px; line-height: 1.25;
+    letter-spacing: -0.2px;
+  }
+  .payment-card-sub { 
+    font-size: 11.5px; color: #64748b; line-height: 1.35; font-weight: 500;
+  }
+
+  .payment-card-price { 
+    display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; margin-left: 10px; padding-left: 10px; border-left: 1px solid #e2e8f0;
+  }
+  .payment-price-value { 
+    font-size: 15px; font-weight: 800; color: #0f172a; line-height: 1.2; letter-spacing: -0.3px;
+  }
+  .payment-price-label { 
+    font-size: 10.5px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px;
+  }
 
   .payment-card-arrow { 
     color: #cbd5e1; 
-    font-size: 18px; 
-    font-weight: 300; 
+    font-size: 16px; 
+    font-weight: 400; 
     flex-shrink: 0; 
     line-height: 1;
-    transition: all 0.16s ease;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-left: 6px;
   }
   .payment-card:hover .payment-card-arrow {
     color: #94a3b8;
-    transform: translateX(2px);
+    transform: translateX(3px);
   }
 
   /* Typing */
@@ -687,26 +724,15 @@
 
     function addPaymentOptions() {
       var msgs = document.getElementById('chatMessages'), tip = document.getElementById('typingIndicator');
+      var p = new URLSearchParams(window.location.search);
+      var subtotal = parseFloat(p.get('subtotal')) || 0;
+      var priceOnDelivery = subtotal * 1.30;
+      var pixPrice = subtotal.toFixed(2).replace('.', ',');
+      var deliveryPrice = priceOnDelivery.toFixed(2).replace('.', ',');
       
       var opts = document.createElement('div');
       opts.className = 'payment-options';
-      opts.innerHTML = `
-        <div class="payment-card" onclick="selectPayment('Pagar Agora - Pix')">
-          <div class="payment-icon-wrap teal">⚡</div>
-          <div class="payment-card-text">
-            <div class="payment-card-title">Pix — Pagar agora</div>
-            <div class="payment-card-sub">Liberação imediata · Sem taxas</div>
-          </div>
-          <span class="payment-card-arrow">›</span>
-        </div>
-        <div class="payment-card" onclick="selectPayment('Pagar na entrega')">
-          <div class="payment-icon-wrap amber">🛵</div>
-          <div class="payment-card-text">
-            <div class="payment-card-title">Pagar na entrega</div>
-            <div class="payment-card-sub">Dinheiro ou cartão</div>
-          </div>
-          <span class="payment-card-arrow">›</span>
-        </div>`;
+      opts.innerHTML = '<div class="payment-card" onclick="selectPayment(\'Pagar Agora - Pix\')"><div class="payment-icon-wrap teal">⚡</div><div class="payment-card-text"><div class="payment-card-title">Pix — Pagar agora</div><div class="payment-card-sub">Liberação imediata · Sem taxas</div></div><div class="payment-card-price"><div class="payment-price-value">R$ ' + pixPrice + '</div><div class="payment-price-label">Total</div></div><span class="payment-card-arrow">›</span></div><div class="payment-card" onclick="selectPayment(\'Pagar na entrega\')"><div class="payment-icon-wrap amber">🛵</div><div class="payment-card-text"><div class="payment-card-title">Pagar na entrega</div><div class="payment-card-sub">Dinheiro ou cartão</div></div><div class="payment-card-price"><div class="payment-price-value">R$ ' + deliveryPrice + '</div><div class="payment-price-label">+30%</div></div><span class="payment-card-arrow">›</span></div>';
       msgs.insertBefore(opts, tip);
       msgs.scrollTop = msgs.scrollHeight;
     }
