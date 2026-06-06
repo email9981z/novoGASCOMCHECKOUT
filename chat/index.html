@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Profissional</title>
+    <title>Chatbot Profissional - Full Screen</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #2563eb;
-            --bg-color: #f3f4f6;
+            --bg-color: #ffffff;
             --chat-bg: #ffffff;
             --text-main: #1f2937;
             --text-muted: #6b7280;
@@ -16,6 +16,8 @@
             --user-msg-text: #ffffff;
             --bot-msg-bg: #f3f4f6;
             --bot-msg-text: #1f2937;
+            --header-height: 70px;
+            --input-area-height: 80px;
         }
 
         * {
@@ -25,92 +27,110 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body {
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px; /* Adiciona respiro nas bordas da tela */
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Evita scroll na página inteira */
         }
 
-        /* Container do Chat */
+        /* Container do Chat Ocupando a Tela Toda */
         .chat-container {
-            width: 100%;
-            max-width: 400px;
-            height: 80vh; /* Altura relativa para não ultrapassar a tela */
-            max-height: 700px;
+            width: 100vw;
+            height: 100vh;
             background: var(--chat-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             position: relative;
         }
 
-        /* Cabeçalho */
+        /* Cabeçalho Profissional */
         .chat-header {
+            height: var(--header-height);
             background: var(--primary-color);
             color: white;
-            padding: 16px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .avatar {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
+            font-size: 22px;
             position: relative;
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background: #22c55e;
             border: 2px solid var(--primary-color);
             border-radius: 50%;
             position: absolute;
-            bottom: 0;
-            right: 0;
+            bottom: 2px;
+            right: 2px;
         }
 
         .header-info h2 {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
         }
 
         .header-info p {
-            font-size: 12px;
-            opacity: 0.8;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            font-size: 20px;
+            cursor: pointer;
         }
 
         /* Área de Mensagens */
         .chat-messages {
             flex: 1;
-            padding: 16px;
+            padding: 30px 10%; /* Mais espaço nas laterais para telas grandes */
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Textura leve de fundo */
+            background-color: #f8fafc;
             scroll-behavior: smooth;
         }
 
+        /* Ajuste para telas menores */
+        @media (max-width: 768px) {
+            .chat-messages {
+                padding: 20px 16px;
+            }
+        }
+
         .message {
-            max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 14px;
-            font-size: 14px;
-            line-height: 1.4;
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.5;
             position: relative;
             animation: fadeIn 0.3s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         @keyframes fadeIn {
@@ -120,39 +140,47 @@
 
         .bot-message {
             align-self: flex-start;
-            background: var(--bot-msg-bg);
+            background: white;
             color: var(--bot-msg-text);
-            border-bottom-left-radius: 2px;
+            border-bottom-left-radius: 4px;
+            border: 1px solid #e5e7eb;
         }
 
         .user-message {
             align-self: flex-end;
             background: var(--user-msg-bg);
             color: var(--user-msg-text);
-            border-bottom-right-radius: 2px;
+            border-bottom-right-radius: 4px;
         }
 
         .time {
-            font-size: 10px;
-            margin-top: 4px;
+            font-size: 11px;
+            margin-top: 6px;
             opacity: 0.6;
             display: block;
+            text-align: right;
         }
 
         /* Indicador de Digitação */
         .typing {
             display: none;
             align-self: flex-start;
-            background: var(--bot-msg-bg);
-            padding: 12px;
-            border-radius: 14px;
-            gap: 4px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 18px;
+            gap: 5px;
+            border: 1px solid #e5e7eb;
+            margin-left: 10%;
+        }
+
+        @media (max-width: 768px) {
+            .typing { margin-left: 0; }
         }
 
         .dot {
-            width: 6px;
-            height: 6px;
-            background: #9ca3af;
+            width: 8px;
+            height: 8px;
+            background: #cbd5e1;
             border-radius: 50%;
             animation: bounce 1.4s infinite ease-in-out;
         }
@@ -167,38 +195,59 @@
 
         /* Rodapé de Entrada */
         .chat-input-area {
-            padding: 16px;
+            height: var(--input-area-height);
+            padding: 0 10%;
             border-top: 1px solid #e5e7eb;
             display: flex;
-            gap: 8px;
+            align-items: center;
+            gap: 15px;
             background: white;
         }
 
-        input {
+        @media (max-width: 768px) {
+            .chat-input-area {
+                padding: 0 16px;
+            }
+        }
+
+        .input-wrapper {
             flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            width: 100%;
             border: 1px solid #e5e7eb;
-            padding: 10px 14px;
-            border-radius: 24px;
+            padding: 14px 20px;
+            border-radius: 30px;
             outline: none;
-            transition: border 0.2s;
+            font-size: 16px;
+            transition: all 0.2s;
+            background: #f9fafb;
         }
 
         input:focus {
             border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
         .send-btn {
             background: var(--primary-color);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.2s, background 0.2s;
+            font-size: 20px;
+            transition: all 0.2s;
+            flex-shrink: 0;
         }
 
         .send-btn:hover {
@@ -206,31 +255,38 @@
             transform: scale(1.05);
         }
 
-        .send-btn:active {
-            transform: scale(0.95);
+        .send-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
 
     <div class="chat-container">
-        <div class="chat-header">
-            <div class="avatar">
-                <i class="fas fa-robot"></i>
-                <div class="status-dot"></div>
+        <header class="chat-header">
+            <div class="header-left">
+                <div class="avatar">
+                    <i class="fas fa-robot"></i>
+                    <div class="status-dot"></div>
+                </div>
+                <div class="header-info">
+                    <h2>Suporte Inteligente</h2>
+                    <p>Atendimento Online</p>
+                </div>
             </div>
-            <div class="header-info">
-                <h2>Assistente Virtual</h2>
-                <p>Online agora</p>
+            <div class="header-actions">
+                <i class="fas fa-phone-alt" title="Ligar"></i>
+                <i class="fas fa-ellipsis-v" title="Mais opções"></i>
             </div>
-        </div>
+        </header>
 
-        <div class="chat-messages" id="chatMessages">
+        <main class="chat-messages" id="chatMessages">
             <div class="message bot-message">
-                Olá! Sou seu assistente virtual. Como posso ajudar você hoje?
+                Olá! Seja bem-vindo ao nosso canal de atendimento. Como posso ajudar você hoje?
                 <span class="time" id="currentTime"></span>
             </div>
-        </div>
+        </main>
 
         <div class="typing" id="typingIndicator">
             <div class="dot"></div>
@@ -238,12 +294,16 @@
             <div class="dot"></div>
         </div>
 
-        <form class="chat-input-area" id="chatForm">
-            <input type="text" id="userInput" placeholder="Digite sua mensagem..." autocomplete="off">
-            <button type="submit" class="send-btn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </form>
+        <footer class="chat-input-area">
+            <form id="chatForm" style="display: flex; width: 100%; gap: 15px; align-items: center;">
+                <div class="input-wrapper">
+                    <input type="text" id="userInput" placeholder="Escreva sua mensagem aqui..." autocomplete="off">
+                </div>
+                <button type="submit" class="send-btn" id="sendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </footer>
     </div>
 
     <script>
@@ -253,7 +313,6 @@
         const typingIndicator = document.getElementById('typingIndicator');
         const timeSpan = document.getElementById('currentTime');
 
-        // Define a hora inicial
         function updateTime() {
             const now = new Date();
             return now.getHours().toString().padStart(2, '0') + ':' + 
@@ -261,16 +320,15 @@
         }
         timeSpan.textContent = updateTime();
 
-        // Respostas predefinidas (Simulação de IA)
         const responses = {
-            "oi": "Olá! Tudo bem? Em que posso ser útil?",
-            "olá": "Olá! Como posso ajudar você hoje?",
-            "quem é você": "Eu sou um chatbot protótipo criado para demonstrar uma interface profissional.",
-            "preço": "Nossos planos começam a partir de R$ 49,90 mensais. Gostaria de saber mais?",
-            "ajuda": "Claro! Você pode perguntar sobre nossos serviços, preços ou suporte técnico.",
-            "obrigado": "Por nada! Se precisar de algo mais, estou à disposição.",
-            "tchau": "Até logo! Tenha um excelente dia!",
-            "default": "Interessante! Pode me contar mais sobre isso? (Este é um chatbot de exemplo)."
+            "oi": "Olá! Tudo bem? Em que posso ser útil hoje?",
+            "olá": "Olá! Como posso ajudar você?",
+            "quem é você": "Sou seu assistente virtual de demonstração. Estou aqui para mostrar como uma interface de chat profissional funciona!",
+            "preço": "Nossos serviços são personalizados. Você gostaria de falar com um consultor comercial?",
+            "ajuda": "Estou à disposição! Você pode digitar sobre nossos produtos, suporte ou falar com um humano.",
+            "obrigado": "Eu que agradeço! Tenha um excelente dia.",
+            "tchau": "Até mais! Se precisar de algo, é só chamar.",
+            "default": "Entendi. Poderia me dar mais detalhes? Assim consigo te ajudar melhor."
         };
 
         function addMessage(text, sender) {
@@ -285,32 +343,31 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function getBotResponse(input) {
-            const cleanInput = input.toLowerCase().trim();
-            for (let key in responses) {
-                if (cleanInput.includes(key)) return responses[key];
-            }
-            return responses["default"];
-        }
-
         chatForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const message = userInput.value;
             if (!message.trim()) return;
 
-            // Adiciona mensagem do usuário
             addMessage(message, 'user');
             userInput.value = '';
 
-            // Simula "digitando..."
             typingIndicator.style.display = 'flex';
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
             setTimeout(() => {
                 typingIndicator.style.display = 'none';
-                const response = getBotResponse(message);
+                const cleanInput = message.toLowerCase().trim();
+                let response = responses["default"];
+                
+                for (let key in responses) {
+                    if (cleanInput.includes(key)) {
+                        response = responses[key];
+                        break;
+                    }
+                }
+                
                 addMessage(response, 'bot');
-            }, 1500); // 1.5 segundos de delay para parecer real
+            }, 1200);
         });
     </script>
 </body>
