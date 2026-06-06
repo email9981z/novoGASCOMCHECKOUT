@@ -9,16 +9,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --brand:    #FF6B35;
-      --brand-dk: #E55A2B;
-      --brand-lt: #FFF4F0;
+      --brand:    #0066CC;
+      --brand-dk: #0052A3;
+      --brand-lt: #E6F2FF;
       --bg:       #F8F9FA;
       --white:    #FFFFFF;
       --text:     #1A1A1A;
       --muted:    #6B7280;
       --border:   #E5E7EB;
       --success:  #10B981;
-      --warning:  #F59E0B;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,7 +25,7 @@
     html, body {
       height: 100%;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+      background: linear-gradient(135deg, #0F1B3C 0%, #1A2F5A 100%);
       display: flex;
       justify-content: center;
     }
@@ -46,7 +45,7 @@
 
     /* ── HEADER ────────────────────────────────────── */
     .header {
-      background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%);
+      background: linear-gradient(135deg, #0052A3 0%, #0066CC 100%);
       padding: 12px 14px;
       display: flex;
       align-items: center;
@@ -54,7 +53,7 @@
       flex-shrink: 0;
       position: relative;
       z-index: 10;
-      box-shadow: 0 2px 12px rgba(255, 107, 53, 0.3);
+      box-shadow: 0 2px 12px rgba(0, 102, 204, 0.3);
     }
 
     .h-agent {
@@ -82,7 +81,7 @@
       width: 11px;
       height: 11px;
       background: var(--success);
-      border: 2px solid #FF6B35;
+      border: 2px solid #0066CC;
       border-radius: 50%;
     }
 
@@ -147,7 +146,7 @@
       gap: 12px;
       margin-bottom: 8px;
       border: 1.5px solid var(--brand-lt);
-      box-shadow: 0 2px 8px rgba(255, 107, 53, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.08);
       flex-shrink: 0;
     }
 
@@ -273,7 +272,7 @@
       background: var(--brand);
       color: white;
       border-radius: 14px;
-      box-shadow: 0 2px 6px rgba(255, 107, 53, 0.25);
+      box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25);
     }
 
     .bmeta {
@@ -313,7 +312,7 @@
     .qbtn:hover  { background: var(--brand-lt); }
     .qbtn:active { background: var(--brand); color: white; }
 
-    /* ── TYPING ────────────────────────────────────── */
+    /* ── TYPING INDICATOR ──────────────────────────── */
     .typing-row {
       display: none;
       gap: 6px;
@@ -344,6 +343,16 @@
     @keyframes tdot {
       0%, 60%, 100% { transform: translateY(0);  background: #D1D5DB; }
       30%           { transform: translateY(-4px); background: #9CA3AF; }
+    }
+
+    /* ── TYPING TEXT INDICATOR ─────────────────────── */
+    .typing-text {
+      font-size: 11px;
+      color: #9CA3AF;
+      font-weight: 500;
+      margin-top: 4px;
+      margin-left: 32px;
+      display: none;
     }
 
     /* ── INPUT AREA ────────────────────────────────── */
@@ -401,7 +410,7 @@
     #msgIn:focus {
       border-color: var(--brand);
       background: white;
-      box-shadow: 0 0 0 2px rgba(255, 107, 53, .08);
+      box-shadow: 0 0 0 2px rgba(0, 102, 204, .08);
     }
     #msgIn::placeholder { color: #9CA3AF; }
 
@@ -419,7 +428,7 @@
       cursor: pointer;
       flex-shrink: 0;
       transition: all .15s;
-      box-shadow: 0 2px 8px rgba(255, 107, 53, .25);
+      box-shadow: 0 2px 8px rgba(0, 102, 204, .25);
     }
     .send-btn:hover    { background: var(--brand-dk); transform: scale(1.05); }
     .send-btn:disabled { background: #D1D5DB; box-shadow: none; transform: none; cursor: not-allowed; }
@@ -475,8 +484,21 @@
     <div class="date-chip"><span id="dateLabel">Hoje</span></div>
     <div class="sys-msg">Mariana entrou no atendimento · Protocolo #<span id="protocolNum"></span></div>
 
-    <!-- Welcome message -->
-    <div class="msg-row">
+    <!-- Typing indicator for initial message -->
+    <div class="typing-text" id="typingText">Mariana está digitando...</div>
+
+    <!-- Typing row (initial) -->
+    <div class="typing-row" id="initialTypingRow">
+      <img class="msg-av" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
+      <div class="typing-bub">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <!-- Welcome message (will appear after typing) -->
+    <div class="msg-row" id="welcomeMsg" style="display: none;">
       <img class="msg-av" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
       <div class="bubble a">
         Olá! Sou a Mariana, vendedora autorizada Diskgas. Posso ajudar com seu pedido de gás agora?
@@ -484,8 +506,8 @@
       </div>
     </div>
 
-    <!-- Quick replies - CONVERSION FOCUSED -->
-    <div class="qreplies" id="qr">
+    <!-- Quick replies -->
+    <div class="qreplies" id="qr" style="display: none;">
       <button class="qbtn" onclick="quick('🛒 Pedir gás agora')">Pedir gás</button>
       <button class="qbtn" onclick="quick('💰 Tabela de preços')">Preços</button>
       <button class="qbtn" onclick="quick('⏱️ Tempo de entrega')">Entrega</button>
@@ -555,6 +577,26 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     const d = new Date();
     return d.getHours().toString().padStart(2,'0') + ':' +
            d.getMinutes().toString().padStart(2,'0');
+  }
+
+  // ── Initial typing animation ───────────────────────
+  function showInitialTyping() {
+    const typingText = document.getElementById('typingText');
+    const initialTypingRow = document.getElementById('initialTypingRow');
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const qreplies = document.getElementById('qr');
+
+    typingText.style.display = 'block';
+    initialTypingRow.style.display = 'flex';
+    
+    // Simulate 2-3 seconds of typing
+    setTimeout(() => {
+      typingText.style.display = 'none';
+      initialTypingRow.style.display = 'none';
+      welcomeMsg.style.display = 'flex';
+      qreplies.style.display = 'flex';
+      scroll();
+    }, 2500);
   }
 
   // ── Add message ────────────────────────────────────────────
@@ -638,6 +680,11 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
   sendBtn.addEventListener('click', send);
   msgIn.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+
+  // ── Start initial typing animation on load ──────────────────
+  window.addEventListener('load', () => {
+    showInitialTyping();
   });
 </script>
 </body>
