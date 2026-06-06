@@ -337,51 +337,72 @@
     background: #E6F4F2; border-radius: 5px; padding: 2px 8px;
   }
 
-  /* Label de opções */
-  .payment-label {
-    align-self: center;
-    background: rgba(255,255,255,0.72);
-    color: #607D8B; font-size: 11px; font-weight: 600;
-    padding: 4px 12px; border-radius: 7px;
-    margin: 4px 0 8px;
-    animation: msgIn 0.3s ease 0.1s both;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-  }
-
-  /* ── Opções de pagamento — limpas ── */
+  /* ── Opções de pagamento — REDESENHADAS E INTEGRADAS ── */
   .payment-options {
-    display: flex; flex-direction: column; gap: 7px;
+    display: flex; flex-direction: column; gap: 8px;
     width: min(278px, 82vw);
     align-self: flex-start;
     margin-left: 4px; margin-bottom: 4px;
     animation: msgIn 0.3s ease 0.15s both;
+    background: var(--white);
+    border-radius: 4px 16px 16px 16px;
+    padding: 14px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10), 0 4px 14px rgba(0,0,0,0.07);
+    border: 1px solid rgba(0,0,0,0.055);
+    position: relative;
+  }
+  .payment-options::before {
+    content: ''; position: absolute; top: 0; left: -7px;
+    border-width: 0 7px 7px 0; border-style: solid;
+    border-color: transparent var(--white) transparent transparent;
   }
 
   .payment-card {
-    background: var(--white);
-    border-radius: 14px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px;
     display: flex; align-items: center; gap: 12px;
-    padding: 13px 14px;
+    padding: 12px 13px;
     cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.07);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-    transition: transform 0.14s ease, box-shadow 0.14s ease;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: all 0.16s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .payment-card:active { transform: scale(0.975); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  .payment-card:active { 
+    transform: scale(0.98); 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    background: linear-gradient(135deg, #f1f5f9 0%, #e8edf4 100%);
+  }
+  .payment-card:hover {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e8edf4 100%);
+    border-color: rgba(0,0,0,0.10);
+  }
 
   .payment-icon-wrap {
-    width: 40px; height: 40px; border-radius: 12px;
+    width: 38px; height: 38px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 19px; flex-shrink: 0; background: #F1F5F9;
+    font-size: 18px; flex-shrink: 0; background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
-  .payment-icon-wrap.teal { background: #E6F4F2; }
-  .payment-icon-wrap.amber { background: #FEF9EE; }
+  .payment-icon-wrap.teal { background: #E6F4F2; border-color: #B8E6E2; }
+  .payment-icon-wrap.amber { background: #FEF9EE; border-color: #F5E6D3; }
 
   .payment-card-text { flex: 1; }
-  .payment-card-title { font-size: 13.5px; font-weight: 700; color: #0f172a; margin-bottom: 2px; line-height: 1.2; }
-  .payment-card-sub { font-size: 11.5px; color: #64748b; line-height: 1.3; }
+  .payment-card-title { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 2px; line-height: 1.2; }
+  .payment-card-sub { font-size: 11px; color: #64748b; line-height: 1.3; font-weight: 500; }
 
-  .payment-card-arrow { color: #CBD5E1; font-size: 20px; font-weight: 300; flex-shrink: 0; line-height: 1; }
+  .payment-card-arrow { 
+    color: #cbd5e1; 
+    font-size: 18px; 
+    font-weight: 300; 
+    flex-shrink: 0; 
+    line-height: 1;
+    transition: all 0.16s ease;
+  }
+  .payment-card:hover .payment-card-arrow {
+    color: #94a3b8;
+    transform: translateX(2px);
+  }
 
   /* Typing */
   .typing {
@@ -666,10 +687,7 @@
 
     function addPaymentOptions() {
       var msgs = document.getElementById('chatMessages'), tip = document.getElementById('typingIndicator');
-      var lbl = document.createElement('div');
-      lbl.className = 'payment-label'; lbl.textContent = 'Como deseja pagar?';
-      msgs.insertBefore(lbl, tip);
-
+      
       var opts = document.createElement('div');
       opts.className = 'payment-options';
       opts.innerHTML = `
@@ -782,16 +800,11 @@
             document.getElementById('mainCard').classList.add('saindo');
             setTimeout(function() { document.getElementById('confirmOverlay').classList.add('visivel'); },400);
           },400);
-        },TOTAL);
-      } catch(err) { console.error('Erro:',err); }
+        }, TOTAL);
+      } catch(e) { console.error('Erro ao processar pedido:', e); }
     }
 
     document.addEventListener('DOMContentLoaded', processarPedido);
-    window.addEventListener('pageshow', function(event) {
-      if (event.persisted||(window.performance&&window.performance.navigation.type===2)) {
-        var ls=document.getElementById('loadingScreen'); if (ls) ls.classList.remove('active');
-      }
-    });
   </script>
 </body>
 </html>
