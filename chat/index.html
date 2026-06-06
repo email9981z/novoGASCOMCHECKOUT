@@ -24,17 +24,21 @@
 
     html, body {
       height: 100%;
+      width: 100%;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background: linear-gradient(135deg, #0F1B3C 0%, #1A2F5A 100%);
       display: flex;
       justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
     }
 
     /* ── APP SHELL ─────────────────────────────────── */
     .app {
       width: 100%;
       max-width: 440px;
-      min-width: 320px;
       height: 100dvh;
       display: flex;
       flex-direction: column;
@@ -43,6 +47,7 @@
       overflow: hidden;
       box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
       box-sizing: border-box;
+      flex-shrink: 0;
     }
 
     /* ── HEADER ────────────────────────────────────── */
@@ -56,6 +61,8 @@
       position: relative;
       z-index: 10;
       box-shadow: 0 2px 12px rgba(0, 102, 204, 0.3);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .h-agent {
@@ -141,6 +148,7 @@
       box-sizing: border-box;
       scrollbar-gutter: stable;
       scrollbar-width: thin;
+      scrollbar-color: rgba(0,0,0,0.08) var(--bg);
     }
 
     /* ── AGENT INFO CARD (PROFESSIONAL) ────────────── */
@@ -370,6 +378,8 @@
       padding: 10px 12px;
       padding-bottom: max(10px, env(safe-area-inset-bottom));
       flex-shrink: 0;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .pw-line {
