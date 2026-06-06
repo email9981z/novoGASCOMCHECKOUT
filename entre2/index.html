@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -366,157 +367,129 @@
   .id-card {
     align-self: flex-start;
     background: var(--white);
-    border-radius: 0px 16px 16px 16px;
-    width: min(300px, 82vw);
+    border-radius: 4px 16px 16px 16px;
+    width: min(272px, 80vw);
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10), 0 2px 10px rgba(0,0,0,0.06);
     animation: fadeSlide 0.35s ease both;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
     margin-left: 2px;
     position: relative;
+    border: 1px solid rgba(0,0,0,0.06);
   }
   .id-card::before {
     content: '';
     position: absolute;
-    top: 0; left: -8px;
-    border-width: 0 8px 8px 0;
+    top: 0; left: -7px;
+    border-width: 0 7px 7px 0;
     border-style: solid;
-    border-color: transparent #ffffff transparent transparent;
+    border-color: transparent var(--white) transparent transparent;
+    filter: drop-shadow(-1px 1px 0 rgba(0,0,0,0.04));
   }
 
-  /* Faixa colorida topo do card */
-  .id-card-stripe {
-    height: 5px;
-    background: linear-gradient(90deg, #075E54 0%, #128C7E 50%, #25D366 100%);
-  }
-
-  .id-card-body { padding: 14px 16px 0; }
-
-  .id-card-header-row {
+  .id-card-body {
+    padding: 16px 16px 14px;
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 12px;
+    align-items: center;
+    gap: 13px;
   }
+
   .id-card-avatar-wrap { position: relative; flex-shrink: 0; }
   .id-card-avatar {
-    width: 56px; height: 56px; border-radius: 50%;
+    width: 52px; height: 52px; border-radius: 50%;
     background-image: url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp');
     background-size: cover; background-position: center;
-    border: 2.5px solid var(--green);
-    box-shadow: 0 2px 8px rgba(34,197,94,0.25);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #25D366, 0 2px 8px rgba(0,0,0,0.12);
   }
   .id-card-verified-badge {
     position: absolute; bottom: -1px; right: -1px;
-    background: var(--green); color: #fff;
-    width: 20px; height: 20px; border-radius: 50%;
+    background: #25D366; color: #fff;
+    width: 18px; height: 18px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 10px; border: 2px solid #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    font-size: 9px; border: 2px solid #fff;
   }
 
   .id-card-text { flex: 1; min-width: 0; }
-  .id-card-name { font-size: 15px; font-weight: 800; color: var(--text-1); margin-bottom: 2px; line-height: 1.2; }
-  .id-card-role { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 6px; }
-  .id-card-stars { display: flex; align-items: center; gap: 3px; }
-  .id-card-stars .star { color: #f59e0b; font-size: 12px; }
-  .id-card-stars .rating-val { font-size: 12px; font-weight: 700; color: var(--text-2); }
-
-  .id-card-stats {
-    display: flex;
-    border-top: 1px solid var(--border);
-    margin: 0 -16px;
-  }
-  .id-stat {
-    flex: 1;
-    padding: 10px 4px;
-    display: flex; flex-direction: column; align-items: center;
-    gap: 2px;
-  }
-  .id-stat:not(:last-child) { border-right: 1px solid var(--border); }
-  .id-stat-val { font-size: 14px; font-weight: 800; color: var(--text-1); line-height: 1; }
-  .id-stat-label { font-size: 9.5px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; }
+  .id-card-name { font-size: 15px; font-weight: 800; color: var(--text-1); margin-bottom: 1px; line-height: 1.2; }
+  .id-card-role { font-size: 11px; font-weight: 500; color: var(--text-3); margin-bottom: 6px; }
+  .id-card-stars { display: flex; align-items: center; gap: 1px; }
+  .id-card-stars .star { color: #f59e0b; font-size: 11px; line-height: 1; }
+  .id-card-stars .rating-val { font-size: 11.5px; font-weight: 700; color: var(--text-2); margin-left: 4px; }
 
   .id-card-footer {
-    background: #f0fdf4;
-    border-top: 1px solid #dcfce7;
+    border-top: 1px solid #f0f0f0;
     padding: 9px 16px;
-    display: flex; align-items: center; gap: 7px;
+    display: flex; align-items: center; gap: 6px;
+    background: #fafafa;
   }
-  .id-card-footer-icon { color: var(--green); font-size: 13px; }
-  .id-card-footer-text { font-size: 11.5px; font-weight: 700; color: #166534; letter-spacing: 0.2px; }
+  .id-card-footer-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #25D366; flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(37,211,102,0.2);
+  }
+  .id-card-footer-text { font-size: 11px; font-weight: 600; color: #3d7a5a; }
 
-  /* ── Opções de Pagamento ── */
+  /* ── Separador de sistema (label de opções) ── */
   .payment-label {
-    align-self: flex-start;
-    background: rgba(255,255,255,0.7);
+    align-self: center;
+    background: rgba(225,245,254,0.88);
     color: #546e7a;
     font-size: 11px;
     font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 6px;
-    margin-bottom: 6px;
-    margin-left: 2px;
+    padding: 4px 12px;
+    border-radius: 7px;
+    margin: 6px 0 8px;
     animation: fadeSlide 0.3s ease 0.1s both;
+    letter-spacing: 0.1px;
   }
 
+  /* ── Opções de Pagamento ── */
   .payment-options {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    width: min(300px, 85vw);
+    gap: 7px;
+    width: min(272px, 80vw);
     align-self: flex-start;
     margin-left: 2px;
     animation: fadeSlide 0.35s ease 0.15s both;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 
   .payment-card {
     background: var(--white);
     border-radius: 14px;
-    overflow: hidden;
     display: flex;
     align-items: center;
-    gap: 0;
+    gap: 12px;
+    padding: 13px 14px;
     cursor: pointer;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    transition: transform 0.16s ease, background 0.16s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.055);
     position: relative;
-    border: 1.5px solid transparent;
+    overflow: hidden;
   }
   .payment-card:active {
-    transform: scale(0.97);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    border-color: var(--blue);
+    transform: scale(0.975);
+    background: #f7fffe;
   }
-
-  /* Borda lateral colorida */
-  .payment-card::before {
-    content: '';
-    display: block;
-    width: 4px;
-    align-self: stretch;
-    background: var(--card-accent, var(--blue));
-    flex-shrink: 0;
-  }
-
-  .payment-card-inner { flex: 1; padding: 13px 14px; display: flex; align-items: center; gap: 12px; }
 
   .payment-card-icon-wrap {
-    width: 42px; height: 42px; border-radius: 12px;
-    background: var(--icon-bg, #eff6ff);
+    width: 40px; height: 40px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+    font-size: 19px; flex-shrink: 0;
   }
-  .payment-card-text { flex: 1; }
-  .payment-card-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 2px; }
-  .payment-card-sub { font-size: 11.5px; color: var(--text-2); line-height: 1.4; }
-  .payment-card-arrow { color: var(--text-3); font-size: 16px; margin-right: 12px; flex-shrink: 0; }
+  .payment-card.pix .payment-card-icon-wrap  { background: #e6faf7; }
+  .payment-card.entrega .payment-card-icon-wrap { background: #fff8e6; }
 
-  /* Variantes */
-  .payment-card.pix { --card-accent: #32BCAD; --icon-bg: #f0fdf9; }
-  .payment-card.entrega { --card-accent: #f59e0b; --icon-bg: #fffbeb; }
+  .payment-card-text { flex: 1; }
+  .payment-card-title { font-size: 13.5px; font-weight: 700; color: var(--text-1); margin-bottom: 2px; line-height: 1.2; }
+  .payment-card-sub { font-size: 11.5px; color: var(--text-2); line-height: 1.3; }
+  .payment-card-arrow {
+    color: var(--text-3); font-size: 18px; flex-shrink: 0;
+    line-height: 1; font-weight: 300;
+  }
 
   /* ── Typing indicator ── */
   .typing {
@@ -601,18 +574,16 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 7px 12px;
-    background: rgba(255,255,255,0.65);
-    border-radius: 7px;
-    margin: 0 12px 8px;
-    font-size: 11.5px;
-    color: #546e7a;
-    font-weight: 600;
+    padding: 5px 0 6px;
+    font-size: 11px;
+    color: #7a9099;
+    font-weight: 500;
     animation: fadeSlide 0.5s ease 0.3s both;
     z-index: 1;
     position: relative;
+    letter-spacing: 0.1px;
   }
-  .security-notice svg { flex-shrink: 0; }
+  .security-notice svg { flex-shrink: 0; opacity: 0.7; }
 </style>
 </head>
 <body>
@@ -868,41 +839,24 @@
       var card = document.createElement('div');
       card.className = 'id-card msg-group-gap';
       card.innerHTML = `
-        <div class="id-card-stripe"></div>
         <div class="id-card-body">
-          <div class="id-card-header-row">
-            <div class="id-card-avatar-wrap">
-              <div class="id-card-avatar"></div>
-              <div class="id-card-verified-badge">✓</div>
-            </div>
-            <div class="id-card-text">
-              <div class="id-card-name">Marcos Oliveira</div>
-              <div class="id-card-role">Entregador Parceiro</div>
-              <div class="id-card-stars">
-                <span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                <span class="star">★</span><span class="star">★</span>
-                <span class="rating-val">4.9</span>
-              </div>
-            </div>
+          <div class="id-card-avatar-wrap">
+            <div class="id-card-avatar"></div>
+            <div class="id-card-verified-badge">✓</div>
           </div>
-          <div class="id-card-stats">
-            <div class="id-stat">
-              <div class="id-stat-val">1.2k</div>
-              <div class="id-stat-label">Entregas</div>
-            </div>
-            <div class="id-stat">
-              <div class="id-stat-val">98%</div>
-              <div class="id-stat-label">Pontual</div>
-            </div>
-            <div class="id-stat">
-              <div class="id-stat-val">3 anos</div>
-              <div class="id-stat-label">Parceiro</div>
+          <div class="id-card-text">
+            <div class="id-card-name">Marcos Oliveira</div>
+            <div class="id-card-role">Entregador parceiro</div>
+            <div class="id-card-stars">
+              <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              <span class="star">★</span><span class="star">★</span>
+              <span class="rating-val">4.9</span>
             </div>
           </div>
         </div>
         <div class="id-card-footer">
-          <span class="id-card-footer-icon">🛡️</span>
-          <span class="id-card-footer-text">DISKGAS — Entregador Verificado Oficial</span>
+          <div class="id-card-footer-dot"></div>
+          <span class="id-card-footer-text">DISKGAS — Entregador Verificado</span>
         </div>
       `;
       chatMessages.insertBefore(card, typingIndicator);
@@ -915,31 +869,27 @@
 
       var label = document.createElement('div');
       label.className = 'payment-label';
-      label.textContent = 'Escolha uma forma de pagamento';
+      label.textContent = 'Como deseja pagar?';
       chatMessages.insertBefore(label, typingIndicator);
 
       var opts = document.createElement('div');
       opts.className = 'payment-options';
       opts.innerHTML = `
         <div class="payment-card pix" onclick="selectPayment('Pagar Agora - Pix')">
-          <div class="payment-card-inner">
-            <div class="payment-card-icon-wrap">⚡</div>
-            <div class="payment-card-text">
-              <div class="payment-card-title">Pagar Agora via Pix</div>
-              <div class="payment-card-sub">Liberação imediata • Sem taxas extras</div>
-            </div>
-            <div class="payment-card-arrow">›</div>
+          <div class="payment-card-icon-wrap">⚡</div>
+          <div class="payment-card-text">
+            <div class="payment-card-title">Pix — Pagar agora</div>
+            <div class="payment-card-sub">Liberação imediata · Sem taxas</div>
           </div>
+          <div class="payment-card-arrow">›</div>
         </div>
         <div class="payment-card entrega" onclick="selectPayment('Pagar na entrega')">
-          <div class="payment-card-inner">
-            <div class="payment-card-icon-wrap">🛵</div>
-            <div class="payment-card-text">
-              <div class="payment-card-title">Pagar na Entrega</div>
-              <div class="payment-card-sub">Dinheiro ou cartão</div>
-            </div>
-            <div class="payment-card-arrow">›</div>
+          <div class="payment-card-icon-wrap">🛵</div>
+          <div class="payment-card-text">
+            <div class="payment-card-title">Pagar na entrega</div>
+            <div class="payment-card-sub">Dinheiro ou cartão</div>
           </div>
+          <div class="payment-card-arrow">›</div>
         </div>
       `;
       chatMessages.insertBefore(opts, typingIndicator);
