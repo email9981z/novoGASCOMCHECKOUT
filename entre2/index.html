@@ -159,13 +159,13 @@
 
   /* Chat Header */
   .chat-header {
-    background: #1e6cf2;
+    background: linear-gradient(135deg, #1e6cf2 0%, #1656c3 100%);
     color: #fff;
     padding: 16px 20px;
     display: flex;
     align-items: center;
     gap: 12px;
-    box-shadow: 0 2px 8px rgba(30, 108, 242, 0.15);
+    box-shadow: 0 4px 12px rgba(30, 108, 242, 0.2);
   }
 
   .chat-header-avatar {
@@ -183,13 +183,14 @@
   .chat-header-avatar::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 12px;
-    height: 12px;
+    bottom: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
     background: #34d399;
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: 2.5px solid #fff;
+    box-shadow: 0 0 0 1px rgba(30, 108, 242, 0.2);
   }
 
   .chat-header-info {
@@ -216,8 +217,8 @@
     padding: 20px 16px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    background: #f8f9fa;
+    gap: 12px;
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
   }
 
   .chat-messages::-webkit-scrollbar {
@@ -239,10 +240,11 @@
     color: #fff;
     border-radius: 16px;
     padding: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     display: flex;
     gap: 12px;
-    animation: slideIn .4s ease;
+    animation: slideIn .5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 16px rgba(30, 108, 242, 0.15);
   }
 
   .seller-info-avatar {
@@ -272,6 +274,7 @@
     justify-content: center;
     font-size: 11px;
     font-weight: 700;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .seller-info-content {
@@ -292,21 +295,22 @@
 
   .seller-info-badge {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     color: #fff;
     font-size: 10px;
     font-weight: 700;
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 8px;
     margin-top: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
   }
 
   @keyframes slideIn {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(15px);
     }
     to {
       opacity: 1;
@@ -324,7 +328,7 @@
   @keyframes messageIn {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(8px);
     }
     to {
       opacity: 1;
@@ -338,11 +342,13 @@
 
   .message-bubble {
     max-width: 75%;
-    padding: 10px 14px;
+    padding: 11px 15px;
     border-radius: 18px;
     font-size: 14px;
     line-height: 1.4;
     word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all .2s ease;
   }
 
   .message-bubble.seller {
@@ -357,15 +363,24 @@
     border-bottom-right-radius: 4px;
   }
 
+  .message-bubble.user::after {
+    content: '✓✓';
+    font-size: 11px;
+    margin-left: 4px;
+    opacity: 0.8;
+  }
+
   /* Typing Indicator */
   .typing-indicator {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 10px 14px;
+    padding: 11px 15px;
     background: #e5e7eb;
     border-radius: 18px;
     width: fit-content;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   .typing-dot {
@@ -391,7 +406,7 @@
     }
     30% {
       opacity: 1;
-      transform: translateY(-10px);
+      transform: translateY(-8px);
     }
   }
 
@@ -417,7 +432,7 @@
     background: #f3f4f6;
     border: 1px solid #e5e7eb;
     color: #111827;
-    padding: 12px 16px;
+    padding: 13px 16px;
     border-radius: 12px;
     font-size: 14px;
     font-weight: 600;
@@ -429,6 +444,8 @@
   .quick-button:hover {
     background: #e5e7eb;
     border-color: #d1d5db;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .quick-button:active {
@@ -436,25 +453,27 @@
   }
 
   .quick-button.primary {
-    background: #1e6cf2;
+    background: linear-gradient(135deg, #1e6cf2 0%, #1656c3 100%);
     color: #fff;
     border-color: #1e6cf2;
+    box-shadow: 0 4px 12px rgba(30, 108, 242, 0.2);
   }
 
   .quick-button.primary:hover {
-    background: #1656c3;
-    border-color: #1656c3;
+    box-shadow: 0 6px 16px rgba(30, 108, 242, 0.3);
+    transform: translateY(-2px);
   }
 
   /* Address Block */
   .address-block {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 12px;
+    background: linear-gradient(135deg, #f0f6ff 0%, #f9fafb 100%);
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    padding: 14px;
     margin-bottom: 12px;
     display: flex;
     gap: 12px;
+    box-shadow: 0 2px 8px rgba(30, 108, 242, 0.08);
   }
 
   .address-block-icon {
@@ -467,6 +486,7 @@
     justify-content: center;
     font-size: 20px;
     flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
 
   .address-block-content {
@@ -478,7 +498,7 @@
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #6b7280;
+    color: #1e6cf2;
     margin-bottom: 4px;
     letter-spacing: 0.5px;
   }
@@ -679,6 +699,32 @@
       return '';
     }
 
+    function processarEndereco() {
+      var p = new URLSearchParams(window.location.search);
+      var address = p.get('address');
+      var cep = p.get('cep');
+
+      if (address) {
+        addressData.address = address;
+        addressData.cep = cep || '';
+
+        var loc = extrairLocalizacao(address);
+        var sigla = extrairSiglaEstado(address);
+
+        if (loc) {
+          var textoExibicao = loc;
+          if (sigla) textoExibicao += '/' + sigla;
+          document.getElementById('searchTitle').innerHTML =
+            'Buscando entregador em <span class="bairro-highlight">' + textoExibicao + '</span>';
+        }
+
+        document.getElementById('displayAddress').textContent = address;
+        if (cep) {
+          document.getElementById('displayCity').textContent = 'CEP: ' + cep;
+        }
+      }
+    }
+
     function atualizarBarra(pct) {
       document.getElementById('searchFill').style.width = pct + '%';
       document.getElementById('searchStatus').textContent = pct + '%';
@@ -686,12 +732,12 @@
 
     // Calcula tempo de digitação baseado no tamanho do texto
     function calcularTempoDigitacao(texto) {
-      const velocidadeMedia = 40; // ms por caractere
-      const minimo = 300;
-      const maximo = 2000;
+      const velocidadeMedia = 45; // ms por caractere
+      const minimo = 400;
+      const maximo = 2200;
       const tempo = Math.min(Math.max(texto.length * velocidadeMedia, minimo), maximo);
       // Adiciona variação aleatória para parecer mais humano
-      return tempo + Math.random() * 300 - 150;
+      return tempo + Math.random() * 400 - 200;
     }
 
     function adicionarMensagem(texto, tipo = 'seller', tempoDelay = 0) {
@@ -784,16 +830,16 @@
       // Adiciona bloco de informação do vendedor
       adicionarBlocoVendedor();
 
-      // Delay inicial para parecer natural
-      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 400));
+      // Delay inicial para parecer natural (simula tempo de leitura)
+      await new Promise(resolve => setTimeout(resolve, 1200 + Math.random() * 500));
 
       // Primeira mensagem
       const msg1 = 'O prazo de entrega do gás para o seu endereço é de 20-30 minutos.';
       await mostrarDigitando(calcularTempoDigitacao(msg1));
       adicionarMensagem(msg1, 'seller', 100);
 
-      // Delay entre mensagens curtas
-      await new Promise(resolve => setTimeout(resolve, 400 + Math.random() * 200));
+      // Delay entre mensagens (simula leitura da própria mensagem)
+      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 300));
 
       // Segunda mensagem
       const msg2 = 'Poderia confirmar o endereço de entrega por gentileza?';
@@ -801,7 +847,7 @@
       adicionarMensagem(msg2, 'seller', 100);
 
       // Delay antes de mostrar o bloco de endereço
-      await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 300));
+      await new Promise(resolve => setTimeout(resolve, 700 + Math.random() * 400));
       adicionarBlocoEndereco();
       adicionarOpcoes([
         {
@@ -824,8 +870,8 @@
       // Simular resposta do usuário
       adicionarMensagem('Confirmar', 'user');
 
-      // Delay realista antes de responder
-      await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 400));
+      // Delay realista antes de responder (simula leitura)
+      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 500));
 
       // Resposta com digitação
       const msg = 'Perfeito! Deseja realizar o pagamento agora ou na entrega?';
@@ -833,7 +879,7 @@
       adicionarMensagem(msg, 'seller', 100);
 
       // Delay antes de mostrar opções
-      await new Promise(resolve => setTimeout(resolve, 400 + Math.random() * 200));
+      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 300));
       adicionarOpcoes([
         {
           texto: '💳 Pagar Agora - Pix',
@@ -857,7 +903,7 @@
       adicionarMensagem('Pagar Agora - Pix', 'user');
       limparOpcoes();
 
-      await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 300));
+      await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 400));
 
       const msg1 = 'Ótimo! Redirecionando para pagamento...';
       await mostrarDigitando(calcularTempoDigitacao(msg1));
@@ -881,7 +927,7 @@
         if (products) tp.set('products',      products);
         
         window.location.href = CHECKOUT_URL + '?' + tp.toString();
-      }, 1200);
+      }, 1500);
     }
 
     async function pagarEntrega() {
@@ -889,13 +935,13 @@
       adicionarMensagem('Pagar na Entrega', 'user');
       limparOpcoes();
 
-      await new Promise(resolve => setTimeout(resolve, 700 + Math.random() * 300));
+      await new Promise(resolve => setTimeout(resolve, 900 + Math.random() * 400));
 
       const msg1 = 'Perfeito! Seu pedido será entregue em breve.';
       await mostrarDigitando(calcularTempoDigitacao(msg1));
       adicionarMensagem(msg1, 'seller', 100);
 
-      await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 400));
+      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 500));
 
       const msg2 = 'Você receberá uma confirmação em instantes. Obrigado!';
       await mostrarDigitando(calcularTempoDigitacao(msg2));
@@ -919,7 +965,7 @@
         if (products) tp.set('products',      products);
         
         window.location.href = CHECKOUT_URL + '?' + tp.toString();
-      }, 1200);
+      }, 1500);
     }
 
     function processarPedido() {
@@ -931,25 +977,8 @@
         var cep      = p.get('cep');
         var delivery = p.get('delivery_time');
 
-        if (address) {
-          document.getElementById('displayAddress').textContent = address;
-          
-          var loc = extrairLocalizacao(address);
-          var sigla = extrairSiglaEstado(address);
-
-          if (loc) {
-            var textoExibicao = loc;
-            if (sigla) textoExibicao += '/' + sigla;
-            document.getElementById('searchTitle').innerHTML =
-              'Buscando entregador em <span class="bairro-highlight">' + textoExibicao + '</span>';
-          }
-          if (cep) {
-            document.getElementById('displayCity').textContent = 'CEP: ' + cep;
-          }
-
-          addressData.address = address;
-          addressData.cep = cep;
-        }
+        // Processa e extrai informações do endereço
+        processarEndereco();
 
         if (products) localStorage.setItem('cart_products',    products);
         if (address)  localStorage.setItem('delivery_address', address);
@@ -977,6 +1006,8 @@
 
       } catch (err) {
         console.error('Erro:', err);
+        // Tenta processar endereço mesmo em caso de erro
+        processarEndereco();
       }
     }
 
