@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Diskgas — Entrega de Gás</title>
+  <title>Diskgas — Entrega Oficial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,13 +12,13 @@
       --brand:    #0066CC;
       --brand-dk: #0052A3;
       --brand-lt: #E6F2FF;
-      --bg:       #F8F9FA;
+      --bg:       #F3F4F6;
       --white:    #FFFFFF;
-      --text:     #1A1A1A;
+      --text:     #111827;
       --muted:    #6B7280;
       --border:   #E5E7EB;
       --success:  #10B981;
-      --info:     #3B82F6;
+      --warning:  #F59E0B;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,14 +26,12 @@
     html, body {
       height: 100%;
       width: 100%;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #0F1B3C 0%, #1A2F5A 100%);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #111827;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      margin: 0;
-      padding: 0;
     }
 
     /* ── APP SHELL ─────────────────────────────────── */
@@ -45,762 +43,355 @@
       flex-direction: column;
       background: var(--bg);
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
-      box-sizing: border-box;
-      flex-shrink: 0;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
 
     /* ── HEADER ────────────────────────────────────── */
     .header {
-      background: linear-gradient(135deg, #0052A3 0%, #0066CC 100%);
-      padding: 12px 14px;
+      background: white;
+      padding: 14px 16px;
       display: flex;
       align-items: center;
       gap: 12px;
-      flex-shrink: 0;
-      position: relative;
+      border-bottom: 1px solid var(--border);
       z-index: 10;
-      box-shadow: 0 2px 12px rgba(0, 102, 204, 0.3);
-      width: 100%;
-      box-sizing: border-box;
     }
 
-    .h-agent {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-    }
-
-    .h-photo-wrap { position: relative; flex-shrink: 0; }
-
+    .h-agent { display: flex; align-items: center; gap: 12px; flex: 1; }
+    .h-photo-wrap { position: relative; }
     .h-photo {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.3);
-      display: block;
+      width: 44px; height: 44px; border-radius: 50%;
+      object-fit: cover; background: #E5E7EB;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
     .h-online-dot {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 11px;
-      height: 11px;
-      background: var(--success);
-      border: 2px solid #0066CC;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
+      position: absolute; bottom: 2px; right: 2px;
+      width: 10px; height: 10px; background: var(--success);
+      border: 2px solid white; border-radius: 50%;
+      display: none;
     }
 
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      50% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
-    }
-
-    .h-name-row {
-      color: white;
-      font-size: 14.5px;
-      font-weight: 600;
-      line-height: 1.2;
-    }
-
-    .h-sub {
-      color: rgba(255,255,255,0.8);
-      font-size: 11.5px;
-      margin-top: 2px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: color 0.3s ease;
-    }
-
-    .h-sub.typing {
-      color: rgba(255,255,255,0.95);
-      font-weight: 600;
-    }
-
-    .h-actions { 
-      display: flex; 
-      gap: 8px; 
-      flex-shrink: 0;
-    }
-
-    .btn-circ {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      color: white;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
-    .btn-circ:hover { background: rgba(255,255,255,0.25); }
+    .h-name-row { font-size: 15px; font-weight: 700; color: var(--text); }
+    .h-sub { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+    .h-sub.online { color: var(--success); font-weight: 600; }
 
     /* ── MESSAGES ──────────────────────────────────── */
     .msgs {
       flex: 1;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      padding: 16px 12px;
+      overflow-y: auto;
+      padding: 20px 16px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      scroll-behavior: smooth;
-      background: var(--bg);
-      width: 100%;
-      box-sizing: border-box;
-      scrollbar-gutter: stable;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0,0,0,0.08) var(--bg);
+      gap: 12px;
+      background: #F9FAFB;
     }
 
-    /* ── AGENT INFO CARD ────────────────────────────── */
+    /* ── AGENT CARD (TRUST BUILDER) ────────────────── */
     .agent-card {
       background: white;
-      border-radius: 12px;
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
-      border: 1.5px solid var(--brand-lt);
-      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.08);
-      flex-shrink: 0;
-      animation: slideIn 0.4s ease;
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid var(--brand-lt);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin-bottom: 10px;
+      display: none;
+      animation: slideDown 0.5s ease;
     }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .ac-header { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+    .ac-info h4 { font-size: 15px; font-weight: 700; }
+    .ac-badge { color: var(--brand); font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+    
+    .ac-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .ac-stat { background: var(--brand-lt); padding: 8px; border-radius: 8px; text-align: center; }
+    .ac-stat-val { display: block; font-size: 13px; font-weight: 700; color: var(--brand); }
+    .ac-stat-lbl { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; }
 
-    .ac-photo {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-      border: 3px solid var(--brand);
-    }
-
-    .ac-info h4 {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .ac-badge {
-      background: var(--brand);
-      color: white;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      letter-spacing: 0.3px;
-    }
-
-    .ac-title {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-      font-weight: 500;
-    }
-
-    .ac-stats {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
-
-    .ac-stat {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      color: var(--text);
-      font-weight: 600;
-      background: var(--brand-lt);
-      padding: 3px 8px;
-      border-radius: 6px;
-    }
-
-    .ac-stat i { font-size: 10px; color: var(--brand); }
-
-    /* ── DATE & SYS ─────────────────────────────────── */
-    .date-chip {
-      text-align: center;
-      margin: 2px 0 6px;
-      animation: slideIn 0.4s ease 0.1s both;
-    }
-    .date-chip span {
-      background: transparent;
-      font-size: 11px;
-      font-weight: 500;
-      color: #9CA3AF;
-    }
-
-    .sys-msg {
-      text-align: center;
-      font-size: 11px;
-      color: #9CA3AF;
-      margin: 0 0 8px;
-      animation: slideIn 0.4s ease 0.15s both;
-    }
-
-    /* ── MESSAGE ROWS ─────────────────────────────── */
-    .msg-row {
-      display: flex;
-      gap: 6px;
-      animation: msgIn .25s ease both;
-      margin-bottom: 2px;
-    }
-    .msg-row.user { flex-direction: row-reverse; }
-
-    @keyframes msgIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .msg-av {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      object-fit: cover;
-      align-self: flex-end;
-      flex-shrink: 0;
-    }
-    .msg-av.ghost { visibility: hidden; }
-
+    /* ── BUBBLES ───────────────────────────────────── */
+    .msg-row { display: flex; gap: 8px; max-width: 85%; }
+    .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
+    
     .bubble {
-      max-width: 75%;
-      padding: 8px 12px;
-      border-radius: 14px;
-      font-size: 13.5px;
-      line-height: 1.5;
-      word-wrap: break-word;
-      box-sizing: border-box;
-    }
-
-    .bubble.a {
-      background: white;
-      color: var(--text);
-      border-radius: 14px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      border: 1px solid #E5E7EB;
-    }
-
-    .bubble.u {
-      background: var(--brand);
-      color: white;
-      border-radius: 14px;
-      box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25);
-    }
-
-    .bmeta {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 3px;
-      margin-top: 4px;
-    }
-
-    .btime { font-size: 10px; }
-    .bubble.a .btime { color: #9CA3AF; }
-    .bubble.u .btime { color: rgba(255,255,255,0.6); }
-
-    .ticks { 
-      font-size: 11px; 
-      color: rgba(255,255,255,0.7);
-      transition: color 0.3s ease;
-    }
-
-    .ticks.read { 
-      color: #4FC3F7;
-      font-weight: 700;
-    }
-
-    /* ── TYPING INDICATOR ──────────────────────────── */
-    .typing-row {
-      display: none;
-      gap: 6px;
-      align-items: flex-end;
-      margin-bottom: 4px;
-      animation: msgIn .25s ease both;
-    }
-
-    .typing-bub {
-      background: white;
-      border-radius: 14px;
-      padding: 8px 12px;
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      border: 1px solid #E5E7EB;
-    }
-
-    .dot {
-      width: 6px;
-      height: 6px;
-      background: #D1D5DB;
-      border-radius: 50%;
-      animation: tdot 1.2s infinite ease;
-    }
-    .dot:nth-child(2) { animation-delay: .2s; }
-    .dot:nth-child(3) { animation-delay: .4s; }
-
-    @keyframes tdot {
-      0%, 60%, 100% { transform: translateY(0);  background: #D1D5DB; }
-      30%           { transform: translateY(-4px); background: #9CA3AF; }
-    }
-
-    /* ── TYPING TEXT INDICATOR ─────────────────────── */
-    .typing-text {
-      font-size: 11px;
-      color: #9CA3AF;
-      font-weight: 500;
-      margin-top: 4px;
-      margin-left: 32px;
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* ── QUICK REPLIES ─────────────────────────────── */
-    .qreplies {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 0 0 6px 32px;
-      animation: slideIn 0.4s ease;
-    }
-
-    .qbtn {
-      background: white;
-      border: 1.5px solid var(--brand);
-      color: var(--brand);
-      padding: 7px 12px;
+      padding: 10px 14px;
       border-radius: 18px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all .15s;
-    }
-    .qbtn:hover  { 
-      background: var(--brand); 
-      color: white;
-      transform: translateY(-2px); 
-      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
-    }
-    .qbtn:active { transform: translateY(0); }
-
-    /* ── INPUT AREA ────────────────────────────────── */
-    .input-area {
-      background: white;
-      border-top: 1px solid var(--border);
-      padding: 10px 12px;
-      padding-bottom: max(10px, env(safe-area-inset-bottom));
-      flex-shrink: 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .pw-line {
-      text-align: center;
-      font-size: 9.5px;
-      color: #9CA3AF;
-      font-weight: 500;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-    .pw-line i { font-size: 9px; color: var(--success); }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .emoji-btn {
-      background: none;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      opacity: 0.5;
-      line-height: 1;
-      transition: opacity .15s;
-      flex-shrink: 0;
-    }
-    .emoji-btn:hover { opacity: 0.8; }
-
-    #msgIn {
-      flex: 1;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 9px 14px;
-      font-size: 13.5px;
-      font-family: inherit;
-      outline: none;
-      background: #F9FAFB;
-      color: var(--text);
-      transition: all .2s;
-      resize: none;
-      max-height: 100px;
-    }
-    #msgIn:focus {
-      border-color: var(--brand);
-      background: white;
-      box-shadow: 0 0 0 2px rgba(0, 102, 204, .08);
-    }
-    #msgIn::placeholder { color: #9CA3AF; }
-
-    .send-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--brand);
-      border: none;
-      color: white;
       font-size: 14px;
+      line-height: 1.5;
+      position: relative;
+    }
+    .bubble.a { background: white; color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+    .bubble.u { background: var(--brand); color: white; border-bottom-right-radius: 4px; }
+
+    .b-meta { font-size: 10px; margin-top: 4px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; opacity: 0.7; }
+
+    /* ── PIX COMPONENT (CONVERSION FOCUS) ─────────── */
+    .pix-card {
+      background: #F0F9FF;
+      border: 2px dashed var(--brand);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 8px;
+      text-align: center;
+    }
+    .pix-title { font-size: 12px; font-weight: 700; color: var(--brand); text-transform: uppercase; margin-bottom: 8px; }
+    .pix-code {
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 11px;
+      word-break: break-all;
+      border: 1px solid var(--brand-lt);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .copy-btn {
+      background: var(--brand);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all .15s;
-      box-shadow: 0 2px 8px rgba(0, 102, 204, .25);
+      gap: 8px;
+      transition: background 0.2s;
     }
-    .send-btn:hover    { background: var(--brand-dk); transform: scale(1.05); }
-    .send-btn:disabled { background: #D1D5DB; box-shadow: none; transform: none; cursor: not-allowed; }
+    .copy-btn:active { transform: scale(0.98); }
 
-    .status-msg {
-      text-align: center;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--brand);
-      margin: 4px 0 8px;
-      padding: 6px 12px;
-      background: var(--brand-lt);
-      border-radius: 20px;
-      align-self: center;
-      display: none;
-      animation: slideIn 0.3s ease;
+    /* ── TYPING ────────────────────────────────────── */
+    .typing-row { display: none; align-items: center; gap: 8px; }
+    .dot-flashing {
+      position: relative; width: 6px; height: 6px; border-radius: 5px;
+      background-color: var(--brand); color: var(--brand);
+      animation: dot-flashing 1s infinite linear alternate; animation-delay: 0.5s;
     }
+    .dot-flashing::before, .dot-flashing::after {
+      content: ""; display: inline-block; position: absolute; top: 0;
+      width: 6px; height: 6px; border-radius: 5px; background-color: var(--brand);
+      animation: dot-flashing 1s infinite linear alternate;
+    }
+    .dot-flashing::before { left: -12px; animation-delay: 0s; }
+    .dot-flashing::after { left: 12px; animation-delay: 1s; }
+    @keyframes dot-flashing { 0% { background-color: var(--brand); } 50%, 100% { background-color: #E5E7EB; } }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    .footer { background: white; padding: 12px 16px; border-top: 1px solid var(--border); }
+    .input-row { display: flex; gap: 10px; align-items: center; }
+    input {
+      flex: 1; border: 1px solid var(--border); padding: 12px 16px;
+      border-radius: 24px; font-size: 14px; outline: none; background: #F9FAFB;
+    }
+    input:focus { border-color: var(--brand); background: white; }
+    .send-btn {
+      width: 44px; height: 44px; border-radius: 50%; background: var(--brand);
+      color: white; border: none; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .q-replies { display: flex; gap: 8px; overflow-x: auto; padding: 8px 0; scrollbar-width: none; }
+    .q-btn {
+      white-space: nowrap; background: white; border: 1px solid var(--brand);
+      color: var(--brand); padding: 8px 16px; border-radius: 20px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+
+    .sys-badge { text-align: center; font-size: 11px; color: var(--muted); margin: 8px 0; }
   </style>
 </head>
 <body>
+
 <div class="app">
-
-  <!-- ── HEADER ── -->
   <header class="header">
-    <button class="btn-circ"><i class="fas fa-chevron-left"></i></button>
-
     <div class="h-agent">
       <div class="h-photo-wrap">
-        <img class="h-photo" src="https://i.pravatar.cc/150?u=thiago" alt="Thiago">
-        <div class="h-online-dot"></div>
+        <img src="https://i.pravatar.cc/150?u=thiago" id="hPhoto" class="h-photo" style="filter: grayscale(1); opacity: 0.5;">
+        <div id="hDot" class="h-online-dot"></div>
       </div>
       <div>
-        <div class="h-name-row">Thiago</div>
-        <div class="h-sub" id="headerStatus">Online agora</div>
+        <div class="h-name-row" id="hName">Atendimento Diskgas</div>
+        <div class="h-sub" id="hStatus">Conectando...</div>
       </div>
     </div>
-
-    <div class="h-actions">
-      <button class="btn-circ" title="Opções"><i class="fas fa-ellipsis-v"></i></button>
-    </div>
+    <i class="fas fa-shield-alt" style="color: var(--success); font-size: 18px;"></i>
   </header>
 
-  <!-- ── MESSAGES ── -->
   <main class="msgs" id="msgs">
-
-    <!-- Agent info card -->
-    <div class="agent-card">
-      <img class="ac-photo" src="https://i.pravatar.cc/150?u=thiago" alt="Thiago">
-      <div class="ac-info">
-        <h4>
-          Thiago
-          <span class="ac-badge"><i class="fas fa-check-circle"></i> Vendedor Oficial</span>
-        </h4>
-        <p class="ac-title">Consultor Diskgas na sua região</p>
-        <div class="ac-stats">
-          <span class="ac-stat"><i class="fas fa-bolt"></i> Resposta rápida</span>
-          <span class="ac-stat"><i class="fas fa-star"></i> 5.0/5.0</span>
+    <div class="sys-badge">Criptografia de ponta a ponta ativa</div>
+    
+    <div id="agentCard" class="agent-card">
+      <div class="ac-header">
+        <img src="https://i.pravatar.cc/150?u=thiago" class="h-photo">
+        <div class="ac-info">
+          <h4>Thiago Silva</h4>
+          <span class="ac-badge"><i class="fas fa-check-circle"></i> Vendedor Verificado</span>
+        </div>
+      </div>
+      <div class="ac-stats">
+        <div class="ac-stat">
+          <span class="ac-stat-val">~2 min</span>
+          <span class="ac-stat-lbl">Tempo de Resposta</span>
+        </div>
+        <div class="ac-stat">
+          <span class="ac-stat-val">4.9/5.0</span>
+          <span class="ac-stat-lbl">Avaliação</span>
         </div>
       </div>
     </div>
 
-    <div class="date-chip"><span id="dateLabel">Hoje</span></div>
-    <div class="sys-msg">Thiago iniciou o atendimento · Protocolo #<span id="protocolNum"></span></div>
-
-    <!-- Status message placeholder -->
-    <div class="status-msg" id="statusMsg">Conectando ao vendedor...</div>
-
-    <!-- Typing indicator text -->
-    <div class="typing-text" id="typingText">Thiago está digitando...</div>
-
-    <!-- Quick Replies Container -->
-    <div class="qreplies" id="qrContainer" style="display: none;"></div>
-
-    <!-- Typing animation row -->
-    <div class="typing-row" id="typingRow">
-      <img class="msg-av" src="https://i.pravatar.cc/150?u=thiago" alt="">
-      <div class="typing-bub">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
+    <div id="sysMsg" class="sys-badge" style="background: #FEF3C7; color: #92400E; padding: 6px; border-radius: 8px;">
+      Aguardando vendedor disponível...
     </div>
 
+    <div id="typingRow" class="typing-row">
+      <div style="margin-left: 20px;"><div class="dot-flashing"></div></div>
+    </div>
   </main>
 
-  <!-- ── INPUT ── -->
-  <div class="input-area">
-    <div class="pw-line">
-      <i class="fas fa-lock"></i>
-      Atendimento criptografado · Diskgas Oficial
-    </div>
+  <footer class="footer">
+    <div id="qReplies" class="q-replies" style="display: none;"></div>
     <div class="input-row">
-      <button class="emoji-btn">😊</button>
-      <input id="msgIn" type="text" placeholder="Escreva uma mensagem..." autocomplete="off">
-      <button class="send-btn" id="sendBtn">
-        <i class="fas fa-paper-plane"></i>
-      </button>
+      <input type="text" id="msgIn" placeholder="Aguarde o vendedor..." disabled>
+      <button id="sendBtn" class="send-btn" disabled><i class="fas fa-paper-plane"></i></button>
     </div>
-  </div>
-
+  </footer>
 </div>
 
 <script>
-  const PHOTO = "https://i.pravatar.cc/150?u=thiago";
-  const msgsEl = document.getElementById('msgs');
-  const typingRow = document.getElementById('typingRow');
+  const msgs = document.getElementById('msgs');
   const msgIn = document.getElementById('msgIn');
   const sendBtn = document.getElementById('sendBtn');
-  const headerStatus = document.getElementById('headerStatus');
-  const qrContainer = document.getElementById('qrContainer');
+  const typingRow = document.getElementById('typingRow');
   
-  let isWaitingForResponse = false;
+  function scroll() { msgs.scrollTop = msgs.scrollHeight; }
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+  function getTime() { return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
 
-  // ── Init ───────────────────────────────────────────────────
-  const now = new Date();
-  const months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-  const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-
-  document.getElementById('dateLabel').textContent =
-    `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
-  document.getElementById('protocolNum').textContent =
-    Math.floor(100000 + Math.random() * 900000);
-
-  function ts() {
-    const d = new Date();
-    return d.getHours().toString().padStart(2,'0') + ':' +
-           d.getMinutes().toString().padStart(2,'0');
-  }
-
-  function sleep(ms) { 
-    return new Promise(resolve => setTimeout(resolve, ms)); 
-  }
-
-  function markAsRead(msgElement) {
-    const ticks = msgElement.querySelector('.ticks');
-    if (ticks) {
-      setTimeout(() => {
-        ticks.classList.add('read');
-      }, 1000);
-    }
-  }
-
-  function showQuickReplies(options) {
-    qrContainer.innerHTML = '';
-    if (!options || options.length === 0) {
-      qrContainer.style.display = 'none';
-      return;
-    }
-    
-    options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'qbtn';
-      btn.textContent = opt;
-      btn.onclick = () => {
-        msgIn.value = opt;
-        send();
-        showQuickReplies(null);
-      };
-      qrContainer.appendChild(btn);
-    });
-    
-    qrContainer.style.display = 'flex';
-    scroll();
-  }
-
-  function addMsg(text, side) {
+  function addMsg(text, type) {
     const row = document.createElement('div');
-    row.className = 'msg-row' + (side === 'user' ? ' user' : '');
-    const time = ts();
-
-    if (side === 'agent') {
-      row.innerHTML = `
-        <img class="msg-av" src="${PHOTO}" alt="">
-        <div class="bubble a">
-          ${text}
-          <div class="bmeta"><span class="btime">${time}</span></div>
-        </div>`;
-    } else {
-      row.innerHTML = `
-        <div class="bubble u">
-          ${text}
-          <div class="bmeta">
-            <span class="btime">${time}</span>
-            <span class="ticks"><i class="fas fa-check-double"></i></span>
-          </div>
-        </div>`;
-      
-      setTimeout(() => markAsRead(row), 600);
-    }
-
-    msgsEl.insertBefore(row, typingRow);
+    row.className = `msg-row ${type}`;
+    row.innerHTML = `
+      <div class="bubble ${type === 'user' ? 'u' : 'a'}">
+        ${text}
+        <div class="b-meta">${getTime()} ${type === 'user' ? '<i class="fas fa-check-double" style="color:#4FC3F7"></i>' : ''}</div>
+      </div>
+    `;
+    msgs.insertBefore(row, typingRow);
     scroll();
-    return row;
   }
 
-  function showTyping(v) {
-    typingRow.style.display = v ? 'flex' : 'none';
-    if (v) scroll();
-  }
-
-  function scroll() { 
-    msgsEl.scrollTop = msgsEl.scrollHeight; 
-  }
-
-  /**
-   * Simula a digitação humana de forma calibrada.
-   * @param {string} text - O texto que está sendo "digitado".
-   * @param {number} baseDelay - Atraso base em ms por caractere (simulando velocidade de digitação).
-   */
-  async function simulateTyping(text, baseDelay = 45) {
-    // Calcula duração baseada no comprimento do texto + fator aleatório humano
-    let duration = text.length * baseDelay;
-    
-    // Limites para não ser nem flash nem eterno
-    duration = Math.max(1500, Math.min(duration, 4000));
-
-    headerStatus.textContent = "Digitando...";
-    headerStatus.classList.add('typing');
-    document.getElementById('typingText').style.display = 'block';
-    showTyping(true);
-    
+  async function showTyping(duration) {
+    typingRow.style.display = 'flex';
+    document.getElementById('hStatus').textContent = 'Digitando...';
+    document.getElementById('hStatus').classList.add('online');
+    scroll();
     await sleep(duration);
-    
-    document.getElementById('typingText').style.display = 'none';
-    showTyping(false);
-    headerStatus.textContent = "Online agora";
-    headerStatus.classList.remove('typing');
+    typingRow.style.display = 'none';
+    document.getElementById('hStatus').textContent = 'Online agora';
   }
 
-  // ── Fluxo Principal com Thiago Calibrado ────────────────────
   async function startFlow() {
-    // 1. Início: Pequena pausa de carregamento do sistema
-    await sleep(1200); 
-
-    // 2. Mensagem do Usuário
-    const userMsg = "Olá! Gostaria de pedir um gás.";
-    addMsg(userMsg, 'user');
-    
-    // 3. Pausa de "Visualização" (Thiago lê a mensagem)
-    // Simula o tempo de abrir a conversa e ler
-    await sleep(2500);
-
-    // Mensagem do Thiago 1: Oi
-    const msg1 = "Oi";
-    await simulateTyping(msg1, 800); // Oi é curto, mas tem o tempo de reação
-    addMsg(msg1, 'agent');
-    
-    // 4. Pausa entre mensagens (Pensando na próxima frase)
-    await sleep(1800);
-
-    // Mensagem do Thiago 2: Apresentação
-    const msg2 = "Sou Thiago, vendedor diskgas na sua região";
-    await simulateTyping(msg2, 50); 
-    addMsg(msg2, 'agent');
-
-    // 5. Pausa de "fôlego" entre frases
-    await sleep(2200);
-
-    // Mensagem do Thiago 3: Aviso do Pix
-    const msg3 = "Vou enviar o pix, um segundo...";
-    await simulateTyping(msg3, 50);
-    addMsg(msg3, 'agent');
-
-    // 6. Tempo de "geração" ou busca do código PIX
-    await sleep(3500);
-    
-    // 7. Envio do PIX
-    const msg4 = "Cópia e Cola do PIX:<br><code style='background:#f0f0f0; padding:6px; display:block; margin-top:8px; font-size:11px; word-break:break-all; border:1px solid #ddd; border-radius:4px;'>00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</code>";
-    await simulateTyping("Buscando código...", 100);
-    addMsg(msg4, 'agent');
-    
-    // 8. Botões aparecem após o PIX ser enviado
+    // 1. Entrada do Usuário
     await sleep(1000);
-    showQuickReplies(["Já paguei!", "Qual o prazo?", "Falar com suporte"]);
+    addMsg("Olá! Gostaria de pedir um gás.", "user");
+
+    // 2. Simulação de Conexão Profissional
+    await sleep(2000);
+    document.getElementById('sysMsg').textContent = "Thiago Silva entrou no atendimento.";
+    document.getElementById('sysMsg').style.background = "#D1FAE5";
+    document.getElementById('sysMsg').style.color = "#065F46";
+    
+    // 3. Thiago se torna "Real"
+    const hPhoto = document.getElementById('hPhoto');
+    hPhoto.style.filter = "none";
+    hPhoto.style.opacity = "1";
+    hPhoto.style.border = "2px solid var(--success)";
+    document.getElementById('hDot').style.display = "block";
+    document.getElementById('hName').textContent = "Thiago Silva";
+    document.getElementById('hStatus').textContent = "Online agora";
+    document.getElementById('hStatus').classList.add('online');
+    document.getElementById('agentCard').style.display = "block";
+    
+    msgIn.disabled = false;
+    msgIn.placeholder = "Digite sua mensagem...";
+    sendBtn.disabled = false;
+
+    // 4. Sequência do Thiago com Cadência Humana
+    await sleep(2000); // Tempo de leitura
+    await showTyping(1800);
+    addMsg("Oi!", "agent");
+
+    await sleep(1500);
+    await showTyping(2500);
+    addMsg("Sou Thiago, vendedor Diskgas na sua região. Vou te ajudar com seu pedido agora mesmo!", "agent");
+
+    await sleep(2000);
+    await showTyping(2200);
+    addMsg("Vou gerar o seu código Pix para pagamento seguro, só um segundo...", "agent");
+
+    // 5. O "Momento da Conversão" - PIX Visual
+    await sleep(3500);
+    await showTyping(1500);
+    
+    const pixHtml = `
+      Aqui está o seu código de pagamento. Assim que pagar, o sistema libera sua entrega automaticamente:
+      <div class="pix-card">
+        <div class="pix-title"><i class="fas fa-qrcode"></i> Pix Copia e Cola</div>
+        <span class="pix-code" id="pixCode">00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</span>
+        <button class="copy-btn" onclick="copyPix()">
+          <i class="fas fa-copy"></i> Copiar Código Pix
+        </button>
+      </div>
+    `;
+    addMsg(pixHtml, "agent");
+
+    // 6. Quick Replies para fechamento
+    await sleep(1000);
+    const q = document.getElementById('qReplies');
+    q.style.display = 'flex';
+    q.innerHTML = `
+      <button class="q-btn" onclick="quickSend('Já realizei o pagamento!')">✅ Já paguei</button>
+      <button class="q-btn" onclick="quickSend('Qual o tempo de entrega?')">🕒 Tempo de entrega?</button>
+      <button class="q-btn" onclick="quickSend('Preciso de ajuda')">🆘 Suporte</button>
+    `;
+    scroll();
+  }
+
+  function copyPix() {
+    const btn = document.querySelector('.copy-btn');
+    btn.innerHTML = '<i class="fas fa-check"></i> Código Copiado!';
+    btn.style.background = 'var(--success)';
+    setTimeout(() => {
+      btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Código Pix';
+      btn.style.background = 'var(--brand)';
+    }, 2000);
+  }
+
+  function quickSend(text) {
+    msgIn.value = text;
+    send();
   }
 
   async function send() {
     const text = msgIn.value.trim();
-    if (!text || sendBtn.disabled || isWaitingForResponse) return;
-    
+    if (!text) return;
     msgIn.value = '';
-    sendBtn.disabled = true;
-    isWaitingForResponse = true;
-    
-    addMsg(text, 'user');
-    
-    // Resposta padrão com tempo humano
-    await sleep(2000);
-    const reply = "Certo! Já estou processando sua solicitação aqui.";
-    await simulateTyping(reply, 50);
-    addMsg(reply, 'agent');
-    
-    sendBtn.disabled = false;
-    isWaitingForResponse = false;
-    msgIn.focus();
+    addMsg(text, "user");
+    await sleep(1500);
+    await showTyping(2000);
+    addMsg("Perfeito! Estou acompanhando aqui. Assim que o pagamento for confirmado, te aviso por aqui mesmo.", "agent");
   }
 
-  sendBtn.addEventListener('click', send);
-  msgIn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { 
-      e.preventDefault(); 
-      send(); 
-    }
-  });
+  sendBtn.onclick = send;
+  msgIn.onkeydown = (e) => { if(e.key === 'Enter') send(); };
 
   window.onload = startFlow;
 </script>
+
 </body>
 </html>
