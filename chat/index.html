@@ -699,10 +699,17 @@
     msgsEl.scrollTop = msgsEl.scrollHeight; 
   }
 
-  async function simulateTyping(text) {
-    const wordCount = text.split(' ').length;
-    let duration = wordCount * 250; 
-    duration = Math.max(1200, Math.min(duration, 3000));
+  /**
+   * Simula a digitação humana de forma calibrada.
+   * @param {string} text - O texto que está sendo "digitado".
+   * @param {number} baseDelay - Atraso base em ms por caractere (simulando velocidade de digitação).
+   */
+  async function simulateTyping(text, baseDelay = 45) {
+    // Calcula duração baseada no comprimento do texto + fator aleatório humano
+    let duration = text.length * baseDelay;
+    
+    // Limites para não ser nem flash nem eterno
+    duration = Math.max(1500, Math.min(duration, 4000));
 
     headerStatus.textContent = "Digitando...";
     headerStatus.classList.add('typing');
@@ -717,43 +724,50 @@
     headerStatus.classList.remove('typing');
   }
 
-  // ── Fluxo Principal com Thiago ──────────────────────────────
+  // ── Fluxo Principal com Thiago Calibrado ────────────────────
   async function startFlow() {
-    await sleep(800); 
+    // 1. Início: Pequena pausa de carregamento do sistema
+    await sleep(1200); 
 
-    // 1. Mensagem Inicial do Usuário (Automática para começar o fluxo)
+    // 2. Mensagem do Usuário
     const userMsg = "Olá! Gostaria de pedir um gás.";
     addMsg(userMsg, 'user');
     
-    // 2. Thiago visualiza e começa a responder (Pausa de leitura)
-    await sleep(1500);
+    // 3. Pausa de "Visualização" (Thiago lê a mensagem)
+    // Simula o tempo de abrir a conversa e ler
+    await sleep(2500);
 
     // Mensagem do Thiago 1: Oi
     const msg1 = "Oi";
-    await simulateTyping(msg1);
+    await simulateTyping(msg1, 800); // Oi é curto, mas tem o tempo de reação
     addMsg(msg1, 'agent');
     
-    await sleep(1000);
+    // 4. Pausa entre mensagens (Pensando na próxima frase)
+    await sleep(1800);
 
     // Mensagem do Thiago 2: Apresentação
     const msg2 = "Sou Thiago, vendedor diskgas na sua região";
-    await simulateTyping(msg2);
+    await simulateTyping(msg2, 50); 
     addMsg(msg2, 'agent');
 
-    await sleep(1200);
+    // 5. Pausa de "fôlego" entre frases
+    await sleep(2200);
 
     // Mensagem do Thiago 3: Aviso do Pix
     const msg3 = "Vou enviar o pix, um segundo...";
-    await simulateTyping(msg3);
+    await simulateTyping(msg3, 50);
     addMsg(msg3, 'agent');
 
-    await sleep(2000);
+    // 6. Tempo de "geração" ou busca do código PIX
+    await sleep(3500);
     
-    // 4. Envio do PIX (Simulação final)
-    const msg4 = "Cópia e Cola do PIX:<br><code style='background:#f0f0f0; padding:4px; display:block; margin-top:8px; font-size:11px; word-break:break-all;'>00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</code>";
-    await simulateTyping("Gerando código...");
+    // 7. Envio do PIX
+    const msg4 = "Cópia e Cola do PIX:<br><code style='background:#f0f0f0; padding:6px; display:block; margin-top:8px; font-size:11px; word-break:break-all; border:1px solid #ddd; border-radius:4px;'>00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</code>";
+    await simulateTyping("Buscando código...", 100);
     addMsg(msg4, 'agent');
     
+    // 8. Botões aparecem após o PIX ser enviado
+    await sleep(1000);
     showQuickReplies(["Já paguei!", "Qual o prazo?", "Falar com suporte"]);
   }
 
@@ -767,9 +781,10 @@
     
     addMsg(text, 'user');
     
-    await sleep(1000);
-    const reply = "Certo! Já estou processando sua solicitação.";
-    await simulateTyping(reply);
+    // Resposta padrão com tempo humano
+    await sleep(2000);
+    const reply = "Certo! Já estou processando sua solicitação aqui.";
+    await simulateTyping(reply, 50);
     addMsg(reply, 'agent');
     
     sendBtn.disabled = false;
