@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Diskgas — Entrega Prioritária</title>
+  <title>Diskgas — Entrega Oficial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,93 +18,182 @@
       --muted:    #6B7280;
       --border:   #E5E7EB;
       --success:  #10B981;
-      --accent:   #FF6B00;
+      --warning:  #F59E0B;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      height: 100%; width: 100%; font-family: 'Plus Jakarta Sans', sans-serif;
-      background: #0F172A; display: flex; justify-content: center; align-items: center; overflow: hidden;
+      height: 100%;
+      width: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #111827;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
 
+    /* ── APP SHELL ─────────────────────────────────── */
     .app {
-      width: 100%; max-width: 440px; height: 100dvh; display: flex; flex-direction: column;
-      background: var(--bg); position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 440px;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
 
-    /* ── HEADER (DYNAMIC) ──────────────────────────── */
+    /* ── HEADER ────────────────────────────────────── */
     .header {
-      background: white; padding: 12px 16px; display: flex; align-items: center; gap: 12px;
-      border-bottom: 1px solid var(--border); z-index: 10;
+      background: white;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
     }
+
     .h-agent { display: flex; align-items: center; gap: 12px; flex: 1; }
     .h-photo-wrap { position: relative; }
     .h-photo {
-      width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
-      background: #F3F4F6; transition: all 0.5s ease;
+      width: 44px; height: 44px; border-radius: 50%;
+      object-fit: cover; background: #E5E7EB;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .h-online-dot {
-      position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px;
-      background: var(--success); border: 2px solid white; border-radius: 50%; display: none;
+      position: absolute; bottom: 2px; right: 2px;
+      width: 10px; height: 10px; background: var(--success);
+      border: 2px solid white; border-radius: 50%;
+      display: none;
     }
-    .h-name-row { font-size: 15px; font-weight: 700; color: var(--text); }
-    .h-sub { font-size: 12px; color: var(--muted); transition: all 0.3s; }
-    .h-sub.active { color: var(--success); font-weight: 600; }
 
-    /* ── PROGRESS BAR (RETENTION TOOL) ─────────────── */
-    .progress-container { height: 3px; background: #E5E7EB; width: 100%; position: relative; overflow: hidden; }
-    .progress-bar { height: 100%; background: var(--brand); width: 0%; transition: width 0.5s ease; }
+    .h-name-row { font-size: 15px; font-weight: 700; color: var(--text); }
+    .h-sub { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+    .h-sub.online { color: var(--success); font-weight: 600; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-container {
+      height: 3px;
+      background: #E5E7EB;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      z-index: 9;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--brand);
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
     /* ── MESSAGES ──────────────────────────────────── */
-    .msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #F9FAFB; }
+    .msgs {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #F9FAFB;
+    }
 
-    .msg-row { display: flex; gap: 8px; max-width: 85%; animation: msgIn 0.3s ease-out forwards; }
+    /* ── AGENT CARD (TRUST BUILDER) ────────────────── */
+    .agent-card {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid var(--brand-lt);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin-bottom: 10px;
+      display: none;
+      animation: slideDown 0.5s ease;
+    }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .ac-header { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+    .ac-info h4 { font-size: 15px; font-weight: 700; }
+    .ac-badge { color: var(--brand); font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+    
+    .ac-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .ac-stat { background: var(--brand-lt); padding: 8px; border-radius: 8px; text-align: center; }
+    .ac-stat-val { display: block; font-size: 13px; font-weight: 700; color: var(--brand); }
+    .ac-stat-lbl { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; }
+
+    /* ── BUBBLES ───────────────────────────────────── */
+    .msg-row { display: flex; gap: 8px; max-width: 85%; }
     .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
-    @keyframes msgIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    .bubble { padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; position: relative; }
+    
+    .bubble {
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+      position: relative;
+    }
     .bubble.a { background: white; color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
     .bubble.u { background: var(--brand); color: white; border-bottom-right-radius: 4px; }
-    .b-meta { font-size: 10px; margin-top: 4px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; opacity: 0.6; }
 
-    /* ── SYSTEM STATUS (MICRO-INTERACTIONS) ────────── */
-    .sys-status {
-      align-self: center; background: rgba(0, 102, 204, 0.05); color: var(--brand);
-      padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 600;
-      margin: 5px 0; display: flex; align-items: center; gap: 8px;
-    }
-    .pulse-small { width: 6px; height: 6px; background: var(--brand); border-radius: 50%; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+    .b-meta { font-size: 10px; margin-top: 4px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; opacity: 0.7; }
 
-    /* ── AGENT CARD ────────────────────────────────── */
-    .agent-card {
-      background: white; border-radius: 16px; padding: 14px; border: 1px solid var(--brand-lt);
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: none; margin-bottom: 10px;
+    /* ── PIX COMPONENT (CONVERSION FOCUS) ─────────── */
+    .pix-card {
+      background: #F0F9FF;
+      border: 2px dashed var(--brand);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 8px;
+      text-align: center;
     }
-
-    /* ── PIX COMPONENT ─────────────────────────────── */
-    .pix-box {
-      background: #F0F9FF; border: 2px solid var(--brand-lt); border-radius: 12px;
-      padding: 16px; margin-top: 8px; text-align: center;
-    }
+    .pix-title { font-size: 12px; font-weight: 700; color: var(--brand); text-transform: uppercase; margin-bottom: 8px; }
     .pix-code {
-      background: white; padding: 12px; border-radius: 8px; font-family: monospace;
-      font-size: 11px; word-break: break-all; border: 1px solid var(--border);
-      margin: 10px 0; display: block; color: var(--text);
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 11px;
+      word-break: break-all;
+      border: 1px solid var(--brand-lt);
+      margin-bottom: 12px;
+      display: block;
     }
     .copy-btn {
-      background: var(--brand); color: white; border: none; padding: 12px;
-      border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--brand);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s;
     }
+    .copy-btn:active { transform: scale(0.98); }
 
     /* ── TYPING ────────────────────────────────────── */
-    .typing-row { display: none; align-items: center; gap: 8px; margin-left: 10px; }
-    .dot { width: 6px; height: 6px; background: #CBD5E1; border-radius: 50%; animation: dot 1.4s infinite; }
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes dot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+    .typing-row { display: none; align-items: center; gap: 8px; }
+    .dot-flashing {
+      position: relative; width: 6px; height: 6px; border-radius: 5px;
+      background-color: var(--brand); color: var(--brand);
+      animation: dot-flashing 1s infinite linear alternate; animation-delay: 0.5s;
+    }
+    .dot-flashing::before, .dot-flashing::after {
+      content: ""; display: inline-block; position: absolute; top: 0;
+      width: 6px; height: 6px; border-radius: 5px; background-color: var(--brand);
+      animation: dot-flashing 1s infinite linear alternate;
+    }
+    .dot-flashing::before { left: -12px; animation-delay: 0s; }
+    .dot-flashing::after { left: 12px; animation-delay: 1s; }
+    @keyframes dot-flashing { 0% { background-color: var(--brand); } 50%, 100% { background-color: #E5E7EB; } }
 
     /* ── FOOTER ────────────────────────────────────── */
     .footer { background: white; padding: 12px 16px; border-top: 1px solid var(--border); }
@@ -113,15 +202,22 @@
       flex: 1; border: 1px solid var(--border); padding: 12px 16px;
       border-radius: 24px; font-size: 14px; outline: none; background: #F9FAFB;
     }
+    input:focus { border-color: var(--brand); background: white; }
     .send-btn {
       width: 44px; height: 44px; border-radius: 50%; background: var(--brand);
       color: white; border: none; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s;
     }
-    .q-replies { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .q-replies { display: flex; gap: 8px; overflow-x: auto; padding: 8px 0; scrollbar-width: none; }
     .q-btn {
       white-space: nowrap; background: white; border: 1px solid var(--brand);
-      color: var(--brand); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;
+      color: var(--brand); padding: 8px 16px; border-radius: 20px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
     }
+
+    .sys-badge { text-align: center; font-size: 11px; color: var(--muted); margin: 8px 0; }
   </style>
 </head>
 <body>
@@ -130,23 +226,49 @@
   <header class="header">
     <div class="h-agent">
       <div class="h-photo-wrap">
-        <img src="https://i.pravatar.cc/150?u=thiago" id="hPhoto" class="h-photo" style="filter: grayscale(1); opacity: 0.4;">
+        <img src="https://i.pravatar.cc/150?u=thiago" id="hPhoto" class="h-photo" style="filter: grayscale(1); opacity: 0.5;">
         <div id="hDot" class="h-online-dot"></div>
       </div>
       <div>
-        <div class="h-name-row" id="hName">Central de Atendimento</div>
-        <div class="h-sub" id="hStatus">Localizando vendedor...</div>
+        <div class="h-name-row" id="hName">Atendimento Diskgas</div>
+        <div class="h-sub" id="hStatus">Conectando...</div>
       </div>
     </div>
-    <div style="font-size: 10px; color: var(--success); font-weight: 700; text-align: right;">
-      <i class="fas fa-bolt"></i> PRIORIDADE ALTA
-    </div>
+    <i class="fas fa-shield-alt" style="color: var(--success); font-size: 18px;"></i>
   </header>
 
   <div class="progress-container"><div id="pBar" class="progress-bar"></div></div>
 
   <main class="msgs" id="msgs">
-    <!-- Inicialização -->
+    <div class="sys-badge">Criptografia de ponta a ponta ativa</div>
+    
+    <div id="agentCard" class="agent-card">
+      <div class="ac-header">
+        <img src="https://i.pravatar.cc/150?u=thiago" class="h-photo">
+        <div class="ac-info">
+          <h4>Thiago Silva</h4>
+          <span class="ac-badge"><i class="fas fa-check-circle"></i> Vendedor Verificado</span>
+        </div>
+      </div>
+      <div class="ac-stats">
+        <div class="ac-stat">
+          <span class="ac-stat-val">~2 min</span>
+          <span class="ac-stat-lbl">Tempo de Resposta</span>
+        </div>
+        <div class="ac-stat">
+          <span class="ac-stat-val">4.9/5.0</span>
+          <span class="ac-stat-lbl">Avaliação</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="sysMsg" class="sys-badge" style="background: #FEF3C7; color: #92400E; padding: 6px; border-radius: 8px;">
+      Aguardando vendedor disponível...
+    </div>
+
+    <div id="typingRow" class="typing-row">
+      <div style="margin-left: 20px;"><div class="dot-flashing"></div></div>
+    </div>
   </main>
 
   <footer class="footer">
@@ -162,10 +284,12 @@
   const msgs = document.getElementById('msgs');
   const msgIn = document.getElementById('msgIn');
   const sendBtn = document.getElementById('sendBtn');
+  const typingRow = document.getElementById('typingRow');
   const pBar = document.getElementById('pBar');
   
   function scroll() { msgs.scrollTop = msgs.scrollHeight; }
   function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+  function getTime() { return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
   function setProgress(w) { pBar.style.width = w + '%'; }
 
   function addMsg(text, type) {
@@ -174,117 +298,120 @@
     row.innerHTML = `
       <div class="bubble ${type === 'user' ? 'u' : 'a'}">
         ${text}
-        <div class="b-meta">${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} ${type==='user'?'<i class="fas fa-check-double" style="color:#4FC3F7"></i>':''}</div>
+        <div class="b-meta">${getTime()} ${type === 'user' ? '<i class="fas fa-check-double" style="color:#4FC3F7"></i>' : ''}</div>
       </div>
     `;
-    msgs.appendChild(row);
+    msgs.insertBefore(row, typingRow);
     scroll();
-  }
-
-  function addStatus(text) {
-    const div = document.createElement('div');
-    div.className = 'sys-status';
-    div.innerHTML = `<div class="pulse-small"></div> ${text}`;
-    msgs.appendChild(div);
-    scroll();
-    return div;
   }
 
   async function showTyping(duration) {
-    const row = document.createElement('div');
-    row.className = 'typing-row';
-    row.style.display = 'flex';
-    row.innerHTML = `<div class="dot"></div><div class="dot"></div><div class="dot"></div>`;
-    msgs.appendChild(row);
+    typingRow.style.display = 'flex';
     document.getElementById('hStatus').textContent = 'Digitando...';
-    document.getElementById('hStatus').classList.add('active');
+    document.getElementById('hStatus').classList.add('online');
     scroll();
     await sleep(duration);
-    row.remove();
+    typingRow.style.display = 'none';
     document.getElementById('hStatus').textContent = 'Online agora';
   }
 
   async function startFlow() {
-    // Etapa 1: Início e Confirmação de Recebimento (0-20%)
-    await sleep(800);
+    // 1. Entrada do Usuário (10%)
+    await sleep(1000);
     setProgress(10);
     addMsg("Olá! Gostaria de pedir um gás.", "user");
-    
-    await sleep(1200);
-    const s1 = addStatus("Pedido recebido! Verificando estoque...");
-    setProgress(25);
 
-    // Etapa 2: Thiago assume (25-50%)
+    // 2. Simulação de Conexão Profissional (25%)
     await sleep(2000);
-    s1.innerHTML = `<i class="fas fa-check-circle"></i> Estoque confirmado! Thiago Silva assumiu seu pedido.`;
-    s1.style.color = "var(--success)";
+    setProgress(25);
+    document.getElementById('sysMsg').textContent = "Thiago Silva entrou no atendimento.";
+    document.getElementById('sysMsg').style.background = "#D1FAE5";
+    document.getElementById('sysMsg').style.color = "#065F46";
     
+    // 3. Thiago se torna "Real" (40%)
+    await sleep(500);
+    setProgress(40);
     const hPhoto = document.getElementById('hPhoto');
-    hPhoto.style.filter = "none"; hPhoto.style.opacity = "1";
+    hPhoto.style.filter = "none";
+    hPhoto.style.opacity = "1";
+    hPhoto.style.border = "2px solid var(--success)";
     document.getElementById('hDot').style.display = "block";
     document.getElementById('hName').textContent = "Thiago Silva";
     document.getElementById('hStatus').textContent = "Online agora";
-    document.getElementById('hStatus').classList.add('active');
+    document.getElementById('hStatus').classList.add('online');
+    document.getElementById('agentCard').style.display = "block";
     
-    msgIn.disabled = false; msgIn.placeholder = "Digite aqui..."; sendBtn.disabled = false;
-    setProgress(50);
+    msgIn.disabled = false;
+    msgIn.placeholder = "Digite sua mensagem...";
+    sendBtn.disabled = false;
 
-    // Etapa 3: Conversa Fluida
+    // 4. Sequência do Thiago (60%)
+    await sleep(2000);
+    setProgress(60);
+    await showTyping(1800);
+    addMsg("Oi!", "agent");
+
     await sleep(1500);
-    await showTyping(1500);
-    addMsg("Oi! Tudo bem? Sou o Thiago e já vi que você precisa de um gás.", "agent");
+    await showTyping(2500);
+    addMsg("Sou Thiago, vendedor Diskgas na sua região. Vou te ajudar com seu pedido agora mesmo!", "agent");
 
-    await sleep(1800);
+    await sleep(2000);
     await showTyping(2200);
-    addMsg("Estou reservando um botijão lacrado para sua região agora mesmo. Só um segundo que vou gerar o Pix para agilizar sua entrega.", "agent");
-    setProgress(75);
+    addMsg("Vou gerar o seu código Pix para pagamento seguro, só um segundo...", "agent");
 
-    // Etapa 4: Fechamento (75-100%)
-    await sleep(3000);
-    await showTyping(1200);
+    // 5. Momento da Conversão (85%)
+    await sleep(3500);
+    setProgress(85);
+    await showTyping(1500);
     
     const pixHtml = `
-      Perfeito! Pagando agora, sua entrega entra na rota de prioridade (30-40 min):
-      <div class="pix-box">
-        <div style="font-size:11px; font-weight:700; color:var(--brand); margin-bottom:5px;">COPIE O CÓDIGO ABAIXO:</div>
-        <span class="pix-code">00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</span>
-        <button class="copy-btn" onclick="copyPix(this)">
-          <i class="fas fa-copy"></i> COPIAR CÓDIGO PIX
+      Aqui está o seu código de pagamento. Assim que pagar, o sistema libera sua entrega automaticamente:
+      <div class="pix-card">
+        <div class="pix-title"><i class="fas fa-qrcode"></i> Pix Copia e Cola</div>
+        <span class="pix-code" id="pixCode">00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</span>
+        <button class="copy-btn" onclick="copyPix()">
+          <i class="fas fa-copy"></i> Copiar Código Pix
         </button>
       </div>
     `;
     addMsg(pixHtml, "agent");
-    setProgress(100);
 
+    // 6. Conclusão do Fluxo (100%)
     await sleep(1000);
+    setProgress(100);
     const q = document.getElementById('qReplies');
     q.style.display = 'flex';
     q.innerHTML = `
-      <button class="q-btn" onclick="quickSend('Já fiz o pagamento!')">✅ Já paguei!</button>
-      <button class="q-btn" onclick="quickSend('Quanto tempo demora?')">🕒 Qual o tempo?</button>
+      <button class="q-btn" onclick="quickSend('Já realizei o pagamento!')">✅ Já paguei</button>
+      <button class="q-btn" onclick="quickSend('Qual o tempo de entrega?')">🕒 Tempo de entrega?</button>
+      <button class="q-btn" onclick="quickSend('Preciso de ajuda')">🆘 Suporte</button>
     `;
     scroll();
   }
 
-  function copyPix(btn) {
-    btn.innerHTML = '<i class="fas fa-check"></i> COPIADO!';
+  function copyPix() {
+    const btn = document.querySelector('.copy-btn');
+    btn.innerHTML = '<i class="fas fa-check"></i> Código Copiado!';
     btn.style.background = 'var(--success)';
     setTimeout(() => {
-      btn.innerHTML = '<i class="fas fa-copy"></i> COPIAR CÓDIGO PIX';
+      btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Código Pix';
       btn.style.background = 'var(--brand)';
     }, 2000);
   }
 
-  function quickSend(t) { msgIn.value = t; send(); }
+  function quickSend(text) {
+    msgIn.value = text;
+    send();
+  }
 
   async function send() {
-    const t = msgIn.value.trim();
-    if (!t) return;
+    const text = msgIn.value.trim();
+    if (!text) return;
     msgIn.value = '';
-    addMsg(t, "user");
+    addMsg(text, "user");
     await sleep(1500);
-    await showTyping(1800);
-    addMsg("Excelente! Estou monitorando a confirmação aqui no sistema. Assim que cair, o entregador já sai com seu gás! 🚚", "agent");
+    await showTyping(2000);
+    addMsg("Perfeito! Estou acompanhando aqui. Assim que o pagamento for confirmado, te aviso por aqui mesmo.", "agent");
   }
 
   sendBtn.onclick = send;
