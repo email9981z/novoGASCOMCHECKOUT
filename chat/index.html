@@ -92,6 +92,12 @@
       background: var(--success);
       border: 2px solid #0066CC;
       border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      50% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
     }
 
     .h-name-row {
@@ -108,6 +114,12 @@
       display: flex;
       align-items: center;
       gap: 4px;
+      transition: color 0.3s ease;
+    }
+
+    .h-sub.typing {
+      color: rgba(255,255,255,0.95);
+      font-weight: 600;
     }
 
     .h-actions { 
@@ -163,6 +175,12 @@
       border: 1.5px solid var(--brand-lt);
       box-shadow: 0 2px 8px rgba(0, 102, 204, 0.08);
       flex-shrink: 0;
+      animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .ac-photo {
@@ -228,6 +246,7 @@
     .date-chip {
       text-align: center;
       margin: 2px 0 6px;
+      animation: slideIn 0.4s ease 0.1s both;
     }
     .date-chip span {
       background: transparent;
@@ -241,18 +260,19 @@
       font-size: 11px;
       color: #9CA3AF;
       margin: 0 0 8px;
+      animation: slideIn 0.4s ease 0.15s both;
     }
 
     /* ── MESSAGE ROWS ─────────────────────────────── */
     .msg-row {
       display: flex;
       gap: 6px;
-      animation: msgIn .2s ease both;
+      animation: msgIn .25s ease both;
     }
     .msg-row.user { flex-direction: row-reverse; }
 
     @keyframes msgIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
@@ -305,34 +325,13 @@
 
     .ticks { font-size: 11px; color: rgba(255,255,255,0.7); }
 
-    /* ── QUICK REPLIES (CONVERSION-FOCUSED) ──────────── */
-    .qreplies {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 0 0 6px 32px;
-    }
-
-    .qbtn {
-      background: white;
-      border: 1.5px solid var(--brand);
-      color: var(--brand);
-      padding: 7px 12px;
-      border-radius: 18px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all .15s;
-    }
-    .qbtn:hover  { background: var(--brand-lt); }
-    .qbtn:active { background: var(--brand); color: white; }
-
     /* ── TYPING INDICATOR ──────────────────────────── */
     .typing-row {
       display: none;
       gap: 6px;
       align-items: flex-end;
+      margin-bottom: 4px;
+      animation: msgIn .25s ease both;
     }
 
     .typing-bub {
@@ -369,6 +368,12 @@
       margin-top: 4px;
       margin-left: 32px;
       display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     /* ── INPUT AREA ────────────────────────────────── */
@@ -451,14 +456,46 @@
     .send-btn:hover    { background: var(--brand-dk); transform: scale(1.05); }
     .send-btn:disabled { background: #D1D5DB; box-shadow: none; transform: none; cursor: not-allowed; }
 
-    /* Scrollbar - Always visible to prevent layout shift */
+    /* Scrollbar */
     .msgs::-webkit-scrollbar { width: 8px; }
     .msgs::-webkit-scrollbar-track { background: transparent; }
     .msgs::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 4px; }
     .msgs::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.12); }
     
-    /* Firefox scrollbar */
     .msgs { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.08) transparent; }
+
+    /* Status indicator */
+    .status-msg {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--brand);
+      margin: 4px 0 8px;
+      padding: 4px 10px;
+      background: var(--brand-lt);
+      border-radius: 20px;
+      align-self: center;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    /* Read receipt animation */
+    .read-receipt {
+      display: inline-flex;
+      gap: 2px;
+      align-items: center;
+    }
+
+    .read-receipt .tick {
+      font-size: 9px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .read-receipt .tick.read {
+      opacity: 1;
+      color: #87CEEB;
+    }
   </style>
 </head>
 <body>
@@ -475,7 +512,7 @@
       </div>
       <div>
         <div class="h-name-row">Mariana</div>
-        <div class="h-sub">Online agora</div>
+        <div class="h-sub" id="headerStatus">Online agora</div>
       </div>
     </div>
 
@@ -487,7 +524,7 @@
   <!-- ── MESSAGES ── -->
   <main class="msgs" id="msgs">
 
-    <!-- Agent info card - PROFESSIONAL DISKGAS -->
+    <!-- Agent info card -->
     <div class="agent-card">
       <img class="ac-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana">
       <div class="ac-info">
@@ -497,7 +534,6 @@
         </h4>
         <p class="ac-title">Especialista em Entrega de Gás</p>
         <div class="ac-stats">
-          <span class="ac-stat"><i class="fas fa-star"></i> 4.9 (1.2k)</span>
           <span class="ac-stat"><i class="fas fa-bolt"></i> Entrega em 30min</span>
         </div>
       </div>
@@ -506,36 +542,13 @@
     <div class="date-chip"><span id="dateLabel">Hoje</span></div>
     <div class="sys-msg">Mariana entrou no atendimento · Protocolo #<span id="protocolNum"></span></div>
 
-    <!-- Typing indicator for initial message -->
+    <!-- Status message placeholder -->
+    <div class="status-msg" id="statusMsg">Aguardando Vendedor...</div>
+
+    <!-- Typing indicator -->
     <div class="typing-text" id="typingText">Mariana está digitando...</div>
 
-    <!-- Typing row (initial) -->
-    <div class="typing-row" id="initialTypingRow">
-      <img class="msg-av" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
-      <div class="typing-bub">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-    </div>
-
-    <!-- Welcome message (will appear after typing) -->
-    <div class="msg-row" id="welcomeMsg" style="display: none;">
-      <img class="msg-av" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
-      <div class="bubble a">
-        Olá! Sou a Mariana, vendedora autorizada Diskgas. Posso ajudar com seu pedido de gás agora?
-        <div class="bmeta"><span class="btime" id="wtime"></span></div>
-      </div>
-    </div>
-
-    <!-- Quick replies -->
-    <div class="qreplies" id="qr" style="display: none;">
-      <button class="qbtn" onclick="quick('🛒 Pedir gás agora')">Pedir gás</button>
-      <button class="qbtn" onclick="quick('💰 Tabela de preços')">Preços</button>
-      <button class="qbtn" onclick="quick('⏱️ Tempo de entrega')">Entrega</button>
-    </div>
-
-    <!-- Typing anchor (always last in DOM) -->
+    <!-- Typing anchor -->
     <div class="typing-row" id="typingRow">
       <img class="msg-av" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
       <div class="typing-bub">
@@ -565,15 +578,18 @@
 </div>
 
 <script>
-  const PHOTO     = "https://randomuser.me/api/portraits/women/44.jpg";
-  const msgsEl    = document.getElementById('msgs');
+  const PHOTO = "https://randomuser.me/api/portraits/women/44.jpg";
+  const msgsEl = document.getElementById('msgs');
   const typingRow = document.getElementById('typingRow');
-  const msgIn     = document.getElementById('msgIn');
-  const sendBtn   = document.getElementById('sendBtn');
-  const qr        = document.getElementById('qr');
-  const history   = [];
+  const msgIn = document.getElementById('msgIn');
+  const sendBtn = document.getElementById('sendBtn');
+  const statusMsg = document.getElementById('statusMsg');
+  const headerStatus = document.getElementById('headerStatus');
+  const history = [];
+  
+  let isWaitingForResponse = false;
 
-  // ── System prompt for Diskgas ──────────────────────────────────────────
+  // ── System prompt ──────────────────────────────────────────
   const SYS = `Você é Mariana, vendedora autorizada Diskgas, especialista em entrega de gás de qualidade.
 Você é profissional, ágil, confiável e focada em converter o cliente em uma venda segura.
 Responda em português brasileiro natural, como um vendedor experiente de gás.
@@ -585,13 +601,12 @@ Trate o cliente com "você". Demonstre urgência positiva para fechar o pedido.
 Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
 
   // ── Init ───────────────────────────────────────────────────
-  const now    = new Date();
+  const now = new Date();
   const months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-  const days   = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
   document.getElementById('dateLabel').textContent =
     `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
-  document.getElementById('wtime').textContent = ts();
   document.getElementById('protocolNum').textContent =
     Math.floor(100000 + Math.random() * 900000);
 
@@ -601,31 +616,27 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
            d.getMinutes().toString().padStart(2,'0');
   }
 
-  // ── Initial typing animation ───────────────────────
-  function showInitialTyping() {
-    const typingText = document.getElementById('typingText');
-    const initialTypingRow = document.getElementById('initialTypingRow');
-    const welcomeMsg = document.getElementById('welcomeMsg');
-    const qreplies = document.getElementById('qr');
-
-    typingText.style.display = 'block';
-    initialTypingRow.style.display = 'flex';
-    
-    // Simulate 2-3 seconds of typing
-    setTimeout(() => {
-      typingText.style.display = 'none';
-      initialTypingRow.style.display = 'none';
-      welcomeMsg.style.display = 'flex';
-      qreplies.style.display = 'flex';
-      scroll();
-    }, 2500);
+  // ── Utility functions ──────────────────────────────────────
+  function sleep(ms) { 
+    return new Promise(resolve => setTimeout(resolve, ms)); 
   }
 
-  // ── Add message ────────────────────────────────────────────
-  function addMsg(text, side) {
-    if (side === 'user') qr.style.display = 'none';
+  // Random delay to simulate human-like behavior
+  function randomDelay(min = 300, max = 800) {
+    return Math.random() * (max - min) + min;
+  }
 
-    const row  = document.createElement('div');
+  // Simulate reading time based on message length
+  function readingTime(text) {
+    const wordsPerMinute = 220;
+    const words = text.split(' ').length;
+    // Add base delay for "notification check"
+    return Math.max(1200, (words / wordsPerMinute) * 60000 * 0.4 + 500);
+  }
+
+  // ── Add message with realistic animation ────────────────────
+  function addMsg(text, side) {
+    const row = document.createElement('div');
     row.className = 'msg-row' + (side === 'user' ? ' user' : '');
     const time = ts();
 
@@ -656,57 +667,124 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     if (v) scroll();
   }
 
-  function scroll() { msgsEl.scrollTop = msgsEl.scrollHeight; }
-
-  // ── Claude API call ────────────────────────────────────────
-  async function getReply(msg) {
-    history.push({ role: 'user', content: msg });
-    try {
-      const res  = await fetch('https://api.anthropic.com/v1/messages', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model:      'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          system:     SYS,
-          messages:   history
-        })
-      });
-      const data  = await res.json();
-      const reply = data.content?.[0]?.text
-        ?? 'Desculpe, tive um problema. Pode tentar novamente?';
-      history.push({ role: 'assistant', content: reply });
-      return reply;
-    } catch {
-      return 'Desculpe, tive um problema momentâneo. Pode tentar novamente?';
-    }
+  function scroll() { 
+    msgsEl.scrollTop = msgsEl.scrollHeight; 
   }
 
-  // ── Send ───────────────────────────────────────────────────
+  // ── Realistic typing simulation ────────────────────────────
+  async function simulateTyping(textLength = 50) {
+    // Typing speed: ~250-300 characters per minute
+    let duration = (textLength / 280) * 60000 * 0.7; 
+    duration = Math.max(1500, Math.min(duration, 5000)); // Cap between 1.5s and 5s
+
+    headerStatus.textContent = "Digitando...";
+    headerStatus.classList.add('typing');
+    document.getElementById('typingText').style.display = 'block';
+    showTyping(true);
+    
+    // Simulate "pauses" while typing (thinking)
+    if (duration > 3000) {
+      const half = duration / 2;
+      await sleep(half);
+      showTyping(false); // Brief pause in typing
+      await sleep(randomDelay(300, 700));
+      showTyping(true);
+      await sleep(half);
+    } else {
+      await sleep(duration);
+    }
+    
+    document.getElementById('typingText').style.display = 'none';
+    showTyping(false);
+    headerStatus.textContent = "Online agora";
+    headerStatus.classList.remove('typing');
+  }
+
+  // ── Automated initial sequence ─────────────────────────────
+  async function startSequence() {
+    // Delay before first message
+    await sleep(800);
+    
+    // 1. User sends initial message
+    addMsg("Quero pagar via Pix", "user");
+    
+    // 2. Show status
+    await sleep(1200);
+    statusMsg.style.display = 'block';
+    scroll();
+
+    // 3. Simulate reading and response delay
+    await sleep(1800);
+    statusMsg.style.display = 'none';
+    
+    // 4. Agent starts typing
+    const initialReply = "Ótimo! Aceito Pix sim, sem problema. Já estou aqui para ajudar com seu pedido. Qual é o seu endereço?";
+    await simulateTyping(initialReply.length);
+    
+    // 5. Agent responds
+    addMsg(initialReply, "agent");
+    
+    isWaitingForResponse = false;
+  }
+
+  // ── Send message ───────────────────────────────────────────
   async function send() {
     const text = msgIn.value.trim();
-    if (!text || sendBtn.disabled) return;
+    if (!text || sendBtn.disabled || isWaitingForResponse) return;
+    
     msgIn.value = '';
     sendBtn.disabled = true;
+    isWaitingForResponse = true;
+    
     addMsg(text, 'user');
-    showTyping(true);
+    
+    // Simulate agent reading the message
+    const readDelay = readingTime(text);
+    await sleep(readDelay);
+    
+    // Generate or fetch response
     const reply = await getReply(text);
-    showTyping(false);
+
+    // Simulate typing response based on reply length
+    await simulateTyping(reply.length);
+    
+    // Add agent response
     addMsg(reply, 'agent');
+    
     sendBtn.disabled = false;
+    isWaitingForResponse = false;
     msgIn.focus();
   }
 
-  function quick(text) { msgIn.value = text; send(); }
+  // ── Get reply (simulated or real API) ──────────────────────
+  async function getReply(msg) {
+    history.push({ role: 'user', content: msg });
+    
+    // Simulated responses for demo
+    const responses = [
+      "Perfeito! E qual é o tipo de botijão que você precisa? 13kg ou 45kg?",
+      "Certo! Qual bairro você está? Assim consigo confirmar o tempo de entrega.",
+      "Ótimo! Você prefere botijão de 13kg ou 45kg? Qual é mais comum na sua casa?",
+      "Entendi! Deixa eu confirmar: você quer um botijão lacrado, é isso? Qual tamanho você precisa?"
+    ];
+    
+    const reply = responses[Math.floor(Math.random() * responses.length)];
+    history.push({ role: 'assistant', content: reply });
+    return reply;
+  }
 
+  // ── Event listeners ────────────────────────────────────────
   sendBtn.addEventListener('click', send);
   msgIn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+    if (e.key === 'Enter' && !e.shiftKey) { 
+      e.preventDefault(); 
+      send(); 
+    }
   });
 
-  // ── Start initial typing animation on load ──────────────────
+  // ── Start on load ──────────────────────────────────────────
   window.addEventListener('load', () => {
-    showInitialTyping();
+    startSequence();
   });
 </script>
 </body>
