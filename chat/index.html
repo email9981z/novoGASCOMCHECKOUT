@@ -771,21 +771,18 @@
     headerStatus.classList.remove('typing');
   }
 
-  // ── Novo Fluxo Inicial Otimizado ─────────────────────────────
+  // ── Fluxo Inicial com Mensagem do Usuário (Rápido e Fluido) ──
   async function startSequence() {
-    await sleep(800);
+    await sleep(500); // Breve pausa inicial
     
-    // Em vez de preencher o input, enviamos a mensagem de boas-vindas da Mariana
-    const welcomeMsgs = [
-      "Olá! Sou a Mariana da Diskgas. 😊",
-      "Precisa de gás com entrega rápida e botijão lacrado? Estou aqui para te ajudar!"
-    ];
+    const initialUserMsg = "Olá! Gostaria de pedir um gás.";
     
-    await simulateTyping(100);
-    await addMultiBubbles(welcomeMsgs, 'agent');
+    // Preenchimento instantâneo ou muito rápido para não atrasar o usuário
+    msgIn.value = initialUserMsg;
+    await sleep(300);
     
-    await sleep(500);
-    showQuickReplies(["🛒 Fazer Pedido", "💰 Ver Preços", "⏱️ Tempo de Entrega", "💬 Falar com Atendente"]);
+    // Dispara o envio
+    await send();
   }
 
   // ── Send message ───────────────────────────────────────────
@@ -864,6 +861,9 @@
       return "Aceitamos Pix, cartões de crédito/débito e dinheiro. No Pix temos um processamento ainda mais rápido! Qual prefere?";
     }
     
+    if (m.includes("olá") || m.includes("ola") || m.includes("bom dia") || m.includes("boa tarde")) {
+      return "Olá! Sou a Mariana da Diskgas. 😊 É um prazer te atender! Precisa de um botijão lacrado com entrega rápida? Posso verificar os preços ou já anotar seu pedido.";
+    }
     return "Certo! Sou a Mariana e estou pronta para te atender. Você gostaria de fazer um pedido agora ou prefere consultar nossos preços e prazos?";
   }
 
