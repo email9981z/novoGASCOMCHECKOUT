@@ -499,15 +499,6 @@
     .send-btn:hover    { background: var(--brand-dk); transform: scale(1.05); }
     .send-btn:disabled { background: #D1D5DB; box-shadow: none; transform: none; cursor: not-allowed; }
 
-    /* Scrollbar */
-    .msgs::-webkit-scrollbar { width: 8px; }
-    .msgs::-webkit-scrollbar-track { background: transparent; }
-    .msgs::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 4px; }
-    .msgs::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.12); }
-    
-    .msgs { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.08) transparent; }
-
-    /* Status indicator */
     .status-msg {
       text-align: center;
       font-size: 11px;
@@ -521,24 +512,6 @@
       display: none;
       animation: slideIn 0.3s ease;
     }
-
-    /* Message group spacing */
-    .msg-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .msg-group .msg-row:not(:last-child) .bubble {
-      margin-bottom: 2px;
-    }
-
-    /* Input focus animation */
-    #msgIn.pre-fill {
-      border-color: var(--brand);
-      background: rgba(0, 102, 204, 0.05);
-      box-shadow: 0 0 0 2px rgba(0, 102, 204, .08);
-    }
   </style>
 </head>
 <body>
@@ -550,11 +523,11 @@
 
     <div class="h-agent">
       <div class="h-photo-wrap">
-        <img class="h-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana">
+        <img class="h-photo" src="https://i.pravatar.cc/150?u=thiago" alt="Thiago">
         <div class="h-online-dot"></div>
       </div>
       <div>
-        <div class="h-name-row">Mariana</div>
+        <div class="h-name-row">Thiago</div>
         <div class="h-sub" id="headerStatus">Online agora</div>
       </div>
     </div>
@@ -569,35 +542,35 @@
 
     <!-- Agent info card -->
     <div class="agent-card">
-      <img class="ac-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana">
+      <img class="ac-photo" src="https://i.pravatar.cc/150?u=thiago" alt="Thiago">
       <div class="ac-info">
         <h4>
-          Mariana
-          <span class="ac-badge"><i class="fas fa-check-circle"></i> Diskgas Autorizada</span>
+          Thiago
+          <span class="ac-badge"><i class="fas fa-check-circle"></i> Vendedor Oficial</span>
         </h4>
-        <p class="ac-title">Especialista em Entrega de Gás</p>
+        <p class="ac-title">Consultor Diskgas na sua região</p>
         <div class="ac-stats">
-          <span class="ac-stat"><i class="fas fa-bolt"></i> Entrega em 30min</span>
-          <span class="ac-stat"><i class="fas fa-star"></i> 4.9/5.0</span>
+          <span class="ac-stat"><i class="fas fa-bolt"></i> Resposta rápida</span>
+          <span class="ac-stat"><i class="fas fa-star"></i> 5.0/5.0</span>
         </div>
       </div>
     </div>
 
     <div class="date-chip"><span id="dateLabel">Hoje</span></div>
-    <div class="sys-msg">Mariana entrou no atendimento · Protocolo #<span id="protocolNum"></span></div>
+    <div class="sys-msg">Thiago iniciou o atendimento · Protocolo #<span id="protocolNum"></span></div>
 
     <!-- Status message placeholder -->
     <div class="status-msg" id="statusMsg">Conectando ao vendedor...</div>
 
-    <!-- Typing indicator -->
-    <div class="typing-text" id="typingText">Mariana está digitando...</div>
+    <!-- Typing indicator text -->
+    <div class="typing-text" id="typingText">Thiago está digitando...</div>
 
     <!-- Quick Replies Container -->
     <div class="qreplies" id="qrContainer" style="display: none;"></div>
 
-    <!-- Typing anchor -->
+    <!-- Typing animation row -->
     <div class="typing-row" id="typingRow">
-      <img class="msg-av" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
+      <img class="msg-av" src="https://i.pravatar.cc/150?u=thiago" alt="">
       <div class="typing-bub">
         <div class="dot"></div>
         <div class="dot"></div>
@@ -611,11 +584,11 @@
   <div class="input-area">
     <div class="pw-line">
       <i class="fas fa-lock"></i>
-      Botijão lacrado · Entrega segura · Diskgas
+      Atendimento criptografado · Diskgas Oficial
     </div>
     <div class="input-row">
       <button class="emoji-btn">😊</button>
-      <input id="msgIn" type="text" placeholder="Descreva sua necessidade..." autocomplete="off">
+      <input id="msgIn" type="text" placeholder="Escreva uma mensagem..." autocomplete="off">
       <button class="send-btn" id="sendBtn">
         <i class="fas fa-paper-plane"></i>
       </button>
@@ -625,18 +598,15 @@
 </div>
 
 <script>
-  const PHOTO = "https://randomuser.me/api/portraits/women/44.jpg";
+  const PHOTO = "https://i.pravatar.cc/150?u=thiago";
   const msgsEl = document.getElementById('msgs');
   const typingRow = document.getElementById('typingRow');
   const msgIn = document.getElementById('msgIn');
   const sendBtn = document.getElementById('sendBtn');
-  const statusMsg = document.getElementById('statusMsg');
   const headerStatus = document.getElementById('headerStatus');
   const qrContainer = document.getElementById('qrContainer');
-  const history = [];
   
   let isWaitingForResponse = false;
-  let messageCount = 0;
 
   // ── Init ───────────────────────────────────────────────────
   const now = new Date();
@@ -654,22 +624,10 @@
            d.getMinutes().toString().padStart(2,'0');
   }
 
-  // ── Utility functions ──────────────────────────────────────
   function sleep(ms) { 
     return new Promise(resolve => setTimeout(resolve, ms)); 
   }
 
-  function randomDelay(min = 300, max = 800) {
-    return Math.random() * (max - min) + min;
-  }
-
-  function readingTime(text) {
-    const wordsPerMinute = 220;
-    const words = text.split(' ').length;
-    return Math.max(1000, (words / wordsPerMinute) * 60000 * 0.3 + 400);
-  }
-
-  // ── Mark message as read ───────────────────────────────────
   function markAsRead(msgElement) {
     const ticks = msgElement.querySelector('.ticks');
     if (ticks) {
@@ -679,7 +637,6 @@
     }
   }
 
-  // ── Quick Replies ──────────────────────────────────────────
   function showQuickReplies(options) {
     qrContainer.innerHTML = '';
     if (!options || options.length === 0) {
@@ -703,7 +660,6 @@
     scroll();
   }
 
-  // ── Add message with realistic animation ────────────────────
   function addMsg(text, side) {
     const row = document.createElement('div');
     row.className = 'msg-row' + (side === 'user' ? ' user' : '');
@@ -731,18 +687,7 @@
 
     msgsEl.insertBefore(row, typingRow);
     scroll();
-    messageCount++;
-    
     return row;
-  }
-
-  async function addMultiBubbles(messages, side) {
-    for (let i = 0; i < messages.length; i++) {
-      addMsg(messages[i], side);
-      if (i < messages.length - 1) {
-        await sleep(randomDelay(200, 400));
-      }
-    }
   }
 
   function showTyping(v) {
@@ -754,9 +699,10 @@
     msgsEl.scrollTop = msgsEl.scrollHeight; 
   }
 
-  async function simulateTyping(textLength = 50) {
-    let duration = (textLength / 300) * 60000 * 0.5; 
-    duration = Math.max(1000, Math.min(duration, 3500));
+  async function simulateTyping(text) {
+    const wordCount = text.split(' ').length;
+    let duration = wordCount * 250; 
+    duration = Math.max(1200, Math.min(duration, 3000));
 
     headerStatus.textContent = "Digitando...";
     headerStatus.classList.add('typing');
@@ -771,21 +717,46 @@
     headerStatus.classList.remove('typing');
   }
 
-  // ── Fluxo Inicial com Mensagem do Usuário (Rápido e Fluido) ──
-  async function startSequence() {
-    await sleep(500); // Breve pausa inicial
+  // ── Fluxo Principal com Thiago ──────────────────────────────
+  async function startFlow() {
+    await sleep(800); 
+
+    // 1. Mensagem Inicial do Usuário (Automática para começar o fluxo)
+    const userMsg = "Olá! Gostaria de pedir um gás.";
+    addMsg(userMsg, 'user');
     
-    const initialUserMsg = "Olá! Gostaria de pedir um gás.";
+    // 2. Thiago visualiza e começa a responder (Pausa de leitura)
+    await sleep(1500);
+
+    // Mensagem do Thiago 1: Oi
+    const msg1 = "Oi";
+    await simulateTyping(msg1);
+    addMsg(msg1, 'agent');
     
-    // Preenchimento instantâneo ou muito rápido para não atrasar o usuário
-    msgIn.value = initialUserMsg;
-    await sleep(300);
+    await sleep(1000);
+
+    // Mensagem do Thiago 2: Apresentação
+    const msg2 = "Sou Thiago, vendedor diskgas na sua região";
+    await simulateTyping(msg2);
+    addMsg(msg2, 'agent');
+
+    await sleep(1200);
+
+    // Mensagem do Thiago 3: Aviso do Pix
+    const msg3 = "Vou enviar o pix, um segundo...";
+    await simulateTyping(msg3);
+    addMsg(msg3, 'agent');
+
+    await sleep(2000);
     
-    // Dispara o envio
-    await send();
+    // 4. Envio do PIX (Simulação final)
+    const msg4 = "Cópia e Cola do PIX:<br><code style='background:#f0f0f0; padding:4px; display:block; margin-top:8px; font-size:11px; word-break:break-all;'>00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</code>";
+    await simulateTyping("Gerando código...");
+    addMsg(msg4, 'agent');
+    
+    showQuickReplies(["Já paguei!", "Qual o prazo?", "Falar com suporte"]);
   }
 
-  // ── Send message ───────────────────────────────────────────
   async function send() {
     const text = msgIn.value.trim();
     if (!text || sendBtn.disabled || isWaitingForResponse) return;
@@ -796,75 +767,14 @@
     
     addMsg(text, 'user');
     
-    const readDelay = readingTime(text);
-    await sleep(readDelay);
-    
-    const reply = await getReply(text);
-    const bubbles = splitIntoBubbles(reply);
-    
-    const totalLength = bubbles.reduce((sum, b) => sum + b.length, 0);
-    await simulateTyping(totalLength);
-    await addMultiBubbles(bubbles, 'agent');
-    
-    // Atualizar Quick Replies dinamicamente
-    updateContextualReplies(text, reply);
+    await sleep(1000);
+    const reply = "Certo! Já estou processando sua solicitação.";
+    await simulateTyping(reply);
+    addMsg(reply, 'agent');
     
     sendBtn.disabled = false;
     isWaitingForResponse = false;
     msgIn.focus();
-  }
-
-  function updateContextualReplies(userMsg, agentReply) {
-    if (userMsg.toLowerCase().includes("preço") || agentReply.toLowerCase().includes("preço")) {
-      showQuickReplies(["P13 (Residencial)", "P45 (Industrial)", "Voltar"]);
-    } else if (userMsg.toLowerCase().includes("pedido") || agentReply.toLowerCase().includes("endereço")) {
-      showQuickReplies(["🏠 Informar Endereço", "💳 Formas de Pagamento", "Voltar"]);
-    } else {
-      showQuickReplies(["🛒 Fazer Pedido", "💰 Ver Preços", "💬 Falar com Atendente"]);
-    }
-  }
-
-  function splitIntoBubbles(text) {
-    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-    const bubbles = [];
-    let current = '';
-
-    for (let sentence of sentences) {
-      if ((current + sentence).length > 100) {
-        if (current) bubbles.push(current.trim());
-        current = sentence;
-      } else {
-        current += sentence;
-      }
-    }
-    if (current) bubbles.push(current.trim());
-    return bubbles.length > 0 ? bubbles : [text];
-  }
-
-  // ── Lógica de Respostas Profissionais ───────────────────────
-  async function getReply(msg) {
-    const m = msg.toLowerCase();
-    
-    if (m.includes("preço") || m.includes("valor") || m.includes("quanto")) {
-      return "Trabalhamos com o melhor preço da região para botijões lacrados e com garantia. O P13 (residencial) está saindo por R$ 115,00 para entrega imediata. Qual você precisa?";
-    }
-    
-    if (m.includes("pedido") || m.includes("comprar") || m.includes("quero um")) {
-      return "Excelente escolha! Para agilizar sua entrega em até 30 minutos, poderia me informar seu endereço e a forma de pagamento (Pix, Cartão ou Dinheiro)?";
-    }
-
-    if (m.includes("tempo") || m.includes("demora")) {
-      return "Nossa entrega é recorde! Geralmente entregamos em 30 a 40 minutos após a confirmação. Qual seu bairro para eu confirmar?";
-    }
-
-    if (m.includes("pagar") || m.includes("pix") || m.includes("cartão")) {
-      return "Aceitamos Pix, cartões de crédito/débito e dinheiro. No Pix temos um processamento ainda mais rápido! Qual prefere?";
-    }
-    
-    if (m.includes("olá") || m.includes("ola") || m.includes("bom dia") || m.includes("boa tarde")) {
-      return "Olá! Sou a Mariana da Diskgas. 😊 É um prazer te atender! Precisa de um botijão lacrado com entrega rápida? Posso verificar os preços ou já anotar seu pedido.";
-    }
-    return "Certo! Sou a Mariana e estou pronta para te atender. Você gostaria de fazer um pedido agora ou prefere consultar nossos preços e prazos?";
   }
 
   sendBtn.addEventListener('click', send);
@@ -875,8 +785,7 @@
     }
   });
 
-  // Start sequence on load
-  window.onload = startSequence;
+  window.onload = startFlow;
 </script>
 </body>
 </html>
