@@ -587,7 +587,7 @@
     <div class="sys-msg">Mariana entrou no atendimento · Protocolo #<span id="protocolNum"></span></div>
 
     <!-- Status message placeholder -->
-    <div class="status-msg" id="statusMsg">Aguardando Vendedor...</div>
+    <div class="status-msg" id="statusMsg">Conectando ao vendedor...</div>
 
     <!-- Typing indicator -->
     <div class="typing-text" id="typingText">Mariana está digitando...</div>
@@ -638,17 +638,6 @@
   let isWaitingForResponse = false;
   let messageCount = 0;
 
-  // ── System prompt ──────────────────────────────────────────
-  const SYS = `Você é Mariana, vendedora autorizada Diskgas, especialista em entrega de gás de qualidade.
-Você é profissional, ágil, confiável e focada em converter o cliente em uma venda segura.
-Responda em português brasileiro natural, como um vendedor experiente de gás.
-Seja breve e direto: máximo 2-3 frases por resposta. Use emojis raramente.
-Nunca mencione que é uma IA. Se perguntarem, confirme que é a Mariana, vendedora Diskgas.
-Sempre mencione: botijão lacrado, entrega rápida (30-40min), segurança, qualidade.
-Para pedidos, solicite: endereço, tipo de botijão (13kg ou 45kg), forma de pagamento.
-Trate o cliente com "você". Demonstre urgência positiva para fechar o pedido.
-Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
-
   // ── Init ───────────────────────────────────────────────────
   const now = new Date();
   const months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -677,7 +666,7 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
   function readingTime(text) {
     const wordsPerMinute = 220;
     const words = text.split(' ').length;
-    return Math.max(1200, (words / wordsPerMinute) * 60000 * 0.4 + 500);
+    return Math.max(1000, (words / wordsPerMinute) * 60000 * 0.3 + 400);
   }
 
   // ── Mark message as read ───────────────────────────────────
@@ -686,7 +675,7 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     if (ticks) {
       setTimeout(() => {
         ticks.classList.add('read');
-      }, 1500);
+      }, 1000);
     }
   }
 
@@ -737,8 +726,7 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
           </div>
         </div>`;
       
-      // Mark user message as read after brief delay
-      setTimeout(() => markAsRead(row), 800);
+      setTimeout(() => markAsRead(row), 600);
     }
 
     msgsEl.insertBefore(row, typingRow);
@@ -748,12 +736,11 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     return row;
   }
 
-  // ── Add multiple bubbles (like real people) ────────────────
   async function addMultiBubbles(messages, side) {
     for (let i = 0; i < messages.length; i++) {
       addMsg(messages[i], side);
       if (i < messages.length - 1) {
-        await sleep(randomDelay(300, 600));
+        await sleep(randomDelay(200, 400));
       }
     }
   }
@@ -767,26 +754,16 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     msgsEl.scrollTop = msgsEl.scrollHeight; 
   }
 
-  // ── Realistic typing simulation ────────────────────────────
   async function simulateTyping(textLength = 50) {
-    let duration = (textLength / 280) * 60000 * 0.7; 
-    duration = Math.max(1500, Math.min(duration, 5000));
+    let duration = (textLength / 300) * 60000 * 0.5; 
+    duration = Math.max(1000, Math.min(duration, 3500));
 
     headerStatus.textContent = "Digitando...";
     headerStatus.classList.add('typing');
     document.getElementById('typingText').style.display = 'block';
     showTyping(true);
     
-    if (duration > 3000) {
-      const half = duration / 2;
-      await sleep(half);
-      showTyping(false);
-      await sleep(randomDelay(300, 700));
-      showTyping(true);
-      await sleep(half);
-    } else {
-      await sleep(duration);
-    }
+    await sleep(duration);
     
     document.getElementById('typingText').style.display = 'none';
     showTyping(false);
@@ -794,28 +771,21 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     headerStatus.classList.remove('typing');
   }
 
-  // ── Animated pre-fill of input field ─────────────────────────
-  async function animatedPreFill(text) {
-    msgIn.classList.add('pre-fill');
-    msgIn.focus();
-    
-    for (let i = 0; i < text.length; i++) {
-      msgIn.value = text.substring(0, i + 1);
-      await sleep(randomDelay(40, 80));
-    }
-    
-    await sleep(600);
-    msgIn.classList.remove('pre-fill');
-  }
-
-  // ── Automated initial sequence ─────────────────────────────
+  // ── Novo Fluxo Inicial Otimizado ─────────────────────────────
   async function startSequence() {
-    await sleep(1500);
+    await sleep(800);
     
-    const initialMessage = "Quero pagar via Pix";
-    await animatedPreFill(initialMessage);
+    // Em vez de preencher o input, enviamos a mensagem de boas-vindas da Mariana
+    const welcomeMsgs = [
+      "Olá! Sou a Mariana da Diskgas. 😊",
+      "Precisa de gás com entrega rápida e botijão lacrado? Estou aqui para te ajudar!"
+    ];
     
-    await send();
+    await simulateTyping(100);
+    await addMultiBubbles(welcomeMsgs, 'agent');
+    
+    await sleep(500);
+    showQuickReplies(["🛒 Fazer Pedido", "💰 Ver Preços", "⏱️ Tempo de Entrega", "💬 Falar com Atendente"]);
   }
 
   // ── Send message ───────────────────────────────────────────
@@ -823,59 +793,47 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     const text = msgIn.value.trim();
     if (!text || sendBtn.disabled || isWaitingForResponse) return;
     
-    const isInitialMessage = messageCount === 0 && text === "Quero pagar via Pix";
-    
     msgIn.value = '';
     sendBtn.disabled = true;
     isWaitingForResponse = true;
     
     addMsg(text, 'user');
     
-    if (isInitialMessage) {
-      await sleep(1000);
-      statusMsg.style.display = 'block';
-      scroll();
-      await sleep(1500);
-      statusMsg.style.display = 'none';
-    }
-    
-    const readDelay = isInitialMessage ? 1200 : readingTime(text);
+    const readDelay = readingTime(text);
     await sleep(readDelay);
     
     const reply = await getReply(text);
-    
-    // Split into multiple bubbles if it's a long response
     const bubbles = splitIntoBubbles(reply);
     
     const totalLength = bubbles.reduce((sum, b) => sum + b.length, 0);
     await simulateTyping(totalLength);
-    
     await addMultiBubbles(bubbles, 'agent');
     
-    if (!isInitialMessage) {
-      if (reply.includes("13kg") || reply.includes("45kg")) {
-        showQuickReplies(["P13 (Tradicional)", "P45 (Industrial)", "Dúvida sobre tamanhos"]);
-      } else {
-        showQuickReplies(["🛒 Fazer pedido", "💰 Preços", "💬 Falar com atendente"]);
-      }
-    } else {
-      await sleep(500);
-      showQuickReplies(["🏠 Informar endereço", "💰 Ver preços", "⏱️ Tempo de entrega"]);
-    }
+    // Atualizar Quick Replies dinamicamente
+    updateContextualReplies(text, reply);
     
     sendBtn.disabled = false;
     isWaitingForResponse = false;
     msgIn.focus();
   }
 
-  // ── Split long responses into multiple bubbles ──────────────
+  function updateContextualReplies(userMsg, agentReply) {
+    if (userMsg.toLowerCase().includes("preço") || agentReply.toLowerCase().includes("preço")) {
+      showQuickReplies(["P13 (Residencial)", "P45 (Industrial)", "Voltar"]);
+    } else if (userMsg.toLowerCase().includes("pedido") || agentReply.toLowerCase().includes("endereço")) {
+      showQuickReplies(["🏠 Informar Endereço", "💳 Formas de Pagamento", "Voltar"]);
+    } else {
+      showQuickReplies(["🛒 Fazer Pedido", "💰 Ver Preços", "💬 Falar com Atendente"]);
+    }
+  }
+
   function splitIntoBubbles(text) {
     const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
     const bubbles = [];
     let current = '';
 
     for (let sentence of sentences) {
-      if ((current + sentence).length > 120) {
+      if ((current + sentence).length > 100) {
         if (current) bubbles.push(current.trim());
         current = sentence;
       } else {
@@ -883,28 +841,32 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
       }
     }
     if (current) bubbles.push(current.trim());
-    
     return bubbles.length > 0 ? bubbles : [text];
   }
 
-  // ── Get reply (simulated) ──────────────────────────────────
+  // ── Lógica de Respostas Profissionais ───────────────────────
   async function getReply(msg) {
-    history.push({ role: 'user', content: msg });
+    const m = msg.toLowerCase();
     
-    const responses = [
-      "Perfeito! E qual é o tipo de botijão que você precisa? 13kg ou 45kg?",
-      "Certo! Qual bairro você está? Assim consigo confirmar o tempo de entrega.",
-      "Ótimo! Você prefere botijão de 13kg ou 45kg? Qual é mais comum na sua casa?",
-      "Entendi! Deixa eu confirmar: você quer um botijão lacrado, é isso? Qual tamanho você precisa?",
-      "Perfeito! Vou anotar seu endereço. Qual é o número do seu botijão? 13kg ou 45kg?"
-    ];
+    if (m.includes("preço") || m.includes("valor") || m.includes("quanto")) {
+      return "Trabalhamos com o melhor preço da região para botijões lacrados e com garantia. O P13 (residencial) está saindo por R$ 115,00 para entrega imediata. Qual você precisa?";
+    }
     
-    const reply = responses[Math.floor(Math.random() * responses.length)];
-    history.push({ role: 'assistant', content: reply });
-    return reply;
+    if (m.includes("pedido") || m.includes("comprar") || m.includes("quero um")) {
+      return "Excelente escolha! Para agilizar sua entrega em até 30 minutos, poderia me informar seu endereço e a forma de pagamento (Pix, Cartão ou Dinheiro)?";
+    }
+
+    if (m.includes("tempo") || m.includes("demora")) {
+      return "Nossa entrega é recorde! Geralmente entregamos em 30 a 40 minutos após a confirmação. Qual seu bairro para eu confirmar?";
+    }
+
+    if (m.includes("pagar") || m.includes("pix") || m.includes("cartão")) {
+      return "Aceitamos Pix, cartões de crédito/débito e dinheiro. No Pix temos um processamento ainda mais rápido! Qual prefere?";
+    }
+    
+    return "Certo! Sou a Mariana e estou pronta para te atender. Você gostaria de fazer um pedido agora ou prefere consultar nossos preços e prazos?";
   }
 
-  // ── Event listeners ────────────────────────────────────────
   sendBtn.addEventListener('click', send);
   msgIn.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { 
@@ -913,16 +875,8 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     }
   });
 
-  // ── Auto-resize textarea ───────────────────────────────────
-  msgIn.addEventListener('input', () => {
-    msgIn.style.height = 'auto';
-    msgIn.style.height = Math.min(msgIn.scrollHeight, 100) + 'px';
-  });
-
-  // ── Start on load ──────────────────────────────────────────
-  window.addEventListener('load', () => {
-    startSequence();
-  });
+  // Start sequence on load
+  window.onload = startSequence;
 </script>
 </body>
 </html>
