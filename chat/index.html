@@ -1,928 +1,767 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Diskgas — Entrega de Gás</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --brand:    #0066CC;
-      --brand-dk: #0052A3;
-      --brand-lt: #E6F2FF;
-      --bg:       #F8F9FA;
-      --white:    #FFFFFF;
-      --text:     #1A1A1A;
-      --muted:    #6B7280;
-      --border:   #E5E7EB;
-      --success:  #10B981;
-      --info:     #3B82F6;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Diskgas — Atendimento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --brand:     #FF5C1A;
+  --brand-dk:  #D94A10;
+  --brand-lt:  #FFF0EB;
+  --bg:        #F5F5F0;
+  --surface:   #FFFFFF;
+  --text:      #1A1A1A;
+  --muted:     #7A7A72;
+  --border:    #E8E8E2;
+  --green:     #1DB97A;
+  --green-lt:  #E8F9F1;
+  --amber:     #F5A623;
+  --amber-lt:  #FEF6E7;
+  --bubble-a:  #FFFFFF;
+  --bubble-u:  #1A1A1A;
+  --radius:    14px;
+}
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #0F1B3C 0%, #1A2F5A 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      margin: 0;
-      padding: 0;
-    }
+html, body {
+  height: 100%; width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  background: #1A1A1A;
+  display: flex; justify-content: center; align-items: center;
+  overflow: hidden;
+}
 
-    /* ── APP SHELL ─────────────────────────────────── */
-    .app {
-      width: 100%;
-      max-width: 440px;
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      background: var(--bg);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
-      box-sizing: border-box;
-      flex-shrink: 0;
-    }
+.app {
+  width: 100%; max-width: 430px;
+  height: 100dvh;
+  display: flex; flex-direction: column;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
 
-    /* ── HEADER ────────────────────────────────────── */
-    .header {
-      background: linear-gradient(135deg, #0052A3 0%, #0066CC 100%);
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 10;
-      box-shadow: 0 2px 12px rgba(0, 102, 204, 0.3);
-      width: 100%;
-      box-sizing: border-box;
-    }
+/* HEADER */
+.header {
+  background: var(--surface);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border);
+  position: relative; z-index: 10;
+}
 
-    .h-agent {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-    }
+.back-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 18px; flex-shrink: 0;
+}
 
-    .h-photo-wrap { position: relative; flex-shrink: 0; }
+.h-agent { display: flex; align-items: center; gap: 10px; flex: 1; }
 
-    .h-photo {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.3);
-      display: block;
-    }
+.h-avatar {
+  position: relative;
+}
+.h-avatar-img {
+  width: 40px; height: 40px; border-radius: 50%;
+  object-fit: cover;
+  background: var(--border);
+  transition: all 0.4s ease;
+  filter: grayscale(1); opacity: 0.5;
+}
+.h-status-dot {
+  position: absolute; bottom: 1px; right: 1px;
+  width: 9px; height: 9px;
+  background: var(--green);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
-    .h-online-dot {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 11px;
-      height: 11px;
-      background: var(--success);
-      border: 2px solid #0066CC;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
+.h-info { flex: 1; }
+.h-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.h-sub {
+  font-size: 11px; color: var(--muted);
+  display: flex; align-items: center; gap: 4px;
+  margin-top: 1px;
+}
+.h-sub.typing { color: var(--brand); }
+.h-sub.online { color: var(--green); font-weight: 500; }
 
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      50% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
-    }
+.h-call {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--brand-lt); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--brand); font-size: 15px;
+}
 
-    .h-name-row {
-      color: white;
-      font-size: 14.5px;
-      font-weight: 600;
-      line-height: 1.2;
-    }
+/* PROGRESS */
+.progress-track {
+  height: 2px; background: var(--border); position: relative; z-index: 9;
+}
+.progress-fill {
+  height: 100%; background: var(--brand);
+  width: 0%; transition: width 0.5s cubic-bezier(.4,0,.2,1);
+}
 
-    .h-sub {
-      color: rgba(255,255,255,0.8);
-      font-size: 11.5px;
-      margin-top: 2px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: color 0.3s ease;
-    }
+/* MESSAGES */
+.msgs {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 16px 14px 8px;
+  display: flex; flex-direction: column; gap: 10px;
+  scroll-behavior: smooth;
+}
+.msgs::-webkit-scrollbar { width: 0; }
 
-    .h-sub.typing {
-      color: rgba(255,255,255,0.95);
-      font-weight: 600;
-    }
+/* DATE DIVIDER */
+.date-sep {
+  text-align: center; font-size: 10px; font-weight: 500;
+  color: var(--muted); letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 4px 0 8px;
+}
 
-    .h-actions { 
-      display: flex; 
-      gap: 8px; 
-      flex-shrink: 0;
-    }
+/* ROW */
+.msg-row {
+  display: flex; gap: 8px;
+  max-width: 88%; align-items: flex-end;
+  animation: fadeUp 0.25s ease;
+}
+.msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
+.msg-row.agent { align-self: flex-start; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-    .btn-circ {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      color: white;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
-    .btn-circ:hover { background: rgba(255,255,255,0.25); }
+.msg-av {
+  width: 26px; height: 26px; border-radius: 50%;
+  object-fit: cover; flex-shrink: 0; margin-bottom: 2px;
+}
+.msg-av-spacer { width: 26px; flex-shrink: 0; }
 
-    /* ── MESSAGES ──────────────────────────────────── */
-    .msgs {
-      flex: 1;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      padding: 16px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      scroll-behavior: smooth;
-      background: var(--bg);
-      width: 100%;
-      box-sizing: border-box;
-      scrollbar-gutter: stable;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0,0,0,0.08) var(--bg);
-    }
+.bubble {
+  padding: 9px 13px;
+  border-radius: var(--radius);
+  font-size: 13.5px; line-height: 1.55;
+  position: relative; max-width: 100%;
+}
+.bubble.a {
+  background: var(--bubble-a);
+  color: var(--text);
+  border-radius: 4px var(--radius) var(--radius) var(--radius);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.bubble.u {
+  background: var(--bubble-u);
+  color: #FFFFFF;
+  border-radius: var(--radius) 4px var(--radius) var(--radius);
+}
+.b-time {
+  font-size: 9.5px; margin-top: 4px;
+  opacity: 0.45; text-align: right;
+  display: flex; align-items: center; justify-content: flex-end; gap: 3px;
+}
+.b-time.user-time { color: #A0A09A; }
 
-    /* ── AGENT INFO CARD ────────────────────────────── */
-    .agent-card {
-      background: white;
-      border-radius: 12px;
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
-      border: 1.5px solid var(--brand-lt);
-      box-shadow: 0 2px 8px rgba(0, 102, 204, 0.08);
-      flex-shrink: 0;
-      animation: slideIn 0.4s ease;
-    }
+/* AGENT INFO CARD */
+.agent-intro {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: none;
+  animation: fadeUp 0.4s ease;
+  margin-bottom: 4px;
+}
+.ai-top { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
+.ai-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+.ai-name { font-size: 15px; font-weight: 600; color: var(--text); }
+.ai-tag {
+  font-size: 10px; font-weight: 600; color: var(--green);
+  background: var(--green-lt); padding: 2px 8px; border-radius: 20px;
+  display: inline-flex; align-items: center; gap: 3px; margin-top: 3px;
+}
+.ai-stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+}
+.ai-stat {
+  background: var(--bg); border-radius: 10px;
+  padding: 8px 6px; text-align: center;
+}
+.ai-stat-val { font-size: 14px; font-weight: 600; color: var(--text); }
+.ai-stat-lbl { font-size: 9px; color: var(--muted); margin-top: 1px; text-transform: uppercase; letter-spacing: 0.04em; }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+/* ORDER CARD */
+.order-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 8px;
+}
+.order-header {
+  background: var(--brand);
+  padding: 10px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.order-header-title { font-size: 12px; font-weight: 600; color: white; letter-spacing: 0.03em; }
+.order-id { font-size: 11px; color: rgba(255,255,255,0.75); font-family: 'DM Mono', monospace; }
+.order-body { padding: 12px 14px; }
+.order-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0; border-bottom: 1px solid var(--border);
+}
+.order-row:last-child { border-bottom: none; padding-bottom: 0; }
+.order-lbl { font-size: 12px; color: var(--muted); }
+.order-val { font-size: 13px; font-weight: 500; color: var(--text); }
+.order-total-val { font-size: 16px; font-weight: 600; color: var(--brand); }
+.order-footer { padding: 0 14px 14px; }
+.confirm-btn {
+  width: 100%; padding: 12px; border-radius: 10px;
+  background: var(--brand); color: white; border: none;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.2s, transform 0.1s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.confirm-btn:hover { background: var(--brand-dk); }
+.confirm-btn:active { transform: scale(0.98); }
+.confirm-btn.done { background: var(--green); cursor: default; }
 
-    .ac-photo {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-      border: 3px solid var(--brand);
-    }
+/* DELIVERY STATUS */
+.delivery-status {
+  background: var(--green-lt);
+  border: 1px solid rgba(29,185,122,0.2);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.ds-title { font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.ds-steps { display: flex; flex-direction: column; gap: 6px; }
+.ds-step { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.ds-step.done { color: var(--green); }
+.ds-step.active { color: var(--text); font-weight: 500; }
+.ds-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+.ds-step.done .ds-dot { background: var(--green); }
+.ds-step.active .ds-dot { background: var(--brand); }
 
-    .ac-info h4 {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+/* TYPING */
+.typing-row {
+  display: none;
+  align-items: center; gap: 8px;
+  align-self: flex-start;
+  animation: fadeUp 0.2s ease;
+}
+.typing-bubble {
+  background: var(--bubble-a);
+  border-radius: 4px var(--radius) var(--radius) var(--radius);
+  padding: 10px 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  display: flex; gap: 4px; align-items: center;
+}
+.typing-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--muted); opacity: 0.5;
+  animation: typePulse 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typePulse {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(1); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
 
-    .ac-badge {
-      background: var(--brand);
-      color: white;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      letter-spacing: 0.3px;
-    }
+/* FOOTER */
+.footer { background: var(--surface); border-top: 1px solid var(--border); padding: 10px 12px 12px; }
 
-    .ac-title {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-      font-weight: 500;
-    }
+.quick-opts {
+  display: none; gap: 6px; overflow-x: auto;
+  padding-bottom: 8px; scrollbar-width: none;
+}
+.quick-opts::-webkit-scrollbar { display: none; }
+.q-chip {
+  white-space: nowrap; background: var(--bg);
+  border: 1px solid var(--border); color: var(--text);
+  padding: 7px 14px; border-radius: 20px;
+  font-size: 12.5px; font-weight: 500; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.q-chip:hover { background: var(--brand-lt); border-color: var(--brand); color: var(--brand); }
 
-    .ac-stats {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
+.input-row { display: flex; gap: 8px; align-items: center; }
 
-    .ac-stat {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      color: var(--text);
-      font-weight: 600;
-      background: var(--brand-lt);
-      padding: 3px 8px;
-      border-radius: 6px;
-    }
+.msg-input {
+  flex: 1; border: 1px solid var(--border);
+  padding: 11px 16px; border-radius: 24px;
+  font-size: 14px; outline: none;
+  background: var(--bg); font-family: 'DM Sans', sans-serif;
+  color: var(--text); transition: border-color 0.2s;
+}
+.msg-input:focus { border-color: var(--brand); background: var(--surface); }
+.msg-input::placeholder { color: var(--muted); }
 
-    .ac-stat i { font-size: 10px; color: var(--brand); }
+.send-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--brand); color: white; border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px;
+  transition: background 0.2s, transform 0.1s;
+  flex-shrink: 0;
+}
+.send-btn:hover { background: var(--brand-dk); }
+.send-btn:active { transform: scale(0.95); }
+.send-btn:disabled { background: var(--border); color: var(--muted); cursor: default; }
 
-    /* ── DATE & SYS ─────────────────────────────────── */
-    .date-chip {
-      text-align: center;
-      margin: 2px 0 6px;
-      animation: slideIn 0.4s ease 0.1s both;
-    }
-    .date-chip span {
-      background: transparent;
-      font-size: 11px;
-      font-weight: 500;
-      color: #9CA3AF;
-    }
-
-    .sys-msg {
-      text-align: center;
-      font-size: 11px;
-      color: #9CA3AF;
-      margin: 0 0 8px;
-      animation: slideIn 0.4s ease 0.15s both;
-    }
-
-    /* ── MESSAGE ROWS ─────────────────────────────── */
-    .msg-row {
-      display: flex;
-      gap: 6px;
-      animation: msgIn .25s ease both;
-      margin-bottom: 2px;
-    }
-    .msg-row.user { flex-direction: row-reverse; }
-
-    @keyframes msgIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .msg-av {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      object-fit: cover;
-      align-self: flex-end;
-      flex-shrink: 0;
-    }
-    .msg-av.ghost { visibility: hidden; }
-
-    .bubble {
-      max-width: 75%;
-      padding: 8px 12px;
-      border-radius: 14px;
-      font-size: 13.5px;
-      line-height: 1.5;
-      word-wrap: break-word;
-      box-sizing: border-box;
-    }
-
-    .bubble.a {
-      background: white;
-      color: var(--text);
-      border-radius: 14px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      border: 1px solid #E5E7EB;
-    }
-
-    .bubble.u {
-      background: var(--brand);
-      color: white;
-      border-radius: 14px;
-      box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25);
-    }
-
-    .bmeta {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 3px;
-      margin-top: 4px;
-    }
-
-    .btime { font-size: 10px; }
-    .bubble.a .btime { color: #9CA3AF; }
-    .bubble.u .btime { color: rgba(255,255,255,0.6); }
-
-    .ticks { 
-      font-size: 11px; 
-      color: rgba(255,255,255,0.7);
-      transition: color 0.3s ease;
-    }
-
-    .ticks.read { 
-      color: #4FC3F7;
-      font-weight: 700;
-    }
-
-    /* ── TYPING INDICATOR ──────────────────────────── */
-    .typing-row {
-      display: none;
-      gap: 6px;
-      align-items: flex-end;
-      margin-bottom: 4px;
-      animation: msgIn .25s ease both;
-    }
-
-    .typing-bub {
-      background: white;
-      border-radius: 14px;
-      padding: 8px 12px;
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      border: 1px solid #E5E7EB;
-    }
-
-    .dot {
-      width: 6px;
-      height: 6px;
-      background: #D1D5DB;
-      border-radius: 50%;
-      animation: tdot 1.2s infinite ease;
-    }
-    .dot:nth-child(2) { animation-delay: .2s; }
-    .dot:nth-child(3) { animation-delay: .4s; }
-
-    @keyframes tdot {
-      0%, 60%, 100% { transform: translateY(0);  background: #D1D5DB; }
-      30%           { transform: translateY(-4px); background: #9CA3AF; }
-    }
-
-    /* ── TYPING TEXT INDICATOR ─────────────────────── */
-    .typing-text {
-      font-size: 11px;
-      color: #9CA3AF;
-      font-weight: 500;
-      margin-top: 4px;
-      margin-left: 32px;
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* ── QUICK REPLIES ─────────────────────────────── */
-    .qreplies {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 0 0 6px 32px;
-      animation: slideIn 0.4s ease;
-    }
-
-    .qbtn {
-      background: white;
-      border: 1.5px solid var(--brand);
-      color: var(--brand);
-      padding: 7px 12px;
-      border-radius: 18px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all .15s;
-    }
-    .qbtn:hover  { 
-      background: var(--brand); 
-      color: white;
-      transform: translateY(-2px); 
-      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
-    }
-    .qbtn:active { transform: translateY(0); }
-
-    /* ── INPUT AREA ────────────────────────────────── */
-    .input-area {
-      background: white;
-      border-top: 1px solid var(--border);
-      padding: 10px 12px;
-      padding-bottom: max(10px, env(safe-area-inset-bottom));
-      flex-shrink: 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .pw-line {
-      text-align: center;
-      font-size: 9.5px;
-      color: #9CA3AF;
-      font-weight: 500;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-    .pw-line i { font-size: 9px; color: var(--success); }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .emoji-btn {
-      background: none;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      opacity: 0.5;
-      line-height: 1;
-      transition: opacity .15s;
-      flex-shrink: 0;
-    }
-    .emoji-btn:hover { opacity: 0.8; }
-
-    #msgIn {
-      flex: 1;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 9px 14px;
-      font-size: 13.5px;
-      font-family: inherit;
-      outline: none;
-      background: #F9FAFB;
-      color: var(--text);
-      transition: all .2s;
-      resize: none;
-      max-height: 100px;
-    }
-    #msgIn:focus {
-      border-color: var(--brand);
-      background: white;
-      box-shadow: 0 0 0 2px rgba(0, 102, 204, .08);
-    }
-    #msgIn::placeholder { color: #9CA3AF; }
-
-    .send-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--brand);
-      border: none;
-      color: white;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all .15s;
-      box-shadow: 0 2px 8px rgba(0, 102, 204, .25);
-    }
-    .send-btn:hover    { background: var(--brand-dk); transform: scale(1.05); }
-    .send-btn:disabled { background: #D1D5DB; box-shadow: none; transform: none; cursor: not-allowed; }
-
-    /* Scrollbar */
-    .msgs::-webkit-scrollbar { width: 8px; }
-    .msgs::-webkit-scrollbar-track { background: transparent; }
-    .msgs::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 4px; }
-    .msgs::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.12); }
-    
-    .msgs { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.08) transparent; }
-
-    /* Status indicator */
-    .status-msg {
-      text-align: center;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--brand);
-      margin: 4px 0 8px;
-      padding: 6px 12px;
-      background: var(--brand-lt);
-      border-radius: 20px;
-      align-self: center;
-      display: none;
-      animation: slideIn 0.3s ease;
-    }
-
-    /* Message group spacing */
-    .msg-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .msg-group .msg-row:not(:last-child) .bubble {
-      margin-bottom: 2px;
-    }
-
-    /* Input focus animation */
-    #msgIn.pre-fill {
-      border-color: var(--brand);
-      background: rgba(0, 102, 204, 0.05);
-      box-shadow: 0 0 0 2px rgba(0, 102, 204, .08);
-    }
-  </style>
+/* LOGO BADGE */
+.logo-badge {
+  text-align: center; padding: 6px 0 10px;
+  font-size: 10px; color: var(--muted);
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.logo-icon {
+  width: 14px; height: 14px; border-radius: 4px;
+  background: var(--brand); display: inline-flex;
+  align-items: center; justify-content: center;
+  font-size: 8px; font-weight: 700; color: white;
+}
+</style>
 </head>
 <body>
+
 <div class="app">
 
-  <!-- ── HEADER ── -->
   <header class="header">
-    <button class="btn-circ"><i class="fas fa-chevron-left"></i></button>
-
+    <button class="back-btn">&#8592;</button>
     <div class="h-agent">
-      <div class="h-photo-wrap">
-        <img class="h-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana">
-        <div class="h-online-dot"></div>
+      <div class="h-avatar">
+        <img src="https://i.pravatar.cc/150?u=carlos_diskgas" id="hImg" class="h-avatar-img">
+        <div id="hDot" class="h-status-dot"></div>
       </div>
-      <div>
-        <div class="h-name-row">Mariana</div>
-        <div class="h-sub" id="headerStatus">Online agora</div>
+      <div class="h-info">
+        <div class="h-name" id="hName">Diskgas Atendimento</div>
+        <div class="h-sub" id="hSub">Conectando ao atendente...</div>
       </div>
     </div>
-
-    <div class="h-actions">
-      <button class="btn-circ" title="Opções"><i class="fas fa-ellipsis-v"></i></button>
-    </div>
+    <button class="h-call">&#9742;</button>
   </header>
 
-  <!-- ── MESSAGES ── -->
-  <main class="msgs" id="msgs">
+  <div class="progress-track">
+    <div id="progressFill" class="progress-fill"></div>
+  </div>
 
-    <!-- Agent info card -->
-    <div class="agent-card">
-      <img class="ac-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana">
-      <div class="ac-info">
-        <h4>
-          Mariana
-          <span class="ac-badge"><i class="fas fa-check-circle"></i> Diskgas Autorizada</span>
-        </h4>
-        <p class="ac-title">Especialista em Entrega de Gás</p>
-        <div class="ac-stats">
-          <span class="ac-stat"><i class="fas fa-bolt"></i> Entrega em 30min</span>
-          <span class="ac-stat"><i class="fas fa-star"></i> 4.9/5.0</span>
+  <main class="msgs" id="msgs">
+    <div class="date-sep">Hoje</div>
+
+    <div id="agentCard" class="agent-intro">
+      <div class="ai-top">
+        <img src="https://i.pravatar.cc/150?u=carlos_diskgas" class="ai-img">
+        <div>
+          <div class="ai-name">Carlos Mendes</div>
+          <span class="ai-tag">&#10003; Atendente Verificado</span>
+        </div>
+      </div>
+      <div class="ai-stats">
+        <div class="ai-stat">
+          <div class="ai-stat-val">98%</div>
+          <div class="ai-stat-lbl">Satisfação</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-val">~3 min</div>
+          <div class="ai-stat-lbl">Resposta</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-val">2.4k</div>
+          <div class="ai-stat-lbl">Entregas</div>
         </div>
       </div>
     </div>
 
-    <div class="date-chip"><span id="dateLabel">Hoje</span></div>
-    <div class="sys-msg">Mariana entrou no atendimento · Protocolo #<span id="protocolNum"></span></div>
-
-    <!-- Status message placeholder -->
-    <div class="status-msg" id="statusMsg">Aguardando Vendedor...</div>
-
-    <!-- Typing indicator -->
-    <div class="typing-text" id="typingText">Mariana está digitando...</div>
-
-    <!-- Quick Replies Container -->
-    <div class="qreplies" id="qrContainer" style="display: none;"></div>
-
-    <!-- Typing anchor -->
-    <div class="typing-row" id="typingRow">
-      <img class="msg-av" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
-      <div class="typing-bub">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+    <div id="typingRow" class="typing-row">
+      <img src="https://i.pravatar.cc/150?u=carlos_diskgas" class="msg-av">
+      <div class="typing-bubble">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
       </div>
     </div>
-
   </main>
 
-  <!-- ── INPUT ── -->
-  <div class="input-area">
-    <div class="pw-line">
-      <i class="fas fa-lock"></i>
-      Botijão lacrado · Entrega segura · Diskgas
-    </div>
+  <footer class="footer">
+    <div id="quickOpts" class="quick-opts"></div>
     <div class="input-row">
-      <button class="emoji-btn">😊</button>
-      <input id="msgIn" type="text" placeholder="Descreva sua necessidade..." autocomplete="off">
-      <button class="send-btn" id="sendBtn">
-        <i class="fas fa-paper-plane"></i>
-      </button>
+      <input type="text" id="msgInput" class="msg-input"
+             placeholder="Aguardando atendente..." disabled>
+      <button id="sendBtn" class="send-btn" disabled>&#10148;</button>
     </div>
-  </div>
+    <div class="logo-badge">
+      <span class="logo-icon">D</span>
+      Diskgas &mdash; Atendimento Oficial
+    </div>
+  </footer>
 
 </div>
 
 <script>
-  const PHOTO = "https://randomuser.me/api/portraits/women/44.jpg";
-  const msgsEl = document.getElementById('msgs');
-  const typingRow = document.getElementById('typingRow');
-  const msgIn = document.getElementById('msgIn');
-  const sendBtn = document.getElementById('sendBtn');
-  const statusMsg = document.getElementById('statusMsg');
-  const headerStatus = document.getElementById('headerStatus');
-  const qrContainer = document.getElementById('qrContainer');
-  const history = [];
-  
-  let isWaitingForResponse = false;
-  let messageCount = 0;
+const msgsEl = document.getElementById('msgs');
+const inputEl = document.getElementById('msgInput');
+const sendBtnEl = document.getElementById('sendBtn');
+const typingRowEl = document.getElementById('typingRow');
+const progressEl = document.getElementById('progressFill');
+const quickEl = document.getElementById('quickOpts');
+const agentCardEl = document.getElementById('agentCard');
+const hImgEl = document.getElementById('hImg');
+const hDotEl = document.getElementById('hDot');
+const hNameEl = document.getElementById('hName');
+const hSubEl = document.getElementById('hSub');
 
-  // ── System prompt ──────────────────────────────────────────
-  const SYS = `Você é Mariana, vendedora autorizada Diskgas, especialista em entrega de gás de qualidade.
-Você é profissional, ágil, confiável e focada em converter o cliente em uma venda segura.
-Responda em português brasileiro natural, como um vendedor experiente de gás.
-Seja breve e direto: máximo 2-3 frases por resposta. Use emojis raramente.
-Nunca mencione que é uma IA. Se perguntarem, confirme que é a Mariana, vendedora Diskgas.
-Sempre mencione: botijão lacrado, entrega rápida (30-40min), segurança, qualidade.
-Para pedidos, solicite: endereço, tipo de botijão (13kg ou 45kg), forma de pagamento.
-Trate o cliente com "você". Demonstre urgência positiva para fechar o pedido.
-Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
+const AGENT_IMG = "https://i.pravatar.cc/150?u=carlos_diskgas";
 
-  // ── Init ───────────────────────────────────────────────────
-  const now = new Date();
-  const months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-  const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+function now() {
+  return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function scroll() { msgsEl.scrollTop = msgsEl.scrollHeight; }
+function setProgress(v) { progressEl.style.width = v + '%'; }
 
-  document.getElementById('dateLabel').textContent =
-    `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
-  document.getElementById('protocolNum').textContent =
-    Math.floor(100000 + Math.random() * 900000);
-
-  function ts() {
-    const d = new Date();
-    return d.getHours().toString().padStart(2,'0') + ':' +
-           d.getMinutes().toString().padStart(2,'0');
+function setTypingStatus(active) {
+  if (active) {
+    hSubEl.className = 'h-sub typing';
+    hSubEl.textContent = 'digitando...';
+  } else {
+    hSubEl.className = 'h-sub online';
+    hSubEl.textContent = 'Online';
   }
+}
 
-  // ── Utility functions ──────────────────────────────────────
-  function sleep(ms) { 
-    return new Promise(resolve => setTimeout(resolve, ms)); 
-  }
+function addMsg(html, type) {
+  const row = document.createElement('div');
+  row.className = `msg-row ${type}`;
 
-  function randomDelay(min = 300, max = 800) {
-    return Math.random() * (max - min) + min;
-  }
+  const avatar = type === 'agent'
+    ? `<img src="${AGENT_IMG}" class="msg-av">`
+    : `<div class="msg-av-spacer"></div>`;
 
-  function readingTime(text) {
-    const wordsPerMinute = 220;
-    const words = text.split(' ').length;
-    return Math.max(1200, (words / wordsPerMinute) * 60000 * 0.4 + 500);
-  }
+  const timeHtml = type === 'user'
+    ? `<div class="b-time user-time">${now()} &#10003;&#10003;</div>`
+    : `<div class="b-time">${now()}</div>`;
 
-  // ── Mark message as read ───────────────────────────────────
-  function markAsRead(msgElement) {
-    const ticks = msgElement.querySelector('.ticks');
-    if (ticks) {
-      setTimeout(() => {
-        ticks.classList.add('read');
-      }, 1500);
-    }
-  }
+  row.innerHTML = `
+    ${avatar}
+    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
+      ${html}
+      ${timeHtml}
+    </div>
+  `;
+  msgsEl.insertBefore(row, typingRowEl);
+  scroll();
+  return row;
+}
 
-  // ── Quick Replies ──────────────────────────────────────────
-  function showQuickReplies(options) {
-    qrContainer.innerHTML = '';
-    if (!options || options.length === 0) {
-      qrContainer.style.display = 'none';
+async function showTyping(ms) {
+  typingRowEl.style.display = 'flex';
+  setTypingStatus(true);
+  scroll();
+  await sleep(ms);
+  typingRowEl.style.display = 'none';
+  setTypingStatus(false);
+}
+
+function setQuickReplies(options) {
+  quickEl.innerHTML = '';
+  if (!options.length) { quickEl.style.display = 'none'; return; }
+  quickEl.style.display = 'flex';
+  options.forEach(([label, value]) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-chip';
+    btn.textContent = label;
+    btn.onclick = () => { quickSend(value || label); };
+    quickEl.appendChild(btn);
+  });
+}
+
+function enableInput(placeholder = 'Digite sua mensagem...') {
+  inputEl.disabled = false;
+  inputEl.placeholder = placeholder;
+  sendBtnEl.disabled = false;
+  inputEl.focus();
+}
+
+function quickSend(text) {
+  inputEl.value = text;
+  sendMsg();
+}
+
+let orderConfirmed = false;
+
+async function startFlow() {
+  await sleep(800);
+  setProgress(30);
+  hSubEl.textContent = 'Localizando atendente disponível...';
+
+  await sleep(1800);
+  setProgress(70);
+
+  await sleep(900);
+
+  hImgEl.style.filter = 'none';
+  hImgEl.style.opacity = '1';
+  hDotEl.style.opacity = '1';
+  hNameEl.textContent = 'Carlos Mendes';
+  hSubEl.className = 'h-sub online';
+  hSubEl.textContent = 'Online';
+  agentCardEl.style.display = 'block';
+  setProgress(100);
+
+  await sleep(600);
+  addMsg('Olá! Gostaria de pedir um botijão de gás.', 'user');
+
+  enableInput();
+
+  await sleep(900);
+  await showTyping(1800);
+  addMsg('Olá! Tudo bem? Aqui é o Carlos, da Diskgas. 😊', 'agent');
+
+  await sleep(1000);
+  await showTyping(2000);
+  addMsg('Claro, vou te ajudar agora mesmo! Que tamanho de botijão você precisa?', 'agent');
+
+  conversationState = 'choosing_product';
+  setQuickReplies([
+    ['P13 — 13 kg (residencial)', 'P13'],
+    ['P20 — 20 kg', 'P20'],
+    ['P45 — 45 kg (industrial)', 'P45'],
+  ]);
+}
+
+let conversationState = 'idle';
+let pendingOrder = {};
+
+async function handleAgentReply(userText) {
+  const t = userText.toLowerCase();
+
+  if (conversationState === 'idle') {
+    if (t.includes('preço') || t.includes('valor') || t.includes('quanto')) {
+      await showTyping(2000);
+      addMsg('Claro! Nossos valores atuais são:<br><br>🔵 <strong>P13 (13 kg)</strong> — R$ 115,00<br>🟠 <strong>P20 (20 kg)</strong> — R$ 175,00<br>🟢 <strong>P45 (45 kg)</strong> — R$ 320,00<br><br>O preço já inclui entrega para o seu bairro.', 'agent');
+      setQuickReplies([
+        ['Quero pedir P13', 'Quero pedir o botijão P13'],
+        ['Quero pedir P20', 'Quero pedir o botijão P20'],
+        ['Mais dúvidas', ''],
+      ]);
       return;
     }
-    
-    options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'qbtn';
-      btn.textContent = opt;
-      btn.onclick = () => {
-        msgIn.value = opt;
-        send();
-        showQuickReplies(null);
-      };
-      qrContainer.appendChild(btn);
-    });
-    
-    qrContainer.style.display = 'flex';
-    scroll();
+
+    if (t.includes('tempo') || t.includes('demora') || t.includes('entrega') && !t.includes('pedir')) {
+      await showTyping(1800);
+      addMsg('Nossa entrega é bem rápida! ⚡<br><br>Após a confirmação do pedido, o prazo médio é de <strong>30 a 50 minutos</strong>, dependendo da sua localização.', 'agent');
+      setQuickReplies([
+        ['Quero pedir agora', 'Quero pedir um botijão de gás'],
+        ['Ok, obrigado!', 'Ok, obrigado'],
+      ]);
+      return;
+    }
+
+    if (t.includes('pedir') || t.includes('botijão') || t.includes('gás')) {
+      conversationState = 'choosing_product';
+      await showTyping(1800);
+      addMsg('Ótimo! Que tipo de botijão você precisa?', 'agent');
+      setQuickReplies([
+        ['P13 — 13 kg (residencial)', 'P13'],
+        ['P20 — 20 kg', 'P20'],
+        ['P45 — 45 kg (industrial)', 'P45'],
+      ]);
+      return;
+    }
+
+    await showTyping(1600);
+    addMsg('Entendido! Posso te ajudar com pedidos, preços e informações sobre entrega. O que você precisa?', 'agent');
+    setQuickReplies([
+      ['Quero fazer um pedido', 'Quero pedir um botijão de gás'],
+      ['Ver preços', 'Qual o preço do botijão?'],
+      ['Tempo de entrega', 'Qual o tempo de entrega?'],
+    ]);
+    return;
   }
 
-  // ── Add message with realistic animation ────────────────────
-  function addMsg(text, side) {
-    const row = document.createElement('div');
-    row.className = 'msg-row' + (side === 'user' ? ' user' : '');
-    const time = ts();
-
-    if (side === 'agent') {
-      row.innerHTML = `
-        <img class="msg-av" src="${PHOTO}" alt="">
-        <div class="bubble a">
-          ${text}
-          <div class="bmeta"><span class="btime">${time}</span></div>
-        </div>`;
+  if (conversationState === 'choosing_product') {
+    if (t.includes('p13') || t.includes('13')) {
+      pendingOrder = { produto: 'Botijão P13 — 13 kg', preco: 'R$ 115,00' };
+    } else if (t.includes('p20') || t.includes('20')) {
+      pendingOrder = { produto: 'Botijão P20 — 20 kg', preco: 'R$ 175,00' };
+    } else if (t.includes('p45') || t.includes('45')) {
+      pendingOrder = { produto: 'Botijão P45 — 45 kg', preco: 'R$ 320,00' };
     } else {
-      row.innerHTML = `
-        <div class="bubble u">
-          ${text}
-          <div class="bmeta">
-            <span class="btime">${time}</span>
-            <span class="ticks"><i class="fas fa-check-double"></i></span>
+      await showTyping(1400);
+      addMsg('Me fala qual tamanho você prefere: P13, P20 ou P45?', 'agent');
+      return;
+    }
+    conversationState = 'awaiting_address';
+    await showTyping(1600);
+    addMsg(`Perfeito! <strong>${pendingOrder.produto}</strong> selecionado. 👍<br><br>Qual é o endereço de entrega? (rua, número e bairro)`, 'agent');
+    setQuickReplies([]);
+    return;
+  }
+
+  if (conversationState === 'awaiting_address') {
+    pendingOrder.endereco = userText;
+    conversationState = 'confirm_order';
+
+    await showTyping(2000);
+
+    const orderId = 'DG-' + Math.floor(10000 + Math.random() * 90000);
+    pendingOrder.id = orderId;
+
+    const orderHtml = `
+      Aqui está o resumo do seu pedido. Confirme para eu processar:
+      <div class="order-card">
+        <div class="order-header">
+          <span class="order-header-title">Resumo do Pedido</span>
+          <span class="order-id">${orderId}</span>
+        </div>
+        <div class="order-body">
+          <div class="order-row">
+            <span class="order-lbl">Produto</span>
+            <span class="order-val">${pendingOrder.produto}</span>
           </div>
-        </div>`;
-      
-      // Mark user message as read after brief delay
-      setTimeout(() => markAsRead(row), 800);
+          <div class="order-row">
+            <span class="order-lbl">Endereço</span>
+            <span class="order-val" style="text-align:right; max-width:55%">${pendingOrder.endereco}</span>
+          </div>
+          <div class="order-row">
+            <span class="order-lbl">Pagamento</span>
+            <span class="order-val">Na entrega (Dinheiro/Pix/Cartão)</span>
+          </div>
+          <div class="order-row">
+            <span class="order-lbl">Entrega</span>
+            <span class="order-val" style="color: var(--green)">30–50 min</span>
+          </div>
+          <div class="order-row" style="padding-top: 8px;">
+            <span class="order-lbl" style="font-weight:600; color: var(--text)">Total</span>
+            <span class="order-val order-total-val">${pendingOrder.preco}</span>
+          </div>
+        </div>
+        <div class="order-footer">
+          <button class="confirm-btn" id="confirmOrderBtn" onclick="confirmOrder()">
+            &#10003; Confirmar Pedido
+          </button>
+        </div>
+      </div>
+    `;
+    addMsg(orderHtml, 'agent');
+    setQuickReplies([
+      ['✏️ Corrigir endereço', 'Preciso corrigir o endereço'],
+      ['❌ Cancelar pedido', 'Quero cancelar'],
+    ]);
+    return;
+  }
+
+  if (conversationState === 'confirm_order') {
+    if (t.includes('cancelar') || t.includes('desistir')) {
+      conversationState = 'idle';
+      await showTyping(1400);
+      addMsg('Tudo bem! Pedido cancelado. Se mudar de ideia, é só chamar! 😊', 'agent');
+      setQuickReplies([
+        ['Fazer novo pedido', 'Quero pedir um botijão de gás'],
+      ]);
+      return;
     }
-
-    msgsEl.insertBefore(row, typingRow);
-    scroll();
-    messageCount++;
-    
-    return row;
-  }
-
-  // ── Add multiple bubbles (like real people) ────────────────
-  async function addMultiBubbles(messages, side) {
-    for (let i = 0; i < messages.length; i++) {
-      addMsg(messages[i], side);
-      if (i < messages.length - 1) {
-        await sleep(randomDelay(300, 600));
-      }
+    if (t.includes('corrigir') || t.includes('endereço') || t.includes('errado')) {
+      conversationState = 'awaiting_address';
+      await showTyping(1400);
+      addMsg('Sem problema! Me passa o endereço correto.', 'agent');
+      setQuickReplies([]);
+      return;
     }
+    await showTyping(1400);
+    addMsg('Você pode confirmar pelo botão acima ou me falar se precisa de algum ajuste. 😊', 'agent');
+    return;
   }
 
-  function showTyping(v) {
-    typingRow.style.display = v ? 'flex' : 'none';
-    if (v) scroll();
-  }
-
-  function scroll() { 
-    msgsEl.scrollTop = msgsEl.scrollHeight; 
-  }
-
-  // ── Realistic typing simulation ────────────────────────────
-  async function simulateTyping(textLength = 50) {
-    let duration = (textLength / 280) * 60000 * 0.7; 
-    duration = Math.max(1500, Math.min(duration, 5000));
-
-    headerStatus.textContent = "Digitando...";
-    headerStatus.classList.add('typing');
-    document.getElementById('typingText').style.display = 'block';
-    showTyping(true);
-    
-    if (duration > 3000) {
-      const half = duration / 2;
-      await sleep(half);
-      showTyping(false);
-      await sleep(randomDelay(300, 700));
-      showTyping(true);
-      await sleep(half);
-    } else {
-      await sleep(duration);
+  if (conversationState === 'order_confirmed') {
+    if (t.includes('obrigad') || t.includes('vlw') || t.includes('valeu')) {
+      await showTyping(1200);
+      addMsg('De nada! Qualquer dúvida estou por aqui. Boa experiência! 🔥', 'agent');
+      setQuickReplies([]);
+      return;
     }
-    
-    document.getElementById('typingText').style.display = 'none';
-    showTyping(false);
-    headerStatus.textContent = "Online agora";
-    headerStatus.classList.remove('typing');
+    await showTyping(1600);
+    addMsg('Seu pedido está a caminho! Assim que o entregador sair, te aviso. Tem mais alguma dúvida?', 'agent');
+    setQuickReplies([
+      ['Onde está meu pedido?', 'Onde está meu pedido?'],
+      ['Obrigado!', 'Obrigado!'],
+    ]);
+    return;
   }
 
-  // ── Animated pre-fill of input field ─────────────────────────
-  async function animatedPreFill(text) {
-    msgIn.classList.add('pre-fill');
-    msgIn.focus();
-    
-    for (let i = 0; i < text.length; i++) {
-      msgIn.value = text.substring(0, i + 1);
-      await sleep(randomDelay(40, 80));
-    }
-    
-    await sleep(600);
-    msgIn.classList.remove('pre-fill');
+  await showTyping(1400);
+  addMsg('Certo! Pode continuar, estou aqui para ajudar.', 'agent');
+}
+
+window.confirmOrder = async function() {
+  if (orderConfirmed) return;
+  orderConfirmed = true;
+  conversationState = 'order_confirmed';
+
+  const btn = document.getElementById('confirmOrderBtn');
+  if (btn) {
+    btn.classList.add('done');
+    btn.innerHTML = '&#10003; Pedido Confirmado!';
+    btn.disabled = true;
   }
 
-  // ── Automated initial sequence ─────────────────────────────
-  async function startSequence() {
-    await sleep(1500);
-    
-    const initialMessage = "Quero pagar via Pix";
-    await animatedPreFill(initialMessage);
-    
-    await send();
-  }
+  await sleep(600);
+  await showTyping(2000);
 
-  // ── Send message ───────────────────────────────────────────
-  async function send() {
-    const text = msgIn.value.trim();
-    if (!text || sendBtn.disabled || isWaitingForResponse) return;
-    
-    const isInitialMessage = messageCount === 0 && text === "Quero pagar via Pix";
-    
-    msgIn.value = '';
-    sendBtn.disabled = true;
-    isWaitingForResponse = true;
-    
-    addMsg(text, 'user');
-    
-    if (isInitialMessage) {
-      await sleep(1000);
-      statusMsg.style.display = 'block';
-      scroll();
-      await sleep(1500);
-      statusMsg.style.display = 'none';
-    }
-    
-    const readDelay = isInitialMessage ? 1200 : readingTime(text);
-    await sleep(readDelay);
-    
-    const reply = await getReply(text);
-    
-    // Split into multiple bubbles if it's a long response
-    const bubbles = splitIntoBubbles(reply);
-    
-    const totalLength = bubbles.reduce((sum, b) => sum + b.length, 0);
-    await simulateTyping(totalLength);
-    
-    await addMultiBubbles(bubbles, 'agent');
-    
-    if (!isInitialMessage) {
-      if (reply.includes("13kg") || reply.includes("45kg")) {
-        showQuickReplies(["P13 (Tradicional)", "P45 (Industrial)", "Dúvida sobre tamanhos"]);
-      } else {
-        showQuickReplies(["🛒 Fazer pedido", "💰 Preços", "💬 Falar com atendente"]);
-      }
-    } else {
-      await sleep(500);
-      showQuickReplies(["🏠 Informar endereço", "💰 Ver preços", "⏱️ Tempo de entrega"]);
-    }
-    
-    sendBtn.disabled = false;
-    isWaitingForResponse = false;
-    msgIn.focus();
-  }
+  const statusHtml = `
+    Pedido confirmado! 🎉 Acompanhe o status aqui:
+    <div class="delivery-status">
+      <div class="ds-title">&#128666; Rastreamento do Pedido</div>
+      <div class="ds-steps">
+        <div class="ds-step done"><div class="ds-dot"></div> Pedido recebido</div>
+        <div class="ds-step done"><div class="ds-dot"></div> Pagamento na entrega confirmado</div>
+        <div class="ds-step active"><div class="ds-dot"></div> Preparando seu pedido...</div>
+        <div class="ds-step"><div class="ds-dot"></div> Entregador a caminho</div>
+        <div class="ds-step"><div class="ds-dot"></div> Entregue</div>
+      </div>
+    </div>
+  `;
+  addMsg(statusHtml, 'agent');
 
-  // ── Split long responses into multiple bubbles ──────────────
-  function splitIntoBubbles(text) {
-    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-    const bubbles = [];
-    let current = '';
+  await sleep(2000);
+  await showTyping(1800);
+  addMsg('Em breve o entregador saí para o seu endereço. Tempo estimado: <strong>35–50 min</strong>. 👍', 'agent');
 
-    for (let sentence of sentences) {
-      if ((current + sentence).length > 120) {
-        if (current) bubbles.push(current.trim());
-        current = sentence;
-      } else {
-        current += sentence;
-      }
-    }
-    if (current) bubbles.push(current.trim());
-    
-    return bubbles.length > 0 ? bubbles : [text];
-  }
+  setQuickReplies([
+    ['Onde está meu pedido?', 'Onde está meu pedido?'],
+    ['Obrigado!', 'Obrigado!'],
+  ]);
+};
 
-  // ── Get reply (simulated) ──────────────────────────────────
-  async function getReply(msg) {
-    history.push({ role: 'user', content: msg });
-    
-    const responses = [
-      "Perfeito! E qual é o tipo de botijão que você precisa? 13kg ou 45kg?",
-      "Certo! Qual bairro você está? Assim consigo confirmar o tempo de entrega.",
-      "Ótimo! Você prefere botijão de 13kg ou 45kg? Qual é mais comum na sua casa?",
-      "Entendi! Deixa eu confirmar: você quer um botijão lacrado, é isso? Qual tamanho você precisa?",
-      "Perfeito! Vou anotar seu endereço. Qual é o número do seu botijão? 13kg ou 45kg?"
-    ];
-    
-    const reply = responses[Math.floor(Math.random() * responses.length)];
-    history.push({ role: 'assistant', content: reply });
-    return reply;
-  }
+async function sendMsg() {
+  const text = inputEl.value.trim();
+  if (!text) return;
+  inputEl.value = '';
+  setQuickReplies([]);
+  addMsg(text, 'user');
+  inputEl.disabled = true;
+  sendBtnEl.disabled = true;
+  await handleAgentReply(text);
+  inputEl.disabled = false;
+  sendBtnEl.disabled = false;
+  inputEl.focus();
+}
 
-  // ── Event listeners ────────────────────────────────────────
-  sendBtn.addEventListener('click', send);
-  msgIn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { 
-      e.preventDefault(); 
-      send(); 
-    }
-  });
+sendBtnEl.onclick = sendMsg;
+inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') sendMsg(); });
 
-  // ── Auto-resize textarea ───────────────────────────────────
-  msgIn.addEventListener('input', () => {
-    msgIn.style.height = 'auto';
-    msgIn.style.height = Math.min(msgIn.scrollHeight, 100) + 'px';
-  });
-
-  // ── Start on load ──────────────────────────────────────────
-  window.addEventListener('load', () => {
-    startSequence();
-  });
+window.onload = startFlow;
 </script>
 </body>
 </html>
