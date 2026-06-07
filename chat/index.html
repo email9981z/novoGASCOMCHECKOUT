@@ -1,438 +1,763 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Diskgas — Entrega Oficial</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --brand:    #0066CC;
-      --brand-dk: #0052A3;
-      --brand-lt: #E6F2FF;
-      --bg:       #F3F4F6;
-      --white:    #FFFFFF;
-      --text:     #111827;
-      --muted:    #6B7280;
-      --border:   #E5E7EB;
-      --success:  #10B981;
-      --warning:  #F59E0B;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Diskgas — Atendimento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --brand:     #FF5C1A;
+  --brand-dk:  #D94A10;
+  --brand-lt:  #FFF0EB;
+  --bg:        #F5F5F0;
+  --surface:   #FFFFFF;
+  --text:      #1A1A1A;
+  --muted:     #7A7A72;
+  --border:    #E8E8E2;
+  --green:     #1DB97A;
+  --green-lt:  #E8F9F1;
+  --amber:     #F5A623;
+  --amber-lt:  #FEF6E7;
+  --bubble-a:  #FFFFFF;
+  --bubble-u:  #1A1A1A;
+  --radius:    14px;
+}
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: #111827;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+html, body {
+  height: 100%; width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  background: #1A1A1A;
+  display: flex; justify-content: center; align-items: center;
+  overflow: hidden;
+}
 
-    /* ── APP SHELL ─────────────────────────────────── */
-    .app {
-      width: 100%;
-      max-width: 440px;
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      background: var(--bg);
-      position: relative;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
+.app {
+  width: 100%; max-width: 430px;
+  height: 100dvh;
+  display: flex; flex-direction: column;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
 
-    /* ── HEADER ────────────────────────────────────── */
-    .header {
-      background: white;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid var(--border);
-      z-index: 10;
-    }
+/* HEADER */
+.header {
+  background: var(--surface);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border);
+  position: relative; z-index: 10;
+}
 
-    .h-agent { display: flex; align-items: center; gap: 12px; flex: 1; }
-    .h-photo-wrap { position: relative; }
-    .h-photo {
-      width: 44px; height: 44px; border-radius: 50%;
-      object-fit: cover; background: #E5E7EB;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .h-online-dot {
-      position: absolute; bottom: 2px; right: 2px;
-      width: 10px; height: 10px; background: var(--success);
-      border: 2px solid white; border-radius: 50%;
-      display: none;
-    }
+.back-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 18px; flex-shrink: 0;
+}
 
-    .h-name-row { font-size: 15px; font-weight: 700; color: var(--text); }
-    .h-sub { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
-    .h-sub.online { color: var(--success); font-weight: 600; }
+.h-agent { display: flex; align-items: center; gap: 10px; flex: 1; }
 
-    /* ── PROGRESS BAR ── */
-    .progress-container {
-      height: 3px;
-      background: #E5E7EB;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-      z-index: 9;
-    }
-    .progress-bar {
-      height: 100%;
-      background: var(--brand);
-      width: 0%;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+.h-avatar {
+  position: relative;
+}
+.h-avatar-img {
+  width: 40px; height: 40px; border-radius: 50%;
+  object-fit: cover;
+  background: var(--border);
+  transition: all 0.4s ease;
+  filter: grayscale(1); opacity: 0.5;
+}
+.h-status-dot {
+  position: absolute; bottom: 1px; right: 1px;
+  width: 9px; height: 9px;
+  background: var(--green);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
-    /* ── MESSAGES ──────────────────────────────────── */
-    .msgs {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: #F9FAFB;
-    }
+.h-info { flex: 1; }
+.h-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.h-sub {
+  font-size: 11px; color: var(--muted);
+  display: flex; align-items: center; gap: 4px;
+  margin-top: 1px;
+}
+.h-sub.typing { color: var(--brand); }
+.h-sub.online { color: var(--green); font-weight: 500; }
 
-    /* ── AGENT CARD (TRUST BUILDER) ────────────────── */
-    .agent-card {
-      background: white;
-      border-radius: 16px;
-      padding: 16px;
-      border: 1px solid var(--brand-lt);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      margin-bottom: 10px;
-      display: none;
-      animation: slideDown 0.5s ease;
-    }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+.h-call {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--brand-lt); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--brand); font-size: 15px;
+}
 
-    .ac-header { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
-    .ac-info h4 { font-size: 15px; font-weight: 700; }
-    .ac-badge { color: var(--brand); font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
-    
-    .ac-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .ac-stat { background: var(--brand-lt); padding: 8px; border-radius: 8px; text-align: center; }
-    .ac-stat-val { display: block; font-size: 13px; font-weight: 700; color: var(--brand); }
-    .ac-stat-lbl { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; }
+/* PROGRESS */
+.progress-track {
+  height: 2px; background: var(--border); position: relative; z-index: 9;
+}
+.progress-fill {
+  height: 100%; background: var(--brand);
+  width: 0%; transition: width 0.5s cubic-bezier(.4,0,.2,1);
+}
 
-    /* ── BUBBLES ───────────────────────────────────── */
-    .msg-row { display: flex; gap: 8px; max-width: 90%; align-items: flex-end; }
-    .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
-    
-    .msg-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #E5E7EB;
-      flex-shrink: 0;
-      margin-bottom: 4px;
-    }
+/* MESSAGES */
+.msgs {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 16px 14px 8px;
+  display: flex; flex-direction: column; gap: 10px;
+  scroll-behavior: smooth;
+}
+.msgs::-webkit-scrollbar { width: 0; }
 
-    .bubble {
-      padding: 10px 14px;
-      border-radius: 18px;
-      font-size: 14px;
-      line-height: 1.5;
-      position: relative;
-    }
-    .bubble.a { background: white; color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
-    .bubble.u { background: var(--brand); color: white; border-bottom-right-radius: 4px; }
+/* DATE DIVIDER */
+.date-sep {
+  text-align: center; font-size: 10px; font-weight: 500;
+  color: var(--muted); letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 4px 0 8px;
+}
 
-    .b-meta { font-size: 10px; margin-top: 4px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; opacity: 0.7; }
+/* ROW */
+.msg-row {
+  display: flex; gap: 8px;
+  max-width: 88%; align-items: flex-end;
+  animation: fadeUp 0.25s ease;
+}
+.msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
+.msg-row.agent { align-self: flex-start; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-    /* ── PIX COMPONENT (CONVERSION FOCUS) ─────────── */
-    .pix-card {
-      background: #F0F9FF;
-      border: 2px dashed var(--brand);
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 8px;
-      text-align: center;
-    }
-    .pix-title { font-size: 12px; font-weight: 700; color: var(--brand); text-transform: uppercase; margin-bottom: 8px; }
-    .pix-code {
-      background: white;
-      padding: 10px;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 11px;
-      word-break: break-all;
-      border: 1px solid var(--brand-lt);
-      margin-bottom: 12px;
-      display: block;
-    }
-    .copy-btn {
-      background: var(--brand);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 13px;
-      cursor: pointer;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s;
-    }
-    .copy-btn:active { transform: scale(0.98); }
+.msg-av {
+  width: 26px; height: 26px; border-radius: 50%;
+  object-fit: cover; flex-shrink: 0; margin-bottom: 2px;
+}
+.msg-av-spacer { width: 26px; flex-shrink: 0; }
 
-    /* ── TYPING ────────────────────────────────────── */
-    .typing-row { display: none; align-items: center; gap: 8px; }
-    .dot-flashing {
-      position: relative; width: 6px; height: 6px; border-radius: 5px;
-      background-color: var(--brand); color: var(--brand);
-      animation: dot-flashing 1s infinite linear alternate; animation-delay: 0.5s;
-    }
-    .dot-flashing::before, .dot-flashing::after {
-      content: ""; display: inline-block; position: absolute; top: 0;
-      width: 6px; height: 6px; border-radius: 5px; background-color: var(--brand);
-      animation: dot-flashing 1s infinite linear alternate;
-    }
-    .dot-flashing::before { left: -12px; animation-delay: 0s; }
-    .dot-flashing::after { left: 12px; animation-delay: 1s; }
-    @keyframes dot-flashing { 0% { background-color: var(--brand); } 50%, 100% { background-color: #E5E7EB; } }
+.bubble {
+  padding: 9px 13px;
+  border-radius: var(--radius);
+  font-size: 13.5px; line-height: 1.55;
+  position: relative; max-width: 100%;
+}
+.bubble.a {
+  background: var(--bubble-a);
+  color: var(--text);
+  border-radius: 4px var(--radius) var(--radius) var(--radius);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.bubble.u {
+  background: var(--bubble-u);
+  color: #FFFFFF;
+  border-radius: var(--radius) 4px var(--radius) var(--radius);
+}
+.b-time {
+  font-size: 9.5px; margin-top: 4px;
+  opacity: 0.45; text-align: right;
+  display: flex; align-items: center; justify-content: flex-end; gap: 3px;
+}
+.b-time.user-time { color: #A0A09A; }
 
-    /* ── FOOTER ────────────────────────────────────── */
-    .footer { background: white; padding: 12px 16px; border-top: 1px solid var(--border); }
-    .input-row { display: flex; gap: 10px; align-items: center; }
-    input {
-      flex: 1; border: 1px solid var(--border); padding: 12px 16px;
-      border-radius: 24px; font-size: 14px; outline: none; background: #F9FAFB;
-    }
-    input:focus { border-color: var(--brand); background: white; }
-    .send-btn {
-      width: 44px; height: 44px; border-radius: 50%; background: var(--brand);
-      color: white; border: none; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+/* AGENT INFO CARD */
+.agent-intro {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: none;
+  animation: fadeUp 0.4s ease;
+  margin-bottom: 4px;
+}
+.ai-top { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
+.ai-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+.ai-name { font-size: 15px; font-weight: 600; color: var(--text); }
+.ai-tag {
+  font-size: 10px; font-weight: 600; color: var(--green);
+  background: var(--green-lt); padding: 2px 8px; border-radius: 20px;
+  display: inline-flex; align-items: center; gap: 3px; margin-top: 3px;
+}
+.ai-stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+}
+.ai-stat {
+  background: var(--bg); border-radius: 10px;
+  padding: 8px 6px; text-align: center;
+}
+.ai-stat-val { font-size: 14px; font-weight: 600; color: var(--text); }
+.ai-stat-lbl { font-size: 9px; color: var(--muted); margin-top: 1px; text-transform: uppercase; letter-spacing: 0.04em; }
 
-    .q-replies { display: flex; gap: 8px; overflow-x: auto; padding: 8px 0; scrollbar-width: none; }
-    .q-btn {
-      white-space: nowrap; background: white; border: 1px solid var(--brand);
-      color: var(--brand); padding: 8px 16px; border-radius: 20px;
-      font-size: 13px; font-weight: 600; cursor: pointer;
-    }
+/* ORDER CARD */
+.order-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 8px;
+}
+.order-header {
+  background: var(--brand);
+  padding: 10px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.order-header-title { font-size: 12px; font-weight: 600; color: white; letter-spacing: 0.03em; }
+.order-id { font-size: 11px; color: rgba(255,255,255,0.75); font-family: 'DM Mono', monospace; }
+.order-body { padding: 12px 14px; }
+.order-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0; border-bottom: 1px solid var(--border);
+}
+.order-row:last-child { border-bottom: none; padding-bottom: 0; }
+.order-lbl { font-size: 12px; color: var(--muted); }
+.order-val { font-size: 13px; font-weight: 500; color: var(--text); }
+.order-total-val { font-size: 16px; font-weight: 600; color: var(--brand); }
+.order-footer { padding: 0 14px 14px; }
+.confirm-btn {
+  width: 100%; padding: 12px; border-radius: 10px;
+  background: var(--brand); color: white; border: none;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.2s, transform 0.1s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.confirm-btn:hover { background: var(--brand-dk); }
+.confirm-btn:active { transform: scale(0.98); }
+.confirm-btn.done { background: var(--green); cursor: default; }
 
-    .sys-badge { text-align: center; font-size: 11px; color: var(--muted); margin: 8px 0; }
-  </style>
+/* DELIVERY STATUS */
+.delivery-status {
+  background: var(--green-lt);
+  border: 1px solid rgba(29,185,122,0.2);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.ds-title { font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.ds-steps { display: flex; flex-direction: column; gap: 6px; }
+.ds-step { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.ds-step.done { color: var(--green); }
+.ds-step.active { color: var(--text); font-weight: 500; }
+.ds-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+.ds-step.done .ds-dot { background: var(--green); }
+.ds-step.active .ds-dot { background: var(--brand); }
+
+/* TYPING */
+.typing-row {
+  display: none;
+  align-items: center; gap: 8px;
+  align-self: flex-start;
+  animation: fadeUp 0.2s ease;
+}
+.typing-bubble {
+  background: var(--bubble-a);
+  border-radius: 4px var(--radius) var(--radius) var(--radius);
+  padding: 10px 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  display: flex; gap: 4px; align-items: center;
+}
+.typing-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--muted); opacity: 0.5;
+  animation: typePulse 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typePulse {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(1); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+
+/* FOOTER */
+.footer { background: var(--surface); border-top: 1px solid var(--border); padding: 10px 12px 12px; }
+
+.quick-opts {
+  display: none; gap: 6px; overflow-x: auto;
+  padding-bottom: 8px; scrollbar-width: none;
+}
+.quick-opts::-webkit-scrollbar { display: none; }
+.q-chip {
+  white-space: nowrap; background: var(--bg);
+  border: 1px solid var(--border); color: var(--text);
+  padding: 7px 14px; border-radius: 20px;
+  font-size: 12.5px; font-weight: 500; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.q-chip:hover { background: var(--brand-lt); border-color: var(--brand); color: var(--brand); }
+
+.input-row { display: flex; gap: 8px; align-items: center; }
+
+.msg-input {
+  flex: 1; border: 1px solid var(--border);
+  padding: 11px 16px; border-radius: 24px;
+  font-size: 14px; outline: none;
+  background: var(--bg); font-family: 'DM Sans', sans-serif;
+  color: var(--text); transition: border-color 0.2s;
+}
+.msg-input:focus { border-color: var(--brand); background: var(--surface); }
+.msg-input::placeholder { color: var(--muted); }
+
+.send-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--brand); color: white; border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px;
+  transition: background 0.2s, transform 0.1s;
+  flex-shrink: 0;
+}
+.send-btn:hover { background: var(--brand-dk); }
+.send-btn:active { transform: scale(0.95); }
+.send-btn:disabled { background: var(--border); color: var(--muted); cursor: default; }
+
+/* LOGO BADGE */
+.logo-badge {
+  text-align: center; padding: 6px 0 10px;
+  font-size: 10px; color: var(--muted);
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.logo-icon {
+  width: 14px; height: 14px; border-radius: 4px;
+  background: var(--brand); display: inline-flex;
+  align-items: center; justify-content: center;
+  font-size: 8px; font-weight: 700; color: white;
+}
+</style>
 </head>
 <body>
 
 <div class="app">
+
   <header class="header">
+    <button class="back-btn">&#8592;</button>
     <div class="h-agent">
-      <div class="h-photo-wrap">
-        <img src="https://i.pravatar.cc/150?u=thiago" id="hPhoto" class="h-photo" style="filter: grayscale(1); opacity: 0.5;">
-        <div id="hDot" class="h-online-dot"></div>
+      <div class="h-avatar">
+        <img src="https://i.pravatar.cc/150?u=carlos_diskgas" id="hImg" class="h-avatar-img">
+        <div id="hDot" class="h-status-dot"></div>
       </div>
-      <div>
-        <div class="h-name-row" id="hName">Atendimento Diskgas</div>
-        <div class="h-sub" id="hStatus">Conectando...</div>
+      <div class="h-info">
+        <div class="h-name" id="hName">Diskgas Atendimento</div>
+        <div class="h-sub" id="hSub">Conectando ao atendente...</div>
       </div>
     </div>
-    <i class="fas fa-shield-alt" style="color: var(--success); font-size: 18px;"></i>
+    <button class="h-call">&#9742;</button>
   </header>
 
-  <div class="progress-container"><div id="pBar" class="progress-bar"></div></div>
+  <div class="progress-track">
+    <div id="progressFill" class="progress-fill"></div>
+  </div>
 
   <main class="msgs" id="msgs">
-    <div class="sys-badge">Criptografia de ponta a ponta ativa</div>
-    
-    <div id="agentCard" class="agent-card">
-      <div class="ac-header">
-        <img src="https://i.pravatar.cc/150?u=thiago" class="h-photo">
-        <div class="ac-info">
-          <h4>Thiago Silva</h4>
-          <span class="ac-badge"><i class="fas fa-check-circle"></i> Vendedor Verificado</span>
-        </div>
-      </div>
-      <div class="ac-stats">
-        <div class="ac-stat">
-          <span class="ac-stat-val">~2 min</span>
-          <span class="ac-stat-lbl">Tempo de Resposta</span>
-        </div>
-        <div class="ac-stat">
-          <span class="ac-stat-val">4.9/5.0</span>
-          <span class="ac-stat-lbl">Avaliação</span>
-        </div>
-      </div>
-    </div>
+    <div class="date-sep">Hoje</div>
 
-    <div id="sysMsg" class="sys-badge" style="background: #FEF3C7; color: #92400E; padding: 6px; border-radius: 8px;">
-      Aguardando vendedor disponível...
+    <div id="agentCard" class="agent-intro">
+      <div class="ai-top">
+        <img src="https://i.pravatar.cc/150?u=carlos_diskgas" class="ai-img">
+        <div>
+          <div class="ai-name">Carlos Mendes</div>
+          <span class="ai-tag">&#10003; Atendente Verificado</span>
+        </div>
+      </div>
+      <div class="ai-stats">
+        <div class="ai-stat">
+          <div class="ai-stat-val">98%</div>
+          <div class="ai-stat-lbl">Satisfação</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-val">~3 min</div>
+          <div class="ai-stat-lbl">Resposta</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-val">2.4k</div>
+          <div class="ai-stat-lbl">Entregas</div>
+        </div>
+      </div>
     </div>
 
     <div id="typingRow" class="typing-row">
-      <div style="width: 28px;"></div> <!-- Espaço para alinhar com o avatar -->
-      <div style="margin-left: 8px;"><div class="dot-flashing"></div></div>
+      <img src="https://i.pravatar.cc/150?u=carlos_diskgas" class="msg-av">
+      <div class="typing-bubble">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
     </div>
   </main>
 
   <footer class="footer">
-    <div id="qReplies" class="q-replies" style="display: none;"></div>
+    <div id="quickOpts" class="quick-opts"></div>
     <div class="input-row">
-      <input type="text" id="msgIn" placeholder="Aguarde o vendedor..." disabled>
-      <button id="sendBtn" class="send-btn" disabled><i class="fas fa-paper-plane"></i></button>
+      <input type="text" id="msgInput" class="msg-input"
+             placeholder="Aguardando atendente..." disabled>
+      <button id="sendBtn" class="send-btn" disabled>&#10148;</button>
+    </div>
+    <div class="logo-badge">
+      <span class="logo-icon">D</span>
+      Diskgas &mdash; Atendimento Oficial
     </div>
   </footer>
+
 </div>
 
 <script>
-  const msgs = document.getElementById('msgs');
-  const msgIn = document.getElementById('msgIn');
-  const sendBtn = document.getElementById('sendBtn');
-  const typingRow = document.getElementById('typingRow');
-  const pBar = document.getElementById('pBar');
-  const agentPhotoUrl = "https://i.pravatar.cc/150?u=thiago";
-  
-  function scroll() { msgs.scrollTop = msgs.scrollHeight; }
-  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-  function getTime() { return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
-  function setProgress(w) { pBar.style.width = w + '%'; }
+const msgsEl = document.getElementById('msgs');
+const inputEl = document.getElementById('msgInput');
+const sendBtnEl = document.getElementById('sendBtn');
+const typingRowEl = document.getElementById('typingRow');
+const progressEl = document.getElementById('progressFill');
+const quickEl = document.getElementById('quickOpts');
+const agentCardEl = document.getElementById('agentCard');
+const hImgEl = document.getElementById('hImg');
+const hDotEl = document.getElementById('hDot');
+const hNameEl = document.getElementById('hName');
+const hSubEl = document.getElementById('hSub');
 
-  function addMsg(text, type) {
-    const row = document.createElement('div');
-    row.className = `msg-row ${type}`;
-    
-    let avatarHtml = '';
-    if (type === 'agent') {
-      avatarHtml = `<img src="${agentPhotoUrl}" class="msg-avatar">`;
+const AGENT_IMG = "https://i.pravatar.cc/150?u=carlos_diskgas";
+
+function now() {
+  return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function scroll() { msgsEl.scrollTop = msgsEl.scrollHeight; }
+function setProgress(v) { progressEl.style.width = v + '%'; }
+
+function setTypingStatus(active) {
+  if (active) {
+    hSubEl.className = 'h-sub typing';
+    hSubEl.textContent = 'digitando...';
+  } else {
+    hSubEl.className = 'h-sub online';
+    hSubEl.textContent = 'Online';
+  }
+}
+
+function addMsg(html, type) {
+  const row = document.createElement('div');
+  row.className = `msg-row ${type}`;
+
+  const avatar = type === 'agent'
+    ? `<img src="${AGENT_IMG}" class="msg-av">`
+    : `<div class="msg-av-spacer"></div>`;
+
+  const timeHtml = type === 'user'
+    ? `<div class="b-time user-time">${now()} &#10003;&#10003;</div>`
+    : `<div class="b-time">${now()}</div>`;
+
+  row.innerHTML = `
+    ${avatar}
+    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
+      ${html}
+      ${timeHtml}
+    </div>
+  `;
+  msgsEl.insertBefore(row, typingRowEl);
+  scroll();
+  return row;
+}
+
+async function showTyping(ms) {
+  typingRowEl.style.display = 'flex';
+  setTypingStatus(true);
+  scroll();
+  await sleep(ms);
+  typingRowEl.style.display = 'none';
+  setTypingStatus(false);
+}
+
+function setQuickReplies(options) {
+  quickEl.innerHTML = '';
+  if (!options.length) { quickEl.style.display = 'none'; return; }
+  quickEl.style.display = 'flex';
+  options.forEach(([label, value]) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-chip';
+    btn.textContent = label;
+    btn.onclick = () => { quickSend(value || label); };
+    quickEl.appendChild(btn);
+  });
+}
+
+function enableInput(placeholder = 'Digite sua mensagem...') {
+  inputEl.disabled = false;
+  inputEl.placeholder = placeholder;
+  sendBtnEl.disabled = false;
+  inputEl.focus();
+}
+
+function quickSend(text) {
+  inputEl.value = text;
+  sendMsg();
+}
+
+let orderConfirmed = false;
+
+async function startFlow() {
+  await sleep(800);
+  setProgress(30);
+  hSubEl.textContent = 'Localizando atendente disponível...';
+
+  await sleep(1800);
+  setProgress(70);
+
+  await sleep(900);
+
+  hImgEl.style.filter = 'none';
+  hImgEl.style.opacity = '1';
+  hDotEl.style.opacity = '1';
+  hNameEl.textContent = 'Carlos Mendes';
+  hSubEl.className = 'h-sub online';
+  hSubEl.textContent = 'Online';
+  agentCardEl.style.display = 'block';
+  setProgress(100);
+
+  enableInput();
+
+  await sleep(800);
+  await showTyping(1800);
+  addMsg('Olá! Tudo bem? Aqui é o Carlos, da Diskgas. 😊', 'agent');
+
+  await sleep(1000);
+  await showTyping(2000);
+  addMsg('Como posso te ajudar hoje?', 'agent');
+
+  setQuickReplies([
+    ['Quero pedir um botijão 🔥', 'Quero pedir um botijão de gás'],
+    ['Qual o preço?', 'Qual o preço do botijão?'],
+    ['Tempo de entrega', 'Qual o tempo de entrega?'],
+  ]);
+}
+
+let conversationState = 'idle';
+let pendingOrder = {};
+
+async function handleAgentReply(userText) {
+  const t = userText.toLowerCase();
+
+  if (conversationState === 'idle') {
+    if (t.includes('preço') || t.includes('valor') || t.includes('quanto')) {
+      await showTyping(2000);
+      addMsg('Claro! Nossos valores atuais são:<br><br>🔵 <strong>P13 (13 kg)</strong> — R$ 115,00<br>🟠 <strong>P20 (20 kg)</strong> — R$ 175,00<br>🟢 <strong>P45 (45 kg)</strong> — R$ 320,00<br><br>O preço já inclui entrega para o seu bairro.', 'agent');
+      setQuickReplies([
+        ['Quero pedir P13', 'Quero pedir o botijão P13'],
+        ['Quero pedir P20', 'Quero pedir o botijão P20'],
+        ['Mais dúvidas', ''],
+      ]);
+      return;
     }
 
-    row.innerHTML = `
-      ${avatarHtml}
-      <div class="bubble ${type === 'user' ? 'u' : 'a'}">
-        ${text}
-        <div class="b-meta">${getTime()} ${type === 'user' ? '<i class="fas fa-check-double" style="color:#4FC3F7"></i>' : ''}</div>
-      </div>
-    `;
-    msgs.insertBefore(row, typingRow);
-    scroll();
+    if (t.includes('tempo') || t.includes('demora') || t.includes('entrega') && !t.includes('pedir')) {
+      await showTyping(1800);
+      addMsg('Nossa entrega é bem rápida! ⚡<br><br>Após a confirmação do pedido, o prazo médio é de <strong>30 a 50 minutos</strong>, dependendo da sua localização.', 'agent');
+      setQuickReplies([
+        ['Quero pedir agora', 'Quero pedir um botijão de gás'],
+        ['Ok, obrigado!', 'Ok, obrigado'],
+      ]);
+      return;
+    }
+
+    if (t.includes('pedir') || t.includes('botijão') || t.includes('gás')) {
+      conversationState = 'choosing_product';
+      await showTyping(1800);
+      addMsg('Ótimo! Que tipo de botijão você precisa?', 'agent');
+      setQuickReplies([
+        ['P13 — 13 kg (residencial)', 'P13'],
+        ['P20 — 20 kg', 'P20'],
+        ['P45 — 45 kg (industrial)', 'P45'],
+      ]);
+      return;
+    }
+
+    await showTyping(1600);
+    addMsg('Entendido! Posso te ajudar com pedidos, preços e informações sobre entrega. O que você precisa?', 'agent');
+    setQuickReplies([
+      ['Quero fazer um pedido', 'Quero pedir um botijão de gás'],
+      ['Ver preços', 'Qual o preço do botijão?'],
+      ['Tempo de entrega', 'Qual o tempo de entrega?'],
+    ]);
+    return;
   }
 
-  async function showTyping(duration) {
-    typingRow.style.display = 'flex';
-    document.getElementById('hStatus').textContent = 'Digitando...';
-    document.getElementById('hStatus').classList.add('online');
-    scroll();
-    await sleep(duration);
-    typingRow.style.display = 'none';
-    document.getElementById('hStatus').textContent = 'Online agora';
+  if (conversationState === 'choosing_product') {
+    if (t.includes('p13') || t.includes('13')) {
+      pendingOrder = { produto: 'Botijão P13 — 13 kg', preco: 'R$ 115,00' };
+    } else if (t.includes('p20') || t.includes('20')) {
+      pendingOrder = { produto: 'Botijão P20 — 20 kg', preco: 'R$ 175,00' };
+    } else if (t.includes('p45') || t.includes('45')) {
+      pendingOrder = { produto: 'Botijão P45 — 45 kg', preco: 'R$ 320,00' };
+    } else {
+      await showTyping(1400);
+      addMsg('Me fala qual tamanho você prefere: P13, P20 ou P45?', 'agent');
+      return;
+    }
+    conversationState = 'awaiting_address';
+    await showTyping(1600);
+    addMsg(`Perfeito! <strong>${pendingOrder.produto}</strong> selecionado. 👍<br><br>Qual é o endereço de entrega? (rua, número e bairro)`, 'agent');
+    setQuickReplies([]);
+    return;
   }
 
-  async function startFlow() {
-    // 1. Mensagem inicial do Usuário (0% -> 20%)
-    await sleep(1000);
-    setProgress(20);
-    addMsg("Olá! Gostaria de pedir um gás.", "user");
-    
-    // 2. Simulação de Conexão Profissional (20% -> 60%)
-    await sleep(1500);
-    setProgress(60);
-    document.getElementById('sysMsg').textContent = "Thiago Silva entrou no atendimento.";
-    document.getElementById('sysMsg').style.background = "#D1FAE5";
-    document.getElementById('sysMsg').style.color = "#065F46";
-    
-    // 3. Thiago se torna "Real" e o CARD APARECE (Barra 100%)
-    await sleep(800);
-    const hPhoto = document.getElementById('hPhoto');
-    hPhoto.style.filter = "none";
-    hPhoto.style.opacity = "1";
-    hPhoto.style.border = "2px solid var(--success)";
-    document.getElementById('hDot').style.display = "block";
-    document.getElementById('hName').textContent = "Thiago Silva";
-    document.getElementById('hStatus').textContent = "Online agora";
-    document.getElementById('hStatus').classList.add('online');
-    document.getElementById('agentCard').style.display = "block";
-    setProgress(100);
-    
-    msgIn.disabled = false;
-    msgIn.placeholder = "Digite sua mensagem...";
-    sendBtn.disabled = false;
+  if (conversationState === 'awaiting_address') {
+    pendingOrder.endereco = userText;
+    conversationState = 'confirm_order';
 
-    // 4. Primeira mensagem do Thiago (Com miniatura)
-    await sleep(1200);
-    await showTyping(1500);
-    addMsg("Oi! Tudo bem? Sou o Thiago da Diskgas.", "agent");
-
-    await sleep(1800);
-    await showTyping(2200);
-    addMsg("Vi que você quer pedir um gás. Vou te ajudar com isso agora mesmo!", "agent");
-
-    await sleep(2000);
-    await showTyping(2500);
-    addMsg("Vou gerar o seu código Pix para pagamento seguro, só um segundo...", "agent");
-
-    // 5. Momento da Conversão (Pix)
-    await sleep(3500);
-    await showTyping(1500);
-    
-    const pixHtml = `
-      Aqui está o seu código de pagamento. Assim que pagar, o sistema libera sua entrega automaticamente:
-      <div class="pix-card">
-        <div class="pix-title"><i class="fas fa-qrcode"></i> Pix Copia e Cola</div>
-        <span class="pix-code" id="pixCode">00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</span>
-        <button class="copy-btn" onclick="copyPix()">
-          <i class="fas fa-copy"></i> Copiar Código Pix
-        </button>
-      </div>
-    `;
-    addMsg(pixHtml, "agent");
-
-    // Sugestões de resposta rápida
-    const q = document.getElementById('qReplies');
-    q.style.display = 'flex';
-    q.innerHTML = `
-      <button class="q-btn" onclick="quickSend('Já realizei o pagamento!')">✅ Já paguei</button>
-      <button class="q-btn" onclick="quickSend('Qual o tempo de entrega?')">🕒 Tempo de entrega?</button>
-      <button class="q-btn" onclick="quickSend('Preciso de ajuda')">🆘 Suporte</button>
-    `;
-    scroll();
-  }
-
-  function copyPix() {
-    const btn = document.querySelector('.copy-btn');
-    btn.innerHTML = '<i class="fas fa-check"></i> Código Copiado!';
-    btn.style.background = 'var(--success)';
-    setTimeout(() => {
-      btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Código Pix';
-      btn.style.background = 'var(--brand)';
-    }, 2000);
-  }
-
-  function quickSend(text) {
-    msgIn.value = text;
-    send();
-  }
-
-  async function send() {
-    const text = msgIn.value.trim();
-    if (!text) return;
-    msgIn.value = '';
-    addMsg(text, "user");
-    await sleep(1500);
     await showTyping(2000);
-    addMsg("Perfeito! Estou acompanhando aqui. Assim que o pagamento for confirmado, te aviso por aqui mesmo.", "agent");
+
+    const orderId = 'DG-' + Math.floor(10000 + Math.random() * 90000);
+    pendingOrder.id = orderId;
+
+    const orderHtml = `
+      Aqui está o resumo do seu pedido. Confirme para eu processar:
+      <div class="order-card">
+        <div class="order-header">
+          <span class="order-header-title">Resumo do Pedido</span>
+          <span class="order-id">${orderId}</span>
+        </div>
+        <div class="order-body">
+          <div class="order-row">
+            <span class="order-lbl">Produto</span>
+            <span class="order-val">${pendingOrder.produto}</span>
+          </div>
+          <div class="order-row">
+            <span class="order-lbl">Endereço</span>
+            <span class="order-val" style="text-align:right; max-width:55%">${pendingOrder.endereco}</span>
+          </div>
+          <div class="order-row">
+            <span class="order-lbl">Pagamento</span>
+            <span class="order-val">Na entrega (Dinheiro/Pix/Cartão)</span>
+          </div>
+          <div class="order-row">
+            <span class="order-lbl">Entrega</span>
+            <span class="order-val" style="color: var(--green)">30–50 min</span>
+          </div>
+          <div class="order-row" style="padding-top: 8px;">
+            <span class="order-lbl" style="font-weight:600; color: var(--text)">Total</span>
+            <span class="order-val order-total-val">${pendingOrder.preco}</span>
+          </div>
+        </div>
+        <div class="order-footer">
+          <button class="confirm-btn" id="confirmOrderBtn" onclick="confirmOrder()">
+            &#10003; Confirmar Pedido
+          </button>
+        </div>
+      </div>
+    `;
+    addMsg(orderHtml, 'agent');
+    setQuickReplies([
+      ['✏️ Corrigir endereço', 'Preciso corrigir o endereço'],
+      ['❌ Cancelar pedido', 'Quero cancelar'],
+    ]);
+    return;
   }
 
-  sendBtn.onclick = send;
-  msgIn.onkeydown = (e) => { if(e.key === 'Enter') send(); };
+  if (conversationState === 'confirm_order') {
+    if (t.includes('cancelar') || t.includes('desistir')) {
+      conversationState = 'idle';
+      await showTyping(1400);
+      addMsg('Tudo bem! Pedido cancelado. Se mudar de ideia, é só chamar! 😊', 'agent');
+      setQuickReplies([
+        ['Fazer novo pedido', 'Quero pedir um botijão de gás'],
+      ]);
+      return;
+    }
+    if (t.includes('corrigir') || t.includes('endereço') || t.includes('errado')) {
+      conversationState = 'awaiting_address';
+      await showTyping(1400);
+      addMsg('Sem problema! Me passa o endereço correto.', 'agent');
+      setQuickReplies([]);
+      return;
+    }
+    await showTyping(1400);
+    addMsg('Você pode confirmar pelo botão acima ou me falar se precisa de algum ajuste. 😊', 'agent');
+    return;
+  }
 
-  window.onload = startFlow;
+  if (conversationState === 'order_confirmed') {
+    if (t.includes('obrigad') || t.includes('vlw') || t.includes('valeu')) {
+      await showTyping(1200);
+      addMsg('De nada! Qualquer dúvida estou por aqui. Boa experiência! 🔥', 'agent');
+      setQuickReplies([]);
+      return;
+    }
+    await showTyping(1600);
+    addMsg('Seu pedido está a caminho! Assim que o entregador sair, te aviso. Tem mais alguma dúvida?', 'agent');
+    setQuickReplies([
+      ['Onde está meu pedido?', 'Onde está meu pedido?'],
+      ['Obrigado!', 'Obrigado!'],
+    ]);
+    return;
+  }
+
+  await showTyping(1400);
+  addMsg('Certo! Pode continuar, estou aqui para ajudar.', 'agent');
+}
+
+window.confirmOrder = async function() {
+  if (orderConfirmed) return;
+  orderConfirmed = true;
+  conversationState = 'order_confirmed';
+
+  const btn = document.getElementById('confirmOrderBtn');
+  if (btn) {
+    btn.classList.add('done');
+    btn.innerHTML = '&#10003; Pedido Confirmado!';
+    btn.disabled = true;
+  }
+
+  await sleep(600);
+  await showTyping(2000);
+
+  const statusHtml = `
+    Pedido confirmado! 🎉 Acompanhe o status aqui:
+    <div class="delivery-status">
+      <div class="ds-title">&#128666; Rastreamento do Pedido</div>
+      <div class="ds-steps">
+        <div class="ds-step done"><div class="ds-dot"></div> Pedido recebido</div>
+        <div class="ds-step done"><div class="ds-dot"></div> Pagamento na entrega confirmado</div>
+        <div class="ds-step active"><div class="ds-dot"></div> Preparando seu pedido...</div>
+        <div class="ds-step"><div class="ds-dot"></div> Entregador a caminho</div>
+        <div class="ds-step"><div class="ds-dot"></div> Entregue</div>
+      </div>
+    </div>
+  `;
+  addMsg(statusHtml, 'agent');
+
+  await sleep(2000);
+  await showTyping(1800);
+  addMsg('Em breve o entregador saí para o seu endereço. Tempo estimado: <strong>35–50 min</strong>. 👍', 'agent');
+
+  setQuickReplies([
+    ['Onde está meu pedido?', 'Onde está meu pedido?'],
+    ['Obrigado!', 'Obrigado!'],
+  ]);
+};
+
+async function sendMsg() {
+  const text = inputEl.value.trim();
+  if (!text) return;
+  inputEl.value = '';
+  setQuickReplies([]);
+  addMsg(text, 'user');
+  inputEl.disabled = true;
+  sendBtnEl.disabled = true;
+  await handleAgentReply(text);
+  inputEl.disabled = false;
+  sendBtnEl.disabled = false;
+  inputEl.focus();
+}
+
+sendBtnEl.onclick = sendMsg;
+inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') sendMsg(); });
+
+window.onload = startFlow;
 </script>
-
 </body>
 </html>
