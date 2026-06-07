@@ -18,6 +18,7 @@
       --muted:    #6B7280;
       --border:   #E5E7EB;
       --success:  #10B981;
+      --info:     #3B82F6;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -163,7 +164,7 @@
       scrollbar-color: rgba(0,0,0,0.08) var(--bg);
     }
 
-    /* ── AGENT INFO CARD (PROFESSIONAL) ────────────── */
+    /* ── AGENT INFO CARD ────────────────────────────── */
     .agent-card {
       background: white;
       border-radius: 12px;
@@ -199,6 +200,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      flex-wrap: wrap;
     }
 
     .ac-badge {
@@ -268,6 +270,7 @@
       display: flex;
       gap: 6px;
       animation: msgIn .25s ease both;
+      margin-bottom: 2px;
     }
     .msg-row.user { flex-direction: row-reverse; }
 
@@ -323,7 +326,16 @@
     .bubble.a .btime { color: #9CA3AF; }
     .bubble.u .btime { color: rgba(255,255,255,0.6); }
 
-    .ticks { font-size: 11px; color: rgba(255,255,255,0.7); }
+    .ticks { 
+      font-size: 11px; 
+      color: rgba(255,255,255,0.7);
+      transition: color 0.3s ease;
+    }
+
+    .ticks.read { 
+      color: #4FC3F7;
+      font-weight: 700;
+    }
 
     /* ── TYPING INDICATOR ──────────────────────────── */
     .typing-row {
@@ -375,6 +387,35 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    /* ── QUICK REPLIES ─────────────────────────────── */
+    .qreplies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0 0 6px 32px;
+      animation: slideIn 0.4s ease;
+    }
+
+    .qbtn {
+      background: white;
+      border: 1.5px solid var(--brand);
+      color: var(--brand);
+      padding: 7px 12px;
+      border-radius: 18px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .15s;
+    }
+    .qbtn:hover  { 
+      background: var(--brand); 
+      color: white;
+      transform: translateY(-2px); 
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+    }
+    .qbtn:active { transform: translateY(0); }
 
     /* ── INPUT AREA ────────────────────────────────── */
     .input-area {
@@ -429,6 +470,8 @@
       background: #F9FAFB;
       color: var(--text);
       transition: all .2s;
+      resize: none;
+      max-height: 100px;
     }
     #msgIn:focus {
       border-color: var(--brand);
@@ -471,7 +514,7 @@
       font-weight: 600;
       color: var(--brand);
       margin: 4px 0 8px;
-      padding: 4px 10px;
+      padding: 6px 12px;
       background: var(--brand-lt);
       border-radius: 20px;
       align-self: center;
@@ -479,22 +522,22 @@
       animation: slideIn 0.3s ease;
     }
 
-    /* Read receipt animation */
-    .read-receipt {
-      display: inline-flex;
-      gap: 2px;
-      align-items: center;
+    /* Message group spacing */
+    .msg-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
 
-    .read-receipt .tick {
-      font-size: 9px;
-      opacity: 0.7;
-      transition: opacity 0.3s;
+    .msg-group .msg-row:not(:last-child) .bubble {
+      margin-bottom: 2px;
     }
 
-    .read-receipt .tick.read {
-      opacity: 1;
-      color: #87CEEB;
+    /* Input focus animation */
+    #msgIn.pre-fill {
+      border-color: var(--brand);
+      background: rgba(0, 102, 204, 0.05);
+      box-shadow: 0 0 0 2px rgba(0, 102, 204, .08);
     }
   </style>
 </head>
@@ -535,6 +578,7 @@
         <p class="ac-title">Especialista em Entrega de Gás</p>
         <div class="ac-stats">
           <span class="ac-stat"><i class="fas fa-bolt"></i> Entrega em 30min</span>
+          <span class="ac-stat"><i class="fas fa-star"></i> 4.9/5.0</span>
         </div>
       </div>
     </div>
@@ -547,6 +591,9 @@
 
     <!-- Typing indicator -->
     <div class="typing-text" id="typingText">Mariana está digitando...</div>
+
+    <!-- Quick Replies Container -->
+    <div class="qreplies" id="qrContainer" style="display: none;"></div>
 
     <!-- Typing anchor -->
     <div class="typing-row" id="typingRow">
@@ -585,9 +632,11 @@
   const sendBtn = document.getElementById('sendBtn');
   const statusMsg = document.getElementById('statusMsg');
   const headerStatus = document.getElementById('headerStatus');
+  const qrContainer = document.getElementById('qrContainer');
   const history = [];
   
   let isWaitingForResponse = false;
+  let messageCount = 0;
 
   // ── System prompt ──────────────────────────────────────────
   const SYS = `Você é Mariana, vendedora autorizada Diskgas, especialista em entrega de gás de qualidade.
@@ -621,17 +670,48 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     return new Promise(resolve => setTimeout(resolve, ms)); 
   }
 
-  // Random delay to simulate human-like behavior
   function randomDelay(min = 300, max = 800) {
     return Math.random() * (max - min) + min;
   }
 
-  // Simulate reading time based on message length
   function readingTime(text) {
     const wordsPerMinute = 220;
     const words = text.split(' ').length;
-    // Add base delay for "notification check"
     return Math.max(1200, (words / wordsPerMinute) * 60000 * 0.4 + 500);
+  }
+
+  // ── Mark message as read ───────────────────────────────────
+  function markAsRead(msgElement) {
+    const ticks = msgElement.querySelector('.ticks');
+    if (ticks) {
+      setTimeout(() => {
+        ticks.classList.add('read');
+      }, 1500);
+    }
+  }
+
+  // ── Quick Replies ──────────────────────────────────────────
+  function showQuickReplies(options) {
+    qrContainer.innerHTML = '';
+    if (!options || options.length === 0) {
+      qrContainer.style.display = 'none';
+      return;
+    }
+    
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'qbtn';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        msgIn.value = opt;
+        send();
+        showQuickReplies(null);
+      };
+      qrContainer.appendChild(btn);
+    });
+    
+    qrContainer.style.display = 'flex';
+    scroll();
   }
 
   // ── Add message with realistic animation ────────────────────
@@ -656,10 +736,26 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
             <span class="ticks"><i class="fas fa-check-double"></i></span>
           </div>
         </div>`;
+      
+      // Mark user message as read after brief delay
+      setTimeout(() => markAsRead(row), 800);
     }
 
     msgsEl.insertBefore(row, typingRow);
     scroll();
+    messageCount++;
+    
+    return row;
+  }
+
+  // ── Add multiple bubbles (like real people) ────────────────
+  async function addMultiBubbles(messages, side) {
+    for (let i = 0; i < messages.length; i++) {
+      addMsg(messages[i], side);
+      if (i < messages.length - 1) {
+        await sleep(randomDelay(300, 600));
+      }
+    }
   }
 
   function showTyping(v) {
@@ -673,20 +769,18 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
 
   // ── Realistic typing simulation ────────────────────────────
   async function simulateTyping(textLength = 50) {
-    // Typing speed: ~250-300 characters per minute
     let duration = (textLength / 280) * 60000 * 0.7; 
-    duration = Math.max(1500, Math.min(duration, 5000)); // Cap between 1.5s and 5s
+    duration = Math.max(1500, Math.min(duration, 5000));
 
     headerStatus.textContent = "Digitando...";
     headerStatus.classList.add('typing');
     document.getElementById('typingText').style.display = 'block';
     showTyping(true);
     
-    // Simulate "pauses" while typing (thinking)
     if (duration > 3000) {
       const half = duration / 2;
       await sleep(half);
-      showTyping(false); // Brief pause in typing
+      showTyping(false);
       await sleep(randomDelay(300, 700));
       showTyping(true);
       await sleep(half);
@@ -700,31 +794,28 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     headerStatus.classList.remove('typing');
   }
 
+  // ── Animated pre-fill of input field ─────────────────────────
+  async function animatedPreFill(text) {
+    msgIn.classList.add('pre-fill');
+    msgIn.focus();
+    
+    for (let i = 0; i < text.length; i++) {
+      msgIn.value = text.substring(0, i + 1);
+      await sleep(randomDelay(40, 80));
+    }
+    
+    await sleep(600);
+    msgIn.classList.remove('pre-fill');
+  }
+
   // ── Automated initial sequence ─────────────────────────────
   async function startSequence() {
-    // Delay before first message
-    await sleep(800);
+    await sleep(1500);
     
-    // 1. User sends initial message
-    addMsg("Quero pagar via Pix", "user");
+    const initialMessage = "Quero pagar via Pix";
+    await animatedPreFill(initialMessage);
     
-    // 2. Show status
-    await sleep(1200);
-    statusMsg.style.display = 'block';
-    scroll();
-
-    // 3. Simulate reading and response delay
-    await sleep(1800);
-    statusMsg.style.display = 'none';
-    
-    // 4. Agent starts typing
-    const initialReply = "Ótimo! Aceito Pix sim, sem problema. Já estou aqui para ajudar com seu pedido. Qual é o seu endereço?";
-    await simulateTyping(initialReply.length);
-    
-    // 5. Agent responds
-    addMsg(initialReply, "agent");
-    
-    isWaitingForResponse = false;
+    await send();
   }
 
   // ── Send message ───────────────────────────────────────────
@@ -732,40 +823,80 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
     const text = msgIn.value.trim();
     if (!text || sendBtn.disabled || isWaitingForResponse) return;
     
+    const isInitialMessage = messageCount === 0 && text === "Quero pagar via Pix";
+    
     msgIn.value = '';
     sendBtn.disabled = true;
     isWaitingForResponse = true;
     
     addMsg(text, 'user');
     
-    // Simulate agent reading the message
-    const readDelay = readingTime(text);
+    if (isInitialMessage) {
+      await sleep(1000);
+      statusMsg.style.display = 'block';
+      scroll();
+      await sleep(1500);
+      statusMsg.style.display = 'none';
+    }
+    
+    const readDelay = isInitialMessage ? 1200 : readingTime(text);
     await sleep(readDelay);
     
-    // Generate or fetch response
     const reply = await getReply(text);
-
-    // Simulate typing response based on reply length
-    await simulateTyping(reply.length);
     
-    // Add agent response
-    addMsg(reply, 'agent');
+    // Split into multiple bubbles if it's a long response
+    const bubbles = splitIntoBubbles(reply);
+    
+    const totalLength = bubbles.reduce((sum, b) => sum + b.length, 0);
+    await simulateTyping(totalLength);
+    
+    await addMultiBubbles(bubbles, 'agent');
+    
+    if (!isInitialMessage) {
+      if (reply.includes("13kg") || reply.includes("45kg")) {
+        showQuickReplies(["P13 (Tradicional)", "P45 (Industrial)", "Dúvida sobre tamanhos"]);
+      } else {
+        showQuickReplies(["🛒 Fazer pedido", "💰 Preços", "💬 Falar com atendente"]);
+      }
+    } else {
+      await sleep(500);
+      showQuickReplies(["🏠 Informar endereço", "💰 Ver preços", "⏱️ Tempo de entrega"]);
+    }
     
     sendBtn.disabled = false;
     isWaitingForResponse = false;
     msgIn.focus();
   }
 
-  // ── Get reply (simulated or real API) ──────────────────────
+  // ── Split long responses into multiple bubbles ──────────────
+  function splitIntoBubbles(text) {
+    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+    const bubbles = [];
+    let current = '';
+
+    for (let sentence of sentences) {
+      if ((current + sentence).length > 120) {
+        if (current) bubbles.push(current.trim());
+        current = sentence;
+      } else {
+        current += sentence;
+      }
+    }
+    if (current) bubbles.push(current.trim());
+    
+    return bubbles.length > 0 ? bubbles : [text];
+  }
+
+  // ── Get reply (simulated) ──────────────────────────────────
   async function getReply(msg) {
     history.push({ role: 'user', content: msg });
     
-    // Simulated responses for demo
     const responses = [
       "Perfeito! E qual é o tipo de botijão que você precisa? 13kg ou 45kg?",
       "Certo! Qual bairro você está? Assim consigo confirmar o tempo de entrega.",
       "Ótimo! Você prefere botijão de 13kg ou 45kg? Qual é mais comum na sua casa?",
-      "Entendi! Deixa eu confirmar: você quer um botijão lacrado, é isso? Qual tamanho você precisa?"
+      "Entendi! Deixa eu confirmar: você quer um botijão lacrado, é isso? Qual tamanho você precisa?",
+      "Perfeito! Vou anotar seu endereço. Qual é o número do seu botijão? 13kg ou 45kg?"
     ];
     
     const reply = responses[Math.floor(Math.random() * responses.length)];
@@ -780,6 +911,12 @@ Inicie respostas de forma variada. Foque em resolver rápido e com confiança.`;
       e.preventDefault(); 
       send(); 
     }
+  });
+
+  // ── Auto-resize textarea ───────────────────────────────────
+  msgIn.addEventListener('input', () => {
+    msgIn.style.height = 'auto';
+    msgIn.style.height = Math.min(msgIn.scrollHeight, 100) + 'px';
   });
 
   // ── Start on load ──────────────────────────────────────────
