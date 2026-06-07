@@ -519,20 +519,24 @@ async function startFlow() {
   agentCardEl.style.display = 'block';
   setProgress(100);
 
+  await sleep(600);
+  addMsg('Olá! Gostaria de pedir um botijão de gás.', 'user');
+
   enableInput();
 
-  await sleep(800);
+  await sleep(900);
   await showTyping(1800);
   addMsg('Olá! Tudo bem? Aqui é o Carlos, da Diskgas. 😊', 'agent');
 
   await sleep(1000);
   await showTyping(2000);
-  addMsg('Como posso te ajudar hoje?', 'agent');
+  addMsg('Claro, vou te ajudar agora mesmo! Que tamanho de botijão você precisa?', 'agent');
 
+  conversationState = 'choosing_product';
   setQuickReplies([
-    ['Quero pedir um botijão 🔥', 'Quero pedir um botijão de gás'],
-    ['Qual o preço?', 'Qual o preço do botijão?'],
-    ['Tempo de entrega', 'Qual o tempo de entrega?'],
+    ['P13 — 13 kg (residencial)', 'P13'],
+    ['P20 — 20 kg', 'P20'],
+    ['P45 — 45 kg (industrial)', 'P45'],
   ]);
 }
 
