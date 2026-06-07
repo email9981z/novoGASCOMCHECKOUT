@@ -316,21 +316,21 @@
   }
 
   async function startFlow() {
-    // 1. Entrada do Usuário (10%)
+    // 1. Mensagem inicial do Usuário (0% -> 20%)
     await sleep(1000);
-    setProgress(10);
+    setProgress(20);
     addMsg("Olá! Gostaria de pedir um gás.", "user");
-
-    // 2. Simulação de Conexão Profissional (25%)
-    await sleep(2000);
-    setProgress(25);
+    
+    // 2. Simulação de Conexão Profissional (20% -> 50%)
+    await sleep(1500);
+    setProgress(50);
     document.getElementById('sysMsg').textContent = "Thiago Silva entrou no atendimento.";
     document.getElementById('sysMsg').style.background = "#D1FAE5";
     document.getElementById('sysMsg').style.color = "#065F46";
     
-    // 3. Thiago se torna "Real" (40%)
-    await sleep(500);
-    setProgress(40);
+    // 3. Thiago se torna "Real" (50% -> 80%)
+    await sleep(800);
+    setProgress(80);
     const hPhoto = document.getElementById('hPhoto');
     hPhoto.style.filter = "none";
     hPhoto.style.opacity = "1";
@@ -341,27 +341,28 @@
     document.getElementById('hStatus').classList.add('online');
     document.getElementById('agentCard').style.display = "block";
     
+    // 4. Primeira mensagem do Thiago (A barra termina AQUI)
+    await sleep(1200);
+    await showTyping(1500);
+    addMsg("Oi! Tudo bem? Sou o Thiago da Diskgas.", "agent");
+    setProgress(100); // BARRA TERMINA NA PRIMEIRA RESPOSTA DO ATENDENTE
+    
+    // Liberamos o chat para o usuário
     msgIn.disabled = false;
     msgIn.placeholder = "Digite sua mensagem...";
     sendBtn.disabled = false;
 
-    // 4. Sequência do Thiago (60%)
-    await sleep(2000);
-    setProgress(60);
-    await showTyping(1800);
-    addMsg("Oi!", "agent");
-
-    await sleep(1500);
-    await showTyping(2500);
-    addMsg("Sou Thiago, vendedor Diskgas na sua região. Vou te ajudar com seu pedido agora mesmo!", "agent");
-
-    await sleep(2000);
+    // 5. Continuação natural do fluxo
+    await sleep(1800);
     await showTyping(2200);
+    addMsg("Vi que você quer pedir um gás. Vou te ajudar com isso agora mesmo!", "agent");
+
+    await sleep(2000);
+    await showTyping(2500);
     addMsg("Vou gerar o seu código Pix para pagamento seguro, só um segundo...", "agent");
 
-    // 5. Momento da Conversão (85%)
+    // 6. Momento da Conversão (Pix)
     await sleep(3500);
-    setProgress(85);
     await showTyping(1500);
     
     const pixHtml = `
@@ -376,9 +377,7 @@
     `;
     addMsg(pixHtml, "agent");
 
-    // 6. Conclusão do Fluxo (100%)
-    await sleep(1000);
-    setProgress(100);
+    // Sugestões de resposta rápida
     const q = document.getElementById('qReplies');
     q.style.display = 'flex';
     q.innerHTML = `
