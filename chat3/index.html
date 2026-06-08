@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Diskgas — Atendimento Melhorado</title>
+<title>Diskgas — Atendimento Profissional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -15,7 +15,7 @@
   --brand-lt:   #FFF2EC;
   --brand-mid:  #FF6430;
 
-  --bg:         #ECE7DF;
+  --bg:         #F2F0EB;
   --surface:    #FFFFFF;
   --surface-2:  #F9F6F2;
   --surface-3:  #F3EEE7;
@@ -125,9 +125,10 @@ html,body{
 .msgs{
   flex:1;overflow-y:auto;overflow-x:hidden;
   padding:16px 14px 12px;
-  display:flex;flex-direction:column;gap:8px;
+  display:flex;flex-direction:column;gap:12px;
   position:relative;z-index:1;
   scroll-behavior:smooth;
+  height: 100%;
 }
 
 .sys-msg{text-align:center;margin:10px 0;animation:fadeIn .4s var(--ease);}
@@ -163,12 +164,19 @@ html,body{
 }
 
 .msg-row{
-  display:flex;gap:7px;align-items:flex-end;
-  max-width:84%;margin-bottom:2px;
+  display:flex;gap:8px;align-items:flex-end;
+  max-width:88%;margin-bottom:2px;
   animation:msgIn .32s var(--ease);
 }
 .msg-row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
 .msg-row.agent{align-self:flex-start;}
+
+.msg-avatar{
+  width:28px;height:28px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;
+  margin-bottom:2px;
+  box-shadow: var(--sh-xs);
+}
 
 @keyframes msgIn{
   from{opacity:0;transform:translateY(7px) scale(.97);}
@@ -179,7 +187,7 @@ html,body{
 .bubble{
   padding:10px 13px 8px;
   border-radius:var(--radius);
-  font-size:14px;line-height:1.65;
+  font-size:14px;line-height:1.6;
   position:relative;
 }
 .bubble.a{
@@ -202,57 +210,112 @@ html,body{
 }
 .b-time{font-size:10.5px;color:rgba(0,0,0,.32);}
 
-/* ─── NEW: Agent Intro Card ─── */
+/* ─── REVISED: Agent Intro Card ─── */
 .agent-intro{
   background:var(--surface);
   border-radius:var(--radius-lg);
   overflow:hidden;
-  margin:16px 0;
-  box-shadow:var(--sh-lg);
-  border:1px solid rgba(0,0,0,.055);
+  margin:4px 0 12px;
+  box-shadow: var(--sh-md);
+  border:1px solid rgba(0,0,0,.04);
   width:100%;
-  position:relative;z-index:2;
+  flex-shrink: 0; /* Prevent shrinking */
+  position:relative;
   animation:cardSlideIn .55s var(--spring);
 }
-.agent-intro::before{
-  content:'';position:absolute;top:0;left:0;right:0;
-  height:3px;
-  background:linear-gradient(90deg, var(--brand) 0%, #FF7848 100%);
+
+.ai-header{
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+.ai-header-title{
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+.ai-badge-verified{
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ai-body{
+  display:flex;gap:16px;align-items:center;
+  padding:20px 18px;
+}
+.ai-img-wrapper{
+  position: relative;
+}
+.ai-img{
+  width:64px;height:64px;border-radius:50%;
+  object-fit:cover;
+  border:3px solid #fff;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+.ai-status-online{
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 14px;
+  height: 14px;
+  background: var(--green);
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+}
+
+.ai-info{flex:1;}
+.ai-name{font-size:17px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.ai-role{font-size:12.5px;color:var(--text-2);margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+
+.ai-stats{
+  display: flex;
+  gap: 15px;
+  border-top: 1px solid var(--border-2);
+  padding: 12px 18px;
+  background: var(--surface-2);
+}
+.ai-stat-item{
+  display: flex;
+  flex-direction: column;
+}
+.ai-stat-val{
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.ai-stat-lbl{
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
 @keyframes cardSlideIn{
   from{opacity:0;transform:translateY(20px);}
   to{opacity:1;transform:translateY(0);}
 }
 
-.ai-top{
-  display:flex;gap:14px;align-items:center;
-  padding:20px 18px 16px;
-}
-.ai-img{
-  width:58px;height:58px;border-radius:50%;
-  object-fit:cover;
-  border:2.5px solid #fff;
-  box-shadow:0 2px 12px rgba(0,0,0,.12);
-}
-.ai-info{flex:1;}
-.ai-name{font-size:16px;font-weight:700;color:var(--text);}
-.ai-role{font-size:12px;color:var(--text-2);margin-bottom:4px;}
-.ai-tag{
-  font-size:11px;font-weight:600;
-  color:#0A8040; background:#E8F7EF;
-  padding:3px 10px; border-radius:20px;
-  display:inline-flex;align-items:center;
-}
-
 /* ─── Typing ─── */
 .typing-row{
-  display:none;align-items:flex-end;gap:7px;
+  display:none;align-items:flex-end;gap:8px;
   align-self:flex-start;animation:fadeIn .2s ease;
 }
 .typing-bubble{
   background:var(--bubble-a);
   border-radius:4px var(--radius) var(--radius) var(--radius);
-  padding:13px 16px;
+  padding:12px 16px;
   box-shadow:var(--sh-sm);
   display:flex;gap:5px;
 }
@@ -281,6 +344,10 @@ html,body{
   border-radius:26px;
   padding:10px 15px;
   border:1.5px solid var(--border);
+  transition: border-color 0.2s ease;
+}
+.input-wrap:focus-within{
+  border-color: var(--brand-mid);
 }
 .msg-input{
   flex:1;border:none;outline:none;
@@ -293,6 +360,11 @@ html,body{
   color:#fff; border:none;
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;
+  transition: transform 0.2s var(--spring), background 0.2s ease;
+}
+.send-btn:active{
+  transform: scale(0.92);
+  background: var(--brand-dk);
 }
 </style>
 </head>
@@ -307,7 +379,7 @@ html,body{
       </div>
       <div class="h-info">
         <div class="h-name">Carlos - Diskgas</div>
-        <div class="h-sub">Online</div>
+        <div class="h-sub">Online agora</div>
       </div>
     </div>
   </header>
@@ -317,6 +389,7 @@ html,body{
   </div>
 
   <div class="typing-row" id="typingRow" style="padding: 0 14px 10px;">
+    <img src="https://i.pravatar.cc/100?u=carlos" class="msg-avatar" alt="Avatar">
     <div class="typing-bubble">
       <div class="typing-dot"></div>
       <div class="typing-dot"></div>
@@ -329,7 +402,9 @@ html,body{
       <div class="input-wrap">
         <input type="text" class="msg-input" id="msgInput" placeholder="Escreva sua mensagem...">
       </div>
-      <button class="send-btn" id="sendBtn">✈</button>
+      <button class="send-btn" id="sendBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
     </div>
   </footer>
 </div>
@@ -340,19 +415,35 @@ const inputEl = document.getElementById('msgInput');
 const sendBtnEl = document.getElementById('sendBtn');
 const typingRowEl = document.getElementById('typingRow');
 
+const agentAvatar = "https://i.pravatar.cc/100?u=carlos";
 const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+
+// Helper to scroll to bottom with smooth behavior and extra safety
+function scrollToBottom() {
+  // Use a small timeout to ensure the DOM has rendered the new height
+  setTimeout(() => {
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+  }, 100);
+}
 
 function addMsg(text, type) {
   const row = document.createElement('div');
   row.className = `msg-row ${type}`;
+  
+  let avatarHtml = '';
+  if (type === 'agent') {
+    avatarHtml = `<img src="${agentAvatar}" class="msg-avatar" alt="Avatar">`;
+  }
+
   row.innerHTML = `
+    ${avatarHtml}
     <div class="bubble ${type === 'user' ? 'u' : 'a'}">
       ${text}
       <div class="b-meta"><span class="b-time">${now()}</span></div>
     </div>
   `;
   msgsEl.appendChild(row);
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+  scrollToBottom();
 }
 
 function addSystemMsg(text, showSpinner = false) {
@@ -371,7 +462,7 @@ function addSystemMsg(text, showSpinner = false) {
     msgsEl.appendChild(spinner);
   }
   
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+  scrollToBottom();
   return { container: div, textSpan: span, spinner: spinner };
 }
 
@@ -379,17 +470,46 @@ function showAgentIntro() {
   const card = document.createElement('div');
   card.className = 'agent-intro';
   card.innerHTML = `
-    <div class="ai-top">
-      <img src="https://i.pravatar.cc/100?u=carlos" class="ai-img" alt="Carlos">
+    <div class="ai-header">
+      <div class="ai-header-title">Consultor Disponível</div>
+      <div class="ai-badge-verified">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Verificado
+      </div>
+    </div>
+    <div class="ai-body">
+      <div class="ai-img-wrapper">
+        <img src="${agentAvatar}" class="ai-img" alt="Carlos">
+        <div class="ai-status-online"></div>
+      </div>
       <div class="ai-info">
         <div class="ai-name">Carlos Oliveira</div>
-        <div class="ai-role">Especialista em Atendimento</div>
-        <div class="ai-tag">● Responde rápido</div>
+        <div class="ai-role">
+          <span>Especialista em Atendimento</span>
+        </div>
+        <div style="font-size: 11px; color: var(--green-dk); font-weight: 600; display: flex; align-items: center; gap: 4px;">
+          <span style="width: 6px; height: 6px; background: var(--green); border-radius: 50%;"></span>
+          Responde em poucos minutos
+        </div>
+      </div>
+    </div>
+    <div class="ai-stats">
+      <div class="ai-stat-item">
+        <span class="ai-stat-val">1.2k+</span>
+        <span class="ai-stat-lbl">Vendas</span>
+      </div>
+      <div class="ai-stat-item">
+        <span class="ai-stat-val">4.9/5</span>
+        <span class="ai-stat-lbl">Avaliação</span>
+      </div>
+      <div class="ai-stat-item">
+        <span class="ai-stat-val">5 anos</span>
+        <span class="ai-stat-lbl">Experiência</span>
       </div>
     </div>
   `;
   msgsEl.appendChild(card);
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+  scrollToBottom();
 }
 
 inputEl.onkeypress = (e) => { 
@@ -404,7 +524,7 @@ inputEl.onkeypress = (e) => {
 
 // Auto-start with automatic user message
 window.onload = async () => {
-  addSystemMsg("Conexão estabelecida");
+  addSystemMsg("Conexão segura estabelecida");
   await new Promise(r => setTimeout(r, 1000));
   
   // Simula a primeira mensagem automática do usuário
@@ -418,14 +538,14 @@ window.onload = async () => {
 async function handleResponseFlow() {
   // 1. GAP FILLER: System Message with Spinner
   await new Promise(r => setTimeout(r, 800));
-  const sysObj = addSystemMsg("Localizando consultor disponível...", true);
+  const sysObj = addSystemMsg("Buscando o melhor consultor para você...", true);
 
   // 2. Wait and update to "Located" with Check
   await new Promise(r => setTimeout(r, 1800));
   if (sysObj.spinner) sysObj.spinner.remove();
   
   // Atualiza o texto e adiciona o check
-  sysObj.textSpan.innerHTML = "Consultor localizado ✓";
+  sysObj.textSpan.innerHTML = "Consultor Carlos conectado ✓";
   sysObj.textSpan.style.color = "var(--green-dk)";
   sysObj.textSpan.style.background = "var(--green-lt)";
   sysObj.textSpan.style.borderColor = "var(--green-bd)";
@@ -435,14 +555,14 @@ async function handleResponseFlow() {
   showAgentIntro();
 
   // 3. Typing indicator starts
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 1200));
   typingRowEl.style.display = 'flex';
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+  scrollToBottom();
 
   // 4. Agent Response
-  await new Promise(r => setTimeout(r, 3000));
+  await new Promise(r => setTimeout(r, 2500));
   typingRowEl.style.display = 'none';
-  addMsg("Olá! Sou o Carlos. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
+  addMsg("Olá! Sou o Carlos. É um prazer te atender. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
 }
 
 // Update sendBtn to use the new flow logic
