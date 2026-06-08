@@ -3,610 +3,484 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Diskgas — Atendimento Premium</title>
+<title>Diskgas — Atendimento Profissional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  /* Cores Profissionais e Sóbrias */
-  --primary: #0052CC;
-  --primary-dark: #0747A6;
-  --primary-light: #DEEBFF;
-  --success: #36B37E;
-  --bg-app: #F4F5F7;
-  --surface: #FFFFFF;
-  --text-main: #172B4D;
-  --text-secondary: #5E6C84;
-  --text-muted: #8993A4;
-  --border: #DFE1E6;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* Premium Blue Palette (Based on Atlassian/Professional standards) */
+  --brand:      #0052CC;
+  --brand-dk:   #0747A6;
+  --brand-lt:   #DEEBFF;
+  --brand-mid:  #0065FF;
   
-  /* Sombras e Bordas */
-  --shadow-sm: 0 1px 2px rgba(9, 30, 66, 0.08);
-  --shadow-md: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
-  --radius-bubble: 18px;
-  --radius-card: 12px;
+  --bg:         #F4F5F7;
+  --surface:    #FFFFFF;
+  --surface-2:  #FAFBFC;
+  
+  --text:       #172B4D;
+  --text-2:     #5E6C84;
+  --text-3:     #8993A4;
+
+  --border:     #DFE1E6;
+  
+  --bubble-a:   #FFFFFF;
+  --bubble-u:   #0052CC;
+
+  --green:      #36B37E;
+  --green-dk:   #1D7F54;
+  
+  --radius:     18px;
+  --radius-sm:  12px;
+  
+  --sh-sm: 0 1px 2px rgba(9, 30, 66, 0.08);
+  --sh-md: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
+html,body{
+  height:100%;width:100%;
+  font-family:'Inter', 'DM Sans', sans-serif;
+  background:#091E42;
+  display:flex;justify-content:center;align-items:center;
+  overflow:hidden;
 }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #091E42;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--text-main);
+.app{
+  width:100%;max-width:430px;height:100dvh;
+  display:flex;flex-direction:column;
+  background:var(--bg);
+  position:relative;overflow:hidden;
 }
 
-.app-container {
-  width: 100%;
-  max-width: 450px;
-  height: 100vh; /* Fallback */
-  height: 100dvh;
-  background: var(--bg-app);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-  overflow: hidden; /* Garante que nada saia do container principal */
-}
-
-/* Header Refinado */
-.header {
+/* ─── Header (Dimensions from original) ─── */
+.header{
   background: var(--surface);
-  padding: 16px 20px;
+  padding: 13px 14px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   border-bottom: 1px solid var(--border);
   z-index: 10;
 }
 
-.header-avatar {
-  position: relative;
-  width: 44px;
-  height: 44px;
+.back-btn{
+  width:34px;height:34px;border-radius:9px;
+  background:var(--bg);border:none;cursor:pointer;
+  color:var(--text-2);font-size:17px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
 }
 
-.header-avatar img {
-  width: 100%;
-  height: 100%;
+.h-agent{display:flex;align-items:center;gap:11px;flex:1;min-width:0;}
+
+.h-avatar{position:relative;}
+.h-avatar-img{
+  width:40px;height:40px;border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--brand-lt);
+}
+.h-status-dot{
+  position:absolute;bottom:1px;right:1px;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--green);
+  border:2px solid var(--surface);
+}
+
+.h-info{flex:1;min-width:0;}
+.h-name{font-size:14.5px;font-weight:700;color:var(--text);letter-spacing:.1px;}
+.h-sub{
+  font-size:11.5px;color:var(--green);
+  font-weight:600;
+}
+
+/* ─── Messages ─── */
+.msgs{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  padding:16px 14px 12px;
+  display:flex;flex-direction:column;gap:12px;
+  position:relative;z-index:1;
+  scroll-behavior:smooth;
+}
+
+.sys-msg{text-align:center;margin:10px 0;animation:fadeIn .4s ease;}
+.sys-msg span{
+  font-size:11.5px;color:var(--text-secondary);
+  background:rgba(9, 30, 66, 0.04);
+  border-radius:20px;
+  padding:6px 16px;
+  font-weight:500;
+}
+
+/* Spinner Style */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0 15px;
+}
+.loading-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--brand-lt);
+  border-top: 2px solid var(--brand);
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--primary-light);
+  animation: spin 0.8s linear infinite;
 }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-.status-indicator {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 10px;
-  height: 10px;
-  background: var(--success);
-  border: 2px solid var(--surface);
-  border-radius: 50%;
+.msg-row{
+  display:flex;gap:8px;align-items:flex-end;
+  max-width:88%;margin-bottom:2px;
+  animation:msgIn .3s ease-out;
 }
+.msg-row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
+.msg-row.agent{align-self:flex-start;}
 
-.header-info {
-  flex: 1;
-}
-
-.header-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.verified-icon {
-  color: var(--primary);
-  display: flex;
-}
-
-.header-status {
-  font-size: 12px;
-  color: var(--success);
-  font-weight: 500;
-}
-
-/* Área de Mensagens */
-.chat-area {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden; /* Evita rolagem horizontal */
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* Rolagem suave no iOS */
-}
-
-/* Estilo dos Balões de Mensagem */
-.msg-group {
-  display: flex;
-  flex-direction: column;
-  max-width: 85%;
-  animation: slideUp 0.3s ease-out;
-}
-
-.msg-group.user {
-  align-self: flex-end;
-  align-items: flex-end;
-}
-
-.msg-group.agent {
-  align-self: flex-start;
-  align-items: flex-start;
-}
-
-.bubble {
-  padding: 12px 16px;
-  font-size: 15px;
-  line-height: 1.5;
-  position: relative;
-  box-shadow: var(--shadow-sm);
-}
-
-.msg-group.agent .bubble {
-  background: var(--surface);
-  color: var(--text-main);
-  border-radius: 4px 18px 18px 18px;
+.msg-avatar{
+  width:28px;height:28px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;
   border: 1px solid var(--border);
 }
 
-.msg-group.user .bubble {
-  background: var(--primary);
-  color: #FFFFFF;
-  border-radius: 18px 18px 4px 18px;
+@keyframes msgIn{
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;transform:translateY(0);}
 }
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-.msg-meta {
-  font-size: 11px;
-  margin-top: 4px;
-  color: var(--text-muted);
+.bubble{
+  padding:10px 14px;
+  font-size:14.5px;line-height:1.5;
+  position:relative;
+  box-shadow: var(--sh-sm);
 }
-
-/* Mensagem de Sistema Profissional */
-.system-msg {
-  align-self: center;
-  background: rgba(9, 30, 66, 0.04);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  font-weight: 500;
-  margin: 8px 0;
-  text-align: center;
-}
-
-/* Cartão do Consultor (Premium) */
-.consultant-card {
-  background: var(--surface);
-  border-radius: var(--radius-card);
+.bubble.a{
+  background:var(--bubble-a);
+  color:var(--text);
+  border-radius:4px 18px 18px 18px;
   border: 1px solid var(--border);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  margin: 10px 0;
-  width: 100%;
-  max-width: 100%; /* Garante que não ultrapasse a largura do chat */
-  flex-shrink: 0; /* Impede que o flexbox esmague o card */
-  animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.bubble.u{
+  background:var(--bubble-u);
+  color:#FFFFFF;
+  border-radius:18px 18px 4px 18px;
 }
 
-.card-header {
-  background: var(--primary-light);
-  padding: 10px 16px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--primary-dark);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.b-meta{
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:3px;margin-top:4px;
+  font-size:10px;
+  opacity: 0.7;
+}
+
+/* ─── Agent Intro Card (Premium Refined) ─── */
+.agent-intro{
+  background:var(--surface);
+  border-radius:var(--radius-sm);
+  overflow:hidden;
+  margin:4px 0 8px;
+  box-shadow: var(--sh-md);
+  border:1px solid var(--border);
+  width:100%;
+  flex-shrink: 0;
+  animation: cardIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes cardIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+.ai-header{
+  background: var(--brand-lt);
+  padding: 8px 14px;
   display: flex;
   justify-content: space-between;
-}
-
-.card-body {
-  padding: 16px;
-  display: flex;
-  gap: 16px;
   align-items: center;
 }
-
-.card-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
+.ai-header-title{
+  color: var(--brand-dk);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ai-badge-verified{
+  background: var(--brand);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 
-.card-info h4 {
-  font-size: 16px;
-  margin-bottom: 2px;
+.ai-body{
+  display:flex;gap:14px;align-items:center;
+  padding:14px;
 }
-
-.card-info p {
-  font-size: 13px;
-  color: var(--text-secondary);
+.ai-img{
+  width:52px;height:52px;border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--brand-lt);
 }
+.ai-info{flex:1;min-width:0;}
+.ai-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.ai-role{font-size:12px;color:var(--text-2);margin-bottom:4px;}
 
-.card-stats {
+.ai-stats{
   display: flex;
   border-top: 1px solid var(--border);
-  background: #FAFBFC;
+  background: var(--surface-2);
 }
-
-.stat-item {
+.ai-stat-item{
   flex: 1;
-  padding: 10px;
+  padding: 8px;
   text-align: center;
   border-right: 1px solid var(--border);
 }
+.ai-stat-item:last-child { border-right: none; }
+.ai-stat-val{ font-size: 13px; font-weight: 700; color: var(--brand); display: block; }
+.ai-stat-lbl{ font-size: 9px; color: var(--text-3); text-transform: uppercase; font-weight: 600; }
 
-.stat-item:last-child { border-right: none; }
-
-.stat-value {
-  display: block;
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--primary);
+/* ─── Typing ─── */
+.typing-row{
+  display:none;align-items:flex-end;gap:8px;
+  align-self:flex-start; margin: 0 14px 10px;
 }
-
-.stat-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-/* Input de Mensagem Estilo iOS/WhatsApp Business */
-.footer {
-  background: var(--surface);
-  padding: 12px 16px 24px;
-  border-top: 1px solid var(--border);
-}
-
-.input-container {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  background: #F4F5F7;
-  border-radius: 24px;
-  padding: 8px 16px;
+.typing-bubble{
+  background:var(--surface);
+  border-radius:4px 18px 18px 18px;
+  padding:12px 16px;
+  box-shadow:var(--sh-sm);
+  display:flex;gap:4px;
   border: 1px solid var(--border);
+}
+.typing-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--text-3);
+  animation:typePulse 1.4s infinite;
+}
+.typing-dot:nth-child(2){animation-delay:.2s;}
+.typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes typePulse{ 0%,60%,100%{transform:translateY(0);opacity:.4;} 30%{transform:translateY(-5px);opacity:1;} }
+
+/* ─── Footer (Dimensions from original) ─── */
+.footer{
+  background: var(--surface);
+  border-top:1px solid var(--border);
+  padding:11px 12px 15px;
+}
+.input-row{display:flex;gap:8px;align-items:flex-end;}
+.input-wrap{
+  flex:1;display:flex;align-items:center;gap:8px;
+  background:var(--bg);
+  border-radius:24px;
+  padding:10px 15px;
+  border:1.5px solid var(--border);
   transition: all 0.2s;
 }
-
-.input-container:focus-within {
+.input-wrap:focus-within{
   background: #FFF;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--primary-light);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px var(--brand-lt);
 }
-
-.chat-input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  padding: 8px 0;
-  font-size: 15px;
+.msg-input{
+  flex:1;border:none;outline:none;
+  font-size:14.5px;
+  background:transparent;
+  color: var(--text);
   font-family: inherit;
-  outline: none;
-  max-height: 100px;
-  overflow-y: auto;
-  resize: none;
 }
-
-.send-button {
-  background: var(--primary);
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
+.send-btn{
+  width:46px;height:46px;border-radius:50%;
+  background: var(--brand);
+  color:#fff; border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
   transition: transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 82, 204, 0.2);
   flex-shrink: 0;
-  margin-bottom: 2px;
 }
-
-.send-button:hover {
-  background: var(--primary-dark);
-  transform: scale(1.05);
-}
-
-.send-button:active {
-  transform: scale(0.95);
-}
-
-/* Indicador de Digitação Humano */
-.typing-indicator {
-  display: none;
-  align-items: center;
-  gap: 4px;
-  padding: 12px 16px;
-  background: var(--surface);
-  border-radius: 4px 18px 18px 18px;
-  width: fit-content;
-  border: 1px solid var(--border);
-  margin-bottom: 10px;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  background: var(--text-muted);
-  border-radius: 50%;
-  animation: bounce 1.4s infinite ease-in-out;
-}
-
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes bounce {
-  0%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-6px); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* Spinner Moderno */
-.loader {
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--primary-light);
-  border-top: 2px solid var(--primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  display: inline-block;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Esconder barra de rolagem mas manter funcionalidade */
-.chat-area::-webkit-scrollbar {
-  width: 4px;
-}
-.chat-area::-webkit-scrollbar-track {
-  background: transparent;
-}
-.chat-area::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 10px;
-}
+.send-btn:hover{ background: var(--brand-dk); transform: scale(1.05); }
+.send-btn:active{ transform: scale(0.95); }
 </style>
 </head>
 <body>
-
-<div class="app-container">
+<div class="app">
   <header class="header">
-    <div class="header-avatar">
-      <img src="https://i.pravatar.cc/150?u=carlos-diskgas" alt="Carlos">
-      <div class="status-indicator"></div>
-    </div>
-    <div class="header-info">
-      <div class="header-name">
-        Carlos Oliveira
-        <span class="verified-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-        </span>
+    <button class="back-btn">←</button>
+    <div class="h-agent">
+      <div class="h-avatar">
+        <img src="https://i.pravatar.cc/150?u=carlos-diskgas" class="h-avatar-img" alt="Avatar">
+        <div class="h-status-dot"></div>
       </div>
-      <div class="header-status">Online agora</div>
+      <div class="h-info">
+        <div class="h-name">Carlos Oliveira</div>
+        <div class="h-sub">Online agora</div>
+      </div>
     </div>
   </header>
 
-  <main class="chat-area" id="chatArea">
-    <!-- Mensagens serão inseridas aqui -->
-  </main>
+  <div class="msgs" id="msgs">
+    <!-- Messages will appear here -->
+  </div>
 
-  <div id="typingIndicator" class="typing-indicator" style="margin-left: 20px;">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <div class="typing-row" id="typingRow">
+    <img src="https://i.pravatar.cc/150?u=carlos-diskgas" class="msg-avatar" alt="Avatar">
+    <div class="typing-bubble">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
   </div>
 
   <footer class="footer">
-    <div class="input-container">
-      <textarea class="chat-input" id="chatInput" placeholder="Digite sua mensagem..." rows="1"></textarea>
-      <button class="send-button" id="sendBtn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    <div class="input-row">
+      <div class="input-wrap">
+        <input type="text" class="msg-input" id="msgInput" placeholder="Escreva sua mensagem...">
+      </div>
+      <button class="send-btn" id="sendBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
   </footer>
 </div>
 
 <script>
-const chatArea = document.getElementById('chatArea');
-const chatInput = document.getElementById('chatInput');
-const sendBtn = document.getElementById('sendBtn');
-const typingIndicator = document.getElementById('typingIndicator');
+const msgsEl = document.getElementById('msgs');
+const inputEl = document.getElementById('msgInput');
+const sendBtnEl = document.getElementById('sendBtn');
+const typingRowEl = document.getElementById('typingRow');
+
+const agentAvatar = "https://i.pravatar.cc/150?u=carlos-diskgas";
+const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
 let isFirstContact = true;
-const agentName = "Carlos Oliveira";
-const agentAvatar = "https://i.pravatar.cc/150?u=carlos-diskgas";
-
-// Ajuste automático da altura do textarea
-chatInput.addEventListener('input', function() {
-  this.style.height = 'auto';
-  this.style.height = (this.scrollHeight) + 'px';
-});
-
-function getTime() {
-  return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-}
 
 function scrollToBottom() {
-  // Executa imediatamente e depois de um curto delay para garantir que o DOM atualizou
-  chatArea.scrollTo({
-    top: chatArea.scrollHeight,
-    behavior: 'smooth'
-  });
-  
-  setTimeout(() => {
-    chatArea.scrollTop = chatArea.scrollHeight;
-  }, 150);
+  msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
+  setTimeout(() => { msgsEl.scrollTop = msgsEl.scrollHeight; }, 150);
 }
 
-function addMessage(text, side) {
-  const group = document.createElement('div');
-  group.className = `msg-group ${side}`;
+function addMsg(text, type) {
+  const row = document.createElement('div');
+  row.className = `msg-row ${type}`;
   
-  group.innerHTML = `
-    <div class="bubble">
+  let avatarHtml = '';
+  if (type === 'agent') {
+    avatarHtml = `<img src="${agentAvatar}" class="msg-avatar" alt="Avatar">`;
+  }
+
+  row.innerHTML = `
+    ${avatarHtml}
+    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
       ${text}
+      <div class="b-meta">${now()}</div>
     </div>
-    <div class="msg-meta">${getTime()}</div>
   `;
-  
-  chatArea.appendChild(group);
+  msgsEl.appendChild(row);
   scrollToBottom();
 }
 
-function addSystemMessage(text, withLoader = false) {
+function addSystemMsg(text, showSpinner = false) {
   const div = document.createElement('div');
-  div.className = 'system-msg';
-  div.innerHTML = `${withLoader ? '<span class="loader"></span>' : ''}${text}`;
-  chatArea.appendChild(div);
+  div.className = 'sys-msg';
+  const span = document.createElement('span');
+  span.innerHTML = text;
+  div.appendChild(span);
+  msgsEl.appendChild(div);
+  
+  let spinner = null;
+  if (showSpinner) {
+    spinner = document.createElement('div');
+    spinner.className = 'spinner-container';
+    spinner.innerHTML = '<div class="loading-spinner"></div>';
+    msgsEl.appendChild(spinner);
+  }
+  
   scrollToBottom();
-  return div;
+  return { container: div, textSpan: span, spinner: spinner };
 }
 
-function showConsultantCard() {
+function showAgentIntro() {
   const card = document.createElement('div');
-  card.className = 'consultant-card';
+  card.className = 'agent-intro';
   card.innerHTML = `
-    <div class="card-header">
-      <span>Consultor Especialista</span>
-      <span>ID: #8824</span>
-    </div>
-    <div class="card-body">
-      <img src="${agentAvatar}" class="card-img" alt="Carlos">
-      <div class="card-info">
-        <h4>Carlos Oliveira</h4>
-        <p>Especialista em Atendimento Diskgas</p>
+    <div class="ai-header">
+      <div class="ai-header-title">Consultor Disponível</div>
+      <div class="ai-badge-verified">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Verificado
       </div>
     </div>
-    <div class="card-stats">
-      <div class="stat-item">
-        <span class="stat-value">4.9</span>
-        <span class="stat-label">Avaliação</span>
+    <div class="ai-body">
+      <img src="${agentAvatar}" class="ai-img" alt="Carlos">
+      <div class="ai-info">
+        <div class="ai-name">Carlos Oliveira</div>
+        <div class="ai-role">Especialista em Atendimento</div>
+        <div style="font-size: 11px; color: var(--green); font-weight: 600;">✓ Responde em poucos minutos</div>
       </div>
-      <div class="stat-item">
-        <span class="stat-value">1.5k</span>
-        <span class="stat-label">Atendimentos</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-value">5 min</span>
-        <span class="stat-label">Tempo médio</span>
-      </div>
+    </div>
+    <div class="ai-stats">
+      <div class="ai-stat-item"><span class="ai-stat-val">4.9</span><span class="ai-stat-lbl">Avaliação</span></div>
+      <div class="ai-stat-item"><span class="ai-stat-val">1.5k+</span><span class="ai-stat-lbl">Vendas</span></div>
+      <div class="ai-stat-item"><span class="ai-stat-val">5 anos</span><span class="ai-stat-lbl">Exp.</span></div>
     </div>
   `;
-  chatArea.appendChild(card);
+  msgsEl.appendChild(card);
   scrollToBottom();
 }
 
 async function handleResponseFlow() {
   if (isFirstContact) {
-    await new Promise(r => setTimeout(r, 1000));
-    const searchingMsg = addSystemMessage("Localizando consultor disponível...", true);
-    
-    await new Promise(r => setTimeout(r, 2000));
-    searchingMsg.innerHTML = "Conectado com Carlos Oliveira ✓";
-    searchingMsg.style.color = "var(--success)";
-    
     await new Promise(r => setTimeout(r, 800));
-    showConsultantCard();
+    const sysObj = addSystemMsg("Localizando o melhor consultor...", true);
+
+    await new Promise(r => setTimeout(r, 1800));
+    if (sysObj.spinner) sysObj.spinner.remove();
     
+    sysObj.textSpan.innerHTML = "Consultor Carlos conectado ✓";
+    sysObj.textSpan.style.color = "var(--green-dk)";
+    sysObj.textSpan.style.background = "var(--brand-lt)";
+
+    await new Promise(r => setTimeout(r, 600));
+    showAgentIntro();
     isFirstContact = false;
   }
 
-  // Simulação de "Pensando/Digitando"
   await new Promise(r => setTimeout(r, 1200));
-  typingIndicator.style.display = 'flex';
+  typingRowEl.style.display = 'flex';
   scrollToBottom();
 
-  // Tempo de resposta variável para parecer humano
-  const responseTime = 2000 + Math.random() * 2000;
-  await new Promise(r => setTimeout(r, responseTime));
+  await new Promise(r => setTimeout(r, 2000));
+  typingRowEl.style.display = 'none';
   
-  typingIndicator.style.display = 'none';
-  
-  const agentMessages = chatArea.querySelectorAll('.msg-group.agent').length;
-  
-  const responses = [
-    "Com certeza, posso te ajudar com isso. Só um instante enquanto consulto o sistema...",
-    "Entendi perfeitamente. Você teria preferência por algum modelo específico ou quer que eu te apresente as opções mais vendidas?",
-    "Excelente pergunta! Na Diskgas priorizamos a segurança, então todos os nossos produtos seguem rigorosamente as normas da ABNT.",
-    "Estou verificando aqui as condições especiais para a sua região. Só um segundo...",
-    "Claro! Além disso, temos uma promoção ativa para novos clientes hoje. Gostaria de conhecer?"
-  ];
-
-  if (agentMessages === 0) {
-    addMessage("Olá! Sou o Carlos Oliveira. Vi que você tem interesse em nossos serviços. É um prazer te atender!", "agent");
-    await new Promise(r => setTimeout(r, 1500));
-    typingIndicator.style.display = 'flex';
-    scrollToBottom();
-    await new Promise(r => setTimeout(r, 2000));
-    typingIndicator.style.display = 'none';
-    addMessage("Como posso te ajudar especificamente hoje? Algum produto ou dúvida técnica?", "agent");
+  const agentMsgs = msgsEl.querySelectorAll('.msg-row.agent');
+  if (agentMsgs.length === 0) {
+      addMsg("Olá! Sou o Carlos Oliveira. É um prazer te atender. Como posso te ajudar hoje?", 'agent');
   } else {
-    // Seleciona uma resposta aleatória para parecer menos robótico
-    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-    addMessage(randomResponse, "agent");
+      addMsg("Entendi. Estou verificando os detalhes para você, só um momento...", 'agent');
   }
 }
 
 function sendMessage() {
-  const text = chatInput.value.trim();
-  if (!text) return;
-  
-  chatInput.value = '';
-  chatInput.style.height = 'auto';
-  
-  addMessage(text, 'user');
+  const text = inputEl.value.trim();
+  if(!text) return;
+  inputEl.value = '';
+  addMsg(text, 'user');
   handleResponseFlow();
 }
 
-sendBtn.onclick = sendMessage;
-chatInput.onkeypress = (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
-};
+sendBtnEl.onclick = sendMessage;
+inputEl.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
 
-// Início automático
 window.onload = async () => {
-  addSystemMessage("Criptografia de ponta a ponta ativa");
-  await new Promise(r => setTimeout(r, 1200));
-  
-  const initialMsg = "Olá! Gostaria de saber mais sobre os serviços da Diskgas.";
-  addMessage(initialMsg, 'user');
+  addSystemMsg("Conexão segura estabelecida");
+  await new Promise(r => setTimeout(r, 1000));
+  addMsg("Olá! Gostaria de saber mais sobre os produtos.", 'user');
   handleResponseFlow();
 };
 </script>
-
 </body>
 </html>
