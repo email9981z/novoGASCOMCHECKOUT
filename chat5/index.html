@@ -763,37 +763,33 @@ async function agentReply(userText) {
 }
 
 /* ── INIT ── */
+const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
+
 (async () => {
+  /* 1. Mensagem padrão do cliente */
+  addMsg(DEFAULT_FIRST_MSG, 'user');
+  await new Promise(r => setTimeout(r, 600));
+
+  /* 2. Conexão + spinner */
   addSys('🔒 Conexão criptografada estabelecida');
-  await new Promise(r => setTimeout(r, 900));
+  await new Promise(r => setTimeout(r, 700));
 
   const sp = addSpinner();
-  const sysTxt = addSys('Conectando com consultor Diskgas...');
-  await new Promise(r => setTimeout(r, 1900));
+  const sysTxt = addSys('Buscando o melhor consultor para você...');
+  await new Promise(r => setTimeout(r, 2000));
 
   sp.remove();
   sysTxt.textContent = '✓ Carlos Oliveira conectado';
   sysTxt.className = 'ok';
 
+  /* 3. Card de apresentação */
   await new Promise(r => setTimeout(r, 600));
   showIntroCard();
 
-  await new Promise(r => setTimeout(r, 900));
-  setTyping(true);
-  await new Promise(r => setTimeout(r, 2300));
-  setTyping(false);
-
-  const greeting = 'Olá! 👋 Sou o Carlos, consultor da Diskgas. Como posso te ajudar hoje?';
-  history.push({ role:'assistant', content: JSON.stringify({message:greeting,quickReplies:[]}) });
-  addMsg(greeting, 'agent');
-
-  await new Promise(r => setTimeout(r, 250));
-  showQR([
-    'Pedir gás agora 🚀',
-    'Ver preços 💰',
-    'Prazo de entrega ⏱️',
-    'Formas de pagamento 💳'
-  ]);
+  /* 4. Carlos responde à mensagem inicial via API */
+  busy = true;
+  await agentReply(DEFAULT_FIRST_MSG);
+  busy = false;
 })();
 </script>
 </body>
