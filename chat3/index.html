@@ -439,6 +439,9 @@ const typingRowEl = document.getElementById('typingRow');
 const agentAvatar = "https://i.pravatar.cc/100?u=carlos";
 const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
+// Variavel para controlar se o consultor já foi conectado
+let isConsultantConnected = false;
+
 // Helper to scroll to bottom with smooth behavior and extra safety
 function scrollToBottom() {
   // Use a small timeout to ensure the DOM has rendered the new height
@@ -498,7 +501,6 @@ function showAgentIntro() {
         Verificado
       </div>
     </div>
-    <div class="ai-body">
       <div class="ai-img-wrapper">
         <img src="${agentAvatar}" class="ai-img" alt="Carlos">
         <div class="ai-status-online"></div>
@@ -557,23 +559,29 @@ window.onload = async () => {
 };
 
 async function handleResponseFlow() {
-  // 1. GAP FILLER: System Message with Spinner
-  await new Promise(r => setTimeout(r, 800));
-  const sysObj = addSystemMsg("Buscando o melhor consultor para você...", true);
+  // Se o consultor ainda não foi conectado, executa o fluxo de busca
+  if (!isConsultantConnected) {
+    // 1. GAP FILLER: System Message with Spinner
+    await new Promise(r => setTimeout(r, 800));
+    const sysObj = addSystemMsg("Buscando o melhor consultor para você...", true);
 
-  // 2. Wait and update to "Located" with Check
-  await new Promise(r => setTimeout(r, 1800));
-  if (sysObj.spinner) sysObj.spinner.remove();
-  
-  // Atualiza o texto e adiciona o check
-  sysObj.textSpan.innerHTML = "Consultor Carlos conectado ✓";
-  sysObj.textSpan.style.color = "var(--green-dk)";
-  sysObj.textSpan.style.background = "var(--green-lt)";
-  sysObj.textSpan.style.borderColor = "var(--green-bd)";
+    // 2. Wait and update to "Located" with Check
+    await new Promise(r => setTimeout(r, 1800));
+    if (sysObj.spinner) sysObj.spinner.remove();
+    
+    // Atualiza o texto e adiciona o check
+    sysObj.textSpan.innerHTML = "Consultor Carlos conectado ✓";
+    sysObj.textSpan.style.color = "var(--green-dk)";
+    sysObj.textSpan.style.background = "var(--green-lt)";
+    sysObj.textSpan.style.borderColor = "var(--green-bd)";
 
-  // 3. GAP FILLER: Agent Intro
-  await new Promise(r => setTimeout(r, 600));
-  showAgentIntro();
+    // 3. GAP FILLER: Agent Intro
+    await new Promise(r => setTimeout(r, 600));
+    showAgentIntro();
+    
+    // Marca como conectado para as próximas mensagens
+    isConsultantConnected = true;
+  }
 
   // 3. Typing indicator starts
   await new Promise(r => setTimeout(r, 1200));
@@ -583,7 +591,13 @@ async function handleResponseFlow() {
   // 4. Agent Response
   await new Promise(r => setTimeout(r, 2500));
   typingRowEl.style.display = 'none';
-  addMsg("Olá! Sou o Carlos. É um prazer te atender. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
+  
+  // Resposta condicional baseada se é o primeiro contato ou não
+  if (msgsEl.querySelectorAll('.msg-row.agent').length === 0) {
+    addMsg("Olá! Sou o Carlos. É um prazer te atender. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
+  } else {
+    addMsg("Entendi perfeitamente. Estou aqui para ajudar! Gostaria de mais detalhes sobre algum item específico?", 'agent');
+  }
 }
 
 // Update sendBtn to use the new flow logic
