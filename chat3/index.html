@@ -439,8 +439,7 @@ const typingRowEl = document.getElementById('typingRow');
 const agentAvatar = "https://i.pravatar.cc/100?u=carlos";
 const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
-// Variavel para controlar se o consultor já foi conectado
-let isConsultantConnected = false;
+let isFirstContact = true;
 
 // Helper to scroll to bottom with smooth behavior and extra safety
 function scrollToBottom() {
@@ -501,6 +500,7 @@ function showAgentIntro() {
         Verificado
       </div>
     </div>
+      <div class="ai-body">
       <div class="ai-img-wrapper">
         <img src="${agentAvatar}" class="ai-img" alt="Carlos">
         <div class="ai-status-online"></div>
@@ -559,8 +559,7 @@ window.onload = async () => {
 };
 
 async function handleResponseFlow() {
-  // Se o consultor ainda não foi conectado, executa o fluxo de busca
-  if (!isConsultantConnected) {
+  if (isFirstContact) {
     // 1. GAP FILLER: System Message with Spinner
     await new Promise(r => setTimeout(r, 800));
     const sysObj = addSystemMsg("Buscando o melhor consultor para você...", true);
@@ -578,9 +577,8 @@ async function handleResponseFlow() {
     // 3. GAP FILLER: Agent Intro
     await new Promise(r => setTimeout(r, 600));
     showAgentIntro();
-    
-    // Marca como conectado para as próximas mensagens
-    isConsultantConnected = true;
+
+    isFirstContact = false;
   }
 
   // 3. Typing indicator starts
@@ -592,11 +590,18 @@ async function handleResponseFlow() {
   await new Promise(r => setTimeout(r, 2500));
   typingRowEl.style.display = 'none';
   
-  // Resposta condicional baseada se é o primeiro contato ou não
-  if (msgsEl.querySelectorAll('.msg-row.agent').length === 0) {
-    addMsg("Olá! Sou o Carlos. É um prazer te atender. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
+  if (!isFirstContact && msgsEl.querySelectorAll('.msg-row.agent').length === 0) {
+      // Esta condição na verdade nunca será atingida devido à lógica acima, 
+      // mas mantemos a resposta inicial para o primeiro fluxo.
+      addMsg("Olá! Sou o Carlos. É um prazer te atender. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
   } else {
-    addMsg("Entendi perfeitamente. Estou aqui para ajudar! Gostaria de mais detalhes sobre algum item específico?", 'agent');
+      // Resposta genérica para mensagens subsequentes ou a primeira resposta após a busca
+      const agentMsgs = msgsEl.querySelectorAll('.msg-row.agent');
+      if (agentMsgs.length === 0) {
+          addMsg("Olá! Sou o Carlos. É um prazer te atender. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
+      } else {
+          addMsg("Entendi. Como posso ajudar com mais detalhes sobre isso?", 'agent');
+      }
   }
 }
 
