@@ -708,11 +708,11 @@ const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
   await new Promise(r => setTimeout(r, 600));
 
   /* 2. Conexão + spinner */
-  addSys('🔒 Conexão criptografada estabelecida');
+  const sysTxt = addSys('🔒 Conexão criptografada estabelecida');
   await new Promise(r => setTimeout(r, 700));
 
   const sp = addSpinner();
-  const sysTxt = addSys('Buscando o melhor consultor para você...');
+  sysTxt.textContent = 'Buscando o melhor consultor para você...';
   await new Promise(r => setTimeout(r, 2000));
 
   sp.remove();
