@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Diskgas — Atendimento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --brand:    #FF5C1A;
+  --brand-dk: #D94A10;
+  --brand-lt: #FFF0EB;
+  --bg:       #EAE0D8;
+  --surface:  #FFFFFF;
+  --text:     #1A1A1A;
+  --muted:    #7A7A72;
+  --border:   #E0D8D0;
+  --green:    #25D366;
+  --green-dk: #1AAB57;
+  --green-lt: #DCF8C6;
+  --read-clr: #53BDEB;
+  --bubble-a: #FFFFFF;
+  --bubble-u: #FFE5D4;
+  --radius:   12px;
+}
+
+html,body{
+  height:100%;width:100%;
+  font-family:'DM Sans',sans-serif;
+  background:#111;
+  display:flex;justify-content:center;align-items:center;
+  overflow:hidden;
+}
+
+.app{
+  width:100%;max-width:430px;height:100dvh;
+  display:flex;flex-direction:column;
+  background:var(--bg);
+  position:relative;overflow:hidden;
+}
+
+.app::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C8B8AA' fill-opacity='0.22' fill-rule='evenodd'%3E%3Cpath d='M26 26c0-5.523-4.477-10-10-10S6 20.477 6 26s4.477 10 10 10 10-4.477 10-10zm-2 0c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm28 0c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm-2 0c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.header{
+  background:var(--brand);
+  padding:10px 14px;
+  display:flex;align-items:center;gap:10px;
+  position:relative;z-index:10;
+  box-shadow:0 2px 6px rgba(0,0,0,0.22);
+}
+
+.back-btn{
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,0.9);font-size:20px;
+  display:flex;align-items:center;padding:4px;flex-shrink:0;
+}
+
+.h-agent{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+
+.h-avatar{position:relative;cursor:pointer;}
+.h-avatar-img{
+  width:40px;height:40px;border-radius:50%;
+  object-fit:cover;border:2px solid rgba(255,255,255,0.3);
+  transition:filter 0.5s,opacity 0.5s;
+  filter:grayscale(1);opacity:0.5;
+}
+.h-avatar-img.live{filter:none;opacity:1;}
+.h-status-dot{
+  position:absolute;bottom:1px;right:1px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--green);border:2px solid var(--brand);
+  opacity:0;transition:opacity 0.5s;
+}
+
+.h-info{flex:1;min-width:0;}
+.h-name{font-size:15px;font-weight:600;color:#fff;}
+.h-sub{
+  font-size:11.5px;color:rgba(255,255,255,0.8);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-top:1px;transition:color 0.3s;
+}
+
+.h-actions{display:flex;gap:2px;flex-shrink:0;}
+.h-action{
+  width:36px;height:36px;border-radius:50%;
+  background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,0.9);font-size:17px;
+  transition:background 0.2s;
+}
+.h-action:hover{background:rgba(255,255,255,0.12);}
+
+.msgs{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  padding:10px 10px 6px;
+  display:flex;flex-direction:column;gap:2px;
+  position:relative;z-index:1;
+  scroll-behavior:smooth;
+}
+.msgs::-webkit-scrollbar{width:3px;}
+.msgs::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:2px;}
+
+.date-sep{text-align:center;margin:6px 0 10px;}
+.date-sep span{
+  font-size:11px;font-weight:500;color:#5C5C5C;
+  background:rgba(255,255,255,0.88);border-radius:20px;
+  padding:3px 12px;box-shadow:0 1px 2px rgba(0,0,0,0.1);
+}
+
+.sys-msg{text-align:center;margin:8px 0;animation:fadeIn 0.4s ease;}
+.sys-msg span{
+  font-size:11px;color:#5C5C5C;
+  background:rgba(255,255,255,0.88);border-radius:8px;
+  padding:4px 12px;box-shadow:0 1px 2px rgba(0,0,0,0.08);
+}
+
+.msg-row{
+  display:flex;gap:6px;align-items:flex-end;
+  max-width:84%;margin-bottom:1px;
+  animation:msgIn 0.22s cubic-bezier(0.18,0,0,1.4);
+}
+.msg-row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
+.msg-row.agent{align-self:flex-start;}
+.msg-row.grouped{margin-bottom:0;}
+
+@keyframes msgIn{
+  from{opacity:0;transform:scale(0.94) translateY(8px);}
+  to{opacity:1;transform:scale(1) translateY(0);}
+}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+.msg-av{
+  width:28px;height:28px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;align-self:flex-end;
+}
+.msg-av-spacer{width:28px;flex-shrink:0;}
+
+.bubble{
+  padding:7px 10px 4px;
+  border-radius:var(--radius);
+  font-size:14px;line-height:1.5;
+  max-width:100%;word-break:break-word;
+  position:relative;
+}
+.bubble.a{
+  background:var(--bubble-a);color:var(--text);
+  border-top-left-radius:3px;
+  box-shadow:0 1px 2px rgba(0,0,0,0.12);
+}
+.bubble.u{
+  background:var(--bubble-u);color:var(--text);
+  border-top-right-radius:3px;
+  box-shadow:0 1px 2px rgba(0,0,0,0.12);
+}
+
+.msg-row:not(.grouped) .bubble.a::before{
+  content:'';position:absolute;top:0;left:-6px;
+  border:8px solid transparent;
+  border-bottom-color:var(--bubble-a);
+  border-right-color:var(--bubble-a);
+  border-top:0;border-left:0;
+}
+.msg-row:not(.grouped) .bubble.u::after{
+  content:'';position:absolute;top:0;right:-6px;
+  border:8px solid transparent;
+  border-bottom-color:var(--bubble-u);
+  border-left-color:var(--bubble-u);
+  border-top:0;border-right:0;
+}
+
+.msg-row.grouped .bubble.a{border-top-left-radius:var(--radius);}
+.msg-row.grouped .bubble.u{border-top-right-radius:var(--radius);}
+
+.b-meta{
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:3px;margin-top:2px;
+  float:right;margin-left:10px;transform:translateY(2px);
+}
+.b-time{font-size:10px;color:rgba(0,0,0,0.38);line-height:1;}
+.b-receipt{
+  font-size:13px;line-height:1;color:rgba(0,0,0,0.3);
+  transition:color 0.4s;
+}
+.b-receipt.delivered{color:rgba(0,0,0,0.38);}
+.b-receipt.read{color:var(--read-clr);}
+
+.agent-intro{
+  background:var(--surface);border-radius:var(--radius);
+  padding:14px;display:none;
+  animation:fadeIn 0.4s ease;
+  margin:4px 0 6px 34px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.1);
+}
+.ai-top{display:flex;gap:10px;align-items:center;margin-bottom:12px;}
+.ai-img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--brand-lt);}
+.ai-name{font-size:15px;font-weight:600;color:var(--text);}
+.ai-tag{
+  font-size:10px;font-weight:600;color:var(--green-dk);
+  background:#E3F8ED;padding:2px 8px;border-radius:20px;
+  display:inline-flex;align-items:center;gap:3px;margin-top:3px;
+}
+.ai-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.ai-stat{background:var(--bg);border-radius:8px;padding:8px 6px;text-align:center;}
+.ai-stat-val{font-size:14px;font-weight:600;color:var(--text);}
+.ai-stat-lbl{font-size:9px;color:var(--muted);margin-top:1px;text-transform:uppercase;letter-spacing:.04em;}
+
+.order-card{
+  background:var(--surface);border-radius:var(--radius);
+  overflow:hidden;margin-top:6px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.12);
+}
+.order-hd{
+  background:var(--brand);padding:10px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.order-hd-title{font-size:12px;font-weight:600;color:#fff;letter-spacing:.03em;}
+.order-id{font-size:11px;color:rgba(255,255,255,0.75);font-family:'DM Mono',monospace;}
+.order-body{padding:10px 14px;}
+.order-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;border-bottom:1px solid var(--border);gap:8px;
+}
+.order-row:last-child{border-bottom:none;padding-bottom:0;}
+.order-lbl{font-size:12px;color:var(--muted);white-space:nowrap;}
+.order-val{font-size:13px;font-weight:500;color:var(--text);text-align:right;}
+.order-total{font-size:16px;font-weight:700;color:var(--brand);}
+.order-ft{padding:0 14px 12px;}
+.confirm-btn{
+  width:100%;padding:11px;border-radius:8px;
+  background:var(--brand);color:#fff;border:none;
+  font-size:14px;font-weight:600;cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:background 0.2s,transform 0.1s;
+}
+.confirm-btn:hover{background:var(--brand-dk);}
+.confirm-btn:active{transform:scale(0.98);}
+.confirm-btn.done{background:var(--green-dk);cursor:default;}
+
+.delivery-status{
+  background:#F0FBF4;border:1px solid rgba(37,211,102,0.25);
+  border-radius:var(--radius);padding:12px 14px;margin-top:6px;
+}
+.ds-title{font-size:12px;font-weight:600;color:#0B7A3E;margin-bottom:10px;display:flex;align-items:center;gap:5px;}
+.ds-steps{display:flex;flex-direction:column;gap:8px;}
+.ds-step{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);}
+.ds-step.done{color:#0B7A3E;}
+.ds-step.active{color:var(--text);font-weight:500;}
+.ds-dot{width:7px;height:7px;border-radius:50%;background:#D0D0D0;flex-shrink:0;}
+.ds-step.done .ds-dot{background:var(--green);}
+.ds-step.active .ds-dot{background:var(--brand);box-shadow:0 0 0 3px rgba(255,92,26,0.2);}
+
+.typing-row{
+  display:none;align-items:flex-end;gap:6px;
+  align-self:flex-start;animation:fadeIn 0.2s ease;
+  margin:1px 0;
+}
+.typing-bubble{
+  background:var(--bubble-a);
+  border-radius:3px var(--radius) var(--radius) var(--radius);
+  padding:10px 14px;box-shadow:0 1px 2px rgba(0,0,0,0.12);
+  display:flex;gap:4px;align-items:center;position:relative;
+}
+.typing-bubble::before{
+  content:'';position:absolute;top:0;left:-6px;
+  border:8px solid transparent;
+  border-bottom-color:var(--bubble-a);border-right-color:var(--bubble-a);
+  border-top:0;border-left:0;
+}
+.typing-dot{
+  width:6px;height:6px;border-radius:50%;background:#AAAAAA;
+  animation:typePulse 1.3s ease-in-out infinite;
+}
+.typing-dot:nth-child(2){animation-delay:.18s;}
+.typing-dot:nth-child(3){animation-delay:.36s;}
+@keyframes typePulse{
+  0%,60%,100%{transform:translateY(0);opacity:.35;}
+  30%{transform:translateY(-4px);opacity:1;}
+}
+
+.scroll-fab{
+  position:absolute;right:14px;bottom:80px;z-index:5;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--surface);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:18px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.22);
+  opacity:0;pointer-events:none;
+  transform:translateY(12px);
+  transition:opacity 0.25s,transform 0.25s cubic-bezier(0.2,0,0,1);
+}
+.scroll-fab.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+.fab-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--brand);color:#fff;
+  font-size:9px;font-weight:700;
+  min-width:16px;height:16px;border-radius:8px;
+  display:none;align-items:center;justify-content:center;
+  padding:0 3px;
+}
+.fab-badge.show{display:flex;}
+
+.footer{
+  background:#F2ECE6;border-top:1px solid rgba(0,0,0,0.07);
+  padding:7px 8px 10px;position:relative;z-index:5;
+}
+.quick-opts{
+  display:none;gap:6px;overflow-x:auto;
+  padding:0 2px 8px;scrollbar-width:none;
+}
+.quick-opts::-webkit-scrollbar{display:none;}
+.q-chip{
+  white-space:nowrap;background:var(--surface);
+  border:1px solid var(--border);color:var(--text);
+  padding:7px 14px;border-radius:20px;
+  font-size:12.5px;font-weight:500;cursor:pointer;
+  font-family:'DM Sans',sans-serif;flex-shrink:0;
+  transition:all 0.15s;box-shadow:0 1px 2px rgba(0,0,0,0.07);
+}
+.q-chip:hover{background:var(--brand-lt);border-color:var(--brand);color:var(--brand);}
+.q-chip:active{transform:scale(0.97);}
+
+.input-row{display:flex;gap:7px;align-items:flex-end;}
+.input-wrap{
+  flex:1;display:flex;align-items:flex-end;gap:6px;
+  background:var(--surface);border-radius:24px;
+  padding:8px 12px;box-shadow:0 1px 3px rgba(0,0,0,0.09);
+  min-height:44px;
+}
+.btn-emoji{
+  background:none;border:none;cursor:pointer;
+  font-size:20px;opacity:0.45;transition:opacity 0.2s;
+  flex-shrink:0;padding:0;line-height:1;margin-bottom:1px;
+}
+.btn-emoji:hover{opacity:0.75;}
+.msg-input{
+  flex:1;border:none;outline:none;
+  font-size:15px;font-family:'DM Sans',sans-serif;
+  color:var(--text);background:transparent;
+  resize:none;line-height:1.45;max-height:110px;
+}
+.msg-input::placeholder{color:#B8B0A8;}
+
+.send-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:#BFBAB4;color:#fff;border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:18px;flex-shrink:0;
+  transition:background 0.2s,transform 0.1s;
+  box-shadow:0 2px 5px rgba(0,0,0,0.18);
+}
+.send-btn.active{background:var(--brand);}
+.send-btn.active:hover{background:var(--brand-dk);}
+.send-btn:active{transform:scale(0.94);}
+.send-btn:disabled{background:#D4D0CC;box-shadow:none;cursor:default;}
+
+.logo-badge{
+  text-align:center;padding:5px 0 1px;
+  font-size:10px;color:#B0A8A0;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+}
+.logo-icon{
+  width:13px;height:13px;border-radius:3px;
+  background:var(--brand);display:inline-flex;
+  align-items:center;justify-content:center;
+  font-size:8px;font-weight:700;color:#fff;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="header">
+    <button class="back-btn">&#8592;</button>
+    <div class="h-agent">
+      <div class="h-avatar">
+        <img src="https://i.pravatar.cc/150?u=carlos_diskgas" id="hImg" class="h-avatar-img">
+        <div id="hDot" class="h-status-dot"></div>
+      </div>
+      <div class="h-info">
+        <div class="h-name" id="hName">Carlos</div>
+        <div class="h-sub" id="hSub">conectando...</div>
+      </div>
+    </div>
+    <div class="h-actions">
+      <button class="h-action" title="Chamada de vídeo">&#128247;</button>
+      <button class="h-action" title="Ligar">&#9742;</button>
+    </div>
+  </header>
+
+  <main class="msgs" id="msgs">
+    <div class="date-sep"><span>Hoje</span></div>
+    <div id="agentCard" class="agent-intro">
+      <div class="ai-top">
+        <img src="https://i.pravatar.cc/150?u=carlos_diskgas" class="ai-img">
+        <div>
+          <div class="ai-name">Carlos Mendes</div>
+          <span class="ai-tag">✓ Verificado</span>
+        </div>
+      </div>
+      <div class="ai-stats">
+        <div class="ai-stat"><div class="ai-stat-val">98%</div><div class="ai-stat-lbl">Satisfação</div></div>
+        <div class="ai-stat"><div class="ai-stat-val">~3 min</div><div class="ai-stat-lbl">Resposta</div></div>
+        <div class="ai-stat"><div class="ai-stat-val">2.4k</div><div class="ai-stat-lbl">Entregas</div></div>
+      </div>
+    </div>
+    <div id="typingRow" class="typing-row">
+      <img src="https://i.pravatar.cc/150?u=carlos_diskgas" class="msg-av">
+      <div class="typing-bubble">
+        <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+      </div>
+    </div>
+  </main>
+
+  <button class="scroll-fab" id="scrollFab" onclick="scrollToBottom(true)">
+    &#8595;
+    <span class="fab-badge" id="fabBadge"></span>
+  </button>
+
+  <footer class="footer">
+    <div id="quickOpts" class="quick-opts"></div>
+    <div class="input-row">
+      <div class="input-wrap">
+        <button class="btn-emoji" tabindex="-1">&#128512;</button>
+        <input type="text" id="msgInput" class="msg-input" placeholder="Aguardando atendente..." disabled>
+      </div>
+      <button id="sendBtn" class="send-btn" disabled>&#10148;</button>
+    </div>
+    <div class="logo-badge">
+      <span class="logo-icon">D</span>
+      Diskgas &mdash; Atendimento Oficial
+    </div>
+  </footer>
+</div>
+
+<script>
+const msgsEl      = document.getElementById('msgs');
+const inputEl     = document.getElementById('msgInput');
+const sendBtnEl   = document.getElementById('sendBtn');
+const typingRowEl = document.getElementById('typingRow');
+const quickEl     = document.getElementById('quickOpts');
+const agentCardEl = document.getElementById('agentCard');
+const hImgEl      = document.getElementById('hImg');
+const hDotEl      = document.getElementById('hDot');
+const hNameEl     = document.getElementById('hName');
+const hSubEl      = document.getElementById('hSub');
+const scrollFab   = document.getElementById('scrollFab');
+const fabBadge    = document.getElementById('fabBadge');
+
+const AGENT_IMG = 'https://i.pravatar.cc/150?u=carlos_diskgas';
+
+let orderConfirmed = false;
+let conversationState = 'idle';
+let pendingOrder = {};
+let lastSender = null;
+let pendingReceipts = [];
+let unreadCount = 0;
+
+const now   = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const pick  = arr => arr[Math.floor(Math.random() * arr.length)];
+const rand  = (a,b) => a + Math.random()*(b-a);
+
+function typingDelay(html) {
+  const chars = html.replace(/<[^>]+>/g,'').length;
+  // Simula digitação mais lenta: 50-70ms por caractere
+  return Math.min(Math.max(1500, chars * 60), 5000);
+}
+
+function playPing() {
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(820, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.18);
+    gain.gain.setValueAtTime(0.10, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.45);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.45);
+  } catch(e){}
+}
+
+const isNearBottom = () => msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 90;
+
+function scrollToBottom(force) {
+  if (force || isNearBottom()) {
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+    unreadCount = 0;
+    scrollFab.classList.remove('show');
+    fabBadge.classList.remove('show');
+  } else {
+    unreadCount++;
+    scrollFab.classList.add('show');
+    fabBadge.textContent = unreadCount;
+    fabBadge.classList.add('show');
+  }
+}
+
+msgsEl.addEventListener('scroll', () => {
+  if (isNearBottom()) {
+    unreadCount = 0;
+    scrollFab.classList.remove('show');
+    fabBadge.classList.remove('show');
+  }
+});
+
+function setStatus(text, style) {
+  hSubEl.textContent = text;
+  hSubEl.style.color =
+    style === 'typing' ? 'rgba(255,255,255,0.95)' :
+    style === 'online' ? 'rgba(255,255,255,0.82)' :
+                         'rgba(255,255,255,0.55)';
+}
+
+function markReceiptsRead() {
+  pendingReceipts.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.className = 'b-receipt read';
+  });
+  pendingReceipts = [];
+}
+
+function addMsg(html, type) {
+  const isUser  = type === 'user';
+  const grouped = lastSender === type;
+  const row     = document.createElement('div');
+  row.className = `msg-row ${type}${grouped ? ' grouped' : ''}`;
+
+  if (isUser) {
+    const rcptId = 'r' + Date.now() + Math.random().toString(36).slice(2);
+    row.innerHTML = `
+      <div class="bubble u">
+        ${html}
+        <div class="b-meta">
+          <span class="b-time">${now()}</span>
+          <span class="b-receipt" id="${rcptId}">✓</span>
+        </div>
+      </div>`;
+    setTimeout(() => {
+      const el = document.getElementById(rcptId);
+      if (el) { el.innerHTML = '✓✓'; el.className = 'b-receipt delivered'; }
+    }, 650);
+    pendingReceipts.push(rcptId);
+
+  } else {
+    const avatar = grouped
+      ? `<div class="msg-av-spacer"></div>`
+      : `<img src="${AGENT_IMG}" class="msg-av">`;
+    row.innerHTML = `
+      ${avatar}
+      <div class="bubble a">
+        ${html}
+        <div class="b-meta">
+          <span class="b-time">${now()}</span>
+        </div>
+      </div>`;
+  }
+
+  msgsEl.insertBefore(row, typingRowEl);
+  lastSender = type;
+
+  if (type === 'agent') { playPing(); scrollToBottom(); }
+  else scrollToBottom(true);
+}
+
+function addSysMsg(text) {
+  const d = document.createElement('div');
+  d.className = 'sys-msg';
+  d.innerHTML = `<span>${text}</span>`;
+  msgsEl.insertBefore(d, typingRowEl);
+  scrollToBottom(true);
+}
+
+async function showTyping(ms) {
+  lastSender = null;
+  typingRowEl.style.display = 'flex';
+  setStatus('digitando...', 'typing');
+  scrollToBottom();
+  await sleep(ms);
+  typingRowEl.style.display = 'none';
+  setStatus('online', 'online');
+}
+
+async function agentSay(messages) {
+  markReceiptsRead();
+  // Simula o vendedor lendo a mensagem antes de responder (1.5-2.5 segundos)
+  await sleep(rand(1500, 2500));
+
+  for (let i = 0; i < messages.length; i++) {
+    await showTyping(typingDelay(messages[i]));
+    addMsg(messages[i], 'agent');
+    // Pausa entre mensagens (como se estivesse digitando a próxima)
+    if (i < messages.length - 1) await sleep(rand(1000, 1800));
+  }
+}
+
+function enableInput() {
+  inputEl.disabled = false;
+  sendBtnEl.disabled = false;
+  inputEl.placeholder = 'escreve aí...';
+  inputEl.focus();
+}
+
+function disableInput() {
+  inputEl.disabled = true;
+  sendBtnEl.disabled = true;
+}
+
+inputEl.addEventListener('input', () => {
+  sendBtnEl.classList.toggle('active', inputEl.value.trim().length > 0);
+});
+
+function setQuicks(opts) {
+  quickEl.innerHTML = '';
+  if (!opts.length) { quickEl.style.display = 'none'; return; }
+  quickEl.style.display = 'flex';
+  opts.forEach(([label, val]) => {
+    const c = document.createElement('div');
+    c.className = 'q-chip';
+    c.textContent = label;
+    c.onclick = () => { inputEl.value = val || label; handleSend(); };
+    quickEl.appendChild(c);
+  });
+}
+
+async function startFlow() {
+  setStatus('procurando atendente...', 'muted');
+  await sleep(1500);
+
+  hImgEl.classList.add('live');
+  hDotEl.style.opacity = '1';
+  hNameEl.textContent = 'Carlos';
+  setStatus('online', 'online');
+  addSysMsg('✓ Carlos entrou');
+
+  await sleep(600);
+  agentCardEl.style.display = 'block';
+  scrollToBottom(true);
+  await sleep(800);
+
+  addMsg('opa, vc tem gás aí?', 'user');
+  enableInput();
+  await sleep(400);
+
+  await agentSay([
+    'opa, tudo certo',
+    'qual tamanho vc tá precisando?',
+  ]);
+
+  conversationState = 'choosing_product';
+  setQuicks([
+    ['P13 (13kg)', 'P13'],
+    ['P20 (20kg)', 'P20'],
+    ['P45 (45kg)', 'P45'],
+  ]);
+}
+
+async function handleAgentReply(userText) {
+  const t = userText.toLowerCase().trim();
+  
+  // Simula o vendedor estar ocupado às vezes (responde um pouco mais lento)
+  const isSlowResponse = Math.random() > 0.75;
+  if (isSlowResponse) {
+    await sleep(rand(800, 1500));
+  }
+
+  if (conversationState === 'idle') {
+    if (/preço|valor|quanto|custa|tabela|valores/.test(t)) {
+      await agentSay([
+        'blz, deixa eu te mostrar',
+        'P13 — R$ 115\nP20 — R$ 175\nP45 — R$ 320',
+        'tudo com entrega',
+      ]);
+      setQuicks([['P13', 'P13'], ['P20', 'P20'], ['P45', 'P45']]);
+      return;
+    }
+    if (/demora|tempo|prazo|entrega|quanto leva|demora quanto/.test(t)) {
+      await agentSay([
+        'demora uns 30 a 50 min, depende do bairro',
+        'quer pedir agora?',
+      ]);
+      setQuicks([['quero sim', 'quero pedir'], ['deixo pra depois', 'depois']]);
+      return;
+    }
+    if (/pedir|botijão|gás|gas|preciso|precisa/.test(t)) {
+      conversationState = 'choosing_product';
+      await agentSay([
+        'blz',
+        'qual tamanho?',
+      ]);
+      setQuicks([['P13', 'P13'], ['P20', 'P20'], ['P45', 'P45']]);
+      return;
+    }
+    if (/obrigad|valeu|vlw|massa|brigadão|thanks/.test(t)) {
+      await agentSay(['tmj, qualquer coisa me chama']);
+      return;
+    }
+    await agentSay([
+      'pode me perguntar sobre os tamanhos, preço, entrega...',
+      'o que vc precisa?',
+    ]);
+    setQuicks([
+      ['pedir', 'quero pedir'],
+      ['preço', 'qual o preço'],
+      ['entrega', 'quanto demora'],
+    ]);
+    return;
+  }
+
+  if (conversationState === 'choosing_product') {
+    if (/p13|13/.test(t)) {
+      pendingOrder = { produto:'P13 — 13kg', preco:'R$ 115,00' };
+    } else if (/p20|20/.test(t)) {
+      pendingOrder = { produto:'P20 — 20kg', preco:'R$ 175,00' };
+    } else if (/p45|45/.test(t)) {
+      pendingOrder = { produto:'P45 — 45kg', preco:'R$ 320,00' };
+    } else {
+      await agentSay(['qual tamanho? P13, P20 ou P45?']);
+      return;
+    }
+    conversationState = 'awaiting_address';
+    await agentSay([
+      `blz, ${pendingOrder.produto}`,
+      'qual é o endereço?',
+    ]);
+    setQuicks([]);
+    return;
+  }
+
+  if (conversationState === 'awaiting_address') {
+    if (t.replace(/\s/g,'').length < 8) {
+      await agentSay(['me manda o endereço completo aí']);
+      return;
+    }
+    pendingOrder.endereco = userText;
+    conversationState = 'confirm_order';
+    const orderId = 'DG-' + Math.floor(10000 + Math.random()*90000);
+    pendingOrder.id = orderId;
+
+    await agentSay(['deixa eu montar aqui...']);
+
+    const card = `
+      confere aí 👇
+      <div class="order-card">
+        <div class="order-hd">
+          <span class="order-hd-title">Seu pedido</span>
+          <span class="order-id">${orderId}</span>
+        </div>
+        <div class="order-body">
+          <div class="order-row">
+            <span class="order-lbl">Produto</span>
+            <span class="order-val">${pendingOrder.produto}</span>
+          </div>
+          <div class="order-row">
+            <span class="order-lbl">Endereço</span>
+            <span class="order-val" style="max-width:58%">${pendingOrder.endereco}</span>
+          </div>
+          <div class="order-row">
+            <span class="order-lbl">Pagamento</span>
+            <span class="order-val">na entrega</span>
+          </div>
+          <div class="order-row">
+            <span class="order-lbl">Prazo</span>
+            <span class="order-val" style="color:#0B7A3E">30–50 min</span>
+          </div>
+          <div class="order-row" style="padding-top:8px">
+            <span class="order-lbl" style="font-weight:600;color:var(--text)">Total</span>
+            <span class="order-total">${pendingOrder.preco}</span>
+          </div>
+        </div>
+        <div class="order-ft">
+          <button class="confirm-btn" id="confirmOrderBtn" onclick="confirmOrder()">
+            confirma aí
+          </button>
+        </div>
+      </div>`;
+
+    await sleep(400);
+    addMsg(card, 'agent');
+    setQuicks([
+      ['corrigir', 'errei o endereço'],
+      ['cancelar', 'cancela'],
+    ]);
+    return;
+  }
+
+  if (conversationState === 'confirm_order') {
+    if (/cancelar|desistir|não/.test(t)) {
+      conversationState = 'idle';
+      await agentSay(['blz, sem problema', 'qualquer coisa me chama']);
+      setQuicks([['novo pedido', 'quero pedir']]);
+      return;
+    }
+    if (/corrigir|errad|mudar|endereço|errei/.test(t)) {
+      conversationState = 'awaiting_address';
+      await agentSay(['qual é o endereço certo?']);
+      setQuicks([]);
+      return;
+    }
+    await agentSay(['é só clicar no botão aí']);
+    return;
+  }
+
+  if (conversationState === 'order_confirmed') {
+    if (/obrigad|valeu|vlw|massa|brigadão/.test(t)) {
+      await agentSay(['boa, aproveita!']);
+      setQuicks([]);
+      return;
+    }
+    if (/onde|status|chegou|andamento|saiu|rastreio/.test(t)) {
+      await agentSay([
+        'tá sendo preparado agora',
+        'entregador sai em breve, uns 35 a 50 min',
+      ]);
+      return;
+    }
+    await agentSay(['qualquer coisa me chama']);
+    return;
+  }
+
+  await agentSay(['fala aí, como posso te ajudar?']);
+}
+
+window.confirmOrder = async function() {
+  if (orderConfirmed) return;
+  orderConfirmed = true;
+  conversationState = 'order_confirmed';
+
+  const btn = document.getElementById('confirmOrderBtn');
+  if (btn) { btn.classList.add('done'); btn.innerHTML = '✓ confirmado'; btn.disabled = true; }
+
+  // Simula o vendedor vendo o pedido confirmado e respondendo
+  await sleep(rand(1200, 2000));
+  await agentSay(['pedido confirmado!', 'tô mandando pra central...']);
+
+  const status = `
+    acompanha aí 👇
+    <div class="delivery-status">
+      <div class="ds-title">🚚 Rastreamento</div>
+      <div class="ds-steps">
+        <div class="ds-step done"><div class="ds-dot"></div> Recebido</div>
+        <div class="ds-step done"><div class="ds-dot"></div> Confirmado</div>
+        <div class="ds-step active"><div class="ds-dot"></div> Preparando</div>
+        <div class="ds-step"><div class="ds-dot"></div> Saiu pra entrega</div>
+        <div class="ds-step"><div class="ds-dot"></div> Entregue</div>
+      </div>
+    </div>`;
+
+  await sleep(800);
+  addMsg(status, 'agent');
+
+  // Simula o vendedor processando o pedido na central
+  await sleep(rand(2000, 3500));
+  await agentSay([
+    'entregador sai pra aí em breve',
+    'uns 35 a 50 min',
+    'qualquer coisa me chama aí',
+  ]);
+  setQuicks([
+    ['onde tá?', 'qual o status?'],
+    ['valeu', 'obrigado'],
+  ]);
+};
+
+async function handleSend() {
+  const text = inputEl.value.trim();
+  if (!text) return;
+  inputEl.value = '';
+  sendBtnEl.classList.remove('active');
+  setQuicks([]);
+  disableInput();
+  addMsg(text, 'user');
+  await handleAgentReply(text);
+  enableInput();
+}
+
+sendBtnEl.onclick = handleSend;
+inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }});
+
+window.onload = startFlow;
+</script>
+</body>
+</html>
