@@ -360,16 +360,33 @@ function showAgentIntro() {
   msgsEl.scrollTop = msgsEl.scrollHeight;
 }
 
-async function handleFlow() {
-  const text = inputEl.value;
-  if(!text) return;
-  
-  inputEl.value = '';
-  addMsg(text, 'user');
+inputEl.onkeypress = (e) => { 
+  if(e.key === 'Enter') {
+    const text = inputEl.value;
+    if(!text) return;
+    inputEl.value = '';
+    addMsg(text, 'user');
+    handleResponseFlow();
+  }
+};
 
+// Auto-start with automatic user message
+window.onload = async () => {
+  addSystemMsg("Conexão estabelecida");
+  await new Promise(r => setTimeout(r, 1000));
+  
+  // Simula a primeira mensagem automática do usuário
+  const defaultMsg = "Olá! Gostaria de saber mais sobre os produtos.";
+  addMsg(defaultMsg, 'user');
+  
+  // Dispara o fluxo de resposta
+  handleResponseFlow();
+};
+
+async function handleResponseFlow() {
   // 1. GAP FILLER: System Message
   await new Promise(r => setTimeout(r, 800));
-  addSystemMsg("Encaminhando para um consultor...");
+  addSystemMsg("Localizando consultor disponível...");
 
   // 2. GAP FILLER: Agent Intro
   await new Promise(r => setTimeout(r, 1200));
@@ -383,15 +400,16 @@ async function handleFlow() {
   // 4. Agent Response
   await new Promise(r => setTimeout(r, 3000));
   typingRowEl.style.display = 'none';
-  addMsg("Olá! Sou o Carlos. Como posso te ajudar com seu pedido hoje?", 'agent');
+  addMsg("Olá! Sou o Carlos. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
 }
 
-sendBtnEl.onclick = handleFlow;
-inputEl.onkeypress = (e) => { if(e.key === 'Enter') handleFlow(); };
-
-// Auto-start for demo
-window.onload = () => {
-  addSystemMsg("Bem-vindo à Diskgas!");
+// Update sendBtn to use the new flow logic
+sendBtnEl.onclick = async () => {
+  const text = inputEl.value;
+  if(!text) return;
+  inputEl.value = '';
+  addMsg(text, 'user');
+  handleResponseFlow();
 };
 </script>
 </body>
