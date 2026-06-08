@@ -15,6 +15,7 @@
       --bg:       #F3F4F6;
       --white:    #FFFFFF;
       --text:     #111827;
+      --text-secondary: #374151;
       --muted:    #6B7280;
       --border:   #E5E7EB;
       --success:  #10B981;
@@ -87,7 +88,7 @@
     .progress-bar {
       height: 100%;
       background: var(--brand);
-      width: 0%;
+      width: 100%;
       transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -98,8 +99,21 @@
       padding: 20px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       background: #F9FAFB;
+    }
+
+    .msgs::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .msgs::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .msgs::-webkit-scrollbar-thumb {
+      background: #D1D5DB;
+      border-radius: 3px;
     }
 
     /* ── AGENT CARD (TRUST BUILDER) ────────────────── */
@@ -109,24 +123,26 @@
       padding: 16px;
       border: 1px solid var(--brand-lt);
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: none;
       animation: slideDown 0.5s ease;
     }
     @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-    .ac-header { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
-    .ac-info h4 { font-size: 15px; font-weight: 700; }
-    .ac-badge { color: var(--brand); font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+    .ac-header { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; }
+    .ac-info h4 { font-size: 15px; font-weight: 700; color: var(--text); }
+    .ac-badge { color: var(--brand); font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; margin-top: 4px; }
     
-    .ac-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .ac-stat { background: var(--brand-lt); padding: 8px; border-radius: 8px; text-align: center; }
-    .ac-stat-val { display: block; font-size: 13px; font-weight: 700; color: var(--brand); }
-    .ac-stat-lbl { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; }
+    .ac-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .ac-stat { background: var(--brand-lt); padding: 10px; border-radius: 10px; text-align: center; }
+    .ac-stat-val { display: block; font-size: 14px; font-weight: 700; color: var(--brand); }
+    .ac-stat-lbl { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; margin-top: 2px; }
 
     /* ── BUBBLES ───────────────────────────────────── */
-    .msg-row { display: flex; gap: 8px; max-width: 90%; align-items: flex-end; }
+    .msg-row { display: flex; gap: 8px; max-width: 90%; align-items: flex-end; animation: fadeIn 0.3s ease; }
     .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     
     .msg-avatar {
       width: 28px;
@@ -138,44 +154,73 @@
     }
 
     .bubble {
-      padding: 10px 14px;
+      padding: 12px 16px;
       border-radius: 18px;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
       position: relative;
+      word-wrap: break-word;
     }
-    .bubble.a { background: white; color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
-    .bubble.u { background: var(--brand); color: white; border-bottom-right-radius: 4px; }
 
-    .b-meta { font-size: 10px; margin-top: 4px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; opacity: 0.7; }
+    .bubble.a { 
+      background: white; 
+      color: var(--text); 
+      border: 1px solid var(--border); 
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .bubble.u { 
+      background: var(--brand); 
+      color: white; 
+      border-bottom-right-radius: 4px;
+    }
+
+    .bubble strong { font-weight: 700; }
+    .bubble br { margin: 4px 0; }
+
+    .b-meta { font-size: 11px; margin-top: 6px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; opacity: 0.65; }
 
     /* ── PIX COMPONENT (CONVERSION FOCUS) ─────────── */
     .pix-card {
-      background: #F0F9FF;
-      border: 2px dashed var(--brand);
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 8px;
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+      border: 2px solid var(--brand);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 10px;
       text-align: center;
     }
-    .pix-title { font-size: 12px; font-weight: 700; color: var(--brand); text-transform: uppercase; margin-bottom: 8px; }
+
+    .pix-title { 
+      font-size: 12px; 
+      font-weight: 700; 
+      color: var(--brand); 
+      text-transform: uppercase; 
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
     .pix-code {
       background: white;
-      padding: 10px;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 11px;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: 600;
       word-break: break-all;
       border: 1px solid var(--brand-lt);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: block;
+      color: var(--text);
+      letter-spacing: 0.5px;
     }
+
     .copy-btn {
       background: var(--brand);
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 12px 20px;
+      border-radius: 10px;
       font-weight: 700;
       font-size: 13px;
       cursor: pointer;
@@ -184,49 +229,162 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: background 0.2s;
+      transition: all 0.3s;
     }
+
+    .copy-btn:hover { 
+      background: var(--brand-dk);
+      transform: translateY(-1px);
+    }
+
     .copy-btn:active { transform: scale(0.98); }
 
     /* ── TYPING ────────────────────────────────────── */
-    .typing-row { display: none; align-items: center; gap: 8px; }
+    .typing-row { display: none; align-items: center; gap: 8px; animation: fadeIn 0.3s ease; }
+    
+    .typing-bubble {
+      background: white;
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
     .dot-flashing {
-      position: relative; width: 6px; height: 6px; border-radius: 5px;
-      background-color: var(--brand); color: var(--brand);
-      animation: dot-flashing 1s infinite linear alternate; animation-delay: 0.5s;
+      position: relative; 
+      width: 6px; 
+      height: 6px; 
+      border-radius: 50%;
+      background-color: var(--muted);
+      animation: dot-flashing 1.4s infinite;
     }
+
     .dot-flashing::before, .dot-flashing::after {
-      content: ""; display: inline-block; position: absolute; top: 0;
-      width: 6px; height: 6px; border-radius: 5px; background-color: var(--brand);
-      animation: dot-flashing 1s infinite linear alternate;
+      content: ""; 
+      display: inline-block; 
+      position: absolute; 
+      top: 0;
+      width: 6px; 
+      height: 6px; 
+      border-radius: 50%; 
+      background-color: var(--muted);
+      animation: dot-flashing 1.4s infinite;
     }
-    .dot-flashing::before { left: -12px; animation-delay: 0s; }
-    .dot-flashing::after { left: 12px; animation-delay: 1s; }
-    @keyframes dot-flashing { 0% { background-color: var(--brand); } 50%, 100% { background-color: #E5E7EB; } }
+
+    .dot-flashing::before { left: -12px; animation-delay: -0.7s; }
+    .dot-flashing::after { left: 12px; animation-delay: -0.35s; }
+
+    @keyframes dot-flashing { 
+      0%, 60%, 100% { background-color: #D1D5DB; opacity: 0.5; }
+      30% { background-color: var(--muted); opacity: 1; }
+    }
+
+    /* ── SYSTEM MESSAGE ────────────────────────────── */
+    .sys-badge { 
+      text-align: center; 
+      font-size: 12px; 
+      color: var(--muted); 
+      margin: 4px 0;
+      padding: 0;
+    }
+
+    .sys-badge.info {
+      background: #DBEAFE;
+      color: #0C4A6E;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .sys-badge.success {
+      background: #DCFCE7;
+      color: #166534;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
 
     /* ── FOOTER ────────────────────────────────────── */
-    .footer { background: white; padding: 12px 16px; border-top: 1px solid var(--border); }
-    .input-row { display: flex; gap: 10px; align-items: center; }
+    .footer { 
+      background: white; 
+      padding: 14px 16px; 
+      border-top: 1px solid var(--border);
+    }
+
+    .input-row { 
+      display: flex; 
+      gap: 10px; 
+      align-items: center;
+    }
+
     input {
-      flex: 1; border: 1px solid var(--border); padding: 12px 16px;
-      border-radius: 24px; font-size: 14px; outline: none; background: #F9FAFB;
+      flex: 1; 
+      border: 1px solid var(--border); 
+      padding: 12px 16px;
+      border-radius: 24px; 
+      font-size: 14px; 
+      outline: none; 
+      background: #F9FAFB;
+      color: var(--text);
+      transition: all 0.2s;
     }
-    input:focus { border-color: var(--brand); background: white; }
+
+    input::placeholder { color: var(--muted); }
+    input:focus { border-color: var(--brand); background: white; box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1); }
+
     .send-btn {
-      width: 44px; height: 44px; border-radius: 50%; background: var(--brand);
-      color: white; border: none; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: all 0.2s;
+      width: 44px; 
+      height: 44px; 
+      border-radius: 50%; 
+      background: var(--brand);
+      color: white; 
+      border: none; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      cursor: pointer; 
+      transition: all 0.2s;
+      flex-shrink: 0;
     }
+
+    .send-btn:hover { background: var(--brand-dk); transform: scale(1.05); }
+    .send-btn:active { transform: scale(0.95); }
     .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .q-replies { display: flex; gap: 8px; overflow-x: auto; padding: 8px 0; scrollbar-width: none; }
-    .q-btn {
-      white-space: nowrap; background: white; border: 1px solid var(--brand);
-      color: var(--brand); padding: 8px 16px; border-radius: 20px;
-      font-size: 13px; font-weight: 600; cursor: pointer;
+    .q-replies { 
+      display: flex; 
+      gap: 8px; 
+      overflow-x: auto; 
+      padding: 10px 0 8px 0; 
+      scrollbar-width: none;
+      margin-bottom: 8px;
     }
 
-    .sys-badge { text-align: center; font-size: 11px; color: var(--muted); margin: 8px 0; }
+    .q-replies::-webkit-scrollbar { display: none; }
+
+    .q-btn {
+      white-space: nowrap; 
+      background: white; 
+      border: 1.5px solid var(--brand);
+      color: var(--brand); 
+      padding: 10px 16px; 
+      border-radius: 20px;
+      font-size: 13px; 
+      font-weight: 600; 
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .q-btn:hover { 
+      background: var(--brand-lt);
+      transform: translateY(-2px);
+    }
+
+    .q-btn:active { transform: scale(0.98); }
   </style>
 </head>
 <body>
@@ -249,8 +407,6 @@
   <div class="progress-container"><div id="pBar" class="progress-bar"></div></div>
 
   <main class="msgs" id="msgs">
-    <div class="sys-badge">Criptografia de ponta a ponta ativa</div>
-    
     <div id="agentCard" class="agent-card">
       <div class="ac-header">
         <img src="https://i.pravatar.cc/150?u=thiago" class="h-photo">
@@ -270,15 +426,6 @@
         </div>
       </div>
     </div>
-
-    <div id="sysMsg" class="sys-badge" style="background: #FEF3C7; color: #92400E; padding: 6px; border-radius: 8px;">
-      Aguardando vendedor disponível...
-    </div>
-
-    <div id="typingRow" class="typing-row">
-      <div style="width: 28px;"></div> <!-- Espaço para alinhar com o avatar -->
-      <div style="margin-left: 8px;"><div class="dot-flashing"></div></div>
-    </div>
   </main>
 
   <footer class="footer">
@@ -294,14 +441,30 @@
   const msgs = document.getElementById('msgs');
   const msgIn = document.getElementById('msgIn');
   const sendBtn = document.getElementById('sendBtn');
-  const typingRow = document.getElementById('typingRow');
   const pBar = document.getElementById('pBar');
+  const agentCardEl = document.getElementById('agentCard');
   const agentPhotoUrl = "https://i.pravatar.cc/150?u=thiago";
+  
+  let typingRow = null;
   
   function scroll() { msgs.scrollTop = msgs.scrollHeight; }
   function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
   function getTime() { return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
   function setProgress(w) { pBar.style.width = w + '%'; }
+
+  function createTypingRow() {
+    if (typingRow) return typingRow;
+    typingRow = document.createElement('div');
+    typingRow.className = 'typing-row';
+    typingRow.innerHTML = `
+      <img src="${agentPhotoUrl}" class="msg-avatar">
+      <div class="typing-bubble">
+        <div class="dot-flashing"></div>
+      </div>
+    `;
+    msgs.appendChild(typingRow);
+    return typingRow;
+  }
 
   function addMsg(text, type) {
     const row = document.createElement('div');
@@ -319,35 +482,28 @@
         <div class="b-meta">${getTime()} ${type === 'user' ? '<i class="fas fa-check-double" style="color:#4FC3F7"></i>' : ''}</div>
       </div>
     `;
-    msgs.insertBefore(row, typingRow);
+    
+    if (typingRow) {
+      msgs.insertBefore(row, typingRow);
+    } else {
+      msgs.appendChild(row);
+    }
     scroll();
   }
 
   async function showTyping(duration) {
-    typingRow.style.display = 'flex';
+    const tRow = createTypingRow();
+    tRow.style.display = 'flex';
     document.getElementById('hStatus').textContent = 'Digitando...';
     document.getElementById('hStatus').classList.add('online');
     scroll();
     await sleep(duration);
-    typingRow.style.display = 'none';
+    tRow.style.display = 'none';
     document.getElementById('hStatus').textContent = 'Online agora';
   }
 
   async function startFlow() {
-    // 1. Mensagem inicial do Usuário (0% -> 20%)
-    await sleep(1000);
-    setProgress(20);
-    addMsg("Olá! Gostaria de pedir um gás.", "user");
-    
-    // 2. Simulação de Conexão Profissional (20% -> 60%)
-    await sleep(1500);
-    setProgress(60);
-    document.getElementById('sysMsg').textContent = "Thiago Silva entrou no atendimento.";
-    document.getElementById('sysMsg').style.background = "#D1FAE5";
-    document.getElementById('sysMsg').style.color = "#065F46";
-    
-    // 3. Thiago se torna "Real" e o CARD APARECE (Barra 100%)
-    await sleep(800);
+    // Exibir card do atendente e foto imediatamente
     const hPhoto = document.getElementById('hPhoto');
     hPhoto.style.filter = "none";
     hPhoto.style.opacity = "1";
@@ -356,35 +512,40 @@
     document.getElementById('hName').textContent = "Thiago Silva";
     document.getElementById('hStatus').textContent = "Online agora";
     document.getElementById('hStatus').classList.add('online');
-    document.getElementById('agentCard').style.display = "block";
+    agentCardEl.style.display = "block";
     setProgress(100);
-    
+
+    // Habilitar input imediatamente
     msgIn.disabled = false;
     msgIn.placeholder = "Digite sua mensagem...";
     sendBtn.disabled = false;
 
-    // 4. Primeira mensagem do Thiago (Com miniatura)
-    await sleep(1200);
-    await showTyping(1500);
-    addMsg("Oi! Tudo bem? Sou o Thiago da Diskgas.", "agent");
+    // Mensagem inicial do usuário
+    await sleep(400);
+    addMsg("Olá! Gostaria de pedir um gás.", "user");
 
-    await sleep(1800);
-    await showTyping(2200);
+    // Primeira resposta do atendente
+    await sleep(800);
+    await showTyping(1500);
+    addMsg("Oi! Tudo bem? Sou o Thiago da Diskgas. 👋", "agent");
+
+    await sleep(1200);
+    await showTyping(1800);
     addMsg("Vi que você quer pedir um gás. Vou te ajudar com isso agora mesmo!", "agent");
 
-    await sleep(2000);
-    await showTyping(2500);
-    addMsg("Vou gerar o seu código Pix para pagamento seguro, só um segundo...", "agent");
+    await sleep(1500);
+    await showTyping(2000);
+    addMsg("Deixa eu gerar o seu código Pix para pagamento seguro. Só um segundo...", "agent");
 
-    // 5. Momento da Conversão (Pix)
-    await sleep(3500);
-    await showTyping(1500);
+    // Código Pix
+    await sleep(2500);
+    await showTyping(1200);
     
     const pixHtml = `
       Aqui está o seu código de pagamento. Assim que pagar, o sistema libera sua entrega automaticamente:
       <div class="pix-card">
-        <div class="pix-title"><i class="fas fa-qrcode"></i> Pix Copia e Cola</div>
-        <span class="pix-code" id="pixCode">00020126580014BR.GOV.BCB.PIX0136e3a45712-9865-4b2a-8765-1234567890ab5204000053039865405115.005802BR5915DISK GAS OFICIAL6009SAO PAULO62070503GAS6304ABCD</span>
+        <div class="pix-title"><i class="fas fa-qrcode"></i> Pix Cópia e Cola</div>
+        <span class="pix-code">00020126580014br.gov.bcb.pix0136xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx520400005303986540510.005802BR5913DISKGAS6009SAO PAULO62410503***63041D3D</span>
         <button class="copy-btn" onclick="copyPix()">
           <i class="fas fa-copy"></i> Copiar Código Pix
         </button>
@@ -392,7 +553,7 @@
     `;
     addMsg(pixHtml, "agent");
 
-    // Sugestões de resposta rápida
+    // Quick replies
     const q = document.getElementById('qReplies');
     q.style.display = 'flex';
     q.innerHTML = `
@@ -405,12 +566,13 @@
 
   function copyPix() {
     const btn = document.querySelector('.copy-btn');
+    const originalHtml = btn.innerHTML;
     btn.innerHTML = '<i class="fas fa-check"></i> Código Copiado!';
     btn.style.background = 'var(--success)';
     setTimeout(() => {
-      btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Código Pix';
+      btn.innerHTML = originalHtml;
       btn.style.background = 'var(--brand)';
-    }, 2000);
+    }, 2500);
   }
 
   function quickSend(text) {
@@ -422,10 +584,18 @@
     const text = msgIn.value.trim();
     if (!text) return;
     msgIn.value = '';
+    document.getElementById('qReplies').style.display = 'none';
     addMsg(text, "user");
-    await sleep(1500);
-    await showTyping(2000);
-    addMsg("Perfeito! Estou acompanhando aqui. Assim que o pagamento for confirmado, te aviso por aqui mesmo.", "agent");
+    msgIn.disabled = true;
+    sendBtn.disabled = true;
+    
+    await sleep(1200);
+    await showTyping(1800);
+    addMsg("Perfeito! Estou acompanhando aqui. Assim que o pagamento for confirmado, te aviso por aqui mesmo. 👍", "agent");
+    
+    msgIn.disabled = false;
+    sendBtn.disabled = false;
+    msgIn.focus();
   }
 
   sendBtn.onclick = send;
