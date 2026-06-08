@@ -3,424 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Diskgas — Atendimento Melhorado</title>
+<title>Diskgas — Atendimento Premium</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --brand:      #E8480C;
-  --brand-dk:   #C23A08;
-  --brand-lt:   #FFF2EC;
-  --brand-mid:  #FF6430;
-
-  --bg:         #ECE7DF;
-  --surface:    #FFFFFF;
-  --surface-2:  #F9F6F2;
-  --surface-3:  #F3EEE7;
-
-  --text:       #1A1714;
-  --text-2:     #5C5650;
-  --text-3:     #9A9288;
-
-  --border:     #DDD7CE;
-  --border-2:   #EAE4DA;
-
-  --bubble-a:   #FFFFFF;
-  --bubble-u:   #FFE1CB;
-
-  --green:      #1DC75F;
-  --green-dk:   #0DA04A;
-  --green-lt:   #F0FDF6;
-  --green-bd:   rgba(13,160,74,.15);
-
-  --read-clr:   #38BDF8;
-
-  --radius-xs:  6px;
-  --radius-sm:  10px;
-  --radius:     16px;
-  --radius-lg:  22px;
-  --radius-xl:  28px;
-
-  --sh-xs: 0 1px 3px rgba(0,0,0,.05);
-  --sh-sm: 0 2px 8px rgba(0,0,0,.07);
-  --sh-md: 0 4px 16px rgba(0,0,0,.09);
-  --sh-lg: 0 8px 32px rgba(0,0,0,.09);
-
-  --ease:   cubic-bezier(.25,.46,.45,.94);
-  --spring: cubic-bezier(.34,1.56,.64,1);
+:root {
+  /* Cores Principais - Refinadas */
+  --brand: #E8480C;
+  --brand-dk: #C23A08;
+  --brand-soft: rgba(232, 72, 12, 0.08);
+  
+  /* Neutros - Paleta Quente e Sofisticada */
+  --bg: #F8F6F2;
+  --surface: #FFFFFF;
+  --text-main: #1A1714;
+  --text-sec: #5C5650;
+  --text-muted: #9A9288;
+  
+  /* Cores de Status */
+  --green: #1DC75F;
+  --green-soft: #F0FDF6;
+  --green-text: #0DA04A;
+  
+  /* Sombras e Bordas */
+  --border: #EAE4DA;
+  --shadow-sm: 0 2px 8px rgba(26, 23, 20, 0.04);
+  --shadow-md: 0 4px 16px rgba(26, 23, 20, 0.08);
+  --shadow-lg: 0 12px 32px rgba(26, 23, 20, 0.12);
+  
+  /* Raio */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
 }
 
-html,body{
-  height:100%;width:100%;
-  font-family:'DM Sans',sans-serif;
-  background:#0D0C0B;
-  display:flex;justify-content:center;align-items:center;
-  overflow:hidden;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-.app{
-  width:100%;max-width:430px;height:100dvh;
-  display:flex;flex-direction:column;
-  background:var(--bg);
-  position:relative;overflow:hidden;
-}
-
-/* Subtle warm atmosphere */
-.app::before{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse 100% 28% at 50% 0%, rgba(232,72,12,.06) 0%, transparent 100%),
-    radial-gradient(ellipse 70% 18% at 0% 100%,  rgba(232,72,12,.03) 0%, transparent 100%);
-}
-
-/* ─── Header ─── */
-.header{
-  background:var(--brand);
-  padding:13px 14px;
-  display:flex;align-items:center;gap:11px;
-  position:relative;z-index:10;
-  box-shadow:0 1px 0 rgba(0,0,0,.1), 0 3px 14px rgba(0,0,0,.14);
-}
-.header::after{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 55%);
-}
-
-.back-btn{
-  width:34px;height:34px;border-radius:9px;
-  background:rgba(255,255,255,.14);border:none;cursor:pointer;
-  color:rgba(255,255,255,.96);font-size:17px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  transition:background .18s ease;
-}
-
-.h-agent{display:flex;align-items:center;gap:11px;flex:1;min-width:0;}
-
-.h-avatar{position:relative;}
-.h-avatar-img{
-  width:40px;height:40px;border-radius:50%;
-  object-fit:cover;
-  border:2px solid rgba(255,255,255,.45);
-  box-shadow:0 0 0 2px rgba(255,255,255,.12);
-}
-.h-status-dot{
-  position:absolute;bottom:1px;right:1px;
-  width:11px;height:11px;border-radius:50%;
-  background:var(--green);
-  border:2px solid var(--brand);
-}
-
-.h-info{flex:1;min-width:0;}
-.h-name{font-size:14.5px;font-weight:600;color:#fff;letter-spacing:.2px;}
-.h-sub{
-  font-size:11.5px;color:rgba(255,255,255,.72);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  margin-top:1px;font-weight:400;
-}
-
-/* ─── Messages ─── */
-.msgs{
-  flex:1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 16px 14px 20px; /* Aumentado o padding inferior */
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* Aumentado o gap para melhor leitura */
-  position: relative;
-  z-index: 1;
-  scroll-behavior: smooth;
-  /* Garante que o conteúdo comece do topo e permita scroll */
-  height: 100%; 
-}
-
-/* Garante que elementos flexíveis não encolham */
-.msg-row, .agent-intro, .sys-msg, .spinner-container {
-  flex-shrink: 0;
-}
-
-.sys-msg{text-align:center;margin:10px 0;animation:fadeIn .4s var(--ease);}
-.sys-msg span{
-  font-size:11.5px;color:var(--text-2);
-  background:rgba(255,255,255,.72);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(0,0,0,.05);
-  border-radius:10px;
-  padding:6px 16px;
-  box-shadow:var(--sh-xs);
-  font-weight:500;letter-spacing:.2px;
-}
-
-/* Spinner Style */
-.spinner-container {
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #0D0C0B;
+  height: 100dvh;
   display: flex;
   justify-content: center;
-  margin: 5px 0 15px;
-  animation: fadeIn 0.3s ease;
+  align-items: center;
 }
-.loading-spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(232,72,12, 0.1);
-  border-top: 2px solid var(--brand);
+
+.app {
+  width: 100%;
+  max-width: 430px;
+  height: 100dvh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 100px rgba(0,0,0,0.5);
+}
+
+/* Header */
+.header {
+  background: var(--surface);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.h-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--brand);
+  position: relative;
+}
+
+.h-status {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  background: var(--green);
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.h-info .h-name { font-size: 15px; font-weight: 700; color: var(--text-main); }
+.h-info .h-sub { font-size: 12px; color: var(--text-muted); }
+
+/* Messages Area */
+.msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+
+/* System Message */
+.sys-msg {
+  align-self: center;
+  text-align: center;
+  max-width: 80%;
+  animation: fadeIn 0.5s ease;
+}
+.sys-msg span {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.03);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* Spinner */
+.spinner-container { display: flex; justify-content: center; padding: 10px; }
+.spinner {
+  width: 22px; height: 22px;
+  border: 2.5px solid var(--brand-soft);
+  border-top-color: var(--brand);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Message Rows */
+.msg-row {
+  display: flex;
+  max-width: 85%;
+  animation: msgIn 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+  flex-shrink: 0;
 }
 
-.msg-row{
-  display:flex;gap:7px;align-items:flex-end;
-  max-width:84%;margin-bottom:2px;
-  animation:msgIn .32s var(--ease);
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
-.msg-row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
-.msg-row.agent{
+
+.msg-row.user {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
+.msg-row.agent {
   align-self: flex-start;
-  display: flex;
+  gap: 10px;
   align-items: flex-end;
-  gap: 8px;
 }
 
 .msg-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
   border: 1.5px solid #fff;
-  box-shadow: var(--sh-xs);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
 }
 
-/* Espaçamento para mensagens do usuário não ficarem desalinhadas visualmente */
-.msg-row.user {
-  align-self: flex-end;
-  flex-direction: row; /* Mantém padrão mas sem avatar */
-  justify-content: flex-end;
+.bubble {
+  padding: 12px 16px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  position: relative;
+  box-shadow: var(--shadow-sm);
 }
 
-@keyframes msgIn{
-  from{opacity:0;transform:translateY(7px) scale(.97);}
-  to{opacity:1;transform:translateY(0) scale(1);}
-}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-
-.bubble{
-  padding:10px 13px 8px;
-  border-radius:var(--radius);
-  font-size:14px;line-height:1.65;
-  position:relative;
-}
-.bubble.a{
-  background:var(--bubble-a);
-  color:var(--text);
-  border-radius:4px var(--radius) var(--radius) var(--radius);
-  box-shadow:var(--sh-sm);
-}
-.bubble.u{
-  background:var(--bubble-u);
-  color:var(--text);
-  border-radius:var(--radius) 4px var(--radius) var(--radius);
-  box-shadow:var(--sh-sm);
+.bubble.u {
+  background: var(--brand);
+  color: #fff;
+  border-radius: 20px 20px 4px 20px;
 }
 
-.b-meta{
-  display:flex;align-items:center;justify-content:flex-end;
-  gap:3px;margin-top:2px;
-  float:right;margin-left:10px;
-}
-.b-time{font-size:10.5px;color:rgba(0,0,0,.32);}
-
-/* ─── NEW: Agent Intro Card ─── */
-.agent-intro{
-  background:var(--surface);
-  border-radius:var(--radius-lg);
-  overflow:hidden;
-  margin:16px 0;
-  box-shadow: var(--sh-lg);
-  border: 1px solid var(--border-2);
-  width:100%;
-  position:relative;z-index:2;
-  animation:cardSlideIn .55s var(--spring);
-}
-.agent-intro::before{
-  content:'';position:absolute;top:0;left:0;right:0;
-  height:4px;
-  background: linear-gradient(90deg, var(--brand), #FF8C00);
-}
-@keyframes cardSlideIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
+.bubble.a {
+  background: var(--surface);
+  color: var(--text-main);
+  border-radius: 20px 20px 20px 4px;
+  border: 1px solid var(--border);
 }
 
-.ai-content {
+.b-meta {
+  font-size: 10px;
+  margin-top: 4px;
+  opacity: 0.7;
+  display: block;
+  text-align: right;
+}
+
+/* Agent Intro Card - Professional Revision */
+.agent-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  margin: 8px 0;
+  animation: cardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ac-header {
   padding: 20px;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-.ai-header {
-  display: flex;
-  gap: 15px;
   align-items: center;
+  gap: 16px;
+  background: linear-gradient(to bottom right, #fff, var(--bg));
 }
-.ai-img-container {
-  position: relative;
-}
-.ai-img{
-  width: 64px;
-  height: 64px;
+
+.ac-img-wrap { position: relative; }
+.ac-img {
+  width: 60px; height: 60px;
   border-radius: 50%;
-  object-fit: cover;
   border: 3px solid #fff;
-  box-shadow: var(--sh-md);
+  box-shadow: var(--shadow-sm);
 }
-.ai-badge {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
+.ac-online {
+  position: absolute; bottom: 2px; right: 2px;
+  width: 14px; height: 14px;
   background: var(--green);
-  width: 14px;
-  height: 14px;
+  border: 2.5px solid #fff;
   border-radius: 50%;
-  border: 2px solid #fff;
 }
-.ai-info{flex:1;}
-.ai-name{
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 2px;
-}
-.ai-role{
-  font-size: 12.5px;
-  color: var(--text-2);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.ai-stars {
-  display: flex;
-  gap: 2px;
-  color: #F59E0B;
-  font-size: 11px;
-  margin-top: 4px;
-}
-.ai-stats {
+
+.ac-name { font-size: 17px; font-weight: 700; color: var(--text-main); }
+.ac-role { font-size: 13px; color: var(--brand); font-weight: 600; margin-top: 2px; }
+
+.ac-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding: 16px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  gap: 1px;
+}
+
+.ac-stat { text-align: center; }
+.ac-val { display: block; font-size: 15px; font-weight: 700; color: var(--text-main); }
+.ac-lbl { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Typing Indicator */
+.typing {
+  display: flex;
+  align-items: flex-end;
   gap: 10px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border-2);
-}
-.ai-stat-item {
-  text-align: center;
-}
-.ai-stat-val {
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text);
-}
-.ai-stat-label {
-  font-size: 10px;
-  color: var(--text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  padding: 0 4px;
+  animation: fadeIn 0.3s ease;
 }
 
-/* ─── Typing ─── */
-.typing-row{
-  display:none;align-items:flex-end;gap:7px;
-  align-self:flex-start;animation:fadeIn .2s ease;
-}
-.typing-bubble{
-  background:var(--bubble-a);
-  border-radius:4px var(--radius) var(--radius) var(--radius);
-  padding:13px 16px;
-  box-shadow:var(--sh-sm);
-  display:flex;gap:5px;
-}
-.typing-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(0,0,0,.17);
-  animation:typePulse 1.4s ease-in-out infinite;
-}
-.typing-dot:nth-child(2){animation-delay:.18s;}
-.typing-dot:nth-child(3){animation-delay:.36s;}
-@keyframes typePulse{
-  0%,60%,100%{transform:translateY(0);opacity:.35;}
-  30%{transform:translateY(-4px);opacity:1;}
+.t-bubble {
+  background: var(--surface);
+  padding: 12px 18px;
+  border-radius: 18px 18px 18px 4px;
+  border: 1px solid var(--border);
+  display: flex;
+  gap: 4px;
 }
 
-/* ─── Footer ─── */
-.footer{
-  background:var(--surface-2);
-  border-top:1px solid var(--border-2);
-  padding:11px 12px 15px;
+.t-dot {
+  width: 6px; height: 6px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: tPulse 1.2s infinite;
 }
-.input-row{display:flex;gap:8px;align-items:flex-end;}
-.input-wrap{
-  flex:1;display:flex;align-items:center;gap:8px;
-  background:var(--surface);
-  border-radius:26px;
-  padding:10px 15px;
-  border:1.5px solid var(--border);
+.t-dot:nth-child(2) { animation-delay: 0.2s; }
+.t-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes tPulse {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(-4px); opacity: 1; }
 }
-.msg-input{
-  flex:1;border:none;outline:none;
-  font-size:14.5px;font-family:'DM Sans',sans-serif;
-  background:transparent;
+
+/* Footer */
+.footer {
+  padding: 16px 20px 30px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
 }
-.send-btn{
-  width:46px;height:46px;border-radius:50%;
-  background:var(--brand);
-  color:#fff; border:none;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg);
+  padding: 10px 16px;
+  border-radius: 30px;
+  border: 1px solid var(--border);
 }
+
+.input-container input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-main);
+}
+
+.send-btn {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.send-btn:active { transform: scale(0.9); }
+
 </style>
 </head>
 <body>
+
 <div class="app">
   <header class="header">
-    <button class="back-btn">←</button>
-    <div class="h-agent">
-      <div class="h-avatar">
-        <img src="https://i.pravatar.cc/100?u=diskgas" class="h-avatar-img" alt="Avatar">
-        <div class="h-status-dot"></div>
-      </div>
-      <div class="h-info">
-        <div class="h-name">Carlos - Diskgas</div>
-        <div class="h-sub">Online</div>
-      </div>
+    <div class="h-avatar">D<div class="h-status"></div></div>
+    <div class="h-info">
+      <div class="h-name">Diskgas Atendimento</div>
+      <div class="h-sub">Suporte ao cliente</div>
     </div>
   </header>
 
   <div class="msgs" id="msgs">
-    <!-- Messages will appear here -->
+    <!-- Content injected via JS -->
   </div>
 
-  <div class="typing-row" id="typingRow" style="padding: 0 14px 10px; align-items: flex-end; gap: 8px;">
-    <img src="https://i.pravatar.cc/100?u=carlos" class="msg-avatar" alt="Vendedor">
-    <div class="typing-bubble">
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
+  <div id="typingArea" style="display: none; padding: 0 16px 20px;">
+    <div class="typing">
+      <img src="https://i.pravatar.cc/100?u=carlos" class="msg-avatar" alt="Carlos">
+      <div class="t-bubble">
+        <div class="t-dot"></div>
+        <div class="t-dot"></div>
+        <div class="t-dot"></div>
+      </div>
     </div>
   </div>
 
   <footer class="footer">
-    <div class="input-row">
-      <div class="input-wrap">
-        <input type="text" class="msg-input" id="msgInput" placeholder="Escreva sua mensagem...">
-      </div>
-      <button class="send-btn" id="sendBtn">✈</button>
+    <div class="input-container">
+      <input type="text" id="msgInput" placeholder="Escreva sua mensagem...">
+      <button class="send-btn" id="sendBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
     </div>
   </footer>
 </div>
@@ -428,12 +371,11 @@ html,body{
 <script>
 const msgsEl = document.getElementById('msgs');
 const inputEl = document.getElementById('msgInput');
-const sendBtnEl = document.getElementById('sendBtn');
-const typingRowEl = document.getElementById('typingRow');
-
-const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+const sendBtn = document.getElementById('sendBtn');
+const typingArea = document.getElementById('typingArea');
 
 const AGENT_AVATAR = "https://i.pravatar.cc/100?u=carlos";
+const now = () => new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
 function addMsg(text, type) {
   const row = document.createElement('div');
@@ -441,143 +383,126 @@ function addMsg(text, type) {
   
   if (type === 'agent') {
     row.innerHTML = `
-      <img src="${AGENT_AVATAR}" class="msg-avatar" alt="Vendedor">
+      <img src="${AGENT_AVATAR}" class="msg-avatar">
       <div class="bubble a">
         ${text}
-        <div class="b-meta"><span class="b-time">${now()}</span></div>
+        <span class="b-meta">${now()}</span>
       </div>
     `;
   } else {
-    // Para o usuário, não exibimos avatar para manter o foco no vendedor
     row.innerHTML = `
       <div class="bubble u">
         ${text}
-        <div class="b-meta"><span class="b-time">${now()}</span></div>
+        <span class="b-meta">${now()}</span>
       </div>
     `;
   }
   
   msgsEl.appendChild(row);
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+  scrollToBottom();
 }
 
-function addSystemMsg(text, showSpinner = false) {
+function addSystemMsg(text) {
   const div = document.createElement('div');
   div.className = 'sys-msg';
   const span = document.createElement('span');
-  span.innerHTML = text;
+  span.innerText = text;
   div.appendChild(span);
   msgsEl.appendChild(div);
-  
-  let spinner = null;
-  if (showSpinner) {
-    spinner = document.createElement('div');
-    spinner.className = 'spinner-container';
-    spinner.innerHTML = '<div class="loading-spinner"></div>';
-    msgsEl.appendChild(spinner);
-  }
-  
-  msgsEl.scrollTop = msgsEl.scrollHeight;
-  return { container: div, textSpan: span, spinner: spinner };
+  scrollToBottom();
+  return span;
 }
 
-function showAgentIntro() {
+function showSpinner() {
+  const div = document.createElement('div');
+  div.className = 'spinner-container';
+  div.innerHTML = '<div class="spinner"></div>';
+  msgsEl.appendChild(div);
+  scrollToBottom();
+  return div;
+}
+
+function showAgentCard() {
   const card = document.createElement('div');
-  card.className = 'agent-intro';
+  card.className = 'agent-card';
   card.innerHTML = `
-    <div class="ai-content">
-      <div class="ai-header">
-        <div class="ai-img-container">
-          <img src="${AGENT_AVATAR}" class="ai-img" alt="Carlos">
-          <div class="ai-badge"></div>
-        </div>
-        <div class="ai-info">
-          <div class="ai-name">Carlos Oliveira</div>
-          <div class="ai-role">✓ Consultor Especialista</div>
-          <div class="ai-stars">★★★★★ <span style="color:var(--text-3); margin-left:4px;">(4.9)</span></div>
-        </div>
+    <div class="ac-header">
+      <div class="ac-img-wrap">
+        <img src="${AGENT_AVATAR}" class="ac-img">
+        <div class="ac-online"></div>
       </div>
-      <div class="ai-stats">
-        <div class="ai-stat-item">
-          <span class="ai-stat-val">+1.2k</span>
-          <span class="ai-stat-label">Atendimentos</span>
-        </div>
-        <div class="ai-stat-item">
-          <span class="ai-stat-val">~2 min</span>
-          <span class="ai-stat-label">Tempo médio</span>
-        </div>
+      <div class="ac-info">
+        <div class="ac-name">Carlos Oliveira</div>
+        <div class="ac-role">Consultor Especialista</div>
+      </div>
+    </div>
+    <div class="ac-stats">
+      <div class="ac-stat">
+        <span class="ac-val">+1.2k</span>
+        <span class="ac-lbl">Atendimentos</span>
+      </div>
+      <div class="ac-stat">
+        <span class="ac-val">4.9/5</span>
+        <span class="ac-lbl">Avaliação</span>
       </div>
     </div>
   `;
   msgsEl.appendChild(card);
-  
-  // Força o scroll para baixo com um pequeno delay para garantir que o DOM renderizou
+  scrollToBottom();
+}
+
+function scrollToBottom() {
   setTimeout(() => {
-    msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
+    msgsEl.scrollTop = msgsEl.scrollHeight;
   }, 50);
 }
 
-inputEl.onkeypress = (e) => { 
-  if(e.key === 'Enter') {
-    const text = inputEl.value;
-    if(!text) return;
-    inputEl.value = '';
-    addMsg(text, 'user');
-    handleResponseFlow();
+async function startFlow() {
+  // 1. Início
+  addSystemMsg("Iniciando atendimento...");
+  await new Promise(r => setTimeout(r, 1200));
+  
+  // 2. Mensagem Automática do Usuário
+  addMsg("Olá! Gostaria de fazer um pedido.", "user");
+  await new Promise(r => setTimeout(r, 800));
+  
+  // 3. Localizando
+  const sysSpan = addSystemMsg("Localizando consultor...");
+  const spinner = showSpinner();
+  await new Promise(r => setTimeout(r, 2000));
+  
+  // 4. Localizado
+  spinner.remove();
+  sysSpan.innerText = "Consultor localizado ✓";
+  sysSpan.style.color = "var(--green-text)";
+  sysSpan.style.background = "var(--green-soft)";
+  
+  await new Promise(r => setTimeout(r, 800));
+  showAgentCard();
+  
+  // 5. Digitando
+  await new Promise(r => setTimeout(r, 1200));
+  typingArea.style.display = 'block';
+  scrollToBottom();
+  
+  // 6. Resposta
+  await new Promise(r => setTimeout(r, 3000));
+  typingArea.style.display = 'none';
+  addMsg("Olá! Sou o Carlos. É um prazer te atender. Como posso te ajudar com seu pedido de hoje?", "agent");
+}
+
+window.onload = startFlow;
+
+sendBtn.onclick = () => {
+  const val = inputEl.value.trim();
+  if (val) {
+    addMsg(val, "user");
+    inputEl.value = "";
   }
 };
 
-// Auto-start with automatic user message
-window.onload = async () => {
-  addSystemMsg("Conexão estabelecida");
-  await new Promise(r => setTimeout(r, 1000));
-  
-  // Simula a primeira mensagem automática do usuário
-  const defaultMsg = "Olá! Gostaria de saber mais sobre os produtos.";
-  addMsg(defaultMsg, 'user');
-  
-  // Dispara o fluxo de resposta
-  handleResponseFlow();
-};
+inputEl.onkeypress = (e) => { if(e.key === 'Enter') sendBtn.click(); };
 
-async function handleResponseFlow() {
-  // 1. GAP FILLER: System Message with Spinner
-  await new Promise(r => setTimeout(r, 800));
-  const sysObj = addSystemMsg("Localizando consultor disponível...", true);
-
-  // 2. Wait and update to "Located" with Check
-  await new Promise(r => setTimeout(r, 1800));
-  if (sysObj.spinner) sysObj.spinner.remove();
-  
-  sysObj.textSpan.innerHTML = "Consultor localizado ✓";
-  sysObj.textSpan.style.color = "var(--green-dk)";
-  sysObj.textSpan.style.background = "var(--green-lt)";
-  sysObj.textSpan.style.borderColor = "var(--green-bd)";
-
-  // 3. GAP FILLER: Agent Intro
-  await new Promise(r => setTimeout(r, 600));
-  showAgentIntro();
-
-  // 4. Typing indicator starts
-  await new Promise(r => setTimeout(r, 1200));
-  typingRowEl.style.display = 'flex';
-  // Scroll suave após o "digitando" aparecer
-  msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
-
-  // 5. Agent Response
-  await new Promise(r => setTimeout(r, 3000));
-  typingRowEl.style.display = 'none';
-  addMsg("Olá! Sou o Carlos. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
-}
-
-// Update sendBtn to use the new flow logic
-sendBtnEl.onclick = async () => {
-  const text = inputEl.value;
-  if(!text) return;
-  inputEl.value = '';
-  addMsg(text, 'user');
-  handleResponseFlow();
-};
 </script>
 </body>
 </html>
