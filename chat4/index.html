@@ -123,11 +123,23 @@ html,body{
 
 /* ─── Messages ─── */
 .msgs{
-  flex:1;overflow-y:auto;overflow-x:hidden;
-  padding:16px 14px 12px;
-  display:flex;flex-direction:column;gap:8px;
-  position:relative;z-index:1;
-  scroll-behavior:smooth;
+  flex:1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 14px 20px; /* Aumentado o padding inferior */
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Aumentado o gap para melhor leitura */
+  position: relative;
+  z-index: 1;
+  scroll-behavior: smooth;
+  /* Garante que o conteúdo comece do topo e permita scroll */
+  height: 100%; 
+}
+
+/* Garante que elementos flexíveis não encolham */
+.msg-row, .agent-intro, .sys-msg, .spinner-container {
+  flex-shrink: 0;
 }
 
 .sys-msg{text-align:center;margin:10px 0;animation:fadeIn .4s var(--ease);}
@@ -168,7 +180,29 @@ html,body{
   animation:msgIn .32s var(--ease);
 }
 .msg-row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
-.msg-row.agent{align-self:flex-start;}
+.msg-row.agent{
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.msg-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1.5px solid #fff;
+  box-shadow: var(--sh-xs);
+}
+
+/* Espaçamento para mensagens do usuário não ficarem desalinhadas visualmente */
+.msg-row.user {
+  align-self: flex-end;
+  flex-direction: row; /* Mantém padrão mas sem avatar */
+  justify-content: flex-end;
+}
 
 @keyframes msgIn{
   from{opacity:0;transform:translateY(7px) scale(.97);}
@@ -208,40 +242,96 @@ html,body{
   border-radius:var(--radius-lg);
   overflow:hidden;
   margin:16px 0;
-  box-shadow:var(--sh-lg);
-  border:1px solid rgba(0,0,0,.055);
+  box-shadow: var(--sh-lg);
+  border: 1px solid var(--border-2);
   width:100%;
   position:relative;z-index:2;
   animation:cardSlideIn .55s var(--spring);
 }
 .agent-intro::before{
   content:'';position:absolute;top:0;left:0;right:0;
-  height:3px;
-  background:linear-gradient(90deg, var(--brand) 0%, #FF7848 100%);
+  height:4px;
+  background: linear-gradient(90deg, var(--brand), #FF8C00);
 }
 @keyframes cardSlideIn{
   from{opacity:0;transform:translateY(20px);}
   to{opacity:1;transform:translateY(0);}
 }
 
-.ai-top{
-  display:flex;gap:14px;align-items:center;
-  padding:20px 18px 16px;
+.ai-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.ai-header {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.ai-img-container {
+  position: relative;
 }
 .ai-img{
-  width:58px;height:58px;border-radius:50%;
-  object-fit:cover;
-  border:2.5px solid #fff;
-  box-shadow:0 2px 12px rgba(0,0,0,.12);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: var(--sh-md);
+}
+.ai-badge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: var(--green);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #fff;
 }
 .ai-info{flex:1;}
-.ai-name{font-size:16px;font-weight:700;color:var(--text);}
-.ai-role{font-size:12px;color:var(--text-2);margin-bottom:4px;}
-.ai-tag{
-  font-size:11px;font-weight:600;
-  color:#0A8040; background:#E8F7EF;
-  padding:3px 10px; border-radius:20px;
-  display:inline-flex;align-items:center;
+.ai-name{
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.ai-role{
+  font-size: 12.5px;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ai-stars {
+  display: flex;
+  gap: 2px;
+  color: #F59E0B;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.ai-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-2);
+}
+.ai-stat-item {
+  text-align: center;
+}
+.ai-stat-val {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.ai-stat-label {
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* ─── Typing ─── */
@@ -316,7 +406,8 @@ html,body{
     <!-- Messages will appear here -->
   </div>
 
-  <div class="typing-row" id="typingRow" style="padding: 0 14px 10px;">
+  <div class="typing-row" id="typingRow" style="padding: 0 14px 10px; align-items: flex-end; gap: 8px;">
+    <img src="https://i.pravatar.cc/100?u=carlos" class="msg-avatar" alt="Vendedor">
     <div class="typing-bubble">
       <div class="typing-dot"></div>
       <div class="typing-dot"></div>
@@ -342,15 +433,30 @@ const typingRowEl = document.getElementById('typingRow');
 
 const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
+const AGENT_AVATAR = "https://i.pravatar.cc/100?u=carlos";
+
 function addMsg(text, type) {
   const row = document.createElement('div');
   row.className = `msg-row ${type}`;
-  row.innerHTML = `
-    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
-      ${text}
-      <div class="b-meta"><span class="b-time">${now()}</span></div>
-    </div>
-  `;
+  
+  if (type === 'agent') {
+    row.innerHTML = `
+      <img src="${AGENT_AVATAR}" class="msg-avatar" alt="Vendedor">
+      <div class="bubble a">
+        ${text}
+        <div class="b-meta"><span class="b-time">${now()}</span></div>
+      </div>
+    `;
+  } else {
+    // Para o usuário, não exibimos avatar para manter o foco no vendedor
+    row.innerHTML = `
+      <div class="bubble u">
+        ${text}
+        <div class="b-meta"><span class="b-time">${now()}</span></div>
+      </div>
+    `;
+  }
+  
   msgsEl.appendChild(row);
   msgsEl.scrollTop = msgsEl.scrollHeight;
 }
@@ -379,17 +485,36 @@ function showAgentIntro() {
   const card = document.createElement('div');
   card.className = 'agent-intro';
   card.innerHTML = `
-    <div class="ai-top">
-      <img src="https://i.pravatar.cc/100?u=carlos" class="ai-img" alt="Carlos">
-      <div class="ai-info">
-        <div class="ai-name">Carlos Oliveira</div>
-        <div class="ai-role">Especialista em Atendimento</div>
-        <div class="ai-tag">● Responde rápido</div>
+    <div class="ai-content">
+      <div class="ai-header">
+        <div class="ai-img-container">
+          <img src="${AGENT_AVATAR}" class="ai-img" alt="Carlos">
+          <div class="ai-badge"></div>
+        </div>
+        <div class="ai-info">
+          <div class="ai-name">Carlos Oliveira</div>
+          <div class="ai-role">✓ Consultor Especialista</div>
+          <div class="ai-stars">★★★★★ <span style="color:var(--text-3); margin-left:4px;">(4.9)</span></div>
+        </div>
+      </div>
+      <div class="ai-stats">
+        <div class="ai-stat-item">
+          <span class="ai-stat-val">+1.2k</span>
+          <span class="ai-stat-label">Atendimentos</span>
+        </div>
+        <div class="ai-stat-item">
+          <span class="ai-stat-val">~2 min</span>
+          <span class="ai-stat-label">Tempo médio</span>
+        </div>
       </div>
     </div>
   `;
   msgsEl.appendChild(card);
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+  
+  // Força o scroll para baixo com um pequeno delay para garantir que o DOM renderizou
+  setTimeout(() => {
+    msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
+  }, 50);
 }
 
 inputEl.onkeypress = (e) => { 
@@ -424,7 +549,6 @@ async function handleResponseFlow() {
   await new Promise(r => setTimeout(r, 1800));
   if (sysObj.spinner) sysObj.spinner.remove();
   
-  // Atualiza o texto e adiciona o check
   sysObj.textSpan.innerHTML = "Consultor localizado ✓";
   sysObj.textSpan.style.color = "var(--green-dk)";
   sysObj.textSpan.style.background = "var(--green-lt)";
@@ -434,12 +558,13 @@ async function handleResponseFlow() {
   await new Promise(r => setTimeout(r, 600));
   showAgentIntro();
 
-  // 3. Typing indicator starts
-  await new Promise(r => setTimeout(r, 1000));
+  // 4. Typing indicator starts
+  await new Promise(r => setTimeout(r, 1200));
   typingRowEl.style.display = 'flex';
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+  // Scroll suave após o "digitando" aparecer
+  msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
 
-  // 4. Agent Response
+  // 5. Agent Response
   await new Promise(r => setTimeout(r, 3000));
   typingRowEl.style.display = 'none';
   addMsg("Olá! Sou o Carlos. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
