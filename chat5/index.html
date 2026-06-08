@@ -518,15 +518,11 @@ function addMsg(text, type) {
   const row = document.createElement('div');
   row.className = `msg-row ${type}`;
   
-  let avatarHtml = '';
-  if (type === 'agent') {
-    avatarHtml = `<img src="${agentAvatar}" class="msg-avatar" alt="Avatar">`;
-  }
-
+  // Removido o avatar das mensagens enviadas conforme solicitado
+  // A foto aparecerá apenas no indicador de digitação (typing-row)
   const readIndicator = type === 'user' ? `<span class="b-read">✓✓</span>` : '';
   
   row.innerHTML = `
-    ${avatarHtml}
     <div class="bubble ${type === 'user' ? 'u' : 'a'}">
       ${text}
       <div class="b-meta">
