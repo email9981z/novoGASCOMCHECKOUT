@@ -3,491 +3,598 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Diskgas — Atendimento Profissional</title>
+<title>Diskgas — Atendimento Premium</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  /* Professional Blue Palette */
-  --brand:      #0F5BA8;
-  --brand-dk:   #0A3F7A;
-  --brand-lt:   #E8F2FF;
-  --brand-mid:  #1B7FD8;
-  --brand-accent: #2B8FE8;
-
-  --bg:         #F5F7FA;
-  --surface:    #FFFFFF;
-  --surface-2:  #F8FAFB;
-  --surface-3:  #F0F3F7;
-
-  --text:       #0F1419;
-  --text-2:     #4A5568;
-  --text-3:     #8A92A2;
-
-  --border:     #D5DDE5;
-  --border-2:   #E5EAEF;
-
-  --bubble-a:   #FFFFFF;
-  --bubble-u:   #E8F2FF;
-
-  --green:      #10B981;
-  --green-dk:   #059669;
-  --green-lt:   #F0FDF4;
-  --green-bd:   rgba(16,185,129,.12);
-
-  --read-clr:   #06B6D4;
-
-  --radius-xs:  6px;
-  --radius-sm:  10px;
-  --radius:     14px;
-  --radius-lg:  20px;
-  --radius-xl:  28px;
-
-  --sh-xs: 0 1px 2px rgba(15,20,25,.04);
-  --sh-sm: 0 2px 6px rgba(15,20,25,.06);
-  --sh-md: 0 4px 12px rgba(15,20,25,.08);
-  --sh-lg: 0 8px 24px rgba(15,20,25,.10);
-
-  --ease:   cubic-bezier(.25,.46,.45,.94);
-  --spring: cubic-bezier(.34,1.56,.64,1);
+:root {
+  /* Cores Profissionais e Sóbrias */
+  --primary: #0052CC;
+  --primary-dark: #0747A6;
+  --primary-light: #DEEBFF;
+  --success: #36B37E;
+  --bg-app: #F4F5F7;
+  --surface: #FFFFFF;
+  --text-main: #172B4D;
+  --text-secondary: #5E6C84;
+  --text-muted: #8993A4;
+  --border: #DFE1E6;
+  
+  /* Sombras e Bordas */
+  --shadow-sm: 0 1px 2px rgba(9, 30, 66, 0.08);
+  --shadow-md: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+  --radius-bubble: 18px;
+  --radius-card: 12px;
 }
 
-html,body{
-  height:100%;width:100%;
-  font-family:'DM Sans',sans-serif;
-  background:#0F1419;
-  display:flex;justify-content:center;align-items:center;
-  overflow:hidden;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.app{
-  width:100%;max-width:430px;height:100dvh;
-  display:flex;flex-direction:column;
-  background:var(--bg);
-  position:relative;overflow:hidden;
-}
-
-/* Subtle professional atmosphere with blue gradient */
-.app::before{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse 100% 28% at 50% 0%, rgba(15,91,168,.04) 0%, transparent 100%),
-    radial-gradient(ellipse 70% 18% at 0% 100%,  rgba(15,91,168,.02) 0%, transparent 100%);
-}
-
-/* ─── Header ─── */
-.header{
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
-  padding:13px 14px;
-  display:flex;align-items:center;gap:11px;
-  position:relative;z-index:10;
-  box-shadow: 0 2px 8px rgba(15,91,168,.12), 0 1px 0 rgba(0,0,0,.05);
-}
-.header::after{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 55%);
-}
-
-.back-btn{
-  width:34px;height:34px;border-radius:9px;
-  background:rgba(255,255,255,.16);border:none;cursor:pointer;
-  color:rgba(255,255,255,.96);font-size:17px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  transition:background .18s ease;
-}
-.back-btn:hover{
-  background:rgba(255,255,255,.24);
-}
-
-.h-agent{display:flex;align-items:center;gap:11px;flex:1;min-width:0;}
-
-.h-avatar{position:relative;}
-.h-avatar-img{
-  width:40px;height:40px;border-radius:50%;
-  object-fit:cover;
-  border:2px solid rgba(255,255,255,.5);
-  box-shadow:0 0 0 2px rgba(255,255,255,.15);
-}
-.h-status-dot{
-  position:absolute;bottom:1px;right:1px;
-  width:11px;height:11px;border-radius:50%;
-  background:var(--green);
-  border:2px solid var(--brand);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.3);
-}
-
-.h-info{flex:1;min-width:0;}
-.h-name{font-size:14.5px;font-weight:600;color:#fff;letter-spacing:.2px;}
-.h-sub{
-  font-size:11.5px;color:rgba(255,255,255,.78);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  margin-top:1px;font-weight:400;
-}
-
-/* ─── Messages ─── */
-.msgs{
-  flex:1;overflow-y:auto;overflow-x:hidden;
-  padding:16px 14px 12px;
-  display:flex;flex-direction:column;gap:12px;
-  position:relative;z-index:1;
-  scroll-behavior:smooth;
-  height: 100%;
-}
-
-.sys-msg{text-align:center;margin:10px 0;animation:fadeIn .4s var(--ease);}
-.sys-msg span{
-  font-size:11.5px;color:var(--text-2);
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(15,91,168,.08);
-  border-radius:10px;
-  padding:6px 16px;
-  box-shadow:var(--sh-xs);
-  font-weight:500;letter-spacing:.2px;
-}
-
-/* Spinner Style */
-.spinner-container {
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #091E42;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  margin: 5px 0 15px;
-  animation: fadeIn 0.3s ease;
+  align-items: center;
+  color: var(--text-main);
 }
-.loading-spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(15,91,168, 0.12);
-  border-top: 2px solid var(--brand);
+
+.app-container {
+  width: 100%;
+  max-width: 450px;
+  height: 100dvh;
+  background: var(--bg-app);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+/* Header Refinado */
+.header {
+  background: var(--surface);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.header-avatar {
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.header-avatar img {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  object-fit: cover;
+  border: 2px solid var(--primary-light);
 }
+
+.status-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  background: var(--success);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+}
+
+.header-info {
+  flex: 1;
+}
+
+.header-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.verified-icon {
+  color: var(--primary);
+  display: flex;
+}
+
+.header-status {
+  font-size: 12px;
+  color: var(--success);
+  font-weight: 500;
+}
+
+/* Área de Mensagens */
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+
+/* Estilo dos Balões de Mensagem */
+.msg-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  animation: slideUp 0.3s ease-out;
+}
+
+.msg-group.user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.msg-group.agent {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.bubble {
+  padding: 12px 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.msg-group.agent .bubble {
+  background: var(--surface);
+  color: var(--text-main);
+  border-radius: 4px 18px 18px 18px;
+  border: 1px solid var(--border);
+}
+
+.msg-group.user .bubble {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-radius: 18px 18px 4px 18px;
+}
+
+.msg-meta {
+  font-size: 11px;
+  margin-top: 4px;
+  color: var(--text-muted);
+}
+
+/* Mensagem de Sistema Profissional */
+.system-msg {
+  align-self: center;
+  background: rgba(9, 30, 66, 0.04);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin: 8px 0;
+  text-align: center;
+}
+
+/* Cartão do Consultor (Premium) */
+.consultant-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  margin: 10px 0;
+  width: 100%;
+  animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-header {
+  background: var(--primary-light);
+  padding: 10px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-body {
+  padding: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.card-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-info h4 {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.card-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.card-stats {
+  display: flex;
+  border-top: 1px solid var(--border);
+  background: #FAFBFC;
+}
+
+.stat-item {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+
+.stat-item:last-child { border-right: none; }
+
+.stat-value {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--primary);
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Input de Mensagem Estilo iOS/WhatsApp Business */
+.footer {
+  background: var(--surface);
+  padding: 12px 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.input-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  background: #F4F5F7;
+  border-radius: 24px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.input-container:focus-within {
+  background: #FFF;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.chat-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  max-height: 100px;
+  overflow-y: auto;
+  resize: none;
+}
+
+.send-button {
+  background: var(--primary);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+
+.send-button:hover {
+  background: var(--primary-dark);
+  transform: scale(1.05);
+}
+
+.send-button:active {
+  transform: scale(0.95);
+}
+
+/* Indicador de Digitação Humano */
+.typing-indicator {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-radius: 4px 18px 18px 18px;
+  width: fit-content;
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-6px); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Spinner Moderno */
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--primary-light);
+  border-top: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-.msg-row{
-  display:flex;gap:8px;align-items:flex-end;
-  max-width:88%;margin-bottom:2px;
-  animation:msgIn .32s var(--ease);
+/* Esconder barra de rolagem mas manter funcionalidade */
+.chat-area::-webkit-scrollbar {
+  width: 4px;
 }
-.msg-row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
-.msg-row.agent{align-self:flex-start;}
-
-.msg-avatar{
-  width:28px;height:28px;border-radius:50%;
-  object-fit:cover;flex-shrink:0;
-  margin-bottom:2px;
-  box-shadow: var(--sh-xs);
-  border: 1px solid rgba(15,91,168,.1);
+.chat-area::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-@keyframes msgIn{
-  from{opacity:0;transform:translateY(7px) scale(.97);}
-  to{opacity:1;transform:translateY(0) scale(1);}
-}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-
-.bubble{
-  padding:10px 13px 8px;
-  border-radius:var(--radius);
-  font-size:14px;line-height:1.6;
-  position:relative;
-}
-.bubble.a{
-  background:var(--bubble-a);
-  color:var(--text);
-  border-radius:4px var(--radius) var(--radius) var(--radius);
-  box-shadow:var(--sh-sm);
-  border: 1px solid var(--border-2);
-}
-.bubble.u{
-  background:var(--bubble-u);
-  color:var(--text);
-  border-radius:var(--radius) 4px var(--radius) var(--radius);
-  box-shadow:var(--sh-sm);
-  border: 1px solid rgba(27,127,216,.15);
-}
-
-.b-meta{
-  display:flex;align-items:center;justify-content:flex-end;
-  gap:3px;margin-top:2px;
-  float:right;margin-left:10px;
-}
-.b-time{font-size:10.5px;color:rgba(15,20,25,.35);}
-
-/* ─── Credibility Badges ─── */
-.h-badges{
-  display:flex;gap:6px;align-items:center;margin-top:3px;}
-.h-badge{
-  display:flex;align-items:center;gap:2px;
-  font-size:9px;font-weight:600;color:rgba(255,255,255,.85);
-  background:rgba(255,255,255,.12);
-  padding:3px 8px;border-radius:12px;
-  border:1px solid rgba(255,255,255,.15);
-  backdrop-filter:blur(4px);
-}
-.h-badge svg{
-  width:10px;height:10px;flex-shrink:0;}
-.h-rating{
-  color:rgba(255,255,255,.95);font-weight:700;}
-
-@keyframes cardSlideIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-/* ─── Typing ─── */
-.typing-row{
-  display:none;align-items:flex-end;gap:8px;
-  align-self:flex-start;animation:fadeIn .2s ease;
-}
-.typing-bubble{
-  background:var(--bubble-a);
-  border-radius:4px var(--radius) var(--radius) var(--radius);
-  padding:12px 16px;
-  box-shadow:var(--sh-sm);
-  display:flex;gap:5px;
-  border: 1px solid var(--border-2);
-}
-.typing-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(15,20,25,.18);
-  animation:typePulse 1.4s ease-in-out infinite;
-}
-.typing-dot:nth-child(2){animation-delay:.18s;}
-.typing-dot:nth-child(3){animation-delay:.36s;}
-@keyframes typePulse{
-  0%,60%,100%{transform:translateY(0);opacity:.35;}
-  30%{transform:translateY(-4px);opacity:1;}
-}
-
-/* ─── Footer ─── */
-.footer{
-  background:var(--surface-2);
-  border-top:1px solid var(--border-2);
-  padding:11px 12px 15px;
-}
-.input-row{display:flex;gap:8px;align-items:flex-end;}
-.input-wrap{
-  flex:1;display:flex;align-items:center;gap:8px;
-  background:var(--surface);
-  border-radius:26px;
-  padding:10px 15px;
-  border:1.5px solid var(--border);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.input-wrap:focus-within{
-  border-color: var(--brand-mid);
-  box-shadow: 0 0 0 3px rgba(27,127,216,.08);
-}
-.msg-input{
-  flex:1;border:none;outline:none;
-  font-size:14.5px;font-family:'DM Sans',sans-serif;
-  background:transparent;
-  color: var(--text);
-}
-.msg-input::placeholder{
-  color: var(--text-3);
-}
-.send-btn{
-  width:46px;height:46px;border-radius:50%;
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
-  color:#fff; border:none;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  transition: transform 0.2s var(--spring), box-shadow 0.2s ease;
-  box-shadow: 0 2px 8px rgba(15,91,168,.16);
-  flex-shrink: 0;
-}
-.send-btn:hover{
-  box-shadow: 0 4px 12px rgba(15,91,168,.24);
-}
-.send-btn:active{
-  transform: scale(0.92);
-  box-shadow: 0 1px 4px rgba(15,91,168,.12);
+.chat-area::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
 }
 </style>
 </head>
 <body>
-<div class="app">
+
+<div class="app-container">
   <header class="header">
-    <button class="back-btn">←</button>
-    <div class="h-agent">
-      <div class="h-avatar">
-        <img src="https://i.pravatar.cc/100?u=diskgas" class="h-avatar-img" alt="Avatar">
-        <div class="h-status-dot"></div>
+    <div class="header-avatar">
+      <img src="https://i.pravatar.cc/150?u=carlos-diskgas" alt="Carlos">
+      <div class="status-indicator"></div>
+    </div>
+    <div class="header-info">
+      <div class="header-name">
+        Carlos Oliveira
+        <span class="verified-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </span>
       </div>
-      <div class="h-info">
-        <div class="h-name">Carlos Oliveira</div>
-        <div class="h-sub">Online agora • Especialista em Atendimento</div>
-        <div class="h-badges">
-          <div class="h-badge">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <span class="h-rating">4.9/5</span>
-          </div>
-          <div class="h-badge">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            Verificado
-          </div>
-          <div class="h-badge">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
-            1.2k+ vendas
-          </div>
-        </div>
-      </div>
+      <div class="header-status">Online agora</div>
     </div>
   </header>
 
-  <div class="msgs" id="msgs">
-    <!-- Messages will appear here -->
-  </div>
+  <main class="chat-area" id="chatArea">
+    <!-- Mensagens serão inseridas aqui -->
+  </main>
 
-  <div class="typing-row" id="typingRow" style="padding: 0 14px 10px;">
-    <img src="https://i.pravatar.cc/100?u=carlos" class="msg-avatar" alt="Avatar">
-    <div class="typing-bubble">
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-    </div>
+  <div id="typingIndicator" class="typing-indicator" style="margin-left: 20px;">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
   </div>
 
   <footer class="footer">
-    <div class="input-row">
-      <div class="input-wrap">
-        <input type="text" class="msg-input" id="msgInput" placeholder="Escreva sua mensagem...">
-      </div>
-      <button class="send-btn" id="sendBtn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    <div class="input-container">
+      <textarea class="chat-input" id="chatInput" placeholder="Digite sua mensagem..." rows="1"></textarea>
+      <button class="send-button" id="sendBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
   </footer>
 </div>
 
 <script>
-const msgsEl = document.getElementById('msgs');
-const inputEl = document.getElementById('msgInput');
-const sendBtnEl = document.getElementById('sendBtn');
-const typingRowEl = document.getElementById('typingRow');
+const chatArea = document.getElementById('chatArea');
+const chatInput = document.getElementById('chatInput');
+const sendBtn = document.getElementById('sendBtn');
+const typingIndicator = document.getElementById('typingIndicator');
 
-const agentAvatar = "https://i.pravatar.cc/100?u=carlos";
-const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+let isFirstContact = true;
+const agentName = "Carlos Oliveira";
+const agentAvatar = "https://i.pravatar.cc/150?u=carlos-diskgas";
 
-// Helper to scroll to bottom with smooth behavior and extra safety
-function scrollToBottom() {
-  // Use a small timeout to ensure the DOM has rendered the new height
-  setTimeout(() => {
-    msgsEl.scrollTop = msgsEl.scrollHeight;
-  }, 100);
+// Ajuste automático da altura do textarea
+chatInput.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
+});
+
+function getTime() {
+  return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 }
 
-function addMsg(text, type) {
-  const row = document.createElement('div');
-  row.className = `msg-row ${type}`;
-  
-  let avatarHtml = '';
-  if (type === 'agent') {
-    avatarHtml = `<img src="${agentAvatar}" class="msg-avatar" alt="Avatar">`;
-  }
+function scrollToBottom() {
+  setTimeout(() => {
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }, 50);
+}
 
-  row.innerHTML = `
-    ${avatarHtml}
-    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
+function addMessage(text, side) {
+  const group = document.createElement('div');
+  group.className = `msg-group ${side}`;
+  
+  group.innerHTML = `
+    <div class="bubble">
       ${text}
-      <div class="b-meta"><span class="b-time">${now()}</span></div>
+    </div>
+    <div class="msg-meta">${getTime()}</div>
+  `;
+  
+  chatArea.appendChild(group);
+  scrollToBottom();
+}
+
+function addSystemMessage(text, withLoader = false) {
+  const div = document.createElement('div');
+  div.className = 'system-msg';
+  div.innerHTML = `${withLoader ? '<span class="loader"></span>' : ''}${text}`;
+  chatArea.appendChild(div);
+  scrollToBottom();
+  return div;
+}
+
+function showConsultantCard() {
+  const card = document.createElement('div');
+  card.className = 'consultant-card';
+  card.innerHTML = `
+    <div class="card-header">
+      <span>Consultor Especialista</span>
+      <span>ID: #8824</span>
+    </div>
+    <div class="card-body">
+      <img src="${agentAvatar}" class="card-img" alt="Carlos">
+      <div class="card-info">
+        <h4>Carlos Oliveira</h4>
+        <p>Especialista em Atendimento Diskgas</p>
+      </div>
+    </div>
+    <div class="card-stats">
+      <div class="stat-item">
+        <span class="stat-value">4.9</span>
+        <span class="stat-label">Avaliação</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">1.5k</span>
+        <span class="stat-label">Atendimentos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">5 min</span>
+        <span class="stat-label">Tempo médio</span>
+      </div>
     </div>
   `;
-  msgsEl.appendChild(row);
+  chatArea.appendChild(card);
   scrollToBottom();
 }
-
-function addSystemMsg(text, showSpinner = false) {
-  const div = document.createElement('div');
-  div.className = 'sys-msg';
-  const span = document.createElement('span');
-  span.innerHTML = text;
-  div.appendChild(span);
-  msgsEl.appendChild(div);
-  
-  let spinner = null;
-  if (showSpinner) {
-    spinner = document.createElement('div');
-    spinner.className = 'spinner-container';
-    spinner.innerHTML = '<div class="loading-spinner"></div>';
-    msgsEl.appendChild(spinner);
-  }
-  
-  scrollToBottom();
-  return { container: div, textSpan: span, spinner: spinner };
-}
-
-function showAgentIntro() {
-  // Agent intro card removed - credibility now shown in header
-}
-
-inputEl.onkeypress = (e) => { 
-  if(e.key === 'Enter') {
-    const text = inputEl.value;
-    if(!text) return;
-    inputEl.value = '';
-    addMsg(text, 'user');
-    handleResponseFlow();
-  }
-};
-
-// Auto-start with automatic user message
-window.onload = async () => {
-  addSystemMsg("Conexão segura estabelecida");
-  await new Promise(r => setTimeout(r, 1000));
-  
-  // Simula a primeira mensagem automática do usuário
-  const defaultMsg = "Olá! Gostaria de saber mais sobre os produtos.";
-  addMsg(defaultMsg, 'user');
-  
-  // Dispara o fluxo de resposta
-  handleResponseFlow();
-};
 
 async function handleResponseFlow() {
-  // 1. GAP FILLER: System Message with Spinner
-  await new Promise(r => setTimeout(r, 800));
-  const sysObj = addSystemMsg("Buscando o melhor consultor para você...", true);
+  if (isFirstContact) {
+    await new Promise(r => setTimeout(r, 1000));
+    const searchingMsg = addSystemMessage("Localizando consultor disponível...", true);
+    
+    await new Promise(r => setTimeout(r, 2000));
+    searchingMsg.innerHTML = "Conectado com Carlos Oliveira ✓";
+    searchingMsg.style.color = "var(--success)";
+    
+    await new Promise(r => setTimeout(r, 800));
+    showConsultantCard();
+    
+    isFirstContact = false;
+  }
 
-  // 2. Wait and update to "Located" with Check
-  await new Promise(r => setTimeout(r, 1800));
-  if (sysObj.spinner) sysObj.spinner.remove();
-  
-  // Atualiza o texto e adiciona o check
-  sysObj.textSpan.innerHTML = "Consultor Carlos conectado ✓";
-  sysObj.textSpan.style.color = "var(--green-dk)";
-  sysObj.textSpan.style.background = "var(--green-lt)";
-  sysObj.textSpan.style.borderColor = "var(--green-bd)";
-
-  // 3. GAP FILLER: Delay before typing
-  await new Promise(r => setTimeout(r, 600));
-
-  // 3. Typing indicator starts
+  // Simulação de "Pensando/Digitando"
   await new Promise(r => setTimeout(r, 1200));
-  typingRowEl.style.display = 'flex';
+  typingIndicator.style.display = 'flex';
   scrollToBottom();
 
-  // 4. Agent Response
-  await new Promise(r => setTimeout(r, 2500));
-  typingRowEl.style.display = 'none';
-  addMsg("Olá! Sou o Carlos. É um prazer te atender. Vi que você tem interesse em nossos produtos. Como posso te ajudar agora?", 'agent');
+  // Tempo de resposta variável para parecer humano
+  const responseTime = 2000 + Math.random() * 2000;
+  await new Promise(r => setTimeout(r, responseTime));
+  
+  typingIndicator.style.display = 'none';
+  
+  const agentMessages = chatArea.querySelectorAll('.msg-group.agent').length;
+  
+  const responses = [
+    "Com certeza, posso te ajudar com isso. Só um instante enquanto consulto o sistema...",
+    "Entendi perfeitamente. Você teria preferência por algum modelo específico ou quer que eu te apresente as opções mais vendidas?",
+    "Excelente pergunta! Na Diskgas priorizamos a segurança, então todos os nossos produtos seguem rigorosamente as normas da ABNT.",
+    "Estou verificando aqui as condições especiais para a sua região. Só um segundo...",
+    "Claro! Além disso, temos uma promoção ativa para novos clientes hoje. Gostaria de conhecer?"
+  ];
+
+  if (agentMessages === 0) {
+    addMessage("Olá! Sou o Carlos Oliveira. Vi que você tem interesse em nossos serviços. É um prazer te atender!", "agent");
+    await new Promise(r => setTimeout(r, 1500));
+    typingIndicator.style.display = 'flex';
+    scrollToBottom();
+    await new Promise(r => setTimeout(r, 2000));
+    typingIndicator.style.display = 'none';
+    addMessage("Como posso te ajudar especificamente hoje? Algum produto ou dúvida técnica?", "agent");
+  } else {
+    // Seleciona uma resposta aleatória para parecer menos robótico
+    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    addMessage(randomResponse, "agent");
+  }
 }
 
-// Update sendBtn to use the new flow logic
-sendBtnEl.onclick = async () => {
-  const text = inputEl.value;
-  if(!text) return;
-  inputEl.value = '';
-  addMsg(text, 'user');
+function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  
+  chatInput.value = '';
+  chatInput.style.height = 'auto';
+  
+  addMessage(text, 'user');
+  handleResponseFlow();
+}
+
+sendBtn.onclick = sendMessage;
+chatInput.onkeypress = (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+};
+
+// Início automático
+window.onload = async () => {
+  addSystemMessage("Criptografia de ponta a ponta ativa");
+  await new Promise(r => setTimeout(r, 1200));
+  
+  const initialMsg = "Olá! Gostaria de saber mais sobre os serviços da Diskgas.";
+  addMessage(initialMsg, 'user');
   handleResponseFlow();
 };
 </script>
+
 </body>
 </html>
