@@ -358,28 +358,58 @@ html,body{
 .b-receipt.delivered{color:rgba(0,0,0,0.4);}
 .b-receipt.read{color:var(--read-clr);font-weight:600;}
 
+/* Agent Card */
 .agent-intro{
   background:var(--surface);border-radius:var(--radius);
-  padding:18px;display:none;
-  animation:fadeIn 0.4s var(--transition);
-  margin:10px 0 10px 40px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  border-left:4px solid var(--brand);
+  padding:16px;display:none;
+  animation:cardSlideIn 0.4s var(--transition);
+  margin:12px 0 12px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  border:1px solid var(--border);
+  align-self:center;width:calc(100% - 24px);max-width:320px;
 }
-.ai-top{display:flex;gap:12px;align-items:center;margin-bottom:14px;}
-.ai-img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2.5px solid var(--brand-lt);}
-.ai-name{font-size:15px;font-weight:600;color:var(--text);letter-spacing:0.3px;}
+
+@keyframes cardSlideIn{
+  from{opacity:0;transform:translateY(12px) scale(0.98);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.ai-top{display:flex;gap:14px;align-items:center;margin-bottom:14px;}
+.ai-img{
+  width:56px;height:56px;border-radius:50%;object-fit:cover;
+  border:2.5px solid var(--brand-lt);
+  flex-shrink:0;
+}
+.ai-info{flex:1;}
+.ai-name{font-size:15px;font-weight:700;color:var(--text);letter-spacing:0.3px;margin-bottom:3px;}
+.ai-role{font-size:12px;color:var(--text-secondary);font-weight:500;margin-bottom:6px;}
 .ai-tag{
   font-size:10px;font-weight:600;color:var(--green-dk);
-  background:var(--green-lt);padding:3px 10px;border-radius:20px;
-  display:inline-flex;align-items:center;gap:4px;margin-top:4px;
+  background:var(--green-lt);padding:4px 10px;border-radius:20px;
+  display:inline-flex;align-items:center;gap:4px;
   letter-spacing:0.3px;
 }
-.ai-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.ai-stat{background:var(--bg);border-radius:var(--radius-sm);padding:10px 8px;text-align:center;transition:all 0.2s ease;}
-.ai-stat:hover{background:var(--brand-lt);transform:translateY(-2px);}
-.ai-stat-val{font-size:15px;font-weight:700;color:var(--brand);}
-.ai-stat-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.05em;font-weight:500;}
+
+.ai-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  padding-top:14px;border-top:1px solid var(--border);
+}
+
+.ai-stat{
+  text-align:center;
+  padding:8px 0;
+}
+
+.ai-stat-val{
+  font-size:16px;font-weight:700;color:var(--brand);
+  display:block;margin-bottom:2px;
+}
+
+.ai-stat-lbl{
+  font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.05em;
+  font-weight:600;
+}
 
 .order-card{
   background:var(--surface);border-radius:var(--radius);
@@ -602,6 +632,7 @@ html,body{
   .loading-logo{width:70px;height:70px;font-size:35px;}
   .loading-title{font-size:16px;}
   .loading-subtitle{font-size:12px;}
+  .agent-intro{width:calc(100% - 16px);}
 }
 
 /* Accessibility improvements */
@@ -848,6 +879,37 @@ function addSysMsg(text) {
   scrollToBottom(true);
 }
 
+function addAgentCard() {
+  const card = document.createElement('div');
+  card.className = 'agent-intro';
+  card.innerHTML = `
+    <div class="ai-top">
+      <img src="${AGENT_IMG}" class="ai-img" alt="Foto do agente">
+      <div class="ai-info">
+        <div class="ai-name">Carlos Silva</div>
+        <div class="ai-role">Especialista em Gás</div>
+        <div class="ai-tag">⭐ Recomendado</div>
+      </div>
+    </div>
+    <div class="ai-stats">
+      <div class="ai-stat">
+        <span class="ai-stat-val">4.9</span>
+        <span class="ai-stat-lbl">Avaliação</span>
+      </div>
+      <div class="ai-stat">
+        <span class="ai-stat-val">1.2k</span>
+        <span class="ai-stat-lbl">Atendimentos</span>
+      </div>
+      <div class="ai-stat">
+        <span class="ai-stat-val">98%</span>
+        <span class="ai-stat-lbl">Satisfação</span>
+      </div>
+    </div>
+  `;
+  msgsEl.insertBefore(card, typingRowEl);
+  scrollToBottom(true);
+}
+
 async function showTyping(ms) {
   lastSender = null;
   typingRowEl.style.display = 'flex';
@@ -906,37 +968,30 @@ async function animateLoadingScreen() {
   ];
 
   for (const item of steps) {
-    // Marca step anterior como completo
     if (item.step > 1) {
       const prevStep = document.getElementById(`step${item.step - 1}`);
       prevStep.classList.remove('active');
       prevStep.classList.add('completed');
     }
     
-    // Ativa step atual
     const currentStep = document.getElementById(`step${item.step}`);
     currentStep.classList.add('active');
     
-    // Anima barra de progresso
     progressFill.style.width = item.progress + '%';
     progressPercent.textContent = item.progress + '%';
     
     await sleep(item.duration);
   }
 
-  // Marca último step como completo
   document.getElementById('step3').classList.remove('active');
   document.getElementById('step3').classList.add('completed');
   
-  // Aguarda um pouco antes de fechar a tela de loading
   await sleep(600);
 }
 
 async function startFlow() {
-  // Anima a tela de loading
   await animateLoadingScreen();
   
-  // Esconde a tela de loading com transição suave
   await sleep(300);
   loadingOverlay.classList.add('hidden');
   
@@ -948,9 +1003,11 @@ async function startFlow() {
   addSysMsg('✓ Carlos entrou');
 
   await sleep(500);
-  scrollToBottom(true);
-  await sleep(600);
-
+  
+  // Adiciona o card de identificação do agente
+  addAgentCard();
+  
+  await sleep(800);
   addMsg('opa, vc tem gás aí?', 'user');
   enableInput();
   await sleep(400);
