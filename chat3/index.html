@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Diskgas — Atendimento</title>
+<title>Diskgas — Atendimento Melhorado</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -75,117 +75,6 @@ html,body{
     radial-gradient(ellipse 70% 18% at 0% 100%,  rgba(232,72,12,.03) 0%, transparent 100%);
 }
 
-/* ─── Loading overlay ─── */
-.loading-overlay{
-  position:absolute;inset:0;z-index:100;
-  background:linear-gradient(160deg,#FEFCFA 0%,#F5EFE8 100%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  opacity:1;transition:opacity .55s var(--ease);
-  pointer-events:auto;
-}
-.loading-overlay.hidden{opacity:0;pointer-events:none;}
-
-.loading-content{
-  display:flex;flex-direction:column;align-items:center;gap:26px;
-  width:100%;padding:36px 28px;
-}
-
-.loading-logo{
-  width:82px;height:82px;border-radius:50%;
-  background:var(--brand);
-  display:flex;align-items:center;justify-content:center;
-  font-size:40px;font-weight:700;color:#fff;
-  letter-spacing:-1px;
-  box-shadow:
-    0 0 0 10px rgba(232,72,12,.08),
-    0 0 0 22px rgba(232,72,12,.04),
-    0 14px 36px rgba(232,72,12,.22);
-  animation:logoFloat 3.5s ease-in-out infinite;
-}
-@keyframes logoFloat{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-11px);}
-}
-
-.loading-text{text-align:center;}
-.loading-title{
-  font-size:18px;font-weight:700;color:var(--text);
-  margin-bottom:6px;letter-spacing:-.3px;
-}
-.loading-subtitle{font-size:13px;color:var(--text-2);line-height:1.6;}
-
-.loading-steps{
-  width:100%;max-width:290px;
-  display:flex;flex-direction:column;
-  position:relative;gap:0;
-}
-/* Connecting line */
-.loading-steps::before{
-  content:'';
-  position:absolute;
-  left:19px;top:28px;bottom:28px;
-  width:2px;
-  background:linear-gradient(to bottom,var(--border) 0%,var(--border-2) 100%);
-  border-radius:1px;z-index:0;
-}
-
-.step-item{
-  display:flex;align-items:center;gap:14px;
-  padding:11px 14px 11px 10px;
-  border-radius:var(--radius);
-  background:transparent;
-  transition:all .4s var(--ease);
-  opacity:.4;position:relative;z-index:1;
-}
-.step-item.active{
-  opacity:1;
-  background:rgba(232,72,12,.055);
-}
-.step-item.completed{opacity:.7;}
-
-.step-icon{
-  width:22px;height:22px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;
-  flex-shrink:0;
-  background:var(--border);color:var(--text-3);
-  border:2px solid #fff;
-  box-shadow:var(--sh-xs);
-  transition:all .4s var(--ease);
-}
-.step-item.active .step-icon{
-  background:var(--brand);color:#fff;
-  border-color:transparent;
-  animation:stepPulse 2s ease-in-out infinite;
-}
-.step-item.completed .step-icon{background:var(--green);color:#fff;border-color:transparent;}
-
-@keyframes stepPulse{
-  0%,100%{box-shadow:0 0 0 4px rgba(232,72,12,.12);}
-  50%{box-shadow:0 0 0 8px rgba(232,72,12,.05);}
-}
-
-.step-text{display:flex;flex-direction:column;gap:1px;flex:1;}
-.step-label{font-size:12.5px;font-weight:600;color:var(--text);letter-spacing:.1px;}
-.step-description{font-size:11px;color:var(--text-3);}
-.step-item.active .step-label{color:var(--brand);}
-.step-item.active .step-description{color:rgba(232,72,12,.55);}
-
-.loading-progress{width:100%;max-width:290px;display:flex;flex-direction:column;gap:9px;}
-.progress-bar{
-  width:100%;height:3px;
-  background:var(--border-2);border-radius:2px;overflow:hidden;
-}
-.progress-fill{
-  height:100%;background:var(--brand);width:0%;
-  transition:width .8s cubic-bezier(.4,0,.2,1);
-  border-radius:2px;
-  box-shadow:0 0 10px rgba(232,72,12,.35);
-}
-.progress-text{display:flex;justify-content:space-between;align-items:center;}
-.progress-label{font-size:11px;color:var(--text-3);font-weight:500;letter-spacing:.3px;}
-.progress-percent{font-size:11.5px;font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums;}
-
 /* ─── Header ─── */
 .header{
   background:var(--brand);
@@ -194,7 +83,6 @@ html,body{
   position:relative;z-index:10;
   box-shadow:0 1px 0 rgba(0,0,0,.1), 0 3px 14px rgba(0,0,0,.14);
 }
-/* subtle inner glow */
 .header::after{
   content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 55%);
@@ -208,26 +96,21 @@ html,body{
   flex-shrink:0;
   transition:background .18s ease;
 }
-.back-btn:hover{background:rgba(255,255,255,.22);}
 
 .h-agent{display:flex;align-items:center;gap:11px;flex:1;min-width:0;}
 
-.h-avatar{position:relative;cursor:pointer;}
+.h-avatar{position:relative;}
 .h-avatar-img{
   width:40px;height:40px;border-radius:50%;
   object-fit:cover;
   border:2px solid rgba(255,255,255,.45);
   box-shadow:0 0 0 2px rgba(255,255,255,.12);
-  transition:filter .4s ease, opacity .4s ease;
-  filter:grayscale(1);opacity:.55;
 }
-.h-avatar-img.live{filter:none;opacity:1;}
 .h-status-dot{
   position:absolute;bottom:1px;right:1px;
   width:11px;height:11px;border-radius:50%;
   background:var(--green);
   border:2px solid var(--brand);
-  opacity:0;transition:opacity .4s ease;
 }
 
 .h-info{flex:1;min-width:0;}
@@ -236,41 +119,15 @@ html,body{
   font-size:11.5px;color:rgba(255,255,255,.72);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   margin-top:1px;font-weight:400;
-  transition:color .2s ease;
 }
-
-.h-actions{display:flex;gap:3px;flex-shrink:0;}
-.h-action{
-  width:34px;height:34px;border-radius:9px;
-  background:rgba(255,255,255,.14);border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.9);font-size:17px;
-  transition:background .18s ease;
-}
-.h-action:hover{background:rgba(255,255,255,.22);}
 
 /* ─── Messages ─── */
 .msgs{
   flex:1;overflow-y:auto;overflow-x:hidden;
   padding:16px 14px 12px;
-  display:flex;flex-direction:column;gap:3px;
+  display:flex;flex-direction:column;gap:8px;
   position:relative;z-index:1;
   scroll-behavior:smooth;
-}
-.msgs::-webkit-scrollbar{width:3px;}
-.msgs::-webkit-scrollbar-track{background:transparent;}
-.msgs::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:2px;}
-
-.date-sep{text-align:center;margin:14px 0;}
-.date-sep span{
-  font-size:11px;font-weight:500;color:var(--text-3);
-  background:rgba(255,255,255,.68);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(0,0,0,.05);
-  border-radius:20px;
-  padding:4px 14px;
-  box-shadow:var(--sh-xs);
-  letter-spacing:.3px;
 }
 
 .sys-msg{text-align:center;margin:10px 0;animation:fadeIn .4s var(--ease);}
@@ -292,7 +149,6 @@ html,body{
 }
 .msg-row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
 .msg-row.agent{align-self:flex-start;}
-.msg-row.grouped{margin-bottom:1px;}
 
 @keyframes msgIn{
   from{opacity:0;transform:translateY(7px) scale(.97);}
@@ -300,73 +156,33 @@ html,body{
 }
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-.msg-av{
-  width:28px;height:28px;border-radius:50%;
-  object-fit:cover;flex-shrink:0;align-self:flex-end;
-  border:1.5px solid rgba(0,0,0,.06);
-  box-shadow:var(--sh-xs);
-}
-.msg-av-spacer{width:28px;flex-shrink:0;}
-
 .bubble{
   padding:10px 13px 8px;
   border-radius:var(--radius);
   font-size:14px;line-height:1.65;
-  max-width:100%;word-break:break-word;
   position:relative;
-  transition:box-shadow .2s ease;
 }
 .bubble.a{
   background:var(--bubble-a);
   color:var(--text);
   border-radius:4px var(--radius) var(--radius) var(--radius);
-  box-shadow:
-    0 1px 2px rgba(0,0,0,.04),
-    0 3px 10px rgba(0,0,0,.07),
-    inset 0 0 0 .8px rgba(0,0,0,.045);
+  box-shadow:var(--sh-sm);
 }
 .bubble.u{
   background:var(--bubble-u);
   color:var(--text);
   border-radius:var(--radius) 4px var(--radius) var(--radius);
-  box-shadow:
-    0 1px 2px rgba(0,0,0,.04),
-    0 3px 10px rgba(0,0,0,.07);
+  box-shadow:var(--sh-sm);
 }
-.bubble:hover{
-  box-shadow:
-    0 2px 4px rgba(0,0,0,.06),
-    0 5px 16px rgba(0,0,0,.09);
-}
-
-.msg-row:not(.grouped) .bubble.a::before{
-  content:'';position:absolute;top:0;left:-5px;
-  border:7px solid transparent;
-  border-bottom-color:var(--bubble-a);
-  border-right-color:var(--bubble-a);
-  border-top:0;border-left:0;
-}
-.msg-row:not(.grouped) .bubble.u::after{
-  content:'';position:absolute;top:0;right:-5px;
-  border:7px solid transparent;
-  border-bottom-color:var(--bubble-u);
-  border-left-color:var(--bubble-u);
-  border-top:0;border-right:0;
-}
-.msg-row.grouped .bubble.a{border-radius:var(--radius);}
-.msg-row.grouped .bubble.u{border-radius:var(--radius);}
 
 .b-meta{
   display:flex;align-items:center;justify-content:flex-end;
   gap:3px;margin-top:2px;
-  float:right;margin-left:10px;transform:translateY(1px);
+  float:right;margin-left:10px;
 }
-.b-time{font-size:10.5px;color:rgba(0,0,0,.32);line-height:1;letter-spacing:.2px;}
-.b-receipt{font-size:11px;line-height:1;color:rgba(0,0,0,.22);transition:color .3s ease;}
-.b-receipt.delivered{color:rgba(0,0,0,.35);}
-.b-receipt.read{color:var(--read-clr);font-weight:600;}
+.b-time{font-size:10.5px;color:rgba(0,0,0,.32);}
 
-/* ─── Agent intro card ─── */
+/* ─── NEW: Agent Intro Card ─── */
 .agent-intro{
   background:var(--surface);
   border-radius:var(--radius-lg);
@@ -376,17 +192,15 @@ html,body{
   border:1px solid rgba(0,0,0,.055);
   width:100%;
   position:relative;z-index:2;
-  flex-shrink:0;
-  animation:cardSlideIn .55s var(--ease);
+  animation:cardSlideIn .55s var(--spring);
 }
-/* Top accent bar */
 .agent-intro::before{
   content:'';position:absolute;top:0;left:0;right:0;
   height:3px;
   background:linear-gradient(90deg, var(--brand) 0%, #FF7848 100%);
 }
 @keyframes cardSlideIn{
-  from{opacity:0;transform:translateY(14px);}
+  from{opacity:0;transform:translateY(20px);}
   to{opacity:1;transform:translateY(0);}
 }
 
@@ -394,212 +208,33 @@ html,body{
   display:flex;gap:14px;align-items:center;
   padding:20px 18px 16px;
 }
-.ai-img-wrapper{position:relative;flex-shrink:0;}
 .ai-img{
   width:58px;height:58px;border-radius:50%;
   object-fit:cover;
   border:2.5px solid #fff;
-  box-shadow:
-    0 2px 12px rgba(0,0,0,.12),
-    0 0 0 3.5px rgba(232,72,12,.14);
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
 }
-.ai-badge-verified{
-  position:absolute;bottom:1px;right:-1px;
-  background:#0B84FF;color:#fff;
-  width:17px;height:17px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:9px;font-weight:700;
-  border:2px solid #fff;
-  box-shadow:var(--sh-xs);
-}
-
 .ai-info{flex:1;}
-.ai-name{
-  font-size:16px;font-weight:700;color:var(--text);
-  letter-spacing:-.3px;margin-bottom:1px;
-}
-.ai-role{
-  font-size:12px;color:var(--text-2);
-  font-weight:400;margin-bottom:7px;
-}
-.ai-stars{
-  display:flex;align-items:center;gap:2px;
-  margin-bottom:8px;
-}
-.ai-star{color:#F59E0B;font-size:12px;line-height:1;}
-.ai-stars-label{
-  font-size:11.5px;color:var(--text-2);font-weight:600;
-  margin-left:4px;
-}
+.ai-name{font-size:16px;font-weight:700;color:var(--text);}
+.ai-role{font-size:12px;color:var(--text-2);margin-bottom:4px;}
 .ai-tag{
   font-size:11px;font-weight:600;
-  color:#0A8040;
-  background:#E8F7EF;
-  border:1px solid rgba(10,128,64,.14);
-  padding:3px 10px;
-  border-radius:20px;
-  display:inline-flex;align-items:center;gap:4px;
-}
-
-.ai-stats{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  border-top:1px solid var(--border-2);
-  overflow:hidden;
-}
-.ai-stat{
-  text-align:center;padding:14px 4px;
-  background:var(--surface-2);
-  border-right:1px solid var(--border-2);
-}
-.ai-stat:last-child{border-right:none;}
-.ai-stat-val{
-  font-size:17px;font-weight:700;color:var(--text);
-  display:block;margin-bottom:3px;letter-spacing:-.3px;
-}
-.ai-stat-lbl{
-  font-size:9.5px;color:var(--text-3);
-  text-transform:uppercase;letter-spacing:.07em;
-  font-weight:600;
-}
-
-/* ─── Order card ─── */
-.order-card{
-  background:var(--surface);border-radius:var(--radius);
-  overflow:hidden;margin-top:10px;
-  box-shadow:var(--sh-md);
-  border:1px solid var(--border-2);
-  animation:fadeIn .4s var(--ease);
-}
-.order-hd{
-  background:var(--brand);
-  padding:12px 16px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.order-hd-title{
-  font-size:10.5px;font-weight:700;color:rgba(255,255,255,.8);
-  letter-spacing:.09em;text-transform:uppercase;
-}
-.order-id{
-  font-size:11.5px;color:#fff;
-  font-family:'DM Mono',monospace;font-weight:500;
-  background:rgba(0,0,0,.14);
-  padding:2px 8px;border-radius:5px;
-  letter-spacing:.04em;
-}
-.order-body{padding:2px 0 0;}
-.order-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:10px 16px;
-  border-bottom:1px solid var(--border-2);
-  gap:10px;
-}
-.order-row:last-child{border-bottom:none;}
-.order-lbl{font-size:12px;color:var(--text-3);white-space:nowrap;font-weight:500;}
-.order-val{font-size:13px;font-weight:600;color:var(--text);text-align:right;}
-.order-total{font-size:18px;font-weight:700;color:var(--brand);}
-.order-ft{padding:4px 14px 14px;}
-.confirm-btn{
-  width:100%;padding:13px;border-radius:var(--radius-sm);
-  background:var(--brand);color:#fff;border:none;
-  font-size:14px;font-weight:700;cursor:pointer;
-  font-family:'DM Sans',sans-serif;
-  display:flex;align-items:center;justify-content:center;gap:7px;
-  transition:all .22s var(--ease);
-  box-shadow:0 4px 16px rgba(232,72,12,.28);
-  letter-spacing:.2px;
-  margin-top:4px;
-}
-.confirm-btn:hover{
-  background:var(--brand-dk);
-  transform:translateY(-2px);
-  box-shadow:0 7px 22px rgba(232,72,12,.34);
-}
-.confirm-btn:active{transform:scale(.97);}
-.confirm-btn.done{
-  background:var(--green-dk);
-  cursor:default;
-  box-shadow:0 4px 14px rgba(13,160,74,.22);
-}
-
-/* ─── Delivery status ─── */
-.delivery-status{
-  background:var(--green-lt);
-  border:1px solid var(--green-bd);
-  border-radius:var(--radius);
-  padding:15px 16px;
-  margin-top:10px;
-}
-.ds-title{
-  font-size:10.5px;font-weight:700;color:var(--green-dk);
-  margin-bottom:14px;
-  display:flex;align-items:center;gap:6px;
-  letter-spacing:.09em;text-transform:uppercase;
-}
-.ds-steps{
-  display:flex;flex-direction:column;
-  position:relative;gap:0;
-}
-/* Vertical line */
-.ds-steps::before{
-  content:'';
-  position:absolute;
-  left:4.5px;top:8px;bottom:8px;
-  width:1.5px;
-  background:linear-gradient(to bottom, var(--green) 55%, rgba(13,160,74,.15) 100%);
-  border-radius:1px;z-index:0;
-}
-.ds-step{
-  display:flex;align-items:center;gap:12px;
-  font-size:13px;color:var(--text-3);font-weight:500;
-  padding:7px 0;
-  position:relative;z-index:1;
-  transition:all .2s ease;
-}
-.ds-step.done{color:var(--green-dk);font-weight:600;}
-.ds-step.active{color:var(--text);font-weight:700;}
-.ds-dot{
-  width:11px;height:11px;border-radius:50%;
-  background:var(--border);
-  border:2.5px solid var(--green-lt);
-  flex-shrink:0;
-  transition:all .3s ease;
-}
-.ds-step.done .ds-dot{
-  background:var(--green);
-  border-color:var(--green-lt);
-  box-shadow:0 0 0 3px rgba(29,199,95,.16);
-}
-.ds-step.active .ds-dot{
-  background:var(--brand);
-  border-color:var(--green-lt);
-  animation:activeDot 2s ease-in-out infinite;
-}
-@keyframes activeDot{
-  0%,100%{box-shadow:0 0 0 3px rgba(232,72,12,.16);}
-  50%{box-shadow:0 0 0 7px rgba(232,72,12,.06);}
+  color:#0A8040; background:#E8F7EF;
+  padding:3px 10px; border-radius:20px;
+  display:inline-flex;align-items:center;
 }
 
 /* ─── Typing ─── */
 .typing-row{
   display:none;align-items:flex-end;gap:7px;
   align-self:flex-start;animation:fadeIn .2s ease;
-  margin:2px 0;
 }
 .typing-bubble{
   background:var(--bubble-a);
   border-radius:4px var(--radius) var(--radius) var(--radius);
   padding:13px 16px;
-  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 3px 10px rgba(0,0,0,.07),
-             inset 0 0 0 .8px rgba(0,0,0,.045);
-  display:flex;gap:5px;align-items:center;
-  position:relative;
-}
-.typing-bubble::before{
-  content:'';position:absolute;top:0;left:-5px;
-  border:7px solid transparent;
-  border-bottom-color:var(--bubble-a);
-  border-right-color:var(--bubble-a);
-  border-top:0;border-left:0;
+  box-shadow:var(--sh-sm);
+  display:flex;gap:5px;
 }
 .typing-dot{
   width:6px;height:6px;border-radius:50%;
@@ -613,677 +248,151 @@ html,body{
   30%{transform:translateY(-4px);opacity:1;}
 }
 
-/* ─── Scroll FAB ─── */
-.scroll-fab{
-  position:absolute;right:14px;bottom:90px;z-index:5;
-  width:46px;height:46px;border-radius:50%;
-  background:var(--surface);
-  border:1px solid var(--border-2);
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--brand);font-size:19px;
-  box-shadow:var(--sh-md);
-  opacity:0;pointer-events:none;
-  transform:translateY(14px) scale(.85);
-  transition:all .32s var(--ease);
-}
-.scroll-fab.show{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}
-.scroll-fab:hover{
-  background:var(--brand-lt);
-  transform:translateY(-2px) scale(1.05);
-}
-.scroll-fab:active{transform:scale(.92);}
-.fab-badge{
-  position:absolute;top:-5px;right:-5px;
-  background:var(--brand);color:#fff;
-  font-size:10px;font-weight:700;
-  min-width:18px;height:18px;border-radius:9px;
-  display:none;align-items:center;justify-content:center;
-  padding:0 4px;
-  box-shadow:0 2px 6px rgba(232,72,12,.3);
-}
-.fab-badge.show{display:flex;}
-
 /* ─── Footer ─── */
 .footer{
   background:var(--surface-2);
   border-top:1px solid var(--border-2);
   padding:11px 12px 15px;
-  position:relative;z-index:5;
 }
-.quick-opts{
-  display:none;gap:6px;overflow-x:auto;
-  padding:0 2px 10px;scrollbar-width:none;
-}
-.quick-opts::-webkit-scrollbar{display:none;}
-.q-chip{
-  white-space:nowrap;
-  background:var(--surface);
-  border:1.5px solid var(--border);
-  color:var(--text);
-  padding:8px 18px;border-radius:24px;
-  font-size:13px;font-weight:600;cursor:pointer;
-  font-family:'DM Sans',sans-serif;flex-shrink:0;
-  transition:all .2s var(--ease);
-  box-shadow:var(--sh-xs);
-  letter-spacing:.1px;
-}
-.q-chip:hover{
-  background:var(--brand-lt);
-  border-color:var(--brand);
-  color:var(--brand);
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(232,72,12,.15);
-}
-.q-chip:active{transform:scale(.96);}
-
 .input-row{display:flex;gap:8px;align-items:flex-end;}
 .input-wrap{
-  flex:1;display:flex;align-items:flex-end;gap:8px;
+  flex:1;display:flex;align-items:center;gap:8px;
   background:var(--surface);
   border-radius:26px;
   padding:10px 15px;
-  min-height:46px;
   border:1.5px solid var(--border);
-  transition:border-color .2s ease, box-shadow .2s ease;
-  box-shadow:var(--sh-xs);
 }
-.input-wrap:focus-within{
-  border-color:rgba(232,72,12,.35);
-  box-shadow:0 0 0 4px rgba(232,72,12,.06);
-}
-.btn-emoji{
-  background:none;border:none;cursor:pointer;
-  font-size:18px;opacity:.42;
-  transition:all .2s ease;
-  flex-shrink:0;padding:0;line-height:1;margin-bottom:1px;
-}
-.btn-emoji:hover{opacity:.68;transform:scale(1.1);}
 .msg-input{
   flex:1;border:none;outline:none;
   font-size:14.5px;font-family:'DM Sans',sans-serif;
-  color:var(--text);background:transparent;
-  resize:none;line-height:1.5;max-height:110px;
-  font-weight:400;
+  background:transparent;
 }
-.msg-input::placeholder{color:var(--text-3);}
-
 .send-btn{
   width:46px;height:46px;border-radius:50%;
-  background:var(--border);
-  color:rgba(255,255,255,.6);
-  border:none;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:18px;flex-shrink:0;
-  transition:all .22s var(--ease);
-  box-shadow:var(--sh-sm);
-}
-.send-btn.active{
   background:var(--brand);
-  color:#fff;
-  box-shadow:0 4px 14px rgba(232,72,12,.28);
-}
-.send-btn.active:hover{
-  background:var(--brand-dk);
-  transform:translateY(-2px);
-  box-shadow:0 6px 18px rgba(232,72,12,.34);
-}
-.send-btn:active{transform:scale(.90);}
-.send-btn:disabled{background:#D8D4CE;box-shadow:none;cursor:default;}
-
-@media (max-width:480px){
-  .app{max-width:100%;}
-  .header{padding:11px 12px;}
-  .msg-row{max-width:88%;}
-  .msg-row.user{max-width:84%;}
-  .loading-content{padding:28px 22px;}
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+  color:#fff; border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
 }
 </style>
 </head>
 <body>
 <div class="app">
-
-  <!-- Loading Screen -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-content">
-      <div class="loading-logo">D</div>
-
-      <div class="loading-text">
-        <div class="loading-title">Conectando ao atendimento</div>
-        <div class="loading-subtitle">Buscando o melhor vendedor para você</div>
-      </div>
-
-      <div class="loading-steps">
-        <div class="step-item active" id="step1">
-          <div class="step-icon">1</div>
-          <div class="step-text">
-            <div class="step-label">Verificando disponibilidade</div>
-            <div class="step-description">Consultando vendedores online</div>
-          </div>
-        </div>
-        <div class="step-item" id="step2">
-          <div class="step-icon">2</div>
-          <div class="step-text">
-            <div class="step-label">Conexão segura</div>
-            <div class="step-description">Estabelecendo canal criptografado</div>
-          </div>
-        </div>
-        <div class="step-item" id="step3">
-          <div class="step-icon">3</div>
-          <div class="step-text">
-            <div class="step-label">Atribuindo atendente</div>
-            <div class="step-description">Selecionando o melhor profissional</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="loading-progress">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <div class="progress-text">
-          <div class="progress-label">Conectando...</div>
-          <div class="progress-percent" id="progressPercent">0%</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Header -->
   <header class="header">
-    <button class="back-btn" onclick="history.back()">←</button>
+    <button class="back-btn">←</button>
     <div class="h-agent">
       <div class="h-avatar">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23E8480C' width='100' height='100'/%3E%3Ctext x='50' y='62' font-size='48' font-weight='700' text-anchor='middle' fill='white' font-family='DM Sans,sans-serif'%3EC%3C/text%3E%3C/svg%3E" class="h-avatar-img" alt="Avatar do agente">
+        <img src="https://i.pravatar.cc/100?u=diskgas" class="h-avatar-img" alt="Avatar">
         <div class="h-status-dot"></div>
       </div>
       <div class="h-info">
-        <div class="h-name">Atendimento</div>
-        <div class="h-sub">Conectando...</div>
+        <div class="h-name">Carlos - Diskgas</div>
+        <div class="h-sub">Online</div>
       </div>
-    </div>
-    <div class="h-actions">
-      <button class="h-action" title="Mais opções">⋯</button>
     </div>
   </header>
 
-  <!-- Messages -->
   <div class="msgs" id="msgs">
-    <div class="typing-row" id="typingRow">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23E8480C' width='100' height='100'/%3E%3Ctext x='50' y='62' font-size='48' font-weight='700' text-anchor='middle' fill='white' font-family='DM Sans,sans-serif'%3EC%3C/text%3E%3C/svg%3E" class="msg-av" alt="Avatar">
-      <div class="typing-bubble">
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-      </div>
+    <!-- Messages will appear here -->
+  </div>
+
+  <div class="typing-row" id="typingRow" style="padding: 0 14px 10px;">
+    <div class="typing-bubble">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
     </div>
   </div>
 
-  <button class="scroll-fab" id="scrollFab" onclick="document.getElementById('msgs').scrollTop=document.getElementById('msgs').scrollHeight">
-    <span>↓</span>
-    <span class="fab-badge" id="fabBadge">0</span>
-  </button>
-
-  <!-- Footer -->
   <footer class="footer">
-    <div class="quick-opts" id="quickOpts"></div>
     <div class="input-row">
       <div class="input-wrap">
-        <button class="btn-emoji">😊</button>
-        <input type="text" class="msg-input" id="msgInput" placeholder="escreva sua mensagem..." autocomplete="off">
+        <input type="text" class="msg-input" id="msgInput" placeholder="Escreva sua mensagem...">
       </div>
-      <button class="send-btn" id="sendBtn" title="Enviar">✈</button>
+      <button class="send-btn" id="sendBtn">✈</button>
     </div>
   </footer>
-
 </div>
 
 <script>
-const AGENT_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23E8480C' width='100' height='100'/%3E%3Ctext x='50' y='62' font-size='48' font-weight='700' text-anchor='middle' fill='white' font-family='DM Sans,sans-serif'%3EC%3C/text%3E%3C/svg%3E";
-
-const msgsEl    = document.getElementById('msgs');
-const inputEl   = document.getElementById('msgInput');
+const msgsEl = document.getElementById('msgs');
+const inputEl = document.getElementById('msgInput');
 const sendBtnEl = document.getElementById('sendBtn');
-const quickEl   = document.getElementById('quickOpts');
 const typingRowEl = document.getElementById('typingRow');
-const scrollFab = document.getElementById('scrollFab');
-const fabBadge  = document.getElementById('fabBadge');
-const hImgEl    = document.querySelector('.h-avatar-img');
-const hDotEl    = document.querySelector('.h-status-dot');
-const hNameEl   = document.querySelector('.h-name');
-const hSubEl    = document.querySelector('.h-sub');
-const loadingOverlay = document.getElementById('loadingOverlay');
-const progressFill   = document.getElementById('progressFill');
-const progressPercent = document.getElementById('progressPercent');
 
-let lastSender = null;
-let unreadCount = 0;
-let pendingReceipts = [];
-let conversationState = 'idle';
-let pendingOrder = null;
-let orderConfirmed = false;
+const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-const rand  = (a,b) => a + Math.random()*(b-a);
-const now   = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-
-function typingDelay(chars){ return Math.min(Math.max(1500, chars.length*60), 5000); }
-
-function playPing(){
-  try{
-    const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(820, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime+.18);
-    gain.gain.setValueAtTime(.10, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime+.45);
-    osc.start(ctx.currentTime); osc.stop(ctx.currentTime+.45);
-  }catch(e){}
-}
-
-const isNearBottom = () => msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 90;
-
-function scrollToBottom(force){
-  if(force || isNearBottom()){
-    msgsEl.scrollTop = msgsEl.scrollHeight;
-    unreadCount = 0;
-    scrollFab.classList.remove('show');
-    fabBadge.classList.remove('show');
-  } else {
-    unreadCount++;
-    scrollFab.classList.add('show');
-    fabBadge.textContent = unreadCount;
-    fabBadge.classList.add('show');
-  }
-}
-
-msgsEl.addEventListener('scroll', ()=>{
-  if(isNearBottom()){ unreadCount=0; scrollFab.classList.remove('show'); fabBadge.classList.remove('show'); }
-});
-
-function setStatus(text, style){
-  hSubEl.textContent = text;
-  hSubEl.style.color =
-    style==='typing' ? 'rgba(255,255,255,.96)' :
-    style==='online' ? 'rgba(255,255,255,.75)' :
-                       'rgba(255,255,255,.55)';
-}
-
-function markReceiptsRead(){
-  pendingReceipts.forEach(id=>{
-    const el = document.getElementById(id);
-    if(el) el.className='b-receipt read';
-  });
-  pendingReceipts = [];
-}
-
-function addMsg(html, type){
-  const isUser  = type==='user';
-  const grouped = lastSender===type;
-  const row     = document.createElement('div');
-  row.className = `msg-row ${type}${grouped?' grouped':''}`;
-
-  if(isUser){
-    const rcptId = 'r'+Date.now()+Math.random().toString(36).slice(2);
-    row.innerHTML = `
-      <div class="bubble u">
-        ${html}
-        <div class="b-meta">
-          <span class="b-time">${now()}</span>
-          <span class="b-receipt" id="${rcptId}">✓</span>
-        </div>
-      </div>`;
-    setTimeout(()=>{
-      const el=document.getElementById(rcptId);
-      if(el){ el.innerHTML='✓✓'; el.className='b-receipt delivered'; }
-    }, 650);
-    pendingReceipts.push(rcptId);
-  } else {
-    const avatar = grouped
-      ? `<div class="msg-av-spacer"></div>`
-      : `<img src="${AGENT_IMG}" class="msg-av" alt="Avatar">`;
-    row.innerHTML = `
-      ${avatar}
-      <div class="bubble a">
-        ${html}
-        <div class="b-meta">
-          <span class="b-time">${now()}</span>
-        </div>
-      </div>`;
-  }
-
-  msgsEl.insertBefore(row, typingRowEl);
-  lastSender = type;
-  if(type==='agent'){ playPing(); scrollToBottom(); }
-  else scrollToBottom(true);
-}
-
-function addSysMsg(text){
-  const d = document.createElement('div');
-  d.className='sys-msg';
-  d.innerHTML=`<span>${text}</span>`;
-  msgsEl.insertBefore(d, typingRowEl);
-  scrollToBottom(true);
-}
-
-function addAgentCard(){
-  const card = document.createElement('div');
-  card.className='agent-intro';
-  card.innerHTML=`
-    <div class="ai-top">
-      <div class="ai-img-wrapper">
-        <img src="${AGENT_IMG}" class="ai-img" alt="Foto do consultor">
-        <div class="ai-badge-verified" title="Perfil Verificado">✓</div>
-      </div>
-      <div class="ai-info">
-        <div class="ai-name">Carlos Silva</div>
-        <div class="ai-role">Consultor de Vendas · Diskgas</div>
-        <div class="ai-stars">
-          <span class="ai-star">★</span>
-          <span class="ai-star">★</span>
-          <span class="ai-star">★</span>
-          <span class="ai-star">★</span>
-          <span class="ai-star">★</span>
-          <span class="ai-stars-label">4.9 · Excelente</span>
-        </div>
-        <div class="ai-tag">
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          Vendedor Verificado
-        </div>
-      </div>
+function addMsg(text, type) {
+  const row = document.createElement('div');
+  row.className = `msg-row ${type}`;
+  row.innerHTML = `
+    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
+      ${text}
+      <div class="b-meta"><span class="b-time">${now()}</span></div>
     </div>
-    <div class="ai-stats">
-      <div class="ai-stat">
-        <span class="ai-stat-val">4.9</span>
-        <span class="ai-stat-lbl">Avaliação</span>
-      </div>
-      <div class="ai-stat">
-        <span class="ai-stat-val">1.2k+</span>
-        <span class="ai-stat-lbl">Pedidos</span>
-      </div>
-      <div class="ai-stat">
-        <span class="ai-stat-val">99%</span>
-        <span class="ai-stat-lbl">Sucesso</span>
+  `;
+  msgsEl.appendChild(row);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
+
+function addSystemMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'sys-msg';
+  div.innerHTML = `<span>${text}</span>`;
+  msgsEl.appendChild(div);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
+
+function showAgentIntro() {
+  const card = document.createElement('div');
+  card.className = 'agent-intro';
+  card.innerHTML = `
+    <div class="ai-top">
+      <img src="https://i.pravatar.cc/100?u=carlos" class="ai-img" alt="Carlos">
+      <div class="ai-info">
+        <div class="ai-name">Carlos Oliveira</div>
+        <div class="ai-role">Especialista em Atendimento</div>
+        <div class="ai-tag">● Responde rápido</div>
       </div>
     </div>
   `;
-  msgsEl.insertBefore(card, typingRowEl);
-  scrollToBottom(true);
+  msgsEl.appendChild(card);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
 }
 
-async function showTyping(ms){
-  lastSender=null;
-  typingRowEl.style.display='flex';
-  setStatus('digitando...','typing');
-  scrollToBottom();
-  await sleep(ms);
-  typingRowEl.style.display='none';
-  setStatus('online','online');
-}
-
-async function agentSay(messages){
-  markReceiptsRead();
-  await sleep(rand(1500,2500));
-  for(let i=0;i<messages.length;i++){
-    await showTyping(typingDelay(messages[i]));
-    addMsg(messages[i],'agent');
-    if(i<messages.length-1) await sleep(rand(1000,1800));
-  }
-}
-
-function enableInput(){
-  inputEl.disabled=false;
-  sendBtnEl.disabled=false;
-  inputEl.placeholder='escreva sua mensagem...';
-  inputEl.focus();
-}
-function disableInput(){
-  inputEl.disabled=true;
-  sendBtnEl.disabled=true;
-}
-
-inputEl.addEventListener('input',()=>{
-  sendBtnEl.classList.toggle('active', inputEl.value.trim().length>0);
-});
-
-function setQuicks(opts){
-  quickEl.innerHTML='';
-  if(!opts.length){ quickEl.style.display='none'; return; }
-  quickEl.style.display='flex';
-  opts.forEach(([label,val])=>{
-    const c=document.createElement('div');
-    c.className='q-chip';
-    c.textContent=label;
-    c.onclick=()=>{ inputEl.value=val||label; handleSend(); };
-    quickEl.appendChild(c);
-  });
-}
-
-async function animateLoadingScreen(){
-  const steps=[
-    {step:1,progress:25,duration:2000},
-    {step:2,progress:55,duration:2200},
-    {step:3,progress:100,duration:1800},
-  ];
-  for(const item of steps){
-    if(item.step>1){
-      const prev=document.getElementById(`step${item.step-1}`);
-      prev.classList.remove('active');
-      prev.classList.add('completed');
-      const prevIcon=prev.querySelector('.step-icon');
-      prevIcon.textContent='✓';
-    }
-    const cur=document.getElementById(`step${item.step}`);
-    cur.classList.add('active');
-    progressFill.style.width=item.progress+'%';
-    progressPercent.textContent=item.progress+'%';
-    await sleep(item.duration);
-  }
-  const last=document.getElementById('step3');
-  last.classList.remove('active');
-  last.classList.add('completed');
-  last.querySelector('.step-icon').textContent='✓';
-  await sleep(500);
-}
-
-async function startFlow(){
-  await animateLoadingScreen();
-  await sleep(280);
-  loadingOverlay.classList.add('hidden');
-  await sleep(400);
-  hImgEl.classList.add('live');
-  hDotEl.style.opacity='1';
-  hNameEl.textContent='Carlos';
-  setStatus('online','online');
-  addSysMsg('✓ Carlos entrou');
-  await sleep(500);
-  addAgentCard();
-  await sleep(800);
-  addMsg('opa, vc tem gás aí?','user');
-  enableInput();
-  await sleep(400);
-  await agentSay(['opa, tudo certo','qual tamanho vc tá precisando?']);
-  conversationState='choosing_product';
-  setQuicks([['P13 (13kg)','P13'],['P20 (20kg)','P20'],['P45 (45kg)','P45']]);
-}
-
-async function handleAgentReply(userText){
-  const t=userText.toLowerCase().trim();
-  const isSlowResponse=Math.random()>.75;
-  if(isSlowResponse) await sleep(rand(800,1500));
-
-  if(conversationState==='idle'){
-    if(/preço|valor|quanto|custa|tabela|valores/.test(t)){
-      await agentSay(['blz, deixa eu te mostrar','P13 — R$ 115\nP20 — R$ 175\nP45 — R$ 320','tudo com entrega']);
-      setQuicks([['P13','P13'],['P20','P20'],['P45','P45']]);
-      return;
-    }
-    if(/demora|tempo|prazo|entrega|quanto leva|demora quanto/.test(t)){
-      await agentSay(['demora uns 30 a 50 min, depende do bairro','quer pedir agora?']);
-      setQuicks([['quero sim','quero pedir'],['deixo pra depois','depois']]);
-      return;
-    }
-    if(/pedir|botijão|gás|gas|preciso|precisa/.test(t)){
-      conversationState='choosing_product';
-      await agentSay(['blz','qual tamanho?']);
-      setQuicks([['P13','P13'],['P20','P20'],['P45','P45']]);
-      return;
-    }
-    if(/obrigad|valeu|vlw|massa|brigadão|thanks/.test(t)){
-      await agentSay(['tmj, qualquer coisa me chama']);
-      return;
-    }
-    await agentSay(['pode me perguntar sobre os tamanhos, preço, entrega...','o que vc precisa?']);
-    setQuicks([['pedir','quero pedir'],['preço','qual o preço'],['entrega','quanto demora']]);
-    return;
-  }
-
-  if(conversationState==='choosing_product'){
-    if(/p13|13/.test(t)){     pendingOrder={produto:'P13 — 13kg',preco:'R$ 115,00'}; }
-    else if(/p20|20/.test(t)){pendingOrder={produto:'P20 — 20kg',preco:'R$ 175,00'}; }
-    else if(/p45|45/.test(t)){pendingOrder={produto:'P45 — 45kg',preco:'R$ 320,00'}; }
-    else{ await agentSay(['qual tamanho? P13, P20 ou P45?']); return; }
-    conversationState='awaiting_address';
-    await agentSay([`blz, ${pendingOrder.produto}`,'qual é o endereço?']);
-    setQuicks([]);
-    return;
-  }
-
-  if(conversationState==='awaiting_address'){
-    if(t.replace(/\s/g,'').length<8){ await agentSay(['me manda o endereço completo aí']); return; }
-    pendingOrder.endereco=userText;
-    conversationState='confirm_order';
-    const orderId='DG-'+Math.floor(10000+Math.random()*90000);
-    pendingOrder.id=orderId;
-    await agentSay(['deixa eu montar aqui...']);
-    const card=`
-      confere aí 👇
-      <div class="order-card">
-        <div class="order-hd">
-          <span class="order-hd-title">Seu pedido</span>
-          <span class="order-id">${orderId}</span>
-        </div>
-        <div class="order-body">
-          <div class="order-row">
-            <span class="order-lbl">Produto</span>
-            <span class="order-val">${pendingOrder.produto}</span>
-          </div>
-          <div class="order-row">
-            <span class="order-lbl">Endereço</span>
-            <span class="order-val" style="max-width:58%">${pendingOrder.endereco}</span>
-          </div>
-          <div class="order-row">
-            <span class="order-lbl">Pagamento</span>
-            <span class="order-val">na entrega</span>
-          </div>
-          <div class="order-row">
-            <span class="order-lbl">Prazo estimado</span>
-            <span class="order-val" style="color:#0DA04A">30 – 50 min</span>
-          </div>
-          <div class="order-row">
-            <span class="order-lbl" style="font-weight:600;color:var(--text)">Total</span>
-            <span class="order-total">${pendingOrder.preco}</span>
-          </div>
-        </div>
-        <div class="order-ft">
-          <button class="confirm-btn" id="confirmOrderBtn" onclick="confirmOrder()">
-            confirmar pedido ✓
-          </button>
-        </div>
-      </div>`;
-    await sleep(400);
-    addMsg(card,'agent');
-    setQuicks([['corrigir','errei o endereço'],['cancelar','cancela']]);
-    return;
-  }
-
-  if(conversationState==='confirm_order'){
-    if(/cancelar|desistir|não/.test(t)){
-      conversationState='idle';
-      await agentSay(['blz, sem problema','qualquer coisa me chama']);
-      setQuicks([['novo pedido','quero pedir']]);
-      return;
-    }
-    if(/corrigir|errad|mudar|endereço|errei/.test(t)){
-      conversationState='awaiting_address';
-      await agentSay(['qual é o endereço certo?']);
-      setQuicks([]);
-      return;
-    }
-    await agentSay(['é só clicar no botão aí 👆']);
-    return;
-  }
-
-  if(conversationState==='order_confirmed'){
-    if(/obrigad|valeu|vlw|massa|brigadão/.test(t)){
-      await agentSay(['boa, aproveita!']);
-      setQuicks([]);
-      return;
-    }
-    if(/onde|status|chegou|andamento|saiu|rastreio/.test(t)){
-      await agentSay(['tá sendo preparado agora','entregador sai em breve, uns 35 a 50 min']);
-      return;
-    }
-    await agentSay(['qualquer coisa me chama']);
-    return;
-  }
-
-  await agentSay(['fala aí, como posso te ajudar?']);
-}
-
-window.confirmOrder = async function(){
-  if(orderConfirmed) return;
-  orderConfirmed=true;
-  conversationState='order_confirmed';
-  const btn=document.getElementById('confirmOrderBtn');
-  if(btn){ btn.classList.add('done'); btn.innerHTML='✓ Confirmado!'; btn.disabled=true; }
-  await sleep(rand(1200,2000));
-  await agentSay(['pedido confirmado!','tô mandando pra central...']);
-  const status=`
-    acompanha aí 👇
-    <div class="delivery-status">
-      <div class="ds-title">🚚 Rastreamento em tempo real</div>
-      <div class="ds-steps">
-        <div class="ds-step done"><div class="ds-dot"></div> Pedido recebido</div>
-        <div class="ds-step done"><div class="ds-dot"></div> Confirmado</div>
-        <div class="ds-step active"><div class="ds-dot"></div> Preparando</div>
-        <div class="ds-step"><div class="ds-dot"></div> Saiu pra entrega</div>
-        <div class="ds-step"><div class="ds-dot"></div> Entregue</div>
-      </div>
-    </div>`;
-  await sleep(800);
-  addMsg(status,'agent');
-  await sleep(rand(2000,3500));
-  await agentSay([
-    'entregador sai pra aí em breve',
-    'uns 35 a 50 min',
-    'qualquer coisa me chama aí 👋',
-  ]);
-  setQuicks([['onde tá?','qual o status?'],['valeu','obrigado']]);
-};
-
-async function handleSend(){
-  const text=inputEl.value.trim();
+async function handleFlow() {
+  const text = inputEl.value;
   if(!text) return;
-  inputEl.value='';
-  sendBtnEl.classList.remove('active');
-  setQuicks([]);
-  disableInput();
-  addMsg(text,'user');
-  await handleAgentReply(text);
-  enableInput();
+  
+  inputEl.value = '';
+  addMsg(text, 'user');
+
+  // 1. GAP FILLER: System Message
+  await new Promise(r => setTimeout(r, 800));
+  addSystemMsg("Encaminhando para um consultor...");
+
+  // 2. GAP FILLER: Agent Intro
+  await new Promise(r => setTimeout(r, 1200));
+  showAgentIntro();
+
+  // 3. Typing indicator starts
+  await new Promise(r => setTimeout(r, 1000));
+  typingRowEl.style.display = 'flex';
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+
+  // 4. Agent Response
+  await new Promise(r => setTimeout(r, 3000));
+  typingRowEl.style.display = 'none';
+  addMsg("Olá! Sou o Carlos. Como posso te ajudar com seu pedido hoje?", 'agent');
 }
 
-sendBtnEl.onclick=handleSend;
-inputEl.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); handleSend(); }});
+sendBtnEl.onclick = handleFlow;
+inputEl.onkeypress = (e) => { if(e.key === 'Enter') handleFlow(); };
 
-window.onload=startFlow;
+// Auto-start for demo
+window.onload = () => {
+  addSystemMsg("Bem-vindo à Diskgas!");
+};
 </script>
 </body>
 </html>
