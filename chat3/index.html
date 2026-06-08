@@ -477,309 +477,525 @@ html,body{
 }
 .order-hd-title{
   font-size:10.5px;font-weight:700;color:rgba(255,255,255,.8);
-  text-transform:uppercase;letter-spacing:.08em;
+  letter-spacing:.09em;text-transform:uppercase;
 }
 .order-id{
-  font-size:11px;font-family:'DM Mono',monospace;
-  color:#fff;background:rgba(0,0,0,.15);
-  padding:2px 8px;border-radius:4px;font-weight:500;
+  font-size:11.5px;color:#fff;
+  font-family:'DM Mono',monospace;font-weight:500;
+  background:rgba(0,0,0,.14);
+  padding:2px 8px;border-radius:5px;
+  letter-spacing:.04em;
 }
-
-.order-body{padding:16px;}
+.order-body{padding:2px 0 0;}
 .order-row{
-  display:flex;justify-content:space-between;align-items:flex-start;
-  padding:9px 0;border-bottom:1px solid var(--border-2);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 16px;
+  border-bottom:1px solid var(--border-2);
+  gap:10px;
 }
-.order-row:last-child{border-bottom:none;padding-bottom:0;margin-top:4px;}
-.order-lbl{font-size:12.5px;color:var(--text-3);font-weight:500;}
-.order-val{font-size:13px;color:var(--text);font-weight:600;text-align:right;}
-.order-total{font-size:18px;font-weight:700;color:var(--brand);letter-spacing:-.5px;}
-
-.order-ft{padding:0 16px 16px;}
+.order-row:last-child{border-bottom:none;}
+.order-lbl{font-size:12px;color:var(--text-3);white-space:nowrap;font-weight:500;}
+.order-val{font-size:13px;font-weight:600;color:var(--text);text-align:right;}
+.order-total{font-size:18px;font-weight:700;color:var(--brand);}
+.order-ft{padding:4px 14px 14px;}
 .confirm-btn{
-  width:100%;padding:14px;border-radius:12px;
-  background:var(--brand);color:#fff;
-  border:none;font-size:14.5px;font-weight:700;
-  cursor:pointer;transition:all .25s var(--ease);
-  box-shadow:0 4px 12px rgba(232,72,12,.25);
+  width:100%;padding:13px;border-radius:var(--radius-sm);
+  background:var(--brand);color:#fff;border:none;
+  font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:all .22s var(--ease);
+  box-shadow:0 4px 16px rgba(232,72,12,.28);
+  letter-spacing:.2px;
+  margin-top:4px;
 }
-.confirm-btn:hover{background:var(--brand-dk);transform:translateY(-1px);}
+.confirm-btn:hover{
+  background:var(--brand-dk);
+  transform:translateY(-2px);
+  box-shadow:0 7px 22px rgba(232,72,12,.34);
+}
+.confirm-btn:active{transform:scale(.97);}
 .confirm-btn.done{
-  background:var(--green);
-  box-shadow:0 4px 12px rgba(29,199,95,.25);
-  cursor:default;pointer-events:none;
+  background:var(--green-dk);
+  cursor:default;
+  box-shadow:0 4px 14px rgba(13,160,74,.22);
 }
 
 /* ─── Delivery status ─── */
 .delivery-status{
-  background:#fff;border-radius:var(--radius);
-  padding:18px;margin-top:10px;
-  box-shadow:var(--sh-md);
-  border:1px solid var(--border-2);
+  background:var(--green-lt);
+  border:1px solid var(--green-bd);
+  border-radius:var(--radius);
+  padding:15px 16px;
+  margin-top:10px;
 }
 .ds-title{
-  font-size:13px;font-weight:700;color:var(--text);
-  margin-bottom:16px;display:flex;align-items:center;gap:8px;
+  font-size:10.5px;font-weight:700;color:var(--green-dk);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:6px;
+  letter-spacing:.09em;text-transform:uppercase;
 }
-.ds-steps{display:flex;flex-direction:column;gap:14px;position:relative;}
+.ds-steps{
+  display:flex;flex-direction:column;
+  position:relative;gap:0;
+}
+/* Vertical line */
 .ds-steps::before{
-  content:'';position:absolute;left:5px;top:8px;bottom:8px;
-  width:2px;background:var(--border-2);
+  content:'';
+  position:absolute;
+  left:4.5px;top:8px;bottom:8px;
+  width:1.5px;
+  background:linear-gradient(to bottom, var(--green) 55%, rgba(13,160,74,.15) 100%);
+  border-radius:1px;z-index:0;
 }
 .ds-step{
   display:flex;align-items:center;gap:12px;
-  font-size:12.5px;color:var(--text-3);font-weight:500;
+  font-size:13px;color:var(--text-3);font-weight:500;
+  padding:7px 0;
   position:relative;z-index:1;
-}
-.ds-dot{
-  width:12px;height:12px;border-radius:50%;
-  background:var(--border);border:2px solid #fff;
-  box-shadow:var(--sh-xs);
-}
-.ds-step.done{color:var(--text-2);}
-.ds-step.done .ds-dot{background:var(--green);}
-.ds-step.active{color:var(--brand);font-weight:700;}
-.ds-step.active .ds-dot{
-  background:var(--brand);
-  box-shadow:0 0 0 4px rgba(232,72,12,.15);
-}
-
-/* ─── Input area ─── */
-.input-wrap{
-  background:var(--surface);
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
-  border-top:1px solid var(--border-2);
-  position:relative;z-index:10;
-  box-shadow:0 -4px 16px rgba(0,0,0,.03);
-}
-
-.quicks{
-  display:flex;gap:8px;overflow-x:auto;
-  padding-bottom:10px;margin-bottom:4px;
-}
-.quicks::-webkit-scrollbar{display:none;}
-.q-chip{
-  white-space:nowrap;padding:7px 14px;
-  background:var(--surface-3);color:var(--text-2);
-  border-radius:18px;font-size:12.5px;font-weight:600;
-  cursor:pointer;border:1px solid rgba(0,0,0,.04);
   transition:all .2s ease;
 }
-.q-chip:hover{background:var(--brand-lt);color:var(--brand);border-color:rgba(232,72,12,.15);}
+.ds-step.done{color:var(--green-dk);font-weight:600;}
+.ds-step.active{color:var(--text);font-weight:700;}
+.ds-dot{
+  width:11px;height:11px;border-radius:50%;
+  background:var(--border);
+  border:2.5px solid var(--green-lt);
+  flex-shrink:0;
+  transition:all .3s ease;
+}
+.ds-step.done .ds-dot{
+  background:var(--green);
+  border-color:var(--green-lt);
+  box-shadow:0 0 0 3px rgba(29,199,95,.16);
+}
+.ds-step.active .ds-dot{
+  background:var(--brand);
+  border-color:var(--green-lt);
+  animation:activeDot 2s ease-in-out infinite;
+}
+@keyframes activeDot{
+  0%,100%{box-shadow:0 0 0 3px rgba(232,72,12,.16);}
+  50%{box-shadow:0 0 0 7px rgba(232,72,12,.06);}
+}
 
-.input-box{
-  display:flex;align-items:center;gap:10px;
-  background:var(--surface-2);
-  border-radius:var(--radius-xl);
-  padding:5px 6px 5px 16px;
+/* ─── Typing ─── */
+.typing-row{
+  display:none;align-items:flex-end;gap:7px;
+  align-self:flex-start;animation:fadeIn .2s ease;
+  margin:2px 0;
+}
+.typing-bubble{
+  background:var(--bubble-a);
+  border-radius:4px var(--radius) var(--radius) var(--radius);
+  padding:13px 16px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 3px 10px rgba(0,0,0,.07),
+             inset 0 0 0 .8px rgba(0,0,0,.045);
+  display:flex;gap:5px;align-items:center;
+  position:relative;
+}
+.typing-bubble::before{
+  content:'';position:absolute;top:0;left:-5px;
+  border:7px solid transparent;
+  border-bottom-color:var(--bubble-a);
+  border-right-color:var(--bubble-a);
+  border-top:0;border-left:0;
+}
+.typing-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(0,0,0,.17);
+  animation:typePulse 1.4s ease-in-out infinite;
+}
+.typing-dot:nth-child(2){animation-delay:.18s;}
+.typing-dot:nth-child(3){animation-delay:.36s;}
+@keyframes typePulse{
+  0%,60%,100%{transform:translateY(0);opacity:.35;}
+  30%{transform:translateY(-4px);opacity:1;}
+}
+
+/* ─── Scroll FAB ─── */
+.scroll-fab{
+  position:absolute;right:14px;bottom:90px;z-index:5;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--surface);
   border:1px solid var(--border-2);
-  transition:border-color .2s ease, box-shadow .2s ease;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--brand);font-size:19px;
+  box-shadow:var(--sh-md);
+  opacity:0;pointer-events:none;
+  transform:translateY(14px) scale(.85);
+  transition:all .32s var(--ease);
 }
-.input-box:focus-within{
-  border-color:rgba(232,72,12,.3);
-  box-shadow:0 0 0 4px rgba(232,72,12,.06);
-  background:#fff;
+.scroll-fab.show{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}
+.scroll-fab:hover{
+  background:var(--brand-lt);
+  transform:translateY(-2px) scale(1.05);
 }
+.scroll-fab:active{transform:scale(.92);}
+.fab-badge{
+  position:absolute;top:-5px;right:-5px;
+  background:var(--brand);color:#fff;
+  font-size:10px;font-weight:700;
+  min-width:18px;height:18px;border-radius:9px;
+  display:none;align-items:center;justify-content:center;
+  padding:0 4px;
+  box-shadow:0 2px 6px rgba(232,72,12,.3);
+}
+.fab-badge.show{display:flex;}
 
-input{
-  flex:1;border:none;background:transparent;
-  padding:10px 0;font-size:14.5px;color:var(--text);
-  font-family:inherit;outline:none;
+/* ─── Footer ─── */
+.footer{
+  background:var(--surface-2);
+  border-top:1px solid var(--border-2);
+  padding:11px 12px 15px;
+  position:relative;z-index:5;
 }
-input::placeholder{color:var(--text-3);opacity:.8;}
+.quick-opts{
+  display:none;gap:6px;overflow-x:auto;
+  padding:0 2px 10px;scrollbar-width:none;
+}
+.quick-opts::-webkit-scrollbar{display:none;}
+.q-chip{
+  white-space:nowrap;
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  color:var(--text);
+  padding:8px 18px;border-radius:24px;
+  font-size:13px;font-weight:600;cursor:pointer;
+  font-family:'DM Sans',sans-serif;flex-shrink:0;
+  transition:all .2s var(--ease);
+  box-shadow:var(--sh-xs);
+  letter-spacing:.1px;
+}
+.q-chip:hover{
+  background:var(--brand-lt);
+  border-color:var(--brand);
+  color:var(--brand);
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(232,72,12,.15);
+}
+.q-chip:active{transform:scale(.96);}
+
+.input-row{display:flex;gap:8px;align-items:flex-end;}
+.input-wrap{
+  flex:1;display:flex;align-items:flex-end;gap:8px;
+  background:var(--surface);
+  border-radius:26px;
+  padding:10px 15px;
+  min-height:46px;
+  border:1.5px solid var(--border);
+  transition:border-color .2s ease, box-shadow .2s ease;
+  box-shadow:var(--sh-xs);
+}
+.input-wrap:focus-within{
+  border-color:rgba(232,72,12,.35);
+  box-shadow:0 0 0 4px rgba(232,72,12,.06);
+}
+.btn-emoji{
+  background:none;border:none;cursor:pointer;
+  font-size:18px;opacity:.42;
+  transition:all .2s ease;
+  flex-shrink:0;padding:0;line-height:1;margin-bottom:1px;
+}
+.btn-emoji:hover{opacity:.68;transform:scale(1.1);}
+.msg-input{
+  flex:1;border:none;outline:none;
+  font-size:14.5px;font-family:'DM Sans',sans-serif;
+  color:var(--text);background:transparent;
+  resize:none;line-height:1.5;max-height:110px;
+  font-weight:400;
+}
+.msg-input::placeholder{color:var(--text-3);}
 
 .send-btn{
-  width:38px;height:38px;border-radius:50%;
-  background:var(--border);color:#fff;
-  border:none;cursor:pointer;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--border);
+  color:rgba(255,255,255,.6);
+  border:none;
   display:flex;align-items:center;justify-content:center;
-  font-size:18px;transition:all .3s var(--spring);
-  flex-shrink:0;
+  cursor:pointer;font-size:18px;flex-shrink:0;
+  transition:all .22s var(--ease);
+  box-shadow:var(--sh-sm);
 }
-.send-btn.active{background:var(--brand);transform:scale(1.05);box-shadow:0 4px 12px rgba(232,72,12,.25);}
-.send-btn:disabled{cursor:default;opacity:.6;}
+.send-btn.active{
+  background:var(--brand);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(232,72,12,.28);
+}
+.send-btn.active:hover{
+  background:var(--brand-dk);
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(232,72,12,.34);
+}
+.send-btn:active{transform:scale(.90);}
+.send-btn:disabled{background:#D8D4CE;box-shadow:none;cursor:default;}
 
-/* ─── Typing indicator ─── */
-.typing{display:flex;gap:4px;padding:12px 16px;background:var(--bubble-a);border-radius:var(--radius);width:fit-content;box-shadow:var(--sh-xs);margin-bottom:10px;}
-.dot{width:5px;height:5px;background:var(--text-3);border-radius:50%;opacity:.4;animation:typing 1.4s infinite;}
-.dot:nth-child(2){animation-delay:.2s;}
-.dot:nth-child(3){animation-delay:.4s;}
-@keyframes typing{0%,100%{transform:translateY(0);opacity:.4;}50%{transform:translateY(-4px);opacity:1;}}
-
+@media (max-width:480px){
+  .app{max-width:100%;}
+  .header{padding:11px 12px;}
+  .msg-row{max-width:88%;}
+  .msg-row.user{max-width:84%;}
+  .loading-content{padding:28px 22px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+}
 </style>
 </head>
 <body>
-
 <div class="app">
-  <!-- Loading overlay -->
+
+  <!-- Loading Screen -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-content">
-      <div class="loading-logo">DG</div>
+      <div class="loading-logo">D</div>
+
       <div class="loading-text">
-        <h2 class="loading-title">Diskgas</h2>
-        <p class="loading-subtitle">Conectando você ao melhor serviço</p>
+        <div class="loading-title">Conectando ao atendimento</div>
+        <div class="loading-subtitle">Buscando o melhor vendedor para você</div>
       </div>
+
       <div class="loading-steps">
-        <div class="step-item" id="step1">
+        <div class="step-item active" id="step1">
           <div class="step-icon">1</div>
           <div class="step-text">
-            <span class="step-label">Localizando vendedor</span>
-            <span class="step-description">Buscando o mais próximo...</span>
+            <div class="step-label">Verificando disponibilidade</div>
+            <div class="step-description">Consultando vendedores online</div>
           </div>
         </div>
         <div class="step-item" id="step2">
           <div class="step-icon">2</div>
           <div class="step-text">
-            <span class="step-label">Validando estoque</span>
-            <span class="step-description">Verificando disponibilidade</span>
+            <div class="step-label">Conexão segura</div>
+            <div class="step-description">Estabelecendo canal criptografado</div>
           </div>
         </div>
         <div class="step-item" id="step3">
           <div class="step-icon">3</div>
           <div class="step-text">
-            <span class="step-label">Iniciando chat seguro</span>
-            <span class="step-description">Criptografia de ponta a ponta</span>
+            <div class="step-label">Atribuindo atendente</div>
+            <div class="step-description">Selecionando o melhor profissional</div>
           </div>
         </div>
       </div>
+
       <div class="loading-progress">
-        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
         <div class="progress-text">
-          <span class="progress-label">Sincronizando...</span>
-          <span class="progress-percent" id="progressPercent">0%</span>
+          <div class="progress-label">Conectando...</div>
+          <div class="progress-percent" id="progressPercent">0%</div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Header -->
   <header class="header">
-    <button class="back-btn">←</button>
+    <button class="back-btn" onclick="history.back()">←</button>
     <div class="h-agent">
       <div class="h-avatar">
-        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop" class="h-avatar-img" id="hImg">
-        <div class="h-status-dot" id="hDot"></div>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23E8480C' width='100' height='100'/%3E%3Ctext x='50' y='62' font-size='48' font-weight='700' text-anchor='middle' fill='white' font-family='DM Sans,sans-serif'%3EC%3C/text%3E%3C/svg%3E" class="h-avatar-img" alt="Avatar do agente">
+        <div class="h-status-dot"></div>
       </div>
       <div class="h-info">
-        <div class="h-name" id="hName">Conectando...</div>
-        <div class="h-sub" id="hSub">aguarde um instante</div>
+        <div class="h-name">Atendimento</div>
+        <div class="h-sub">Conectando...</div>
       </div>
     </div>
     <div class="h-actions">
-      <button class="h-action">📞</button>
-      <button class="h-action">⋮</button>
+      <button class="h-action" title="Mais opções">⋯</button>
     </div>
   </header>
 
+  <!-- Messages -->
   <div class="msgs" id="msgs">
-    <div class="date-sep"><span>HOJE</span></div>
-    
-    <!-- Typing row (hidden by default) -->
-    <div class="msg-row agent" id="typingRow" style="display:none">
-      <div class="msg-av-spacer"></div>
-      <div class="typing">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="typing-row" id="typingRow">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23E8480C' width='100' height='100'/%3E%3Ctext x='50' y='62' font-size='48' font-weight='700' text-anchor='middle' fill='white' font-family='DM Sans,sans-serif'%3EC%3C/text%3E%3C/svg%3E" class="msg-av" alt="Avatar">
+      <div class="typing-bubble">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
       </div>
     </div>
   </div>
 
-  <div class="input-wrap">
-    <div class="quicks" id="quicks"></div>
-    <div class="input-box">
-      <input type="text" id="chatInput" placeholder="aguarde o início..." disabled>
-      <button class="send-btn" id="sendBtn" disabled>↑</button>
+  <button class="scroll-fab" id="scrollFab" onclick="document.getElementById('msgs').scrollTop=document.getElementById('msgs').scrollHeight">
+    <span>↓</span>
+    <span class="fab-badge" id="fabBadge">0</span>
+  </button>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="quick-opts" id="quickOpts"></div>
+    <div class="input-row">
+      <div class="input-wrap">
+        <button class="btn-emoji">😊</button>
+        <input type="text" class="msg-input" id="msgInput" placeholder="escreva sua mensagem..." autocomplete="off">
+      </div>
+      <button class="send-btn" id="sendBtn" title="Enviar">✈</button>
     </div>
-  </div>
+  </footer>
+
 </div>
 
 <script>
-const msgsEl = document.getElementById('msgs');
-const inputEl = document.getElementById('chatInput');
+const AGENT_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23E8480C' width='100' height='100'/%3E%3Ctext x='50' y='62' font-size='48' font-weight='700' text-anchor='middle' fill='white' font-family='DM Sans,sans-serif'%3EC%3C/text%3E%3C/svg%3E";
+
+const msgsEl    = document.getElementById('msgs');
+const inputEl   = document.getElementById('msgInput');
 const sendBtnEl = document.getElementById('sendBtn');
+const quickEl   = document.getElementById('quickOpts');
 const typingRowEl = document.getElementById('typingRow');
-const hNameEl = document.getElementById('hName');
-const hSubEl = document.getElementById('hSub');
-const hImgEl = document.getElementById('hImg');
-const hDotEl = document.getElementById('hDot');
-const quickEl = document.getElementById('quicks');
+const scrollFab = document.getElementById('scrollFab');
+const fabBadge  = document.getElementById('fabBadge');
+const hImgEl    = document.querySelector('.h-avatar-img');
+const hDotEl    = document.querySelector('.h-status-dot');
+const hNameEl   = document.querySelector('.h-name');
+const hSubEl    = document.querySelector('.h-sub');
 const loadingOverlay = document.getElementById('loadingOverlay');
-const progressFill = document.getElementById('progressFill');
+const progressFill   = document.getElementById('progressFill');
 const progressPercent = document.getElementById('progressPercent');
 
-let conversationState = 'idle';
-let pendingOrder = {};
 let lastSender = null;
+let unreadCount = 0;
+let pendingReceipts = [];
+let conversationState = 'idle';
+let pendingOrder = null;
 let orderConfirmed = false;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const rand = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+const rand  = (a,b) => a + Math.random()*(b-a);
+const now   = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
-function scrollToBottom(force=false){
-  if(force){ msgsEl.scrollTop = msgsEl.scrollHeight; return; }
-  const isNearBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 150;
-  if(isNearBottom) msgsEl.scrollTop = msgsEl.scrollHeight;
+function typingDelay(chars){ return Math.min(Math.max(1500, chars.length*60), 5000); }
+
+function playPing(){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(820, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime+.18);
+    gain.gain.setValueAtTime(.10, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime+.45);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime+.45);
+  }catch(e){}
 }
 
-function setStatus(txt, type){
-  hSubEl.textContent = txt;
-  hSubEl.style.color = type==='typing' ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.72)';
-}
+const isNearBottom = () => msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 90;
 
-function addMsg(content, side){
-  const row = document.createElement('div');
-  const isAgent = side==='agent';
-  row.className = `msg-row ${side}`;
-  if(lastSender === side) row.classList.add('grouped');
-  
-  const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-  
-  let html = '';
-  if(isAgent && lastSender !== 'agent'){
-    html += `<img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop" class="msg-av">`;
-  } else if(isAgent){
-    html += `<div class="msg-av-spacer"></div>`;
+function scrollToBottom(force){
+  if(force || isNearBottom()){
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+    unreadCount = 0;
+    scrollFab.classList.remove('show');
+    fabBadge.classList.remove('show');
+  } else {
+    unreadCount++;
+    scrollFab.classList.add('show');
+    fabBadge.textContent = unreadCount;
+    fabBadge.classList.add('show');
   }
-  
-  html += `
-    <div class="bubble ${isAgent?'a':'u'}">
-      ${content}
-      <div class="b-meta">
-        <span class="b-time">${time}</span>
-        ${!isAgent ? '<span class="b-receipt read">✓✓</span>' : ''}
-      </div>
-    </div>
-  `;
-  
-  row.innerHTML = html;
-  msgsEl.insertBefore(row, typingRowEl);
-  lastSender = side;
-  scrollToBottom();
 }
 
-function addSysMsg(txt){
+msgsEl.addEventListener('scroll', ()=>{
+  if(isNearBottom()){ unreadCount=0; scrollFab.classList.remove('show'); fabBadge.classList.remove('show'); }
+});
+
+function setStatus(text, style){
+  hSubEl.textContent = text;
+  hSubEl.style.color =
+    style==='typing' ? 'rgba(255,255,255,.96)' :
+    style==='online' ? 'rgba(255,255,255,.75)' :
+                       'rgba(255,255,255,.55)';
+}
+
+function markReceiptsRead(){
+  pendingReceipts.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.className='b-receipt read';
+  });
+  pendingReceipts = [];
+}
+
+function addMsg(html, type){
+  const isUser  = type==='user';
+  const grouped = lastSender===type;
+  const row     = document.createElement('div');
+  row.className = `msg-row ${type}${grouped?' grouped':''}`;
+
+  if(isUser){
+    const rcptId = 'r'+Date.now()+Math.random().toString(36).slice(2);
+    row.innerHTML = `
+      <div class="bubble u">
+        ${html}
+        <div class="b-meta">
+          <span class="b-time">${now()}</span>
+          <span class="b-receipt" id="${rcptId}">✓</span>
+        </div>
+      </div>`;
+    setTimeout(()=>{
+      const el=document.getElementById(rcptId);
+      if(el){ el.innerHTML='✓✓'; el.className='b-receipt delivered'; }
+    }, 650);
+    pendingReceipts.push(rcptId);
+  } else {
+    const avatar = grouped
+      ? `<div class="msg-av-spacer"></div>`
+      : `<img src="${AGENT_IMG}" class="msg-av" alt="Avatar">`;
+    row.innerHTML = `
+      ${avatar}
+      <div class="bubble a">
+        ${html}
+        <div class="b-meta">
+          <span class="b-time">${now()}</span>
+        </div>
+      </div>`;
+  }
+
+  msgsEl.insertBefore(row, typingRowEl);
+  lastSender = type;
+  if(type==='agent'){ playPing(); scrollToBottom(); }
+  else scrollToBottom(true);
+}
+
+function addSysMsg(text){
   const d = document.createElement('div');
-  d.className = 'sys-msg';
-  d.innerHTML = `<span>${txt}</span>`;
+  d.className='sys-msg';
+  d.innerHTML=`<span>${text}</span>`;
   msgsEl.insertBefore(d, typingRowEl);
-  scrollToBottom();
+  scrollToBottom(true);
 }
 
 function addAgentCard(){
   const card = document.createElement('div');
-  card.className = 'agent-intro';
-  card.innerHTML = `
+  card.className='agent-intro';
+  card.innerHTML=`
     <div class="ai-top">
       <div class="ai-img-wrapper">
-        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop" class="ai-img">
-        <div class="ai-badge-verified">✓</div>
+        <img src="${AGENT_IMG}" class="ai-img" alt="Foto do consultor">
+        <div class="ai-badge-verified" title="Perfil Verificado">✓</div>
       </div>
       <div class="ai-info">
         <div class="ai-name">Carlos Silva</div>
-        <div class="ai-role">Consultor Diskgas</div>
+        <div class="ai-role">Consultor de Vendas · Diskgas</div>
         <div class="ai-stars">
-          <span class="ai-star">★</span><span class="ai-star">★</span><span class="ai-star">★</span><span class="ai-star">★</span><span class="ai-star">★</span>
-          <span class="ai-stars-label">5.0</span>
+          <span class="ai-star">★</span>
+          <span class="ai-star">★</span>
+          <span class="ai-star">★</span>
+          <span class="ai-star">★</span>
+          <span class="ai-star">★</span>
+          <span class="ai-stars-label">4.9 · Excelente</span>
         </div>
-        <div class="ai-tag">Vendedor Oficial</div>
+        <div class="ai-tag">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Vendedor Verificado
+        </div>
       </div>
     </div>
     <div class="ai-stats">
@@ -801,12 +1017,6 @@ function addAgentCard(){
   scrollToBottom(true);
 }
 
-function typingDelay(text){
-  const base = 800;
-  const perChar = 30;
-  return Math.min(3000, base + (text.length * perChar));
-}
-
 async function showTyping(ms){
   lastSender=null;
   typingRowEl.style.display='flex';
@@ -818,6 +1028,8 @@ async function showTyping(ms){
 }
 
 async function agentSay(messages){
+  markReceiptsRead();
+  await sleep(rand(1500,2500));
   for(let i=0;i<messages.length;i++){
     await showTyping(typingDelay(messages[i]));
     addMsg(messages[i],'agent');
@@ -893,17 +1105,9 @@ async function startFlow(){
   await sleep(500);
   addAgentCard();
   await sleep(800);
-  
-  // Mensagem inicial do usuário simulada
   addMsg('opa, vc tem gás aí?','user');
   enableInput();
-  
-  // NOVO: Mensagem de "Preenchimento de Intervalo" (Intersticial)
-  // Isso evita o vácuo enquanto o vendedor "digita" as respostas reais
-  await sleep(600);
-  addMsg('Olá! Localizei sua mensagem. Só um instante enquanto verifico nossa disponibilidade imediata para você...','agent');
-  
-  await sleep(1200);
+  await sleep(400);
   await agentSay(['opa, tudo certo','qual tamanho vc tá precisando?']);
   conversationState='choosing_product';
   setQuicks([['P13 (13kg)','P13'],['P20 (20kg)','P20'],['P45 (45kg)','P45']]);
@@ -1061,7 +1265,7 @@ window.confirmOrder = async function(){
     'uns 35 a 50 min',
     'qualquer coisa me chama aí 👋',
   ]);
-  setQuicks([['onde tá?','qual the status?'],['valeu','obrigado']]);
+  setQuicks([['onde tá?','qual o status?'],['valeu','obrigado']]);
 };
 
 async function handleSend(){
