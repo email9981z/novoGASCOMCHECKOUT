@@ -377,14 +377,15 @@ html,body{
   display:flex;
   flex-direction:column;
   animation:cardSlideIn 0.7s var(--transition);
-  margin:18px auto;
+  margin:18px 0; /* Removido o auto para alinhar ao fluxo */
   box-shadow:var(--shadow-lg);
   border: 1px solid rgba(0,0,0,0.05);
-  width:calc(100% - 36px);
-  max-width:380px;
+  width: 100%; /* Ocupa a largura disponível no fluxo do chat */
+  max-width: 100%; /* Garante que não ultrapasse o container msgs */
   position:relative;
   z-index:2;
   overflow:hidden;
+  flex-shrink: 0; /* Garante que não seja espremido */
 }
 
 .agent-intro::before {
@@ -1004,11 +1005,11 @@ function addAgentCard() {
       </div>
     </div>
   `;
+  // Inserimos o card no fluxo normal de mensagens
   msgsEl.insertBefore(card, typingRowEl);
   
-  setTimeout(() => {
-    msgsEl.scrollTop = msgsEl.scrollHeight;
-  }, 50);
+  // O scroll é gerenciado pelo fluxo normal do chat
+  scrollToBottom(true);
 }
 
 async function showTyping(ms) {
