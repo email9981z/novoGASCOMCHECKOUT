@@ -2,65 +2,54 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Diskgas — Atendimento Profissional</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Diskgas — Atendimento</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  /* Professional Blue Palette - Enhanced */
   --brand:      #0F5BA8;
   --brand-dk:   #0A3F7A;
   --brand-lt:   #E8F2FF;
   --brand-mid:  #1B7FD8;
-  --brand-accent: #2B8FE8;
+  --brand-glow: rgba(27,127,216,.14);
 
-  --bg:         #F8FAFB;
+  --bg:         #EDF0F5;
   --surface:    #FFFFFF;
   --surface-2:  #F5F7FA;
-  --surface-3:  #F0F3F7;
 
   --text:       #0F1419;
   --text-2:     #4A5568;
   --text-3:     #8A92A2;
-  --text-4:     #B0B8C1;
 
   --border:     #D5DDE5;
   --border-2:   #E5EAEF;
-  --border-3:   #F0F3F7;
 
   --bubble-a:   #FFFFFF;
-  --bubble-u:   #E8F2FF;
+  --bubble-u-from: #0F5BA8;
+  --bubble-u-to:   #1B7FD8;
 
   --green:      #10B981;
   --green-dk:   #059669;
   --green-lt:   #F0FDF4;
-  --green-bd:   rgba(16,185,129,.12);
 
-  --read-clr:   #06B6D4;
+  --orange:     #F59E0B;
 
-  --radius-xs:  6px;
-  --radius-sm:  10px;
-  --radius:     14px;
-  --radius-lg:  20px;
-  --radius-xl:  28px;
+  --read-clr:   #60D4F7;
 
-  --sh-xs: 0 1px 2px rgba(15,20,25,.04);
-  --sh-sm: 0 2px 6px rgba(15,20,25,.06);
-  --sh-md: 0 4px 12px rgba(15,20,25,.08);
-  --sh-lg: 0 8px 24px rgba(15,20,25,.10);
-  --sh-xl: 0 12px 32px rgba(15,20,25,.12);
+  --radius:     16px;
+  --radius-lg:  22px;
+  --radius-xs:  5px;
 
-  --ease:   cubic-bezier(.25,.46,.45,.94);
-  --spring: cubic-bezier(.34,1.56,.64,1);
+  --ease:  cubic-bezier(.25,.46,.45,.94);
+  --spring:cubic-bezier(.34,1.56,.64,1);
 }
 
 html,body{
   height:100%;width:100%;
   font-family:'DM Sans',sans-serif;
-  background:#0F1419;
+  background:#0d1117;
   display:flex;justify-content:center;align-items:center;
   overflow:hidden;
 }
@@ -72,603 +61,740 @@ html,body{
   position:relative;overflow:hidden;
 }
 
-/* Subtle professional atmosphere with enhanced gradient */
-.app::before{
-  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse 100% 28% at 50% 0%, rgba(15,91,168,.06) 0%, transparent 100%),
-    radial-gradient(ellipse 70% 18% at 0% 100%,  rgba(15,91,168,.03) 0%, transparent 100%);
-}
-
-/* ─── Header ─── */
+/* ── HEADER ── */
 .header{
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
-  padding:14px 16px;
-  display:flex;align-items:center;gap:12px;
+  background:linear-gradient(160deg,var(--brand-dk) 0%,var(--brand-mid) 100%);
+  padding:13px 14px;
+  display:flex;align-items:center;gap:10px;
   position:relative;z-index:10;
-  box-shadow: 0 2px 12px rgba(15,91,168,.15), 0 1px 0 rgba(0,0,0,.05);
+  flex-shrink:0;
+  box-shadow:0 2px 10px rgba(10,63,122,.3);
 }
 .header::after{
   content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 55%);
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 55%);
 }
 
-.back-btn{
+.icon-btn{
   width:36px;height:36px;border-radius:10px;
-  background:rgba(255,255,255,.16);border:none;cursor:pointer;
-  color:rgba(255,255,255,.96);font-size:18px;
+  background:rgba(255,255,255,.13);border:none;cursor:pointer;
+  color:rgba(255,255,255,.95);
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
-  transition:background .2s ease, transform .15s ease;
-  font-weight:600;
+  transition:background .18s ease,transform .15s ease;
+  position:relative;z-index:1;
 }
-.back-btn:hover{
-  background:rgba(255,255,255,.24);
-  transform:translateX(-2px);
-}
-.back-btn:active{
-  transform:scale(.92);
-}
+.icon-btn:hover{background:rgba(255,255,255,.22);}
+.icon-btn:active{transform:scale(.9);}
 
-.h-agent{display:flex;align-items:center;gap:12px;flex:1;min-width:0;}
+.h-agent{display:flex;align-items:center;gap:10px;flex:1;min-width:0;position:relative;z-index:1;}
 
-.h-avatar{position:relative;}
+.h-avatar{position:relative;flex-shrink:0;}
 .h-avatar-img{
-  width:42px;height:42px;border-radius:50%;
+  width:40px;height:40px;border-radius:50%;
   object-fit:cover;
-  border:2.5px solid rgba(255,255,255,.6);
-  box-shadow:0 0 0 2px rgba(15,91,168,.3), 0 2px 8px rgba(0,0,0,.15);
+  border:2px solid rgba(255,255,255,.5);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
-.h-status-dot{
+.h-dot{
   position:absolute;bottom:0;right:0;
-  width:12px;height:12px;border-radius:50%;
+  width:11px;height:11px;border-radius:50%;
   background:var(--green);
-  border:2.5px solid var(--brand);
-  box-shadow: 0 0 0 2px rgba(255,255,255,.4), inset 0 0 0 1px rgba(0,0,0,.1);
-  animation: statusPulse 2s ease-in-out infinite;
-}
-
-@keyframes statusPulse{
-  0%, 100%{box-shadow: 0 0 0 2px rgba(255,255,255,.4), inset 0 0 0 1px rgba(0,0,0,.1), 0 0 0 0 rgba(16,185,129,.4);}
-  50%{box-shadow: 0 0 0 2px rgba(255,255,255,.4), inset 0 0 0 1px rgba(0,0,0,.1), 0 0 0 4px rgba(16,185,129,.2);}
+  border:2px solid var(--brand-dk);
 }
 
 .h-info{flex:1;min-width:0;}
-.h-name{font-size:15px;font-weight:700;color:#fff;letter-spacing:.3px;}
+.h-name{font-size:14.5px;font-weight:700;color:#fff;letter-spacing:.2px;}
 .h-sub{
-  font-size:12px;color:rgba(255,255,255,.82);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  margin-top:2px;font-weight:400;
+  font-size:11.5px;color:rgba(255,255,255,.75);
+  margin-top:1px;font-weight:400;
+  transition:all .25s ease;
+  display:flex;align-items:center;gap:5px;
 }
+.h-sub.typing-state{color:rgba(255,255,255,.95);}
+.typing-dots-mini{display:none;gap:2px;align-items:center;}
+.typing-dots-mini.show{display:flex;}
+.tdm{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.85);animation:tdmpulse 1.2s ease infinite;}
+.tdm:nth-child(2){animation-delay:.15s;}
+.tdm:nth-child(3){animation-delay:.3s;}
+@keyframes tdmpulse{0%,60%,100%{opacity:.3;transform:scale(.8);}30%{opacity:1;transform:scale(1.2);}}
 
-/* ─── Messages ─── */
+/* ── TRUST BAR ── */
+.trust-bar{
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--border-2);
+  padding:6px 16px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  flex-shrink:0;
+}
+.t-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-2);font-weight:500;}
+.t-item svg{flex-shrink:0;}
+.t-sep{color:var(--border);font-size:12px;line-height:1;}
+
+/* ── MESSAGES ── */
 .msgs{
   flex:1;overflow-y:auto;overflow-x:hidden;
-  padding:18px 14px 14px;
-  display:flex;flex-direction:column;gap:14px;
-  position:relative;z-index:1;
-  scroll-behavior:smooth;
-  height: 100%;
+  padding:16px 14px 6px;
+  display:flex;flex-direction:column;gap:3px;
+  position:relative;
+}
+.msgs::-webkit-scrollbar{width:4px;}
+.msgs::-webkit-scrollbar-track{background:transparent;}
+.msgs::-webkit-scrollbar-thumb{background:rgba(15,91,168,.12);border-radius:2px;}
+
+/* ── SYSTEM MESSAGES ── */
+.sys{
+  text-align:center;margin:8px 0;
+  animation:fadeUp .4s var(--ease);
+}
+.sys span{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11.5px;color:var(--text-2);
+  background:rgba(255,255,255,.95);
+  border:1px solid var(--border-2);
+  border-radius:20px;
+  padding:5px 13px;
+  box-shadow:0 1px 4px rgba(0,0,0,.05);
+  font-weight:500;
+}
+.sys span.ok{
+  color:var(--green-dk);
+  background:var(--green-lt);
+  border-color:rgba(16,185,129,.18);
 }
 
-.sys-msg{text-align:center;margin:12px 0;animation:fadeIn .4s var(--ease);}
-.sys-msg span{
-  font-size:12px;color:var(--text-2);
-  background:rgba(255,255,255,.9);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(15,91,168,.12);
-  border-radius:12px;
-  padding:7px 18px;
-  box-shadow:var(--sh-sm);
-  font-weight:500;letter-spacing:.2px;
+.spinner-wrap{display:flex;justify-content:center;margin:4px 0 8px;animation:fadeUp .3s ease;}
+.spinner{
+  width:18px;height:18px;
+  border:2px solid rgba(15,91,168,.1);
+  border-top-color:var(--brand);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
 }
 
-/* Spinner Style - Enhanced */
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  margin: 6px 0 16px;
-  animation: fadeIn 0.3s ease;
-}
-.loading-spinner {
-  width: 22px;
-  height: 22px;
-  border: 2.5px solid rgba(15,91,168, 0.12);
-  border-top: 2.5px solid var(--brand);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  box-shadow: 0 0 0 2px rgba(15,91,168, 0.04);
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes chipIn{from{opacity:0;transform:translateX(-6px);}to{opacity:1;transform:translateX(0);}}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 
-.msg-row{
-  display:flex;gap:10px;align-items:flex-end;
-  max-width:88%;margin-bottom:0px;
-  animation:msgIn .35s var(--ease);
+/* ── MESSAGE ROWS ── */
+.row{
+  display:flex;gap:8px;align-items:flex-end;
+  max-width:88%;animation:msgIn .28s var(--ease);
 }
-.msg-row.user{align-self:flex-end;flex-direction:row-reverse;max-width:82%;}
-.msg-row.agent{align-self:flex-start;}
+.row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
+.row.agent{align-self:flex-start;}
+/* Grouped = same sender, consecutive */
+.row.grouped{margin-top:2px;}
+.row:not(.grouped){margin-top:10px;}
 
-.msg-avatar{
-  width:32px;height:32px;border-radius:50%;
+.m-avatar{
+  width:30px;height:30px;border-radius:50%;
   object-fit:cover;flex-shrink:0;
-  margin-bottom:2px;
-  box-shadow: 0 2px 6px rgba(15,91,168,.12);
-  border: 1.5px solid rgba(15,91,168,.15);
+  border:1.5px solid rgba(15,91,168,.1);
 }
-
-@keyframes msgIn{
-  from{opacity:0;transform:translateY(8px) scale(.96);}
-  to{opacity:1;transform:translateY(0) scale(1);}
-}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.m-avatar.ghost{visibility:hidden;}
 
 .bubble{
-  padding:11px 14px 9px;
+  padding:10px 13px 8px;
   border-radius:var(--radius);
-  font-size:14.5px;line-height:1.65;
-  position:relative;
-  word-wrap:break-word;
-  overflow-wrap:break-word;
+  font-size:14px;line-height:1.7;
+  word-wrap:break-word;overflow-wrap:break-word;
+  position:relative;max-width:100%;
 }
 .bubble.a{
-  background:var(--bubble-a);
-  color:var(--text);
-  border-radius:4px var(--radius) var(--radius) var(--radius);
-  box-shadow: 0 1px 3px rgba(15,20,25,.08), 0 0 0 1px rgba(15,20,25,.04);
-  border: 1px solid var(--border-2);
+  background:var(--bubble-a);color:var(--text);
+  border-radius:var(--radius-xs) var(--radius) var(--radius) var(--radius);
+  box-shadow:0 1px 3px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.03);
 }
+.row.grouped.agent .bubble.a{border-radius:var(--radius-xs) var(--radius) var(--radius) var(--radius);}
 .bubble.u{
-  background:var(--bubble-u);
-  color:var(--text);
-  border-radius:var(--radius) 4px var(--radius) var(--radius);
-  box-shadow: 0 1px 3px rgba(27,127,216,.1), 0 0 0 1px rgba(27,127,216,.08);
-  border: 1px solid rgba(27,127,216,.2);
+  background:linear-gradient(150deg,var(--bubble-u-from) 0%,var(--bubble-u-to) 100%);
+  color:#fff;
+  border-radius:var(--radius) var(--radius-xs) var(--radius) var(--radius);
+  box-shadow:0 3px 10px rgba(15,91,168,.22);
 }
+.row.grouped.user .bubble.u{border-radius:var(--radius) var(--radius-xs) var(--radius) var(--radius);}
 
 .b-meta{
   display:flex;align-items:center;justify-content:flex-end;
-  gap:5px;margin-top:3px;
-  float:right;margin-left:10px;
+  gap:4px;margin-top:4px;float:right;margin-left:8px;
 }
-.b-time{font-size:11px;color:rgba(15,20,25,.4);font-weight:400;}
-.b-read{
-  font-size:11px;color:var(--read-clr);
-  display:flex;align-items:center;gap:2px;
-}
+.b-time{font-size:10.5px;color:rgba(255,255,255,.55);}
+.bubble.a .b-time{color:rgba(15,20,25,.3);}
+.b-read{font-size:10.5px;transition:color .4s ease;}
+.b-read.sending{color:rgba(255,255,255,.4);}
+.b-read.sent{color:rgba(255,255,255,.6);}
+.b-read.read{color:var(--read-clr);}
+.b-meta.hide{display:none;}
 
-/* ─── Agent Intro Card ─── */
-.agent-intro{
+/* ── AGENT INTRO CARD ── */
+.intro-card{
   background:var(--surface);
   border-radius:var(--radius-lg);
   overflow:hidden;
-  margin:6px 0 10px;
-  box-shadow: 0 2px 12px rgba(15,91,168,.08);
+  margin:10px 0 6px;
   border:1px solid var(--border-2);
+  box-shadow:0 3px 12px rgba(15,91,168,.1);
+  animation:cardIn .5s var(--spring);
+  flex-shrink:0;
+  align-self:flex-start;
   width:100%;
-  flex-shrink: 0;
-  position:relative;
-  animation:cardSlideIn .55s var(--spring);
 }
-
-.ai-header{
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
-  padding: 10px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.ic-top{
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);
+  padding:9px 14px;
+  display:flex;justify-content:space-between;align-items:center;
 }
-.ai-header-title{
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  opacity: 0.95;
+.ic-top-label{color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;}
+.ic-badge{
+  background:rgba(255,255,255,.22);color:#fff;
+  font-size:8.5px;font-weight:700;padding:3px 8px;
+  border-radius:20px;text-transform:uppercase;letter-spacing:.4px;
+  display:flex;align-items:center;gap:3px;
 }
-.ai-badge-verified{
-  background: rgba(255,255,255,0.25);
-  color: #fff;
-  font-size: 8.5px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  border: 1px solid rgba(255,255,255,.25);
-  backdrop-filter: blur(6px);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-}
-
-.ai-body{
-  display:flex;gap:12px;align-items:center;
-  padding:12px 14px;
-}
-.ai-img-wrapper{
-  position: relative;
-}
-.ai-img{
-  width:44px;height:44px;border-radius:50%;
-  object-fit:cover;
+.ic-body{display:flex;gap:12px;align-items:center;padding:12px 14px 14px;}
+.ic-avatar-wrap{position:relative;}
+.ic-avatar{
+  width:46px;height:46px;border-radius:50%;object-fit:cover;
   border:2.5px solid #fff;
-  box-shadow: 0 2px 8px rgba(15,91,168,.15), 0 0 0 1px rgba(15,91,168,.1);
-  flex-shrink: 0;
+  box-shadow:0 2px 8px rgba(15,91,168,.12);
 }
-.ai-status-online{
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  width: 12px;
-  height: 12px;
-  background: var(--green);
-  border: 2.5px solid #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(15,91,168,.2), inset 0 0 0 1px rgba(0,0,0,.1);
-  animation: statusPulse 2s ease-in-out infinite;
+.ic-online{
+  position:absolute;bottom:1px;right:1px;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--green);border:2px solid #fff;
 }
+.ic-info{flex:1;min-width:0;}
+.ic-name{font-size:14.5px;font-weight:700;color:var(--text);}
+.ic-role{font-size:11.5px;color:var(--text-2);margin:2px 0 4px;font-weight:500;}
+.ic-status{font-size:11px;color:var(--green-dk);font-weight:600;display:flex;align-items:center;gap:4px;}
+.ic-status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);}
+.ic-stars{display:flex;align-items:center;gap:5px;margin-top:5px;}
+.ic-star{color:var(--orange);font-size:11px;}
+.ic-rating{font-size:11px;color:var(--text-2);font-weight:500;}
 
-.ai-info{flex:1;min-width:0;}
-.ai-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;letter-spacing:.2px;}
-.ai-role{font-size:11px;color:var(--text-2);margin-bottom:4px;display:flex;align-items:center;gap:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
-
-.ai-status-info{
-  font-size: 11px;
-  color: var(--green-dk);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  letter-spacing: .2px;
-}
-.ai-status-dot{
-  width: 7px;
-  height: 7px;
-  background: var(--green);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(16,185,129,.2);
-}
-
-.ai-stats{
-  display: none;
-}
-.ai-stat-item{
-  display: flex;
-  flex-direction: column;
-}
-.ai-stat-val{
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--brand);
-}
-.ai-stat-lbl{
-  font-size: 9px;
-  color: var(--text-3);
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-@keyframes cardSlideIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-/* ─── Typing ─── */
+/* ── TYPING ── */
 .typing-row{
-  display:none;align-items:flex-end;gap:10px;
-  align-self:flex-start;animation:fadeIn .25s ease;
+  display:none;align-items:flex-end;gap:8px;
+  align-self:flex-start;
+  padding:0 14px 4px;
+  animation:fadeUp .25s ease;
+  flex-shrink:0;
 }
 .typing-bubble{
   background:var(--bubble-a);
-  border-radius:4px var(--radius) var(--radius) var(--radius);
-  padding:12px 16px;
-  box-shadow: 0 1px 3px rgba(15,20,25,.08), 0 0 0 1px rgba(15,20,25,.04);
-  display:flex;gap:6px;
-  border: 1px solid var(--border-2);
-  align-items:center;
-  min-height:42px;
+  border-radius:var(--radius-xs) var(--radius) var(--radius) var(--radius);
+  padding:11px 15px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);
+  display:flex;gap:5px;align-items:center;
 }
-.typing-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:rgba(15,20,25,.25);
-  animation:typePulse 1.4s ease-in-out infinite;
+.td{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(15,20,25,.2);
+  animation:tdpulse 1.3s ease-in-out infinite;
 }
-.typing-dot:nth-child(2){animation-delay:.2s;}
-.typing-dot:nth-child(3){animation-delay:.4s;}
-@keyframes typePulse{
-  0%,60%,100%{transform:translateY(0);opacity:.35;}
-  30%{transform:translateY(-5px);opacity:1;}
+.td:nth-child(2){animation-delay:.17s;}
+.td:nth-child(3){animation-delay:.34s;}
+@keyframes tdpulse{
+  0%,65%,100%{transform:translateY(0);opacity:.25;}
+  30%{transform:translateY(-5px);opacity:1;background:var(--brand);}
 }
 
-/* ─── Footer ─── */
+/* ── QUICK REPLIES ── */
+.qr-row{
+  padding:5px 14px 8px;
+  display:flex;gap:7px;
+  overflow-x:auto;
+  flex-shrink:0;
+  scrollbar-width:none;
+}
+.qr-row::-webkit-scrollbar{display:none;}
+.chip{
+  display:inline-flex;align-items:center;gap:4px;
+  white-space:nowrap;
+  padding:7px 13px;
+  background:var(--surface);
+  border:1.5px solid rgba(15,91,168,.2);
+  border-radius:20px;
+  font-size:12.5px;font-weight:600;
+  color:var(--brand);
+  cursor:pointer;
+  transition:all .18s var(--ease);
+  box-shadow:0 1px 4px rgba(15,91,168,.07);
+  animation:chipIn .3s var(--ease) both;
+  flex-shrink:0;
+  font-family:'DM Sans',sans-serif;
+}
+.chip:nth-child(2){animation-delay:.07s;}
+.chip:nth-child(3){animation-delay:.13s;}
+.chip:nth-child(4){animation-delay:.19s;}
+.chip:hover{
+  background:var(--brand-lt);
+  border-color:var(--brand-mid);
+  transform:translateY(-1px);
+  box-shadow:0 3px 9px rgba(15,91,168,.15);
+}
+.chip:active{transform:scale(.95);}
+
+/* ── SCROLL FAB ── */
+.scroll-fab{
+  position:absolute;
+  bottom:78px;right:14px;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--brand);color:#fff;border:none;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(15,91,168,.28);
+  z-index:20;
+  transition:all .22s var(--spring);
+}
+.scroll-fab.on{display:flex;}
+.scroll-fab:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(15,91,168,.32);}
+.scroll-fab:active{transform:scale(.9);}
+.fab-badge{
+  position:absolute;top:-5px;right:-5px;
+  background:#EF4444;color:#fff;
+  font-size:9px;font-weight:700;
+  min-width:17px;height:17px;
+  border-radius:10px;
+  display:none;align-items:center;justify-content:center;
+  border:2px solid var(--bg);
+  padding:0 3px;
+}
+.fab-badge.on{display:flex;}
+
+/* ── FOOTER ── */
 .footer{
   background:var(--surface);
   border-top:1px solid var(--border-2);
-  padding:12px 14px 16px;
-  box-shadow: 0 -2px 8px rgba(0,0,0,.02);
+  padding:10px 12px;
+  padding-bottom:max(12px,env(safe-area-inset-bottom));
+  flex-shrink:0;
+  box-shadow:0 -2px 8px rgba(0,0,0,.03);
 }
-.input-row{display:flex;gap:10px;align-items:flex-end;}
+.input-row{display:flex;gap:9px;align-items:flex-end;}
 .input-wrap{
-  flex:1;display:flex;align-items:center;gap:10px;
+  flex:1;display:flex;align-items:flex-end;
   background:var(--surface-2);
-  border-radius:26px;
-  padding:11px 16px;
+  border-radius:24px;
+  padding:10px 14px;
   border:1.5px solid var(--border);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;
+  min-height:44px;
 }
 .input-wrap:focus-within{
-  border-color: var(--brand-mid);
-  box-shadow: 0 0 0 3px rgba(27,127,216,.1);
+  border-color:var(--brand-mid);
+  box-shadow:0 0 0 3px var(--brand-glow);
   background:var(--surface);
 }
 .msg-input{
   flex:1;border:none;outline:none;
   font-size:14.5px;font-family:'DM Sans',sans-serif;
-  background:transparent;
-  color: var(--text);
-  font-weight:400;
+  background:transparent;color:var(--text);
+  resize:none;
+  min-height:22px;max-height:88px;
+  line-height:1.5;overflow-y:auto;
+  scrollbar-width:none;
 }
-.msg-input::placeholder{
-  color: var(--text-3);
-  font-weight:400;
-}
+.msg-input::-webkit-scrollbar{display:none;}
+.msg-input::placeholder{color:var(--text-3);}
+
 .send-btn{
   width:44px;height:44px;border-radius:50%;
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
-  color:#fff; border:none;
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);
+  color:#fff;border:none;
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;
-  transition: transform 0.2s var(--spring), box-shadow 0.2s ease;
-  box-shadow: 0 2px 8px rgba(15,91,168,.16);
-  flex-shrink: 0;
-  font-weight:600;
+  transition:all .2s var(--spring);
+  box-shadow:0 3px 10px rgba(15,91,168,.22);
+  flex-shrink:0;
 }
-.send-btn:hover{
-  box-shadow: 0 4px 14px rgba(15,91,168,.24);
-  transform: translateY(-1px);
+.send-btn:disabled{
+  background:var(--border);
+  box-shadow:none;
+  cursor:not-allowed;
+  transform:none !important;
 }
-.send-btn:active{
-  transform: scale(0.88);
-  box-shadow: 0 1px 4px rgba(15,91,168,.12);
+.send-btn:not(:disabled):hover{
+  box-shadow:0 5px 16px rgba(15,91,168,.32);
+  transform:translateY(-1px) scale(1.05);
 }
-
-/* Scrollbar Styling */
-.msgs::-webkit-scrollbar{
-  width:6px;
-}
-.msgs::-webkit-scrollbar-track{
-  background:transparent;
-}
-.msgs::-webkit-scrollbar-thumb{
-  background:rgba(15,91,168,.15);
-  border-radius:3px;
-  transition: background 0.2s ease;
-}
-.msgs::-webkit-scrollbar-thumb:hover{
-  background:rgba(15,91,168,.25);
-}
+.send-btn:not(:disabled):active{transform:scale(.88);}
 </style>
 </head>
 <body>
 <div class="app">
+
+  <!-- HEADER -->
   <header class="header">
-    <button class="back-btn">←</button>
+    <button class="icon-btn" aria-label="Voltar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    </button>
     <div class="h-agent">
       <div class="h-avatar">
-        <img src="https://i.pravatar.cc/100?u=diskgas" class="h-avatar-img" alt="Avatar">
-        <div class="h-status-dot"></div>
+        <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="h-avatar-img" alt="Carlos Oliveira">
+        <div class="h-dot"></div>
       </div>
       <div class="h-info">
         <div class="h-name">Carlos Oliveira</div>
-        <div class="h-sub">Online agora</div>
+        <div class="h-sub" id="headerStatus">
+          <span id="statusText">Online · Diskgas</span>
+          <span class="typing-dots-mini" id="typingDotsMini">
+            <span class="tdm"></span><span class="tdm"></span><span class="tdm"></span>
+          </span>
+        </div>
       </div>
     </div>
+    <button class="icon-btn" aria-label="Mais opções">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+    </button>
   </header>
 
-  <div class="msgs" id="msgs">
-    <!-- Messages will appear here -->
-  </div>
-
-  <div class="typing-row" id="typingRow" style="padding: 0 14px 10px;">
-    <img src="https://i.pravatar.cc/100?u=carlos" class="msg-avatar" alt="Avatar">
-    <div class="typing-bubble">
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="t-item">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="#F59E0B"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>4,9</span>
+    </div>
+    <span class="t-sep">·</span>
+    <div class="t-item">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>2.847 atendidos</span>
+    </div>
+    <span class="t-sep">·</span>
+    <div class="t-item">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>≤ 45 min entrega</span>
     </div>
   </div>
 
+  <!-- MESSAGES -->
+  <div class="msgs" id="msgs"></div>
+
+  <!-- TYPING ROW -->
+  <div class="typing-row" id="typingRow">
+    <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="m-avatar" alt="Carlos">
+    <div class="typing-bubble">
+      <div class="td"></div><div class="td"></div><div class="td"></div>
+    </div>
+  </div>
+
+  <!-- QUICK REPLIES -->
+  <div id="qrZone"></div>
+
+  <!-- SCROLL FAB -->
+  <button class="scroll-fab" id="scrollFab" aria-label="Ir para mensagens novas">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <span class="fab-badge" id="fabBadge">0</span>
+  </button>
+
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="input-row">
       <div class="input-wrap">
-        <input type="text" class="msg-input" id="msgInput" placeholder="Escreva sua mensagem...">
+        <textarea class="msg-input" id="msgInput" placeholder="Escreva sua mensagem..." rows="1"></textarea>
       </div>
-      <button class="send-btn" id="sendBtn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <button class="send-btn" id="sendBtn" disabled aria-label="Enviar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
   </footer>
 </div>
 
 <script>
-const msgsEl = document.getElementById('msgs');
-const inputEl = document.getElementById('msgInput');
-const sendBtnEl = document.getElementById('sendBtn');
-const typingRowEl = document.getElementById('typingRow');
+const msgsEl   = document.getElementById('msgs');
+const inputEl  = document.getElementById('msgInput');
+const sendBtnEl= document.getElementById('sendBtn');
+const typingEl = document.getElementById('typingRow');
+const qrZoneEl = document.getElementById('qrZone');
+const fabEl    = document.getElementById('scrollFab');
+const fabBadge = document.getElementById('fabBadge');
+const statusTextEl    = document.getElementById('statusText');
+const typingDotsMini  = document.getElementById('typingDotsMini');
+const headerStatusEl  = document.getElementById('headerStatus');
 
-const agentAvatar = "https://i.pravatar.cc/100?u=carlos";
-const now = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+const AVATAR = "https://i.pravatar.cc/100?u=diskgas-carlos";
+const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
-let isFirstContact = true;
-let messageCount = 0;
+let history = [];
+let lastSender = null;
+let atBottom = true;
+let unread = 0;
+let busy = false;
 
-// Helper to scroll to bottom with smooth behavior
-function scrollToBottom() {
-  setTimeout(() => {
-    msgsEl.scrollTop = msgsEl.scrollHeight;
-  }, 100);
-}
+/* ── CARLOS SYSTEM PROMPT ── */
+const SYSTEM = `Você é Carlos Oliveira, consultor especializado da Diskgas, empresa brasileira de entrega rápida de gás. Responda SEMPRE com JSON válido puro (sem markdown):
+{"message":"sua resposta","quickReplies":["sugestão1","sugestão2","sugestão3"]}
 
-function addMsg(text, type) {
-  const row = document.createElement('div');
-  row.className = `msg-row ${type}`;
-  
-  // Removido o avatar das mensagens enviadas conforme solicitado
-  // A foto aparecerá apenas no indicador de digitação (typing-row)
-  const readIndicator = type === 'user' ? `<span class="b-read">✓✓</span>` : '';
-  
-  row.innerHTML = `
-    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
-      ${text}
-      <div class="b-meta">
-        <span class="b-time">${now()}</span>
-        ${readIndicator}
-      </div>
-    </div>
-  `;
-  msgsEl.appendChild(row);
-  scrollToBottom();
-}
+Produtos:
+- Botijão P13 (gás de cozinha): R$120,00
+- Botijão P45 (uso comercial): R$280,00
+- Botijão P90 (industrial): R$520,00
+- 1ª entrega GRÁTIS para novos clientes
+- Entrega em até 45 minutos
+- Pagamento: PIX (5% desconto), cartão (3x sem juros), dinheiro na entrega
+- Atende todo o Brasil
 
-function addSystemMsg(text, showSpinner = false) {
-  const div = document.createElement('div');
-  div.className = 'sys-msg';
-  const span = document.createElement('span');
-  span.innerHTML = text;
-  div.appendChild(span);
-  msgsEl.appendChild(div);
-  
-  let spinner = null;
-  if (showSpinner) {
-    spinner = document.createElement('div');
-    spinner.className = 'spinner-container';
-    spinner.innerHTML = '<div class="loading-spinner"></div>';
-    msgsEl.appendChild(spinner);
-  }
-  
-  scrollToBottom();
-  return { container: div, textSpan: span, spinner: spinner };
-}
+Regras: máximo 2-3 frases, tom amigável e profissional, emojis com moderação.
+quickReplies: 2-4 opções relevantes ao próximo passo do cliente.
+Responda SOMENTE com o JSON, sem nenhum texto extra.`;
 
-function showAgentIntro() {
-  const card = document.createElement('div');
-  card.className = 'agent-intro';
-  card.innerHTML = `
-    <div class="ai-header">
-      <div class="ai-header-title">Consultor Disponível</div>
-      <div class="ai-badge-verified">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Verificado
-      </div>
-    </div>
-    <div class="ai-body">
-      <div class="ai-img-wrapper">
-        <img src="${agentAvatar}" class="ai-img" alt="Carlos">
-        <div class="ai-status-online"></div>
-      </div>
-      <div class="ai-info">
-        <div class="ai-name">Carlos Oliveira</div>
-        <div class="ai-role">
-          <span>Especialista em Atendimento</span>
-        </div>
-        <div class="ai-status-info">
-          <div class="ai-status-dot"></div>
-          Responde em poucos minutos
-        </div>
-      </div>
-    </div>
-  `;
-  msgsEl.appendChild(card);
-  scrollToBottom();
-}
-
-inputEl.onkeypress = (e) => { 
-  if(e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    const text = inputEl.value.trim();
-    if(!text) return;
-    inputEl.value = '';
-    addMsg(text, 'user');
-    messageCount++;
-    handleResponseFlow();
-  }
-};
-
-// Auto-start with automatic user message
-window.onload = async () => {
-  addSystemMsg("🔒 Conexão segura estabelecida");
-  await new Promise(r => setTimeout(r, 1200));
-  
-  // Simula a primeira mensagem automática do usuário
-  const defaultMsg = "Olá! Gostaria de saber mais sobre os produtos.";
-  addMsg(defaultMsg, 'user');
-  messageCount++;
-  
-  // Dispara o fluxo de resposta
-  handleResponseFlow();
-};
-
-async function handleResponseFlow() {
-  if (isFirstContact) {
-    // 1. GAP FILLER: System Message with Spinner
-    await new Promise(r => setTimeout(r, 900));
-    const sysObj = addSystemMsg("Buscando o melhor consultor para você...", true);
-
-    // 2. Wait and update to "Located" with Check
-    await new Promise(r => setTimeout(r, 2000));
-    if (sysObj.spinner) sysObj.spinner.remove();
-    
-    // Atualiza o texto e adiciona o check
-    sysObj.textSpan.innerHTML = "✓ Consultor Carlos conectado";
-    sysObj.textSpan.style.color = "var(--green-dk)";
-    sysObj.textSpan.style.background = "var(--green-lt)";
-    sysObj.textSpan.style.borderColor = "var(--green-bd)";
-
-    // 3. GAP FILLER: Agent Intro
-    await new Promise(r => setTimeout(r, 700));
-    showAgentIntro();
-
-    isFirstContact = false;
-  }
-
-  // 3. Typing indicator starts
-  await new Promise(r => setTimeout(r, 1400));
-  typingRowEl.style.display = 'flex';
-  scrollToBottom();
-
-  // 4. Agent Response
-  await new Promise(r => setTimeout(r, 2800));
-  typingRowEl.style.display = 'none';
-  
-  if (messageCount === 1) {
-      addMsg("Olá! Sou o Carlos. É um prazer te atender. 👋\n\nVi que você tem interesse em nossos produtos. Como posso ajudar você hoje?", 'agent');
+/* ── SCROLL TRACKING ── */
+msgsEl.addEventListener('scroll', () => {
+  atBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 80;
+  if (atBottom) {
+    unread = 0;
+    fabEl.classList.remove('on');
+    fabBadge.classList.remove('on');
   } else {
-      const responses = [
-        "Entendi perfeitamente. Deixa eu buscar mais informações para você.",
-        "Ótimo! Vou te ajudar com isso. Um momento...",
-        "Claro! Essa é uma ótima pergunta. Deixa eu detalhar melhor.",
-        "Perfeito! Vou verificar os melhores opções para você.",
-        "Entendi sua necessidade. Vou te passar as melhores soluções."
-      ];
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      addMsg(randomResponse, 'agent');
+    fabEl.classList.add('on');
+  }
+});
+fabEl.addEventListener('click', () => {
+  scrollDown(true);
+  unread = 0;
+  fabEl.classList.remove('on');
+  fabBadge.classList.remove('on');
+});
+
+function scrollDown(force = false) {
+  if (atBottom || force) {
+    setTimeout(() => msgsEl.scrollTo({top:msgsEl.scrollHeight,behavior:'smooth'}), 50);
+  } else {
+    unread++;
+    fabBadge.textContent = unread;
+    fabBadge.classList.add('on');
+    fabEl.classList.add('on');
   }
 }
 
-// Update sendBtn to use the new flow logic
-sendBtnEl.onclick = async () => {
+/* ── TEXTAREA AUTO-RESIZE ── */
+inputEl.addEventListener('input', () => {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 88) + 'px';
+  sendBtnEl.disabled = !inputEl.value.trim();
+});
+inputEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); }
+});
+sendBtnEl.addEventListener('click', doSend);
+
+/* ── QUICK REPLIES ── */
+function clearQR() { qrZoneEl.innerHTML = ''; }
+function showQR(replies) {
+  clearQR();
+  if (!replies?.length) return;
+  const row = document.createElement('div');
+  row.className = 'qr-row';
+  replies.forEach(txt => {
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.textContent = txt;
+    btn.onclick = () => { clearQR(); inputEl.value = txt; doSend(); };
+    row.appendChild(btn);
+  });
+  qrZoneEl.appendChild(row);
+  scrollDown();
+}
+
+/* ── ADD MESSAGE ── */
+function addMsg(text, type) {
+  const isGrouped = lastSender === type;
+  const row = document.createElement('div');
+  row.className = `row ${type}${isGrouped ? ' grouped' : ''}`;
+
+  const safeText = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\n/g,'<br>');
+
+  const avatarHtml = type === 'agent'
+    ? `<img src="${AVATAR}" class="m-avatar${isGrouped?' ghost':''}" alt="Carlos">`
+    : '';
+
+  const readHtml = type === 'user' ? `<span class="b-read sending">✓</span>` : '';
+
+  row.innerHTML = `
+    ${avatarHtml}
+    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
+      ${safeText}
+      <div class="b-meta">
+        <span class="b-time">${ts()}</span>
+        ${readHtml}
+      </div>
+    </div>`;
+
+  msgsEl.appendChild(row);
+  lastSender = type;
+
+  if (type === 'user') {
+    const readEl = row.querySelector('.b-read');
+    setTimeout(() => { readEl.textContent = '✓✓'; readEl.className = 'b-read sent'; }, 700);
+    setTimeout(() => { readEl.className = 'b-read read'; }, 2000);
+  }
+
+  scrollDown();
+  return row;
+}
+
+/* ── SYSTEM MESSAGE ── */
+function addSys(html, variant = '') {
+  const d = document.createElement('div');
+  d.className = 'sys';
+  const s = document.createElement('span');
+  s.className = variant;
+  s.innerHTML = html;
+  d.appendChild(s);
+  msgsEl.appendChild(d);
+  scrollDown();
+  return s;
+}
+
+function addSpinner() {
+  const d = document.createElement('div');
+  d.className = 'spinner-wrap';
+  d.innerHTML = '<div class="spinner"></div>';
+  msgsEl.appendChild(d);
+  scrollDown();
+  return d;
+}
+
+/* ── AGENT INTRO CARD ── */
+function showIntroCard() {
+  const el = document.createElement('div');
+  el.className = 'intro-card';
+  el.innerHTML = `
+    <div class="ic-top">
+      <span class="ic-top-label">Consultor disponível</span>
+      <span class="ic-badge">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Verificado
+      </span>
+    </div>
+    <div class="ic-body">
+      <div class="ic-avatar-wrap">
+        <img src="${AVATAR}" class="ic-avatar" alt="Carlos">
+        <div class="ic-online"></div>
+      </div>
+      <div class="ic-info">
+        <div class="ic-name">Carlos Oliveira</div>
+        <div class="ic-role">Especialista Diskgas</div>
+        <div class="ic-status"><div class="ic-status-dot"></div>Disponível agora</div>
+        <div class="ic-stars">
+          <span class="ic-star">★★★★★</span>
+          <span class="ic-rating">4,9 · 2.847 atendimentos</span>
+        </div>
+      </div>
+    </div>`;
+  msgsEl.appendChild(el);
+  lastSender = null;
+  scrollDown();
+}
+
+/* ── TYPING STATE ── */
+function setTyping(on) {
+  typingEl.style.display = on ? 'flex' : 'none';
+  if (on) {
+    statusTextEl.textContent = 'Digitando';
+    headerStatusEl.classList.add('typing-state');
+    typingDotsMini.classList.add('show');
+  } else {
+    statusTextEl.textContent = 'Online · Diskgas';
+    headerStatusEl.classList.remove('typing-state');
+    typingDotsMini.classList.remove('show');
+  }
+  if (on) scrollDown();
+}
+
+/* ── CARLOS API ── */
+async function askCarlos(userMsg) {
+  history.push({ role: 'user', content: userMsg });
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:SYSTEM,
+        messages:history
+      })
+    });
+    const data = await res.json();
+    const raw = (data.content||[]).map(b=>b.text||'').join('');
+    let parsed;
+    try { parsed = JSON.parse(raw.replace(/```json|```/g,'').trim()); }
+    catch { parsed = {message:raw, quickReplies:[]}; }
+    history.push({ role:'assistant', content: raw });
+    return { message: parsed.message || raw, quickReplies: parsed.quickReplies || [] };
+  } catch {
+    return {
+      message: 'Desculpe, tive uma falha técnica momentânea. Pode tentar novamente? 🙏',
+      quickReplies: ['Tentar novamente', 'Preciso de ajuda urgente']
+    };
+  }
+}
+
+/* ── SEND ── */
+async function doSend() {
   const text = inputEl.value.trim();
-  if(!text) return;
+  if (!text || busy) return;
+  busy = true;
   inputEl.value = '';
+  inputEl.style.height = 'auto';
+  sendBtnEl.disabled = true;
+  clearQR();
   addMsg(text, 'user');
-  messageCount++;
-  handleResponseFlow();
-};
+  await agentReply(text);
+  busy = false;
+  sendBtnEl.disabled = !inputEl.value.trim();
+}
+
+async function agentReply(userText) {
+  const delay = 1100 + Math.random() * 1100;
+  setTyping(true);
+  const [reply] = await Promise.all([
+    askCarlos(userText),
+    new Promise(r => setTimeout(r, delay))
+  ]);
+  setTyping(false);
+  addMsg(reply.message, 'agent');
+  if (reply.quickReplies?.length) setTimeout(() => showQR(reply.quickReplies), 180);
+}
+
+/* ── INIT ── */
+(async () => {
+  addSys('🔒 Conexão criptografada estabelecida');
+  await new Promise(r => setTimeout(r, 900));
+
+  const sp = addSpinner();
+  const sysTxt = addSys('Conectando com consultor Diskgas...');
+  await new Promise(r => setTimeout(r, 1900));
+
+  sp.remove();
+  sysTxt.textContent = '✓ Carlos Oliveira conectado';
+  sysTxt.className = 'ok';
+
+  await new Promise(r => setTimeout(r, 600));
+  showIntroCard();
+
+  await new Promise(r => setTimeout(r, 900));
+  setTyping(true);
+  await new Promise(r => setTimeout(r, 2300));
+  setTyping(false);
+
+  const greeting = 'Olá! 👋 Sou o Carlos, consultor da Diskgas. Como posso te ajudar hoje?';
+  history.push({ role:'assistant', content: JSON.stringify({message:greeting,quickReplies:[]}) });
+  addMsg(greeting, 'agent');
+
+  await new Promise(r => setTimeout(r, 250));
+  showQR([
+    'Pedir gás agora 🚀',
+    'Ver preços 💰',
+    'Prazo de entrega ⏱️',
+    'Formas de pagamento 💳'
+  ]);
+})();
 </script>
 </body>
 </html>
