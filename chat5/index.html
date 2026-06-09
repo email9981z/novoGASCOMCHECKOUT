@@ -447,58 +447,29 @@ html,body{
 .ic-avatar{
   width:48px;height:48px;border-radius:50%;object-fit:cover;
   border:2.5px solid #fff;
-  box-shadow:0 2px 10px rgba(15,91,168,.14);
+  box-shadow:0 2px 10px rgba(15,91,168,.15);
 }
 .ic-online{
-  position:absolute;bottom:1px;right:1px;
+  position:absolute;bottom:2px;right:2px;
   width:12px;height:12px;border-radius:50%;
-  background:var(--green);border:2px solid #fff;
-  animation:pulse-dot 2s ease-in-out infinite;
+  background:var(--green);border:2.5px solid #fff;
 }
-.ic-info{flex:1;min-width:0;}
-.ic-name{font-size:15px;font-weight:700;color:var(--text);}
-.ic-role{font-size:11.5px;color:var(--text-2);margin:2px 0 4px;font-weight:500;}
-.ic-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.ic-status{font-size:11px;color:var(--green-dk);font-weight:700;display:flex;align-items:center;gap:4px;}
-.ic-status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);}
-.ic-stars{display:flex;align-items:center;gap:4px;}
-.ic-star{color:var(--orange);font-size:11px;}
-.ic-rating{font-size:11px;color:var(--text-2);font-weight:600;}
-.ic-divider{width:1px;height:12px;background:var(--border-2);}
-.ic-orders{font-size:11px;color:var(--text-3);font-weight:500;}
-
-/* ── TYPING ── */
-.typing-row{
-  display:none;align-items:flex-end;gap:8px;
-  align-self:flex-start;
-  padding:0 14px 4px;
-  animation:fadeUp .25s ease;
-  flex-shrink:0;
-}
-.typing-bubble{
-  background:var(--bubble-a);
-  border-radius:var(--radius-xs) var(--radius) var(--radius) var(--radius);
-  padding:11px 15px;
-  box-shadow:0 1px 4px rgba(0,0,0,.07);
-  display:flex;gap:5px;align-items:center;
-}
-.td{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(15,20,25,.2);
-  animation:tdpulse 1.3s ease-in-out infinite;
-}
-.td:nth-child(2){animation-delay:.17s;}
-.td:nth-child(3){animation-delay:.34s;}
-@keyframes tdpulse{
-  0%,65%,100%{transform:translateY(0);opacity:.25;}
-  30%{transform:translateY(-5px);opacity:1;background:var(--brand);}
-}
+.ic-info{flex:1;}
+.ic-name{font-size:15px;font-weight:700;color:var(--text);letter-spacing:.2px;}
+.ic-role{font-size:11.5px;color:var(--text-3);margin-top:1px;font-weight:500;}
+.ic-meta{display:flex;align-items:center;gap:7px;margin-top:7px;}
+.ic-status{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--green-dk);font-weight:600;}
+.ic-status-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse-dot 2s infinite;}
+.ic-divider{width:1px;height:10px;background:var(--border-2);}
+.ic-stars{color:var(--orange);font-size:10px;letter-spacing:-1px;}
+.ic-rating{font-size:10.5px;font-weight:700;color:var(--text-2);}
+.ic-orders{font-size:10.5px;color:var(--text-3);font-weight:500;}
 
 /* ── SCROLL FAB ── */
 .scroll-fab{
-  position:absolute;bottom:78px;right:14px;
-  width:40px;height:40px;border-radius:50%;
-  background:var(--brand);color:#fff;border:none;cursor:pointer;
+  position:absolute;bottom:85px;right:14px;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--surface);color:var(--brand);border:none;
   display:none;align-items:center;justify-content:center;
   box-shadow:0 4px 14px rgba(15,91,168,.3);
   z-index:20;transition:all .22s var(--spring);
@@ -1159,7 +1130,7 @@ inputWrapEl.onclick = (e) => {
     inputWrapEl.classList.remove('shake');
     void inputWrapEl.offsetWidth; // Trigger reflow
     inputWrapEl.classList.add('shake');
-    showAlert('O chat com o vendedor é liberado para clientes com pedidos em fase de entrega, conclua o pagamento do seu pedido para liberação do chat.');
+    showAlert('O chat com o vendedor é liberado para clientes com pedido em fase de entrega, realize o pgamento do seu pedido e o chat será liberado para dúvidas ou outras questões.');
   }
 };
 inputEl.addEventListener('keydown', e => {
@@ -1188,8 +1159,9 @@ function addMsg(text, type, newGroup = false) {
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/\n/g,'<br>');
 
-  const avatarHtml = type === 'agent'
-    ? `<img src="${AVATAR}" class="m-avatar${isGrouped?' ghost':''}" alt="Thiago">` : '';
+  const avatarHtml = (type === 'agent' && !isGrouped) 
+    ? `<img src="${AVATAR}" class="m-avatar" alt="Thiago">` 
+    : (type === 'agent' ? `<div class="m-avatar ghost"></div>` : '');
 
   const readHtml = type === 'user' ? `<span class="b-read sending">✓</span>` : '';
 
@@ -1257,7 +1229,7 @@ function showIntroCard() {
         Parceiro conectado
       </span>
       <span class="ic-badge">
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"/></svg>
         Verificado Diskgas
       </span>
     </div>
@@ -1374,68 +1346,13 @@ function showOrderConfirmation() {
   }
 }
 
-// ── PIX BLOCK ────────────────────────────────────────
-function showPixBlock() {
+// ── DELIVERY STEPS ───────────────────────────────────
+function showDeliverySteps() {
   const pixCode = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540589.905802BR5915DISK GAS LTDA6009SAO PAULO62070503***6304E2B1";
   const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
   const originalPrice = (ORDER.productPrice * 1.225).toFixed(2).replace('.',',');
   const savings = (ORDER.productPrice * 0.225).toFixed(2).replace('.',',');
 
-  const block = document.createElement('div');
-  block.className = 'pix-block';
-  block.innerHTML = `
-    <div class="pix-header">
-      <div class="pix-logo">PIX</div>
-      <div class="pix-head-info">
-        <div class="pix-head-title">Pagamento via Pix</div>
-        <div class="pix-head-sub">Diskgas Entregas Ltda.</div>
-      </div>
-      <div class="pix-secure-badge">
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Seguro
-      </div>
-    </div>
-    <div class="pix-pricing">
-      <div class="pix-price-col">
-        <div class="pix-original">de R$ ${originalPrice}</div>
-        <div class="pix-final">R$ ${finalPrice}</div>
-      </div>
-      <div class="pix-savings-badge">Economia R$ ${savings}</div>
-    </div>
-    <div class="pix-code-field" id="pixField">
-      <div class="pix-code-text">${pixCode}</div>
-      <div class="pix-copy-btn" id="pixCopyBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-        Copiar código
-      </div>
-    </div>
-    <div class="pix-hint">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      Pague no app do banco · Confirmação automática
-    </div>`;
-
-  msgsEl.appendChild(block);
-  scrollDown();
-
-  const field = block.querySelector('#pixField');
-  const copyBtn = block.querySelector('#pixCopyBtn');
-  field.onclick = () => {
-    navigator.clipboard.writeText(pixCode).catch(() => {});
-    field.classList.add('copied');
-    copyBtn.innerHTML = `
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-      Copiado!`;
-    setTimeout(() => {
-      field.classList.remove('copied');
-      copyBtn.innerHTML = `
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-        Copiar código`;
-    }, 2500);
-  };
-}
-
-// ── DELIVERY STEPS ───────────────────────────────────
-function showDeliverySteps() {
   const card = document.createElement('div');
   card.className = 'steps-card';
   card.innerHTML = `
@@ -1445,6 +1362,29 @@ function showDeliverySteps() {
       <div class="step-content">
         <div class="step-label">Confirmar pagamento</div>
         <div class="step-desc">Aguardando Pix</div>
+        
+        <!-- Pix Copy Section Inside Step 1 -->
+        <div style="margin-top:12px; margin-bottom:12px;">
+          <div class="pix-pricing" style="margin-bottom:8px; padding:8px 10px;">
+            <div class="pix-price-col">
+              <div class="pix-original" style="font-size:10px;">de R$ ${originalPrice}</div>
+              <div class="pix-final" style="font-size:16px;">R$ ${finalPrice}</div>
+            </div>
+            <div class="pix-savings-badge" style="font-size:9px; padding:3px 8px;">Economia R$ ${savings}</div>
+          </div>
+          <div class="pix-code-field" id="pixField" style="margin-bottom:6px;">
+            <div class="pix-code-text" style="font-size:10px;">${pixCode}</div>
+            <div class="pix-copy-btn" id="pixCopyBtn" style="height:30px; font-size:10px; padding:0 10px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copiar
+            </div>
+          </div>
+          <div class="pix-hint" style="font-size:9.5px;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Pague no app do banco
+          </div>
+        </div>
+
         <div class="step-wait">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Aguardando
@@ -1467,6 +1407,22 @@ function showDeliverySteps() {
     </div>`;
   msgsEl.appendChild(card);
   scrollDown();
+
+  const field = card.querySelector('#pixField');
+  const copyBtn = card.querySelector('#pixCopyBtn');
+  field.onclick = () => {
+    navigator.clipboard.writeText(pixCode).catch(() => {});
+    field.classList.add('copied');
+    copyBtn.innerHTML = `
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      Copiado!`;
+    setTimeout(() => {
+      field.classList.remove('copied');
+      copyBtn.innerHTML = `
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copiar`;
+    }, 2500);
+  };
 }
 
 // ── TYPING STATE ─────────────────────────────────────
@@ -1476,7 +1432,6 @@ function setTyping(on) {
     statusTextEl.textContent = 'Digitando';
     headerStatusEl.classList.add('typing-state');
     typingDotsMini.classList.add('show');
-    scrollDown();
   } else {
     statusTextEl.textContent = 'Online · Diskgas';
     headerStatusEl.classList.remove('typing-state');
@@ -1533,17 +1488,9 @@ async function runConversation() {
   await pause(4000);
   loadingSp.remove();
 
-  // PIX block
-  showPixBlock();
-  await pause(1200);
-
-
-
-
-
-  // Steps card
+  // Delivery steps with Pix inside
   showDeliverySteps();
-  await pause(800);
+  await pause(1200);
 
   // 7 — Compromisso de entrega
   await agentSay(`Assim que o sistema identificar o Pix, o entregador sai imediatamente. Estou aqui acompanhando tudo! 🚀`, true);
