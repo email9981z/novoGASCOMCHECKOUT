@@ -1239,17 +1239,17 @@ function showOrderConfirmation() {
   scrollDown();
 
   currentConfirmationBlock.querySelector('#btnCorrect').onclick = async () => {
-    currentConfirmationBlock.style.opacity='0.6';
+    currentConfirmationBlock.style.opacity='0.8';
     currentConfirmationBlock.style.pointerEvents='none';
     const btn = currentConfirmationBlock.querySelector('#btnCorrect');
-    btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;border-top-color:#fff;margin-right:8px;"></div> Processando...';
+    
+    // Feedback instantâneo: Verde + Confirmado
+    btn.style.background = 'var(--green)';
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
+    
     currentConfirmationBlock.querySelectorAll('button').forEach(b=>b.disabled=true);
     const { onReadPromise } = addMsg('Sim, está correto','user');
     await onReadPromise;
-    
-    // Pequeno atraso para o usuário ver o "Processando" antes de sumir
-    await pause(600);
-    btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
     
     if(confirmationResolve) confirmationResolve('correct');
   };
