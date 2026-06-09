@@ -963,40 +963,48 @@ async function doSend() {
   sendBtnEl.disabled = !inputEl.value.trim();
 }
 
-async function agentReply(userText, specialMode = "normal") {
-  let delay = 1500;
-  
-  // Tempos ajustados para parecer leitura/digitação humana
-  if (specialMode === "greeting") delay = 1200;
-  else if (specialMode === "payment") delay = 1800;
+function calculateTypingDelay(text) {
+  const words = text.split(' ').length;
+  const delay = (words * 200) + 1000; // ~200ms por palavra + 1s base
+  return Math.max(1200, Math.min(delay, 3500));
+}
 
+async function agentReply(userText, specialMode = "normal") {
   setTyping(true);
   
-  const [reply] = await Promise.all([
-    askCarlos(userText, specialMode),
-    new Promise(r => setTimeout(r, delay))
-  ]);
+  const response = await askCarlos(userText, specialMode);
+  // Simula quebra de mensagens se houver um ponto seguido de espaço ou nova linha
+  const messages = response.message.split(/(?<=[.!?])\s+|\n/);
   
-  setTyping(false);
-  addMsg(reply.message, 'agent');
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i].trim();
+    if (!msg) continue;
+
+    const delay = calculateTypingDelay(msg);
+    
+    if (i > 0) {
+      await new Promise(r => setTimeout(r, 600)); // Pequena pausa natural entre mensagens
+      setTyping(true);
+    }
+    
+    await new Promise(r => setTimeout(r, delay));
+    setTyping(false);
+    addMsg(msg, 'agent');
+  }
   
   if (specialMode === "payment") {
-      // Pausa de 2 segundos após a mensagem para o usuário ler "Vou enviar o Pix..."
-      await new Promise(r => setTimeout(r, 2000));
-      
-      const spinner = addSpinner('Aguarde...');
-      // Simula o tempo de processamento do sistema para gerar o código (exatos 4 segundos)
-      await new Promise(r => setTimeout(r, 4000));
-      spinner.remove();
-      
-      showPixBlock();
-      
-      // Mensagem final sobre o prazo de entrega
-      await new Promise(r => setTimeout(r, 1500));
-      setTyping(true);
-      await new Promise(r => setTimeout(r, 2500));
-      setTyping(false);
-      addMsg("O prazo de entrega é de 20-30 minutos após o pagamento", 'agent', true);
+    await new Promise(r => setTimeout(r, 800));
+    setTyping(true);
+    await new Promise(r => setTimeout(r, 1500));
+    setTyping(false);
+    showPixBlock();
+    
+    // Mensagem final sobre o prazo de entrega
+    await new Promise(r => setTimeout(r, 1200));
+    setTyping(true);
+    await new Promise(r => setTimeout(r, 2000));
+    setTyping(false);
+    addMsg("O prazo de entrega é de 20-30 minutos após a confirmação do pagamento.", 'agent');
   }
 }
 
