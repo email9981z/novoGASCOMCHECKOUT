@@ -784,7 +784,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Arrastar alerta (swipe) com acompanhamento profissional
+// Arrastar alerta (swipe) com acompanhamento profissional fluido
 let isDraggingAlert = false;
 let alertStartX = 0;
 let alertStartY = 0;
@@ -800,6 +800,11 @@ document.addEventListener('touchstart', (e) => {
       alertStartX = touchStartX;
       alertStartY = touchStartY;
       typingAlertEl.classList.add('dragging');
+      
+      const alertContent = typingAlertEl.querySelector('.alert-content');
+      if (alertContent) {
+        alertContent.style.transition = 'none';
+      }
     }
   }
 });
@@ -826,24 +831,29 @@ document.addEventListener('touchend', (e) => {
     const diffX = currentX - alertStartX;
     
     typingAlertEl.classList.remove('dragging');
+    const alertContent = typingAlertEl.querySelector('.alert-content');
     
     if (Math.abs(diffX) > 80) {
-      typingAlertEl.classList.add('swiped-out');
+      if (alertContent) {
+        alertContent.style.transition = 'all 0.25s ease-out';
+        alertContent.style.transform = 'translateX(150px) scale(0.95)';
+        alertContent.style.opacity = '0';
+      }
+      
       setTimeout(() => {
         typingAlertEl.classList.remove('show');
-        typingAlertEl.classList.remove('swiped-out');
-        const alertContent = typingAlertEl.querySelector('.alert-content');
         if (alertContent) {
           alertContent.style.transform = '';
           alertContent.style.opacity = '';
+          alertContent.style.transition = '';
         }
-      }, 300);
+      }, 250);
     } else {
-      const alertContent = typingAlertEl.querySelector('.alert-content');
       if (alertContent) {
-        alertContent.style.transition = 'all 0.3s ease';
+        alertContent.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
         alertContent.style.transform = 'translateX(0) scale(1)';
         alertContent.style.opacity = '1';
+        
         setTimeout(() => {
           alertContent.style.transition = '';
         }, 300);
