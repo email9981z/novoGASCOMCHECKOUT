@@ -1241,10 +1241,16 @@ function showOrderConfirmation() {
   currentConfirmationBlock.querySelector('#btnCorrect').onclick = async () => {
     currentConfirmationBlock.style.opacity='0.6';
     currentConfirmationBlock.style.pointerEvents='none';
-    currentConfirmationBlock.querySelector('#btnCorrect').innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;border-top-color:#fff;margin-right:8px;"></div> Processando...';
+    const btn = currentConfirmationBlock.querySelector('#btnCorrect');
+    btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;border-top-color:#fff;margin-right:8px;"></div> Processando...';
     currentConfirmationBlock.querySelectorAll('button').forEach(b=>b.disabled=true);
     const { onReadPromise } = addMsg('Sim, está correto','user');
     await onReadPromise;
+    
+    // Pequeno atraso para o usuário ver o "Processando" antes de sumir
+    await pause(600);
+    btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
+    
     if(confirmationResolve) confirmationResolve('correct');
   };
   currentConfirmationBlock.querySelector('#btnChange').onclick = () => { updateModal(true); modalOverlayEl.classList.add('on'); };
@@ -1393,10 +1399,10 @@ async function runConversation() {
   await pause(800);
 
   const action = await showOrderConfirmation();
-  // Pausa após a ação do usuário para o vendedor "ver" a confirmação
-  await pause(1200);
 
   if (action==='correct') {
+    // Inicia a validação 400ms após a mensagem do usuário ser confirmada
+    await pause(400);
     const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
