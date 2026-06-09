@@ -1180,21 +1180,16 @@ async function runConversation() {
   const ordersNearby = Math.floor(Math.random() * 7) + 6;
 
   // 1 — Saudação
-  await agentSay(`${gr}! 👋 Sou o Carlos, consultor da Diskgas responsável pelas entregas ${here}.`);
+  await agentSay(`${gr}`);
   await pause(500);
 
-  // 2 — Confirmar pedido
-  await agentSay(`Vi aqui o seu pedido de ${productName}. Deixa eu confirmar a disponibilidade agora no sistema...`);
+  // 2 — Apresentação
+  await agentSay(`Sou Carlos, vendedor diskgas em sua região`);
   await pause(1600);
 
-  // Sistema: prova social + estoque
-  addSys(`${ordersNearby} pedidos confirmados ${here} hoje`, 'ok');
-  addSys('Produto disponível · Entrega garantida hoje', 'brand');
+  // 3 — Confirmar pedido
+  await agentSay(`Para confirmar o pedido, o pagamento é via Pix. Vou enviar o código agora`);
   await pause(500);
-
-  // 3 — Disponibilidade
-  await agentSay(`Perfeito! Confirmei aqui: temos disponibilidade para entrega hoje ainda ${city ? 'em ' + city : 'no seu endereço'}! 🎉`);
-  await pause(600);
 
   // 4 — Proposta de valor
   await agentSay(`Consegui aplicar um desconto exclusivo no seu pedido. O ${productName} sai por R$ ${productPrice.toFixed(2).replace('.',',')} — com a entrega já inclusa. Não tem taxa adicional, tá?`);
