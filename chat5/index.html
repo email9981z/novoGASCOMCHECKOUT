@@ -1406,8 +1406,8 @@ async function runConversation() {
     const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
-    addMsg(`Ótimo Vou gerar agora o código Pix,  Um segundo`, 'agent', true);
-    await pause(800);
+    addSys('Pedido validado com sucesso', 'ok');
+    await pause(1200);
   }
 
   if (action==='change') {
@@ -1416,6 +1416,7 @@ async function runConversation() {
   }
 
   // ── MELHORADO: mensagem de transição com contexto de segurança ──
+  await agentSay(`Ótimo Vou gerar agora o código Pix,  Um segundo`);
   await pause(1000);
 
   // ── MELHORADO: texto do spinner mais oficial ──
