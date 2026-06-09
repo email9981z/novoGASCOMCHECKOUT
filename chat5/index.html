@@ -1098,7 +1098,7 @@ modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayE
 		const moveDrag = (x) => {
 		  if (!isDragging) return;
 		  currentX = x - startX;
-		  alertContent.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.05}deg)`;
+		  alertContent.style.transform = `translateX(${currentX}px)`;
 		  alertContent.style.opacity = 1 - Math.abs(currentX) / 200;
 		};
 
@@ -1110,11 +1110,11 @@ modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayE
 		  if (Math.abs(currentX) > 80) {
 		    // Animação de saída para o lado
 		    const exitX = currentX > 0 ? 400 : -400;
-		    alertContent.style.transform = `translateX(${exitX}px) rotate(${exitX * 0.05}deg)`;
+		    alertContent.style.transform = `translateX(${exitX}px)`;
 		    alertContent.style.opacity = '0';
 		    setTimeout(hideAlert, 300);
 		  } else {
-		    alertContent.style.transform = 'translateX(0) rotate(0)';
+		    alertContent.style.transform = 'translateX(0)';
 		    alertContent.style.opacity = '1';
 		    alertTimeout = setTimeout(() => hideAlert(), 5000);
 		  }
