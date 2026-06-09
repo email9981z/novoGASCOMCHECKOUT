@@ -650,7 +650,7 @@ html,body{
     <div class="typing-alert" id="typingAlert">
       <div class="alert-content">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-        <span id="alertText">Aguarde o vendedor terminar de digitar...</span>
+        Aguarde o vendedor terminar de digitar...
       </div>
     </div>
     <div class="input-row">
@@ -723,11 +723,11 @@ const orderItemsEl   = document.getElementById('orderItems');
 const orderAddressEl = document.getElementById('orderAddress');
 const orderTimeEl    = document.getElementById('orderTime');
 const typingAlertEl  = document.getElementById('typingAlert');
-const alertTextEl    = document.getElementById('alertText');
 
 const AVATAR = "https://i.pravatar.cc/100?u=diskgas-carlos";
 const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
+let history = [];
 let lastSender = null;
 let atBottom = true;
 let unread = 0;
@@ -764,31 +764,16 @@ function scrollDown(force = false) {
   }
 }
 
-/* ── LOCK/UNLOCK INPUT ── */
-function lockInput(text = "Aguarde o vendedor...") {
-  inputEl.readOnly = true;
-  inputEl.placeholder = text;
-  inputWrapEl.classList.add('locked');
-  alertTextEl.textContent = text;
-}
-
-function unlockInput() {
-  inputEl.readOnly = false;
-  inputEl.placeholder = "Escreva sua mensagem...";
-  inputWrapEl.classList.remove('locked');
-  typingAlertEl.classList.remove('show');
-}
-
 /* ── TEXTAREA AUTO-RESIZE ── */
 inputEl.addEventListener('input', () => {
   inputEl.style.height = 'auto';
   inputEl.style.height = Math.min(inputEl.scrollHeight, 88) + 'px';
-  sendBtnEl.disabled = !inputEl.value.trim() || busy;
+  sendBtnEl.disabled = !inputEl.value.trim();
 });
 
 /* ── TYPING ALERT LOGIC ── */
 function showTypingAlert() {
-  if (!busy && deliveryTimeSent) return;
+  if (deliveryTimeSent) return;
   
   typingAlertEl.classList.add('show');
   if (alertTimeout) clearTimeout(alertTimeout);
@@ -797,8 +782,9 @@ function showTypingAlert() {
   }, 2500);
 }
 
+// Intercepta qualquer tentativa de clique no input bloqueado
 inputWrapEl.addEventListener('click', (e) => {
-  if (busy || !deliveryTimeSent) {
+  if (!deliveryTimeSent) {
     showTypingAlert();
     e.preventDefault();
     e.stopPropagation();
@@ -808,7 +794,7 @@ inputWrapEl.addEventListener('click', (e) => {
 inputEl.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) { 
     e.preventDefault(); 
-    if (busy || !deliveryTimeSent) {
+    if (!deliveryTimeSent) {
       showTypingAlert();
       return;
     }
@@ -817,7 +803,7 @@ inputEl.addEventListener('keydown', e => {
 });
 
 sendBtnEl.addEventListener('click', () => {
-  if (busy || !deliveryTimeSent) {
+  if (!deliveryTimeSent) {
     showTypingAlert();
     return;
   }
@@ -877,7 +863,9 @@ function addMsg(text, type, forceAvatar = false) {
 function showPixBlock() {
   const container = document.createElement('div');
   container.className = 'pix-block';
+  
   const pixCode = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540589.905802BR5915DISK GAS LTDA6009SAO PAULO62070503***6304E2B1";
+
   container.innerHTML = `
     <div class="pix-header">
       <div class="pix-icon-small">pix</div>
@@ -894,14 +882,18 @@ function showPixBlock() {
     </div>
     <div class="pix-footer-hint">Toque para copiar o código</div>
   `;
+
   msgsEl.appendChild(container);
   scrollDown();
+
   const codeField = container.querySelector('#pixCodeField');
   const copyTrigger = container.querySelector('#pixCopyTrigger');
+  
   codeField.onclick = () => {
     navigator.clipboard.writeText(pixCode);
     codeField.classList.add('copied');
     copyTrigger.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    
     setTimeout(() => {
       codeField.classList.remove('copied');
       copyTrigger.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
@@ -915,9 +907,11 @@ function addSys(html, variant = '') {
   d.className = 'sys';
   const s = document.createElement('span');
   s.className = variant;
+  
   let icon = '';
   if (variant === 'ok') icon = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
   else if (variant === 'secure') icon = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+  
   s.innerHTML = `${icon} ${html}`;
   d.appendChild(s);
   msgsEl.appendChild(d);
@@ -981,43 +975,62 @@ function setTyping(on) {
   if (on) scrollDown();
 }
 
-/* ── CARLOS INTELLIGENT RESPONSES ── */
-async function askCarlos(userMsg, mode = "normal") {
-  if (mode === "greeting") {
-    const hour = new Date().getHours();
-    let greeting = (hour >= 5 && hour < 12) ? "Bom dia! Tudo bem?" : (hour >= 12 && hour < 18) ? "Boa tarde! Tudo bem?" : "Boa noite! Tudo bem?";
-    return { message: greeting + " Sou o Carlos e vou acompanhar seu pedido." };
+/* ── URL PARSING & ORDER DATA ── */
+function updateOrderFromURL() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const productsStr = params.get('products');
+    const address = params.get('address');
+    const deliveryTime = params.get('delivery_time');
+
+    if (productsStr) {
+      const products = JSON.parse(decodeURIComponent(productsStr));
+      orderItemsEl.innerHTML = products.map(p => `
+        <div class="order-item">
+          <img src="${p.p}" class="oi-img" alt="${p.n}">
+          <div class="oi-info">
+            <div class="oi-name">${p.n} (x${p.q})</div>
+            <div class="oi-price">R$ ${p.v.toFixed(2).replace('.', ',')}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    if (address) orderAddressEl.textContent = address;
+    if (deliveryTime) orderTimeEl.textContent = deliveryTime;
+  } catch (e) {
+    console.error("Erro ao processar dados do pedido:", e);
   }
-  if (mode === "payment") return { message: "Perfeito. Vou gerar seu código Pix agora mesmo. Um segundo..." };
-
-  const input = userMsg.toLowerCase();
-  
-  if (input.includes("valor") || input.includes("preço") || input.includes("quanto")) 
-    return { message: "O valor total com o desconto do Pix fica em R$ 89,90. É o melhor preço da região para o seu endereço!" };
-  
-  if (input.includes("seguro") || input.includes("confiável") || input.includes("golpe"))
-    return { message: "Pode ficar tranquilo! Somos a revenda oficial Diskgas com mais de 10 anos de mercado. Sua conexão é criptografada e o pagamento é processado com total segurança." };
-  
-  if (input.includes("tempo") || input.includes("demora") || input.includes("prazo"))
-    return { message: "Nossa entrega é expressa! Geralmente leva entre 20 a 30 minutos após a confirmação do pagamento." };
-    
-  if (input.includes("cartão") || input.includes("dinheiro") || input.includes("pagar"))
-    return { message: "No momento estamos priorizando o Pix para garantir o desconto especial e a entrega mais rápida. O código que enviei já está com o valor promocional!" };
-
-  if (input.includes("obrigado") || input.includes("vlw") || input.includes("ok"))
-    return { message: "Disponha! Qualquer outra dúvida é só me chamar. Estou aqui para ajudar!" };
-
-  return { message: "Entendi! Vou verificar essa informação para você. Mais alguma dúvida sobre o seu pedido?" };
 }
 
-/* ── SEND FLOW ── */
+cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
+closeModalEl.onclick = () => modalOverlayEl.classList.remove('on');
+confirmModalEl.onclick = () => modalOverlayEl.classList.remove('on');
+modalOverlayEl.onclick = (e) => { if(e.target === modalOverlayEl) modalOverlayEl.classList.remove('on'); };
+
+/* ── CARLOS API ── */
+async function askCarlos(userMsg, mode = "normal") {
+  if (mode === "greeting") {
+      const hour = new Date().getHours();
+      let greeting = "";
+      if (hour >= 5 && hour < 12) greeting = "Bom dia! Tudo bem?";
+      else if (hour >= 12 && hour < 18) greeting = "Boa tarde! Tudo bem?";
+      else greeting = "Boa noite! Tudo bem?";
+      return { message: greeting };
+  }
+
+  if (mode === "payment") {
+      return { message: "Vou enviar o Pix, um segundo..." };
+  }
+
+  return { message: "Em que mais posso te ajudar?" };
+}
+
+/* ── SEND ── */
 async function doSend() {
   const text = inputEl.value.trim();
   if (!text || busy) return;
-  
   busy = true;
-  lockInput("Carlos está digitando...");
-  
   inputEl.value = '';
   inputEl.style.height = 'auto';
   sendBtnEl.disabled = true;
@@ -1026,72 +1039,101 @@ async function doSend() {
   await onReadPromise;
   
   await agentReply(text);
-  
   busy = false;
-  unlockInput();
+  sendBtnEl.disabled = !inputEl.value.trim();
 }
 
 function calculateTypingDelay(text) {
   const words = text.split(' ').length;
-  return Math.max(1500, Math.min((words * 180) + 800, 4000));
+  const delay = (words * 200) + 1000; // ~200ms por palavra + 1s base
+  return Math.max(1200, Math.min(delay, 3500));
 }
 
 async function agentReply(userText, specialMode = "normal") {
   setTyping(true);
+  
   const response = await askCarlos(userText, specialMode);
+  // Simula quebra de mensagens se houver um ponto seguido de espaço ou nova linha
   const messages = response.message.split(/(?<=[.!?])\s+|\n/);
   
   for (let i = 0; i < messages.length; i++) {
     const msg = messages[i].trim();
     if (!msg) continue;
+
     const delay = calculateTypingDelay(msg);
+    
     if (i > 0) {
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise(r => setTimeout(r, 600)); // Pequena pausa natural entre mensagens
       setTyping(true);
     }
+    
     await new Promise(r => setTimeout(r, delay));
     setTyping(false);
     addMsg(msg, 'agent');
   }
   
   if (specialMode === "payment") {
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 800));
     setTyping(true);
-    await new Promise(r => setTimeout(r, 1800));
+    await new Promise(r => setTimeout(r, 1500));
     setTyping(false);
     showPixBlock();
+    
+    // Mensagem final sobre o prazo de entrega
     await new Promise(r => setTimeout(r, 1200));
     setTyping(true);
-    await new Promise(r => setTimeout(r, 2200));
+    await new Promise(r => setTimeout(r, 2000));
     setTyping(false);
     addMsg("O prazo de entrega é de 20-30 minutos após a confirmação do pagamento.", 'agent', true);
+    
+    // LIBERAÇÃO FINAL
     deliveryTimeSent = true;
+    inputEl.readOnly = false;
+    inputEl.placeholder = "Escreva sua mensagem...";
+    inputWrapEl.classList.remove('locked');
+    typingAlertEl.classList.remove('show');
   }
 }
 
 /* ── INIT ── */
+const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
+
 (async () => {
-  addMsg('Olá! Gostaria de saber mais sobre os produtos.', 'user');
+  // Carregar dados da URL imediatamente
+  updateOrderFromURL();
+
+  const { onReadPromise } = addMsg(DEFAULT_FIRST_MSG, 'user');
   await new Promise(r => setTimeout(r, 600));
+
   const connSys = addSys('Conexão criptografada estabelecida', 'secure');
   await new Promise(r => setTimeout(r, 700));
+
   const sp = addSpinner();
   const sysTxt = addSys('Buscando o melhor consultor para você...', 'brand');
   await new Promise(r => setTimeout(r, 1500));
+
   sp.remove();
   connSys.parentElement.remove();
-  sysTxt.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Carlos Oliveira conectado';
+  sysTxt.textContent = 'Carlos Oliveira conectado';
   sysTxt.className = 'ok';
+  sysTxt.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Carlos Oliveira conectado';
+
   await new Promise(r => setTimeout(r, 600));
   showIntroCard();
-  
+
   busy = true;
-  lockInput("Carlos está digitando...");
-  await agentReply("", "greeting");
-  await new Promise(r => setTimeout(r, 1200));
+  await onReadPromise;
+  
+  // 1. Saudação
+  await agentReply(DEFAULT_FIRST_MSG, "greeting");
+  
+  // 2. Intervalo de "leitura"
+  await new Promise(r => setTimeout(r, 1000));
+  
+  // 3. Pix Flow
   await agentReply("", "payment");
+  
   busy = false;
-  unlockInput();
 })();
 </script>
 </body>
