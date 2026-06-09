@@ -1077,6 +1077,45 @@ function showIntroCard() {
   scrollDown();
 }
 
+// ── ORDER CONFIRMATION BLOCK ────────────────────────
+function showOrderConfirmation() {
+  const block = document.createElement('div');
+  block.className = 'steps-card'; // Reutilizando estilo de card
+  block.style.maxWidth = '320px';
+  
+  const itemsHtml = ORDER.products.length > 0 
+    ? ORDER.products.map(p => `<div style="font-size:13px; color:var(--text-2); margin-bottom:4px;">• ${p.n} (x${p.q})</div>`).join('')
+    : `<div style="font-size:13px; color:var(--text-2); margin-bottom:4px;">• ${ORDER.productName} (x${ORDER.productQty})</div>`;
+
+  block.innerHTML = `
+    <div class="steps-title">Resumo do Pedido</div>
+    <div style="margin-bottom:15px;">
+      ${itemsHtml}
+      <div style="font-size:14px; font-weight:700; color:var(--brand); margin-top:8px;">Total: R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
+      <div style="font-size:11px; color:var(--text-3); margin-top:4px;">Entregar em: ${ORDER.location}</div>
+    </div>
+    <div style="display:flex; gap:8px;">
+      <button id="btnCorrect" style="flex:1; padding:10px; border-radius:10px; border:none; background:var(--green); color:#fff; font-weight:700; cursor:pointer; font-size:13px;">Correto</button>
+      <button id="btnChange" style="flex:1; padding:10px; border-radius:10px; border:1px solid var(--border); background:#fff; color:var(--text-2); font-weight:700; cursor:pointer; font-size:13px;">Mudar</button>
+    </div>
+  `;
+
+  msgsEl.appendChild(block);
+  scrollDown();
+
+  return new Promise((resolve) => {
+    block.querySelector('#btnCorrect').onclick = () => {
+      block.querySelector('#btnCorrect').style.opacity = '0.7';
+      block.querySelector('#btnCorrect').innerText = '✓ Confirmado';
+      block.querySelectorAll('button').forEach(b => b.disabled = true);
+      resolve('correct');
+    };
+    block.querySelector('#btnChange').onclick = () => {
+      resolve('change');
+    };
+  });
+}
+
 // ── PIX BLOCK ────────────────────────────────────────
 function showPixBlock() {
   const pixCode = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540589.905802BR5915DISK GAS LTDA6009SAO PAULO62070503***6304E2B1";
@@ -1221,10 +1260,19 @@ async function runConversation() {
   await pause(1600);
 
   // 3 — Confirmar pedido
-  await agentSay(`Para confirmar o pedido, o pagamento é via Pix. Vou enviar o código agora`);
-  await pause(500);
+  await agentSay(`Só confere o pedido por gentileza`);
+  await pause(400);
 
+  const action = await showOrderConfirmation();
+  await pause(800);
 
+  if (action === 'change') {
+    await agentSay(`Sem problemas! Pode me falar o que deseja alterar ou clique no ícone do carrinho no topo para ajustar seu pedido.`);
+    return; // Para a execução automática para o usuário interagir
+  }
+
+  await agentSay(`Perfeito! Vou gerar o código Pix para você agora:`);
+  await pause(600);
 
   // PIX block
   showPixBlock();
