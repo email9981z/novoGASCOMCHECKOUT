@@ -1004,7 +1004,7 @@ async function agentReply(userText, specialMode = "normal") {
     setTyping(true);
     await new Promise(r => setTimeout(r, 2000));
     setTyping(false);
-    addMsg("O prazo de entrega é de 20-30 minutos após a confirmação do pagamento.", 'agent');
+    addMsg("O prazo de entrega é de 20-30 minutos após a confirmação do pagamento.", 'agent', true);
   }
 }
 
