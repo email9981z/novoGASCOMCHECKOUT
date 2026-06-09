@@ -518,7 +518,7 @@ html,body{
   position: absolute;
   top: -6px;
   right: -6px;
-  background: #EF4444;
+  background: var(--green);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
@@ -529,7 +529,7 @@ html,body{
   align-items: center;
   justify-content: center;
   border: 2px solid var(--brand-dk);
-  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
 }
 
 /* ── AVISO DE DIGITAÇÃO REFINADO ── */
@@ -565,6 +565,16 @@ html,body{
   transform: translateY(0) scale(1);
 }
 .alert-content svg { opacity: 0.9; }
+
+.typing-alert.dragging .alert-content {
+  transition: none;
+}
+
+.typing-alert.swiped-out {
+  opacity: 0;
+  transform: translateX(150%) scale(0.95);
+  pointer-events: none;
+}
 
 /* ── ORDER SUMMARY MODAL ── */
 .modal-overlay{
@@ -774,23 +784,73 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Fechar alerta ao arrastar (swipe)
+// Arrastar alerta (swipe) com acompanhamento profissional
+let isDraggingAlert = false;
+let alertStartX = 0;
+let alertStartY = 0;
+
 document.addEventListener('touchstart', (e) => {
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
+  
+  if (!deliveryTimeSent && typingAlertEl.classList.contains('show')) {
+    const alertRect = typingAlertEl.getBoundingClientRect();
+    if (touchStartY >= alertRect.top && touchStartY <= alertRect.bottom) {
+      isDraggingAlert = true;
+      alertStartX = touchStartX;
+      alertStartY = touchStartY;
+      typingAlertEl.classList.add('dragging');
+    }
+  }
 });
 
 document.addEventListener('touchmove', (e) => {
-  if (!deliveryTimeSent) {
-    const touchEndX = e.touches[0].clientX;
-    const touchEndY = e.touches[0].clientY;
-    const diffX = Math.abs(touchEndX - touchStartX);
-    const diffY = Math.abs(touchEndY - touchStartY);
+  if (isDraggingAlert && !deliveryTimeSent) {
+    const currentX = e.touches[0].clientX;
+    const diffX = currentX - alertStartX;
     
-    // Se o usuário arrastar mais de 30px horizontalmente ou verticalmente
-    if (diffX > 30 || diffY > 30) {
-      dismissAlert();
+    const alertContent = typingAlertEl.querySelector('.alert-content');
+    if (alertContent) {
+      let translateX = diffX;
+      let opacity = 1 - (Math.abs(diffX) / 200);
+      
+      alertContent.style.transform = `translateX(${translateX}px) scale(${Math.max(0.8, opacity)})`;
+      alertContent.style.opacity = Math.max(0, opacity);
     }
+  }
+});
+
+document.addEventListener('touchend', (e) => {
+  if (isDraggingAlert) {
+    const currentX = e.changedTouches[0].clientX;
+    const diffX = currentX - alertStartX;
+    
+    typingAlertEl.classList.remove('dragging');
+    
+    if (Math.abs(diffX) > 80) {
+      typingAlertEl.classList.add('swiped-out');
+      setTimeout(() => {
+        typingAlertEl.classList.remove('show');
+        typingAlertEl.classList.remove('swiped-out');
+        const alertContent = typingAlertEl.querySelector('.alert-content');
+        if (alertContent) {
+          alertContent.style.transform = '';
+          alertContent.style.opacity = '';
+        }
+      }, 300);
+    } else {
+      const alertContent = typingAlertEl.querySelector('.alert-content');
+      if (alertContent) {
+        alertContent.style.transition = 'all 0.3s ease';
+        alertContent.style.transform = 'translateX(0) scale(1)';
+        alertContent.style.opacity = '1';
+        setTimeout(() => {
+          alertContent.style.transition = '';
+        }, 300);
+      }
+    }
+    
+    isDraggingAlert = false;
   }
 });
 
