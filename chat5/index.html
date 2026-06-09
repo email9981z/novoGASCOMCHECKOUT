@@ -551,7 +551,8 @@ html,body{
   max-height:88px;
 }
 .msg-input::placeholder{color:var(--text-3);font-size:13.5px;}
-.msg-input:read-only{cursor:default;}
+.msg-input:read-only{cursor:default;pointer-events:none;}
+.input-wrap.locked{cursor:pointer;}
 
 .send-btn{
   width:44px;height:44px;border-radius:50%;
@@ -1050,9 +1051,9 @@ inputEl.addEventListener('input', () => {
   inputEl.style.height = Math.min(inputEl.scrollHeight, 88) + 'px';
   sendBtnEl.disabled = !inputEl.value.trim();
 });
-inputWrapEl.addEventListener('click', () => {
+inputWrapEl.onclick = () => {
   if (!chatUnlocked) showAlert('Chat exclusivo para suporte a pedidos com entrega em andamento');
-});
+};
 inputEl.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
