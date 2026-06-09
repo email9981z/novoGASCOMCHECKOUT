@@ -251,6 +251,40 @@ html,body{
 .b-read.read{color:var(--read-clr);}
 .b-meta.hide{display:none;}
 
+/* ── PAYMENT CARDS (NEW) ── */
+.payment-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  margin-top:10px;width:100%;
+  animation: cardIn 0.5s var(--spring);
+}
+.pay-card{
+  background:#fff;border:1.5px solid var(--border-2);
+  border-radius:16px;padding:12px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  cursor:pointer;transition:all 0.25s var(--ease);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.pay-card:hover{
+  border-color:var(--brand-mid);
+  transform:translateY(-3px);
+  box-shadow: 0 6px 15px var(--brand-glow);
+}
+.pay-card:active{transform:scale(0.96);}
+.pay-card.selected{
+  border-color:var(--brand);
+  background:var(--brand-lt);
+  box-shadow: 0 0 0 2px var(--brand);
+}
+.pay-icon{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--brand-lt);color:var(--brand);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:8px;
+}
+.pay-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.pay-price{font-size:15px;font-weight:800;color:var(--brand-dk);}
+.pay-sub{font-size:10px;color:var(--text-3);margin-top:2px;}
+
 /* ── AGENT INTRO CARD ── */
 .intro-card{
   background:var(--surface);
@@ -610,6 +644,39 @@ function addMsg(text, type) {
   return { row, onReadPromise };
 }
 
+/* ── PAYMENT OPTIONS ── */
+function showPaymentOptions() {
+  const container = document.createElement('div');
+  container.className = 'payment-grid';
+  
+  const options = [
+    { title: 'Pagar Agora', price: 'R$ 89,90', sub: 'Via PIX / Cartão', icon: '💳' },
+    { title: 'Na Entrega', price: 'R$ 130,00', sub: 'Dinheiro / Maquininha', icon: '🚚' }
+  ];
+
+  options.forEach(opt => {
+    const card = document.createElement('div');
+    card.className = 'pay-card';
+    card.innerHTML = `
+      <div class="pay-icon">${opt.icon}</div>
+      <div class="pay-title">${opt.title}</div>
+      <div class="pay-price">${opt.price}</div>
+      <div class="pay-sub">${opt.sub}</div>
+    `;
+    card.onclick = () => {
+      if (busy) return;
+      document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      inputEl.value = `Quero pagar ${opt.title.toLowerCase()} (${opt.price})`;
+      doSend();
+    };
+    container.appendChild(card);
+  });
+
+  msgsEl.appendChild(container);
+  scrollDown();
+}
+
 /* ── SYSTEM MESSAGE ── */
 function addSys(html, variant = '') {
   const d = document.createElement('div');
@@ -684,19 +751,21 @@ function setTyping(on) {
   if (on) scrollDown();
 }
 
-/* ── CARLOS API (MODO SIMULAÇÃO/FALLBACK) ── */
-async function askCarlos(userMsg, isGreetingOnly = false) {
+/* ── CARLOS API ── */
+async function askCarlos(userMsg, mode = "normal") {
   history.push({ role: 'user', content: userMsg });
   
-  if (isGreetingOnly) {
+  if (mode === "greeting") {
       const hour = new Date().getHours();
       let greeting = "";
       if (hour >= 5 && hour < 12) greeting = "Bom dia!";
       else if (hour >= 12 && hour < 18) greeting = "Boa tarde!";
       else greeting = "Boa noite!";
-      
-      history.push({ role:'assistant', content: JSON.stringify({message: greeting}) });
       return { message: greeting };
+  }
+
+  if (mode === "payment") {
+      return { message: "Prefere pagar agora ou na entrega?" };
   }
 
   const simulation = () => {
@@ -761,16 +830,21 @@ async function doSend() {
   sendBtnEl.disabled = !inputEl.value.trim();
 }
 
-async function agentReply(userText, isFirst = false) {
-  const delay = isFirst ? 1000 : 1500 + Math.random() * 1500;
+async function agentReply(userText, specialMode = "normal") {
+  const delay = specialMode !== "normal" ? 1000 : 1500 + Math.random() * 1500;
   setTyping(true);
   
   const [reply] = await Promise.all([
-    askCarlos(userText, isFirst), // Passa isFirst para a função askCarlos
+    askCarlos(userText, specialMode),
     new Promise(r => setTimeout(r, delay))
   ]);
+  
   setTyping(false);
   addMsg(reply.message, 'agent');
+  
+  if (specialMode === "payment") {
+      showPaymentOptions();
+  }
 }
 
 /* ── INIT ── */
@@ -798,7 +872,16 @@ const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
 
   busy = true;
   await onReadPromise;
-  await agentReply(DEFAULT_FIRST_MSG, true); // Primeira resposta
+  
+  // 1. Saudação
+  await agentReply(DEFAULT_FIRST_MSG, "greeting");
+  
+  // 2. Pequeno delay entre saudação e pergunta de pagamento
+  await new Promise(r => setTimeout(r, 800));
+  
+  // 3. Pergunta de pagamento + Cards
+  await agentReply("", "payment");
+  
   busy = false;
 })();
 </script>
