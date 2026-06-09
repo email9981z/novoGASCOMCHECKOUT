@@ -1026,9 +1026,10 @@ cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
 closeModalEl.onclick = () => modalOverlayEl.classList.remove('on');
 confirmModalEl.onclick = () => {
   modalOverlayEl.classList.remove('on');
-  // Se houver um card de confirmação de pedido aberto, ele deve ser atualizado ou o chat deve continuar
-  // Como o usuário clicou em "Alterar" no card, vamos apenas fechar o modal.
-  // O estado global ORDER já foi atualizado.
+  // Se houver um card de confirmação de pedido aberto, ele deve ser atualizado
+  if (currentConfirmationBlock) {
+    showOrderConfirmation();
+  }
 };
 modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayEl.classList.remove('on'); };
 
@@ -1171,29 +1172,35 @@ function showIntroCard() {
 }
 
 // ── ORDER CONFIRMATION BLOCK ────────────────────────
+let currentConfirmationBlock = null;
+let confirmationResolve = null;
+
 function showOrderConfirmation() {
-  const block = document.createElement('div');
-  block.className = 'steps-card'; 
-  block.style.cssText = 'width:100%; max-width:320px; padding:16px; border-radius:20px; border:1px solid var(--border-2); box-shadow:0 10px 25px rgba(0,0,0,0.05); background:#fff;';
-  
+  if (!currentConfirmationBlock) {
+    currentConfirmationBlock = document.createElement('div');
+    currentConfirmationBlock.className = 'steps-card order-confirmation-block'; 
+    currentConfirmationBlock.style.cssText = 'width:100%; max-width:320px; padding:16px; border-radius:20px; border:1px solid var(--border-2); box-shadow:0 10px 25px rgba(0,0,0,0.05); background:#fff;';
+    msgsEl.appendChild(currentConfirmationBlock);
+  }
+
   const itemsHtml = ORDER.products.length > 0 
     ? ORDER.products.map(p => `
       <div style="display:flex; align-items:center; gap:12px; padding:8px; background:var(--surface-2); border-radius:12px; margin-bottom:8px; border:1px solid var(--border-2);">
         ${p.p ? `<img src="${p.p}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; box-shadow:0 2px 6px rgba(0,0,0,0.08);">` : ''}
         <div style="flex:1;">
           <div style="font-size:13px; font-weight:600; color:var(--text); line-height:1.2;">${p.n}</div>
-          <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Qtd: ${p.q} · R$ ${(p.v||0).toFixed(2).replace('.',',')}</div>
+          <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Qtd: ${p.q} · R$ ${(p.v * (p.q||1)).toFixed(2).replace('.',',')}</div>
         </div>
       </div>`).join('')
     : `
       <div style="display:flex; align-items:center; gap:12px; padding:8px; background:var(--surface-2); border-radius:12px; margin-bottom:8px; border:1px solid var(--border-2);">
         <div style="flex:1;">
           <div style="font-size:13px; font-weight:600; color:var(--text);">${ORDER.productName}</div>
-          <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Qtd: ${ORDER.productQty}</div>
+          <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Qtd: ${ORDER.productQty} · R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
         </div>
       </div>`;
 
-  block.innerHTML = `
+  currentConfirmationBlock.innerHTML = `
     <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
       <div style="width:24px; height:24px; border-radius:6px; background:var(--brand-lt); display:flex; align-items:center; justify-content:center; color:var(--brand);">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -1225,26 +1232,29 @@ function showOrderConfirmation() {
     </div>
   `;
 
-  msgsEl.appendChild(block);
   scrollDown();
 
-  return new Promise((resolve) => {
-    block.querySelector('#btnCorrect').onclick = async () => {
-      block.querySelector('#btnCorrect').style.opacity = '0.7';
-      block.querySelector('#btnCorrect').innerText = '✓ Confirmado';
-      block.querySelectorAll('button').forEach(b => b.disabled = true);
-      
-      // Simular envio de mensagem pelo usuário
-      const { onReadPromise } = addMsg('Sim, está correto', 'user');
-      await onReadPromise;
-      
-      resolve('correct');
-    };
-    block.querySelector('#btnChange').onclick = () => {
-      updateModal(true);
-      modalOverlayEl.classList.add('on');
-    };
-  });
+  currentConfirmationBlock.querySelector('#btnCorrect').onclick = async () => {
+    currentConfirmationBlock.querySelector('#btnCorrect').style.opacity = '0.7';
+    currentConfirmationBlock.querySelector('#btnCorrect').innerText = '✓ Confirmado';
+    currentConfirmationBlock.querySelectorAll('button').forEach(b => b.disabled = true);
+    
+    const { onReadPromise } = addMsg('Sim, está correto', 'user');
+    await onReadPromise;
+    
+    if (confirmationResolve) confirmationResolve('correct');
+  };
+
+  currentConfirmationBlock.querySelector('#btnChange').onclick = () => {
+    updateModal(true);
+    modalOverlayEl.classList.add('on');
+  };
+
+  if (!confirmationResolve) {
+    return new Promise((resolve) => {
+      confirmationResolve = resolve;
+    });
+  }
 }
 
 // ── PIX BLOCK ────────────────────────────────────────
