@@ -1449,52 +1449,61 @@ function showDeliverySteps() {
   card.className = 'steps-card';
   card.style.maxWidth = '100%'; // Garante que se ajuste ao container pai
   card.innerHTML = `
-    <div class="steps-title">O que acontece depois</div>
+        <div class="steps-title" style="display: flex; align-items: center; justify-content: space-between;">
+      <span>Acompanhamento do Pedido</span>
+      <div style="display: flex; align-items: center; gap: 4px; color: var(--green-dk); font-size: 9px; background: var(--green-lt); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--green-border);">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Ambiente Seguro
+      </div>
+    </div>
     <div class="step-row">
       <div class="step-num active">1</div>
       <div class="step-content">
-        <div class="step-label">Confirmar pagamento</div>
-        <div class="step-desc">Aguardando Pix</div>
+        <div class="step-label" style="display: flex; align-items: center; gap: 6px;">
+          Pagamento Instantâneo
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#32BCAD"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <div class="step-desc">Aguardando confirmação via Pix</div>
         
         <!-- Bloco de Valor a Pagar -->
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin: 12px 0 8px; background: var(--surface-2); padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border-2);">
           <div style="display: flex; flex-direction: column; min-width: fit-content;">
-            <span style="font-size: 10px; color: var(--text-3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Valor a pagar</span>
+            <span style="font-size: 10px; color: var(--text-3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Valor Total</span>
             <span style="font-size: 17px; font-weight: 800; color: var(--text);">R$ ${finalPrice}</span>
           </div>
-          <div class="step-wait" style="margin: 0; padding: 4px 8px; height: fit-content; border-radius: 8px; flex-shrink: 0;">
+          <div class="step-wait" style="margin: 0; padding: 4px 8px; height: fit-content; border-radius: 8px; flex-shrink: 0; background: #FFF9EB; border-color: #FFE4A1;">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Pendente
+            Aguardando
           </div>
         </div>
 
         <!-- Seção do Código Pix Corrigida -->
-        <div class="pix-code-field" id="pixField" style="margin-top: 4px; margin-bottom: 8px; padding: 4px 4px 4px 12px; height: 42px; border-radius: 10px; display: flex; align-items: center; gap: 8px; overflow: hidden; width: 100%; box-sizing: border-box;">
-          <div class="pix-code-text" style="flex: 1; font-size: 11px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0.7; min-width: 0;">${pixCode}</div>
-          <div class="pix-copy-btn" id="pixCopyBtn" style="flex-shrink: 0; height: 34px; padding: 0 12px; font-size: 11px; border-radius: 8px; display: flex; align-items: center; gap: 6px;">
+        <div class="pix-code-field" id="pixField" style="margin-top: 4px; margin-bottom: 8px; padding: 4px 4px 4px 12px; height: 42px; border-radius: 10px; display: flex; align-items: center; gap: 8px; overflow: hidden; width: 100%; box-sizing: border-box; background: #fff; border: 1.5px solid var(--brand-mid);">
+          <div class="pix-code-text" style="flex: 1; font-size: 11px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0.8; min-width: 0; font-family: 'Courier New', monospace; font-weight: 600;">${pixCode}</div>
+          <div class="pix-copy-btn" id="pixCopyBtn" style="flex-shrink: 0; height: 34px; padding: 0 12px; font-size: 11px; border-radius: 8px; display: flex; align-items: center; gap: 6px; background: var(--brand);">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Copiar
+            Copiar Código
           </div>
         </div>
 
-        <div class="pix-hint" style="justify-content: flex-start; margin-top: 4px; font-size: 10px;">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          Confirmação automática no app
+        <div class="pix-hint" style="justify-content: flex-start; margin-top: 4px; font-size: 10px; color: var(--text-3);">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Transação segura via Banco Central do Brasil
         </div>
       </div>
     </div>
     <div class="step-row">
       <div class="step-num pending">2</div>
       <div class="step-content">
-        <div class="step-label">Entregador a caminho</div>
-        <div class="step-desc">Em até 5 min após confirmação</div>
+        <div class="step-label">Preparação e Envio</div>
+        <div class="step-desc">Entregador designado em até 5 min</div>
       </div>
     </div>
     <div class="step-row">
       <div class="step-num pending">3</div>
       <div class="step-content" style="padding-bottom:0">
-        <div class="step-label">Entrega na sua porta</div>
-        <div class="step-desc">Prazo: 20–30 minutos no total</div>
+        <div class="step-label">Entrega Garantida</div>
+        <div class="step-desc">Acompanhe o trajeto em tempo real após pagar</div>
       </div>
     </div>`;
   msgsEl.appendChild(card);
