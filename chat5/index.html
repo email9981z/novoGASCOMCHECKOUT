@@ -1142,7 +1142,7 @@ function showOrderConfirmation() {
       block.querySelectorAll('button').forEach(b => b.disabled = true);
       
       // Simular envio de mensagem pelo usuário
-      const { onReadPromise } = addMsg('Confirmar', 'user');
+      const { onReadPromise } = addMsg('Sim, está correto', 'user');
       await onReadPromise;
       
       resolve('correct');
