@@ -866,11 +866,10 @@ html,body{
   <!-- FOOTER -->
   <footer class="footer">
     <div class="input-row">
-      <div class="input-wrap locked" id="inputWrap">
-        <svg class="lock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <textarea class="msg-input" id="msgInput" placeholder="O chat será habilitado após a confirmação do pedido" rows="1" readonly></textarea>
+      <div class="input-wrap" id="inputWrap">
+        <textarea class="msg-input" id="msgInput" placeholder="Digite sua mensagem..." rows="1"></textarea>
       </div>
-      <button class="send-btn" id="sendBtn" disabled aria-label="Enviar">
+	      <button class="send-btn" id="sendBtn" aria-label="Enviar">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
@@ -1258,27 +1257,15 @@ inputEl.addEventListener('input', () => {
   sendBtnEl.disabled = !inputEl.value.trim();
 });
 inputWrapEl.onclick = (e) => {
-  if (!chatUnlocked) {
-    e.stopPropagation();
-    inputWrapEl.classList.remove('shake');
-    void inputWrapEl.offsetWidth; // Trigger reflow
-    inputWrapEl.classList.add('shake');
-    showAlert('O chat com o vendedor é liberado para clientes com pedido em fase de entrega, realize o pgamento do seu pedido e o chat será liberado para dúvidas ou outras questões.');
-  }
+  // Chat agora é visualmente aberto por padrão
 };
 inputEl.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
-    if (!chatUnlocked) { showAlert('Aguardando confirmação do pagamento para liberar o atendimento via chat.'); return; }
     doSend();
   }
 });
 sendBtnEl.addEventListener('click', (e) => {
-  if (!chatUnlocked) { 
-    e.stopPropagation();
-    showAlert('Aguardando confirmação do pagamento para liberar o atendimento via chat.'); 
-    return; 
-  }
   doSend();
 });
 
@@ -1734,15 +1721,41 @@ async function doSend() {
   const text = inputEl.value.trim();
   if (!text || busy) return;
   busy = true;
+  
+  // Limpa o input imediatamente para feedback tátil
   inputEl.value = '';
   inputEl.style.height = 'auto';
   sendBtnEl.disabled = true;
-  const { onReadPromise } = addMsg(text, 'user');
-  await onReadPromise;
-  setTyping(true);
-  await pause(1800);
-  setTyping(false);
-  addMsg('Obrigado pela mensagem! Em que mais posso ajudar?', 'agent');
+
+  // Adiciona a mensagem do usuário
+  const { row, onReadPromise } = addMsg(text, 'user');
+  
+  // Pequena pausa para simular tentativa de envio
+  await pause(800);
+
+  // Transforma a mensagem do usuário em um aviso de sistema profissional (estilo WhatsApp/Telegram de erro)
+  const bubble = row.querySelector('.bubble');
+  bubble.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+  bubble.style.background = '#FEF2F2';
+  bubble.style.color = '#991B1B';
+  bubble.style.border = '1px solid #FCA5A5';
+  bubble.style.boxShadow = '0 2px 8px rgba(153, 27, 27, 0.08)';
+  
+  // Substitui o texto da mensagem pelo aviso de forma elegante
+  bubble.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; margin-bottom: 4px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      Mensagem não enviada
+    </div>
+    <div style="font-size: 11px; opacity: 0.9; line-height: 1.5; font-weight: 500;">
+      Apenas clientes com pedidos em fase de entrega podem enviar mensagens.
+    </div>
+  `;
+
+  // Vibração visual sutil (shake) para indicar erro
+  row.classList.add('shake');
+  setTimeout(() => row.classList.remove('shake'), 400);
+  
   busy = false;
   sendBtnEl.disabled = !inputEl.value.trim();
 }
