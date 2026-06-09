@@ -1347,9 +1347,19 @@ function getGreeting() {
 function pause(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
 async function agentSay(text, newGroup=false) {
-  const typingMs = Math.max(1000, Math.min(text.split(' ').length*170+500, 3200));
-  setTyping(true); await pause(typingMs); setTyping(false);
-  addMsg(text,'agent',newGroup); await pause(180);
+  // Simula o tempo de "leitura" da mensagem anterior ou preparação (respiro)
+  await pause(800 + Math.random() * 700);
+  
+  // Simula o tempo de digitação baseado no tamanho do texto
+  const typingMs = Math.max(1200, Math.min(text.split(' ').length * 200 + 600, 3500));
+  
+  setTyping(true); 
+  await pause(typingMs); 
+  setTyping(false);
+  
+  addMsg(text, 'agent', newGroup); 
+  // Pequena pausa após enviar para não parecer instantâneo o próximo passo
+  await pause(500);
 }
 
 async function runConversation() {
@@ -1357,27 +1367,28 @@ async function runConversation() {
   const gr = getGreeting();
 
   await agentSay(`${gr}`);
-  await pause(500);
+  await pause(1000); // Pausa entre falas iniciais
   await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`);
-  await pause(800);
+  await pause(1500); // Respiro antes de processar dados
 
   // NOVO: Validando dados do pedido antes da confirmação
   const spValPre = addSpinner("Validando dados do pedido...");
-  await pause(2500);
+  await pause(3000);
   spValPre.remove();
 
   await agentSay(`Peço que verifique se está tudo Ok`, true);
-  await pause(400);
+  await pause(800);
 
   const action = await showOrderConfirmation();
-  await pause(800);
+  // Pausa após a ação do usuário para o vendedor "ver" a confirmação
+  await pause(1200);
 
   if (action==='correct') {
     const spVal = addSpinner("Validando dados do pedido...");
-    await pause(3000);
+    await pause(3500);
     spVal.remove();
     addSys('Pedido validado com sucesso', 'ok');
-    await pause(800);
+    await pause(1200);
   }
 
   if (action==='change') {
@@ -1387,23 +1398,23 @@ async function runConversation() {
 
   // ── MELHORADO: mensagem de transição com contexto de segurança ──
   await agentSay(`Ótimo! Vou gerar agora o código Pix registrado no CNPJ da Diskgas. Assim que o pagamento cair, o sistema confirma na hora e o entregador sai imediatamente:`);
-  await pause(600);
+  await pause(1000);
 
   // ── MELHORADO: texto do spinner mais oficial ──
   const sp = addSpinner("Validando chave Pix...");
-  await pause(3500);
+  await pause(4000);
   sp.remove();
 
   // ── NOVO: sys message de validação após o spinner ──
   addSys('Chave Pix verificada · Diskgas Entregas Ltda.', 'ok');
-  await pause(500);
+  await pause(1000);
 
   showDeliverySteps();
-  await pause(2000);
+  await pause(2500);
 
   // ── MELHORADO: instrução clara de como pagar + presença do agente ──
   await agentSay(`Copie o código acima e cole no app do seu banco em "Pix → Pix Copia e Cola". Confirma em segundos! 📦`, true);
-  await pause(2000);
+  await pause(2500);
 
   // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
   await agentSay(`Estou aqui acompanhando o pagamento em tempo real. Qualquer dúvida é só chamar! 😊`, true);
