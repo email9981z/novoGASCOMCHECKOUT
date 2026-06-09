@@ -1008,15 +1008,15 @@ closeModalEl.onclick = () => modalOverlayEl.classList.remove('on');
 confirmModalEl.onclick = () => modalOverlayEl.classList.remove('on');
 modalOverlayEl.onclick = (e) => { if(e.target === modalOverlayEl) modalOverlayEl.classList.remove('on'); };
 
-/* ── EXTRACT NEIGHBORHOOD FROM URL ── */
-function extractNeighborhoodFromURL() {
+/* ── EXTRACT CITY FROM URL ── */
+function extractCityFromURL() {
   try {
     const params = new URLSearchParams(window.location.search);
     const address = params.get('address');
     
     if (!address) return null;
     
-    // Extrai o bairro da URL
+    // Extrai a cidade da URL
     // Formato esperado: "Rua..., número - Bairro, Cidade/Estado"
     // Exemplo: "Rua Governador Adhemar Pereira de Barros, 13 - Jardim Itaquiti, Barueri/SP"
     
@@ -1025,11 +1025,15 @@ function extractNeighborhoodFromURL() {
     
     const bairroECidade = parts[1];
     const bairroParts = bairroECidade.split(',');
-    const bairro = bairroParts[0].trim();
     
-    return bairro;
+    if (bairroParts.length < 2) return null;
+    
+    const cidadeEEstado = bairroParts[1].trim();
+    const cidade = cidadeEEstado.split('/')[0].trim();
+    
+    return cidade;
   } catch (e) {
-    console.error("Erro ao extrair bairro da URL:", e);
+    console.error("Erro ao extrair cidade da URL:", e);
     return null;
   }
 }
@@ -1046,9 +1050,9 @@ async function askCarlos(userMsg, mode = "normal") {
   }
 
   if (mode === "payment") {
-      const bairro = extractNeighborhoodFromURL();
-      const message = bairro 
-        ? `Sou carlos, responsavel diskgas em ${bairro} e Região` 
+      const cidade = extractCityFromURL();
+      const message = cidade 
+        ? `Sou carlos, responsavel diskgas em ${cidade} e Região` 
         : "Vou enviar o Pix, um segundo...";
       return { message: message };
   }
