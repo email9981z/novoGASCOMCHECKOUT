@@ -186,7 +186,7 @@ html,body{
   border-color:rgba(15,91,168,.15);
 }
 
-.spinner-wrap{display:flex;justify-content:center;margin:8px 0;animation:fadeUp .3s ease;}
+.spinner-wrap{display:flex;justify-content:center;align-items:center;gap:10px;margin:8px 0;animation:fadeUp .3s ease;}
 .spinner{
   width:16px;height:16px;
   border:2px solid rgba(15,91,168,.1);
@@ -194,6 +194,7 @@ html,body{
   border-radius:50%;
   animation:spin .7s linear infinite;
 }
+.spinner-text{font-size:13px;color:var(--text-2);font-weight:500;}
 
 @keyframes spin{to{transform:rotate(360deg);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
@@ -251,39 +252,46 @@ html,body{
 .b-read.read{color:var(--read-clr);}
 .b-meta.hide{display:none;}
 
-/* ── PAYMENT CARDS ── */
-.payment-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+/* ── PIX BLOCK ── */
+.pix-block{
+  background:#fff;border:1.5px solid var(--border-2);
+  border-radius:16px;padding:16px;
   margin-top:10px;width:100%;
   animation: cardIn 0.5s var(--spring);
+  display: flex; flex-direction: column; gap: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-.pay-card{
-  background:#fff;border:1.5px solid var(--border-2);
-  border-radius:16px;padding:12px;
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-  cursor:pointer;transition:all 0.25s var(--ease);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-.pay-card:hover{
-  border-color:var(--brand-mid);
-  transform:translateY(-3px);
-  box-shadow: 0 6px 15px var(--brand-glow);
-}
-.pay-card:active{transform:scale(0.96);}
-.pay-card.selected{
-  border-color:var(--brand);
-  background:var(--brand-lt);
-  box-shadow: 0 0 0 2px var(--brand);
-}
-.pay-icon{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--brand-lt);color:var(--brand);
+.pix-header{display:flex;align-items:center;gap:10px;}
+.pix-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:#32BCAD;color:#fff;
   display:flex;align-items:center;justify-content:center;
-  margin-bottom:8px;
+  font-weight:bold;font-size:18px;
 }
-.pay-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
-.pay-price{font-size:15px;font-weight:800;color:var(--brand-dk);}
-.pay-sub{font-size:10px;color:var(--text-3);margin-top:2px;}
+.pix-info-title{font-size:14px;font-weight:700;color:var(--text);}
+.pix-info-sub{font-size:11px;color:var(--text-3);}
+.pix-code-wrap{
+  background:var(--surface-2);
+  border:1px dashed var(--border);
+  border-radius:10px;padding:12px;
+  position:relative;cursor:pointer;
+  transition:all 0.2s ease;
+}
+.pix-code-wrap:hover{border-color:var(--brand);background:#fff;}
+.pix-code{
+  font-family:monospace;font-size:11px;color:var(--text-2);
+  word-break:break-all;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.pix-copy-btn{
+  background:var(--brand);color:#fff;
+  border:none;border-radius:12px;
+  padding:10px;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all 0.2s ease;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.pix-copy-btn:active{transform:scale(0.97);}
+.pix-copy-btn.copied{background:var(--green);}
 
 /* ── AGENT INTRO CARD ── */
 .intro-card{
@@ -449,50 +457,47 @@ html,body{
   <!-- HEADER -->
   <header class="header">
     <button class="icon-btn" aria-label="Voltar">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
     </button>
     <div class="h-agent">
       <div class="h-avatar">
-        <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="h-avatar-img" alt="Carlos Oliveira">
+        <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="h-avatar-img" alt="Carlos">
         <div class="h-dot"></div>
       </div>
       <div class="h-info">
         <div class="h-name">Carlos Oliveira</div>
         <div class="h-sub" id="headerStatus">
           <span id="statusText">Online · Diskgas</span>
-          <span class="typing-dots-mini" id="typingDotsMini">
-            <span class="tdm"></span><span class="tdm"></span><span class="tdm"></span>
-          </span>
+          <div class="typing-dots-mini" id="typingDotsMini">
+            <div class="tdm"></div><div class="tdm"></div><div class="tdm"></div>
+          </div>
         </div>
       </div>
     </div>
-    <button class="icon-btn" aria-label="Mais opções">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+    <button class="icon-btn" aria-label="Ligar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     </button>
   </header>
 
   <!-- TRUST BAR -->
   <div class="trust-bar">
     <div class="t-item">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="#F59E0B"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <span>4,9</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Dados Protegidos
     </div>
-    <span class="t-sep">·</span>
+    <div class="t-sep">|</div>
     <div class="t-item">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span>2.847 atendidos</span>
-    </div>
-    <span class="t-sep">·</span>
-    <div class="t-item">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span>≤ 45 min entrega</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Entrega em 45min
     </div>
   </div>
 
-  <!-- MESSAGES -->
-  <div class="msgs" id="msgs"></div>
+  <!-- MESSAGES AREA -->
+  <div class="msgs" id="msgs">
+    <!-- Messages injected here -->
+  </div>
 
-  <!-- TYPING ROW -->
+  <!-- TYPING INDICATOR -->
   <div class="typing-row" id="typingRow">
     <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="m-avatar" alt="Carlos">
     <div class="typing-bubble">
@@ -538,22 +543,6 @@ let lastSender = null;
 let atBottom = true;
 let unread = 0;
 let busy = false;
-
-/* ── CARLOS SYSTEM PROMPT ── */
-const SYSTEM = `Você é Carlos Oliveira, consultor especializado da Diskgas, empresa brasileira de entrega rápida de gás. Responda SEMPRE com JSON válido puro (sem markdown):
-{"message":"sua resposta"}
-
-Produtos:
-- Botijão P13 (gás de cozinha): R$120,00
-- Botijão P45 (uso comercial): R$280,00
-- Botijão P90 (industrial): R$520,00
-- 1ª entrega GRÁTIS para novos clientes
-- Entrega em até 45 minutos
-- Pagamento: PIX (5% desconto), cartão (3x sem juros), dinheiro na entrega
-- Atende todo o Brasil
-
-Regras: máximo 2-3 frases, tom amigável e profissional, emojis com moderação.
-Responda SOMENTE com o JSON, sem nenhum texto extra.`;
 
 /* ── SCROLL TRACKING ── */
 msgsEl.addEventListener('scroll', () => {
@@ -644,37 +633,49 @@ function addMsg(text, type) {
   return { row, onReadPromise };
 }
 
-/* ── PAYMENT OPTIONS ── */
-function showPaymentOptions() {
+/* ── PIX BLOCK ── */
+function showPixBlock() {
   const container = document.createElement('div');
-  container.className = 'payment-grid';
+  container.className = 'pix-block';
   
-  const options = [
-    { title: 'Pagar Agora', price: 'R$ 89,90', sub: 'Via PIX / Cartão', icon: '💳' },
-    { title: 'Na Entrega', price: 'R$ 130,00', sub: 'Dinheiro / Maquininha', icon: '🚚' }
-  ];
+  const pixCode = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540589.905802BR5915DISK GAS LTDA6009SAO PAULO62070503***6304E2B1";
 
-  options.forEach(opt => {
-    const card = document.createElement('div');
-    card.className = 'pay-card';
-    card.innerHTML = `
-      <div class="pay-icon">${opt.icon}</div>
-      <div class="pay-title">${opt.title}</div>
-      <div class="pay-price">${opt.price}</div>
-      <div class="pay-sub">${opt.sub}</div>
-    `;
-    card.onclick = () => {
-      if (busy) return;
-      document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      inputEl.value = `Quero pagar ${opt.title.toLowerCase()} (${opt.price})`;
-      doSend();
-    };
-    container.appendChild(card);
-  });
+  container.innerHTML = `
+    <div class="pix-header">
+      <div class="pix-icon">pix</div>
+      <div class="pix-info">
+        <div class="pix-info-title">Pagamento via PIX</div>
+        <div class="pix-info-sub">Valor: R$ 89,90 (5% desc. incluso)</div>
+      </div>
+    </div>
+    <div class="pix-code-wrap" id="pixCodeWrap">
+      <div class="pix-code">${pixCode}</div>
+    </div>
+    <button class="pix-copy-btn" id="pixCopyBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      Copiar código Pix
+    </button>
+  `;
 
   msgsEl.appendChild(container);
   scrollDown();
+
+  const copyBtn = container.querySelector('#pixCopyBtn');
+  copyBtn.onclick = () => {
+    navigator.clipboard.writeText(pixCode);
+    copyBtn.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      Código Copiado!
+    `;
+    copyBtn.classList.add('copied');
+    setTimeout(() => {
+      copyBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copiar código Pix
+      `;
+      copyBtn.classList.remove('copied');
+    }, 2000);
+  };
 }
 
 /* ── SYSTEM MESSAGE ── */
@@ -695,10 +696,10 @@ function addSys(html, variant = '') {
   return s;
 }
 
-function addSpinner() {
+function addSpinner(text = '') {
   const d = document.createElement('div');
   d.className = 'spinner-wrap';
-  d.innerHTML = '<div class="spinner"></div>';
+  d.innerHTML = `<div class="spinner"></div>${text ? `<span class="spinner-text">${text}</span>` : ''}`;
   msgsEl.appendChild(d);
   scrollDown();
   return d;
@@ -753,64 +754,20 @@ function setTyping(on) {
 
 /* ── CARLOS API ── */
 async function askCarlos(userMsg, mode = "normal") {
-  history.push({ role: 'user', content: userMsg });
-  
   if (mode === "greeting") {
       const hour = new Date().getHours();
       let greeting = "";
-      if (hour >= 5 && hour < 12) greeting = "Bom dia!";
-      else if (hour >= 12 && hour < 18) greeting = "Boa tarde!";
-      else greeting = "Boa noite!";
+      if (hour >= 5 && hour < 12) greeting = "Bom dia! Tudo bem?";
+      else if (hour >= 12 && hour < 18) greeting = "Boa tarde! Tudo bem?";
+      else greeting = "Boa noite! Tudo bem?";
       return { message: greeting };
   }
 
   if (mode === "payment") {
-      return { message: "Prefere pagar agora ou na entrega?" };
+      return { message: "Vou enviar o Pix, um segundo..." };
   }
 
-  const simulation = () => {
-    const responses = [
-      "Claro! O botijão P13 está saindo por R$120,00 com entrega grátis por ser sua primeira compra. Posso agendar?",
-      "Temos o P13 (residencial) por R$120 e o P45 por R$280. Qual você prefere?",
-      "Entregamos em até 45 minutos em qualquer região. Como deseja pagar?",
-      "Aceitamos PIX com 5% de desconto, cartão em até 3x ou dinheiro na entrega. O que fica melhor?"
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
-  };
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{
-          'Content-Type':'application/json',
-          'x-api-key': 'SUA_CHAVE_AQUI',
-          'anthropic-version': '2023-06-01'
-      },
-      body:JSON.stringify({
-        model:'claude-3-sonnet-20240229',
-        max_tokens:1000,
-        system:SYSTEM,
-        messages:history
-      })
-    });
-
-    if (!res.ok) throw new Error('API_FAIL');
-
-    const data = await res.json();
-    const raw = (data.content||[]).map(b=>b.text||'').join('');
-    let parsed;
-    try { parsed = JSON.parse(raw.replace(/```json|```/g,'').trim()); }
-    catch { parsed = {message:raw}; }
-    
-    let finalMsg = parsed.message || raw;
-    history.push({ role:'assistant', content: JSON.stringify({message: finalMsg}) });
-    return { message: finalMsg };
-
-  } catch (err) {
-    let finalMsg = simulation();
-    history.push({ role:'assistant', content: JSON.stringify({message: finalMsg}) });
-    return { message: finalMsg };
-  }
+  return { message: "Em que mais posso te ajudar?" };
 }
 
 /* ── SEND ── */
@@ -831,17 +788,11 @@ async function doSend() {
 }
 
 async function agentReply(userText, specialMode = "normal") {
-  // Delays realistas
-  // Saudação: rápido (1s)
-  // Pagamento: simula tempo de leitura da saudação + digitação (3.5s a 4.5s)
-  // Normal: tempo variável baseado no texto (1.5s a 3s)
-  let delay = 1500 + Math.random() * 1500;
+  let delay = 1500;
   
-  if (specialMode === "greeting") {
-      delay = 1000;
-  } else if (specialMode === "payment") {
-      delay = 3500 + Math.random() * 1000; 
-  }
+  // Tempos ajustados para parecer leitura/digitação humana
+  if (specialMode === "greeting") delay = 1200;
+  else if (specialMode === "payment") delay = 1800;
 
   setTyping(true);
   
@@ -854,7 +805,20 @@ async function agentReply(userText, specialMode = "normal") {
   addMsg(reply.message, 'agent');
   
   if (specialMode === "payment") {
-      showPaymentOptions();
+      // Pequena pausa após a mensagem para o usuário ler "Vou enviar o Pix..."
+      await new Promise(r => setTimeout(r, 800));
+      
+      const spinner = addSpinner('Aguarde...');
+      // Simula o tempo de processamento do sistema para gerar o código (exatos 2 segundos)
+      await new Promise(r => setTimeout(r, 2000));
+      spinner.remove();
+      
+      showPixBlock();
+      
+      // Feedback visual de que o sistema está monitorando o pagamento
+      setTimeout(() => {
+        addSys('Pagamento aguardando confirmação', 'brand');
+      }, 500);
   }
 }
 
@@ -870,7 +834,7 @@ const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
 
   const sp = addSpinner();
   const sysTxt = addSys('Buscando o melhor consultor para você...', 'brand');
-  await new Promise(r => setTimeout(r, 2000));
+  await new Promise(r => setTimeout(r, 1500));
 
   sp.remove();
   connSys.parentElement.remove();
@@ -884,13 +848,13 @@ const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
   busy = true;
   await onReadPromise;
   
-  // 1. Saudação (Rápida: 1s)
+  // 1. Saudação
   await agentReply(DEFAULT_FIRST_MSG, "greeting");
   
-  // 2. Intervalo de "leitura" humana (Pausa de 1.2s antes de começar a digitar a próxima)
-  await new Promise(r => setTimeout(r, 1200));
+  // 2. Intervalo de "leitura"
+  await new Promise(r => setTimeout(r, 1000));
   
-  // 3. Pergunta de pagamento + Cards (Digitação mais longa: 3.5s a 4.5s)
+  // 3. Pix Flow
   await agentReply("", "payment");
   
   busy = false;
