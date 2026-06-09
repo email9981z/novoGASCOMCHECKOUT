@@ -251,7 +251,7 @@ html,body{
 .b-read.read{color:var(--read-clr);}
 .b-meta.hide{display:none;}
 
-/* ── PAYMENT CARDS (NEW) ── */
+/* ── PAYMENT CARDS ── */
 .payment-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:10px;
   margin-top:10px;width:100%;
@@ -831,7 +831,18 @@ async function doSend() {
 }
 
 async function agentReply(userText, specialMode = "normal") {
-  const delay = specialMode !== "normal" ? 1000 : 1500 + Math.random() * 1500;
+  // Delays realistas
+  // Saudação: rápido (1s)
+  // Pagamento: simula tempo de leitura da saudação + digitação (3.5s a 4.5s)
+  // Normal: tempo variável baseado no texto (1.5s a 3s)
+  let delay = 1500 + Math.random() * 1500;
+  
+  if (specialMode === "greeting") {
+      delay = 1000;
+  } else if (specialMode === "payment") {
+      delay = 3500 + Math.random() * 1000; 
+  }
+
   setTyping(true);
   
   const [reply] = await Promise.all([
@@ -873,13 +884,13 @@ const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
   busy = true;
   await onReadPromise;
   
-  // 1. Saudação
+  // 1. Saudação (Rápida: 1s)
   await agentReply(DEFAULT_FIRST_MSG, "greeting");
   
-  // 2. Pequeno delay entre saudação e pergunta de pagamento
-  await new Promise(r => setTimeout(r, 800));
+  // 2. Intervalo de "leitura" humana (Pausa de 1.2s antes de começar a digitar a próxima)
+  await new Promise(r => setTimeout(r, 1200));
   
-  // 3. Pergunta de pagamento + Cards
+  // 3. Pergunta de pagamento + Cards (Digitação mais longa: 3.5s a 4.5s)
   await agentReply("", "payment");
   
   busy = false;
