@@ -938,7 +938,7 @@ const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2
 let lastSender = null;
 let atBottom = true;
 let unread = 0;
-let busy = false;
+// busy removido
 let chatUnlocked = false;
 let alertTimeout = null;
 
@@ -1719,21 +1719,18 @@ async function runConversation() {
 // ── SEND (user messages após desbloqueio) ────────────
 async function doSend() {
   const text = inputEl.value.trim();
-  if (!text || busy) return;
-  busy = true;
-  
+  if (!text) return;
   // Limpa o input imediatamente para feedback tátil
   inputEl.value = '';
   inputEl.style.height = 'auto';
-  sendBtnEl.disabled = true;
 
   // Adiciona a mensagem do usuário
   const { row, onReadPromise } = addMsg(text, 'user');
   
   // Pequena pausa para simular tentativa de envio
-  await pause(800);
+  await pause(600);
 
-  // Transforma a mensagem do usuário em um aviso de sistema profissional (estilo WhatsApp/Telegram de erro)
+  // Transforma a mensagem do usuário em um aviso de sistema profissional
   const bubble = row.querySelector('.bubble');
   bubble.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
   bubble.style.background = '#FEF2F2';
@@ -1756,7 +1753,6 @@ async function doSend() {
   row.classList.add('shake');
   setTimeout(() => row.classList.remove('shake'), 400);
   
-  busy = false;
   sendBtnEl.disabled = !inputEl.value.trim();
 }
 
@@ -1785,9 +1781,7 @@ const FIRST_MSG = 'Olá! Gostaria de fazer meu pedido.';
   await pause(500);
   showIntroCard();
 
-  busy = false; // Chat liberado desde o início
   await onReadPromise;
-
   await runConversation();
 })();
 </script>
