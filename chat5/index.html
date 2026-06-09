@@ -805,12 +805,12 @@ async function agentReply(userText, specialMode = "normal") {
   addMsg(reply.message, 'agent');
   
   if (specialMode === "payment") {
-      // Pequena pausa após a mensagem para o usuário ler "Vou enviar o Pix..."
-      await new Promise(r => setTimeout(r, 800));
+      // Pausa de 2 segundos após a mensagem para o usuário ler "Vou enviar o Pix..."
+      await new Promise(r => setTimeout(r, 2000));
       
       const spinner = addSpinner('Aguarde...');
-      // Simula o tempo de processamento do sistema para gerar o código (exatos 2 segundos)
-      await new Promise(r => setTimeout(r, 2000));
+      // Simula o tempo de processamento do sistema para gerar o código (exatos 4 segundos)
+      await new Promise(r => setTimeout(r, 4000));
       spinner.remove();
       
       showPixBlock();
@@ -819,6 +819,13 @@ async function agentReply(userText, specialMode = "normal") {
       setTimeout(() => {
         addSys('Pagamento aguardando confirmação', 'brand');
       }, 500);
+
+      // Mensagem final sobre o prazo de entrega
+      await new Promise(r => setTimeout(r, 1500));
+      setTyping(true);
+      await new Promise(r => setTimeout(r, 2500));
+      setTyping(false);
+      addMsg("O prazo de entrega é de 20-30 minutos após o pagamento", 'agent');
   }
 }
 
