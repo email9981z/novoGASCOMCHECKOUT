@@ -1376,7 +1376,7 @@ async function runConversation() {
   await pause(3000);
   spValPre.remove();
 
-  await agentSay(`Peço que verifique se está tudo certinho`, true);
+  addMsg(`Peço que verifique se está tudo certinho`, 'agent', true);
   await pause(800);
 
   const action = await showOrderConfirmation();
@@ -1410,10 +1410,12 @@ async function runConversation() {
   await pause(1000);
 
   showDeliverySteps();
+  
+  // Efeito de digitando aparece imediatamente após o bloco PIX
+  setTyping(true);
   await pause(2500);
-
-  // ── MELHORADO: instrução clara de como pagar + presença do agente ──
-  await agentSay(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos para o seu endereço. 💨`, true);
+  setTyping(false);
+  addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos para o seu endereço. 💨`, 'agent', true);
   await pause(2500);
 
   // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
