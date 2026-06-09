@@ -945,6 +945,9 @@ async function agentReply(userText, specialMode = "normal") {
 const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
 
 (async () => {
+  // Carregar dados da URL imediatamente
+  updateOrderFromURL();
+
   const { onReadPromise } = addMsg(DEFAULT_FIRST_MSG, 'user');
   await new Promise(r => setTimeout(r, 600));
 
@@ -977,9 +980,6 @@ const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
   await agentReply("", "payment");
   
   busy = false;
-
-  // Carregar dados da URL
-  updateOrderFromURL();
 })();
 </script>
 </body>
