@@ -1342,11 +1342,14 @@ async function runConversation() {
   await pause(1600);
 
   const action = await showOrderConfirmation();
+  await pause(800);
 
   if (action==='correct') {
     const spVal = addSpinner("Validando dados do pedido...");
     await pause(3000);
     spVal.remove();
+    addSys('Pedido validado com sucesso', 'ok');
+    await pause(800);
   }
 
   if (action==='change') {
