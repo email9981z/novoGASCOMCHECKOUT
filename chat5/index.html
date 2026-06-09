@@ -684,13 +684,21 @@ function setTyping(on) {
   if (on) scrollDown();
 }
 
-/* ── CARLOS API (COM MODO DE SIMULAÇÃO) ── */
-async function askCarlos(userMsg, prefix = "") {
+/* ── CARLOS API (MODO SIMULAÇÃO/FALLBACK) ── */
+async function askCarlos(userMsg, isGreetingOnly = false) {
   history.push({ role: 'user', content: userMsg });
   
-  // MODO DE SIMULAÇÃO (FALLBACK)
-  // Como chamadas diretas para APIs de IA via Front-end costumam falhar por CORS sem um Proxy,
-  // adicionei este fallback para garantir que o chat funcione sempre.
+  if (isGreetingOnly) {
+      const hour = new Date().getHours();
+      let greeting = "";
+      if (hour >= 5 && hour < 12) greeting = "Bom dia!";
+      else if (hour >= 12 && hour < 18) greeting = "Boa tarde!";
+      else greeting = "Boa noite!";
+      
+      history.push({ role:'assistant', content: JSON.stringify({message: greeting}) });
+      return { message: greeting };
+  }
+
   const simulation = () => {
     const responses = [
       "Claro! O botijão P13 está saindo por R$120,00 com entrega grátis por ser sua primeira compra. Posso agendar?",
@@ -702,12 +710,11 @@ async function askCarlos(userMsg, prefix = "") {
   };
 
   try {
-    // Tenta chamar a API (Atenção: Isso geralmente falha em navegadores locais sem Proxy/CORS configurado)
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method:'POST',
       headers:{
           'Content-Type':'application/json',
-          'x-api-key': 'SUA_CHAVE_AQUI', // Precisa de chave válida
+          'x-api-key': 'SUA_CHAVE_AQUI',
           'anthropic-version': '2023-06-01'
       },
       body:JSON.stringify({
@@ -727,18 +734,11 @@ async function askCarlos(userMsg, prefix = "") {
     catch { parsed = {message:raw}; }
     
     let finalMsg = parsed.message || raw;
-    if (prefix) finalMsg = prefix + " " + finalMsg;
-    
     history.push({ role:'assistant', content: JSON.stringify({message: finalMsg}) });
     return { message: finalMsg };
 
   } catch (err) {
-    // Se a API falhar (CORS, falta de chave, etc), usa a simulação
-    console.warn("API Offline ou Erro de CORS. Usando modo simulação.", err);
-    
     let finalMsg = simulation();
-    if (prefix) finalMsg = prefix + " " + finalMsg;
-    
     history.push({ role:'assistant', content: JSON.stringify({message: finalMsg}) });
     return { message: finalMsg };
   }
@@ -762,19 +762,11 @@ async function doSend() {
 }
 
 async function agentReply(userText, isFirst = false) {
-  const delay = 1500 + Math.random() * 1500; // Delay mais natural para digitação
+  const delay = isFirst ? 1000 : 1500 + Math.random() * 1500;
   setTyping(true);
   
-  let prefix = "";
-  if (isFirst) {
-      const hour = new Date().getHours();
-      if (hour >= 5 && hour < 12) prefix = "Oi, bom dia!";
-      else if (hour >= 12 && hour < 18) prefix = "Oi, boa tarde!";
-      else prefix = "Oi, boa noite!";
-  }
-  
   const [reply] = await Promise.all([
-    askCarlos(userText, prefix),
+    askCarlos(userText, isFirst), // Passa isFirst para a função askCarlos
     new Promise(r => setTimeout(r, delay))
   ]);
   setTyping(false);
@@ -806,7 +798,7 @@ const DEFAULT_FIRST_MSG = 'Olá! Gostaria de saber mais sobre os produtos.';
 
   busy = true;
   await onReadPromise;
-  await agentReply(DEFAULT_FIRST_MSG, true);
+  await agentReply(DEFAULT_FIRST_MSG, true); // Primeira resposta
   busy = false;
 })();
 </script>
