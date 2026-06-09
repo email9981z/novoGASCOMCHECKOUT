@@ -268,201 +268,140 @@ html,body{
 .b-read.sent{color:rgba(255,255,255,.55);}
 .b-read.read{color:var(--read-clr);}
 
-/* ── PIX BLOCK — Otimizado para Conversão ── */
+/* ── PIX BLOCK — Minimalista e Profissional ── */
 .pix-block {
   background: var(--surface);
-  border: 1.5px solid var(--border-2);
+  border: 1px solid var(--border-2);
   border-radius: 20px;
-  padding: 16px;
-  margin: 10px 0;
+  padding: 20px;
+  margin: 12px 0;
   width: 100%;
-  max-width: 340px;
+  max-width: 350px;
   animation: cardIn 0.5s var(--spring);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
   align-self: flex-start;
-  position: relative;
-  overflow: hidden;
-}
-.pix-block::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, #32BCAD, #1B7FD8);
 }
 .pix-header {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+.pix-brand {
+  display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
 }
-.pix-logo-wrap {
-  position: relative;
-  flex-shrink: 0;
-}
-.pix-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
+.pix-icon-bg {
+  width: 38px;
+  height: 38px;
   background: #32BCAD;
-  color: #fff;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #fff;
   font-weight: 900;
-  font-size: 12px;
-  text-transform: uppercase;
-  box-shadow: 0 4px 12px rgba(50,188,173,0.3);
+  font-size: 11px;
 }
-.pix-head-info { flex: 1; }
-.pix-head-title {
+.pix-title-main {
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text);
   line-height: 1.2;
 }
-.pix-head-sub {
+.pix-subtitle {
   font-size: 12px;
   color: var(--text-3);
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  margin-top: 1px;
 }
-.pix-secure-badge {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  background: #ECFDF5;
-  border: 1px solid #10B981;
-  color: #059669;
+.pix-badge-minimal {
+  background: #F0FDF4;
+  color: #166534;
   font-size: 10px;
   font-weight: 700;
   padding: 4px 8px;
-  border-radius: 8px;
-}
-
-.pix-pricing-card {
-  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-  border: 1px solid var(--border-2);
-  border-radius: 14px;
-  padding: 14px;
-  margin-bottom: 14px;
+  border-radius: 6px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 4px;
 }
-.pix-price-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.pix-original {
-  font-size: 12px;
-  color: var(--text-3);
-  text-decoration: line-through;
-}
-.pix-savings-tag {
-  background: #10B981;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 6px;
-  text-transform: uppercase;
-}
-.pix-price-main {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-.pix-currency { font-size: 14px; font-weight: 700; color: var(--text); }
-.pix-final {
-  font-size: 26px;
-  font-weight: 900;
-  color: var(--text);
-  letter-spacing: -0.5px;
-}
 
-.pix-code-container {
-  margin-bottom: 12px;
+.pix-price-display {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: #F8FAFC;
+  border-radius: 16px;
 }
-.pix-code-label {
+.pix-price-label {
   font-size: 11px;
   font-weight: 700;
   color: var(--text-3);
   text-transform: uppercase;
-  margin-bottom: 6px;
-  display: block;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
 }
-.pix-code-field {
+.pix-price-val {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -1px;
+}
+.pix-price-val span { font-size: 16px; margin-right: 2px; }
+
+.pix-copy-area {
+  position: relative;
+  margin-bottom: 16px;
+}
+.pix-input-mock {
   background: #fff;
-  border: 2px solid var(--brand);
+  border: 1.5px solid var(--border);
   border-radius: 12px;
+  height: 54px;
   display: flex;
   align-items: center;
-  padding: 4px 4px 4px 12px;
-  transition: all 0.2s ease;
+  padding: 0 12px;
   cursor: pointer;
-  gap: 8px;
-  box-shadow: 0 4px 12px rgba(15, 91, 168, 0.08);
+  transition: all 0.2s ease;
 }
-.pix-code-text {
-  flex: 1;
+.pix-input-mock:hover { border-color: var(--brand); }
+.pix-code-snippet {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 600;
+  flex: 1;
 }
-.pix-copy-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+.pix-copy-trigger {
   background: var(--brand);
   color: #fff;
   font-size: 13px;
   font-weight: 700;
-  padding: 0 16px;
-  height: 40px;
-  border-radius: 10px;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
-}
-.pix-code-field:active .pix-copy-btn { transform: scale(0.96); }
-.pix-code-field.copied { border-color: #10B981; }
-.pix-code-field.copied .pix-copy-btn { background: #10B981; }
-
-.pix-footer-info {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 4px;
-}
-.pix-info-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--text-2);
-  font-weight: 500;
-}
-.pix-info-item svg { color: #10B981; flex-shrink: 0; }
-.pix-timer {
-  background: #FFF7ED;
-  border: 1px solid #FED7AA;
-  color: #9A3412;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 6px 10px;
+  padding: 8px 16px;
   border-radius: 8px;
+  margin-left: 8px;
+}
+.pix-input-mock.copied { border-color: #10B981; background: #F0FDF4; }
+
+.pix-trust-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-2);
+}
+.pix-trust-item {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 600;
 }
+.pix-trust-item svg { color: #32BCAD; }
 
 /* ── STEPS CARD ── */
 .steps-card{
@@ -1469,63 +1408,44 @@ function showOrderConfirmation() {
 function showPixBlock() {
   const pixCode = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540589.905802BR5915DISK GAS LTDA6009SAO PAULO62070503***6304E2B1";
   const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
-  const originalPrice = (ORDER.productPrice * 1.225).toFixed(2).replace('.',',');
-  const savings = (ORDER.productPrice * 0.225).toFixed(2).replace('.',',');
 
   const block = document.createElement('div');
   block.className = 'pix-block';
   block.innerHTML = `
     <div class="pix-header">
-      <div class="pix-logo-wrap">
-        <div class="pix-logo">PIX</div>
-      </div>
-      <div class="pix-head-info">
-        <div class="pix-head-title">Pagamento via Pix</div>
-        <div class="pix-head-sub">
-          Diskgas Entregas Ltda.
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="#1d9bf0"><path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.97-.81-4.08s-2.47-1.49-3.89-1.12c-.77-1.16-2.04-1.96-3.51-1.96s-2.74.8-3.51 1.96c-1.42-.37-2.88.01-3.89 1.12s-1.27 2.69-.81 4.08c-1.31.67-2.19 1.91-2.19 3.34s.88 2.67 2.19 3.34c-.46 1.39-.2 2.97.81 4.08s2.47 1.49 3.89 1.12c.77 1.16 2.04 1.96 3.51 1.96s2.74-.8 3.51-1.96c1.42.37 2.88-.01 3.89-1.12s1.27-2.69.81-4.08c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.35-6.2 6.78z"></path></svg>
+      <div class="pix-brand">
+        <div class="pix-icon-bg">PIX</div>
+        <div>
+          <div class="pix-title-main">Pagamento via Pix</div>
+          <div class="pix-subtitle">Diskgas Entregas Ltda.</div>
         </div>
       </div>
-      <div class="pix-secure-badge">
+      <div class="pix-badge-minimal">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Seguro
       </div>
     </div>
 
-    <div class="pix-pricing-card">
-      <div class="pix-price-top">
-        <div class="pix-original">De R$ ${originalPrice}</div>
-        <div class="pix-savings-tag">Economia de R$ ${savings}</div>
-      </div>
-      <div class="pix-price-main">
-        <span class="pix-currency">R$</span>
-        <span class="pix-final">${finalPrice}</span>
+    <div class="pix-price-display">
+      <div class="pix-price-label">Valor do Pedido</div>
+      <div class="pix-price-val"><span>R$</span>${finalPrice}</div>
+    </div>
+
+    <div class="pix-copy-area">
+      <div class="pix-input-mock" id="pixField">
+        <div class="pix-code-snippet">${pixCode}</div>
+        <div class="pix-copy-trigger" id="pixCopyBtn">Copiar</div>
       </div>
     </div>
 
-    <div class="pix-code-container">
-      <label class="pix-code-label">Copia e Cola</label>
-      <div class="pix-code-field" id="pixField">
-        <div class="pix-code-text">${pixCode}</div>
-        <div class="pix-copy-btn" id="pixCopyBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          Copiar
-        </div>
+    <div class="pix-trust-footer">
+      <div class="pix-trust-item">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        Confirmação Instantânea
       </div>
-    </div>
-
-    <div class="pix-footer-info">
-      <div class="pix-info-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        <span>Confirmação instantânea após o pagamento</span>
-      </div>
-      <div class="pix-info-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        <span>Entrega prioritária garantida</span>
-      </div>
-      <div class="pix-timer">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Este código expira em 30 minutos
+      <div class="pix-trust-item">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Vence em 30 min
       </div>
     </div>`;
 
@@ -1537,14 +1457,12 @@ function showPixBlock() {
   field.onclick = () => {
     navigator.clipboard.writeText(pixCode).catch(() => {});
     field.classList.add('copied');
-    copyBtn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-      Copiado!`;
+    copyBtn.textContent = 'Copiado!';
+    copyBtn.style.background = '#10B981';
     setTimeout(() => {
       field.classList.remove('copied');
-      copyBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-        Copiar`;
+      copyBtn.textContent = 'Copiar';
+      copyBtn.style.background = 'var(--brand)';
     }, 2500);
   };
 }
