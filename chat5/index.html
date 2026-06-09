@@ -585,8 +585,8 @@ inputEl.addEventListener('keydown', e => {
 sendBtnEl.addEventListener('click', doSend);
 
 /* ── ADD MESSAGE ── */
-function addMsg(text, type) {
-  const isGrouped = lastSender === type;
+function addMsg(text, type, forceAvatar = false) {
+  const isGrouped = !forceAvatar && lastSender === type;
   const row = document.createElement('div');
   row.className = `row ${type}${isGrouped ? ' grouped' : ''}`;
 
@@ -825,7 +825,7 @@ async function agentReply(userText, specialMode = "normal") {
       setTyping(true);
       await new Promise(r => setTimeout(r, 2500));
       setTyping(false);
-      addMsg("O prazo de entrega é de 20-30 minutos após o pagamento", 'agent');
+      addMsg("O prazo de entrega é de 20-30 minutos após o pagamento", 'agent', true);
   }
 }
 
