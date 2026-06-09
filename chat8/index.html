@@ -1344,6 +1344,14 @@ async function runConversation() {
   const action = await showOrderConfirmation();
   await pause(800);
 
+  if (action==='correct') {
+    const spVal = addSpinner("Validando dados do pedido...");
+    await pause(3000);
+    spVal.remove();
+    addSys('Pedido validado com sucesso', 'ok');
+    await pause(800);
+  }
+
   if (action==='change') {
     await agentSay(`Sem problemas! Pode me falar o que deseja alterar ou clique no ícone do carrinho no topo para ajustar seu pedido.`);
     return;
