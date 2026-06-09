@@ -844,18 +844,37 @@ function parseOrderData() {
       }
     }
 
-    // Extrair cidade de forma mais robusta
-    let city = null;
+    // Extrair localização (Bairro ou Cidade) de forma mais inteligente
+    let location = 'sua região';
     if (address) {
+      // Exemplo: "Rua ..., 12 - Jardim Itaquiti, Barueri/SP"
       const parts = address.split(',');
+      let city = '';
+      let neighborhood = '';
+
       if (parts.length >= 2) {
-        // Geralmente Cidade/UF é o penúltimo ou último antes do CEP
+        // Cidade costuma ser a parte antes da UF
         const cityPart = parts[parts.length - 1].trim();
         city = cityPart.split('/')[0].trim();
+
+        // Tentar pegar o bairro (geralmente após o '-' na primeira parte ou em uma parte separada)
+        const firstPart = parts[0];
+        if (firstPart.includes(' - ')) {
+          neighborhood = firstPart.split(' - ')[1].trim();
+        } else if (parts.length >= 3) {
+          neighborhood = parts[1].trim();
+        }
+      }
+
+      // Escolher o que tiver menos caracteres (desde que não seja vazio)
+      if (neighborhood && city) {
+        location = neighborhood.length <= city.length ? neighborhood : city;
+      } else if (neighborhood || city) {
+        location = neighborhood || city;
       }
     }
 
-    return { products, productName, productQty, productPrice, city, address, deliveryTime };
+    return { products, productName, productQty, productPrice, location, address, deliveryTime };
   } catch (e) {
     return {
       products: [], productName: 'Botijão de Gás P13', productQty: 1,
@@ -1189,9 +1208,8 @@ async function agentSay(text, newGroup = false) {
 }
 
 async function runConversation() {
-  const { productName, city, productPrice } = ORDER;
+  const { productName, location, productPrice } = ORDER;
   const gr   = getGreeting();
-  const here = city ? `em ${city}` : 'na sua região';
   const ordersNearby = Math.floor(Math.random() * 7) + 6;
 
   // 1 — Saudação
@@ -1199,7 +1217,7 @@ async function runConversation() {
   await pause(500);
 
   // 2 — Apresentação
-  await agentSay(`Sou Carlos, vendedor diskgas em sua região`);
+  await agentSay(`Sou Carlos, vendedor diskgas em ${location} e região`);
   await pause(1600);
 
   // 3 — Confirmar pedido
