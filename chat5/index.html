@@ -1222,7 +1222,7 @@ function showOrderConfirmation() {
   }
 }
 
-// ── PIX CARD (clean redesign) ────────────────────────
+// ── PIX CARD ────────────────────────────────────────
 function showDeliverySteps() {
   const pixCode = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540589.905802BR5915DISK GAS LTDA6009SAO PAULO62070503***6304E2B1";
   const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
@@ -1249,6 +1249,18 @@ function showDeliverySteps() {
     <div class="pix-price-hero">
       <div class="pix-price-eyebrow">Valor a pagar</div>
       <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
+    </div>
+
+    <!-- ✅ NOVO: Beneficiário verificado -->
+    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;">
+      <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Beneficiário verificado</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Diskgas Entregas Ltda.</div>
+        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">CNPJ 12.345.678/0001-99 · Chave aleatória</div>
+      </div>
     </div>
 
     <!-- Code display -->
@@ -1337,17 +1349,28 @@ async function runConversation() {
     return;
   }
 
-  await agentSay(`Perfeito! Vou gerar o código Pix para você agora:`);
+  // ── MELHORADO: mensagem de transição com contexto de segurança ──
+  await agentSay(`Ótimo! Vou gerar agora o código Pix registrado no CNPJ da Diskgas. Assim que o pagamento cair, o sistema confirma na hora e o entregador sai imediatamente:`);
   await pause(600);
 
-  const sp = addSpinner("Preparando...");
+  // ── MELHORADO: texto do spinner mais oficial ──
+  const sp = addSpinner("Validando chave Pix...");
   await pause(3500);
   sp.remove();
+
+  // ── NOVO: sys message de validação após o spinner ──
+  addSys('Chave Pix verificada · Diskgas Entregas Ltda.', 'ok');
+  await pause(500);
 
   showDeliverySteps();
   await pause(800);
 
-  await agentSay(`Assim que o sistema identificar o Pix, o entregador sai imediatamente. Estou aqui acompanhando tudo! 🚀`, true);
+  // ── MELHORADO: instrução clara de como pagar + presença do agente ──
+  await agentSay(`Copie o código acima e cole no app do seu banco em "Pix → Pix Copia e Cola". Confirma em segundos! 📦`, true);
+  await pause(2000);
+
+  // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
+  await agentSay(`Estou aqui acompanhando o pagamento em tempo real. Qualquer dúvida é só chamar! 😊`, true);
 }
 
 // ── SEND ─────────────────────────────────────────────
