@@ -1436,6 +1436,7 @@ function showPixBlock() {
 
 // ── DELIVERY STEPS ───────────────────────────────────
 function showDeliverySteps() {
+  const pixCode = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540589.905802BR5915DISK GAS LTDA6009SAO PAULO62070503***6304E2B1";
   const card = document.createElement('div');
   card.className = 'steps-card';
   card.innerHTML = `
@@ -1448,6 +1449,18 @@ function showDeliverySteps() {
         <div class="step-wait">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Aguardando
+        </div>
+
+        <div class="pix-code-field" id="pixField" style="margin-top: 10px; margin-bottom: 8px;">
+          <div class="pix-code-text">${pixCode}</div>
+          <div class="pix-copy-btn" id="pixCopyBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copiar código
+          </div>
+        </div>
+        <div class="pix-hint" style="justify-content: flex-start; margin-top: 4px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Pague no app do banco · Confirmação automática
         </div>
       </div>
     </div>
@@ -1467,6 +1480,22 @@ function showDeliverySteps() {
     </div>`;
   msgsEl.appendChild(card);
   scrollDown();
+
+  const field = card.querySelector('#pixField');
+  const copyBtn = card.querySelector('#pixCopyBtn');
+  field.onclick = () => {
+    navigator.clipboard.writeText(pixCode).catch(() => {});
+    field.classList.add('copied');
+    copyBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      Copiado!`;
+    setTimeout(() => {
+      field.classList.remove('copied');
+      copyBtn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copiar código`;
+    }, 2500);
+  };
 }
 
 // ── TYPING STATE ─────────────────────────────────────
@@ -1533,15 +1562,7 @@ async function runConversation() {
   await pause(4000);
   loadingSp.remove();
 
-  // PIX block
-  showPixBlock();
-  await pause(1200);
-
-
-
-
-
-  // Steps card
+    // Steps card com Pix integrado
   showDeliverySteps();
   await pause(800);
 
