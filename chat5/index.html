@@ -1406,6 +1406,8 @@ async function runConversation() {
     const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
+    addSys('Pedido validado com sucesso', 'ok');
+    await pause(1200);
   }
 
   if (action==='change') {
@@ -1414,7 +1416,7 @@ async function runConversation() {
   }
 
   // ── MELHORADO: mensagem de transição com contexto de segurança ──
-  await agentSay(`Ótimo Vou gerar agora o código Pix,  Um segundo`, false, true);
+  await agentSay(`Ótimo Vou gerar agora o código Pix,  Um segundo`);
   await pause(1000);
 
   // ── MELHORADO: texto do spinner mais oficial ──
@@ -1432,7 +1434,7 @@ async function runConversation() {
   setTyping(true);
   await pause(2500);
   setTyping(false);
-  addMsg(`O prazo de entrega do seu gás é de 20-30 minutos após o pagamento ⏱️💨`, 'agent', true);
+  addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos para o seu endereço. 💨`, 'agent', true);
 
   // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
   await agentSay(`Me chamo Thiago. Qualquer dúvida é só chamar 😊`, true, true);
