@@ -1104,7 +1104,6 @@ function addSys(html, variant='') {
   if(variant==='secure') icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
   if(variant==='gold')   icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
   s.innerHTML=icon+' '+html; d.appendChild(s); msgsEl.appendChild(d); scrollDown();
-  return s;
 }
 
 function addSpinner(text='') {
@@ -1197,11 +1196,10 @@ function showOrderConfirmation() {
         </div>
       </div>
     </div>
-    <div style="display:flex;gap:10px;margin-bottom:12px;">
+    <div style="display:flex;gap:10px;">
       <button id="btnCorrect" style="flex:1.5;padding:12px;border-radius:12px;border:none;background:var(--brand);color:#fff;font-weight:700;cursor:pointer;font-size:13px;transition:all 0.2s;box-shadow:0 4px 12px rgba(15,91,168,0.2);">Sim, está correto</button>
       <button id="btnChange" style="flex:1;padding:12px;border-radius:12px;border:1.5px solid var(--border);background:#fff;color:var(--text-2);font-weight:600;cursor:pointer;font-size:13px;transition:all 0.2s;">Alterar</button>
     </div>
-    <div style="font-size:13.5px;color:var(--text-2);line-height:1.5;padding-top:10px;border-top:1px solid var(--border-2);margin-top:4px;">Peço que verifique se está tudo Ok</div>
   `;
 
   scrollDown();
@@ -1339,7 +1337,17 @@ async function runConversation() {
   await agentSay(`${gr}`);
   await pause(500);
   await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`);
-  await pause(1600);
+  await pause(800);
+
+  // ── NOVO: Efeito de validação após a segunda mensagem do vendedor ──
+  const spVal = addSpinner("Validando dados do pedido...");
+  await pause(2500);
+  spVal.remove();
+  await pause(800);
+
+  // ── AJUSTADO: Mensagem de verificação agora como mensagem real do vendedor ──
+  await agentSay(`Peço que verifique se está tudo Ok`);
+  await pause(400);
 
   const action = await showOrderConfirmation();
   await pause(800);
@@ -1358,7 +1366,7 @@ async function runConversation() {
   await pause(3500);
   sp.remove();
 
-  // ── NOVO: sys message de validação após o spinner ──
+  // ── NOVO: sys message de validação após the spinner ──
   addSys('Chave Pix verificada · Diskgas Entregas Ltda.', 'ok');
   await pause(500);
 
@@ -1369,58 +1377,27 @@ async function runConversation() {
   await agentSay(`Copie o código acima e cole no app do seu banco em "Pix → Pix Copia e Cola". Confirma em segundos! 📦`, true);
   await pause(2000);
 
-  // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
-  await agentSay(`Estou aqui acompanhando o pagamento em tempo real. Qualquer dúvida é só chamar! 😊`, true);
+  addSys('Thiago está aguardando o pagamento...', 'brand');
 }
 
-// ── SEND ─────────────────────────────────────────────
-async function doSend() {
-  const text = inputEl.value.trim();
-  if (!text) return;
-  inputEl.value=''; inputEl.style.height='auto';
-
-  const { row } = addMsg(text,'user');
-  await pause(600);
-
-  const bubble = row.querySelector('.bubble');
-  bubble.style.transition='all 0.4s cubic-bezier(0.4,0,0.2,1)';
-  bubble.style.background='#FEF2F2'; bubble.style.color='#991B1B';
-  bubble.style.border='1px solid #FCA5A5'; bubble.style.boxShadow='0 2px 8px rgba(153,27,27,0.08)';
-  bubble.innerHTML=`
-    <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-bottom:4px;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      Mensagem não enviada
-    </div>
-    <div style="font-size:11px;opacity:0.9;line-height:1.5;font-weight:500;">Apenas clientes com pedidos em fase de entrega podem enviar mensagens.</div>
-  `;
-  row.classList.add('shake');
-  setTimeout(()=>row.classList.remove('shake'),400);
-  sendBtnEl.disabled=!inputEl.value.trim();
-  scrollDown(true);
-}
-
-// ── INIT ─────────────────────────────────────────────
-(async () => {
+// ── INITIALIZATION ───────────────────────────────────
+window.addEventListener('load', () => {
   updateModal();
-  const { onReadPromise } = addMsg('Olá! Gostaria de fazer meu pedido.','user');
-  await pause(500);
+  setTimeout(() => {
+    showIntroCard();
+    setTimeout(() => {
+      addSys('As mensagens são protegidas por criptografia de ponta-a-ponta.','secure');
+      setTimeout(runConversation, 1200);
+    }, 1000);
+  }, 800);
+});
 
-  const connSys = addSys('Conexão criptografada estabelecida','secure');
-  await pause(700);
-
-  const sp = addSpinner();
-  const searchSys = addSys('Buscando consultor disponível...','brand');
-  await pause(1600);
-
-  sp.remove(); connSys.parentElement.remove();
-  searchSys.textContent=''; searchSys.className='ok';
-  searchSys.innerHTML=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Thiago Callegari conectado`;
-
-  await pause(500);
-  showIntroCard();
-  await onReadPromise;
-  await runConversation();
-})();
+function doSend() {
+  const text = inputEl.value.trim();
+  if(!text) return;
+  inputEl.value=''; inputEl.style.height='auto'; sendBtnEl.disabled=true;
+  addMsg(text,'user');
+}
 </script>
 </body>
 </html>
