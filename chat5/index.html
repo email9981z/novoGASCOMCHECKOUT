@@ -1127,12 +1127,8 @@ async function agentReply(userText, specialMode = "normal") {
     setTyping(false);
     addMsg("O prazo de entrega é de 20-30 minutos após a confirmação do pagamento.", 'agent', true);
     
-    // LIBERAÇÃO FINAL
-    deliveryTimeSent = true;
-    inputEl.readOnly = false;
-    inputEl.placeholder = "Escreva sua mensagem...";
-    inputWrapEl.classList.remove('locked');
-    typingAlertEl.classList.remove('show');
+    // Chat permanece bloqueado até que o pagamento seja confirmado
+    // A liberação só ocorre quando o usuário confirma o pagamento
   }
 }
 
