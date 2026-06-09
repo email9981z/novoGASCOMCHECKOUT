@@ -656,7 +656,15 @@ html,body{
   transition:all .2s ease;
 }
 .modal-btn:hover{background:var(--brand-mid);}
-</style>
+	
+	/* Estilos para edição */
+	.qty-control{display:flex;align-items:center;gap:12px;background:var(--surface);border-radius:8px;padding:4px 8px;border:1px solid var(--border);}
+	.qty-btn{width:28px;height:28px;border-radius:6px;border:none;background:var(--surface-2);color:var(--text);font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+	.qty-btn:hover{background:var(--border-2);}
+	.qty-val{font-size:14px;font-weight:700;min-width:20px;text-align:center;}
+	.edit-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:13px;color:var(--text);outline:none;transition:all .2s;background:var(--surface-2);}
+	.edit-input:focus{border-color:var(--brand-mid);background:#fff;box-shadow:0 0 0 3px var(--brand-glow);}
+	</style>
 </head>
 <body>
 <div class="app">
@@ -884,32 +892,112 @@ function parseOrderData() {
 }
 const ORDER = parseOrderData();
 
-function updateModal() {
-  if (ORDER.products.length > 0) {
-    orderItemsEl.innerHTML = ORDER.products.map(p => `
-      <div class="order-item">
-        ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
-        <div class="oi-info">
-          <div class="oi-name">${p.n||'Produto'} (x${p.q||1})</div>
-          <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
-        </div>
-      </div>`).join('');
+function updateModal(isEditing = false) {
+  if (isEditing) {
+    document.querySelector('.modal-title').textContent = 'Editar Pedido';
+    confirmModalEl.textContent = 'Salvar Alterações';
+    
+    if (ORDER.products.length > 0) {
+      orderItemsEl.innerHTML = ORDER.products.map((p, idx) => `
+        <div class="order-item" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+            ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
+            <div class="oi-info">
+              <input type="text" class="edit-input" value="${p.n}" onchange="updateProductField(${idx}, 'n', this.value)" placeholder="Nome do produto">
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 4px;">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
+              <span class="qty-val" id="qty-${idx}">${p.q || 1}</span>
+              <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+            </div>
+            <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
+          </div>
+        </div>`).join('');
+    } else {
+      orderItemsEl.innerHTML = `
+        <div class="order-item" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+          <input type="text" class="edit-input" value="${ORDER.productName}" onchange="ORDER.productName = this.value" placeholder="Nome do produto">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 4px;">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeSingleQty(-1)">-</button>
+              <span class="qty-val" id="qty-single">${ORDER.productQty}</span>
+              <button class="qty-btn" onclick="changeSingleQty(1)">+</button>
+            </div>
+            <div class="oi-price">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
+          </div>
+        </div>`;
+    }
+    
+    orderAddressEl.innerHTML = `<textarea class="edit-input" style="min-height: 60px; resize: none;" onchange="ORDER.address = this.value">${ORDER.address}</textarea>`;
+    
   } else {
-    orderItemsEl.innerHTML = `
-      <div class="order-item">
-        <div class="oi-info">
-          <div class="oi-name">${ORDER.productName} (x${ORDER.productQty})</div>
-          <div class="oi-price">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-        </div>
-      </div>`;
+    document.querySelector('.modal-title').textContent = 'Resumo do Pedido';
+    confirmModalEl.textContent = 'Entendido';
+    
+    if (ORDER.products.length > 0) {
+      orderItemsEl.innerHTML = ORDER.products.map(p => `
+        <div class="order-item">
+          ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
+          <div class="oi-info">
+            <div class="oi-name">${p.n||'Produto'} (x${p.q||1})</div>
+            <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
+          </div>
+        </div>`).join('');
+    } else {
+      orderItemsEl.innerHTML = `
+        <div class="order-item">
+          <div class="oi-info">
+            <div class="oi-name">${ORDER.productName} (x${ORDER.productQty})</div>
+            <div class="oi-price">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
+          </div>
+        </div>`;
+    }
+    orderAddressEl.textContent = ORDER.address || '—';
   }
-  if (ORDER.address) orderAddressEl.textContent = ORDER.address;
+
   if (ORDER.deliveryTime) {
-    // Se o prazo já vier com texto (ex: "Entrega Rápida..."), usamos direto
     orderTimeEl.textContent = ORDER.deliveryTime.includes('minutos') 
       ? ORDER.deliveryTime 
       : ORDER.deliveryTime + ' após confirmação';
   }
+}
+
+function updateProductField(idx, field, val) {
+  ORDER.products[idx][field] = val;
+}
+
+function changeQty(idx, delta) {
+  const p = ORDER.products[idx];
+  const newQty = Math.max(1, (p.q || 1) + delta);
+  p.q = newQty;
+  document.getElementById(`qty-${idx}`).textContent = newQty;
+  recalculateTotal();
+}
+
+function changeSingleQty(delta) {
+  ORDER.productQty = Math.max(1, ORDER.productQty + delta);
+  document.getElementById('qty-single').textContent = ORDER.productQty;
+  recalculateTotal();
+}
+
+function recalculateTotal() {
+  if (ORDER.products.length > 0) {
+    ORDER.productPrice = ORDER.products.reduce((acc, curr) => acc + (curr.v * (curr.q || 1)), 0);
+  }
+  // Atualiza os preços exibidos no modal sem fechar
+  const priceEls = document.querySelectorAll('.oi-price');
+  if (ORDER.products.length > 0) {
+    ORDER.products.forEach((p, i) => {
+      if(priceEls[i]) priceEls[i].textContent = `R$ ${(p.v * p.q).toFixed(2).replace('.',',')}`;
+    });
+  } else {
+    if(priceEls[0]) priceEls[0].textContent = `R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}`;
+  }
+  // Update cart badge
+  const totalQty = ORDER.products.length > 0 ? ORDER.products.reduce((a, b) => a + (b.q || 1), 0) : ORDER.productQty;
+  document.getElementById('cartBadgeEl').textContent = totalQty;
 }
 
 // ── SCROLL ───────────────────────────────────────────
@@ -936,7 +1024,12 @@ function scrollDown(force = false) {
 // ── MODAL ────────────────────────────────────────────
 cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
 closeModalEl.onclick = () => modalOverlayEl.classList.remove('on');
-confirmModalEl.onclick = () => modalOverlayEl.classList.remove('on');
+confirmModalEl.onclick = () => {
+  modalOverlayEl.classList.remove('on');
+  // Se houver um card de confirmação de pedido aberto, ele deve ser atualizado ou o chat deve continuar
+  // Como o usuário clicou em "Alterar" no card, vamos apenas fechar o modal.
+  // O estado global ORDER já foi atualizado.
+};
 modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayEl.classList.remove('on'); };
 
 // ── ALERT ────────────────────────────────────────────
@@ -1148,7 +1241,8 @@ function showOrderConfirmation() {
       resolve('correct');
     };
     block.querySelector('#btnChange').onclick = () => {
-      resolve('change');
+      updateModal(true);
+      modalOverlayEl.classList.add('on');
     };
   });
 }
