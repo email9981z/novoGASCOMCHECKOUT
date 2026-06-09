@@ -1085,34 +1085,54 @@ modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayE
 	  }
 	});
 
-	// Swipe para fechar
-	const alertContent = document.querySelector('.alert-content');
-	alertContent.addEventListener('touchstart', (e) => {
-	  startX = e.touches[0].clientX;
-	  isDragging = true;
-	  clearTimeout(alertTimeout);
-	}, {passive: true});
+// Swipe e Mouse Drag para fechar
+		const alertContent = document.querySelector('.alert-content');
+		
+		const startDrag = (x) => {
+		  startX = x;
+		  isDragging = true;
+		  clearTimeout(alertTimeout);
+		  alertContent.style.transition = 'none';
+		};
 
-	alertContent.addEventListener('touchmove', (e) => {
-	  if (!isDragging) return;
-	  currentX = e.touches[0].clientX - startX;
-	  if (Math.abs(currentX) > 0) {
-	    alertContent.style.transform = `translateX(${currentX}px)`;
-	    alertContent.style.opacity = 1 - Math.abs(currentX) / 200;
-	  }
-	}, {passive: true});
+		const moveDrag = (x) => {
+		  if (!isDragging) return;
+		  currentX = x - startX;
+		  alertContent.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.05}deg)`;
+		  alertContent.style.opacity = 1 - Math.abs(currentX) / 200;
+		};
 
-	alertContent.addEventListener('touchend', () => {
-	  isDragging = false;
-	  if (Math.abs(currentX) > 80) {
-	    hideAlert();
-	  } else {
-	    alertContent.style.transform = 'translateX(0)';
-	    alertContent.style.opacity = '1';
-	    alertTimeout = setTimeout(() => hideAlert(), 5000);
-	  }
-	  currentX = 0;
-	});
+		const endDrag = () => {
+		  if (!isDragging) return;
+		  isDragging = false;
+		  alertContent.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+		  
+		  if (Math.abs(currentX) > 80) {
+		    // Animação de saída para o lado
+		    const exitX = currentX > 0 ? 400 : -400;
+		    alertContent.style.transform = `translateX(${exitX}px) rotate(${exitX * 0.05}deg)`;
+		    alertContent.style.opacity = '0';
+		    setTimeout(hideAlert, 300);
+		  } else {
+		    alertContent.style.transform = 'translateX(0) rotate(0)';
+		    alertContent.style.opacity = '1';
+		    alertTimeout = setTimeout(() => hideAlert(), 5000);
+		  }
+		  currentX = 0;
+		};
+
+		// Eventos Touch
+		alertContent.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX), {passive: true});
+		alertContent.addEventListener('touchmove', (e) => moveDrag(e.touches[0].clientX), {passive: true});
+		alertContent.addEventListener('touchend', endDrag);
+
+		// Eventos Mouse
+		alertContent.addEventListener('mousedown', (e) => {
+		  e.stopPropagation(); // Evita o fechamento por clique ao iniciar o drag
+		  startDrag(e.clientX);
+		});
+		window.addEventListener('mousemove', (e) => moveDrag(e.clientX));
+		window.addEventListener('mouseup', endDrag);
 
 // ── INPUT ────────────────────────────────────────────
 inputEl.addEventListener('input', () => {
