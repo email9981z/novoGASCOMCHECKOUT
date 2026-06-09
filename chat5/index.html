@@ -462,7 +462,10 @@ html,body{
   padding-bottom:max(12px,env(safe-area-inset-bottom));
   flex-shrink:0;
   box-shadow:0 -2px 8px rgba(0,0,0,.03);
+  display: none; /* Começa oculto */
+  animation: fadeUp 0.5s ease forwards;
 }
+.footer.show { display: block; }
 .input-row{display:flex;gap:9px;align-items:flex-end;}
 .input-wrap{
   flex:1;display:flex;align-items:flex-end;
@@ -1005,6 +1008,12 @@ async function agentReply(userText, specialMode = "normal") {
     await new Promise(r => setTimeout(r, 2000));
     setTyping(false);
     addMsg("O prazo de entrega é de 20-30 minutos após a confirmação do pagamento.", 'agent', true);
+    
+    // Mostra o campo de digitação apenas agora
+    setTimeout(() => {
+      document.querySelector('.footer').classList.add('show');
+      scrollDown(true);
+    }, 500);
   }
 }
 
