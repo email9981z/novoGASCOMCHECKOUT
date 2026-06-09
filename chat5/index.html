@@ -550,11 +550,11 @@ html,body{
   background:var(--surface);
   border-top:1px solid var(--border-2);
   padding:10px 12px;
-  padding-bottom:max(12px, env(safe-area-inset-bottom));
+  padding-bottom:max(8px, env(safe-area-inset-bottom));
   flex-shrink:0;
   box-shadow:0 -2px 10px rgba(0,0,0,0.04);
   position:relative;
-  z-index: 100; /* Ensure footer stays above messages */
+  z-index: 100;
 }
 .input-row{display:flex;gap:9px;align-items:flex-end;}
 .input-wrap{
@@ -1161,12 +1161,8 @@ window.addEventListener('mouseup', endDrag);
 // Ensure the viewport adjusts correctly when keyboard opens
 if ('visualViewport' in window) {
   window.visualViewport.addEventListener('resize', () => {
-    const offset = window.innerHeight - window.visualViewport.height;
-    document.body.style.height = `${window.visualViewport.height}px`;
     // Scroll to bottom when keyboard opens
-    if (offset > 50) {
-      scrollDown(true);
-    }
+    setTimeout(() => scrollDown(true), 100);
   });
 }
 
