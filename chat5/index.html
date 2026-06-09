@@ -1416,7 +1416,7 @@ async function runConversation() {
   await pause(600);
 
   const loadingSp = addSpinner("Preparando...");
-  await pause(3000);
+  await pause(4000);
   loadingSp.remove();
 
   // PIX block
@@ -1427,12 +1427,12 @@ async function runConversation() {
 
 
 
-  // 7 — Compromisso de entrega
-  await agentSay(`Assim que o sistema identificar o Pix, o entregador sai imediatamente. Estou aqui acompanhando tudo! 🚀`, true);
+  // Steps card
+  showDeliverySteps();
   await pause(800);
 
-  // Steps card — Posicionado ao final para maior clareza de pós-venda
-  showDeliverySteps();
+  // 7 — Compromisso de entrega
+  await agentSay(`Assim que o sistema identificar o Pix, o entregador sai imediatamente. Estou aqui acompanhando tudo! 🚀`, true);
 }
 
 // ── SEND (user messages após desbloqueio) ────────────
