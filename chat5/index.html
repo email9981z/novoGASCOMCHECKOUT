@@ -253,45 +253,107 @@ html,body{
 .b-meta.hide{display:none;}
 
 /* ── PIX BLOCK ── */
-.pix-block{
-  background:#fff;border:1.5px solid var(--border-2);
-  border-radius:16px;padding:16px;
-  margin-top:10px;width:100%;
-  animation: cardIn 0.5s var(--spring);
-  display: flex; flex-direction: column; gap: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+.pix-block {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 18px;
+  padding: 12px;
+  margin: 8px 0;
+  width: 100%;
+  max-width: 320px;
+  animation: cardIn 0.4s var(--spring);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  align-self: flex-start;
 }
-.pix-header{display:flex;align-items:center;gap:10px;}
-.pix-icon{
-  width:36px;height:36px;border-radius:10px;
-  background:#32BCAD;color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:bold;font-size:18px;
+.pix-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
-.pix-info-title{font-size:14px;font-weight:700;color:var(--text);}
-.pix-info-sub{font-size:11px;color:var(--text-3);}
-.pix-code-wrap{
-  background:var(--surface-2);
-  border:1px dashed var(--border);
-  border-radius:10px;padding:12px;
-  position:relative;cursor:pointer;
-  transition:all 0.2s ease;
+.pix-icon-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #32BCAD;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  flex-shrink: 0;
 }
-.pix-code-wrap:hover{border-color:var(--brand);background:#fff;}
-.pix-code{
-  font-family:monospace;font-size:11px;color:var(--text-2);
-  word-break:break-all;line-height:1.4;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+.pix-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
-.pix-copy-btn{
-  background:var(--brand);color:#fff;
-  border:none;border-radius:12px;
-  padding:10px;font-size:13px;font-weight:700;
-  cursor:pointer;transition:all 0.2s ease;
-  display:flex;align-items:center;justify-content:center;gap:8px;
+.pix-info-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
 }
-.pix-copy-btn:active{transform:scale(0.97);}
-.pix-copy-btn.copied{background:var(--green);}
+.pix-info-sub {
+  font-size: 11px;
+  color: var(--brand);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.pix-code-field {
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 2px 2px 2px 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.pix-code-field:hover {
+  border-color: var(--brand-mid);
+  background: #fff;
+}
+.pix-code-text {
+  flex: 1;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 8px;
+}
+.pix-copy-trigger {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.pix-code-field:active .pix-copy-trigger {
+  transform: scale(0.9);
+}
+.pix-code-field.copied {
+  border-color: var(--green);
+}
+.pix-code-field.copied .pix-copy-trigger {
+  background: var(--green);
+}
+.pix-footer-hint {
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 500;
+}
 
 /* ── AGENT INTRO CARD ── */
 .intro-card{
@@ -726,38 +788,35 @@ function showPixBlock() {
 
   container.innerHTML = `
     <div class="pix-header">
-      <div class="pix-icon">pix</div>
+      <div class="pix-icon-small">pix</div>
       <div class="pix-info">
-        <div class="pix-info-title">Pagamento via PIX</div>
-        <div class="pix-info-sub">Valor: R$ 89,90 (5% desc. incluso)</div>
+        <div class="pix-info-title">Pagamento via Pix</div>
+        <div class="pix-info-sub">Total: R$ 89,90 (Desconto incluso)</div>
       </div>
     </div>
-    <div class="pix-code-wrap" id="pixCodeWrap">
-      <div class="pix-code">${pixCode}</div>
+    <div class="pix-code-field" id="pixCodeField">
+      <div class="pix-code-text">${pixCode}</div>
+      <div class="pix-copy-trigger" id="pixCopyTrigger">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      </div>
     </div>
-    <button class="pix-copy-btn" id="pixCopyBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-      Copiar código Pix
-    </button>
+    <div class="pix-footer-hint">Toque para copiar o código</div>
   `;
 
   msgsEl.appendChild(container);
   scrollDown();
 
-  const copyBtn = container.querySelector('#pixCopyBtn');
-  copyBtn.onclick = () => {
+  const codeField = container.querySelector('#pixCodeField');
+  const copyTrigger = container.querySelector('#pixCopyTrigger');
+  
+  codeField.onclick = () => {
     navigator.clipboard.writeText(pixCode);
-    copyBtn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-      Código Copiado!
-    `;
-    copyBtn.classList.add('copied');
+    codeField.classList.add('copied');
+    copyTrigger.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    
     setTimeout(() => {
-      copyBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-        Copiar código Pix
-      `;
-      copyBtn.classList.remove('copied');
+      codeField.classList.remove('copied');
+      copyTrigger.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
     }, 2000);
   };
 }
