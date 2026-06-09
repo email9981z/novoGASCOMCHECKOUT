@@ -1064,8 +1064,9 @@ inputEl.addEventListener('input', () => {
   inputEl.style.height = Math.min(inputEl.scrollHeight, 88) + 'px';
   sendBtnEl.disabled = !inputEl.value.trim();
 });
-inputWrapEl.onclick = () => {
+inputWrapEl.onclick = (e) => {
   if (!chatUnlocked) {
+    e.stopPropagation();
     inputWrapEl.classList.remove('shake');
     void inputWrapEl.offsetWidth; // Trigger reflow
     inputWrapEl.classList.add('shake');
@@ -1079,8 +1080,12 @@ inputEl.addEventListener('keydown', e => {
     doSend();
   }
 });
-sendBtnEl.addEventListener('click', () => {
-  if (!chatUnlocked) { showAlert('O canal de comunicação será liberado assim que seu Pix for confirmado'); return; }
+sendBtnEl.addEventListener('click', (e) => {
+  if (!chatUnlocked) { 
+    e.stopPropagation();
+    showAlert('O canal de comunicação será liberado assim que seu Pix for confirmado'); 
+    return; 
+  }
   doSend();
 });
 
