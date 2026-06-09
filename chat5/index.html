@@ -740,13 +740,13 @@ html,body{
     <div class="typing-alert" id="typingAlert">
       <div class="alert-content">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <span id="alertMessage">Confirme o pagamento via Pix para liberar o chat</span>
+        <span id="alertMessage">O chat é ativado automaticamente após a confirmação do pedido</span>
       </div>
     </div>
     <div class="input-row">
       <div class="input-wrap locked" id="inputWrap">
         <svg class="lock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <textarea class="msg-input" id="msgInput" placeholder="Chat disponível após confirmar pagamento" rows="1" readonly></textarea>
+        <textarea class="msg-input" id="msgInput" placeholder="Canal liberado para entregas em andamento" rows="1" readonly></textarea>
       </div>
       <button class="send-btn" id="sendBtn" disabled aria-label="Enviar">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -1051,17 +1051,17 @@ inputEl.addEventListener('input', () => {
   sendBtnEl.disabled = !inputEl.value.trim();
 });
 inputWrapEl.addEventListener('click', () => {
-  if (!chatUnlocked) showAlert('Confirme o pagamento via Pix para liberar o chat');
+  if (!chatUnlocked) showAlert('Chat exclusivo para suporte a pedidos com entrega em andamento');
 });
 inputEl.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
-    if (!chatUnlocked) { showAlert('Confirme o pagamento via Pix para liberar o chat'); return; }
+    if (!chatUnlocked) { showAlert('O canal de comunicação será liberado assim que seu Pix for confirmado'); return; }
     doSend();
   }
 });
 sendBtnEl.addEventListener('click', () => {
-  if (!chatUnlocked) { showAlert('Confirme o pagamento via Pix para liberar o chat'); return; }
+  if (!chatUnlocked) { showAlert('O canal de comunicação será liberado assim que seu Pix for confirmado'); return; }
   doSend();
 });
 
