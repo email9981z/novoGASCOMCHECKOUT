@@ -2,507 +2,1294 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Diskgas — Atendimento Premium</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Diskgas — Atendimento</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
-:root {
-  /* Cores Principais - Refinadas */
-  --brand: #E8480C;
-  --brand-dk: #C23A08;
-  --brand-soft: rgba(232, 72, 12, 0.08);
-  
-  /* Neutros - Paleta Quente e Sofisticada */
-  --bg: #F8F6F2;
-  --surface: #FFFFFF;
-  --text-main: #1A1714;
-  --text-sec: #5C5650;
-  --text-muted: #9A9288;
-  
-  /* Cores de Status */
-  --green: #1DC75F;
-  --green-soft: #F0FDF6;
-  --green-text: #0DA04A;
-  
-  /* Sombras e Bordas */
-  --border: #EAE4DA;
-  --shadow-sm: 0 2px 8px rgba(26, 23, 20, 0.04);
-  --shadow-md: 0 4px 16px rgba(26, 23, 20, 0.08);
-  --shadow-lg: 0 12px 32px rgba(26, 23, 20, 0.12);
-  
-  /* Raio */
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --brand:      #0F5BA8;
+  --brand-dk:   #0A3F7A;
+  --brand-lt:   #E8F2FF;
+  --brand-mid:  #1B7FD8;
+  --brand-glow: rgba(27,127,216,.14);
+
+  --bg:         #EDF0F5;
+  --surface:    #FFFFFF;
+  --surface-2:  #F5F7FA;
+
+  --text:       #0F1419;
+  --text-2:     #4A5568;
+  --text-3:     #8A92A2;
+
+  --border:     #D5DDE5;
+  --border-2:   #E5EAEF;
+
+  --bubble-a:   #FFFFFF;
+  --bubble-u-from: #0F5BA8;
+  --bubble-u-to:   #1B7FD8;
+
+  --green:      #10B981;
+  --green-dk:   #059669;
+  --green-lt:   #F0FDF4;
+  --green-border: rgba(16,185,129,.25);
+
+  --orange:     #F59E0B;
+  --orange-lt:  #FFFBEB;
+
+  --read-clr:   #60D4F7;
+
+  --radius:     16px;
+  --radius-lg:  22px;
+  --radius-xs:  5px;
+
+  --ease:  cubic-bezier(.25,.46,.45,.94);
+  --spring:cubic-bezier(.34,1.56,.64,1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: #0D0C0B;
-  height: 100dvh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+html,body{
+  height:100%;width:100%;
+  font-family:'DM Sans',sans-serif;
+  background:#0d1117;
+  display:flex;justify-content:center;align-items:center;
+  overflow:hidden;
 }
 
-.app {
-  width: 100%;
-  max-width: 430px;
-  height: 100dvh;
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 0 100px rgba(0,0,0,0.5);
+.app{
+  width:100%;max-width:430px;height:100dvh;
+  display:flex;flex-direction:column;
+  background:var(--bg);
+  position:relative;overflow:hidden;
 }
 
-/* Header */
-.header {
-  background: var(--surface);
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid var(--border);
-  z-index: 10;
+/* ── HEADER ── */
+.header{
+  background:linear-gradient(160deg,var(--brand-dk) 0%,var(--brand-mid) 100%);
+  padding:13px 14px;
+  display:flex;align-items:center;gap:10px;
+  position:relative;z-index:10;
+  flex-shrink:0;
+  box-shadow:0 2px 12px rgba(10,63,122,.32);
+}
+.header::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 55%);
 }
 
-.h-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--brand-soft);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: var(--brand);
-  position: relative;
+.icon-btn{
+  width:36px;height:36px;border-radius:10px;
+  background:rgba(255,255,255,.13);border:none;cursor:pointer;
+  color:rgba(255,255,255,.95);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  transition:background .18s ease,transform .15s ease;
+  position:relative;z-index:1;
+}
+.icon-btn:hover{background:rgba(255,255,255,.22);}
+.icon-btn:active{transform:scale(.9);}
+
+.h-agent{display:flex;align-items:center;gap:10px;flex:1;min-width:0;position:relative;z-index:1;}
+
+.h-avatar{position:relative;flex-shrink:0;}
+.h-avatar-img{
+  width:40px;height:40px;border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,.5);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.h-dot{
+  position:absolute;bottom:0;right:0;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--green);
+  border:2px solid var(--brand-dk);
+  animation:pulse-dot 2.5s ease-in-out infinite;
+}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4);}50%{box-shadow:0 0 0 4px rgba(16,185,129,0);}}
+
+.h-info{flex:1;min-width:0;}
+.h-name{
+  font-size:14.5px;font-weight:700;color:#fff;letter-spacing:.2px;
+  display:flex;align-items:center;gap:6px;
+}
+.h-verified{
+  width:14px;height:14px;background:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.h-verified svg{color:var(--brand-mid);}
+.h-sub{
+  font-size:11.5px;color:rgba(255,255,255,.72);
+  margin-top:1px;font-weight:400;
+  transition:all .25s ease;
+  display:flex;align-items:center;gap:5px;
+}
+.h-sub.typing-state{color:rgba(255,255,255,.92);}
+.typing-dots-mini{display:none;gap:2px;align-items:center;}
+.typing-dots-mini.show{display:flex;}
+.tdm{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.85);animation:tdmpulse 1.2s ease infinite;}
+.tdm:nth-child(2){animation-delay:.15s;}
+.tdm:nth-child(3){animation-delay:.3s;}
+@keyframes tdmpulse{0%,60%,100%{opacity:.3;transform:scale(.8);}30%{opacity:1;transform:scale(1.2);}}
+
+/* ── TRUST BAR ── */
+.trust-bar{
+  background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--border-2);
+  padding:7px 16px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  flex-shrink:0;
+}
+.t-item{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--text-2);font-weight:600;}
+.t-item svg,.t-item .t-ico{flex-shrink:0;}
+.t-sep{color:var(--border);font-size:12px;}
+.t-stars{color:var(--orange);font-size:11px;letter-spacing:-1px;}
+
+/* ── MESSAGES AREA ── */
+.msgs{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  padding:16px 14px 6px;
+  display:flex;flex-direction:column;gap:3px;
+  position:relative;
+}
+.msgs::-webkit-scrollbar{width:4px;}
+.msgs::-webkit-scrollbar-track{background:transparent;}
+.msgs::-webkit-scrollbar-thumb{background:rgba(15,91,168,.12);border-radius:2px;}
+
+/* ── SYSTEM MESSAGES ── */
+.sys{
+  text-align:center;margin:10px 0;
+  animation:fadeUp .4s var(--ease);
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+}
+.sys span{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--text-2);
+  background:rgba(255,255,255,.88);
+  border:1px solid var(--border-2);
+  border-radius:14px;
+  padding:5px 12px;
+  font-weight:500;
+  letter-spacing:.1px;
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+}
+.sys span.secure{
+  color:var(--brand-dk);
+  background:#fff;
+  border-color:rgba(15,91,168,.2);
+  box-shadow:0 2px 6px var(--brand-glow);
+  font-weight:600;
+}
+.sys span.ok{
+  color:var(--green-dk);
+  background:var(--green-lt);
+  border-color:var(--green-border);
+  font-weight:600;
+}
+.sys span.brand{
+  color:var(--brand);
+  background:var(--brand-lt);
+  border-color:rgba(15,91,168,.18);
+  font-weight:600;
+}
+.sys span.gold{
+  color:#92600A;
+  background:var(--orange-lt);
+  border-color:rgba(245,158,11,.2);
+  font-weight:600;
 }
 
-.h-status {
-  position: absolute;
-  bottom: 1px;
-  right: 1px;
-  width: 10px;
-  height: 10px;
-  background: var(--green);
-  border: 2px solid #fff;
-  border-radius: 50%;
+.spinner-wrap{display:flex;justify-content:center;align-items:center;gap:10px;margin:8px 0;animation:fadeUp .3s ease;}
+.spinner{
+  width:16px;height:16px;
+  border:2px solid rgba(15,91,168,.1);
+  border-top-color:var(--brand);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+.spinner-text{font-size:13px;color:var(--text-2);font-weight:500;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+
+/* ── MESSAGE ROWS ── */
+.row{
+  display:flex;gap:8px;align-items:flex-end;
+  max-width:88%;animation:msgIn .28s var(--ease);
+}
+.row.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%;}
+.row.agent{align-self:flex-start;}
+.row.grouped{margin-top:2px;}
+.row:not(.grouped){margin-top:10px;}
+
+.m-avatar{
+  width:30px;height:30px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;
+  border:1.5px solid rgba(15,91,168,.12);
+}
+.m-avatar.ghost{visibility:hidden;}
+
+.bubble{
+  padding:10px 13px 8px;
+  border-radius:var(--radius);
+  font-size:14px;line-height:1.7;
+  word-wrap:break-word;overflow-wrap:break-word;
+  position:relative;max-width:100%;
+}
+.bubble.a{
+  background:var(--bubble-a);color:var(--text);
+  border-radius:var(--radius-xs) var(--radius) var(--radius) var(--radius);
+  box-shadow:0 1px 3px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.03);
+}
+.bubble.u{
+  background:linear-gradient(150deg,var(--bubble-u-from) 0%,var(--bubble-u-to) 100%);
+  color:#fff;
+  border-radius:var(--radius) var(--radius-xs) var(--radius) var(--radius);
+  box-shadow:0 3px 10px rgba(15,91,168,.22);
 }
 
-.h-info .h-name { font-size: 15px; font-weight: 700; color: var(--text-main); }
-.h-info .h-sub { font-size: 12px; color: var(--text-muted); }
+.b-meta{
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:4px;margin-top:4px;float:right;margin-left:8px;
+}
+.b-time{font-size:10.5px;color:rgba(255,255,255,.5);}
+.bubble.a .b-time{color:rgba(15,20,25,.28);}
+.b-read{font-size:10.5px;transition:color .4s ease;}
+.b-read.sending{color:rgba(255,255,255,.35);}
+.b-read.sent{color:rgba(255,255,255,.55);}
+.b-read.read{color:var(--read-clr);}
 
-/* Messages Area */
-.msgs {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  scroll-behavior: smooth;
+/* ── PIX BLOCK — redesenhado ── */
+.pix-block{
+  background:var(--surface);
+  border:1px solid var(--border-2);
+  border-radius:18px;
+  padding:14px;
+  margin:6px 0;
+  width:100%;max-width:320px;
+  animation:cardIn .4s var(--spring);
+  box-shadow:0 4px 18px rgba(0,0,0,.05);
+  align-self:flex-start;
+}
+.pix-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;
+}
+.pix-logo{
+  width:34px;height:34px;border-radius:9px;
+  background:#32BCAD;
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;
+  flex-shrink:0;
+  box-shadow:0 2px 8px rgba(50,188,173,.35);
+}
+.pix-head-info{flex:1;}
+.pix-head-title{font-size:13px;font-weight:700;color:var(--text);line-height:1.2;}
+.pix-head-sub{font-size:11px;color:var(--text-3);margin-top:1px;font-weight:500;}
+.pix-secure-badge{
+  display:flex;align-items:center;gap:3px;
+  background:var(--green-lt);border:1px solid var(--green-border);
+  color:var(--green-dk);font-size:9px;font-weight:700;
+  padding:3px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px;
+  flex-shrink:0;
 }
 
-/* System Message */
-.sys-msg {
-  align-self: center;
-  text-align: center;
-  max-width: 80%;
-  animation: fadeIn 0.5s ease;
+.pix-pricing{
+  background:var(--green-lt);
+  border:1px solid var(--green-border);
+  border-radius:10px;
+  padding:10px 12px;
+  display:flex;align-items:center;
+  gap:10px;
+  margin-bottom:10px;
 }
-.sys-msg span {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--text-muted);
-  background: rgba(0,0,0,0.03);
-  padding: 4px 12px;
-  border-radius: 20px;
+.pix-price-col{flex:1;}
+.pix-original{
+  font-size:11px;color:var(--text-3);
+  text-decoration:line-through;line-height:1.2;
+  font-weight:500;
 }
-
-/* Spinner */
-.spinner-container { display: flex; justify-content: center; padding: 10px; }
-.spinner {
-  width: 22px; height: 22px;
-  border: 2.5px solid var(--brand-soft);
-  border-top-color: var(--brand);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+.pix-final{
+  font-size:20px;font-weight:800;
+  color:var(--text);line-height:1.1;letter-spacing:-.3px;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* Message Rows */
-.msg-row {
-  display: flex;
-  max-width: 85%;
-  animation: msgIn 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
-  flex-shrink: 0;
+.pix-savings-badge{
+  background:var(--green);color:#fff;
+  font-size:10px;font-weight:700;
+  padding:4px 10px;border-radius:20px;
+  white-space:nowrap;
+  box-shadow:0 2px 6px rgba(16,185,129,.3);
 }
 
-@keyframes msgIn {
-  from { opacity: 0; transform: translateY(10px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+.pix-code-field{
+  background:var(--surface-2);
+  border:1.5px solid var(--border-2);
+  border-radius:10px;
+  display:flex;align-items:center;
+  padding:3px 3px 3px 11px;
+  transition:all .2s ease;
+  cursor:pointer;
+  margin-bottom:8px;
+}
+.pix-code-field:hover{border-color:var(--brand-mid);background:#fff;}
+.pix-code-text{
+  flex:1;
+  font-family:monospace;
+  font-size:10.5px;color:var(--text-2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  padding-right:8px;font-weight:500;
+}
+.pix-copy-btn{
+  display:flex;align-items:center;gap:5px;
+  background:var(--brand);color:#fff;
+  font-size:11px;font-weight:700;
+  padding:0 12px;height:34px;
+  border-radius:7px;flex-shrink:0;
+  transition:all .2s ease;white-space:nowrap;
+}
+.pix-code-field:active .pix-copy-btn{transform:scale(.95);}
+.pix-code-field.copied{border-color:var(--green);}
+.pix-code-field.copied .pix-copy-btn{background:var(--green);}
+
+.pix-hint{
+  display:flex;align-items:center;gap:5px;
+  font-size:10.5px;color:var(--text-3);font-weight:500;
+  justify-content:center;
 }
 
-.msg-row.user {
-  align-self: flex-end;
-  justify-content: flex-end;
+/* ── STEPS CARD ── */
+.steps-card{
+  background:var(--surface);
+  border:1px solid var(--border-2);
+  border-radius:16px;
+  padding:14px;
+  margin:6px 0;
+  width:100%;max-width:300px;
+  animation:cardIn .45s var(--spring);
+  box-shadow:0 3px 14px rgba(0,0,0,.04);
+  align-self:flex-start;
+}
+.steps-title{
+  font-size:10px;font-weight:700;color:var(--text-3);
+  text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;
+}
+.step-row{
+  display:flex;gap:12px;align-items:flex-start;
+  position:relative;
+}
+.step-row:not(:last-child)::after{
+  content:'';position:absolute;
+  left:13px;top:28px;bottom:-4px;
+  width:2px;background:var(--border-2);
+}
+.step-row:first-child::after{
+  background:linear-gradient(to bottom,rgba(16,185,129,.3),var(--border-2));
+}
+.step-num{
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;
+}
+.step-num.active{
+  background:var(--green);color:#fff;
+  box-shadow:0 0 0 3px rgba(16,185,129,.15);
+}
+.step-num.active::after{
+  animation:none;
+}
+.step-num.pending{
+  background:var(--surface-2);color:var(--text-3);
+  border:1.5px solid var(--border);
+}
+.step-content{flex:1;padding-bottom:14px;}
+.step-label{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;}
+.step-row:nth-child(2) .step-label,
+.step-row:nth-child(3) .step-label{color:var(--text-3);}
+.step-desc{font-size:11px;color:var(--text-3);margin-top:2px;}
+.step-row:first-child .step-desc{color:var(--green-dk);font-weight:600;}
+.step-wait{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--orange-lt);border:1px solid rgba(245,158,11,.2);
+  color:#92600A;font-size:10px;font-weight:600;
+  padding:2px 8px;border-radius:20px;margin-top:4px;
 }
 
-.msg-row.agent {
-  align-self: flex-start;
-  gap: 10px;
-  align-items: flex-end;
+/* ── AGENT INTRO CARD ── */
+.intro-card{
+  background:var(--surface);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  margin:10px 0 6px;
+  border:1px solid var(--border-2);
+  box-shadow:0 4px 16px rgba(15,91,168,.1);
+  animation:cardIn .5s var(--spring);
+  flex-shrink:0;
+  align-self:flex-start;
+  width:100%;
+}
+.ic-top{
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);
+  padding:9px 14px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ic-top-label{color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:5px;}
+.ic-badge{
+  background:rgba(255,255,255,.22);color:#fff;
+  font-size:8.5px;font-weight:700;padding:3px 9px;
+  border-radius:20px;text-transform:uppercase;letter-spacing:.4px;
+  display:flex;align-items:center;gap:4px;
+}
+.ic-body{display:flex;gap:12px;align-items:center;padding:12px 14px 14px;}
+.ic-avatar-wrap{position:relative;}
+.ic-avatar{
+  width:48px;height:48px;border-radius:50%;object-fit:cover;
+  border:2.5px solid #fff;
+  box-shadow:0 2px 10px rgba(15,91,168,.14);
+}
+.ic-online{
+  position:absolute;bottom:1px;right:1px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--green);border:2px solid #fff;
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+.ic-info{flex:1;min-width:0;}
+.ic-name{font-size:15px;font-weight:700;color:var(--text);}
+.ic-role{font-size:11.5px;color:var(--text-2);margin:2px 0 4px;font-weight:500;}
+.ic-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.ic-status{font-size:11px;color:var(--green-dk);font-weight:700;display:flex;align-items:center;gap:4px;}
+.ic-status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);}
+.ic-stars{display:flex;align-items:center;gap:4px;}
+.ic-star{color:var(--orange);font-size:11px;}
+.ic-rating{font-size:11px;color:var(--text-2);font-weight:600;}
+.ic-divider{width:1px;height:12px;background:var(--border-2);}
+.ic-orders{font-size:11px;color:var(--text-3);font-weight:500;}
+
+/* ── TYPING ── */
+.typing-row{
+  display:none;align-items:flex-end;gap:8px;
+  align-self:flex-start;
+  padding:0 14px 4px;
+  animation:fadeUp .25s ease;
+  flex-shrink:0;
+}
+.typing-bubble{
+  background:var(--bubble-a);
+  border-radius:var(--radius-xs) var(--radius) var(--radius) var(--radius);
+  padding:11px 15px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);
+  display:flex;gap:5px;align-items:center;
+}
+.td{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(15,20,25,.2);
+  animation:tdpulse 1.3s ease-in-out infinite;
+}
+.td:nth-child(2){animation-delay:.17s;}
+.td:nth-child(3){animation-delay:.34s;}
+@keyframes tdpulse{
+  0%,65%,100%{transform:translateY(0);opacity:.25;}
+  30%{transform:translateY(-5px);opacity:1;background:var(--brand);}
 }
 
-.msg-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1.5px solid #fff;
-  box-shadow: var(--shadow-sm);
-  flex-shrink: 0;
+/* ── SCROLL FAB ── */
+.scroll-fab{
+  position:absolute;bottom:78px;right:14px;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--brand);color:#fff;border:none;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(15,91,168,.3);
+  z-index:20;transition:all .22s var(--spring);
+}
+.scroll-fab.on{display:flex;}
+.scroll-fab:hover{transform:translateY(-2px);}
+.scroll-fab:active{transform:scale(.9);}
+.fab-badge{
+  position:absolute;top:-5px;right:-5px;
+  background:#EF4444;color:#fff;font-size:9px;font-weight:700;
+  min-width:17px;height:17px;border-radius:10px;
+  display:none;align-items:center;justify-content:center;
+  border:2px solid var(--bg);padding:0 3px;
+}
+.fab-badge.on{display:flex;}
+
+/* ── FOOTER ── */
+.footer{
+  background:var(--surface);
+  border-top:1px solid var(--border-2);
+  padding:10px 12px;
+  padding-bottom:max(12px,env(safe-area-inset-bottom));
+  flex-shrink:0;
+  box-shadow:0 -2px 10px rgba(0,0,0,.04);
+  position:relative;
+}
+.input-row{display:flex;gap:9px;align-items:flex-end;}
+.input-wrap{
+  flex:1;display:flex;align-items:center;
+  background:var(--surface-2);
+  border-radius:24px;
+  padding:10px 14px;
+  border:1.5px solid var(--border);
+  transition:all .2s ease;
+  min-height:44px;gap:8px;
+}
+.input-wrap:focus-within{
+  border-color:var(--brand-mid);
+  box-shadow:0 0 0 3px var(--brand-glow);
+  background:var(--surface);
+}
+.input-wrap.locked{
+  background:var(--bg);
+  border-color:transparent;
+  cursor:default;
+}
+.lock-icon{color:var(--text-3);flex-shrink:0;}
+.msg-input{
+  flex:1;border:none;outline:none;background:transparent;
+  font-family:inherit;font-size:14px;color:var(--text);
+  padding:0;margin:0;resize:none;line-height:1.4;
+  max-height:88px;
+}
+.msg-input::placeholder{color:var(--text-3);font-size:13.5px;}
+.msg-input:read-only{cursor:default;}
+
+.send-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--brand);color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .25s var(--spring);
+  box-shadow:0 3px 10px rgba(15,91,168,.22);
+}
+.send-btn:disabled{
+  background:var(--border);box-shadow:none;
+  cursor:not-allowed;transform:none !important;
+}
+.send-btn:not(:disabled):hover{
+  box-shadow:0 5px 16px rgba(15,91,168,.32);
+  transform:translateY(-1px) scale(1.05);
+}
+.send-btn:not(:disabled):active{transform:scale(.88);}
+
+/* ── CART BADGE ── */
+.cart-badge{
+  position:absolute;top:-6px;right:-6px;
+  background:var(--green);color:#fff;
+  font-size:10px;font-weight:700;
+  min-width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--brand-dk);
+  box-shadow:0 2px 6px rgba(16,185,129,.4);
 }
 
-.bubble {
-  padding: 12px 16px;
-  font-size: 14.5px;
-  line-height: 1.5;
-  position: relative;
-  box-shadow: var(--shadow-sm);
+/* ── TYPING ALERT ── */
+.typing-alert{
+  position:absolute;bottom:calc(100% + 10px);
+  left:0;right:0;
+  display:flex;justify-content:center;
+  pointer-events:none;z-index:50;
+}
+.alert-content{
+  background:rgba(15,20,25,.88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  color:#fff;padding:7px 16px;
+  border-radius:22px;font-size:11.5px;font-weight:500;
+  display:flex;align-items:center;gap:7px;
+  box-shadow:0 4px 16px rgba(0,0,0,.12);
+  opacity:0;transform:translateY(8px) scale(.95);
+  transition:all .35s var(--spring);
+  max-width:88%;text-align:center;
+}
+.typing-alert.show .alert-content{
+  opacity:1;transform:translateY(0) scale(1);
 }
 
-.bubble.u {
-  background: var(--brand);
-  color: #fff;
-  border-radius: 20px 20px 4px 20px;
+/* ── ORDER MODAL ── */
+.modal-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.4);
+  z-index:100;display:none;align-items:flex-end;justify-content:center;
+  backdrop-filter:blur(4px);
 }
-
-.bubble.a {
-  background: var(--surface);
-  color: var(--text-main);
-  border-radius: 20px 20px 20px 4px;
-  border: 1px solid var(--border);
+.modal-overlay.on{display:flex;}
+.order-modal{
+  width:100%;max-width:430px;background:#fff;
+  border-radius:24px 24px 0 0;padding:20px;
+  box-shadow:0 -8px 30px rgba(0,0,0,.12);
+  animation:slideUp .35s var(--spring);
+  max-height:85dvh;overflow-y:auto;
 }
-
-.b-meta {
-  font-size: 10px;
-  margin-top: 4px;
-  opacity: 0.7;
-  display: block;
-  text-align: right;
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:var(--border);margin:0 auto 18px;
 }
+.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.modal-title{font-size:16px;font-weight:700;color:var(--text);}
+.close-modal{background:none;border:none;color:var(--text-3);cursor:pointer;padding:4px;}
 
-/* Agent Intro Card - Professional Revision */
-.agent-card {
-  background: var(--surface);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-  margin: 8px 0;
-  animation: cardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  flex-shrink: 0;
+.order-items{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.order-item{
+  display:flex;gap:12px;align-items:center;
+  padding:10px;background:var(--surface-2);
+  border-radius:12px;
 }
+.oi-img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--border-2);}
+.oi-info{flex:1;}
+.oi-name{font-size:13px;font-weight:600;color:var(--text);}
+.oi-price{font-size:13px;color:var(--brand);font-weight:700;margin-top:1px;}
 
-@keyframes cardIn {
-  from { opacity: 0; transform: scale(0.9) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+.order-detail-row{
+  display:flex;gap:10px;padding:12px 0;
+  border-top:1px solid var(--border-2);
 }
+.od-icon{color:var(--brand);flex-shrink:0;padding-top:1px;}
+.od-content{flex:1;}
+.od-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.od-value{font-size:13px;color:var(--text-2);line-height:1.5;}
 
-.ac-header {
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: linear-gradient(to bottom right, #fff, var(--bg));
+.modal-footer{margin-top:16px;}
+.modal-btn{
+  width:100%;padding:13px;border-radius:14px;
+  background:var(--brand);color:#fff;border:none;
+  font-weight:700;font-size:14px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(15,91,168,.25);
+  transition:all .2s ease;
 }
-
-.ac-img-wrap { position: relative; }
-.ac-img {
-  width: 60px; height: 60px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  box-shadow: var(--shadow-sm);
-}
-.ac-online {
-  position: absolute; bottom: 2px; right: 2px;
-  width: 14px; height: 14px;
-  background: var(--green);
-  border: 2.5px solid #fff;
-  border-radius: 50%;
-}
-
-.ac-name { font-size: 17px; font-weight: 700; color: var(--text-main); }
-.ac-role { font-size: 13px; color: var(--brand); font-weight: 600; margin-top: 2px; }
-
-.ac-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 16px;
-  background: var(--bg);
-  border-top: 1px solid var(--border);
-  gap: 1px;
-}
-
-.ac-stat { text-align: center; }
-.ac-val { display: block; font-size: 15px; font-weight: 700; color: var(--text-main); }
-.ac-lbl { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-
-/* Typing Indicator */
-.typing {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  padding: 0 4px;
-  animation: fadeIn 0.3s ease;
-}
-
-.t-bubble {
-  background: var(--surface);
-  padding: 12px 18px;
-  border-radius: 18px 18px 18px 4px;
-  border: 1px solid var(--border);
-  display: flex;
-  gap: 4px;
-}
-
-.t-dot {
-  width: 6px; height: 6px;
-  background: var(--text-muted);
-  border-radius: 50%;
-  opacity: 0.4;
-  animation: tPulse 1.2s infinite;
-}
-.t-dot:nth-child(2) { animation-delay: 0.2s; }
-.t-dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes tPulse {
-  0%, 100% { transform: translateY(0); opacity: 0.4; }
-  50% { transform: translateY(-4px); opacity: 1; }
-}
-
-/* Footer */
-.footer {
-  padding: 16px 20px 30px;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-}
-
-.input-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--bg);
-  padding: 10px 16px;
-  border-radius: 30px;
-  border: 1px solid var(--border);
-}
-
-.input-container input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 15px;
-  font-family: inherit;
-  color: var(--text-main);
-}
-
-.send-btn {
-  background: var(--brand);
-  color: #fff;
-  border: none;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-.send-btn:active { transform: scale(0.9); }
-
+.modal-btn:hover{background:var(--brand-mid);}
 </style>
 </head>
 <body>
-
 <div class="app">
+
+  <!-- HEADER -->
   <header class="header">
-    <div class="h-avatar">D<div class="h-status"></div></div>
-    <div class="h-info">
-      <div class="h-name">Diskgas Atendimento</div>
-      <div class="h-sub">Suporte ao cliente</div>
-    </div>
-  </header>
-
-  <div class="msgs" id="msgs">
-    <!-- Content injected via JS -->
-  </div>
-
-  <div id="typingArea" style="display: none; padding: 0 16px 20px;">
-    <div class="typing">
-      <img src="https://i.pravatar.cc/100?u=carlos" class="msg-avatar" alt="Carlos">
-      <div class="t-bubble">
-        <div class="t-dot"></div>
-        <div class="t-dot"></div>
-        <div class="t-dot"></div>
+    <button class="icon-btn" aria-label="Voltar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <div class="h-agent">
+      <div class="h-avatar">
+        <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="h-avatar-img" alt="Carlos">
+        <div class="h-dot"></div>
+      </div>
+      <div class="h-info">
+        <div class="h-name">
+          Carlos Oliveira
+          <span class="h-verified" title="Consultor verificado">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          </span>
+        </div>
+        <div class="h-sub" id="headerStatus">
+          <span id="statusText">Online · Diskgas</span>
+          <div class="typing-dots-mini" id="typingDotsMini">
+            <div class="tdm"></div><div class="tdm"></div><div class="tdm"></div>
+          </div>
+        </div>
       </div>
     </div>
+    <button class="icon-btn" id="cartBtn" aria-label="Ver Pedido" style="position:relative;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="cart-badge" id="cartBadgeEl">1</span>
+    </button>
+  </header>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="t-item">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--green-dk)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Pagamento Seguro
+    </div>
+    <div class="t-sep">·</div>
+    <div class="t-item">
+      <span class="t-stars">★★★★★</span>
+      4,9 · 2,8k entregas
+    </div>
+    <div class="t-sep">·</div>
+    <div class="t-item">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Entrega Expressa
+    </div>
   </div>
 
+  <!-- MESSAGES -->
+  <div class="msgs" id="msgs"></div>
+
+  <!-- TYPING -->
+  <div class="typing-row" id="typingRow">
+    <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="m-avatar" alt="Carlos">
+    <div class="typing-bubble">
+      <div class="td"></div><div class="td"></div><div class="td"></div>
+    </div>
+  </div>
+
+  <!-- SCROLL FAB -->
+  <button class="scroll-fab" id="scrollFab" aria-label="Ir para mensagens novas">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <span class="fab-badge" id="fabBadge">0</span>
+  </button>
+
+  <!-- FOOTER -->
   <footer class="footer">
-    <div class="input-container">
-      <input type="text" id="msgInput" placeholder="Escreva sua mensagem...">
-      <button class="send-btn" id="sendBtn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    <div class="typing-alert" id="typingAlert">
+      <div class="alert-content">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span id="alertMessage">Confirme o pagamento via Pix para liberar o chat</span>
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="input-wrap locked" id="inputWrap">
+        <svg class="lock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <textarea class="msg-input" id="msgInput" placeholder="Chat disponível após confirmar pagamento" rows="1" readonly></textarea>
+      </div>
+      <button class="send-btn" id="sendBtn" disabled aria-label="Enviar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
   </footer>
+
+  <!-- ORDER MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="order-modal">
+      <div class="modal-handle"></div>
+      <div class="modal-h">
+        <span class="modal-title">Resumo do Pedido</span>
+        <button class="close-modal" id="closeModal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="order-items" id="orderItems"></div>
+      <div class="order-detail-row">
+        <div class="od-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="od-content">
+          <div class="od-label">Endereço de Entrega</div>
+          <div class="od-value" id="orderAddress">—</div>
+        </div>
+      </div>
+      <div class="order-detail-row">
+        <div class="od-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="od-content">
+          <div class="od-label">Prazo de Entrega</div>
+          <div class="od-value" id="orderTime">20–30 minutos após pagamento</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn" id="confirmModal">Entendido</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-const msgsEl = document.getElementById('msgs');
-const inputEl = document.getElementById('msgInput');
-const sendBtn = document.getElementById('sendBtn');
-const typingArea = document.getElementById('typingArea');
+const msgsEl         = document.getElementById('msgs');
+const inputEl        = document.getElementById('msgInput');
+const inputWrapEl    = document.getElementById('inputWrap');
+const sendBtnEl      = document.getElementById('sendBtn');
+const typingEl       = document.getElementById('typingRow');
+const fabEl          = document.getElementById('scrollFab');
+const fabBadge       = document.getElementById('fabBadge');
+const statusTextEl   = document.getElementById('statusText');
+const typingDotsMini = document.getElementById('typingDotsMini');
+const headerStatusEl = document.getElementById('headerStatus');
+const cartBtnEl      = document.getElementById('cartBtn');
+const modalOverlayEl = document.getElementById('modalOverlay');
+const closeModalEl   = document.getElementById('closeModal');
+const confirmModalEl = document.getElementById('confirmModal');
+const orderItemsEl   = document.getElementById('orderItems');
+const orderAddressEl = document.getElementById('orderAddress');
+const orderTimeEl    = document.getElementById('orderTime');
+const typingAlertEl  = document.getElementById('typingAlert');
+const alertMessageEl = document.getElementById('alertMessage');
 
-const AGENT_AVATAR = "https://i.pravatar.cc/100?u=carlos";
-const now = () => new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+const AVATAR = "https://i.pravatar.cc/100?u=diskgas-carlos";
+const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
-function addMsg(text, type) {
-  const row = document.createElement('div');
-  row.className = `msg-row ${type}`;
-  
-  if (type === 'agent') {
-    row.innerHTML = `
-      <img src="${AGENT_AVATAR}" class="msg-avatar">
-      <div class="bubble a">
-        ${text}
-        <span class="b-meta">${now()}</span>
-      </div>
-    `;
+let lastSender = null;
+let atBottom = true;
+let unread = 0;
+let busy = false;
+let chatUnlocked = false;
+let alertTimeout = null;
+
+// ── ORDER DATA FROM URL ──────────────────────────────
+function parseOrderData() {
+  try {
+    const p = new URLSearchParams(window.location.search);
+    const productsStr = p.get('products');
+    const address = p.get('address') || '';
+    const deliveryTime = p.get('delivery_time') || '20–30 minutos';
+    const subtotal = parseFloat(p.get('subtotal')) || 0;
+
+    let products = [];
+    if (productsStr) {
+      try {
+        products = JSON.parse(decodeURIComponent(productsStr));
+      } catch(err) {
+        console.error("Erro ao parsear produtos:", err);
+      }
+    }
+
+    let productName = 'Botijão de Gás P13';
+    let productQty = 1;
+    let productPrice = subtotal || 89.90;
+
+    if (products.length > 0) {
+      productName = products[0].n || productName;
+      productQty  = products[0].q || 1;
+      // Se tivermos subtotal na URL, usamos ele, senão somamos os produtos
+      if (!subtotal) {
+        productPrice = products.reduce((acc, curr) => acc + (curr.v * (curr.q || 1)), 0);
+      }
+    }
+
+    // Extrair localização (Bairro ou Cidade) de forma mais inteligente
+    let location = 'sua região';
+    if (address) {
+      // Exemplo: "Rua ..., 12 - Jardim Itaquiti, Barueri/SP"
+      const parts = address.split(',');
+      let city = '';
+      let neighborhood = '';
+
+      if (parts.length >= 2) {
+        // Cidade costuma ser a parte antes da UF
+        const cityPart = parts[parts.length - 1].trim();
+        city = cityPart.split('/')[0].trim();
+
+        // Tentar pegar o bairro (geralmente após o '-' na primeira parte ou em uma parte separada)
+        const firstPart = parts[0];
+        if (firstPart.includes(' - ')) {
+          neighborhood = firstPart.split(' - ')[1].trim();
+        } else if (parts.length >= 3) {
+          neighborhood = parts[1].trim();
+        }
+      }
+
+      // Escolher o que tiver menos caracteres (desde que não seja vazio)
+      if (neighborhood && city) {
+        location = neighborhood.length <= city.length ? neighborhood : city;
+      } else if (neighborhood || city) {
+        location = neighborhood || city;
+      }
+    }
+
+    return { products, productName, productQty, productPrice, location, address, deliveryTime };
+  } catch (e) {
+    return {
+      products: [], productName: 'Botijão de Gás P13', productQty: 1,
+      productPrice: 89.90, city: null, address: '', deliveryTime: '20–30 minutos'
+    };
+  }
+}
+const ORDER = parseOrderData();
+
+function updateModal() {
+  if (ORDER.products.length > 0) {
+    orderItemsEl.innerHTML = ORDER.products.map(p => `
+      <div class="order-item">
+        ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
+        <div class="oi-info">
+          <div class="oi-name">${p.n||'Produto'} (x${p.q||1})</div>
+          <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
+        </div>
+      </div>`).join('');
   } else {
-    row.innerHTML = `
-      <div class="bubble u">
-        ${text}
-        <span class="b-meta">${now()}</span>
-      </div>
-    `;
+    orderItemsEl.innerHTML = `
+      <div class="order-item">
+        <div class="oi-info">
+          <div class="oi-name">${ORDER.productName} (x${ORDER.productQty})</div>
+          <div class="oi-price">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
+        </div>
+      </div>`;
   }
-  
+  if (ORDER.address) orderAddressEl.textContent = ORDER.address;
+  if (ORDER.deliveryTime) {
+    // Se o prazo já vier com texto (ex: "Entrega Rápida..."), usamos direto
+    orderTimeEl.textContent = ORDER.deliveryTime.includes('minutos') 
+      ? ORDER.deliveryTime 
+      : ORDER.deliveryTime + ' após confirmação';
+  }
+}
+
+// ── SCROLL ───────────────────────────────────────────
+msgsEl.addEventListener('scroll', () => {
+  atBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 80;
+  if (atBottom) { unread = 0; fabEl.classList.remove('on'); fabBadge.classList.remove('on'); }
+  else fabEl.classList.add('on');
+});
+fabEl.addEventListener('click', () => {
+  scrollDown(true); unread = 0;
+  fabEl.classList.remove('on'); fabBadge.classList.remove('on');
+});
+function scrollDown(force = false) {
+  if (atBottom || force) {
+    setTimeout(() => msgsEl.scrollTo({top:msgsEl.scrollHeight,behavior:'smooth'}), 50);
+  } else {
+    unread++;
+    fabBadge.textContent = unread;
+    fabBadge.classList.add('on');
+    fabEl.classList.add('on');
+  }
+}
+
+// ── MODAL ────────────────────────────────────────────
+cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
+closeModalEl.onclick = () => modalOverlayEl.classList.remove('on');
+confirmModalEl.onclick = () => modalOverlayEl.classList.remove('on');
+modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayEl.classList.remove('on'); };
+
+// ── ALERT ────────────────────────────────────────────
+function showAlert(msg) {
+  alertMessageEl.textContent = msg;
+  typingAlertEl.classList.add('show');
+  clearTimeout(alertTimeout);
+  alertTimeout = setTimeout(() => typingAlertEl.classList.remove('show'), 4000);
+}
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.typing-alert')) typingAlertEl.classList.remove('show');
+});
+
+// ── INPUT ────────────────────────────────────────────
+inputEl.addEventListener('input', () => {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 88) + 'px';
+  sendBtnEl.disabled = !inputEl.value.trim();
+});
+inputWrapEl.addEventListener('click', () => {
+  if (!chatUnlocked) showAlert('Confirme o pagamento via Pix para liberar o chat');
+});
+inputEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!chatUnlocked) { showAlert('Confirme o pagamento via Pix para liberar o chat'); return; }
+    doSend();
+  }
+});
+sendBtnEl.addEventListener('click', () => {
+  if (!chatUnlocked) { showAlert('Confirme o pagamento via Pix para liberar o chat'); return; }
+  doSend();
+});
+
+// ── MESSAGES ─────────────────────────────────────────
+function addMsg(text, type, newGroup = false) {
+  const isGrouped = !newGroup && lastSender === type;
+  const row = document.createElement('div');
+  row.className = `row ${type}${isGrouped ? ' grouped' : ''}`;
+
+  const safeText = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\n/g,'<br>');
+
+  const avatarHtml = type === 'agent'
+    ? `<img src="${AVATAR}" class="m-avatar${isGrouped?' ghost':''}" alt="Carlos">` : '';
+
+  const readHtml = type === 'user' ? `<span class="b-read sending">✓</span>` : '';
+
+  row.innerHTML = `
+    ${avatarHtml}
+    <div class="bubble ${type === 'user' ? 'u' : 'a'}">
+      ${safeText}
+      <div class="b-meta">
+        <span class="b-time">${ts()}</span>
+        ${readHtml}
+      </div>
+    </div>`;
+
   msgsEl.appendChild(row);
-  scrollToBottom();
-}
+  lastSender = type;
 
-function addSystemMsg(text) {
-  const div = document.createElement('div');
-  div.className = 'sys-msg';
-  const span = document.createElement('span');
-  span.innerText = text;
-  div.appendChild(span);
-  msgsEl.appendChild(div);
-  scrollToBottom();
-  return span;
-}
-
-function showSpinner() {
-  const div = document.createElement('div');
-  div.className = 'spinner-container';
-  div.innerHTML = '<div class="spinner"></div>';
-  msgsEl.appendChild(div);
-  scrollToBottom();
-  return div;
-}
-
-function showAgentCard() {
-  const card = document.createElement('div');
-  card.className = 'agent-card';
-  card.innerHTML = `
-    <div class="ac-header">
-      <div class="ac-img-wrap">
-        <img src="${AGENT_AVATAR}" class="ac-img">
-        <div class="ac-online"></div>
-      </div>
-      <div class="ac-info">
-        <div class="ac-name">Carlos Oliveira</div>
-        <div class="ac-role">Consultor Especialista</div>
-      </div>
-    </div>
-    <div class="ac-stats">
-      <div class="ac-stat">
-        <span class="ac-val">+1.2k</span>
-        <span class="ac-lbl">Atendimentos</span>
-      </div>
-      <div class="ac-stat">
-        <span class="ac-val">4.9/5</span>
-        <span class="ac-lbl">Avaliação</span>
-      </div>
-    </div>
-  `;
-  msgsEl.appendChild(card);
-  scrollToBottom();
-}
-
-function scrollToBottom() {
-  setTimeout(() => {
-    msgsEl.scrollTop = msgsEl.scrollHeight;
-  }, 50);
-}
-
-async function startFlow() {
-  // 1. Início
-  addSystemMsg("Iniciando atendimento...");
-  await new Promise(r => setTimeout(r, 1200));
-  
-  // 2. Mensagem Automática do Usuário
-  addMsg("Olá! Gostaria de fazer um pedido.", "user");
-  await new Promise(r => setTimeout(r, 800));
-  
-  // 3. Localizando
-  const sysSpan = addSystemMsg("Localizando consultor...");
-  const spinner = showSpinner();
-  await new Promise(r => setTimeout(r, 2000));
-  
-  // 4. Localizado
-  spinner.remove();
-  sysSpan.innerText = "Consultor localizado ✓";
-  sysSpan.style.color = "var(--green-text)";
-  sysSpan.style.background = "var(--green-soft)";
-  
-  await new Promise(r => setTimeout(r, 800));
-  showAgentCard();
-  
-  // 5. Digitando
-  await new Promise(r => setTimeout(r, 1200));
-  typingArea.style.display = 'block';
-  scrollToBottom();
-  
-  // 6. Resposta
-  await new Promise(r => setTimeout(r, 3000));
-  typingArea.style.display = 'none';
-  addMsg("Olá! Sou o Carlos. É um prazer te atender. Como posso te ajudar com seu pedido de hoje?", "agent");
-}
-
-window.onload = startFlow;
-
-sendBtn.onclick = () => {
-  const val = inputEl.value.trim();
-  if (val) {
-    addMsg(val, "user");
-    inputEl.value = "";
+  let onReadPromise = Promise.resolve();
+  if (type === 'user') {
+    const readEl = row.querySelector('.b-read');
+    onReadPromise = new Promise(resolve => {
+      setTimeout(() => {
+        readEl.textContent = '✓✓'; readEl.className = 'b-read sent';
+        setTimeout(() => { readEl.className = 'b-read read'; resolve(); }, 1300);
+      }, 700);
+    });
   }
-};
 
-inputEl.onkeypress = (e) => { if(e.key === 'Enter') sendBtn.click(); };
+  scrollDown();
+  return { row, onReadPromise };
+}
 
+function addSys(html, variant = '') {
+  const d = document.createElement('div');
+  d.className = 'sys';
+  const s = document.createElement('span');
+  s.className = variant;
+  let icon = '';
+  if (variant === 'ok')     icon = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+  if (variant === 'secure') icon = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+  if (variant === 'gold')   icon = `<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+  s.innerHTML = icon + ' ' + html;
+  d.appendChild(s);
+  msgsEl.appendChild(d);
+  scrollDown();
+  return s;
+}
+
+function addSpinner(text = '') {
+  const d = document.createElement('div');
+  d.className = 'spinner-wrap';
+  d.innerHTML = `<div class="spinner"></div>${text ? `<span class="spinner-text">${text}</span>` : ''}`;
+  msgsEl.appendChild(d);
+  scrollDown();
+  return d;
+}
+
+// ── INTRO CARD ───────────────────────────────────────
+function showIntroCard() {
+  const el = document.createElement('div');
+  el.className = 'intro-card';
+  el.innerHTML = `
+    <div class="ic-top">
+      <span class="ic-top-label">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.25)"/><circle cx="12" cy="12" r="5" fill="#fff"/></svg>
+        Consultor conectado
+      </span>
+      <span class="ic-badge">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+        Verificado Diskgas
+      </span>
+    </div>
+    <div class="ic-body">
+      <div class="ic-avatar-wrap">
+        <img src="${AVATAR}" class="ic-avatar" alt="Carlos Oliveira">
+        <div class="ic-online"></div>
+      </div>
+      <div class="ic-info">
+        <div class="ic-name">Carlos Oliveira</div>
+        <div class="ic-role">Especialista em Entregas · Diskgas</div>
+        <div class="ic-meta">
+          <div class="ic-status"><div class="ic-status-dot"></div>Disponível agora</div>
+          <div class="ic-divider"></div>
+          <div class="ic-stars"><span class="ic-star">★★★★★</span></div>
+          <span class="ic-rating">4,9</span>
+          <div class="ic-divider"></div>
+          <span class="ic-orders">2.847 atend.</span>
+        </div>
+      </div>
+    </div>`;
+  msgsEl.appendChild(el);
+  lastSender = null;
+  scrollDown();
+}
+
+// ── PIX BLOCK ────────────────────────────────────────
+function showPixBlock() {
+  const pixCode = "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540589.905802BR5915DISK GAS LTDA6009SAO PAULO62070503***6304E2B1";
+  const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
+  const originalPrice = (ORDER.productPrice * 1.225).toFixed(2).replace('.',',');
+  const savings = (ORDER.productPrice * 0.225).toFixed(2).replace('.',',');
+
+  const block = document.createElement('div');
+  block.className = 'pix-block';
+  block.innerHTML = `
+    <div class="pix-header">
+      <div class="pix-logo">PIX</div>
+      <div class="pix-head-info">
+        <div class="pix-head-title">Pagamento via Pix</div>
+        <div class="pix-head-sub">Diskgas Entregas Ltda.</div>
+      </div>
+      <div class="pix-secure-badge">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Seguro
+      </div>
+    </div>
+    <div class="pix-pricing">
+      <div class="pix-price-col">
+        <div class="pix-original">de R$ ${originalPrice}</div>
+        <div class="pix-final">R$ ${finalPrice}</div>
+      </div>
+      <div class="pix-savings-badge">Economia R$ ${savings}</div>
+    </div>
+    <div class="pix-code-field" id="pixField">
+      <div class="pix-code-text">${pixCode}</div>
+      <div class="pix-copy-btn" id="pixCopyBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copiar código
+      </div>
+    </div>
+    <div class="pix-hint">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      Pague no app do banco · Confirmação automática
+    </div>`;
+
+  msgsEl.appendChild(block);
+  scrollDown();
+
+  const field = block.querySelector('#pixField');
+  const copyBtn = block.querySelector('#pixCopyBtn');
+  field.onclick = () => {
+    navigator.clipboard.writeText(pixCode).catch(() => {});
+    field.classList.add('copied');
+    copyBtn.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      Copiado!`;
+    setTimeout(() => {
+      field.classList.remove('copied');
+      copyBtn.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copiar código`;
+    }, 2500);
+  };
+}
+
+// ── DELIVERY STEPS ───────────────────────────────────
+function showDeliverySteps() {
+  const card = document.createElement('div');
+  card.className = 'steps-card';
+  card.innerHTML = `
+    <div class="steps-title">O que acontece depois</div>
+    <div class="step-row">
+      <div class="step-num active">1</div>
+      <div class="step-content">
+        <div class="step-label">Confirmar pagamento</div>
+        <div class="step-desc">Aguardando Pix</div>
+        <div class="step-wait">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Aguardando
+        </div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num pending">2</div>
+      <div class="step-content">
+        <div class="step-label">Entregador a caminho</div>
+        <div class="step-desc">Em até 5 min após confirmação</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num pending">3</div>
+      <div class="step-content" style="padding-bottom:0">
+        <div class="step-label">Entrega na sua porta</div>
+        <div class="step-desc">Prazo: 20–30 minutos no total</div>
+      </div>
+    </div>`;
+  msgsEl.appendChild(card);
+  scrollDown();
+}
+
+// ── TYPING STATE ─────────────────────────────────────
+function setTyping(on) {
+  typingEl.style.display = on ? 'flex' : 'none';
+  if (on) {
+    statusTextEl.textContent = 'Digitando';
+    headerStatusEl.classList.add('typing-state');
+    typingDotsMini.classList.add('show');
+    scrollDown();
+  } else {
+    statusTextEl.textContent = 'Online · Diskgas';
+    headerStatusEl.classList.remove('typing-state');
+    typingDotsMini.classList.remove('show');
+  }
+}
+
+// ── CONVERSATION ENGINE ──────────────────────────────
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h >= 5  && h < 12) return 'Bom dia';
+  if (h >= 12 && h < 18) return 'Boa tarde';
+  return 'Boa noite';
+}
+
+function pause(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function agentSay(text, newGroup = false) {
+  const words = text.split(' ').length;
+  const typingMs = Math.max(1000, Math.min(words * 170 + 500, 3200));
+  setTyping(true);
+  await pause(typingMs);
+  setTyping(false);
+  addMsg(text, 'agent', newGroup);
+  await pause(180);
+}
+
+async function runConversation() {
+  const { productName, location, productPrice } = ORDER;
+  const gr   = getGreeting();
+  const ordersNearby = Math.floor(Math.random() * 7) + 6;
+
+  // 1 — Saudação
+  await agentSay(`${gr}`);
+  await pause(500);
+
+  // 2 — Apresentação
+  await agentSay(`Sou Carlos, vendedor diskgas em ${location} e região`);
+  await pause(1600);
+
+  // 3 — Confirmar pedido
+  await agentSay(`Para confirmar o pedido, o pagamento é via Pix. Vou enviar o código agora`);
+  await pause(500);
+
+
+
+  // PIX block
+  showPixBlock();
+  await pause(1200);
+
+
+
+  // Steps card
+  showDeliverySteps();
+  await pause(900);
+
+  // 7 — Compromisso de entrega
+  await agentSay(`Assim que o sistema identificar o Pix, o entregador sai imediatamente. Estou aqui acompanhando tudo! 🚀`, true);
+}
+
+// ── SEND (user messages após desbloqueio) ────────────
+async function doSend() {
+  const text = inputEl.value.trim();
+  if (!text || busy) return;
+  busy = true;
+  inputEl.value = '';
+  inputEl.style.height = 'auto';
+  sendBtnEl.disabled = true;
+  const { onReadPromise } = addMsg(text, 'user');
+  await onReadPromise;
+  setTyping(true);
+  await pause(1800);
+  setTyping(false);
+  addMsg('Obrigado pela mensagem! Em que mais posso ajudar?', 'agent');
+  busy = false;
+  sendBtnEl.disabled = !inputEl.value.trim();
+}
+
+// ── INIT ─────────────────────────────────────────────
+const FIRST_MSG = 'Olá! Gostaria de fazer meu pedido.';
+
+(async () => {
+  updateModal();
+
+  const { onReadPromise } = addMsg(FIRST_MSG, 'user');
+
+  await pause(500);
+  const connSys = addSys('Conexão criptografada estabelecida', 'secure');
+
+  await pause(700);
+  const sp = addSpinner();
+  const searchSys = addSys('Buscando consultor disponível...', 'brand');
+
+  await pause(1600);
+  sp.remove();
+  connSys.parentElement.remove();
+  searchSys.textContent = '';
+  searchSys.className = 'ok';
+  searchSys.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Carlos Oliveira conectado`;
+
+  await pause(500);
+  showIntroCard();
+
+  busy = true;
+  await onReadPromise;
+
+  await runConversation();
+
+  busy = false;
+})();
 </script>
 </body>
 </html>
