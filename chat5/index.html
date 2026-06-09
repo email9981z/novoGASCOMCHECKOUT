@@ -1396,25 +1396,40 @@ async function runConversation() {
 async function doSend() {
   const text = inputEl.value.trim();
   if (!text) return;
+  
+  // Captura o texto antes de limpar o input
+  const originalText = text;
   inputEl.value=''; inputEl.style.height='auto';
 
-  const { row } = addMsg(text,'user');
+  // Conta o número de palavras (separadas por espaços)
+  const words = originalText.split(/\s+/).filter(w => w.trim().length > 0);
+  const wordCount = words.length;
+  
+  // O aviso aparece se a mensagem tiver mais de 2 palavras
+  const isLongMessage = wordCount > 2;
+
+  const { row } = addMsg(originalText, 'user');
   await pause(600);
 
-  const bubble = row.querySelector('.bubble');
-  bubble.style.transition='all 0.4s cubic-bezier(0.4,0,0.2,1)';
-  bubble.style.background='#F1F5F9'; bubble.style.color='#475569';
-  bubble.style.border='1px solid #CBD5E1'; bubble.style.boxShadow='0 2px 6px rgba(0,0,0,0.04)';
-  bubble.innerHTML=`
-    <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-bottom:4px;color:#1e293b;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Chat restrito para segurança
-    </div>
-    <div style="font-size:11px;opacity:0.9;line-height:1.5;font-weight:500;">O canal de atendimento será liberado automaticamente após a confirmação do seu pedido.</div>
-  `;
-  row.classList.add('shake');
-  setTimeout(()=>row.classList.remove('shake'),400);
-  sendBtnEl.disabled=!inputEl.value.trim();
+  if (isLongMessage) {
+    const bubble = row.querySelector('.bubble');
+    bubble.style.transition='all 0.4s cubic-bezier(0.4,0,0.2,1)';
+    bubble.style.background='#F1F5F9'; 
+    bubble.style.color='#475569';
+    bubble.style.border='1px solid #CBD5E1'; 
+    bubble.style.boxShadow='0 2px 6px rgba(0,0,0,0.04)';
+    bubble.innerHTML=`
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-bottom:4px;color:#1e293b;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Chat restrito para segurança
+      </div>
+      <div style="font-size:11px;opacity:0.9;line-height:1.5;font-weight:500;">O canal de atendimento será liberado automaticamente após a confirmação do seu pedido.</div>
+    `;
+    row.classList.add('shake');
+    setTimeout(()=>row.classList.remove('shake'), 400);
+  }
+  
+  sendBtnEl.disabled = true;
   scrollDown(true);
 }
 
