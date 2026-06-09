@@ -815,11 +815,6 @@ async function agentReply(userText, specialMode = "normal") {
       
       showPixBlock();
       
-      // Feedback visual de que o sistema está monitorando o pagamento
-      setTimeout(() => {
-        addSys('Pagamento aguardando confirmação', 'brand');
-      }, 500);
-
       // Mensagem final sobre o prazo de entrega
       await new Promise(r => setTimeout(r, 1500));
       setTyping(true);
