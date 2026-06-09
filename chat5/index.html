@@ -1387,7 +1387,7 @@ async function runConversation() {
   const gr = getGreeting();
 
   const spWaiting = addSpinner("Aguardando vendedor");
-  await pause(1000);
+  await pause(3000);
   spWaiting.remove();
 
   await agentSay(`${gr}`);
@@ -1411,7 +1411,7 @@ async function runConversation() {
     await pause(3500);
     spVal.remove();
     addSys('Pedido validado com sucesso', 'ok');
-    await pause(400);
+    await pause(100);
   }
 
   if (action==='change') {
