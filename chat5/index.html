@@ -1136,10 +1136,15 @@ function showOrderConfirmation() {
   scrollDown();
 
   return new Promise((resolve) => {
-    block.querySelector('#btnCorrect').onclick = () => {
+    block.querySelector('#btnCorrect').onclick = async () => {
       block.querySelector('#btnCorrect').style.opacity = '0.7';
       block.querySelector('#btnCorrect').innerText = '✓ Confirmado';
       block.querySelectorAll('button').forEach(b => b.disabled = true);
+      
+      // Simular envio de mensagem pelo usuário
+      const { onReadPromise } = addMsg('Confirmar', 'user');
+      await onReadPromise;
+      
       resolve('correct');
     };
     block.querySelector('#btnChange').onclick = () => {
