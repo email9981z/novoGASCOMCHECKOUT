@@ -1084,7 +1084,11 @@ function showOrderConfirmation() {
   block.style.maxWidth = '320px';
   
   const itemsHtml = ORDER.products.length > 0 
-    ? ORDER.products.map(p => `<div style="font-size:13px; color:var(--text-2); margin-bottom:4px;">• ${p.n} (x${p.q})</div>`).join('')
+    ? ORDER.products.map(p => `
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+        ${p.p ? `<img src="${p.p}" style="width:40px; height:40px; border-radius:6px; object-fit:cover; border:1px solid var(--border-2);">` : ''}
+        <div style="font-size:13px; color:var(--text-2);">• ${p.n} (x${p.q})</div>
+      </div>`).join('')
     : `<div style="font-size:13px; color:var(--text-2); margin-bottom:4px;">• ${ORDER.productName} (x${ORDER.productQty})</div>`;
 
   block.innerHTML = `
@@ -1092,7 +1096,7 @@ function showOrderConfirmation() {
     <div style="margin-bottom:15px;">
       ${itemsHtml}
       <div style="font-size:14px; font-weight:700; color:var(--brand); margin-top:8px;">Total: R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-      <div style="font-size:11px; color:var(--text-3); margin-top:4px;">Entregar em: ${ORDER.location}</div>
+      <div style="font-size:11px; color:var(--text-3); margin-top:4px;">Entregar em: ${ORDER.address}</div>
     </div>
     <div style="display:flex; gap:8px;">
       <button id="btnCorrect" style="flex:1; padding:10px; border-radius:10px; border:none; background:var(--green); color:#fff; font-weight:700; cursor:pointer; font-size:13px;">Correto</button>
