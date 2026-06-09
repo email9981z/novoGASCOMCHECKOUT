@@ -462,10 +462,8 @@ html,body{
   padding-bottom:max(12px,env(safe-area-inset-bottom));
   flex-shrink:0;
   box-shadow:0 -2px 8px rgba(0,0,0,.03);
-  display: none; /* Começa oculto */
-  animation: fadeUp 0.5s ease forwards;
+  position: relative;
 }
-.footer.show { display: block; }
 .input-row{display:flex;gap:9px;align-items:flex-end;}
 .input-wrap{
   flex:1;display:flex;align-items:flex-end;
@@ -482,26 +480,20 @@ html,body{
   background:var(--surface);
 }
 .msg-input{
-  flex:1;border:none;outline:none;
-  font-size:14.5px;font-family:'DM Sans',sans-serif;
-  background:transparent;color:var(--text);
-  resize:none;
-  min-height:22px;max-height:88px;
-  line-height:1.5;overflow-y:auto;
-  scrollbar-width:none;
+  flex:1;border:none;outline:none;background:transparent;
+  font-family:inherit;font-size:14.5px;color:var(--text);
+  padding:0;margin:0;resize:none;
+  line-height:1.4;
+  max-height:88px;
 }
-.msg-input::-webkit-scrollbar{display:none;}
 .msg-input::placeholder{color:var(--text-3);}
 
 .send-btn{
   width:44px;height:44px;border-radius:50%;
-  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);
-  color:#fff;border:none;
+  background:var(--brand);color:#fff;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  transition:all .2s var(--spring);
-  box-shadow:0 3px 10px rgba(15,91,168,.22);
-  flex-shrink:0;
+  flex-shrink:0;transition:all .25s var(--spring);
+  box-shadow:0 3px 10px rgba(15,91,168,.2);
 }
 .send-btn:disabled{
   background:var(--border);
@@ -514,6 +506,34 @@ html,body{
   transform:translateY(-1px) scale(1.05);
 }
 .send-btn:not(:disabled):active{transform:scale(.88);}
+
+/* ── AVISO DE DIGITAÇÃO ── */
+.typing-alert {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 12px;
+  right: 12px;
+  background: rgba(15, 91, 168, 0.95);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s var(--spring);
+  z-index: 50;
+}
+.typing-alert.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.typing-alert svg { flex-shrink: 0; }
 
 /* ── ORDER SUMMARY MODAL ── */
 .modal-overlay{
@@ -615,6 +635,10 @@ html,body{
 
   <!-- FOOTER -->
   <footer class="footer">
+    <div class="typing-alert" id="typingAlert">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      Aguarde o vendedor terminar de digitar...
+    </div>
     <div class="input-row">
       <div class="input-wrap">
         <textarea class="msg-input" id="msgInput" placeholder="Escreva sua mensagem..." rows="1"></textarea>
@@ -683,6 +707,7 @@ const confirmModalEl = document.getElementById('confirmModal');
 const orderItemsEl   = document.getElementById('orderItems');
 const orderAddressEl = document.getElementById('orderAddress');
 const orderTimeEl    = document.getElementById('orderTime');
+const typingAlertEl  = document.getElementById('typingAlert');
 
 const AVATAR = "https://i.pravatar.cc/100?u=diskgas-carlos";
 const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
@@ -692,6 +717,8 @@ let lastSender = null;
 let atBottom = true;
 let unread = 0;
 let busy = false;
+let deliveryTimeSent = false;
+let alertTimeout = null;
 
 /* ── SCROLL TRACKING ── */
 msgsEl.addEventListener('scroll', () => {
@@ -728,10 +755,38 @@ inputEl.addEventListener('input', () => {
   inputEl.style.height = Math.min(inputEl.scrollHeight, 88) + 'px';
   sendBtnEl.disabled = !inputEl.value.trim();
 });
+
+/* ── TYPING ALERT LOGIC ── */
+function showTypingAlert() {
+  if (deliveryTimeSent) return;
+  
+  typingAlertEl.classList.add('show');
+  if (alertTimeout) clearTimeout(alertTimeout);
+  alertTimeout = setTimeout(() => {
+    typingAlertEl.classList.remove('show');
+  }, 3000);
+}
+
+inputEl.addEventListener('click', showTypingAlert);
+inputEl.addEventListener('focus', showTypingAlert);
+
 inputEl.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); }
+  if (e.key === 'Enter' && !e.shiftKey) { 
+    e.preventDefault(); 
+    if (!deliveryTimeSent) {
+      showTypingAlert();
+      return;
+    }
+    doSend(); 
+  }
 });
-sendBtnEl.addEventListener('click', doSend);
+sendBtnEl.addEventListener('click', () => {
+  if (!deliveryTimeSent) {
+    showTypingAlert();
+    return;
+  }
+  doSend();
+});
 
 /* ── ADD MESSAGE ── */
 function addMsg(text, type, forceAvatar = false) {
@@ -1009,11 +1064,9 @@ async function agentReply(userText, specialMode = "normal") {
     setTyping(false);
     addMsg("O prazo de entrega é de 20-30 minutos após a confirmação do pagamento.", 'agent', true);
     
-    // Mostra o campo de digitação apenas agora
-    setTimeout(() => {
-      document.querySelector('.footer').classList.add('show');
-      scrollDown(true);
-    }, 500);
+    // Libera a digitação do usuário após o prazo ser enviado
+    deliveryTimeSent = true;
+    typingAlertEl.classList.remove('show');
   }
 }
 
