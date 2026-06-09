@@ -1347,8 +1347,10 @@ function getGreeting() {
 function pause(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
 async function agentSay(text, newGroup=false, immediateTyping=false) {
-  // Se não for imediato, simula tempo de leitura/preparação
-  if (!immediateTyping) {
+  // Se for imediato, dá uma "piscada" curta. Se não, simula tempo de leitura/preparação.
+  if (immediateTyping) {
+    await pause(400); 
+  } else {
     await pause(800 + Math.random() * 700);
   }
   
