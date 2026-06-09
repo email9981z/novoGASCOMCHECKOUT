@@ -1008,6 +1008,32 @@ closeModalEl.onclick = () => modalOverlayEl.classList.remove('on');
 confirmModalEl.onclick = () => modalOverlayEl.classList.remove('on');
 modalOverlayEl.onclick = (e) => { if(e.target === modalOverlayEl) modalOverlayEl.classList.remove('on'); };
 
+/* ── EXTRACT NEIGHBORHOOD FROM URL ── */
+function extractNeighborhoodFromURL() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const address = params.get('address');
+    
+    if (!address) return null;
+    
+    // Extrai o bairro da URL
+    // Formato esperado: "Rua..., número - Bairro, Cidade/Estado"
+    // Exemplo: "Rua Governador Adhemar Pereira de Barros, 13 - Jardim Itaquiti, Barueri/SP"
+    
+    const parts = address.split(' - ');
+    if (parts.length < 2) return null;
+    
+    const bairroECidade = parts[1];
+    const bairroParts = bairroECidade.split(',');
+    const bairro = bairroParts[0].trim();
+    
+    return bairro;
+  } catch (e) {
+    console.error("Erro ao extrair bairro da URL:", e);
+    return null;
+  }
+}
+
 /* ── CARLOS API ── */
 async function askCarlos(userMsg, mode = "normal") {
   if (mode === "greeting") {
@@ -1020,7 +1046,11 @@ async function askCarlos(userMsg, mode = "normal") {
   }
 
   if (mode === "payment") {
-      return { message: "Vou enviar o Pix, um segundo..." };
+      const bairro = extractNeighborhoodFromURL();
+      const message = bairro 
+        ? `Sou carlos, responsavel diskgas em ${bairro} e Região` 
+        : "Vou enviar o Pix, um segundo...";
+      return { message: message };
   }
 
   return { message: "Em que mais posso te ajudar?" };
