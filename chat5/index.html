@@ -212,9 +212,11 @@ html,body{
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 @keyframes msgIn{from{opacity:0;transform:translateY(10px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
-
-/* ── MESSAGE ROWS ── */
+	@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+	@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+	.shake{animation:shake .2s ease 2;}
+	
+	/* ── MESSAGE ROWS ── */
 .row{
   display:flex;gap:8px;align-items:flex-end;
   max-width:88%;animation:msgIn .28s var(--ease);
@@ -1052,7 +1054,12 @@ inputEl.addEventListener('input', () => {
   sendBtnEl.disabled = !inputEl.value.trim();
 });
 inputWrapEl.onclick = () => {
-  if (!chatUnlocked) showAlert('Chat exclusivo para suporte a pedidos com entrega em andamento');
+  if (!chatUnlocked) {
+    inputWrapEl.classList.remove('shake');
+    void inputWrapEl.offsetWidth; // Trigger reflow
+    inputWrapEl.classList.add('shake');
+    showAlert('O suporte direto via chat é ativado automaticamente assim que seu pedido entra em fase de entrega.');
+  }
 };
 inputEl.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) {
