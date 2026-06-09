@@ -586,28 +586,32 @@ html,body{
 
 /* ── TYPING ALERT ── */
 .typing-alert{
-  position:absolute;
-  bottom: 100px;
-  left:0;right:0;
-  display:none; /* Escondido por padrão */
-  justify-content:center;
-  pointer-events:none;z-index:9999;
-  padding:0 12px;
-}
+	  position:absolute;
+	  bottom: 100px;
+	  left:0;right:0;
+	  display:none; /* Escondido por padrão */
+	  justify-content:center;
+	  pointer-events:auto;z-index:9999;
+	  padding:0 12px;
+	  cursor: pointer;
+	}
 .typing-alert.show{display:flex;}
 .alert-content{
-  background:linear-gradient(135deg,#0F5BA8 0%,#1B7FD8 100%);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  color:#fff;padding:14px 18px;
-  border-radius:14px;font-size:13px;font-weight:600;
-  display:flex;align-items:center;gap:12px;
-  box-shadow:0 12px 32px rgba(15,91,168,0.28),0 0 0 1px rgba(255,255,255,0.12);
-  max-width:90%;text-align:center;
-  line-height:1.5;
-  border:1px solid rgba(255,255,255,0.18);
-  animation: alertPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+	  background:linear-gradient(135deg,#0F5BA8 0%,#1B7FD8 100%);
+	  backdrop-filter:blur(12px);
+	  -webkit-backdrop-filter:blur(12px);
+	  color:#fff;padding:14px 18px;
+	  border-radius:14px;font-size:13px;font-weight:600;
+	  display:flex;align-items:center;gap:12px;
+	  box-shadow:0 12px 32px rgba(15,91,168,0.28),0 0 0 1px rgba(255,255,255,0.12);
+	  max-width:90%;text-align:center;
+	  line-height:1.5;
+	  border:1px solid rgba(255,255,255,0.18);
+	  animation: alertPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	  transition: transform 0.2s ease, opacity 0.2s ease;
+	  user-select: none;
+	  touch-action: none;
+	}
 .alert-content svg{
   flex-shrink:0;color:#fff;opacity:0.95;
 }
@@ -1048,19 +1052,67 @@ confirmModalEl.onclick = () => {
 modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayEl.classList.remove('on'); };
 
 // ── ALERT ────────────────────────────────────────────
-function showAlert(msg) {
-  const alertEl = document.getElementById('typingAlert');
-  const alertMsgEl = document.getElementById('alertMessage');
-  if (!alertEl || !alertMsgEl) return;
-  
-  alertMsgEl.textContent = msg;
-  alertEl.classList.add('show');
-  clearTimeout(alertTimeout);
-  alertTimeout = setTimeout(() => alertEl.classList.remove('show'), 5000);
-}
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.typing-alert')) typingAlertEl.classList.remove('show');
-});
+	let startX = 0;
+	let currentX = 0;
+	let isDragging = false;
+
+	function showAlert(msg) {
+	  const alertEl = document.getElementById('typingAlert');
+	  const alertMsgEl = document.getElementById('alertMessage');
+	  const contentEl = alertEl.querySelector('.alert-content');
+	  if (!alertEl || !alertMsgEl) return;
+	  
+	  alertMsgEl.textContent = msg;
+	  alertEl.classList.add('show');
+	  contentEl.style.transform = '';
+	  contentEl.style.opacity = '1';
+	  
+	  clearTimeout(alertTimeout);
+	  alertTimeout = setTimeout(() => hideAlert(), 5000);
+	}
+
+	function hideAlert() {
+	  typingAlertEl.classList.remove('show');
+	  const contentEl = typingAlertEl.querySelector('.alert-content');
+	  contentEl.style.transform = '';
+	  contentEl.style.opacity = '1';
+	}
+
+	// Fechar ao clicar em qualquer lugar
+	document.addEventListener('mousedown', (e) => {
+	  if (typingAlertEl.classList.contains('show')) {
+	    hideAlert();
+	  }
+	});
+
+	// Swipe para fechar
+	const alertContent = document.querySelector('.alert-content');
+	alertContent.addEventListener('touchstart', (e) => {
+	  startX = e.touches[0].clientX;
+	  isDragging = true;
+	  clearTimeout(alertTimeout);
+	}, {passive: true});
+
+	alertContent.addEventListener('touchmove', (e) => {
+	  if (!isDragging) return;
+	  currentX = e.touches[0].clientX - startX;
+	  if (Math.abs(currentX) > 0) {
+	    alertContent.style.transform = `translateX(${currentX}px)`;
+	    alertContent.style.opacity = 1 - Math.abs(currentX) / 200;
+	  }
+	}, {passive: true});
+
+	alertContent.addEventListener('touchend', () => {
+	  isDragging = false;
+	  if (Math.abs(currentX) > 80) {
+	    hideAlert();
+	  } else {
+	    alertContent.style.transform = 'translateX(0)';
+	    alertContent.style.opacity = '1';
+	    alertTimeout = setTimeout(() => hideAlert(), 5000);
+	  }
+	  currentX = 0;
+	});
 
 // ── INPUT ────────────────────────────────────────────
 inputEl.addEventListener('input', () => {
