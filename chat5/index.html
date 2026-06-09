@@ -1080,27 +1080,55 @@ function showIntroCard() {
 // ── ORDER CONFIRMATION BLOCK ────────────────────────
 function showOrderConfirmation() {
   const block = document.createElement('div');
-  block.className = 'steps-card'; // Reutilizando estilo de card
-  block.style.maxWidth = '320px';
+  block.className = 'steps-card'; 
+  block.style.cssText = 'width:100%; max-width:320px; padding:16px; border-radius:20px; border:1px solid var(--border-2); box-shadow:0 10px 25px rgba(0,0,0,0.05); background:#fff;';
   
   const itemsHtml = ORDER.products.length > 0 
     ? ORDER.products.map(p => `
-      <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-        ${p.p ? `<img src="${p.p}" style="width:40px; height:40px; border-radius:6px; object-fit:cover; border:1px solid var(--border-2);">` : ''}
-        <div style="font-size:13px; color:var(--text-2);">• ${p.n} (x${p.q})</div>
+      <div style="display:flex; align-items:center; gap:12px; padding:8px; background:var(--surface-2); border-radius:12px; margin-bottom:8px; border:1px solid var(--border-2);">
+        ${p.p ? `<img src="${p.p}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; box-shadow:0 2px 6px rgba(0,0,0,0.08);">` : ''}
+        <div style="flex:1;">
+          <div style="font-size:13px; font-weight:600; color:var(--text); line-height:1.2;">${p.n}</div>
+          <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Qtd: ${p.q} · R$ ${(p.v||0).toFixed(2).replace('.',',')}</div>
+        </div>
       </div>`).join('')
-    : `<div style="font-size:13px; color:var(--text-2); margin-bottom:4px;">• ${ORDER.productName} (x${ORDER.productQty})</div>`;
+    : `
+      <div style="display:flex; align-items:center; gap:12px; padding:8px; background:var(--surface-2); border-radius:12px; margin-bottom:8px; border:1px solid var(--border-2);">
+        <div style="flex:1;">
+          <div style="font-size:13px; font-weight:600; color:var(--text);">${ORDER.productName}</div>
+          <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Qtd: ${ORDER.productQty}</div>
+        </div>
+      </div>`;
 
   block.innerHTML = `
-    <div class="steps-title">Resumo do Pedido</div>
-    <div style="margin-bottom:15px;">
-      ${itemsHtml}
-      <div style="font-size:14px; font-weight:700; color:var(--brand); margin-top:8px;">Total: R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-      <div style="font-size:11px; color:var(--text-3); margin-top:4px;">Entregar em: ${ORDER.address}</div>
+    <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+      <div style="width:24px; height:24px; border-radius:6px; background:var(--brand-lt); display:flex; align-items:center; justify-content:center; color:var(--brand);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </div>
+      <div style="font-size:11px; font-weight:800; color:var(--text-3); text-transform:uppercase; letter-spacing:0.8px;">Confirmação do Pedido</div>
     </div>
-    <div style="display:flex; gap:8px;">
-      <button id="btnCorrect" style="flex:1; padding:10px; border-radius:10px; border:none; background:var(--green); color:#fff; font-weight:700; cursor:pointer; font-size:13px;">Correto</button>
-      <button id="btnChange" style="flex:1; padding:10px; border-radius:10px; border:1px solid var(--border); background:#fff; color:var(--text-2); font-weight:700; cursor:pointer; font-size:13px;">Mudar</button>
+    
+    <div style="margin-bottom:16px;">
+      ${itemsHtml}
+    </div>
+
+    <div style="background:var(--brand-lt); border-radius:12px; padding:12px; margin-bottom:16px; border:1px dashed rgba(15,91,168,0.2);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:12px; color:var(--brand-dk); font-weight:500;">Total a pagar</span>
+        <span style="font-size:16px; font-weight:800; color:var(--brand);">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</span>
+      </div>
+      <div style="display:flex; gap:8px; align-items:flex-start; padding-top:8px; border-top:1px solid rgba(15,91,168,0.1);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2.5" style="margin-top:2px; flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div style="font-size:11px; color:var(--brand-dk); line-height:1.4;">
+          <strong style="display:block; margin-bottom:1px;">Endereço de Entrega:</strong>
+          ${ORDER.address}
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px;">
+      <button id="btnCorrect" style="flex:1.5; padding:12px; border-radius:12px; border:none; background:var(--brand); color:#fff; font-weight:700; cursor:pointer; font-size:13px; transition:all 0.2s; box-shadow:0 4px 12px rgba(15,91,168,0.2);">Sim, está correto</button>
+      <button id="btnChange" style="flex:1; padding:12px; border-radius:12px; border:1.5px solid var(--border); background:#fff; color:var(--text-2); font-weight:600; cursor:pointer; font-size:13px; transition:all 0.2s;">Alterar</button>
     </div>
   `;
 
