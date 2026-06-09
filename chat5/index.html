@@ -1346,9 +1346,11 @@ function getGreeting() {
 }
 function pause(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-async function agentSay(text, newGroup=false) {
-  // Simula o tempo de "leitura" da mensagem anterior ou preparação (respiro)
-  await pause(800 + Math.random() * 700);
+async function agentSay(text, newGroup=false, immediateTyping=false) {
+  // Se não for imediato, simula tempo de leitura/preparação
+  if (!immediateTyping) {
+    await pause(800 + Math.random() * 700);
+  }
   
   // Simula o tempo de digitação baseado no tamanho do texto
   const typingMs = Math.max(1200, Math.min(text.split(' ').length * 200 + 600, 3500));
@@ -1358,8 +1360,6 @@ async function agentSay(text, newGroup=false) {
   setTyping(false);
   
   addMsg(text, 'agent', newGroup); 
-  // Pequena pausa após enviar para não parecer instantâneo o próximo passo
-  await pause(500);
 }
 
 async function runConversation() {
@@ -1367,8 +1367,7 @@ async function runConversation() {
   const gr = getGreeting();
 
   await agentSay(`${gr}`);
-  await pause(1000); // Pausa entre falas iniciais
-  await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`);
+  await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
   await pause(1500); // Respiro antes de processar dados
 
   // NOVO: Validando dados do pedido antes da confirmação
@@ -1416,10 +1415,9 @@ async function runConversation() {
   await pause(2500);
   setTyping(false);
   addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos para o seu endereço. 💨`, 'agent', true);
-  await pause(2500);
 
   // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
-  await agentSay(`Me chamo Thiago. Qualquer dúvida é só chamar 😊`, true);
+  await agentSay(`Me chamo Thiago. Qualquer dúvida é só chamar 😊`, true, true);
 }
 
 // ── SEND ─────────────────────────────────────────────
