@@ -335,8 +335,6 @@ html,body{
   margin-bottom:8px;
   overflow:hidden;
   gap:8px;
-  width:100%;
-  min-width:0;
 }
 .pix-code-field:hover{border-color:var(--brand-mid);background:#fff;}
 .pix-code-text{
@@ -345,7 +343,6 @@ html,body{
   font-size:11px;color:var(--text-2);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   font-weight:500;
-  min-width:0;
 }
 .pix-copy-btn{
   display:flex;align-items:center;gap:6px;
@@ -376,7 +373,6 @@ html,body{
   animation:cardIn .45s var(--spring);
   box-shadow:0 3px 14px rgba(0,0,0,.04);
   align-self:flex-start;
-  overflow:hidden;
 }
 .steps-title{
   font-size:10px;font-weight:700;color:var(--text-3);
@@ -410,7 +406,7 @@ html,body{
   background:var(--surface-2);color:var(--text-3);
   border:1.5px solid var(--border);
 }
-.step-content{flex:1;padding-bottom:14px;min-width:0;overflow:hidden;}
+.step-content{flex:1;padding-bottom:14px;}
 .step-label{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;}
 .step-row:nth-child(2) .step-label,
 .step-row:nth-child(3) .step-label{color:var(--text-3);}
@@ -421,69 +417,6 @@ html,body{
   background:var(--orange-lt);border:1px solid rgba(245,158,11,.2);
   color:#92600A;font-size:10px;font-weight:600;
   padding:2px 8px;border-radius:20px;margin-top:4px;
-}
-
-/* ── STEPS PIX INLINE ── */
-.step-pix-value{
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--brand-lt);
-  border:1px solid rgba(15,91,168,.15);
-  border-radius:8px;
-  padding:7px 10px;
-  margin-top:10px;
-  gap:8px;
-}
-.step-pix-value-label{
-  font-size:10px;font-weight:700;color:var(--brand-dk);
-  text-transform:uppercase;letter-spacing:.4px;
-  white-space:nowrap;
-}
-.step-pix-value-amount{
-  font-size:15px;font-weight:800;color:var(--brand);
-  white-space:nowrap;
-}
-.step-pix-code-wrap{
-  margin-top:8px;
-  width:100%;
-}
-.step-pix-code-field{
-  background:var(--surface-2);
-  border:1.5px solid var(--border-2);
-  border-radius:8px;
-  display:flex;align-items:center;
-  padding:3px 3px 3px 10px;
-  gap:6px;
-  width:100%;
-  min-width:0;
-  overflow:hidden;
-  cursor:pointer;
-  transition:all .2s ease;
-  height:36px;
-}
-.step-pix-code-field:hover{border-color:var(--brand-mid);background:#fff;}
-.step-pix-code-field.copied{border-color:var(--green);}
-.step-pix-code-text{
-  flex:1;
-  min-width:0;
-  font-family:monospace;
-  font-size:10px;color:var(--text-2);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  font-weight:500;
-}
-.step-pix-copy-btn{
-  display:flex;align-items:center;gap:5px;
-  background:var(--brand);color:#fff;
-  font-size:10px;font-weight:700;
-  padding:0 10px;height:28px;
-  border-radius:6px;flex-shrink:0;
-  white-space:nowrap;
-  transition:all .2s ease;
-}
-.step-pix-code-field.copied .step-pix-copy-btn{background:var(--green);}
-.step-pix-hint{
-  display:flex;align-items:center;gap:4px;
-  font-size:10px;color:var(--text-3);font-weight:500;
-  margin-top:6px;
 }
 
 /* ── AGENT INTRO CARD ── */
@@ -658,7 +591,7 @@ html,body{
 	  position:absolute;
 	  bottom: 100px;
 	  left:0;right:0;
-	  display:none;
+	  display:none; /* Escondido por padrão */
 	  justify-content:center;
 	  pointer-events:auto;z-index:9999;
 	  padding:0 12px;
@@ -933,22 +866,28 @@ function parseOrderData() {
     if (products.length > 0) {
       productName = products[0].n || productName;
       productQty  = products[0].q || 1;
+      // Se tivermos subtotal na URL, usamos ele, senão somamos os produtos
       if (!subtotal) {
         productPrice = products.reduce((acc, curr) => acc + (curr.v * (curr.q || 1)), 0);
       }
     }
 
+    // Extrair localização (Bairro ou Cidade) de forma mais inteligente
     let location = 'sua região';
     if (address) {
+      // Exemplo: "Rua dos Girassóis, 112 - Crispim, Itapecerica da Serra/SP"
       const parts = address.split(',').map(p => p.trim());
       let city = '';
       let neighborhood = '';
 
+      // 1. Tentar pegar a cidade (última parte antes da UF, ex: "Itapecerica da Serra/SP")
       const lastPart = parts[parts.length - 1];
       if (lastPart.includes('/')) {
         city = lastPart.split('/')[0].trim();
       }
 
+      // 2. Tentar pegar o bairro
+      // Caso A: "Rua ..., 112 - Bairro" (está na primeira ou segunda parte após o '-')
       for (let part of parts) {
         if (part.includes(' - ')) {
           neighborhood = part.split(' - ')[1].trim();
@@ -956,14 +895,19 @@ function parseOrderData() {
         }
       }
 
+      // Caso B: Bairro está como uma parte isolada (ex: "Rua, Numero, Bairro, Cidade")
       if (!neighborhood && parts.length >= 3) {
+        // Geralmente o bairro é a penúltima parte se a última for Cidade/UF
         neighborhood = parts[parts.length - 2];
       }
 
+      // Limpeza final: Se o bairro ainda contiver números isolados (como o número da casa que sobrou), limpamos
       if (neighborhood) {
+        // Remove números sozinhos no início (ex: "112 - Crispim" -> "Crispim")
         neighborhood = neighborhood.replace(/^\d+\s*-\s*/, '').trim();
       }
 
+      // Escolher a melhor opção (prioridade para bairro se for curto e válido)
       if (neighborhood && neighborhood.length > 2) {
         location = neighborhood;
       } else if (city && city.length > 2) {
@@ -1075,6 +1019,7 @@ function recalculateTotal() {
   if (ORDER.products.length > 0) {
     ORDER.productPrice = ORDER.products.reduce((acc, curr) => acc + (curr.v * (curr.q || 1)), 0);
   }
+  // Atualiza os preços exibidos no modal sem fechar
   const priceEls = document.querySelectorAll('.oi-price');
   if (ORDER.products.length > 0) {
     ORDER.products.forEach((p, i) => {
@@ -1083,6 +1028,7 @@ function recalculateTotal() {
   } else {
     if(priceEls[0]) priceEls[0].textContent = `R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}`;
   }
+  // Update cart badge
   const totalQty = ORDER.products.length > 0 ? ORDER.products.reduce((a, b) => a + (b.q || 1), 0) : ORDER.productQty;
   document.getElementById('cartBadgeEl').textContent = totalQty;
 }
@@ -1113,6 +1059,7 @@ cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
 closeModalEl.onclick = () => modalOverlayEl.classList.remove('on');
 confirmModalEl.onclick = () => {
   modalOverlayEl.classList.remove('on');
+  // Se houver um card de confirmação de pedido aberto, ele deve ser atualizado
   if (currentConfirmationBlock) {
     showOrderConfirmation();
   }
@@ -1146,12 +1093,14 @@ modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayE
 	  contentEl.style.opacity = '1';
 	}
 
+	// Fechar ao clicar em qualquer lugar
 	document.addEventListener('mousedown', (e) => {
 	  if (typingAlertEl.classList.contains('show')) {
 	    hideAlert();
 	  }
 	});
 
+// Swipe e Mouse Drag para fechar
 		const alertContent = document.querySelector('.alert-content');
 		
 		const startDrag = (x) => {
@@ -1174,6 +1123,7 @@ modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayE
 		  alertContent.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
 		  
 		  if (Math.abs(currentX) > 80) {
+		    // Animação de saída para o lado
 		    const exitX = currentX > 0 ? 400 : -400;
 		    alertContent.style.transform = `translateX(${exitX}px)`;
 		    alertContent.style.opacity = '0';
@@ -1186,12 +1136,14 @@ modalOverlayEl.onclick = (e) => { if (e.target === modalOverlayEl) modalOverlayE
 		  currentX = 0;
 		};
 
+		// Eventos Touch
 		alertContent.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX), {passive: true});
 		alertContent.addEventListener('touchmove', (e) => moveDrag(e.touches[0].clientX), {passive: true});
 		alertContent.addEventListener('touchend', endDrag);
 
+		// Eventos Mouse
 		alertContent.addEventListener('mousedown', (e) => {
-		  e.stopPropagation();
+		  e.stopPropagation(); // Evita o fechamento por clique ao iniciar o drag
 		  startDrag(e.clientX);
 		});
 		window.addEventListener('mousemove', (e) => moveDrag(e.clientX));
@@ -1207,7 +1159,7 @@ inputWrapEl.onclick = (e) => {
   if (!chatUnlocked) {
     e.stopPropagation();
     inputWrapEl.classList.remove('shake');
-    void inputWrapEl.offsetWidth;
+    void inputWrapEl.offsetWidth; // Trigger reflow
     inputWrapEl.classList.add('shake');
     showAlert('O chat com o vendedor é liberado para clientes com pedido em fase de entrega, realize o pgamento do seu pedido e o chat será liberado para dúvidas ou outras questões.');
   }
@@ -1495,6 +1447,7 @@ function showDeliverySteps() {
   
   const card = document.createElement('div');
   card.className = 'steps-card';
+  card.style.maxWidth = '320px'; // Pequeno ajuste para garantir espaço interno
   card.innerHTML = `
     <div class="steps-title">O que acontece depois</div>
     <div class="step-row">
@@ -1502,27 +1455,25 @@ function showDeliverySteps() {
       <div class="step-content">
         <div class="step-label">Confirmar pagamento</div>
         <div class="step-desc">Aguardando Pix</div>
-
-        <div class="step-pix-value">
-          <div class="step-pix-value-label">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; margin-bottom: 6px;">
+          <div class="step-wait" style="margin-top: 0;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Aguardando
           </div>
-          <div class="step-pix-value-amount">R$ ${finalPrice}</div>
+          <div style="font-size: 14px; font-weight: 800; color: var(--brand);">R$ ${finalPrice}</div>
         </div>
 
-        <div class="step-pix-code-wrap">
-          <div class="step-pix-code-field" id="stepsPixField">
-            <div class="step-pix-code-text">${pixCode}</div>
-            <div class="step-pix-copy-btn" id="stepsPixCopyBtn">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              Copiar
-            </div>
+        <div class="pix-code-field" id="pixField" style="margin-top: 4px; margin-bottom: 8px; padding: 2px 2px 2px 10px; height: 38px;">
+          <div class="pix-code-text" style="font-size: 10px;">${pixCode}</div>
+          <div class="pix-copy-btn" id="pixCopyBtn" style="height: 32px; padding: 0 10px; font-size: 10px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copiar
           </div>
-          <div class="step-pix-hint">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            Confirmação automática no app do banco
-          </div>
+        </div>
+        <div class="pix-hint" style="justify-content: flex-start; margin-top: 4px; font-size: 10px;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Confirmação automática no app
         </div>
       </div>
     </div>
@@ -1543,18 +1494,18 @@ function showDeliverySteps() {
   msgsEl.appendChild(card);
   scrollDown();
 
-  const field = card.querySelector('#stepsPixField');
-  const copyBtn = card.querySelector('#stepsPixCopyBtn');
+  const field = card.querySelector('#pixField');
+  const copyBtn = card.querySelector('#pixCopyBtn');
   field.onclick = () => {
     navigator.clipboard.writeText(pixCode).catch(() => {});
     field.classList.add('copied');
     copyBtn.innerHTML = `
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
       Copiado!`;
     setTimeout(() => {
       field.classList.remove('copied');
       copyBtn.innerHTML = `
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
         Copiar`;
     }, 2500);
   };
@@ -1600,18 +1551,21 @@ async function runConversation() {
   const gr   = getGreeting();
   const ordersNearby = Math.floor(Math.random() * 7) + 6;
 
+  // 1 — Saudação
   await agentSay(`${gr}`);
   await pause(500);
 
+  // 2 — Apresentação
   await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`);
   await pause(1600);
 
+  // 3 — Confirmar pedido
   const action = await showOrderConfirmation();
   await pause(800);
 
   if (action === 'change') {
     await agentSay(`Sem problemas! Pode me falar o que deseja alterar ou clique no ícone do carrinho no topo para ajustar seu pedido.`);
-    return;
+    return; // Para a execução automática para o usuário interagir
   }
 
   await agentSay(`Perfeito! Vou gerar o código Pix para você agora:`);
@@ -1621,9 +1575,11 @@ async function runConversation() {
   await pause(4000);
   loadingSp.remove();
 
+    // Steps card com Pix integrado
   showDeliverySteps();
   await pause(800);
 
+  // 7 — Compromisso de entrega
   await agentSay(`Assim que o sistema identificar o Pix, o entregador sai imediatamente. Estou aqui acompanhando tudo! 🚀`, true);
 }
 
