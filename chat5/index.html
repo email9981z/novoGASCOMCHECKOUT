@@ -471,13 +471,18 @@ html,body{
   border-radius:24px;
   padding:10px 14px;
   border:1.5px solid var(--border);
-  transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;
+  transition:all .2s ease;
   min-height:44px;
 }
 .input-wrap:focus-within{
   border-color:var(--brand-mid);
   box-shadow:0 0 0 3px var(--brand-glow);
   background:var(--surface);
+}
+.input-wrap.locked {
+  background: var(--bg);
+  border-color: transparent;
+  cursor: default;
 }
 .msg-input{
   flex:1;border:none;outline:none;background:transparent;
@@ -487,6 +492,7 @@ html,body{
   max-height:88px;
 }
 .msg-input::placeholder{color:var(--text-3);}
+.msg-input:read-only { cursor: default; }
 
 .send-btn{
   width:44px;height:44px;border-radius:50%;
@@ -507,33 +513,39 @@ html,body{
 }
 .send-btn:not(:disabled):active{transform:scale(.88);}
 
-/* ── AVISO DE DIGITAÇÃO ── */
+/* ── AVISO DE DIGITAÇÃO REFINADO ── */
 .typing-alert {
   position: absolute;
-  bottom: calc(100% + 10px);
-  left: 12px;
-  right: 12px;
-  background: rgba(15, 91, 168, 0.95);
+  bottom: calc(100% + 12px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 50;
+}
+.alert-content {
+  background: rgba(15, 20, 25, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: #fff;
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11.5px;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  pointer-events: none;
+  gap: 6px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s var(--spring);
-  z-index: 50;
+  transform: translateY(8px) scale(0.95);
+  transition: all 0.4s var(--spring);
 }
-.typing-alert.show {
+.typing-alert.show .alert-content {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
-.typing-alert svg { flex-shrink: 0; }
+.alert-content svg { opacity: 0.9; }
 
 /* ── ORDER SUMMARY MODAL ── */
 .modal-overlay{
@@ -636,12 +648,14 @@ html,body{
   <!-- FOOTER -->
   <footer class="footer">
     <div class="typing-alert" id="typingAlert">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      Aguarde o vendedor terminar de digitar...
+      <div class="alert-content">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        Aguarde o vendedor terminar de digitar...
+      </div>
     </div>
     <div class="input-row">
-      <div class="input-wrap">
-        <textarea class="msg-input" id="msgInput" placeholder="Escreva sua mensagem..." rows="1"></textarea>
+      <div class="input-wrap locked" id="inputWrap">
+        <textarea class="msg-input" id="msgInput" placeholder="Aguarde o vendedor..." rows="1" readonly></textarea>
       </div>
       <button class="send-btn" id="sendBtn" disabled aria-label="Enviar">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -693,6 +707,7 @@ html,body{
 <script>
 const msgsEl   = document.getElementById('msgs');
 const inputEl  = document.getElementById('msgInput');
+const inputWrapEl = document.getElementById('inputWrap');
 const sendBtnEl= document.getElementById('sendBtn');
 const typingEl = document.getElementById('typingRow');
 const fabEl    = document.getElementById('scrollFab');
@@ -764,11 +779,17 @@ function showTypingAlert() {
   if (alertTimeout) clearTimeout(alertTimeout);
   alertTimeout = setTimeout(() => {
     typingAlertEl.classList.remove('show');
-  }, 3000);
+  }, 2500);
 }
 
-inputEl.addEventListener('click', showTypingAlert);
-inputEl.addEventListener('focus', showTypingAlert);
+// Intercepta qualquer tentativa de clique no input bloqueado
+inputWrapEl.addEventListener('click', (e) => {
+  if (!deliveryTimeSent) {
+    showTypingAlert();
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
 
 inputEl.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) { 
@@ -780,6 +801,7 @@ inputEl.addEventListener('keydown', e => {
     doSend(); 
   }
 });
+
 sendBtnEl.addEventListener('click', () => {
   if (!deliveryTimeSent) {
     showTypingAlert();
@@ -1064,8 +1086,11 @@ async function agentReply(userText, specialMode = "normal") {
     setTyping(false);
     addMsg("O prazo de entrega é de 20-30 minutos após a confirmação do pagamento.", 'agent', true);
     
-    // Libera a digitação do usuário após o prazo ser enviado
+    // LIBERAÇÃO FINAL
     deliveryTimeSent = true;
+    inputEl.readOnly = false;
+    inputEl.placeholder = "Escreva sua mensagem...";
+    inputWrapEl.classList.remove('locked');
     typingAlertEl.classList.remove('show');
   }
 }
