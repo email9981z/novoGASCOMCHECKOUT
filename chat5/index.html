@@ -820,28 +820,38 @@ function parseOrderData() {
     const productsStr = p.get('products');
     const address = p.get('address') || '';
     const deliveryTime = p.get('delivery_time') || '20–30 minutos';
+    const subtotal = parseFloat(p.get('subtotal')) || 0;
 
     let products = [];
-    let productName = 'Botijão de Gás P13';
-    let productQty = 1;
-    let productPrice = 89.90;
-
     if (productsStr) {
-      products = JSON.parse(decodeURIComponent(productsStr));
-      if (products.length > 0) {
-        productName = products[0].n;
-        productQty  = products[0].q || 1;
-        productPrice = products[0].v || 89.90;
+      try {
+        products = JSON.parse(decodeURIComponent(productsStr));
+      } catch(err) {
+        console.error("Erro ao parsear produtos:", err);
       }
     }
 
-    // Extract city: "Rua ..., N - Bairro, Cidade/UF"
+    let productName = 'Botijão de Gás P13';
+    let productQty = 1;
+    let productPrice = subtotal || 89.90;
+
+    if (products.length > 0) {
+      productName = products[0].n || productName;
+      productQty  = products[0].q || 1;
+      // Se tivermos subtotal na URL, usamos ele, senão somamos os produtos
+      if (!subtotal) {
+        productPrice = products.reduce((acc, curr) => acc + (curr.v * (curr.q || 1)), 0);
+      }
+    }
+
+    // Extrair cidade de forma mais robusta
     let city = null;
     if (address) {
-      const parts = address.split(' - ');
+      const parts = address.split(',');
       if (parts.length >= 2) {
-        const after = parts[1].split(',');
-        if (after.length >= 2) city = after[1].trim().split('/')[0].trim();
+        // Geralmente Cidade/UF é o penúltimo ou último antes do CEP
+        const cityPart = parts[parts.length - 1].trim();
+        city = cityPart.split('/')[0].trim();
       }
     }
 
@@ -859,7 +869,7 @@ function updateModal() {
   if (ORDER.products.length > 0) {
     orderItemsEl.innerHTML = ORDER.products.map(p => `
       <div class="order-item">
-        <img src="${p.p||''}" class="oi-img" alt="${p.n||'Produto'}" onerror="this.style.display='none'">
+        ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
         <div class="oi-info">
           <div class="oi-name">${p.n||'Produto'} (x${p.q||1})</div>
           <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
@@ -875,7 +885,12 @@ function updateModal() {
       </div>`;
   }
   if (ORDER.address) orderAddressEl.textContent = ORDER.address;
-  if (ORDER.deliveryTime) orderTimeEl.textContent = ORDER.deliveryTime + ' após confirmação';
+  if (ORDER.deliveryTime) {
+    // Se o prazo já vier com texto (ex: "Entrega Rápida..."), usamos direto
+    orderTimeEl.textContent = ORDER.deliveryTime.includes('minutos') 
+      ? ORDER.deliveryTime 
+      : ORDER.deliveryTime + ' após confirmação';
+  }
 }
 
 // ── SCROLL ───────────────────────────────────────────
