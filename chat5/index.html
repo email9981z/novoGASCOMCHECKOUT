@@ -1232,7 +1232,9 @@ async function runConversation() {
 
 
 
-
+  // Steps card
+  showDeliverySteps();
+  await pause(900);
 
   // 7 — Compromisso de entrega
   await agentSay(`Assim que o sistema identificar o Pix, o entregador sai imediatamente. Estou aqui acompanhando tudo! 🚀`, true);
