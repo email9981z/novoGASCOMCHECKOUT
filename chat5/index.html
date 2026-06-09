@@ -1191,13 +1191,7 @@ async function runConversation() {
   await agentSay(`Para confirmar o pedido, o pagamento é via Pix. Vou enviar o código agora`);
   await pause(500);
 
-  // 4 — Proposta de valor
-  await agentSay(`Consegui aplicar um desconto exclusivo no seu pedido. O ${productName} sai por R$ ${productPrice.toFixed(2).replace('.',',')} — com a entrega já inclusa. Não tem taxa adicional, tá?`);
-  await pause(700);
 
-  // 5 — Instruções de pagamento
-  await agentSay(`Para garantir sua entrega ainda hoje, o pagamento é via Pix. Vou te enviar o código agora:`);
-  await pause(400);
 
   // PIX block
   showPixBlock();
