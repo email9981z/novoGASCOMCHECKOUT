@@ -1447,17 +1447,10 @@ async function runConversation() {
   await pause(4000);
   loadingSp.remove();
 
-  // PIX block
+  // PIX block and Steps card - sent simultaneously
   showPixBlock();
-  await pause(1200);
-
-
-
-
-
-  // Steps card
   showDeliverySteps();
-  await pause(800);
+  await pause(1200);
 
   // 7 — Compromisso de entrega
   await agentSay(`Assim que o sistema identificar o Pix, o entregador sai imediatamente. Estou aqui acompanhando tudo! 🚀`, true);
