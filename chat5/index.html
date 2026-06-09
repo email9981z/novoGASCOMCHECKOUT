@@ -873,30 +873,43 @@ function parseOrderData() {
     // Extrair localização (Bairro ou Cidade) de forma mais inteligente
     let location = 'sua região';
     if (address) {
-      // Exemplo: "Rua ..., 12 - Jardim Itaquiti, Barueri/SP"
-      const parts = address.split(',');
+      // Exemplo: "Rua dos Girassóis, 112 - Crispim, Itapecerica da Serra/SP"
+      const parts = address.split(',').map(p => p.trim());
       let city = '';
       let neighborhood = '';
 
-      if (parts.length >= 2) {
-        // Cidade costuma ser a parte antes da UF
-        const cityPart = parts[parts.length - 1].trim();
-        city = cityPart.split('/')[0].trim();
+      // 1. Tentar pegar a cidade (última parte antes da UF, ex: "Itapecerica da Serra/SP")
+      const lastPart = parts[parts.length - 1];
+      if (lastPart.includes('/')) {
+        city = lastPart.split('/')[0].trim();
+      }
 
-        // Tentar pegar o bairro (geralmente após o '-' na primeira parte ou em uma parte separada)
-        const firstPart = parts[0];
-        if (firstPart.includes(' - ')) {
-          neighborhood = firstPart.split(' - ')[1].trim();
-        } else if (parts.length >= 3) {
-          neighborhood = parts[1].trim();
+      // 2. Tentar pegar o bairro
+      // Caso A: "Rua ..., 112 - Bairro" (está na primeira ou segunda parte após o '-')
+      for (let part of parts) {
+        if (part.includes(' - ')) {
+          neighborhood = part.split(' - ')[1].trim();
+          break;
         }
       }
 
-      // Escolher o que tiver menos caracteres (desde que não seja vazio)
-      if (neighborhood && city) {
-        location = neighborhood.length <= city.length ? neighborhood : city;
-      } else if (neighborhood || city) {
-        location = neighborhood || city;
+      // Caso B: Bairro está como uma parte isolada (ex: "Rua, Numero, Bairro, Cidade")
+      if (!neighborhood && parts.length >= 3) {
+        // Geralmente o bairro é a penúltima parte se a última for Cidade/UF
+        neighborhood = parts[parts.length - 2];
+      }
+
+      // Limpeza final: Se o bairro ainda contiver números isolados (como o número da casa que sobrou), limpamos
+      if (neighborhood) {
+        // Remove números sozinhos no início (ex: "112 - Crispim" -> "Crispim")
+        neighborhood = neighborhood.replace(/^\d+\s*-\s*/, '').trim();
+      }
+
+      // Escolher a melhor opção (prioridade para bairro se for curto e válido)
+      if (neighborhood && neighborhood.length > 2) {
+        location = neighborhood;
+      } else if (city && city.length > 2) {
+        location = city;
       }
     }
 
