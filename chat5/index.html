@@ -692,12 +692,12 @@ html,body{
     </button>
     <div class="h-agent">
       <div class="h-avatar">
-        <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="h-avatar-img" alt="Carlos">
+        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="h-avatar-img" alt="Thiago">
         <div class="h-dot"></div>
       </div>
       <div class="h-info">
         <div class="h-name">
- Carlos Oliveira
+ Thiago Callegari
           <span style="display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; background-color: #1d9bf0; border-radius: 50%; margin-left: 4px;">
             <svg viewBox="0 0 24 24" aria-label="Verificado" style="width: 10px; height: 10px; fill: #fff;"><g><path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.97-.81-4.08s-2.47-1.49-3.89-1.12c-.77-1.16-2.04-1.96-3.51-1.96s-2.74.8-3.51 1.96c-1.42-.37-2.88.01-3.89 1.12s-1.27 2.69-.81 4.08c-1.31.67-2.19 1.91-2.19 3.34s.88 2.67 2.19 3.34c-.46 1.39-.2 2.97.81 4.08s2.47 1.49 3.89 1.12c.77 1.16 2.04 1.96 3.51 1.96s2.74-.8 3.51-1.96c1.42.37 2.88-.01 3.89-1.12s1.27-2.69.81-4.08c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.35-6.2 6.78z"></path></g></svg>
           </span>
@@ -720,17 +720,17 @@ html,body{
   <div class="trust-bar">
     <div class="t-item">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--green-dk)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Pagamento Seguro
+      Seguro
     </div>
     <div class="t-sep">·</div>
     <div class="t-item">
       <span class="t-stars">★★★★★</span>
-      4,9 · 2,8k entregas
+      4,9 · Excelente
     </div>
     <div class="t-sep">·</div>
     <div class="t-item">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Entrega Expressa
+      Autorizado
     </div>
   </div>
 
@@ -739,7 +739,7 @@ html,body{
 
   <!-- TYPING -->
   <div class="typing-row" id="typingRow">
-    <img src="https://i.pravatar.cc/100?u=diskgas-carlos" class="m-avatar" alt="Carlos">
+    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="m-avatar" alt="Thiago">
     <div class="typing-bubble">
       <div class="td"></div><div class="td"></div><div class="td"></div>
     </div>
@@ -829,7 +829,7 @@ const orderTimeEl    = document.getElementById('orderTime');
 const typingAlertEl  = document.getElementById('typingAlert');
 const alertMessageEl = document.getElementById('alertMessage');
 
-const AVATAR = "https://i.pravatar.cc/100?u=diskgas-carlos";
+const AVATAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp";
 const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
 let lastSender = null;
@@ -1189,7 +1189,7 @@ function addMsg(text, type, newGroup = false) {
     .replace(/\n/g,'<br>');
 
   const avatarHtml = type === 'agent'
-    ? `<img src="${AVATAR}" class="m-avatar${isGrouped?' ghost':''}" alt="Carlos">` : '';
+    ? `<img src="${AVATAR}" class="m-avatar${isGrouped?' ghost':''}" alt="Thiago">` : '';
 
   const readHtml = type === 'user' ? `<span class="b-read sending">✓</span>` : '';
 
@@ -1254,7 +1254,7 @@ function showIntroCard() {
     <div class="ic-top">
       <span class="ic-top-label">
         <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.25)"/><circle cx="12" cy="12" r="5" fill="#fff"/></svg>
-        Consultor conectado
+        Parceiro conectado
       </span>
       <span class="ic-badge">
         <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
@@ -1263,19 +1263,19 @@ function showIntroCard() {
     </div>
     <div class="ic-body">
       <div class="ic-avatar-wrap">
-        <img src="${AVATAR}" class="ic-avatar" alt="Carlos Oliveira">
+        <img src="${AVATAR}" class="ic-avatar" alt="Thiago Callegari">
         <div class="ic-online"></div>
       </div>
       <div class="ic-info">
-        <div class="ic-name">Carlos Oliveira</div>
-        <div class="ic-role">Especialista em Entregas · Diskgas</div>
+        <div class="ic-name">Thiago Callegari</div>
+        <div class="ic-role">Vendedor Autorizado · Diskgas</div>
         <div class="ic-meta">
           <div class="ic-status"><div class="ic-status-dot"></div>Disponível agora</div>
           <div class="ic-divider"></div>
           <div class="ic-stars"><span class="ic-star">★★★★★</span></div>
           <span class="ic-rating">4,9</span>
           <div class="ic-divider"></div>
-          <span class="ic-orders">2.847 atend.</span>
+          <span class="ic-orders">Excelente</span>
         </div>
       </div>
     </div>`;
@@ -1514,7 +1514,7 @@ async function runConversation() {
   await pause(500);
 
   // 2 — Apresentação
-  await agentSay(`Sou Carlos, vendedor diskgas em ${location} e região`);
+  await agentSay(`Sou Thiago, vendedor diskgas em ${location} e região`);
   await pause(1600);
 
   // 3 — Confirmar pedido
@@ -1587,7 +1587,7 @@ const FIRST_MSG = 'Olá! Gostaria de fazer meu pedido.';
   connSys.parentElement.remove();
   searchSys.textContent = '';
   searchSys.className = 'ok';
-  searchSys.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Carlos Oliveira conectado`;
+  searchSys.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Thiago Callegari conectado`;
 
   await pause(500);
   showIntroCard();
