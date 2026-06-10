@@ -1417,9 +1417,10 @@ async function runConversation() {
 
   await agentSay(`${gr}`, false, true);
   await pause(100);
-  agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
+  
+  // O spinner aparece ao mesmo tempo que Thiago começa a digitar sua apresentação
   const spValPre = addSpinner("Validando dados do pedido...");
-  await pause(4000);
+  await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
   spValPre.remove();
 
   addMsg(`Peço que verifique se está tudo certinho, por gentileza`, 'agent', true);
