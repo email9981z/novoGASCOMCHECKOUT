@@ -1390,7 +1390,7 @@ async function runConversation() {
   await pause(3000);
   spWaiting.remove();
 
-  await agentSay(`${gr}`);
+  await agentSay(`${gr}`, false, true);
   await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
   await pause(1500); // Respiro antes de processar dados
 
