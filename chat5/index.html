@@ -1099,9 +1099,10 @@ if ('visualViewport' in window) {
     setTimeout(() => {
       scrollDown(true);
       // Ajusta o padding do footer baseado na altura do teclado se necessário
-      if (window.visualViewport.height < window.innerHeight * 0.8) {
-        document.querySelector('.footer').style.paddingBottom = '12px';
-      } else {
+      const keyboardHeight = window.innerHeight - window.visualViewport.height;
+      if (keyboardHeight > 0) { // Teclado está aberto
+        document.querySelector('.footer').style.paddingBottom = `${keyboardHeight}px`;
+      } else { // Teclado está fechado
         document.querySelector('.footer').style.paddingBottom = 'max(12px, env(safe-area-inset-bottom))';
       }
     }, 100);
