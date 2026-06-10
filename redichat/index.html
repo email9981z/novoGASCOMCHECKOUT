@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -319,43 +318,31 @@
             animation: deliveryPulse 2s ease-out infinite;
         }
 
-        @keyframes deliveryPulse {
-            0%   { box-shadow: 0 0 0 0 rgba(22,163,74,0.4); }
-            70%  { box-shadow: 0 0 0 5px rgba(22,163,74,0); }
-            100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
-        }
-
         .pix-delivery-body {
-            padding: 14px 16px;
+            padding: 14px;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .pix-delivery-icon-wrap {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
             background: #f0fdf4;
-            border: 1px solid #bbf7d0;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .pix-delivery-icon-wrap i {
-            color: #16a34a;
-            font-size: 18px;
+            position: relative;
         }
 
         .delivery-spinner {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #bbf7d0;
-            border-top-color: #16a34a;
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(22, 163, 74, 0.1);
+            border-top: 2px solid #16a34a;
             border-radius: 50%;
-            animation: spin 0.9s linear infinite;
+            animation: spin 1s linear infinite;
         }
 
         .pix-delivery-info {
@@ -363,142 +350,105 @@
         }
 
         .pix-delivery-time-text {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 700;
             color: #111827;
-            line-height: 1.3;
+            margin-bottom: 2px;
         }
 
         .pix-delivery-sub {
             font-size: 11px;
+            color: #6b7280;
             font-weight: 500;
-            color: #9ca3af;
-            margin-top: 2px;
         }
 
-        .pix-delivery-footer {
-            padding: 8px 16px;
+        .guarantee-badge {
+            margin: 0 16px 16px;
+            padding: 10px;
             background: #f8fafc;
-            border-top: 1px solid #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #475569;
+        }
+
+        .guarantee-badge i {
+            color: #16a34a;
+        }
+
+        .pix-qr-wrap {
+            margin: 0 16px 16px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .pix-qr-img-container {
+            margin: 0 auto 16px;
+            width: 170px;
+            height: 170px;
+        }
+
+        .pix-qr-caption {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 6px;
         }
 
-        .pix-delivery-footer i {
-            color: #16a34a;
-            font-size: 11px;
-        }
-
-        .pix-delivery-footer span {
-            font-size: 11px;
-            font-weight: 600;
-            color: #6b7280;
-        }
-
-        .pix-delivery-footer strong {
-            color: #111827;
-            font-weight: 700;
-        }
-        /* ===== FIM BLOCO DE ENTREGA ===== */
-
-        /* QR Code */
-        .guarantee-badge {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border: 1px solid #fde68a; border-radius: 100px;
-            padding: 7px 16px; margin: 0 auto 16px; width: fit-content;
-            font-size: 11px; font-weight: 800; color: #78350f; letter-spacing: 0.3px;
-        }
-        .guarantee-badge i { color: #d97706; }
-
-        .pix-qr-wrap {
-            text-align: center; margin: 0 16px 20px;
-            background: #fff; border: 1px solid var(--border);
-            border-radius: 16px; padding: 24px 16px;
-            box-shadow: var(--shadow-sm);
-        }
-        .pix-qr-img-container {
-            width: 190px; height: 190px; padding: 10px; background: #fff;
-            margin: 0 auto; display: flex; align-items: center; justify-content: center;
-            border: 2px solid var(--pix-bg); border-radius: 12px;
-        }
-        .pix-qr-img-container img { width: 100% !important; height: 100% !important; }
-        .pix-qr-caption { font-size: 12px; color: var(--ink2); font-weight: 600; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .pix-qr-caption i { color: var(--pix-color); }
-
         .pix-primary-cta {
             margin: 0 16px 16px;
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-            color: #fff; border: none; border-radius: 14px;
-            padding: 18px 20px; width: calc(100% - 32px);
-            font-size: 17px; font-weight: 800; font-family: inherit;
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            box-shadow: 0 8px 24px rgba(22, 163, 74, 0.3), 0 0 0 0 rgba(22, 163, 74, 0.5);
-            cursor: pointer; position: relative; overflow: hidden; transition: all 0.2s;
-            animation: ctaPulse 2.2s ease-in-out infinite;
-        }
-        @keyframes ctaPulse {
-            0%, 100% { box-shadow: 0 8px 24px rgba(22, 163, 74, 0.3), 0 0 0 0 rgba(22, 163, 74, 0.4); }
-            50%      { box-shadow: 0 8px 28px rgba(22, 163, 74, 0.38), 0 0 0 10px rgba(22, 163, 74, 0); }
-        }
-        .pix-primary-cta::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 60%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-            animation: ctaShine 3s ease-in-out infinite;
-        }
-        @keyframes ctaShine { 0% { left: -100%; } 60% { left: 130%; } 100% { left: 130%; } }
-        .pix-primary-cta:active { transform: scale(0.97); }
-        .pix-primary-cta.copied { background: #111827; animation: none; }
-        .pix-primary-cta.copied::before { display: none; }
-
-        .pix-code-field { display: flex; gap: 8px; margin: 0 16px 20px; }
-        .pix-copia-input {
-            flex: 1; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px;
-            font-size: 12px; color: var(--muted); font-family: monospace; background: #f8fafc;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; outline: none;
-            -webkit-user-select: none; user-select: none; caret-color: transparent; pointer-events: none;
-        }
-        .pix-btn-copiar {
-            background: #f1f5f9; color: var(--ink2); border: 1px solid var(--border);
-            border-radius: 12px; padding: 0 18px; font-size: 13px; font-weight: 700;
-            transition: all .15s; cursor: pointer;
-        }
-        .pix-btn-copiar:active { background: #e2e8f0; }
-
-        /* ===== AGUARDANDO PAGAMENTO - REVISADO ===== */
-        .pix-aguardando {
+            width: calc(100% - 32px);
+            background: #111827;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 12px;
-            margin: 0 16px 12px;
-            font-size: 13px;
-            color: #15803d;
-            font-weight: 600;
-            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pix-primary-cta:active {
+            transform: scale(0.98);
+        }
+
+        .pix-aguardando {
+            margin: 0 16px 16px;
+            text-align: center;
         }
 
         .pix-aguardando-top {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex: 1;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #16a34a;
+            margin-bottom: 4px;
         }
 
-        .pix-aguardando-sub {
-            font-size: 11px;
-            color: #15803d;
-            font-weight: 500;
-            opacity: 0.75;
-            white-space: nowrap;
+        .pix-dot-loader {
+            display: flex;
+            gap: 3px;
         }
 
-        .pix-dot-loader { display: flex; gap: 4px; align-items: center; }
         .pix-dot-loader span {
             width: 5px; height: 5px;
             border-radius: 50%;
@@ -518,10 +468,10 @@
         }
         .pix-social-proof .live-dot {
             width: 8px; height: 8px; border-radius: 50%; background: #16a34a;
-            box-shadow: 0 0 0 0 rgba(22,163,74,0.6);
+            box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
             animation: liveDot 1.6s ease-out infinite; flex-shrink: 0;
         }
-        @keyframes liveDot { 0% { box-shadow: 0 0 0 0 rgba(22,163,74,0.55); } 70% { box-shadow: 0 0 0 8px rgba(22,163,74,0); } 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); } }
+        @keyframes liveDot { 0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55); } 70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); } 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); } }
         .pix-social-proof b { color: #0f172a; font-weight: 800; }
 
         .bank-icons-row {
@@ -544,90 +494,57 @@
         .pix-secure-line span { display: inline-flex; align-items: center; gap: 5px; }
         .pix-secure-line i { color: var(--green); }
 
-        /* ===== LOADER APRIMORADO ===== */
+        /* ===== LOADER CIRÚRGICO ===== */
         .loader-backdrop {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px) saturate(180%);
+            background: #ffffff;
             z-index: 2000; display: none;
             align-items: center; justify-content: center;
-            opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0; transition: opacity 0.3s ease;
         }
         .loader-backdrop.active { display: flex; opacity: 1; }
 
-        .loader-content-box {
-            background: white;
-            padding: 40px;
-            border-radius: 32px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        .loader-content-minimal {
             text-align: center;
-            max-width: 320px;
-            width: 90%;
-            border: 1px solid rgba(0,0,0,0.03);
-            animation: slideUpLoader 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 280px;
+            width: 100%;
         }
 
-        @keyframes slideUpLoader {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .loader-spinner-minimal {
+            width: 48px; height: 48px;
+            border: 3px solid rgba(0, 85, 255, 0.08);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            animation: spin 0.8s linear infinite;
         }
 
-        .loader-shield {
-            width: 90px; height: 90px;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto; position: relative;
-        }
-
-        .loader-shield i {
-            display: flex; font-size: 32px; color: var(--primary); opacity: 0.9;
-            animation: pulseShield 2s ease-in-out infinite;
-        }
-
-        .loader-circle {
-            position: absolute; width: 100%; height: 100%;
-            border: 2px solid rgba(0, 85, 255, 0.05);
-            border-top: 2px solid var(--primary);
-            border-right: 2px solid var(--primary);
-            border-radius: 50%; 
-            animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
-        }
-
-        @keyframes pulseShield {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-
-        .loader-text {
-            margin-top: 24px;
-        }
-
-        .loader-text h3 {
-            font-size: 1.1rem;
-            font-weight: 800;
+        .loader-text-minimal h3 {
+            font-size: 1rem;
+            font-weight: 700;
             color: #1a1a1a;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
+            margin-bottom: 6px;
+            letter-spacing: -0.2px;
         }
 
-        .loader-text p {
+        .loader-text-minimal p {
             font-size: 0.85rem;
-            color: #6b7280;
+            color: #888;
             margin: 0;
-            line-height: 1.5;
         }
 
-        .loader-trust {
-            margin-top: 32px;
-            padding-top: 20px;
-            border-top: 1px solid #f1f5f9;
+        .loader-footer-minimal {
+            position: absolute;
+            bottom: 40px;
+            left: 0; width: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 20px;
+            opacity: 0.5;
         }
 
-        .loader-trust-item {
+        .loader-footer-item {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -636,11 +553,6 @@
             color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-
-        .loader-trust-item i {
-            color: #10b981;
-            font-size: 12px;
         }
 
         /* MODALS */
@@ -718,27 +630,18 @@
     </style>
 </head>
 <body>
-    <!-- Loader Aprimorado -->
+    <!-- Loader Cirúrgico -->
     <div id="global-loader" class="loader-backdrop">
-        <div class="loader-content-box">
-            <div class="loader-shield">
-                <div class="loader-circle"></div>
-                <i class="fas fa-shield-check"></i>
+        <div class="loader-content-minimal">
+            <div class="loader-spinner-minimal"></div>
+            <div class="loader-text-minimal">
+                <h3 id="loader-title">Processando...</h3>
+                <p id="loader-desc">Validando informações seguras.</p>
             </div>
-            <div class="loader-text">
-                <h3 id="loader-title">Processando Pedido</h3>
-                <p id="loader-desc">Validando informações e gerando seu pagamento seguro.</p>
-            </div>
-            <div class="loader-trust">
-                <div class="loader-trust-item">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Criptografado</span>
-                </div>
-                <div class="loader-trust-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Autenticado</span>
-                </div>
-            </div>
+        </div>
+        <div class="loader-footer-minimal">
+            <div class="loader-footer-item"><i class="fas fa-shield-alt"></i><span>Seguro</span></div>
+            <div class="loader-footer-item"><i class="fas fa-lock"></i><span>SSL</span></div>
         </div>
     </div>
 
@@ -829,9 +732,9 @@
                     <div class="pix-delivery-sub">Confirmação instantânea via Pix</div>
                 </div>
             </div>
-            <div class="pix-delivery-footer">
-                <i class="fas fa-clock"></i>
-                <span><strong id="pixDeliveryTime">20 minutos</strong> após confirmação</span>
+            <div class="pix-delivery-footer" style="padding: 10px 14px; background: #f8fafc; border-top: 1px solid #f1f5f9; font-size: 11px; color: #64748b; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                <i class="fas fa-bolt" style="color: #f59e0b;"></i>
+                <span>Entrega em <strong id="pixDeliveryTime">20 minutos</strong> após confirmação</span>
             </div>
         </div>
 
@@ -1117,8 +1020,8 @@
         }
 
         function setLoaderStep(stepIndex, statusMsg) {
-            // A barra de progresso foi removida para um visual mais limpo e profissional
-            // Mantemos a função para evitar erros de referência no código existente
+            // Mantemos a função para evitar erros de referência, mas agora o visual é minimalista
+            if (statusMsg) document.getElementById('loader-desc').textContent = statusMsg;
         }
 
         async function generatePix() {
@@ -1134,11 +1037,8 @@
             if (cpf.length !== 11) { errorText.textContent = 'Informe um CPF válido.'; errorEl.classList.add('visible'); return; }
 
             const loader = document.getElementById('global-loader');
-            document.getElementById('loader-title').textContent = 'Validando Pedido';
-            document.getElementById('loader-desc').textContent = 'Processando sua solicitação com segurança...';
-
-
-
+            document.getElementById('loader-title').textContent = 'Processando Pedido';
+            document.getElementById('loader-desc').textContent = 'Validando informações seguras...';
 
             loader.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1146,27 +1046,14 @@
             // Inicia o envio do e-mail em segundo plano
             sendEmailJS(name, cpfRaw, phone, subtotalValue);
 
-            // Sequência de animação otimizada para ser fluida e rápida
-            setTimeout(() => setLoaderStep(0, 'Iniciando...'), 50);
-            setTimeout(() => setLoaderStep(1, 'Validando dados...'), 500);
-            
-            // O redirecionamento acontece exatamente quando a barra atinge 100%
+            // Redirecionamento ultrarrápido (apenas o tempo de mostrar a animação de entrada)
             setTimeout(() => {
-                setLoaderStep(2, 'Concluído!');
-                
-                // Prepara os parâmetros antes do redirecionamento
                 const currentParams = new URLSearchParams(window.location.search);
                 currentParams.set('nome', name);
                 currentParams.set('cpf', cpfRaw);
                 const redirectUrl = `https://seulinkaqui.com/?${currentParams.toString()}`;
-
-	                // Pequeno delay para redirecionar
-	                setTimeout(() => {
-	                    // Dispara o redirecionamento. O loader permanece na tela até a página sair.
-	                    window.location.replace(redirectUrl);
-	                }, 350);
-                
-            }, 1200);
+                window.location.replace(redirectUrl);
+            }, 800);
         }
 
         // Proteção para resetar o loader se o usuário voltar à página
@@ -1320,24 +1207,15 @@
             e.preventDefault();
             const loader = document.getElementById('global-loader');
             document.getElementById('loader-title').textContent = 'Validando Pedido';
-            document.getElementById('loader-desc').textContent = 'Estamos verificando a disponibilidade para sua região.';
-
-
-
-
+            document.getElementById('loader-desc').textContent = 'Estamos verificando a disponibilidade...';
 
             loader.classList.add('active');
 
-            setTimeout(() => setLoaderStep(0, 'Iniciando verificação...'), 180);
-            setTimeout(() => setLoaderStep(1, 'Verificando disponibilidade...'), 1050);
             setTimeout(() => {
-                setLoaderStep(2, 'Concluído');
-                setTimeout(() => {
-                    // O loader permanece ativo
-                    document.getElementById('modal-step-2').style.display = 'none';
-                    document.getElementById('modal-step-not-allowed').style.display = 'block';
-                }, 500);
-            }, 2200);
+                document.getElementById('modal-step-2').style.display = 'none';
+                document.getElementById('modal-step-not-allowed').style.display = 'block';
+                loader.classList.remove('active');
+            }, 1200);
         });
 
         document.getElementById('btn-back-to-pix-from-warning').addEventListener('click', () => {
