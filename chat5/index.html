@@ -1096,30 +1096,20 @@ modalOverlayEl.onclick = (e) => { if(e.target===modalOverlayEl) modalOverlayEl.c
 
 if ('visualViewport' in window) {
   window.visualViewport.addEventListener('resize', () => {
-    const vh = window.visualViewport.height;
-    const appEl = document.querySelector('.app');
-    appEl.style.height = vh + 'px';
-    
-    if (vh < window.innerHeight * 0.8) {
-      document.querySelector('.footer').style.paddingBottom = '12px';
-    } else {
-      document.querySelector('.footer').style.paddingBottom = 'max(12px, env(safe-area-inset-bottom))';
-    }
-    
-    window.scrollTo(0, 0);
-    setTimeout(() => scrollDown(true), 100);
+    setTimeout(() => {
+      scrollDown(true);
+      // Ajusta o padding do footer baseado na altura do teclado se necessário
+      if (window.visualViewport.height < window.innerHeight * 0.8) {
+        document.querySelector('.footer').style.paddingBottom = '12px';
+      } else {
+        document.querySelector('.footer').style.paddingBottom = 'max(12px, env(safe-area-inset-bottom))';
+      }
+    }, 100);
   });
 }
 
 inputEl.addEventListener('focus', () => {
-  if ('visualViewport' in window) {
-    const vh = window.visualViewport.height;
-    document.querySelector('.app').style.height = vh + 'px';
-  }
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-    scrollDown(true);
-  }, 300);
+  setTimeout(() => scrollDown(true), 300);
 });
 
 inputEl.addEventListener('input', () => {
