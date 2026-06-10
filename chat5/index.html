@@ -1417,12 +1417,9 @@ async function runConversation() {
 
   await agentSay(`${gr}`, false, true);
   await pause(100);
-  await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
-  await pause(1500); // Respiro antes de processar dados
-
-  // NOVO: Validando dados do pedido antes da confirmação
+  agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
   const spValPre = addSpinner("Validando dados do pedido...");
-  await pause(3000);
+  await pause(4000);
   spValPre.remove();
 
   addMsg(`Peço que verifique se está tudo certinho, por gentileza`, 'agent', true);
@@ -1436,6 +1433,7 @@ async function runConversation() {
     await pause(3500);
     spVal.remove();
     addSys('Pedido validado com sucesso', 'ok');
+    setTyping(true);
   }
 
   if (action==='change') {
