@@ -401,7 +401,7 @@ html,body{
   background:var(--surface);
   border-top:1px solid var(--border-2);
   padding:12px 14px;
-  padding-bottom: 12px;
+  padding-bottom:max(12px, env(safe-area-inset-bottom));
   flex-shrink:0;
   box-shadow:0 -4px 15px rgba(0,0,0,0.03);
   position:relative;
@@ -434,7 +434,7 @@ html,body{
 .msg-input{
   flex:1;border:none;outline:none;background:transparent;
   font-family:inherit;font-size:14.5px;color:var(--text);
-  resize:none;padding:0;line-height:1.2;
+  resize:none;padding:2px 0;line-height:1.4;
   max-height:88px;
 }
 .msg-input::placeholder{color:var(--text-3);opacity:0.8;}
@@ -553,7 +553,7 @@ html,body{
   font-size: 14px;
   font-weight: 700;
   color: var(--text);
-  line-height:1.2;
+  line-height: 1.2;
 }
 .pix-brand-sub {
   font-size: 11px;
@@ -1099,7 +1099,11 @@ if ('visualViewport' in window) {
     setTimeout(() => {
       scrollDown(true);
       // Ajusta o padding do footer baseado na altura do teclado se necessário
-      document.querySelector('.app').style.height = `${window.visualViewport.height}px`;
+      if (window.visualViewport.height < window.innerHeight * 0.8) {
+        document.querySelector('.footer').style.paddingBottom = '12px';
+      } else {
+        document.querySelector('.footer').style.paddingBottom = 'max(12px, env(safe-area-inset-bottom))';
+      }
     }, 100);
   });
 }
