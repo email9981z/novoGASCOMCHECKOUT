@@ -431,63 +431,74 @@ html,body{
   cursor:default;
 }
 .lock-icon{color:var(--text-3);flex-shrink:0;}
-
 .msg-input{
-  flex:1;border:none;background:transparent;
-  font-family:inherit;font-size:15px;color:var(--text);
-  outline:none;resize:none;padding:2px 0;
-  line-height:1.4;max-height:88px;
+  flex:1;border:none;outline:none;background:transparent;
+  font-family:inherit;font-size:14.5px;color:var(--text);
+  resize:none;padding:2px 0;line-height:1.4;
+  max-height:88px;
 }
-.msg-input::placeholder{color:var(--text-3);font-weight:400;}
+.msg-input::placeholder{color:var(--text-3);opacity:0.8;}
 
 .send-btn{
   width:46px;height:46px;border-radius:50%;
   background:var(--brand);color:#fff;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   transition:all .2s ease;flex-shrink:0;
-  box-shadow:0 4px 12px rgba(15,91,168,.25);
+  box-shadow:0 3px 10px rgba(15,91,168,.25);
 }
-.send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;transform:none !important;}
-.send-btn:not(:disabled):hover{background:var(--brand-mid);transform:translateY(-1px);}
-.send-btn:not(:disabled):active{transform:scale(.92);}
+.send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;opacity:0.6;}
+.send-btn:not(:disabled):hover{background:var(--brand-mid);transform:scale(1.05);}
+.send-btn:not(:disabled):active{transform:scale(.95);}
 
 /* ── MODALS ── */
 .modal-overlay{
   position:absolute;inset:0;background:rgba(0,0,0,.4);
-  z-index:1000;display:none;align-items:flex-end;
+  z-index:1000;display:none;align-items:flex-end;justify-content:center;
   backdrop-filter:blur(4px);
 }
 .modal-overlay.on{display:flex;}
 .order-modal{
-  width:100%;background:#fff;
+  width:100%;max-width:430px;background:#fff;
   border-radius:24px 24px 0 0;padding:20px;
-  animation:slideUp .35s var(--ease);
-  box-shadow:0 -10px 30px rgba(0,0,0,0.1);
+  box-shadow:0 -8px 30px rgba(0,0,0,.12);
+  animation:slideUp .35s var(--spring);
+  max-height:85dvh;overflow-y:auto;
 }
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-
-.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 15px;}
-.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.modal-title{font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.4px;}
+.modal-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:var(--border);margin:0 auto 18px;
+}
+.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.modal-title{font-size:16px;font-weight:700;color:var(--text);}
 .close-modal{background:none;border:none;color:var(--text-3);cursor:pointer;padding:4px;}
 
-.order-items{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;}
-.order-item{display:flex;gap:12px;align-items:center;padding:10px;background:var(--surface-2);border-radius:14px;}
-.oi-img{width:48px;height:48px;border-radius:10px;object-fit:cover;}
+.order-items{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.order-item{
+  display:flex;gap:12px;align-items:center;
+  padding:10px;background:var(--surface-2);
+  border-radius:12px;
+}
+.oi-img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--border-2);}
 .oi-info{flex:1;}
-.oi-name{font-size:14px;font-weight:700;color:var(--text);}
-.oi-price{font-size:13px;font-weight:600;color:var(--brand);}
+.oi-name{font-size:13px;font-weight:600;color:var(--text);}
+.oi-price{font-size:13px;color:var(--brand);font-weight:700;margin-top:1px;}
 
-.order-detail-row{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--border-2);}
-.od-icon{color:var(--brand);margin-top:2px;}
-.od-label{font-size:11px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
-.od-value{font-size:13px;color:var(--text-2);font-weight:500;margin-top:2px;}
+.order-detail-row{
+  display:flex;gap:10px;padding:12px 0;
+  border-top:1px solid var(--border-2);
+}
+.od-icon{color:var(--brand);flex-shrink:0;padding-top:1px;}
+.od-content{flex:1;}
+.od-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.od-value{font-size:13px;color:var(--text-2);line-height:1.5;}
 
-.modal-footer{padding-top:10px;}
+.modal-footer{margin-top:16px;}
 .modal-btn{
-  width:100%;padding:15px;border-radius:16px;
-  background:var(--brand);color:#fff;
-  font-size:15px;font-weight:700;border:none;cursor:pointer;
+  width:100%;padding:13px;border-radius:14px;
+  background:var(--brand);color:#fff;border:none;
+  font-weight:700;font-size:14px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(15,91,168,.25);
   transition:all .2s ease;
 }
 .modal-btn:hover{background:var(--brand-mid);}
@@ -1406,9 +1417,10 @@ async function runConversation() {
 
   await agentSay(`${gr}`, false, true);
   await pause(100);
-  
-  // AJUSTE CIRÚRGICO 1: "validando dados do pedido" aparece imediatamente após a mensagem de Thiago
   await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
+  await pause(1500); // Respiro antes de processar dados
+
+  // NOVO: Validando dados do pedido antes da confirmação
   const spValPre = addSpinner("Validando dados do pedido...");
   await pause(3000);
   spValPre.remove();
@@ -1424,9 +1436,6 @@ async function runConversation() {
     await pause(3500);
     spVal.remove();
     addSys('Pedido validado com sucesso', 'ok');
-    
-    // AJUSTE CIRÚRGICO 2: efeito de digitando aparece imediatamente após "Pedido validado com sucesso"
-    setTyping(true);
   }
 
   if (action==='change') {
@@ -1435,10 +1444,7 @@ async function runConversation() {
   }
 
   // ── MELHORADO: mensagem de transição com contexto de segurança ──
-  // Simula tempo de digitação já que setTyping(true) foi chamado acima
-  await pause(2500);
-  setTyping(false);
-  addMsg(`Ótimo, vou gerar agora o código pix, um segundo`, 'agent', false);
+  await agentSay(`Ótimo, vou gerar agora o código pix,  um segundo`);
   await pause(1000);
 
   // ── MELHORADO: texto do spinner mais oficial ──
