@@ -95,7 +95,7 @@ html,body{
 .icon-btn:hover{background:rgba(255,255,255,.22);}
 .icon-btn:active{transform:scale(.9);}
 
-.h-agent{display:flex;align-items:center;gap:10px;flex:1;min-width:0;position:relative;z-index:1;}
+.h-agent{display:flex;align-items:center;gap:10px;flex:1;min-width:0;position:relative;z-index:1;cursor:pointer;}
 
 .h-avatar{position:relative;flex-shrink:0;}
 .h-avatar-img{
@@ -231,6 +231,7 @@ html,body{
   width:30px;height:30px;border-radius:50%;
   object-fit:cover;flex-shrink:0;
   border:1.5px solid rgba(15,91,168,.12);
+  cursor:pointer;
 }
 .m-avatar.ghost{visibility:hidden;}
 
@@ -318,6 +319,7 @@ html,body{
   flex-shrink:0;
   align-self:flex-start;
   width:100%;
+  cursor:pointer;
 }
 .ic-top{
   background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);
@@ -431,76 +433,24 @@ html,body{
 .lock-icon{color:var(--text-3);flex-shrink:0;}
 .msg-input{
   flex:1;border:none;outline:none;background:transparent;
-  font-family:inherit;font-size:14px;color:var(--text);
-  padding:0;margin:0;resize:none;line-height:1.4;
+  font-family:inherit;font-size:14.5px;color:var(--text);
+  resize:none;padding:2px 0;line-height:1.4;
   max-height:88px;
 }
-.msg-input::placeholder{color:var(--text-3);font-size:13.5px;}
-.msg-input:read-only{cursor:default;pointer-events:none;}
+.msg-input::placeholder{color:var(--text-3);opacity:0.8;}
 
 .send-btn{
-  width:44px;height:44px;border-radius:50%;
+  width:46px;height:46px;border-radius:50%;
   background:var(--brand);color:#fff;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:all .25s var(--spring);
-  box-shadow:0 3px 10px rgba(15,91,168,.22);
+  transition:all .2s ease;flex-shrink:0;
+  box-shadow:0 3px 10px rgba(15,91,168,.25);
 }
-.send-btn:disabled{
-  background:var(--border);box-shadow:none;
-  cursor:not-allowed;transform:none !important;
-}
-.send-btn:not(:disabled):hover{
-  box-shadow:0 5px 16px rgba(15,91,168,.32);
-  transform:translateY(-1px) scale(1.05);
-}
-.send-btn:not(:disabled):active{transform:scale(.88);}
+.send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;opacity:0.6;}
+.send-btn:not(:disabled):hover{background:var(--brand-mid);transform:scale(1.05);}
+.send-btn:not(:disabled):active{transform:scale(.95);}
 
-/* ── CART BADGE ── */
-.cart-badge{
-  position:absolute;top:-6px;right:-6px;
-  background:var(--green);color:#fff;
-  font-size:10px;font-weight:700;
-  min-width:18px;height:18px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  border:2px solid var(--brand-dk);
-  box-shadow:0 2px 6px rgba(16,185,129,.4);
-}
-
-/* ── TYPING ALERT ── */
-.typing-alert{
-  position:absolute;
-  bottom:100px;
-  left:0;right:0;
-  display:none;
-  justify-content:center;
-  pointer-events:auto;z-index:9999;
-  padding:0 12px;
-  cursor:pointer;
-}
-.typing-alert.show{display:flex;}
-.alert-content{
-  background:linear-gradient(135deg,#0F5BA8 0%,#1B7FD8 100%);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  color:#fff;padding:14px 18px;
-  border-radius:14px;font-size:13px;font-weight:600;
-  display:flex;align-items:center;gap:12px;
-  box-shadow:0 12px 32px rgba(15,91,168,0.28),0 0 0 1px rgba(255,255,255,0.12);
-  max-width:90%;text-align:center;
-  line-height:1.5;
-  border:1px solid rgba(255,255,255,0.18);
-  animation:alertPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition:transform 0.2s ease, opacity 0.2s ease;
-  user-select:none;
-  touch-action:none;
-}
-.alert-content svg{flex-shrink:0;color:#fff;opacity:0.95;}
-@keyframes alertPop{
-  from{opacity:0;transform:translateY(24px) scale(0.92);}
-  to{opacity:1;transform:translateY(0) scale(1);}
-}
-
-/* ── ORDER MODAL ── */
+/* ── MODALS ── */
 .modal-overlay{
   position:absolute;inset:0;background:rgba(0,0,0,.4);
   z-index:1000;display:none;align-items:flex-end;justify-content:center;
@@ -717,6 +667,57 @@ html,body{
 }
 .pix-trust-item.positive { color: var(--green-dk); }
 .pix-trust-item.neutral { color: var(--text-3); justify-content: flex-end; }
+
+/* ── SELLER MODAL ── */
+.seller-modal-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.4);
+  z-index:1100;display:none;align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);padding:20px;
+}
+.seller-modal-overlay.on{display:flex;}
+.seller-modal{
+  width:100%;max-width:340px;background:#fff;
+  border-radius:28px;padding:24px;
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+  animation:cardIn .4s var(--spring);
+  position:relative;
+}
+.seller-close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--surface-2);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-3);transition:all .2s;
+}
+.seller-close:hover{background:var(--border-2);color:var(--text);}
+.seller-header{text-align:center;margin-bottom:20px;}
+.seller-avatar-big{
+  width:84px;height:84px;border-radius:50%;
+  object-fit:cover;border:3px solid var(--brand-lt);
+  box-shadow:0 4px 15px var(--brand-glow);
+  margin-bottom:12px;
+}
+.seller-name-big{font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.seller-badge-big{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--brand-lt);color:var(--brand);
+  font-size:11px;font-weight:700;padding:4px 10px;
+  border-radius:20px;text-transform:uppercase;letter-spacing:.4px;
+}
+.seller-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-bottom:20px;padding:16px;background:var(--surface-2);
+  border-radius:18px;
+}
+.stat-item{text-align:center;}
+.stat-val{font-size:15px;font-weight:800;color:var(--text);display:block;}
+.stat-lbl{font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;}
+.seller-info-list{display:flex;flex-direction:column;gap:14px;}
+.info-row{display:flex;gap:12px;align-items:flex-start;}
+.info-ico{color:var(--brand);flex-shrink:0;margin-top:2px;}
+.info-txt{font-size:13px;color:var(--text-2);line-height:1.4;}
+.info-lbl{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;display:block;margin-bottom:1px;}
+
 </style>
 </head>
 <body>
@@ -727,7 +728,7 @@ html,body{
     <button class="icon-btn" aria-label="Voltar">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
     </button>
-    <div class="h-agent">
+    <div class="h-agent" id="headerSellerTrigger">
       <div class="h-avatar">
         <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="h-avatar-img" alt="Thiago">
         <div class="h-dot"></div>
@@ -776,7 +777,7 @@ html,body{
 
   <!-- TYPING -->
   <div class="typing-row" id="typingRow">
-    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="m-avatar" alt="Thiago">
+    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="m-avatar" alt="Thiago" id="typingAvatarTrigger">
     <div class="typing-bubble">
       <div class="td"></div><div class="td"></div><div class="td"></div>
     </div>
@@ -845,6 +846,54 @@ html,body{
       </div>
     </div>
   </div>
+
+  <!-- SELLER MODAL -->
+  <div class="seller-modal-overlay" id="sellerModalOverlay">
+    <div class="seller-modal">
+      <button class="seller-close" id="closeSellerModal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="seller-header">
+        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="seller-avatar-big" alt="Thiago">
+        <div class="seller-name-big">Thiago Callegari</div>
+        <div class="seller-badge-big">Vendedor Verificado</div>
+      </div>
+      <div class="seller-stats">
+        <div class="stat-item">
+          <span class="stat-val">4,9 ★</span>
+          <span class="stat-lbl">Avaliação</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">+10k</span>
+          <span class="stat-lbl">Entregas</span>
+        </div>
+      </div>
+      <div class="seller-info-list">
+        <div class="info-row">
+          <div class="info-ico">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="info-txt">
+            <span class="info-lbl">Região de Atendimento</span>
+            Atende sua região com prioridade
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-ico">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="info-txt">
+            <span class="info-lbl">Garantia Diskgas</span>
+            Produto selado e com nota fiscal
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="margin-top:24px;">
+        <button class="modal-btn" id="closeSellerModalBtn">Voltar ao Chat</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -867,6 +916,22 @@ const orderAddressEl = document.getElementById('orderAddress');
 const orderTimeEl    = document.getElementById('orderTime');
 const typingAlertEl  = document.getElementById('typingAlert');
 const alertMessageEl = document.getElementById('alertMessage');
+
+// Seller Modal Elements
+const sellerModalOverlayEl = document.getElementById('sellerModalOverlay');
+const closeSellerModalEl   = document.getElementById('closeSellerModal');
+const closeSellerModalBtnEl = document.getElementById('closeSellerModalBtn');
+const headerSellerTriggerEl = document.getElementById('headerSellerTrigger');
+const typingAvatarTriggerEl = document.getElementById('typingAvatarTrigger');
+
+const openSellerModal = () => sellerModalOverlayEl.classList.add('on');
+const closeSellerModal = () => sellerModalOverlayEl.classList.remove('on');
+
+closeSellerModalEl.onclick = closeSellerModal;
+closeSellerModalBtnEl.onclick = closeSellerModal;
+headerSellerTriggerEl.onclick = openSellerModal;
+typingAvatarTriggerEl.onclick = openSellerModal;
+sellerModalOverlayEl.onclick = (e) => { if(e.target===sellerModalOverlayEl) closeSellerModal(); };
 
 const AVATAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp";
 const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
@@ -1100,7 +1165,7 @@ function addMsg(text, type, newGroup=false) {
   const row = document.createElement('div');
   row.className = `row ${type}${isGrouped?' grouped':''}`;
   const safeText = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
-  const avatarHtml = type==='agent' ? `<img src="${AVATAR}" class="m-avatar${isGrouped?' ghost':''}" alt="Thiago">` : '';
+  const avatarHtml = type==='agent' ? `<img src="${AVATAR}" class="m-avatar${isGrouped?' ghost':''}" alt="Thiago" onclick="openSellerModal()">` : '';
   const readHtml   = type==='user'  ? `<span class="b-read sending">✓</span>` : '';
   row.innerHTML = `${avatarHtml}<div class="bubble ${type==='user'?'u':'a'}">${safeText}<div class="b-meta"><span class="b-time">${ts()}</span>${readHtml}</div></div>`;
   msgsEl.appendChild(row);
@@ -1138,6 +1203,7 @@ function addSpinner(text='') {
 function showIntroCard() {
   const el = document.createElement('div');
   el.className='intro-card';
+  el.onclick = openSellerModal;
   el.innerHTML=`
     <div class="ic-top">
       <span class="ic-top-label">
@@ -1146,7 +1212,7 @@ function showIntroCard() {
       </span>
       <span class="ic-badge">
         <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-        Verificado Diskgas
+        Oficial
       </span>
     </div>
     <div class="ic-body">
@@ -1288,7 +1354,7 @@ function showDeliverySteps() {
     </div>
 
     <!-- ✅ NOVO: Beneficiário verificado -->
-    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;">
+    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
       <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
@@ -1424,10 +1490,6 @@ async function runConversation() {
   const sp = addSpinner("Preparando chave Pix...");
   await pause(4000);
   sp.remove();
-
-  // ── NOVO: sys message de validação após o spinner ──
-  addSys('Vendedor DiskGás · Autorizado.', 'ok');
-  await pause(1000);
 
   showDeliverySteps();
   
