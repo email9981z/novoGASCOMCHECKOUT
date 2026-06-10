@@ -401,7 +401,7 @@ html,body{
   background:var(--surface);
   border-top:1px solid var(--border-2);
   padding:12px 14px;
-  padding-bottom:max(12px, env(safe-area-inset-bottom));
+  padding-bottom: 12px;
   flex-shrink:0;
   box-shadow:0 -4px 15px rgba(0,0,0,0.03);
   position:relative;
@@ -1099,12 +1099,7 @@ if ('visualViewport' in window) {
     setTimeout(() => {
       scrollDown(true);
       // Ajusta o padding do footer baseado na altura do teclado se necessário
-      const keyboardHeight = window.innerHeight - window.visualViewport.height;
-      if (keyboardHeight > 0) { // Teclado está aberto
-        document.querySelector('.footer').style.paddingBottom = `${keyboardHeight}px`;
-      } else { // Teclado está fechado
-        document.querySelector('.footer').style.paddingBottom = 'max(12px, env(safe-area-inset-bottom))';
-      }
+      document.querySelector('.app').style.height = `${window.visualViewport.height}px`;
     }, 100);
   });
 }
