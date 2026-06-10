@@ -1229,7 +1229,7 @@ function showOrderConfirmation() {
 
     <div style="display:flex;flex-direction:column;gap:8px;">
       <button id="btnCorrect" style="width:100%;padding:14px;border-radius:14px;border:none;background:var(--brand);color:#fff;font-weight:800;cursor:pointer;font-size:14px;transition:all 0.2s;box-shadow:0 4px 15px rgba(15,91,168,0.25);display:flex;align-items:center;justify-content:center;gap:8px;">
-        Sim, Prosseguir
+        Confirmar e Pagar
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <button id="btnChange" style="width:100%;padding:10px;border-radius:12px;border:none;background:transparent;color:var(--text-3);font-weight:600;cursor:pointer;font-size:12px;transition:all 0.2s;">Alterar informações</button>
@@ -1248,7 +1248,7 @@ function showOrderConfirmation() {
     btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
     
     currentConfirmationBlock.querySelectorAll('button').forEach(b=>b.disabled=true);
-    const { onReadPromise } = addMsg('Sim, prosseguir','user');
+    const { onReadPromise } = addMsg('Sim, está correto','user');
     await onReadPromise;
     
     if(confirmationResolve) confirmationResolve('correct');
@@ -1273,13 +1273,13 @@ function showDeliverySteps() {
       <div class="pix-brand-mark">
         <div class="pix-logo">PIX</div>
         <div>
-          <div class="pix-brand-label">Pix Protegido</div>
+          <div class="pix-brand-label">Pagar com Pix</div>
           <div class="pix-brand-sub">Disk Gás Entregas.</div>
         </div>
       </div>
       <div class="pix-expiry">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        20 min
+        30 min
       </div>
     </div>
 
@@ -1367,7 +1367,7 @@ function pause(ms){ return new Promise(r=>setTimeout(r,ms)); }
 async function agentSay(text, newGroup=false, immediateTyping=false) {
   // Se for imediato, dá uma "piscada" curta. Se não, simula tempo de leitura/preparação.
   if (immediateTyping) {
-    await pause(400); 
+    // Imediato: remove qualquer pause
   } else {
     await pause(800 + Math.random() * 700);
   }
@@ -1399,19 +1399,17 @@ async function runConversation() {
   await pause(3000);
   spValPre.remove();
 
-  addMsg(`Peço que verifique se está tudo certinho, por gentileza`, 'agent', true);
+  addMsg(`Peço que verifique se está tudo certinho`, 'agent', true);
   await pause(800);
 
   const action = await showOrderConfirmation();
 
   if (action==='correct') {
-    // Inicia a validação 100ms após a mensagem do usuário ser confirmada
-    await pause(100);
+    // Inicia a validação imediatamente após a mensagem do usuário ser confirmada
     const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
     addSys('Pedido validado com sucesso', 'ok');
-    await pause(100);
   }
 
   if (action==='change') {
@@ -1420,7 +1418,7 @@ async function runConversation() {
   }
 
   // ── MELHORADO: mensagem de transição com contexto de segurança ──
-  await agentSay(`Certo Vou gerar agora o código Pix, um segundo`);
+  await agentSay(`Ótimo Vou gerar agora o código Pix,  Um segundo`);
   await pause(1000);
 
   // ── MELHORADO: texto do spinner mais oficial ──
@@ -1429,7 +1427,7 @@ async function runConversation() {
   sp.remove();
 
   // ── NOVO: sys message de validação após o spinner ──
-  addSys('Vendedor DiskGás · Autorizado.', 'ok');
+  addSys('Vendedor DiskGás · Thiago Callegari.', 'ok');
   await pause(1000);
 
   showDeliverySteps();
@@ -1438,10 +1436,10 @@ async function runConversation() {
   setTyping(true);
   await pause(2500);
   setTyping(false);
-  addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. ⏰`, 'agent', true);
+  addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos para o seu endereço. 💨`, 'agent', true);
 
   // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
-  await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar 😊`, true, true);
+  await agentSay(`Me chamo Thiago. Qualquer dúvida é só chamar 😊`, true, true);
 }
 
 // ── SEND ─────────────────────────────────────────────
