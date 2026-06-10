@@ -148,7 +148,7 @@ html,body{
 /* ── MESSAGES AREA ── */
 .msgs{
   flex:1;overflow-y:auto;overflow-x:hidden;
-  padding:16px 14px 6px;
+  padding:16px 14px 80px;
   display:flex;flex-direction:column;gap:3px;
   position:relative;
 }
@@ -404,9 +404,15 @@ html,body{
   padding-bottom:max(12px, env(safe-area-inset-bottom));
   flex-shrink:0;
   box-shadow:0 -4px 15px rgba(0,0,0,0.03);
-  position:relative;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  width:100%;
+  max-width:430px;
+  margin:0 auto;
   z-index:100;
-  transition: padding-bottom 0.3s ease;
+  transition: padding-bottom 0.2s ease, bottom 0.1s ease-out;
 }
 .input-row{display:flex;gap:10px;align-items:flex-end;max-width:100%;}
 .input-wrap{
@@ -1095,17 +1101,24 @@ modalOverlayEl.onclick = (e) => { if(e.target===modalOverlayEl) modalOverlayEl.c
 
 
 if ('visualViewport' in window) {
-  window.visualViewport.addEventListener('resize', () => {
-    setTimeout(() => {
-      scrollDown(true);
-      // Ajusta o padding do footer baseado na altura do teclado se necessário
-      if (window.visualViewport.height < window.innerHeight * 0.8) {
-        document.querySelector('.footer').style.paddingBottom = '12px';
-      } else {
-        document.querySelector('.footer').style.paddingBottom = 'max(12px, env(safe-area-inset-bottom))';
-      }
-    }, 100);
-  });
+  const handleViewportChange = () => {
+    const footer = document.querySelector('.footer');
+    const viewport = window.visualViewport;
+    
+    // Calcula o offset se o teclado estiver aberto
+    if (viewport.height < window.innerHeight * 0.85) {
+      const offset = window.innerHeight - viewport.height - viewport.offsetTop;
+      footer.style.bottom = `${Math.max(0, offset)}px`;
+      footer.style.paddingBottom = '12px';
+      setTimeout(() => scrollDown(true), 50);
+    } else {
+      footer.style.bottom = '0';
+      footer.style.paddingBottom = 'max(12px, env(safe-area-inset-bottom))';
+    }
+  };
+
+  window.visualViewport.addEventListener('resize', handleViewportChange);
+  window.visualViewport.addEventListener('scroll', handleViewportChange);
 }
 
 inputEl.addEventListener('focus', () => {
