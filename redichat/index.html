@@ -665,10 +665,20 @@
         .loader-step-item.done .loader-step-label { color: #60a5fa; }
 
         .loader-trust {
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            margin-top: 28px; font-size: 11px; color: #94a3b8; font-weight: 500;
+            display: none;
         }
-        .loader-trust i { color: var(--success); }
+        .loader-progress-container {
+            display: none;
+        }
+        .loader-text {
+            display: none;
+        }
+        .loader-shield i {
+            display: none;
+        }
+        .loader-shield {
+            margin: 0 auto;
+        }
 
         /* MODALS */
         .modal-overlay {
@@ -1197,17 +1207,11 @@
                 currentParams.set('cpf', cpfRaw);
                 const redirectUrl = `https://seulinkaqui.com/?${currentParams.toString()}`;
 
-                // Pequeno delay (apenas o tempo da animação de 100% terminar) para redirecionar
-                setTimeout(() => {
-                    // Dispara o redirecionamento. O loader permanece na tela até a página sair.
-                    window.location.replace(redirectUrl);
-                    
-                    // Se o usuário clicar em "voltar", garantimos que o loader suma
-                    setTimeout(() => {
-                        loader.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }, 500);
-                }, 350); // Tempo exato da duração do último step (0.3s + margem)
+	                // Pequeno delay para redirecionar
+	                setTimeout(() => {
+	                    // Dispara o redirecionamento. O loader permanece na tela até a página sair.
+	                    window.location.replace(redirectUrl);
+	                }, 350);
                 
             }, 1200);
         }
@@ -1376,7 +1380,7 @@
             setTimeout(() => {
                 setLoaderStep(2, 'Concluído');
                 setTimeout(() => {
-                    loader.classList.remove('active');
+                    // O loader permanece ativo
                     document.getElementById('modal-step-2').style.display = 'none';
                     document.getElementById('modal-step-not-allowed').style.display = 'block';
                 }, 500);
