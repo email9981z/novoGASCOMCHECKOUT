@@ -1405,8 +1405,8 @@ async function runConversation() {
   const action = await showOrderConfirmation();
 
   if (action==='correct') {
-    // Inicia a validação 400ms após a mensagem do usuário ser confirmada
-    await pause(400);
+    // Inicia a validação 100ms após a mensagem do usuário ser confirmada
+    await pause(100);
     const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
