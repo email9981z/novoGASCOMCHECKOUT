@@ -1229,7 +1229,7 @@ function showOrderConfirmation() {
 
     <div style="display:flex;flex-direction:column;gap:8px;">
       <button id="btnCorrect" style="width:100%;padding:14px;border-radius:14px;border:none;background:var(--brand);color:#fff;font-weight:800;cursor:pointer;font-size:14px;transition:all 0.2s;box-shadow:0 4px 15px rgba(15,91,168,0.25);display:flex;align-items:center;justify-content:center;gap:8px;">
-        Confirmar e Pagar
+        Sim, Prosseguir
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <button id="btnChange" style="width:100%;padding:10px;border-radius:12px;border:none;background:transparent;color:var(--text-3);font-weight:600;cursor:pointer;font-size:12px;transition:all 0.2s;">Alterar informações</button>
@@ -1248,7 +1248,7 @@ function showOrderConfirmation() {
     btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
     
     currentConfirmationBlock.querySelectorAll('button').forEach(b=>b.disabled=true);
-    addMsg('Sim, está correto','user');
+    addMsg('Sim, prosseguir','user');
     if(confirmationResolve) confirmationResolve('correct');
   };
   currentConfirmationBlock.querySelector('#btnChange').onclick = () => { updateModal(true); modalOverlayEl.classList.add('on'); };
@@ -1271,7 +1271,7 @@ function showDeliverySteps() {
       <div class="pix-brand-mark">
         <div class="pix-logo">PIX</div>
         <div>
-          <div class="pix-brand-label">Pagar com Pix</div>
+          <div class="pix-brand-label">Pix Protegido</div>
           <div class="pix-brand-sub">Disk Gás Entregas.</div>
         </div>
       </div>
@@ -1384,7 +1384,7 @@ async function runConversation() {
   const { location } = ORDER;
   const gr = getGreeting();
 
-  const spWaiting = addSpinner("Aguardando vendedor");
+  const spWaiting = addSpinner("Aguardando vendedor Autorizado");
   await pause(3000);
   spWaiting.remove();
 
@@ -1398,7 +1398,7 @@ async function runConversation() {
   await pause(3000);
   spValPre.remove();
 
-  addMsg(`Peço que verifique se está tudo certinho`, 'agent', true);
+  addMsg(`Peço que verifique se está tudo certinho, por gentileza`, 'agent', true);
   await pause(800);
 
   const action = await showOrderConfirmation();
@@ -1417,7 +1417,7 @@ async function runConversation() {
   }
 
   // ── MELHORADO: mensagem de transição com contexto de segurança ──
-  await agentSay(`Ótimo Vou gerar agora o código Pix,  Um segundo`);
+  await agentSay(`Ótimo vou gerar agora o código Pix,  um segundo`);
   await pause(1000);
 
   // ── MELHORADO: texto do spinner mais oficial ──
@@ -1426,7 +1426,7 @@ async function runConversation() {
   sp.remove();
 
   // ── NOVO: sys message de validação após o spinner ──
-  addSys('Vendedor DiskGás · Thiago Callegari.', 'ok');
+  addSys('Vendedor DiskGás · Autorizado.', 'ok');
   await pause(1000);
 
   showDeliverySteps();
@@ -1435,10 +1435,10 @@ async function runConversation() {
   setTyping(true);
   await pause(2500);
   setTyping(false);
-  addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos para o seu endereço. 💨`, 'agent', true);
+  addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos para o seu endereço. ⏰`, 'agent', true);
 
   // ── NOVO: segunda mensagem reforçando acompanhamento em tempo real ──
-  await agentSay(`Me chamo Thiago. Qualquer dúvida é só chamar 😊`, true, true);
+  await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar 😊`, true, true);
 }
 
 // ── SEND ─────────────────────────────────────────────
