@@ -789,13 +789,7 @@ html,body{
     <span class="fab-badge" id="fabBadge">0</span>
   </button>
 
-  <!-- TYPING ALERT -->
-  <div class="typing-alert" id="typingAlert">
-    <div class="alert-content">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      <span id="alertMessage">Para sua segurança, o chat será habilitado após a confirmação do pedido.</span>
-    </div>
-  </div>
+
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -914,8 +908,8 @@ const confirmModalEl = document.getElementById('confirmModal');
 const orderItemsEl   = document.getElementById('orderItems');
 const orderAddressEl = document.getElementById('orderAddress');
 const orderTimeEl    = document.getElementById('orderTime');
-const typingAlertEl  = document.getElementById('typingAlert');
-const alertMessageEl = document.getElementById('alertMessage');
+// const typingAlertEl  = document.getElementById('typingAlert');
+// const alertMessageEl = document.getElementById('alertMessage');
 
 // Seller Modal Elements
 const sellerModalOverlayEl = document.getElementById('sellerModalOverlay');
@@ -1098,40 +1092,7 @@ confirmModalEl.onclick = () => {
 };
 modalOverlayEl.onclick = (e) => { if(e.target===modalOverlayEl) modalOverlayEl.classList.remove('on'); };
 
-// ── ALERT ────────────────────────────────────────────
-let startX=0, currentX=0, isDragging=false;
 
-function showAlert(msg) {
-  alertMessageEl.textContent = msg;
-  typingAlertEl.classList.add('show');
-  const c = typingAlertEl.querySelector('.alert-content');
-  c.style.transform=''; c.style.opacity='1';
-  clearTimeout(alertTimeout);
-  alertTimeout = setTimeout(() => hideAlert(), 5000);
-}
-function hideAlert() {
-  typingAlertEl.classList.remove('show');
-  const c = typingAlertEl.querySelector('.alert-content');
-  c.style.transform=''; c.style.opacity='1';
-}
-document.addEventListener('mousedown', (e) => { if(typingAlertEl.classList.contains('show')) hideAlert(); });
-
-const alertContent = document.querySelector('.alert-content');
-const startDrag = (x) => { startX=x; isDragging=true; clearTimeout(alertTimeout); alertContent.style.transition='none'; };
-const moveDrag = (x) => { if(!isDragging) return; currentX=x-startX; alertContent.style.transform=`translateX(${currentX}px)`; alertContent.style.opacity=1-Math.abs(currentX)/200; };
-const endDrag = () => {
-  if(!isDragging) return; isDragging=false;
-  alertContent.style.transition='all 0.3s cubic-bezier(0.175,0.885,0.32,1.275)';
-  if(Math.abs(currentX)>80) { alertContent.style.transform=`translateX(${currentX>0?400:-400}px)`; alertContent.style.opacity='0'; setTimeout(hideAlert,300); }
-  else { alertContent.style.transform='translateX(0)'; alertContent.style.opacity='1'; alertTimeout=setTimeout(()=>hideAlert(),5000); }
-  currentX=0;
-};
-alertContent.addEventListener('touchstart',(e)=>startDrag(e.touches[0].clientX),{passive:true});
-alertContent.addEventListener('touchmove',(e)=>moveDrag(e.touches[0].clientX),{passive:true});
-alertContent.addEventListener('touchend',endDrag);
-alertContent.addEventListener('mousedown',(e)=>{e.stopPropagation();startDrag(e.clientX);});
-window.addEventListener('mousemove',(e)=>moveDrag(e.clientX));
-window.addEventListener('mouseup',endDrag);
 
 if ('visualViewport' in window) {
   window.visualViewport.addEventListener('resize', () => {
