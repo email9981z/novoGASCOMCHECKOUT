@@ -1606,9 +1606,10 @@ async function runConversation(startStep = 0) {
     addSys('Pedido validado com sucesso', 'ok');
   }
 
-  if (window._currentFlowStep === 5) {
+    if (window._currentFlowStep === 5) {
     // ── STEP 5: payment choice ──
     await agentSay(`Certo, prefere pagar agora ou na entrega?`);
+    await pause(400); // Adiciona o intervalo de 400ms
     const paymentChoice = await showPaymentOptions();
     if (paymentChoice === 'pix') {
       window._currentFlowStep = 6;
