@@ -1673,9 +1673,13 @@ async function runConversation(startStep = 0) {
       }
     }
 
-    const elapsed = Date.now() - pixStartTime;
+        const elapsed = Date.now() - pixStartTime;
     if (elapsed < 2000) await pause(2000 - elapsed);
     sp.remove();
+    
+    // Adiciona a etiqueta de validação aqui
+    addSys('Pedido validado com sucesso', 'ok');
+    await pause(500); // Pequena pausa para a etiqueta aparecer antes dos cards
 
     showDeliverySteps(pixCode);
   }
