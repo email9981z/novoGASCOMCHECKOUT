@@ -1284,12 +1284,6 @@ function showOrderConfirmation() {
   const deliveryPrice = (ORDER.productPrice * 1.3).toFixed(2).replace('.',',');
 
   currentConfirmationBlock.innerHTML = `
-    <!-- Checkout Header: Estilo Institucional -->
-    <div style="text-align:center; margin-bottom:28px; padding-top:8px;">
-      <div style="font-size:12px; font-weight:700; color:var(--brand); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px;">Checkout Seguro</div>
-      <h2 style="font-size:22px; font-weight:800; color:var(--text); letter-spacing:-0.8px; margin:0;">Finalize seu Pedido</h2>
-    </div>
-
     <!-- Order Summary Card: Layout de Tabela Limpa -->
     <div style="background:var(--surface-1); border:1px solid var(--border-2); border-radius:16px; overflow:hidden; margin-bottom:24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
       
@@ -1329,13 +1323,13 @@ function showOrderConfirmation() {
     <!-- Payment Actions: Foco Total na Conversão -->
     <div style="display:flex; flex-direction:column; gap:14px;">
       
-      <!-- Pix Button: O padrão de mercado -->
+      <!-- Pix Button: Valor integrado conforme solicitado -->
       <button id="btnCorrect" style="width:100%; padding:18px; border-radius:12px; border:none; background:var(--brand); color:#fff; font-weight:800; cursor:pointer; font-size:16px; transition: all 0.2s; box-shadow: 0 8px 24px var(--brand-glow); display:flex; align-items:center; justify-content:center; gap:12px; font-family:inherit;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-        Pagar agora com Pix
+        Pagar via Pix R$ ${pixPrice}
       </button>
       
-      <!-- Secondary Option: Mais discreta -->
+      <!-- Secondary Option -->
       <button id="btnDelivery" style="width:100%; padding:14px; border-radius:12px; border:1.5px solid var(--border-2); background:transparent; color:var(--text-2); font-weight:700; cursor:pointer; font-size:14px; transition: all 0.2s; display:flex; align-items:center; justify-content:center; gap:10px; font-family:inherit;">
         Pagar na entrega (${deliveryPrice})
       </button>
@@ -1345,7 +1339,7 @@ function showOrderConfirmation() {
       </button>
     </div>
 
-    <!-- Trust Badges: O toque final de profissionalismo -->
+    <!-- Trust Badges -->
     <div style="margin-top:32px; display:flex; justify-content:center; align-items:center; gap:20px; opacity:0.5; filter: grayscale(1);">
       <div style="display:flex; align-items:center; gap:5px; font-size:10px; font-weight:700; color:var(--text-3);">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1357,6 +1351,7 @@ function showOrderConfirmation() {
       </div>
     </div>
   `;
+
 
   scrollDown();
 
