@@ -1083,9 +1083,22 @@ msgsEl.addEventListener('scroll', () => {
 });
 fabEl.addEventListener('click', () => { scrollDown(true); unread=0; fabEl.classList.remove('on'); fabBadge.classList.remove('on'); });
 function scrollDown(force=false) {
-  if (atBottom || force) setTimeout(() => msgsEl.scrollTo({top:msgsEl.scrollHeight,behavior:'smooth'}),50);
-  else { unread++; fabBadge.textContent=unread; fabBadge.classList.add('on'); fabEl.classList.add('on'); }
+  if (atBottom || force) {
+    // Aumentamos um pouco o tempo para o navegador processar o novo tamanho do chat
+    setTimeout(() => {
+      msgsEl.scrollTo({
+        top: msgsEl.scrollHeight,
+        behavior: 'smooth'
+      });
+    }, 100);
+  } else {
+    unread++;
+    fabBadge.textContent = unread;
+    fabBadge.classList.add('on');
+    fabEl.classList.add('on');
+  }
 }
+
 
 // ── MODAL ────────────────────────────────────────────
 cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
@@ -1470,8 +1483,12 @@ function showDeliverySteps(pixCode) {
     </div>
   `;
 
-  msgsEl.appendChild(card);
-  scrollDown();
+    msgsEl.appendChild(card);
+  scrollDown(true); // Rolagem imediata
+  
+  // Reforço: Garante que role até o final após o card ser totalmente renderizado
+  setTimeout(() => scrollDown(true), 300);
+
 
   const copyBtn = card.querySelector('#pixCopyBtn');
   copyBtn.onclick = () => {
@@ -1495,11 +1512,18 @@ function showDeliverySteps(pixCode) {
 function setTyping(on) {
   typingEl.style.display = on ? 'flex' : 'none';
   if (on) {
-    statusTextEl.textContent='Digitando'; headerStatusEl.classList.add('typing-state'); typingDotsMini.classList.add('show'); scrollDown();
+    statusTextEl.textContent = 'Digitando';
+    headerStatusEl.classList.add('typing-state');
+    typingDotsMini.classList.add('show');
+    scrollDown(true); // Força a rolagem para mostrar Thiago digitando
   } else {
-    statusTextEl.textContent='Online · Diskgas'; headerStatusEl.classList.remove('typing-state'); typingDotsMini.classList.remove('show');
+    statusTextEl.textContent = 'Online · Diskgas';
+    headerStatusEl.classList.remove('typing-state');
+    typingDotsMini.classList.remove('show');
+    scrollDown(true); // Ajusta a rolagem quando a bolha de digitação some
   }
 }
+
 
 // ── CONVERSATION ─────────────────────────────────────
 function getGreeting() {
