@@ -1608,7 +1608,7 @@ async function runConversation(startStep = 0) {
     addSys('Pedido validado com sucesso', 'ok');
     await pause(800);
     await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`);
-    await pause(1000);
+    await pause(400);
 
     const sp = addSpinner("Preparando chave Pix...");
     let pixCode = window._currentPixCode;
@@ -1664,7 +1664,7 @@ async function runConversation(startStep = 0) {
   if (window._currentFlowStep === 7) {
     window._currentFlowStep = 8;
     saveChatHistory();
-    await pause(400);
+    await pause(300);
     setTyping(true);
     await pause(2500);
     setTyping(false);
