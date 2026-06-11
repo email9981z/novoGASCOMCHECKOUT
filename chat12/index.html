@@ -1620,18 +1620,12 @@ async function runConversation(startStep = 0) {
     saveChatHistory();
   }
 
-  if (window._currentFlowStep === 6) {
+    if (window._currentFlowStep === 6) {
     // ── STEP 6: generate and show PIX ──
-    // Advance step BEFORE async work so a refresh mid-generation resumes at step 7
     window._currentFlowStep = 7;
     saveChatHistory();
 
-    // Replicando efeito de carregamento e etiqueta após escolha do Pix
-    const spValPix = addSpinner("Validando dados do pedido...");
-    await pause(3500);
-    spValPix.remove();
-    addSys('Pedido validado com sucesso', 'ok');
-    await pause(800);
+    // Removemos a validação e vamos direto para a fala do agente
     await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`);
     await pause(400);
 
