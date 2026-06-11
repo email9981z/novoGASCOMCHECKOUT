@@ -349,13 +349,18 @@ html,body{
 .ic-orders{font-size:11px;color:var(--text-3);font-weight:500;}
 
 /* ── TYPING ── */
-.typing-row{
-  display:none;align-items:flex-end;gap:8px;
-  align-self:flex-start;
-  padding:0 14px 4px;
-  animation:fadeUp .25s ease;
-  flex-shrink:0;
+.typing-row {
+  display: none;
+  align-items: flex-end;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 10px 0; /* Aumentamos o respiro */
+  margin-top: 4px;
+  animation: fadeUp .25s ease;
+  flex-shrink: 0;
+  width: 100%;
 }
+
 .typing-bubble{
   background:var(--bubble-a);
   border-radius:var(--radius-xs) var(--radius) var(--radius) var(--radius);
@@ -778,12 +783,17 @@ html,body{
   <div class="msgs" id="msgs"></div>
 
   <!-- TYPING -->
+  <!-- MESSAGES -->
+<div class="msgs" id="msgs">
+  <!-- O typingRow deve ficar aqui dentro agora -->
   <div class="typing-row" id="typingRow">
     <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="m-avatar" alt="Thiago" id="typingAvatarTrigger">
     <div class="typing-bubble">
       <div class="td"></div><div class="td"></div><div class="td"></div>
     </div>
   </div>
+</div>
+
 
   <!-- SCROLL FAB -->
   <button class="scroll-fab" id="scrollFab" aria-label="Ir para mensagens novas">
@@ -1510,19 +1520,26 @@ function showDeliverySteps(pixCode) {
 
 // ── TYPING STATE ─────────────────────────────────────
 function setTyping(on) {
-  typingEl.style.display = on ? 'flex' : 'none';
   if (on) {
+    // Garante que o indicador de digitação vá para o final da lista
+    msgsEl.appendChild(typingEl); 
+    typingEl.style.display = 'flex';
     statusTextEl.textContent = 'Digitando';
     headerStatusEl.classList.add('typing-state');
     typingDotsMini.classList.add('show');
-    scrollDown(true); // Força a rolagem para mostrar Thiago digitando
+    
+    // Rolagem reforçada
+    scrollDown(true);
+    setTimeout(() => scrollDown(true), 200);
   } else {
+    typingEl.style.display = 'none';
     statusTextEl.textContent = 'Online · Diskgas';
     headerStatusEl.classList.remove('typing-state');
     typingDotsMini.classList.remove('show');
-    scrollDown(true); // Ajusta a rolagem quando a bolha de digitação some
+    scrollDown(true);
   }
 }
+
 
 
 // ── CONVERSATION ─────────────────────────────────────
