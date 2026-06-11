@@ -430,75 +430,63 @@ html,body{
 .input-wrap.locked{
   background:var(--bg);
   border-color:transparent;
-  cursor:default;
+  cursor:not-allowed;
 }
-.lock-icon{color:var(--text-3);flex-shrink:0;}
+
 .msg-input{
-  flex:1;border:none;outline:none;background:transparent;
+  flex:1;border:none;background:transparent;
   font-family:inherit;font-size:14.5px;color:var(--text);
-  resize:none;padding:2px 0;line-height:1.4;
-  max-height:88px;
+  outline:none;resize:none;padding:4px 0;
+  line-height:1.4;max-height:120px;
 }
-.msg-input::placeholder{color:var(--text-3);opacity:0.8;}
+.msg-input::placeholder{color:var(--text-3);font-weight:400;}
 
 .send-btn{
-  width:40px;height:40px;border-radius:50%;
+  width:42px;height:42px;border-radius:50%;
   background:var(--brand);color:#fff;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:all .2s ease;flex-shrink:0;
+  transition:all .2s var(--spring);flex-shrink:0;
   box-shadow:0 3px 10px rgba(15,91,168,.25);
 }
-.send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;opacity:0.6;}
+.send-btn:disabled{
+  background:var(--border);color:var(--text-3);
+  cursor:default;box-shadow:none;transform:none !important;
+}
 .send-btn:not(:disabled):hover{background:var(--brand-mid);transform:scale(1.05);}
 .send-btn:not(:disabled):active{transform:scale(.95);}
 
-/* ── MODALS ── */
+/* ── MODAL ── */
 .modal-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,.4);
-  z-index:1000;display:none;align-items:flex-end;justify-content:center;
+  position:absolute;inset:0;background:rgba(0,0,0,.3);
+  z-index:1000;display:none;align-items:flex-end;
   backdrop-filter:blur(4px);
 }
 .modal-overlay.on{display:flex;}
 .order-modal{
-  width:100%;max-width:430px;background:#fff;
+  width:100%;background:#fff;
   border-radius:24px 24px 0 0;padding:20px;
-  box-shadow:0 -8px 30px rgba(0,0,0,.12);
-  animation:slideUp .35s var(--spring);
-  max-height:85dvh;overflow-y:auto;
+  box-shadow:0 -10px 40px rgba(0,0,0,.1);
+  animation:slideUp .4s var(--spring);
+  max-height:90%;overflow-y:auto;
 }
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.modal-handle{
-  width:36px;height:4px;border-radius:2px;
-  background:var(--border);margin:0 auto 18px;
-}
-.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-.modal-title{font-size:16px;font-weight:700;color:var(--text);}
-.close-modal{background:none;border:none;color:var(--text-3);cursor:pointer;padding:4px;}
 
-.order-items{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
-.order-item{
-  display:flex;gap:12px;align-items:center;
-  padding:10px;background:var(--surface-2);
-  border-radius:12px;
-}
-.oi-img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--border-2);}
-.oi-info{flex:1;}
-.oi-name{font-size:13px;font-weight:600;color:var(--text);}
-.oi-price{font-size:13px;color:var(--brand);font-weight:700;margin-top:1px;}
+.modal-handle{width:40px;height:5px;background:var(--border);border-radius:10px;margin:0 auto 15px;}
+.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.modal-title{font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.3px;}
+.close-modal{background:none;border:none;color:var(--text-3);cursor:pointer;padding:5px;}
 
-.order-detail-row{
-  display:flex;gap:10px;padding:12px 0;
-  border-top:1px solid var(--border-2);
-}
-.od-icon{color:var(--brand);flex-shrink:0;padding-top:1px;}
+.order-items{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;}
+.order-detail-row{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--border-2);}
+.od-icon{width:32px;height:32px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--brand);flex-shrink:0;}
 .od-content{flex:1;}
-.od-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
-.od-value{font-size:13px;color:var(--text-2);line-height:1.5;}
+.od-label{font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+.od-value{font-size:14px;color:var(--text);font-weight:600;line-height:1.4;}
 
-.modal-footer{margin-top:16px;}
+.modal-footer{margin-top:20px;padding-top:15px;border-top:1px solid var(--border-2);}
 .modal-btn{
-  width:100%;padding:13px;border-radius:14px;
-  background:var(--brand);color:#fff;border:none;
+  width:100%;padding:16px;border-radius:16px;border:none;
+  background:var(--brand);color:#fff;
   font-weight:700;font-size:14px;cursor:pointer;
   box-shadow:0 4px 14px rgba(15,91,168,.25);
   transition:all .2s ease;
@@ -867,25 +855,31 @@ html,body{
       <div class="seller-info-list">
         <div class="info-row">
           <div class="info-ico">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <div class="info-txt">
-            <span class="info-lbl">Região de Atendimento</span>
-            Atende sua região com prioridade
+            <span class="info-lbl">Segurança</span>
+            Pagamento 100% protegido e verificado pela Diskgas.
           </div>
         </div>
         <div class="info-row">
           <div class="info-ico">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
           <div class="info-txt">
-            <span class="info-lbl">Garantia Diskgas</span>
-            Produto selado e com nota fiscal
+            <span class="info-lbl">Tempo de Resposta</span>
+            Geralmente responde em menos de 2 minutos.
           </div>
         </div>
-      </div>
-      <div class="modal-footer" style="margin-top:24px;">
-        <button class="modal-btn" id="closeSellerModalBtn">Voltar ao Chat</button>
+        <div class="info-row">
+          <div class="info-ico">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="info-txt">
+            <span class="info-lbl">Localização</span>
+            Atendendo toda região com entrega expressa.
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -893,311 +887,110 @@ html,body{
 </div>
 
 <script>
-const msgsEl         = document.getElementById('msgs');
-const LOCAL_STORAGE_KEY = 'diskgas_chat_history';
-const STATE_STORAGE_KEY = 'diskgas_chat_state';
-const inputEl        = document.getElementById('msgInput');
-const inputWrapEl    = document.getElementById('inputWrap');
-const sendBtnEl      = document.getElementById('sendBtn');
-const typingEl       = document.getElementById('typingRow');
-const fabEl          = document.getElementById('scrollFab');
-const fabBadge       = document.getElementById('fabBadge');
-const statusTextEl   = document.getElementById('statusText');
-const typingDotsMini = document.getElementById('typingDotsMini');
-const headerStatusEl = document.getElementById('headerStatus');
-const cartBtnEl      = document.getElementById('cartBtn');
-const backBtnEl      = document.getElementById('backBtn');
-const modalOverlayEl = document.getElementById('modalOverlay');
-const closeModalEl   = document.getElementById('closeModal');
-const confirmModalEl = document.getElementById('confirmModal');
-const orderItemsEl   = document.getElementById('orderItems');
-const orderAddressEl = document.getElementById('orderAddress');
-const orderTimeEl    = document.getElementById('orderTime');
-
-// Seller Modal Elements
-const sellerModalOverlayEl = document.getElementById('sellerModalOverlay');
-const closeSellerModalEl   = document.getElementById('closeSellerModal');
-const closeSellerModalBtnEl = document.getElementById('closeSellerModalBtn');
-const headerSellerTriggerEl = document.getElementById('headerSellerTrigger');
-const typingAvatarTriggerEl = document.getElementById('typingAvatarTrigger');
-
-const openSellerModal = () => sellerModalOverlayEl.classList.add('on');
-const closeSellerModal = () => sellerModalOverlayEl.classList.remove('on');
-
-closeSellerModalEl.onclick = closeSellerModal;
-closeSellerModalBtnEl.onclick = closeSellerModal;
-headerSellerTriggerEl.onclick = openSellerModal;
-typingAvatarTriggerEl.onclick = openSellerModal;
-sellerModalOverlayEl.onclick = (e) => { if(e.target===sellerModalOverlayEl) closeSellerModal(); };
-
+// ── CONFIG & STATE ───────────────────────────────────
 const AVATAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp";
-const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+const STATE_STORAGE_KEY = 'diskgas_chat_state_v1';
 
+let ORDER = {
+  productName: "Botijão de Gás 13kg",
+  productPrice: 110.00,
+  productQty: 1,
+  address: "Rua das Flores, 123 - Centro",
+  location: "São Paulo",
+  nome: "",
+  products: []
+};
+
+// ── DOM ELEMENTS ─────────────────────────────────────
+const msgsEl = document.getElementById('msgs');
+const msgInput = document.getElementById('msgInput');
+const sendBtn = document.getElementById('sendBtn');
+const typingEl = document.getElementById('typingRow');
+const statusTextEl = document.getElementById('statusText');
+const headerStatusEl = document.getElementById('headerStatus');
+const typingDotsMini = document.getElementById('typingDotsMini');
+const scrollFab = document.getElementById('scrollFab');
+const fabBadge = document.getElementById('fabBadge');
+const inputWrap = document.getElementById('inputWrap');
+const modalOverlayEl = document.getElementById('modalOverlay');
+const sellerModalOverlayEl = document.getElementById('sellerModalOverlay');
+const cartBadgeEl = document.getElementById('cartBadgeEl');
+
+// ── UTILS ────────────────────────────────────────────
+function scrollDown() {
+  setTimeout(() => {
+    msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
+    updateScrollFab();
+  }, 50);
+}
+
+function updateScrollFab() {
+  const threshold = 150;
+  const isBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < threshold;
+  if (isBottom) {
+    scrollFab.classList.remove('on');
+    fabBadge.textContent = '0';
+    fabBadge.classList.remove('on');
+  }
+}
+
+msgsEl.onscroll = updateScrollFab;
+scrollFab.onclick = () => { msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' }); };
+
+// ── CORE FUNCTIONS ───────────────────────────────────
 let lastSender = null;
-let atBottom = true;
-let unread = 0;
-let chatUnlocked = false;
-let alertTimeout = null;
 
-// ── ORDER DATA FROM URL ──────────────────────────────
-function parseOrderData() {
-  try {
-    const p = new URLSearchParams(window.location.search);
-    const productsStr = p.get('products');
-    const address = p.get('address') || '';
-    const deliveryTime = p.get('delivery_time') || '20–30 minutos';
-    const subtotal = parseFloat(p.get('subtotal')) || 0;
-
-    let products = [];
-    if (productsStr) {
-      try { products = JSON.parse(decodeURIComponent(productsStr)); } catch(e) {}
-    }
-
-    let productName = 'Botijão de Gás P13';
-    let productQty  = 1;
-    let productPrice = subtotal || 89.90;
-
-    if (products.length > 0) {
-      productName  = products[0].n || productName;
-      productQty   = products[0].q || 1;
-      if (!subtotal) productPrice = products.reduce((a, c) => a + (c.v * (c.q || 1)), 0);
-    }
-
-    let location = 'sua região';
-    if (address) {
-      const parts = address.split(',').map(p => p.trim());
-      let city = '', neighborhood = '';
-      const lastPart = parts[parts.length - 1];
-      if (lastPart.includes('/')) city = lastPart.split('/')[0].trim();
-      for (let part of parts) {
-        if (part.includes(' - ')) { neighborhood = part.split(' - ')[1].trim(); break; }
-      }
-      if (!neighborhood && parts.length >= 3) neighborhood = parts[parts.length - 2];
-      if (neighborhood) neighborhood = neighborhood.replace(/^\d+\s*-\s*/, '').trim();
-      if (neighborhood && neighborhood.length > 2) location = neighborhood;
-      else if (city && city.length > 2) location = city;
-    }
-
-    const nome = p.get('nome') || '';
-    return { products, productName, productQty, productPrice, location, address, deliveryTime, nome };
-  } catch(e) {
-    return { products:[], productName:'Botijão de Gás P13', productQty:1, productPrice:89.90, location:'sua região', address:'', deliveryTime:'20–30 minutos', nome:'' };
-  }
-}
-const ORDER = parseOrderData();
-
-function updateModal(isEditing = false, customTitle = null) {
-  if (isEditing) {
-    document.querySelector('.modal-title').textContent = customTitle || 'Editar Pedido';
-    confirmModalEl.textContent = 'Salvar Alterações';
-    if (ORDER.products.length > 0) {
-      orderItemsEl.innerHTML = ORDER.products.map((p, idx) => `
-        <div class="order-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
-          <div style="display:flex;align-items:center;gap:12px;width:100%;">
-            ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
-            <div class="oi-info">
-              <input type="text" class="edit-input" value="${p.n}" onchange="updateProductField(${idx},'n',this.value)" placeholder="Nome do produto">
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:4px;">
-            <div class="qty-control">
-              <button class="qty-btn" onclick="changeQty(${idx},-1)">-</button>
-              <span class="qty-val" id="qty-${idx}">${p.q||1}</span>
-              <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
-            </div>
-            <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
-          </div>
-        </div>`).join('');
-    } else {
-      orderItemsEl.innerHTML = `
-        <div class="order-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
-          <input type="text" class="edit-input" value="${ORDER.productName}" onchange="ORDER.productName=this.value" placeholder="Nome do produto">
-          <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:4px;">
-            <div class="qty-control">
-              <button class="qty-btn" onclick="changeSingleQty(-1)">-</button>
-              <span class="qty-val" id="qty-single">${ORDER.productQty}</span>
-              <button class="qty-btn" onclick="changeSingleQty(1)">+</button>
-            </div>
-            <div class="oi-price">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-          </div>
-        </div>`;
-    }
-    orderAddressEl.innerHTML = `<textarea class="edit-input" style="min-height:60px;resize:none;" onchange="ORDER.address=this.value">${ORDER.address}</textarea>`;
-  } else {
-    document.querySelector('.modal-title').textContent = 'Resumo do Pedido';
-    confirmModalEl.textContent = 'Entendido';
-    if (ORDER.products.length > 0) {
-      orderItemsEl.innerHTML = ORDER.products.map(p => `
-        <div class="order-item">
-          ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
-          <div class="oi-info">
-            <div class="oi-name">${p.n||'Produto'} (x${p.q||1})</div>
-            <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
-          </div>
-        </div>`).join('');
-    } else {
-      orderItemsEl.innerHTML = `
-        <div class="order-item">
-          <div class="oi-info">
-            <div class="oi-name">${ORDER.productName} (x${ORDER.productQty})</div>
-            <div class="oi-price">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-          </div>
-        </div>`;
-    }
-    orderAddressEl.textContent = ORDER.address || '—';
-  }
-  if (ORDER.deliveryTime) {
-    orderTimeEl.textContent = ORDER.deliveryTime.includes('minutos') ? ORDER.deliveryTime : ORDER.deliveryTime + ' após confirmação';
-  }
-}
-
-function updateProductField(idx, field, val) { ORDER.products[idx][field] = val; }
-function changeQty(idx, delta) {
-  const p = ORDER.products[idx];
-  p.q = Math.max(1, (p.q||1) + delta);
-  document.getElementById(`qty-${idx}`).textContent = p.q;
-  recalculateTotal();
-}
-function changeSingleQty(delta) {
-  ORDER.productQty = Math.max(1, ORDER.productQty + delta);
-  document.getElementById('qty-single').textContent = ORDER.productQty;
-  recalculateTotal();
-}
-function recalculateTotal() {
-  if (ORDER.products.length > 0) ORDER.productPrice = ORDER.products.reduce((a, c) => a + (c.v * (c.q||1)), 0);
-  const priceEls = document.querySelectorAll('.oi-price');
-  if (ORDER.products.length > 0) {
-    ORDER.products.forEach((p,i) => { if(priceEls[i]) priceEls[i].textContent = `R$ ${(p.v*p.q).toFixed(2).replace('.',',')}`; });
-  } else {
-    if(priceEls[0]) priceEls[0].textContent = `R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}`;
-  }
-  const totalQty = ORDER.products.length > 0 ? ORDER.products.reduce((a,b) => a+(b.q||1),0) : ORDER.productQty;
-  document.getElementById('cartBadgeEl').textContent = totalQty;
-}
-
-// ── SCROLL ───────────────────────────────────────────
-msgsEl.addEventListener('scroll', () => {
-  atBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 80;
-  if (atBottom) { unread=0; fabEl.classList.remove('on'); fabBadge.classList.remove('on'); }
-  else fabEl.classList.add('on');
-});
-fabEl.addEventListener('click', () => { scrollDown(true); unread=0; fabEl.classList.remove('on'); fabBadge.classList.remove('on'); });
-function scrollDown(force=false) {
-  if (atBottom || force) setTimeout(() => msgsEl.scrollTo({top:msgsEl.scrollHeight,behavior:'smooth'}),50);
-  else { unread++; fabBadge.textContent=unread; fabBadge.classList.add('on'); fabEl.classList.add('on'); }
-}
-
-// ── MODAL ────────────────────────────────────────────
-cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
-closeModalEl.onclick  = () => modalOverlayEl.classList.remove('on');
-confirmModalEl.onclick = () => {
-  modalOverlayEl.classList.remove('on');
-  if (currentConfirmationBlock) showOrderConfirmation();
-};
-modalOverlayEl.onclick = (e) => { if(e.target===modalOverlayEl) modalOverlayEl.classList.remove('on'); };
-
-backBtnEl.onclick = () => {
-  updateModal(true, 'Gostaria de alterar algo?');
-  modalOverlayEl.classList.add('on');
-};
-
-
-
-if ('visualViewport' in window) {
-  function handleViewport() {
-    const vv = window.visualViewport;
-    const app = document.querySelector('.app');
-    const footer = document.querySelector('.footer');
-    const fab = document.querySelector('.scroll-fab');
-    const keyboardOpen = vv.height < window.innerHeight * 0.75;
-
-    app.style.height = vv.height + 'px';
-
-    if (keyboardOpen) {
-      footer.style.paddingBottom = '8px';
-      fab.classList.add('keyboard-open');
-      requestAnimationFrame(() => { msgsEl.scrollTop = msgsEl.scrollHeight; });
-    } else {
-      app.style.height = '';
-      footer.style.paddingBottom = 'max(8px, env(safe-area-inset-bottom))';
-      fab.classList.remove('keyboard-open');
-    }
-  }
-  window.visualViewport.addEventListener('resize', handleViewport);
-  window.visualViewport.addEventListener('scroll', handleViewport);
-}
-
-inputEl.addEventListener('focus', () => {
-  requestAnimationFrame(() => { msgsEl.scrollTop = msgsEl.scrollHeight; });
-  setTimeout(() => { msgsEl.scrollTop = msgsEl.scrollHeight; }, 350);
-});
-
-inputEl.addEventListener('input', () => {
-  inputEl.style.height='auto';
-  inputEl.style.height=Math.min(inputEl.scrollHeight,88)+'px';
-  sendBtnEl.disabled=!inputEl.value.trim();
-});
-inputEl.addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();} });
-
-// Adicione esta linha nova do mousedown:
-sendBtnEl.addEventListener('mousedown', e => { if (inputEl.value.trim()) e.preventDefault(); });
-
-sendBtnEl.addEventListener('click', () => doSend());
-
-
-// ── MESSAGES ─────────────────────────────────────────
-function addMsg(text, type, newGroup=false, saveToStorage=true) {
-  const isGrouped = !newGroup && lastSender===type;
+function addMsg(text, type='agent', newGroup=false) {
   const row = document.createElement('div');
-  row.className = `row ${type}${isGrouped?' grouped':''}`;
-  const safeText = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
-  const avatarHtml = type==='agent' ? `<img src="${AVATAR}" class="m-avatar${isGrouped?' ghost':''}" alt="Thiago" onclick="openSellerModal()">` : '';
-  const readHtml   = type==='user'  ? `<span class="b-read sending">✓</span>` : '';
-  row.innerHTML = `${avatarHtml}<div class="bubble ${type==='user'?'u':'a'}">${safeText}<div class="b-meta"><span class="b-time">${ts()}</span>${readHtml}</div></div>`;
+  const isAgent = type === 'agent';
+  const isGrouped = !newGroup && lastSender === type;
+  
+  row.className = `row ${type} ${isGrouped ? 'grouped' : ''}`;
+  
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+  let avatarHtml = '';
+  if (isAgent && !isGrouped) {
+    avatarHtml = `<img src="${AVATAR}" class="m-avatar" alt="Thiago" onclick="openSellerModal()">`;
+  } else if (isAgent && isGrouped) {
+    avatarHtml = `<div class="m-avatar ghost"></div>`;
+  }
+
+  row.innerHTML = `
+    ${avatarHtml}
+    <div class="bubble ${isAgent ? 'a' : 'u'}">
+      ${text}
+      <div class="b-meta">
+        <span class="b-time">${time}</span>
+        ${!isAgent ? `<span class="b-read read">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/><polyline points="13 17 8 12 9 11"/></svg>
+        </span>` : ''}
+      </div>
+    </div>
+  `;
+  
   msgsEl.appendChild(row);
   lastSender = type;
-  let onReadPromise = Promise.resolve();
-  if (type==='user') {
-    const readEl = row.querySelector('.b-read');
-    onReadPromise = new Promise(resolve => {
-      setTimeout(()=>{ readEl.textContent='✓✓'; readEl.className='b-read sent'; setTimeout(()=>{readEl.className='b-read read';resolve();},1300); },700);
-    });
+  
+  if (!msgsEl.classList.contains('user-scrolling')) {
+    scrollDown();
+  } else {
+    const count = parseInt(fabBadge.textContent) + 1;
+    fabBadge.textContent = count;
+    fabBadge.classList.add('on');
+    scrollFab.classList.add('on');
   }
+  
+  saveChatHistory();
+}
+
+function addSys(text, style='') {
+  const s = document.createElement('div');
+  s.className = 'sys';
+  s.innerHTML = `<span class="${style}">${text}</span>`;
+  msgsEl.appendChild(s);
+  lastSender = null;
   scrollDown();
-  
-  if (saveToStorage) {
-    saveChatHistory();
-  }
-  
-  return { row, onReadPromise };
-}
-
-function saveChatHistory() {
-  localStorage.setItem(LOCAL_STORAGE_KEY, msgsEl.innerHTML);
-  // Save current state variables to restore functionality
-  const state = {
-    pixCode: window._currentPixCode || null,
-    lastSender: lastSender,
-    flowStep: window._currentFlowStep || 0,
-    paymentConfirmed: window._paymentConfirmed || false,
-    contactMsgSent: window._contactMsgSent || false
-  };
-  localStorage.setItem(STATE_STORAGE_KEY, JSON.stringify(state));
-}
-
-function loadChatHistory() {
-  return localStorage.getItem(LOCAL_STORAGE_KEY);
-}
-
-function addSys(html, variant='') {
-  const d = document.createElement('div'); d.className='sys';
-  const s = document.createElement('span'); s.className=variant;
-  let icon='';
-  if(variant==='ok')     icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-  if(variant==='secure') icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
-  if(variant==='gold')   icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
-  if(variant==='brand')  icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
-  s.innerHTML=icon+' '+html; d.appendChild(s); msgsEl.appendChild(d); scrollDown();
   saveChatHistory();
   return s;
 }
@@ -1346,6 +1139,67 @@ function showOrderConfirmation() {
   }
 }
 
+let paymentResolve = null;
+function showPaymentOptions() {
+  const card = document.createElement('div');
+  card.className = 'steps-card payment-options-block';
+  card.style.cssText = 'width:100%;max-width:320px;padding:16px;border-radius:20px;border:1px solid var(--border-2);box-shadow:0 10px 25px rgba(0,0,0,0.05);background:#fff;';
+  
+  card.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <div style="width:32px;height:32px;border-radius:10px;background:var(--brand-lt);display:flex;align-items:center;justify-content:center;color:var(--brand);box-shadow: 0 2px 8px var(--brand-glow);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:800;color:var(--text);letter-spacing:-0.2px;">Forma de Pagamento</div>
+        <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.4px;">Como deseja pagar?</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button id="payNowPix" style="width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--border-2);background:#fff;color:var(--text);font-weight:700;cursor:pointer;font-size:14px;transition:all 0.2s;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:#32BCAD;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:9px;">PIX</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;">Pagar Agora - Pix</div>
+            <div style="font-size:11px;color:var(--text-3);font-weight:500;">Liberação instantânea</div>
+          </div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <button id="payOnDelivery" style="width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--border-2);background:#fff;color:var(--text);font-weight:700;cursor:pointer;font-size:14px;transition:all 0.2s;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:var(--surface-2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-2);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;">Pagar na entrega</div>
+            <div style="font-size:11px;color:var(--text-3);font-weight:500;">Dinheiro ou Cartão</div>
+          </div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  `;
+
+  msgsEl.appendChild(card);
+  scrollDown();
+
+  card.querySelector('#payNowPix').onclick = () => {
+    card.style.opacity='0.8'; card.style.pointerEvents='none';
+    addMsg('Pagar Agora - Pix', 'user');
+    if(paymentResolve) paymentResolve('pix');
+  };
+  card.querySelector('#payOnDelivery').onclick = () => {
+    card.style.opacity='0.8'; card.style.pointerEvents='none';
+    addMsg('Pagar na entrega', 'user');
+    if(paymentResolve) paymentResolve('delivery');
+  };
+
+  return new Promise(resolve => { paymentResolve = resolve; });
+}
+
 // ── PIX CARD ────────────────────────────────────────
 function showDeliverySteps(pixCode) {
   pixCode = pixCode || '(código indisponível)';
@@ -1462,42 +1316,6 @@ async function agentSay(text, newGroup=false, immediateTyping=false) {
   addMsg(text, 'agent', newGroup); 
 }
 
-function showPaymentOptions() {
-  const card = document.createElement('div');
-  card.className = 'payment-options-card';
-  card.style.cssText = 'animation: cardIn 0.5s var(--spring); margin: 10px 0; align-self: flex-start; width: 100%; max-width: 320px;';
-  card.innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <button id="btnPayNow" style="width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--brand);background:var(--surface);color:var(--brand);font-weight:700;cursor:pointer;font-size:14px;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 2px 8px rgba(15,91,168,0.08);">
-        <div style="width:24px;height:24px;background:#32BCAD;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:7px;font-family:JetBrains Mono, monospace;">PIX</div>
-        Pagar Agora - Pix
-      </button>
-      <button id="btnPayDelivery" style="width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--border);background:var(--surface);color:var(--text-2);font-weight:700;cursor:pointer;font-size:14px;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-        Pagar na entrega
-      </button>
-    </div>
-  `;
-  msgsEl.appendChild(card);
-  scrollDown();
-
-  return new Promise(resolve => {
-    window._paymentResolve = resolve;
-    card.querySelector('#btnPayNow').onclick = () => {
-      card.style.opacity = '0.7';
-      card.style.pointerEvents = 'none';
-      addMsg('Pagar Agora - Pix', 'user');
-      resolve('pix');
-    };
-    card.querySelector('#btnPayDelivery').onclick = () => {
-      card.style.opacity = '0.7';
-      card.style.pointerEvents = 'none';
-      addMsg('Pagar na entrega', 'user');
-      resolve('delivery');
-    };
-  });
-}
-
 async function runConversation(startStep = 0) {
   const { location } = ORDER;
   const gr = getGreeting();
@@ -1562,20 +1380,25 @@ async function runConversation(startStep = 0) {
   }
 
   if (window._currentFlowStep === 5) {
-    // ── STEP 5: payment choice ──
+    // ── STEP 5: payment method selection ──
     window._currentFlowStep = 5.5;
     saveChatHistory();
     await agentSay(`Certo, prefere pagar agora ou na entrega?`);
-    const choice = await showPaymentOptions();
-    
-    if (choice === 'pix') {
-      window._currentFlowStep = 6;
+    const method = await showPaymentOptions();
+    if (method === 'delivery') {
+      await agentSay(`Perfeito, o entregador levará a maquininha para você pagar na entrega.`);
+      window._currentFlowStep = 8; // Pula para o final
       saveChatHistory();
-    } else {
-      await agentSay(`Perfeito! O entregador levará a maquininha para você realizar o pagamento na hora da entrega.`);
-      window._currentFlowStep = 7; // Pula para a mensagem de prazo/finalização
-      saveChatHistory();
+      await pause(400);
+      setTyping(true);
+      await pause(2500);
+      setTyping(false);
+      addMsg(`O prazo de entrega do seu gás é de 20-30 minutos. ⏰`, 'agent', true);
+      return;
     }
+    // Se for PIX, continua o fluxo normal
+    window._currentFlowStep = 6;
+    saveChatHistory();
   }
 
   if (window._currentFlowStep === 6) {
@@ -1643,314 +1466,202 @@ async function runConversation(startStep = 0) {
     setTyping(false);
     addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. ⏰`, 'agent', true);
   }
-
-  if (window._currentFlowStep === 8) {
-    // ── STEP 8: farewell message ──
-    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
-    window._currentFlowStep = 9;
-    saveChatHistory();
-    await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar, estarei a disposição 😊`, true, true);
-  }
 }
 
-// ── SEND ─────────────────────────────────────────────
-async function doSend() {
-  const text = inputEl.value.trim();
-  if (!text) return;
-  
-  const originalText = text;
-  inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
-
-  const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei", "acabei", "concluí", "conclui", "concluido", "concluído"];
-  const lowerText = originalText.toLowerCase();
-  const foundPaymentTerm = paymentTerms.some(term => lowerText.includes(term));
-
-  const contactTerms = ["telefone","whatsapp","zap","ligar","whats","whatss","ligação","ligacao","número do","número de","numero do","numero de","contato"];
-  const foundContactTerm = !window._contactMsgSent && contactTerms.some(term => lowerText.includes(term));
-
-  const words = originalText.split(/\s+/).filter(w => w.trim().length > 0);
-  const wordCount = words.length;
-  
-  const isLongMessage = wordCount > 2 && !(foundPaymentTerm && window._currentFlowStep >= 6);
-
-  const { row } = addMsg(originalText, 'user');
-  await pause(1600);
-
-  if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
-    window._paymentConfirmed = true;
-    saveChatHistory();
-    await agentSay("Certo, com o pagamento realizado podemos preparar o envio, o prazo de entrega é de 20-30 minutos", true, true);
-    saveChatHistory();
-  } else if (foundContactTerm) {
-    window._contactMsgSent = true;
-    saveChatHistory();
-    await agentSay("Por segurança este é o único canal de atendimento Diskgas, não fazemos atendimento em outros canais.", true, true);
-    saveChatHistory();
-  } else if (isLongMessage) {
-    const bubble = row.querySelector('.bubble');
-    bubble.style.transition='all 0.4s cubic-bezier(0.4,0,0.2,1)';
-    bubble.style.background='#F1F5F9'; 
-    bubble.style.color='#475569';
-    bubble.style.border='1px solid #CBD5E1'; 
-    bubble.style.boxShadow='0 2px 6px rgba(0,0,0,0.04)';
-    bubble.innerHTML=`
-      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-bottom:4px;color:#1e293b;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Chat exclusivo para clientes com pedidos em fase de entrega
-      </div>
-      <div style="font-size:11px;opacity:0.9;line-height:1.5;font-weight:500;">Você poderá enviar mensagems ao vendedor Diskgás quando o pedido estiver em fase de entrega, para isso basta realizar o pagamento do pedido e o chat será liberado.</div>
-    `;
-    row.classList.add('shake');
-    setTimeout(()=>row.classList.remove('shake'), 400);
-  }
-
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-  // Agora só re-envia se o passo for 3 E se o bloco já tiver sido mostrado uma vez
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-  if (window._currentFlowStep === 3 && window._orderConfirmationShown) {
-    await pause(2000); // Adiciona o atraso de 2 segundos (2000ms)
-    const msg = confirmationMessages[confirmationMsgIndex];
-
-    await agentSay(msg, true, true);
-    
-    // Avança para a próxima mensagem da lista (volta ao início se chegar ao fim)
-    confirmationMsgIndex = (confirmationMsgIndex + 1) % confirmationMessages.length;
-    
-    currentConfirmationBlock = null;   // força criação de novo bloco
-    showOrderConfirmation();            // reutiliza o mesmo confirmationResolve → flow continua normalmente
-  }
-
-
-  sendBtnEl.disabled = true;
-  scrollDown(true);
+// ── PERSISTENCE ──────────────────────────────────────
+function saveChatHistory() {
+  const state = {
+    order: ORDER,
+    messages: msgsEl.innerHTML,
+    step: window._currentFlowStep,
+    pixCode: window._currentPixCode,
+    orderConfirmationShown: window._orderConfirmationShown
+  };
+  localStorage.setItem(STATE_STORAGE_KEY, JSON.stringify(state));
 }
 
-// ── BROWSER BACK LOCK (ROBUST — 7 LAYERS) ────────────────────────────────────
-function lockBackButton() {
-  // ── Layer 1: flood history stack with 60 dummy states ──────────────────────
-  // Forces the user to press "back" 60+ times before escaping the page.
-  const STACK_FILL = 60;
-  for (let i = 0; i < STACK_FILL; i++) {
-    history.pushState({ diskgas_lock: true, n: i }, '', location.href);
-  }
-
-  // ── Layer 2: popstate — the primary guard ───────────────────────────────────
-  // Fires every time the back/forward button is pressed.
-  // Immediately re-pushes a state AND calls go(1) to jump forward.
-  window.addEventListener('popstate', function() {
-    history.pushState({ diskgas_lock: true }, '', location.href);
-    history.go(1);
-  });
-
-  // ── Layer 3: continuous refill every 500 ms ─────────────────────────────────
-  // Ensures the stack never drains even if the user presses back rapidly.
-  setInterval(function() {
-    try { history.pushState({ diskgas_lock: true }, '', location.href); } catch(e) {}
-  }, 500);
-
-  // ── Layer 4: blur — user switches tab or app ────────────────────────────────
-  // Tops up the stack before the page loses focus so returning finds more buffer.
-  window.addEventListener('blur', function() {
-    for (let i = 0; i < 10; i++) {
-      history.pushState({ diskgas_lock: true }, '', location.href);
-    }
-  });
-
-  // ── Layer 5: visibilitychange — page restored from background ───────────────
-  // Re-stacks history whenever the page becomes visible again (e.g. after bfcache).
-  document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'visible') {
-      for (let i = 0; i < 15; i++) {
-        history.pushState({ diskgas_lock: true }, '', location.href);
-      }
-    }
-  });
-
-  // ── Layer 6: beforeunload — desktop navigation attempt ─────────────────────
-  window.addEventListener('beforeunload', function() {
-    history.pushState({ diskgas_lock: true }, '', location.href);
-  });
-
-  // ── Layer 7: pagehide — mobile Safari / bfcache restore ────────────────────
-  // Mobile browsers often fire pagehide instead of beforeunload; push aggressively.
-  window.addEventListener('pagehide', function() {
-    for (let i = 0; i < 20; i++) {
-      history.pushState({ diskgas_lock: true }, '', location.href);
-    }
-  });
-}
-
-// ── INIT ─────────────────────────────────────────────
-(async () => {
-  lockBackButton();
-  updateModal();
-  
-  const savedHTML = loadChatHistory();
-  const savedState = localStorage.getItem(STATE_STORAGE_KEY);
-  
-  if (savedHTML && savedState) {
-    const state = JSON.parse(savedState);
+function loadChatHistory() {
+  const saved = localStorage.getItem(STATE_STORAGE_KEY);
+  if (!saved) return false;
+  try {
+    const state = JSON.parse(saved);
+    ORDER = state.order;
+    msgsEl.innerHTML = state.messages;
+    window._currentFlowStep = state.step;
     window._currentPixCode = state.pixCode;
-    lastSender = state.lastSender;
-    window._currentFlowStep = state.flowStep || 0;
-    window._paymentConfirmed = state.paymentConfirmed || false;
-    window._contactMsgSent = state.contactMsgSent || false;
-    msgsEl.innerHTML = savedHTML;
+    window._orderConfirmationShown = state.orderConfirmationShown;
     
-    // Re-attach event listeners for PIX
-    const pixCopyBtn = msgsEl.querySelector('#pixCopyBtn');
-    if (pixCopyBtn && window._currentPixCode) {
-      pixCopyBtn.onclick = () => {
+    // Re-bind events to buttons in the loaded HTML
+    const confirmBtn = document.getElementById('btnCorrect');
+    if (confirmBtn) {
+      confirmBtn.onclick = async () => {
+        confirmBtn.style.background = 'var(--green)';
+        confirmBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
+        addMsg('Sim, prosseguir','user');
+        if(confirmationResolve) confirmationResolve('correct');
+      };
+    }
+    const changeBtn = document.getElementById('btnChange');
+    if (changeBtn) {
+      changeBtn.onclick = () => { updateModal(true); modalOverlayEl.classList.add('on'); };
+    }
+    
+    const pixBtn = document.getElementById('pixCopyBtn');
+    if (pixBtn && window._currentPixCode) {
+      pixBtn.onclick = () => {
         navigator.clipboard.writeText(window._currentPixCode).catch(()=>{});
-        pixCopyBtn.classList.add('copied');
-        pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Código copiado!`;
-        setTimeout(()=>{
-          pixCopyBtn.classList.remove('copied');
-          pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar código Pix`;
+        pixBtn.classList.add('copied');
+        pixBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Código copiado!';
+        setTimeout(() => {
+          pixBtn.classList.remove('copied');
+          pixBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar código Pix';
         }, 2500);
       };
     }
-    
-    // Re-attach event listeners for Payment Options
-    const btnPayNow = msgsEl.querySelector('#btnPayNow');
-    const btnPayDelivery = msgsEl.querySelector('#btnPayDelivery');
-    if (btnPayNow && btnPayDelivery && window._currentFlowStep === 5.5) {
-      btnPayNow.onclick = () => {
-        const card = btnPayNow.closest('.payment-options-card');
-        card.style.opacity = '0.7';
-        card.style.pointerEvents = 'none';
+
+    // Re-bind payment options if they are on screen
+    const payPix = document.getElementById('payNowPix');
+    const payDeliv = document.getElementById('payOnDelivery');
+    if (payPix && payDeliv) {
+      payPix.onclick = () => {
+        payPix.parentElement.parentElement.style.opacity='0.8';
+        payPix.parentElement.parentElement.style.pointerEvents='none';
         addMsg('Pagar Agora - Pix', 'user');
-        if (window._paymentResolve) window._paymentResolve('pix');
+        if(paymentResolve) paymentResolve('pix');
       };
-      btnPayDelivery.onclick = () => {
-        const card = btnPayDelivery.closest('.payment-options-card');
-        card.style.opacity = '0.7';
-        card.style.pointerEvents = 'none';
+      payDeliv.onclick = () => {
+        payDeliv.parentElement.parentElement.style.opacity='0.8';
+        payDeliv.parentElement.parentElement.style.pointerEvents='none';
         addMsg('Pagar na entrega', 'user');
-        if (window._paymentResolve) window._paymentResolve('delivery');
+        if(paymentResolve) paymentResolve('delivery');
       };
     }
 
-    // Re-attach event listeners for Order Confirmation Buttons
-    const btnCorrect = msgsEl.querySelector('#btnCorrect');
-    const btnChange = msgsEl.querySelector('#btnChange');
-    if (btnCorrect && btnChange && window._currentFlowStep === 3) {
-        btnCorrect.onclick = async () => {
-            const block = btnCorrect.closest('.order-confirmation-block');
-            block.style.opacity='0.8';
-            block.style.pointerEvents='none';
-            btnCorrect.style.background = 'var(--green)';
-            btnCorrect.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
-            block.querySelectorAll('button').forEach(b=>b.disabled=true);
-            addMsg('Sim, prosseguir','user');
-            if(confirmationResolve) confirmationResolve('correct');
-        };
-        btnChange.onclick = () => { updateModal(true); modalOverlayEl.classList.add('on'); };
-    }
-    
-    // Re-attach intro card and avatar clicks
-    msgsEl.querySelectorAll('.intro-card, .m-avatar:not(.ghost)').forEach(el => {
-      el.onclick = openSellerModal;
-    });
+    scrollDown();
+    return true;
+  } catch(e) { return false; }
+}
 
-    scrollDown(true);
+// ── INITIALIZATION ───────────────────────────────────
+window.onload = async () => {
+  // 1. Parse URL params
+  const params = new URLSearchParams(window.location.search);
+  const productsParam = params.get('products');
+  const addressParam = params.get('address');
+  const cityParam = params.get('city');
+  const nameParam = params.get('name');
 
-    // Continue flow if not finished
-    if (window._currentFlowStep < 9 && window._currentFlowStep !== 99) {
-      runConversation(window._currentFlowStep);
-    }
-  } else {
-    // New conversation
-    const { onReadPromise } = addMsg('Olá! Gostaria de pagar agora via Pix.','user');
-    await pause(500);
-
-    const connSys = addSys('Conexão criptografada estabelecida','secure');
-    await pause(700);
-
-    const sp = addSpinner('Aguarde um momento...');
-    const searchSys = addSys('Buscando consultor disponível...','brand');
-    await pause(1600);
-
-    sp.remove(); connSys.parentElement.remove();
-    searchSys.textContent=''; searchSys.className='ok';
-    searchSys.innerHTML=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Thiago Callegari conectado`;
-
-    await pause(500);
-    showIntroCard();
-    await onReadPromise;
-    await runConversation();
-  }
-})();
-</script>
-  <script>
-/* ── TIMED DESTROY + REDIRECT ──────────────────────────────────────────────
-   25 min a partir do primeiro acesso.
-   Se o Pix for gerado, substitui pelo timer de 8 min a partir da geração.
-   Ao expirar: tela em branco → redirect.
-   ─────────────────────────────────────────────────────────────────────── */
-(function () {
-  /* ➜ Troque pela URL de destino */
-  const REDIRECT_URL    = 'https://google.com';
-
-  const MS_FIRST_ACCESS = 25 * 60 * 1000;   /* 25 min */
-  const MS_AFTER_PIX    =  8 * 60 * 1000;   /*  8 min */
-
-  const KEY_FA  = 'dg_fa';   /* first access timestamp */
-  const KEY_PT  = 'dg_pt';   /* pix generated timestamp */
-
-  let _timer = null;
-
-  /* ── destroy + redirect ─────────────────────────────────────────────── */
-  function destroyAndRedirect() {
-    if (_timer) clearTimeout(_timer);
+  if (productsParam) {
     try {
-      /* Esvazia tudo imediatamente */
-      document.documentElement.style.cssText = 'background:#fff!important';
-      document.body.style.cssText = 'background:#fff;margin:0;padding:0;';
-      document.body.innerHTML = '';
-    } catch (e) {}
-    setTimeout(function () {
-      window.location.replace(REDIRECT_URL);
-    }, 250);
+      ORDER.products = JSON.parse(decodeURIComponent(productsParam));
+      ORDER.productPrice = ORDER.products.reduce((acc, p) => acc + (p.v * (p.q || 1)), 0);
+      cartBadgeEl.textContent = ORDER.products.reduce((acc, p) => acc + (p.q || 1), 0);
+    } catch(e) {}
   }
+  if (addressParam) ORDER.address = decodeURIComponent(addressParam);
+  if (cityParam) ORDER.location = decodeURIComponent(cityParam);
+  if (nameParam) ORDER.nome = decodeURIComponent(nameParam);
 
-  /* ── arma o timer com ms restantes ─────────────────────────────────── */
-  function arm(ms) {
-    if (_timer) clearTimeout(_timer);
-    if (ms <= 0) { destroyAndRedirect(); return; }
-    _timer = setTimeout(destroyAndRedirect, ms);
-  }
-
-  /* ── bootstrap ──────────────────────────────────────────────────────── */
-  var now       = Date.now();
-  var storedPix = localStorage.getItem(KEY_PT);
-
-  if (storedPix) {
-    /* Pix já gerado em sessão anterior → contar 8 min desde então */
-    arm(MS_AFTER_PIX - (now - parseInt(storedPix, 10)));
+  // 2. Load history or start fresh
+  const hasHistory = loadChatHistory();
+  if (!hasHistory) {
+    showIntroCard();
+    runConversation(0);
   } else {
-    /* Primeiro acesso: registrar e contar 25 min */
-    if (!localStorage.getItem(KEY_FA)) {
-      localStorage.setItem(KEY_FA, now);
-    }
-    arm(MS_FIRST_ACCESS - (now - parseInt(localStorage.getItem(KEY_FA), 10)));
+    // Se parou no meio de um passo que espera interação, "re-trigger" o promise se necessário
+    // mas o runConversation vai cuidar de retomar do window._currentFlowStep
+    runConversation(window._currentFlowStep);
   }
+};
 
-  /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
-  var _origSDS = window.showDeliverySteps;
-  window.showDeliverySteps = function (pixCode) {
-    var result = _origSDS.apply(this, arguments);
-    /* Primeira vez que o Pix aparece: troca para timer de 8 min */
-    if (!localStorage.getItem(KEY_PT)) {
-      var pixNow = Date.now();
-      localStorage.setItem(KEY_PT, pixNow);
-      arm(MS_AFTER_PIX);   /* reinicia contagem a partir de agora */
-    }
-    return result;
-  };
-})();
-</script>
+// ── MODAL LOGIC ──────────────────────────────────────
+function updateModal(isEdit = false) {
+  const itemsEl = document.getElementById('orderItems');
+  const addressEl = document.getElementById('orderAddress');
   
+  addressEl.innerHTML = isEdit 
+    ? `<input type="text" class="edit-input" id="editAddress" value="${ORDER.address}">`
+    : ORDER.address;
+
+  const items = ORDER.products.length > 0 ? ORDER.products : [{n: ORDER.productName, v: ORDER.productPrice, q: ORDER.productQty}];
+  
+  itemsEl.innerHTML = items.map((p, i) => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface-2);border-radius:14px;border:1px solid var(--border-2);">
+      ${p.p ? `<img src="${p.p}" style="width:48px;height:48px;border-radius:10px;object-fit:cover;">` : ''}
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:700;color:var(--text);">${p.n}</div>
+        <div style="font-size:12px;color:var(--brand);font-weight:700;margin-top:2px;">R$ ${p.v.toFixed(2).replace('.',',')}</div>
+      </div>
+      ${isEdit ? `
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty(${i}, -1)">-</button>
+          <span class="qty-val">${p.q || 1}</span>
+          <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+        </div>
+      ` : `<div style="font-size:13px;font-weight:700;color:var(--text-3);">x${p.q || 1}</div>`}
+    </div>
+  `).join('');
+}
+
+window.changeQty = (index, delta) => {
+  const items = ORDER.products.length > 0 ? ORDER.products : [{n: ORDER.productName, v: ORDER.productPrice, q: ORDER.productQty, isSingle: true}];
+  const p = items[index];
+  const newQty = Math.max(1, (p.q || 1) + delta);
+  
+  if (p.isSingle) {
+    ORDER.productQty = newQty;
+  } else {
+    ORDER.products[index].q = newQty;
+  }
+  
+  ORDER.productPrice = (ORDER.products.length > 0 ? ORDER.products : [{v:110, q:ORDER.productQty}]).reduce((acc, curr) => acc + (curr.v * (curr.q || 1)), 0);
+  cartBadgeEl.textContent = (ORDER.products.length > 0 ? ORDER.products : [{q:ORDER.productQty}]).reduce((acc, curr) => acc + (curr.q || 1), 0);
+  
+  updateModal(true);
+};
+
+document.getElementById('cartBtn').onclick = () => { updateModal(false); modalOverlayEl.classList.add('on'); };
+document.getElementById('closeModal').onclick = () => { modalOverlayEl.classList.remove('on'); };
+document.getElementById('confirmModal').onclick = () => {
+  const editAddr = document.getElementById('editAddress');
+  if (editAddr) {
+    ORDER.address = editAddr.value;
+    // Se o bloco de confirmação já existir, atualiza ele também
+    if (currentConfirmationBlock) showOrderConfirmation();
+  }
+  modalOverlayEl.classList.remove('on');
+  saveChatHistory();
+};
+
+// ── SELLER MODAL ─────────────────────────────────────
+function openSellerModal() { sellerModalOverlayEl.classList.add('on'); }
+document.getElementById('headerSellerTrigger').onclick = openSellerModal;
+document.getElementById('closeSellerModal').onclick = () => { sellerModalOverlayEl.classList.remove('on'); };
+sellerModalOverlayEl.onclick = (e) => { if(e.target === sellerModalOverlayEl) sellerModalOverlayEl.classList.remove('on'); };
+
+// ── INPUT LOGIC ──────────────────────────────────────
+msgInput.oninput = () => {
+  msgInput.style.height = 'auto';
+  msgInput.style.height = msgInput.scrollHeight + 'px';
+  sendBtn.disabled = !msgInput.value.trim();
+};
+
+sendBtn.onclick = () => {
+  const text = msgInput.value.trim();
+  if(!text) return;
+  addMsg(text, 'user');
+  msgInput.value = '';
+  msgInput.style.height = 'auto';
+  sendBtn.disabled = true;
+};
+
+msgInput.onkeydown = (e) => {
+  if(e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendBtn.click();
+  }
+};
+
+</script>
 </body>
 </html>
