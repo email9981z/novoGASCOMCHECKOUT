@@ -1284,65 +1284,63 @@ function showOrderConfirmation() {
   const deliveryPrice = (ORDER.productPrice * 1.3).toFixed(2).replace('.',',');
 
   currentConfirmationBlock.innerHTML = `
-    <!-- Card Principal Compacto -->
-    <div style="background:var(--surface-1); border:1px solid var(--border-2); border-radius:14px; overflow:hidden; margin-bottom:18px; box-shadow: 0 2px 12px rgba(0,0,0,0.03);">
+    <!-- Título de Seção Profissional -->
+    <div style="margin-bottom:20px; padding-left:4px;">
+      <h3 style="font-size:16px; font-weight:800; color:var(--text); letter-spacing:-0.4px; margin:0;">Revisão e Pagamento</h3>
+      <p style="font-size:12px; color:var(--text-3); margin:4px 0 0 0; font-weight:500;">Confirme os dados para finalizar seu pedido.</p>
+    </div>
+
+    <!-- Card de Resumo do Pedido -->
+    <div style="background:var(--surface-1); border:1px solid var(--border-2); border-radius:16px; overflow:hidden; margin-bottom:20px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);">
       
-      <!-- Lista de Itens (Compactada) -->
-      <div style="padding:16px; border-bottom:1px solid var(--border-2);">
+      <!-- Lista de Itens -->
+      <div style="padding:18px; border-bottom:1px solid var(--border-2);">
         ${itemsHtml}
       </div>
 
-      <!-- Resumo Direto: Total e Endereço -->
-      <div style="padding:16px; background:var(--surface-2); display:flex; flex-direction:column; gap:12px;">
+      <!-- Resumo Financeiro e Logístico -->
+      <div style="padding:18px; background:var(--surface-2); display:flex; flex-direction:column; gap:14px;">
         
-        <!-- Valor Total -->
+        <!-- Valor Total em Destaque -->
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:13px; color:var(--text-3); font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Total do Pedido</span>
-          <span style="font-size:22px; font-weight:900; color:var(--text); letter-spacing:-0.8px;">R$ ${pixPrice}</span>
+          <span style="font-size:12px; color:var(--text-3); font-weight:700; text-transform:uppercase; letter-spacing:0.8px;">Total a pagar</span>
+          <span style="font-size:24px; font-weight:900; color:var(--text); letter-spacing:-1px;">R$ ${pixPrice}</span>
         </div>
 
-        <!-- Endereço de Entrega (Estilo simplificado) -->
-        <div style="display:flex; gap:10px; align-items:flex-start; padding-top:12px; border-top:1px solid var(--border-2);">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5" style="margin-top:2px; flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <div style="font-size:13px; color:var(--text-2); line-height:1.4; font-weight:500;">
+        <!-- Endereço de Entrega -->
+        <div style="display:flex; gap:12px; align-items:flex-start; padding-top:14px; border-top:1px solid var(--border-2);">
+          <div style="width:24px; height:24px; border-radius:6px; background:var(--brand-lt); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div style="font-size:13px; color:var(--text-2); line-height:1.5; font-weight:500;">
+            <span style="color:var(--text-3); font-size:10px; font-weight:700; text-transform:uppercase; display:block; margin-bottom:2px;">Entregar em</span>
             ${ORDER.address}
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Ações de Pagamento -->
-    <div style="display:flex; flex-direction:column; gap:10px;">
+    <!-- Ações de Finalização -->
+    <div style="display:flex; flex-direction:column; gap:12px;">
       
-      <!-- Botão Pix Principal -->
-      <button id="btnCorrect" style="width:100%; padding:16px; border-radius:12px; border:none; background:#16a34a; color:#fff; font-weight:800; cursor:pointer; font-size:15px; transition: all 0.2s; box-shadow: 0 6px 16px rgba(22,163,74,0.2); display:flex; align-items:center; justify-content:center; gap:10px; font-family:inherit;">
+      <!-- Botão Primário: Pix -->
+      <button id="btnCorrect" style="width:100%; padding:18px; border-radius:14px; border:none; background:#16a34a; color:#fff; font-weight:800; cursor:pointer; font-size:16px; transition: all 0.2s; box-shadow: 0 8px 20px rgba(22,163,74,0.2); display:flex; align-items:center; justify-content:center; gap:12px; font-family:inherit;">
         <span>Pagar via Pix R$ ${pixPrice}</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
       
-      <!-- Opção de Pagamento na Entrega -->
-      <button id="btnDelivery" style="width:100%; padding:12px; border-radius:12px; border:1.5px solid var(--border-2); background:transparent; color:var(--text-2); font-weight:700; cursor:pointer; font-size:13px; transition: all 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; font-family:inherit;">
+      <!-- Botão Secundário: Entrega -->
+      <button id="btnDelivery" style="width:100%; padding:14px; border-radius:14px; border:1.5px solid var(--border-2); background:transparent; color:var(--text-2); font-weight:700; cursor:pointer; font-size:14px; transition: all 0.2s; display:flex; align-items:center; justify-content:center; gap:10px; font-family:inherit;">
         Pagar na entrega (${deliveryPrice})
       </button>
 
-      <!-- Alterar Informações (Link discreto) -->
-      <button id="btnChange" style="width:100%; padding:6px; border:none; background:transparent; color:var(--text-3); font-weight:600; cursor:pointer; font-size:12px; font-family:inherit; text-decoration: underline; text-underline-offset: 3px; opacity:0.7;">
-        Alterar informações
+      <!-- Opção de Edição -->
+      <button id="btnChange" style="width:100%; padding:8px; border:none; background:transparent; color:var(--text-3); font-weight:600; cursor:pointer; font-size:12px; font-family:inherit; text-decoration: underline; text-underline-offset: 4px; opacity:0.8;">
+        Editar informações do pedido
       </button>
     </div>
-
-    <!-- Rodapé de Segurança (Muito discreto) -->
-    <div style="margin-top:24px; display:flex; justify-content:center; align-items:center; gap:15px; opacity:0.4; filter: grayscale(1);">
-      <div style="display:flex; align-items:center; gap:4px; font-size:9px; font-weight:700; color:var(--text-3); text-transform:uppercase;">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        SSL Secure
-      </div>
-      <div style="display:flex; align-items:center; gap:4px; font-size:9px; font-weight:700; color:var(--text-3); text-transform:uppercase;">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-        Pix Certified
-      </div>
-    </div>
   `;
+
 
 
 
