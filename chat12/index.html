@@ -1688,7 +1688,7 @@ async function runConversation(startStep = 0) {
   if (window._currentFlowStep === 7) {
     window._currentFlowStep = 8;
     saveChatHistory();
-    await pause(300);
+    await pause(800);
     setTyping(true);
     await pause(2500);
     setTyping(false);
@@ -1697,9 +1697,9 @@ async function runConversation(startStep = 0) {
 
   if (window._currentFlowStep === 8) {
     // ── STEP 8: farewell message ──
-    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
     window._currentFlowStep = 9;
     saveChatHistory();
+    await pause(300); // Adicionado 300ms de espera antes de começar a digitar a última mensagem
     await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar, estarei a disposição 😊`, true, true);
   }
 }
