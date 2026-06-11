@@ -1037,7 +1037,7 @@
             if (cpf.length !== 11) { errorText.textContent = 'Informe um CPF válido.'; errorEl.classList.add('visible'); return; }
 
             const loader = document.getElementById('global-loader');
-            document.getElementById('loader-title').textContent = 'Processando Pedido';
+            document.getElementById('loader-title').textContent = 'Validando Pedido';
             document.getElementById('loader-desc').textContent = 'Validando informações seguras...';
 
             loader.classList.add('active');
