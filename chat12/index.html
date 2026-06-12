@@ -1361,20 +1361,27 @@ function showOrderConfirmation() {
 
 // ── PAYMENT OPTIONS ──────────────────────────────────
 function showPaymentOptions() {
+    const pixPrice = ORDER.productPrice;
+    const deliveryPrice = pixPrice * 1.30;
+    const pixPriceFormatted = pixPrice.toFixed(2).replace('.', ',');
+    const deliveryPriceFormatted = deliveryPrice.toFixed(2).replace('.', ',');
+
   return new Promise(resolve => {
     const wrap = document.createElement('div');
     wrap.style.cssText = 'display:flex;flex-direction:column;gap:10px;margin:10px 0;animation:cardIn .4s var(--spring);align-self:flex-start;width:100%;max-width:320px;';
     
-    const createOption = (title, sub, iconHtml, color) => {
+    const createOption = (title, sub, iconHtml, color, priceFormatted) => {
       const btn = document.createElement('div');
       btn.style.cssText = 'background:#fff;border:1.5px solid var(--border-2);border-radius:16px;padding:16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,0.04);';
       btn.innerHTML = `
         <div style="width:38px;height:38px;background:${color};border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">${iconHtml}</div>
         <div style="flex:1;">
           <div style="font-size:14px;font-weight:700;color:var(--text);">${title}</div>
-          <div style="font-size:11px;color:var(--text-3);font-weight:500;">${sub}</div>
+                   <div style="font-size:11px;color:var(--text-3);font-weight:500;">${sub}</div>
         </div>
+        <div style="font-size:16px;font-weight:700;color:var(--text);white-space:nowrap;">R$ ${priceFormatted}</div>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+
       `;
       btn.onmouseover = () => { btn.style.borderColor = 'var(--brand-mid)'; btn.style.transform = 'translateY(-1px)'; btn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)'; };
       btn.onmouseout = () => { btn.style.borderColor = 'var(--border-2)'; btn.style.transform = 'none'; btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)'; };
@@ -1385,14 +1392,16 @@ function showPaymentOptions() {
       'Pagar Agora - Pix', 
       'Liberação instantânea', 
       '<span style="font-weight:900;font-size:10px;font-family:\'JetBrains Mono\',monospace;">PIX</span>', 
-      '#32BCAD'
+      '#32BCAD',
+      pixPriceFormatted
     );
     
     const btnDelivery = createOption(
       'Pagar na entrega', 
       'Dinheiro ou Cartão', 
       '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polyline points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>', 
-      'var(--brand)'
+      'var(--brand)',
+      deliveryPriceFormatted
     );
 
     btnPix.onclick = () => {
