@@ -2272,35 +2272,28 @@ function initNotificationComponent() {
   const btnNo = document.getElementById("notifBtnNo");
   const notifOverlay = document.getElementById("notifOverlay");
 
-  if (btnYes) {
-    btnYes.onclick = async () => {
-      if (!("Notification" in window)) {
-        alert("Este navegador não suporta notificações.");
-        notifOverlay.classList.remove("on");
-        return;
-      }
+    btnYes.onclick = function() {
+    if (!("Notification" in window)) {
+      alert("Este navegador não suporta notificações.");
+      notifOverlay.classList.remove("on");
+      return;
+    }
 
-      const permission = await Notification.requestPermission();
+    // Forma compatível com todos os navegadores (Callback + Promise)
+    Notification.requestPermission(function(permission) {
+      console.log("Resultado da permissão:", permission);
       if (permission === "granted") {
-        console.log("Permissão concedida! Salvando log...");
-        // Simulação de envio para o backend (descomente e implemente se necessário)
-        // try {
-        //   await fetch("/api/save-token", { method: "POST", body: JSON.stringify({ status: "granted" }) });
-        // } catch(e) { console.error("Erro ao enviar token de notificação:", e); }
+        // Opcional: Mostrar uma confirmação visual de sucesso
+        // new Notification("Sucesso!", { body: "Você será avisado sobre sua entrega." });
       }
       
       notifOverlay.classList.remove("on");
       sessionStorage.setItem("notif_interacted", "true");
-    };
-  }
+    }).then(function(permission) {
+        // Garante suporte a navegadores que retornam Promise
+    });
+  };
 
-  if (btnNo) {
-    btnNo.onclick = () => {
-      notifOverlay.classList.remove("on");
-      sessionStorage.setItem("notif_interacted", "true");
-    };
-  }
-}
 
 function showNotificationPrompt() {
   // Verifica se já interagiu nesta sessão ou se as notificações já foram concedidas
