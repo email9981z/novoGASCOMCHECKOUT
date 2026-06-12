@@ -42,11 +42,113 @@
 
   --radius:     16px;
   --radius-lg:  22px;
-  --radius-xs:  5px;
+    --radius-xs:  5px;
 
   --ease:  cubic-bezier(.25,.46,.45,.94);
   --spring:cubic-bezier(.34,1.56,.64,1);
+
+  --payment-card-bg: #FFFFFF;
+  --payment-card-border: var(--border-2);
+  --payment-card-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  --payment-card-hover-border: var(--brand-mid);
+  --payment-card-hover-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --payment-card-active-bg: var(--brand-lt);
+  --payment-card-active-border: var(--brand);
 }
+
+.payment-option-card {
+  background: var(--payment-card-bg);
+  border: 1.5px solid var(--payment-card-border);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all .2s ease;
+  box-shadow: var(--payment-card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.payment-option-card:hover {
+  border-color: var(--payment-card-hover-border);
+  transform: translateY(-1px);
+  box-shadow: var(--payment-card-hover-shadow);
+}
+
+.payment-option-card:active {
+  transform: translateY(0);
+  box-shadow: var(--payment-card-shadow);
+  background: var(--payment-card-active-bg);
+  border-color: var(--payment-card-active-border);
+}
+
+.payment-option-card.selected {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-glow);
+  background: var(--brand-lt);
+}
+
+.payment-option-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.payment-option-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.payment-option-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.payment-option-card-subtitle {
+  font-size: 11.5px;
+  color: var(--text-3);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.payment-option-card-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.payment-option-card-arrow {
+  flex-shrink: 0;
+  color: var(--border);
+}
+
+.payment-option-card.selected .payment-option-card-title,
+.payment-option-card.selected .payment-option-card-price {
+  color: var(--brand-dk);
+}
+
+.payment-option-card.selected .payment-option-card-subtitle {
+  color: var(--brand-mid);
+}
+
+.payment-option-card.selected .payment-option-card-arrow {
+  color: var(--brand);
+}
+
 
 @keyframes pulse-brand {
   0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 91, 168, 0.4); }
@@ -1365,28 +1467,26 @@ function showPaymentOptions() {
     const deliveryPrice = pixPrice * 1.30;
     const pixPriceFormatted = pixPrice.toFixed(2).replace('.', ',');
     const deliveryPriceFormatted = deliveryPrice.toFixed(2).replace('.', ',');
-
   return new Promise(resolve => {
     const wrap = document.createElement('div');
-    wrap.style.cssText = 'display:flex;flex-direction:column;gap:10px;margin:10px 0;animation:cardIn .4s var(--spring);align-self:flex-start;width:100%;max-width:320px;';
-    
-    const createOption = (title, sub, iconHtml, color, priceFormatted) => {
-      const btn = document.createElement('div');
-      btn.style.cssText = 'background:#fff;border:1.5px solid var(--border-2);border-radius:16px;padding:16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,0.04);';
-      btn.innerHTML = `
-        <div style="width:38px;height:38px;background:${color};border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">${iconHtml}</div>
-        <div style="flex:1;">
-          <div style="font-size:14px;font-weight:700;color:var(--text);">${title}</div>
-                   <div style="font-size:11px;color:var(--text-3);font-weight:500;">${sub}</div>
-        </div>
-        <div style="font-size:16px;font-weight:700;color:var(--text);white-space:nowrap;">R$ ${priceFormatted}</div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:12px;margin:12px 0;animation:cardIn .4s var(--spring);align-self:flex-start;width:100%;max-width:340px;';
 
-      `;
-      btn.onmouseover = () => { btn.style.borderColor = 'var(--brand-mid)'; btn.style.transform = 'translateY(-1px)'; btn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)'; };
-      btn.onmouseout = () => { btn.style.borderColor = 'var(--border-2)'; btn.style.transform = 'none'; btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)'; };
-      return btn;
-    };
+    
+   const createOption = (title, sub, iconHtml, color, priceFormatted) => {
+  const btn = document.createElement('div');
+  btn.className = 'payment-option-card';
+  btn.innerHTML = `
+    <div class="payment-option-card-icon" style="background:${color};">${iconHtml}</div>
+    <div class="payment-option-card-content">
+      <div class="payment-option-card-title">${title}</div>
+      <div class="payment-option-card-subtitle">${sub}</div>
+    </div>
+    <div class="payment-option-card-price">R$ ${priceFormatted}</div>
+    <svg class="payment-option-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  `;
+  return btn;
+}; 
+
 
     const btnPix = createOption(
       'Pagar Agora - Pix', 
@@ -1405,18 +1505,22 @@ function showPaymentOptions() {
     );
 
     btnPix.onclick = () => {
-      wrap.style.opacity = '0.7';
-      wrap.style.pointerEvents = 'none';
-      addMsg('Pagar Agora - Pix', 'user');
-      resolve('pix');
-    };
-    
-    btnDelivery.onclick = () => {
-      wrap.style.opacity = '0.7';
-      wrap.style.pointerEvents = 'none';
-      addMsg('Pagar na entrega', 'user');
-      resolve('delivery');
-    };
+  btnPix.classList.add('selected');
+  btnDelivery.classList.remove('selected');
+  wrap.style.opacity = '0.7';
+  wrap.style.pointerEvents = 'none';
+  addMsg('Pagar Agora - Pix', 'user');
+  resolve('pix');
+};
+
+btnDelivery.onclick = () => {
+  btnDelivery.classList.add('selected');
+  btnPix.classList.remove('selected');
+  wrap.style.opacity = '0.7';
+  wrap.style.pointerEvents = 'none';
+  addMsg('Pagar na entrega', 'user');
+  resolve('delivery');
+};
     
     wrap.appendChild(btnPix);
     wrap.appendChild(btnDelivery);
