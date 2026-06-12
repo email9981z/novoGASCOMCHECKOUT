@@ -265,7 +265,7 @@ html,body{
 .payment-option-card.selected {
   animation: card-select-bounce 0.3s ease-out; /* Aplica a animação ao selecionar */
 }
-
+  
 /* ── HEADER ── */
 .header{
   background:linear-gradient(160deg,var(--brand-dk) 0%,var(--brand-mid) 100%);
@@ -716,238 +716,280 @@ html,body{
 .edit-input:focus{border-color:var(--brand-mid);background:#fff;box-shadow:0 0 0 3px var(--brand-glow);}
 
 /* ── PIX CARD (new clean design) ── */
-/* Variáveis CSS aprimoradas para o PIX */
-:root {
-  /* Cores e sombras para o cartão PIX */
-  --pix-card-bg: var(--surface);
-  --pix-card-border: var(--border-2);
-  --pix-card-shadow: 0 4px 18px rgba(0,0,0,0.05);
-  --pix-card-hover-shadow: 0 8px 25px rgba(0,0,0,0.1);
-
-  /* Destaque PIX (para promoções ou seleção) */
-  --pix-highlight-border: 2px solid var(--green); /* Borda mais visível */
-  --pix-highlight-shadow: 0 0 0 3px rgba(50,188,173,0.3); /* Sombra mais suave e presente */
-  --pix-price-color: var(--green-dk); /* Cor do preço mantida */
-
-  /* Estilos do botão de copiar PIX */
-  --pix-copy-btn-bg: var(--brand); /* Cor principal */
-  --pix-copy-btn-hover-bg: var(--brand-mid); /* Hover mais sutil */
-  --pix-copy-btn-shadow: 0 4px 14px rgba(15,91,168,0.22);
-  --pix-copy-btn-hover-shadow: 0 6px 18px rgba(15,91,168,0.28);
-  --pix-copy-btn-copied-bg: var(--green); /* Feedback de copiado */
-  --pix-copy-btn-copied-shadow: 0 4px 14px rgba(16,185,129,0.25);
-
-  /* Estilos da tag de promoção */
-  --promo-tag-bg-pix: var(--orange); /* Cor específica para PIX */
-  --promo-tag-text-pix: #FFFFFF;
-}
-
-/* Estilos do Cartão PIX */
 .pix-card {
-  background: var(--pix-card-bg);
-  border: 1px solid var(--pix-card-border);
-  border-radius: var(--radius-lg); /* Arredondamento maior */
-  padding: 24px; /* Aumentar o padding para mais respiro */
-  margin: 15px auto; /* Centraliza e adiciona espaçamento */
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 22px;
+  padding: 22px;
+  margin: 10px 0;
   width: 100%;
-  max-width: 360px; /* Levemente mais largo para melhor visualização */
+  max-width: 340px;
   animation: cardIn 0.5s var(--spring);
-  box-shadow: var(--pix-card-shadow);
-  align-self: center;
-  transition: all 0.3s var(--ease); /* Transição suave para interações */
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  align-self: center; /* Centraliza o bloco no chat */
+  margin: 15px auto;  /* Garante espaçamento e centralização */
 }
-
-.pix-card.pix-highlight {
-  border: var(--pix-highlight-border);
-  box-shadow: var(--pix-highlight-shadow);
-  animation: pulse-pix-highlight 2s infinite alternate ease-in-out;
-}
-
 .pix-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px; /* Ajuste de espaçamento */
+  margin-bottom: 22px;
 }
-
 .pix-brand-mark {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .pix-logo {
-  width: 40px; /* Levemente maior */
-  height: 40px; /* Levemente maior */
+  width: 36px;
+  height: 36px;
   background: #32BCAD;
-  border-radius: 10px; /* Arredondamento sutil */
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-weight: 800; /* Menos bold que 900, mais legível */
-  font-size: 10px;
+  font-weight: 900;
+  font-size: 9.5px;
   font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.5px; /* Ajuste de espaçamento */
+  letter-spacing: 0.4px;
   flex-shrink: 0;
 }
-
 .pix-brand-label {
-  font-size: 15px; /* Levemente maior */
+  font-size: 14px;
   font-weight: 700;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.2;
 }
-
 .pix-brand-sub {
-  font-size: 11.5px; /* Levemente maior */
+  font-size: 11px;
   color: var(--text-3);
-  margin-top: 2px;
+  margin-top: 1px;
 }
-
 .pix-expiry {
   display: flex;
   align-items: center;
-  gap: 6px; /* Aumentar o espaçamento */
+  gap: 4px;
   background: #FFF7ED;
   border: 1px solid rgba(249,115,22,0.22);
   color: #9A3412;
-  font-size: 11px; /* Levemente maior */
-  font-weight: 600; /* Menos bold */
-  padding: 6px 12px; /* Ajuste de padding */
-  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 7px;
   flex-shrink: 0;
 }
-
 .pix-price-hero {
   text-align: center;
-  padding: 18px 0 25px; /* Mais espaçamento vertical */
+  padding: 16px 0 22px;
 }
-
 .pix-price-eyebrow {
-  font-size: 11px; /* Levemente maior */
+  font-size: 10.5px;
   font-weight: 700;
   color: var(--text-3);
   text-transform: uppercase;
-  letter-spacing: 1.5px; /* Mais espaçamento */
-  margin-bottom: 10px; /* Mais espaçamento */
+  letter-spacing: 1.3px;
+  margin-bottom: 8px;
 }
-
 .pix-price-amount {
-  font-size: 44px; /* Valor maior e mais impactante */
+  font-size: 40px;
   font-weight: 900;
-  color: var(--pix-price-color); /* Usar a variável de cor do PIX */
-  letter-spacing: -2.5px; /* Ajuste de espaçamento */
+  color: var(--text);
+  letter-spacing: -2px;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
-
 .pix-price-amount span {
-  font-size: 20px; /* Levemente maior */
+  font-size: 19px;
   font-weight: 700;
   letter-spacing: 0;
-  margin-right: 4px;
-  vertical-align: 5px; /* Ajuste de alinhamento */
+  margin-right: 3px;
+  vertical-align: 4px;
 }
-
 .pix-code-row {
   background: #F8FAFC;
   border: 1.5px solid var(--border-2);
-  border-radius: 14px; /* Arredondamento maior */
-  padding: 14px 16px; /* Mais padding */
-  margin-bottom: 15px; /* Mais espaçamento */
+  border-radius: 12px;
+  padding: 11px 14px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 10px; /* Mais espaçamento */
-  cursor: pointer; /* Indica que é clicável */
-  transition: all 0.2s var(--ease);
+  gap: 8px;
 }
-
-.pix-code-row:hover {
-  border-color: var(--brand-mid); /* Feedback visual ao passar o mouse */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
 .pix-code-text {
   flex: 1;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12.5px; /* Levemente maior */
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--text-2);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .pix-copy-btn {
   width: 100%;
-  padding: 16px; /* Mais padding */
-  background: var(--pix-copy-btn-bg);
+  padding: 15px;
+  background: var(--brand);
   color: #fff;
   border: none;
-  border-radius: 16px; /* Arredondamento maior */
-  font-size: 16px; /* Levemente maior */
+  border-radius: 14px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px; /* Mais espaçamento */
-  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-  margin-bottom: 20px; /* Mais espaçamento */
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.15s ease;
+  margin-bottom: 18px;
   font-family: inherit;
-  box-shadow: var(--pix-copy-btn-shadow);
-  animation: pulse-brand 2.8s infinite; /* Manter animação de pulso */
+  box-shadow: 0 4px 14px rgba(15,91,168,0.22);
+  animation: pulse-brand 2.8s infinite;
 }
-
 .pix-copy-btn:hover {
-  background: var(--pix-copy-btn-hover-bg);
-  transform: translateY(-2px); /* Elevação sutil */
-  box-shadow: var(--pix-copy-btn-hover-shadow);
+  background: var(--brand-mid);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15,91,168,0.28);
 }
-
-.pix-copy-btn:active {
-  transform: translateY(0); /* Retorna à posição original */
-  box-shadow: var(--pix-copy-btn-shadow);
-}
-
+.pix-copy-btn:active { transform: scale(0.97); }
 .pix-copy-btn.copied {
-  background: var(--pix-copy-btn-copied-bg);
+  background: var(--green);
   animation: none;
-  box-shadow: var(--pix-copy-btn-copied-shadow);
+  box-shadow: 0 4px 14px rgba(16,185,129,0.25);
 }
-
 .pix-trust-row {
   display: flex;
   align-items: center;
-  justify-content: center; /* Centralizar itens de confiança */
-  padding-top: 18px; /* Mais espaçamento */
+  padding-top: 14px;
   border-top: 1px solid var(--border-2);
-  gap: 20px; /* Aumentar espaçamento entre os itens */
 }
-
 .pix-trust-item {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 6px; /* Mais espaçamento */
-  font-size: 11.5px; /* Levemente maior */
+  gap: 5px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--text-3);
 }
-
 .pix-trust-item.positive { color: var(--green-dk); }
-.pix-trust-item.neutral { color: var(--text-3); }
+.pix-trust-item.neutral { color: var(--text-3); justify-content: flex-end; }
 
-/* Animações */
-@keyframes pulse-pix-highlight {
-  0% { box-shadow: var(--pix-highlight-shadow); }
-  100% { box-shadow: 0 0 0 5px rgba(50,188,173,0); } /* Efeito de pulso mais pronunciado */
+/* ── SELLER MODAL ── */
+.seller-modal-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.4);
+  z-index:1100;display:none;align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);padding:20px;
 }
+.seller-modal-overlay.on{display:flex;}
+.seller-modal{
+  width:100%;max-width:340px;background:#fff;
+  border-radius:28px;padding:24px;
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+  animation:cardIn .4s var(--spring);
+  position:relative;
+}
+.seller-close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--surface-2);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-3);transition:all .2s;
+}
+.seller-close:hover{background:var(--border-2);color:var(--text);}
+.seller-header{text-align:center;margin-bottom:20px;}
+.seller-avatar-big{
+  width:84px;height:84px;border-radius:50%;
+  object-fit:cover;border:3px solid var(--brand-lt);
+  box-shadow:0 4px 15px var(--brand-glow);
+  margin-bottom:12px;
+}
+.seller-name-big{font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.seller-badge-big{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--brand-lt);color:var(--brand);
+  font-size:11px;font-weight:700;padding:4px 10px;
+  border-radius:20px;text-transform:uppercase;letter-spacing:.4px;
+}
+.seller-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-bottom:20px;padding:16px;background:var(--surface-2);
+  border-radius:18px;
+}
+.stat-item{text-align:center;}
+.stat-val{font-size:15px;font-weight:800;color:var(--text);display:block;}
+.stat-lbl{font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;}
+.seller-info-list{display:flex;flex-direction:column;gap:14px;}
+.info-row{display:flex;gap:12px;align-items:flex-start;}
+.info-ico{color:var(--brand);flex-shrink:0;margin-top:2px;}
+.info-txt{font-size:13px;color:var(--text-2);line-height:1.4;}
+.info-lbl{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;display:block;margin-bottom:1px;}
 
-@keyframes pulse-brand {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 91, 168, 0.4); }
-  70% { transform: scale(1.01); box-shadow: 0 0 0 8px rgba(15, 91, 168, 0); } /* Pulso mais sutil */
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 91, 168, 0); }
+  /* --- Estilos do Modal de Confirmação de Pagamento --- */
+#paymentConfirmOverlay {
+  align-items: center; /* Centraliza verticalmente ao invés de ficar no rodapé */
+}
+.confirm-payment-modal {
+  width: 90%;
+  max-width: 380px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: cardIn 0.3s cubic-bezier(.34,1.56,.64,1);
+}
+.confirm-payment-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.confirm-payment-sub {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+.confirm-payment-sub strong {
+  color: var(--brand);
+}
+.confirm-payment-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btn-confirm-pix {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-confirm-pix:active { transform: scale(0.98); }
+.btn-confirm-delivery {
+  background: var(--surface-2);
+  color: var(--text-2);
+  border: 1px solid var(--border-2);
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.confirm-error-icon {
+  width: 50px;
+  height: 50px;
+  background: #FEF2F2;
+  color: #EF4444;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
 }
 
   @keyframes bounce-in {
@@ -1844,176 +1886,178 @@ function showDeliverySteps(pixCode) {
   return new Promise(resolve => {
     pixCode = pixCode || '(código indisponível)';
     window._currentPixCode = pixCode;
-    window._pixCodeCopied = false;
-    const finalPrice = ORDER.productPrice.toFixed(2).replace('.', ',');
+    const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
 
     const card = document.createElement('div');
     card.className = 'pix-card';
     card.innerHTML = `
-      <!-- Header com Selo de Segurança -->
+      <!-- Header -->
       <div class="pix-card-header">
         <div class="pix-brand-mark">
           <div class="pix-logo">PIX</div>
           <div>
-            <div class="pix-brand-label">Pagamento Seguro</div>
-            <div class="pix-brand-sub">Criptografia de ponta a ponta</div>
+            <div class="pix-brand-label">Pix Protegido</div>
+            <div class="pix-brand-sub">Disk Gás Entregas.</div>
           </div>
         </div>
-        <div class="pix-expiry" style="background: #FFF1F2; border-color: #FECDD3; color: #E11D48;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Expira em 15:00
+        <div class="pix-expiry">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          20 min
         </div>
       </div>
 
-      <!-- Valor com Destaque -->
+      <!-- Price hero -->
       <div class="pix-price-hero">
-        <div class="pix-price-eyebrow">Total a pagar com desconto</div>
+        <div class="pix-price-eyebrow">Valor a pagar</div>
         <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
       </div>
 
-      <!-- Alerta de Reserva (Evita Inadimplência) -->
-      <div style="background: #FFFBEB; border: 1px solid #FEF3C7; border-radius: 12px; padding: 12px; margin-bottom: 18px; display: flex; align-items: flex-start; gap: 10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <div style="font-size: 12px; color: #92400E; font-weight: 600; line-height: 1.4;">
-          <strong>Sua carga foi reservada!</strong> O pedido será cancelado se o pagamento não for identificado em breve.
+      <!-- ✅ NOVO: Beneficiário verificado -->
+      <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
+        <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
+          <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
         </div>
       </div>
 
-      <!-- Campo de Código PIX Copiável -->
-      <div class="pix-code-row" id="pixCodeRow">
-        <div class="pix-code-text">${pixCode.substring(0, 35)}...</div>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <!-- Code display -->
+      <div class="pix-code-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
       </div>
 
-      <!-- Botão CTA -->
+      <!-- Copy CTA -->
       <button class="pix-copy-btn" id="pixCopyBtn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        COPIAR CÓDIGO PIX
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar código Pix
       </button>
 
-      <!-- Rodapé de Confiança -->
+      <!-- Trust row -->
       <div class="pix-trust-row">
-         <div class="pix-trust-item positive">
-           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-           Ambiente Seguro
-         </div>
-         <div class="pix-trust-item positive">
-           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-           Aprovação Instantânea
-         </div>
+        <div class="pix-trust-item positive">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Confirmação instantânea
+        </div>
+        <div class="pix-trust-item neutral">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Pagamento seguro
+        </div>
       </div>
     `;
 
     msgsEl.appendChild(card);
+    // A rolagem será feita após um pequeno atraso para permitir que o card seja renderizado
     setTimeout(() => {
       scrollDown(true);
-      resolve();
-
-      // Lembrete de 30 segundos para copiar o PIX
-      setTimeout(async () => {
-        if (!window._pixCodeCopied && window._currentFlowStep === 7) {
-          await agentSay("Para agilizar a entrega do seu gás, por favor, copie o código PIX e realize o pagamento. Estamos aguardando para prosseguir com seu pedido!", true, true);
-        }
-      }, 30000);
-
+      resolve(); // Resolve a Promise após a rolagem
     }, 100);
 
     const copyBtn = card.querySelector('#pixCopyBtn');
-    const pixCodeRow = card.querySelector('#pixCodeRow');
-
-    const handleCopy = () => {
-      navigator.clipboard.writeText(pixCode).catch(() => {});
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(pixCode).catch(()=>{});
       copyBtn.classList.add('copied');
       copyBtn.innerHTML = `
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         Copiado!
       `;
-      window._pixCodeCopied = true;
-      setTimeout(() => {
+      setTimeout(()=>{
         copyBtn.classList.remove('copied');
         copyBtn.innerHTML = `
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          COPIAR CÓDIGO PIX
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar código Pix
         `;
       }, 2500);
     };
-
-    copyBtn.onclick = handleCopy;
-    pixCodeRow.onclick = handleCopy; // Torna a linha do código PIX clicável para copiar
   });
 }
 
-// Lógica de geração do PIX (mantida similar, com pequenos ajustes de UX)
-      if (window._currentFlowStep === 6) {
-    window._currentFlowStep = 7;
+// ── TYPING STATE ─────────────────────────────────────
+function setTyping(on) {
+  typingEl.style.display = on ? 'flex' : 'none';
+  if (on) {
+    statusTextEl.textContent = 'Digitando';
+    headerStatusEl.classList.add('typing-state');
+    typingDotsMini.classList.add('show');
+    scrollDown(true); // Força a rolagem para mostrar Thiago digitando
+  } else {
+    statusTextEl.textContent = 'Online · Diskgas';
+    headerStatusEl.classList.remove('typing-state');
+    typingDotsMini.classList.remove('show');
+    scrollDown(true); // Ajusta a rolagem quando a bolha de digitação some
+  }
+}
+
+
+// ── CONVERSATION ─────────────────────────────────────
+function getGreeting() {
+  const h=new Date().getHours();
+  if(h>=5&&h<12) return 'Bom dia'; if(h>=12&&h<18) return 'Boa tarde'; return 'Boa noite';
+}
+function pause(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+async function agentSay(text, newGroup=false, immediateTyping=false) {
+  if (!immediateTyping) {
+    await pause(800 + Math.random() * 700);
+  }
+  const typingMs = Math.max(1200, Math.min(text.split(' ').length * 200 + 600, 3500));
+  setTyping(true); 
+  await pause(typingMs); 
+  setTyping(false);
+  addMsg(text, 'agent', newGroup); 
+}
+
+async function runConversation(startStep = 0) {
+  const { location } = ORDER;
+  const gr = getGreeting();
+
+  if (startStep === 0) {
+    // ── STEP 0: initial wait spinner ──
+    // Advance step BEFORE async work so a refresh mid-spinner resumes at step 1
+    window._currentFlowStep = 1;
     saveChatHistory();
-
-    const spValPix = addSpinner("Validando dados do pedido...");
-    await pause(3000); // Tempo de validação levemente reduzido
-    spValPix.remove();
-
-    addSys("Pedido validado com sucesso", "ok");
-    await pause(500); // Pequena pausa
-
-    await agentSay(`Ótimo! Gerando seu código PIX agora, um instante...`, true, true); // Mensagem mais amigável
-    await pause(300);
-
-    const sp = addSpinner("Preparando chave Pix...");
-    let pixCode = window._currentPixCode;
-    
-    if (!pixCode) {
-      const _hasOrderParams = window.location.search &&
-        new URLSearchParams(window.location.search).get('products');
-
-      if (!_hasOrderParams) {
-        pixCode = '00020126580014br.gov.bcb.pix0136a1b2c3d4-e5f6-7890-abcd-ef1234567890520400005303986540510.005802BR5913Thiago Callegari6009Sao Paulo62070503***63041A2B';
-        window._currentPixCode = pixCode;
-      } else {
-        try {
-          const savedState = localStorage.getItem(STATE_STORAGE_KEY);
-          if (savedState) {
-            const state = JSON.parse(savedState);
-            if (state.pixCode) {
-              pixCode = state.pixCode;
-              window._currentPixCode = pixCode;
-            }
-          }
-
-          if (!pixCode) {
-            const payerName = ORDER.nome
-              ? ORDER.nome.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-              : 'Pedido Aprovado';
-            const amountStr = ORDER.productPrice.toFixed(2).replace('.', ',');
-
-            const pixResp = await fetch('/api/pix', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ payer_name: payerName, amount: amountStr })
-            });
-            const pixData = await pixResp.json();
-            if (pixData.success && pixData.pixCode) {
-              pixCode = pixData.pixCode;
-              window._currentPixCode = pixCode;
-            }
-          }
-        } catch (err) { console.error(err); }
-      }
-    }
-
-    await pause(3000); // Tempo de preparação da chave PIX levemente reduzido
-    sp.remove();
-    
-    addSys('Pix gerado com sucesso!', 'ok'); // Mensagem de sucesso mais clara
-    setTyping(true);
-    await pause(1500); // Pausa levemente reduzida
-    setTyping(false);
-
-    await showDeliverySteps(pixCode);
+    const spWaiting = addSpinner("Aguardando vendedor Autorizado");
+    await pause(3000);
+    spWaiting.remove();
   }
 
-  if (window._currentFlowStep === 7) {
-    window._currentFlowStep = 8;
+  if (window._currentFlowStep === 1) {
+    // ── STEP 1: greetings ──
+    // Advance step BEFORE async work so a refresh mid-greeting resumes at step 2
+    window._currentFlowStep = 2;
     saveChatHistory();
+    await agentSay(`${gr}`, false, true);
+    await pause(300);
+    await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
+    await pause(800);
+  }
+
+  if (window._currentFlowStep === 2) {
+    // ── STEP 2: validation spinner + confirmation prompt ──
+    // Advance step BEFORE async work so a refresh mid-spinner resumes at step 3
+    window._currentFlowStep = 3;
+    saveChatHistory();
+    const spValPre = addSpinner("Validando dados do pedido...");
+    await pause(3000);
+    spValPre.remove();
+    spValPre.remove();
+    await agentSay(`Peço que verifique se está tudo certo, por gentileza`, true, true);
+  }
+
+  let action;
+  if (window._currentFlowStep === 3) {
+    await pause(400);
+    action = await showOrderConfirmation();
+    if (action === 'correct') {
+      window._currentFlowStep = 4;
+      saveChatHistory();
+    } else if (action === 'change') {
+      await agentSay(`Sem problemas! Pode me falar o que deseja alterar ou clique no ícone do carrinho no topo para ajustar seu pedido.`);
+      window._currentFlowStep = 99; 
+      saveChatHistory();
       return;
     }
   }
