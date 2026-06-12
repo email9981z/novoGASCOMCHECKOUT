@@ -1296,9 +1296,8 @@ function addMsg(text, type, newGroup=false, saveToStorage=true) {
 function saveChatHistory() {
   localStorage.setItem(LOCAL_STORAGE_KEY, msgsEl.innerHTML);
   // Save current state variables to restore functionality
-    const state = {
+  const state = {
     pixCode: window._currentPixCode || null,
-    pixCreatedAt: window._pixCreatedAt || null,
     lastSender: lastSender,
     flowStep: window._currentFlowStep || 0,
     paymentConfirmed: window._paymentConfirmed || false,
@@ -1306,6 +1305,9 @@ contactMsgSent: window._contactMsgSent || false,
 pixCopyClicked: window._pixCopyClicked || false,
 pixCopyReminderSent: window._pixCopyReminderSent || false,
 pixPaymentReminderSent: window._pixPaymentReminderSent || false
+    pixCopyClicked: window._pixCopyClicked || false,
+    pixCopyReminderSent: window._pixCopyReminderSent || false,
+    pixPaymentReminderSent: window._pixPaymentReminderSent || false
   };
   localStorage.setItem(STATE_STORAGE_KEY, JSON.stringify(state));
 }
@@ -1471,48 +1473,37 @@ function showOrderConfirmation() {
   }
 }
 
-  function startPixTimers() {
-  if (!window._currentPixCode || !window._pixCreatedAt) return;
-
-  const now = Date.now();
-  const elapsed = now - window._pixCreatedAt;
-
-  // Limpa timers existentes para evitar duplicidade
-  if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
-  if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
-
-  // Lembrete de 30 segundos (Copiar código)
-  if (!window._pixCopyClicked && !window._pixCopyReminderSent) {
-    const remainingCopy = Math.max(0, (30 * 1000) - elapsed);
-      startPixTimers();
-      if (!window._pixCopyClicked && !window._pixCopyReminderSent) {
-        await agentSay("Olá! Não se esqueça de copiar o código Pix para realizar o pagamento. 😉", true);
-        window._pixCopyReminderSent = true;
-        saveChatHistory();
-      }
-    }, remainingCopy);
-  }
-
-  // Lembrete de 5 minutos (Pagamento)
-  if (!window._paymentConfirmed && !window._pixPaymentReminderSent) {
-    const remainingPayment = Math.max(0, (5 * 60 * 1000) - elapsed);
-    window._pixPaymentTimer = setTimeout(async () => {
-      if (!window._paymentConfirmed && !window._pixPaymentReminderSent) {
-        await agentSay("Ainda aguardando a confirmação do seu pagamento Pix. Assim que for identificado, seu pedido será liberado!", true);
-        window._pixPaymentReminderSent = true;
-        saveChatHistory();
-      }
-    }, remainingPayment);
-  }
-}
-
-
 // ── PIX CARD ────────────────────────────────────────
 function showDeliverySteps(pixCode) {
   pixCode = pixCode || '(código indisponível)';
-    window._currentPixCode = pixCode;
-  window._pixCreatedAt = Date.now(); // Salva o momento da criação
+  window._currentPixCode = pixCode;
 
+  // Limpa quaisquer timers anteriores para evitar duplicação
+  if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
+  if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
+  window._pixCopyClicked = false;
+  window._pixCopyReminderSent = false;
+  window._pixPaymentReminderSent = false;
+
+  // Timer de 30 segundos para lembrar de copiar o código Pix
+  window._pixCopyTimer = setTimeout(async () => {
+    if (!window._pixCopyClicked && !window._pixCopyReminderSent) {
+      await agentSay("Olá! Não se esqueça de copiar o código Pix para realizar o pagamento. 😉", true);
+      window._pixCopyReminderSent = true;
+      saveChatHistory();
+    }
+  }, 30 * 1000); // 30 segundos
+
+  // Timer de 5 minutos para lembrar do pagamento Pix
+  window._pixPaymentTimer = setTimeout(async () => {
+    if (!window._paymentConfirmed && !window._pixPaymentReminderSent) {
+      await agentSay("Ainda aguardando a confirmação do seu pagamento Pix. Assim que for identificado, seu pedido será liberado!", true);
+      window._pixPaymentReminderSent = true;
+      saveChatHistory();
+    }
+  }, 5 * 60 * 1000); // 5 minutos
+
+  window._currentPixCode = pixCode;
 
 // Limpa quaisquer timers anteriores para evitar duplicação
 if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
@@ -1522,7 +1513,7 @@ window._pixCopyReminderSent = false;
 window._pixPaymentReminderSent = false;
 
 // Timer de 30 segundos para lembrar de copiar o código Pix
-  startPixTimers();
+window._pixCopyTimer = setTimeout(async () => {
   if (!window._pixCopyClicked && !window._pixCopyReminderSent) {
     await agentSay("Olá! Não se esqueça de copiar o código Pix para realizar o pagamento. 😉", true);
     window._pixCopyReminderSent = true;
@@ -1999,25 +1990,26 @@ window._pixPaymentTimer = null;
 window._pixCopyClicked = false;
 window._pixCopyReminderSent = false;
 window._pixPaymentReminderSent = false;
+    window._pixCopyTimer = null;
+    window._pixPaymentTimer = null;
+    window._pixCopyReminderSent = false;
+    window._pixPaymentReminderSent = false;
     lastSender = state.lastSender;
     window._currentFlowStep = state.flowStep || 0;
     window._paymentConfirmed = state.paymentConfirmed || false;
     window._contactMsgSent = state.contactMsgSent || false;
 window._pixCopyClicked = state.pixCopyClicked || false;
 window._pixCopyReminderSent = state.pixCopyReminderSent || false;
+window._pixPaymentReminderSent = state.pixPaymentReminderSent || false;
+    window._pixCopyClicked = state.pixCopyClicked || false;
+    window._pixCopyReminderSent = state.pixCopyReminderSent || false;
     window._pixPaymentReminderSent = state.pixPaymentReminderSent || false;
-    window._pixCreatedAt = state.pixCreatedAt || null;
-    
-    // Reinicia os timers baseados no tempo que já passou
-    if (window._currentPixCode && window._pixCreatedAt) {
-      startPixTimers();
-    }
     msgsEl.innerHTML = savedHTML;
     
     // Re-attach event listeners for PIX
     const pixCopyBtn = msgsEl.querySelector('#pixCopyBtn');
     if (pixCopyBtn && window._currentPixCode) {
-      pixCopyBtn.onclick = () => {
+        pixCopyBtn.onclick = () => {
   window._pixCopyClicked = true;
   if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
   navigator.clipboard.writeText(window._currentPixCode).catch(()=>{});
