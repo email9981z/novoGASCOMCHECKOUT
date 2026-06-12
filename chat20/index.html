@@ -730,16 +730,15 @@ html,body{
   border: 1px solid var(--border-2);
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   animation: fadeUp 0.5s ease;
-  align-self: flex-start;
-  width: 100%;
-  max-width: 320px;
 }
+
 .status-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 }
+
 .status-badge {
   background: var(--brand-lt);
   color: var(--brand-dk);
@@ -750,11 +749,13 @@ html,body{
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
 .status-steps {
   display: flex;
   gap: 8px;
   margin-bottom: 15px;
 }
+
 .step-bar {
   height: 4px;
   flex: 1;
@@ -763,6 +764,7 @@ html,body{
   position: relative;
   overflow: hidden;
 }
+
 .step-bar.active::after {
   content: '';
   position: absolute;
@@ -773,19 +775,23 @@ html,body{
   background: var(--brand);
   animation: pulse-progress 2s infinite ease-in-out;
 }
+
 .step-bar.completed {
   background: var(--green);
 }
+
 @keyframes pulse-progress {
   0% { opacity: 0.6; width: 40%; }
   50% { opacity: 1; width: 70%; }
   100% { opacity: 0.6; width: 40%; }
 }
+
 .status-info {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
 .status-icon-pulse {
   width: 40px;
   height: 40px;
@@ -797,6 +803,7 @@ html,body{
   color: var(--brand);
   position: relative;
 }
+
 .status-icon-pulse::before {
   content: '';
   position: absolute;
@@ -806,21 +813,25 @@ html,body{
   border-radius: 50%;
   animation: ripple 1.5s infinite;
 }
+
 @keyframes ripple {
   0% { transform: scale(1); opacity: 1; }
   100% { transform: scale(1.5); opacity: 0; }
 }
+
 .status-text-main {
   font-size: 14px;
   font-weight: 700;
   color: var(--text);
   margin-bottom: 2px;
 }
+
 .status-text-sub {
   font-size: 12px;
   color: var(--text-3);
   margin-top: 2px;
 }
+
 
 
 </style>
@@ -1798,12 +1809,14 @@ async function doSend() {
       <span class="status-badge">Logística Diskgas</span>
       <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
     </div>
+    
     <div class="status-steps">
       <div class="step-bar completed"></div>
       <div class="step-bar completed"></div>
       <div class="step-bar active"></div>
       <div class="step-bar"></div>
     </div>
+    
     <div class="status-info">
       <div class="status-icon-pulse">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polyline points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
@@ -1813,15 +1826,18 @@ async function doSend() {
         <div class="status-text-sub">O entregador será despachado imediatamente após o PIX.</div>
       </div>
     </div>
+    
     <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
        <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
     </div>
   `;
+  
   msgsEl.appendChild(card);
   scrollDown(true);
   return card;
 }
+
 
 
 // ── BROWSER BACK LOCK (ROBUST — 7 LAYERS) ────────────────────────────────────
