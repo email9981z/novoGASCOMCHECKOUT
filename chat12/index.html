@@ -49,9 +49,11 @@
 
     --payment-card-bg: #FFFFFF;
   --payment-card-border: var(--border-2);
-  --payment-card-shadow: 0 1px 4px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02);
-  --payment-card-hover-border: var(--brand-mid);
-  --payment-card-hover-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    --payment-card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --payment-card-hover-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  --payment-card-active-shadow: 0 0 0 3px var(--brand-glow);
+  --pix-highlight-border: 1.5px solid var(--green);
+  --pix-highlight-shadow: 0 0 0 2px rgba(50,188,173,0.3);
   --payment-card-active-bg: var(--brand-lt);
   --payment-card-active-border: var(--brand);
   --payment-card-active-shadow: 0 0 0 3px var(--brand-glow);
@@ -66,7 +68,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  transition: all .25s var(--ease);
+  transition: all .3s cubic-bezier(.2, .8, .2, 1);
   box-shadow: var(--payment-card-shadow);
   position: relative;
   overflow: hidden;
@@ -74,7 +76,7 @@
 
 .payment-option-card:hover {
   border-color: var(--payment-card-hover-border);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--payment-card-hover-shadow);
 }
 
@@ -89,6 +91,7 @@
   border-color: var(--payment-card-active-border);
   box-shadow: var(--payment-card-active-shadow);
   background: var(--payment-card-active-bg);
+  transform: translateY(-1px); /* Mantém um leve destaque */
 }
 
 .payment-option-card-icon {
@@ -188,6 +191,17 @@ html,body{
   display:flex;flex-direction:column;
   background:var(--bg);
   position:relative;overflow:hidden;
+}
+
+  .payment-option-card.pix-highlight {
+  border: var(--pix-highlight-border);
+  box-shadow: var(--pix-highlight-shadow);
+  animation: pulse-pix-highlight 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-pix-highlight {
+  0% { box-shadow: var(--pix-highlight-shadow); }
+  100% { box-shadow: 0 0 0 4px rgba(50,188,173,0.5); }
 }
 
 /* ── HEADER ── */
@@ -1491,9 +1505,9 @@ function showPaymentOptions() {
     wrap.style.cssText = 'display:flex;flex-direction:column;gap:12px;margin:12px 0;animation:cardIn .4s var(--spring);align-self:flex-start;width:100%;max-width:340px;';
 
     
-      const createOption = (title, sub, iconHtml, color, priceFormatted) => {
+         const createOption = (title, sub, iconHtml, color, priceFormatted, isPix = false) => {
   const btn = document.createElement("div");
-  btn.className = "payment-option-card";
+  btn.className = `payment-option-card ${isPix ? 'pix-highlight' : ''}`;
   btn.innerHTML = `
     <div class="payment-option-card-icon" style="background:${color};">${iconHtml}</div>
     <div class="payment-option-card-content">
@@ -1515,14 +1529,15 @@ function showPaymentOptions() {
       'Liberação instantânea', 
       '<span style="font-weight:800;font-size:14px;font-family:\'DM Sans\',sans-serif;">PIX</span>', 
       '#32BCAD',
-      pixPriceFormatted
+      pixPriceFormatted,
+      true // Adiciona o destaque PIX
     );
     
     const btnDelivery = createOption(
       'Pagar na entrega', 
       'Dinheiro ou Cartão', 
       '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polyline points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>', 
-      'var(--brand)',
+      'var(--brand)' ,
       deliveryPriceFormatted
     );
 
