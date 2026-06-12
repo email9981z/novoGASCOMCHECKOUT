@@ -66,93 +66,7 @@
   --promo-tag-padding-y: 2px;
   --promo-tag-font-size: 9px;
   --promo-tag-font-weight: 700;
-    --promo-tag-letter-spacing: 0.4px;
-}
-
-/* --- Status Bar --- */
-.status-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-  padding: 12px 15px;
-  background: var(--surface-2);
-  border-radius: 14px;
-  border: 1px solid var(--border-2);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-}
-.status-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  text-align: center;
-  position: relative;
-}
-.status-step-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--border-2);
-  color: var(--text-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
-}
-.status-step-label {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  line-height: 1.2;
-  transition: all 0.3s ease;
-}
-.status-step.active .status-step-icon {
-  background: var(--brand);
-  color: #fff;
-  box-shadow: 0 0 0 4px var(--brand-glow);
-}
-.status-step.active .status-step-label {
-  color: var(--brand);
-}
-.status-step.completed .status-step-icon {
-  background: var(--green);
-  color: #fff;
-}
-.status-step.completed .status-step-label {
-  color: var(--green-dk);
-}
-.status-connector {
-  height: 2px;
-  background: var(--border-2);
-  flex: 1;
-  margin: 0 -10px;
-  position: relative;
-  top: -20px; /* Ajusta para ficar entre os ícones */
-  z-index: 0;
-}
-.status-step.active + .status-connector {
-  background: linear-gradient(to right, var(--brand) 50%, var(--border-2) 50%);
-}
-.status-step.completed + .status-connector {
-  background: var(--green);
-}
-
-@keyframes pulse-highlight {
-  0% { box-shadow: 0 0 0 0 rgba(27,127,216,0.4); }
-  70% { box-shadow: 0 0 0 8px rgba(27,127,216,0); }
-  100% { box-shadow: 0 0 0 0 rgba(27,127,216,0); }
-}
-
-.status-step.highlight .status-step-icon {
-  animation: pulse-highlight 1.5s infinite;
+  --promo-tag-letter-spacing: 0.4px;
 }
 
 .payment-option-card {
@@ -1100,6 +1014,101 @@ html,body{
   box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
 }
 
+  .notif-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.notif-overlay.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.notif-card {
+  background: #fff;
+  width: 100%;
+  max-width: 340px;
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.notif-overlay.on .notif-card {
+  transform: translateY(0);
+}
+
+.notif-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--brand-lt);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  color: var(--brand);
+}
+
+.notif-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.notif-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.notif-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notif-btn-main {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.notif-btn-main:active {
+  filter: brightness(0.9);
+}
+
+.notif-btn-sub {
+  background: transparent;
+  color: var(--text-3);
+  border: none;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
 </style>
 </head>
 <body>
@@ -1873,7 +1882,6 @@ function showDeliverySteps(pixCode) {
       </button>
 
       <!-- Trust row -->
-            <!-- Trust row -->
       <div class="pix-trust-row">
         <div class="pix-trust-item positive">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1884,76 +1892,9 @@ function showDeliverySteps(pixCode) {
           Pagamento seguro
         </div>
       </div>
-
-      <!-- Status Bar -->
-      <div class="status-bar" id="pixStatusBar">
-        <div class="status-step" id="statusStep1">
-          <div class="status-step-icon">1</div>
-          <div class="status-step-label">Pedido Recebido</div>
-        </div>
-        <div class="status-connector"></div>
-        <div class="status-step" id="statusStep2">
-          <div class="status-step-icon">2</div>
-          <div class="status-step-label">Aguardando Pagamento</div>
-        </div>
-        <div class="status-connector"></div>
-        <div class="status-step" id="statusStep3">
-          <div class="status-step-icon">3</div>
-          <div class="status-step-label">Entregador Liberado</div>
-        </div>
-        <div class="status-connector"></div>
-        <div class="status-step" id="statusStep4">
-          <div class="status-step-icon">4</div>
-          <div class="status-step-label">Em Rota</div>
-        </div>
-      </div>
     `;
 
-        msgsEl.appendChild(card);
-
-    // Inicializa a barra de status
-    const statusBar = card.querySelector('#pixStatusBar');
-    const statusStep1 = card.querySelector('#statusStep1');
-    const statusStep2 = card.querySelector('#statusStep2');
-    const statusStep3 = card.querySelector('#statusStep3');
-    const statusStep4 = card.querySelector('#statusStep4');
-
-    statusStep1.classList.add('completed');
-    statusStep2.classList.add('active', 'highlight'); // Aguardando Pagamento ativo e piscando
-
-    // Variáveis globais para controle dos timers de lembrete
-    window._pixPaymentConfirmed = false;
-    window._pixReminder1Sent = false;
-    window._pixReminder2Sent = false;
-    window._pixExpiryTimer = null;
-    window._pixReminder1Timer = null;
-    window._pixReminder2Timer = null;
-
-    // Inicia o timer de 20 minutos para expiração do Pix
-    window._pixExpiryTimer = setTimeout(() => {
-      if (!window._pixPaymentConfirmed) {
-        // Lógica para Pix expirado (opcional, pode ser um aviso ou redirecionamento)
-        console.log('Pix expirado!');
-        // addSys('Seu código Pix expirou. Por favor, gere um novo pedido.', 'gold');
-      }
-    }, 20 * 60 * 1000); // 20 minutos
-
-    // Timer para o primeiro lembrete (3 minutos)
-    window._pixReminder1Timer = setTimeout(() => {
-      if (!window._pixPaymentConfirmed && !window._pixReminder1Sent) {
-        addMsg("Olá! Vi que o seu Pix ainda não foi confirmado. 🚚 Já reservei o seu botijão e o entregador está de prontidão para sair. Assim que o pagamento for confirmado, ele é liberado na hora para você! Precisa de alguma ajuda com o código?", 'agent', true);
-        window._pixReminder1Sent = true;
-      }
-    }, 3 * 60 * 1000); // 3 minutos
-
-    // Timer para o segundo lembrete (5 minutos antes de expirar, ou seja, em 15 minutos)
-    window._pixReminder2Timer = setTimeout(() => {
-      if (!window._pixPaymentConfirmed && !window._pixReminder2Sent) {
-        addMsg("O seu código Pix promocional expira em poucos minutos. ⏰ Garanta o valor com desconto e a entrega prioritária realizando o pagamento agora!", 'agent', true);
-        window._pixReminder2Sent = true;
-      }
-    }, (20 - 5) * 60 * 1000); // 15 minutos
-
+    msgsEl.appendChild(card);
     // A rolagem será feita após um pequeno atraso para permitir que o card seja renderizado
     setTimeout(() => {
       scrollDown(true);
@@ -2107,6 +2048,9 @@ async function runConversation(startStep = 0) {
     await pause(3500);
     spValPix.remove();
 
+    // Adicione a chamada para exibir o prompt de notificação AQUI
+    showNotificationPrompt(); // <-- ADICIONE ESTA LINHA
+
     // 2. Fala do agente com efeito de digitando IMEDIATO
     // O terceiro parâmetro 'true' força o efeito de digitação sem espera extra
     await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`, true, true);
@@ -2213,21 +2157,12 @@ async function doSend() {
   const { row } = addMsg(originalText, 'user');
   await pause(1600);
 
-      if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._pixPaymentConfirmed) {
-      window._pixPaymentConfirmed = true;
-      saveChatHistory();
-
-      // Limpa os timers de lembrete
-      clearTimeout(window._pixExpiryTimer);
-      clearTimeout(window._pixReminder1Timer);
-      clearTimeout(window._pixReminder2Timer);
-
-      // Atualiza a barra de status para 'Entregador Liberado'
-      updatePixStatusBar(3); // 3 corresponde a 'Entregador Liberado'
-
-      await agentSay("✅ **Pagamento confirmado!** Excelente. Acabei de liberar o entregador aqui no sistema. Ele chega aí em cerca de 20-30 minutos.", true, true);
-      saveChatHistory();
-    } else if (foundContactTerm) {
+  if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
+    window._paymentConfirmed = true;
+    saveChatHistory();
+    await agentSay("Certo, após pagamento realizado podemos preparar o envio, o prazo de entrega é de 20-30 minutos", true, true);
+    saveChatHistory();
+  } else if (foundContactTerm) {
     window._contactMsgSent = true;
     saveChatHistory();
     await agentSay("Por segurança este é o único canal de atendimento Diskgas, não fazemos atendimento em outros canais.", true, true);
@@ -2303,6 +2238,80 @@ async function doSend() {
     errorContent.style.display = 'block';
   };
 }
+
+  // ... seu código JavaScript existente ...
+
+/* 
+  FUNÇÕES DE NOTIFICAÇÃO
+  Adicione este bloco no final do seu script JavaScript.
+*/
+function initNotificationComponent() {
+  // Criar o elemento HTML do modal (já adicionado no passo 2, esta função apenas inicializa os listeners)
+  const overlay = document.getElementById("notifOverlay");
+  if (!overlay) { // Se o overlay não existir, cria dinamicamente (fallback)
+    const newOverlay = document.createElement("div");
+    newOverlay.id = "notifOverlay";
+    newOverlay.className = "notif-overlay";
+    newOverlay.innerHTML = `
+      <div class="notif-card">
+        <div class="notif-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <div class="notif-title">Acompanhar sua entrega? 🛵</div>
+        <div class="notif-text">Gostaria de receber uma notificação quando seu pagamento for aprovado e seu gás sair para entrega? Assim você não precisa ficar conferindo o chat o tempo todo.</div>
+        <div class="notif-actions">
+          <button class="notif-btn-main" id="notifBtnYes">Sim, me avisar</button>
+          <button class="notif-btn-sub" id="notifBtnNo">Agora não</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(newOverlay);
+  }
+
+  const btnYes = document.getElementById("notifBtnYes");
+  const btnNo = document.getElementById("notifBtnNo");
+  const notifOverlay = document.getElementById("notifOverlay");
+
+  if (btnYes) {
+    btnYes.onclick = async () => {
+      if (!("Notification" in window)) {
+        alert("Este navegador não suporta notificações.");
+        notifOverlay.classList.remove("on");
+        return;
+      }
+
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        console.log("Permissão concedida! Salvando log...");
+        // Simulação de envio para o backend (descomente e implemente se necessário)
+        // try {
+        //   await fetch("/api/save-token", { method: "POST", body: JSON.stringify({ status: "granted" }) });
+        // } catch(e) { console.error("Erro ao enviar token de notificação:", e); }
+      }
+      
+      notifOverlay.classList.remove("on");
+      sessionStorage.setItem("notif_interacted", "true");
+    };
+  }
+
+  if (btnNo) {
+    btnNo.onclick = () => {
+      notifOverlay.classList.remove("on");
+      sessionStorage.setItem("notif_interacted", "true");
+    };
+  }
+}
+
+function showNotificationPrompt() {
+  // Verifica se já interagiu nesta sessão ou se as notificações já foram concedidas
+  if (sessionStorage.getItem("notif_interacted") || (Notification.permission === "granted")) return;
+  
+  const overlay = document.getElementById("notifOverlay");
+  if (overlay) overlay.classList.add("on");
+}
+
+// Chame initNotificationComponent() quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', initNotificationComponent);
 
 
 // ── BROWSER BACK LOCK (ROBUST — 7 LAYERS) ────────────────────────────────────
@@ -2506,40 +2515,10 @@ function lockBackButton() {
       localStorage.setItem(KEY_PT, pixNow);
       arm(MS_AFTER_PIX);   /* reinicia contagem a partir de agora */
     }
-        return result;
+    return result;
   };
 })();
 </script>
-
-<script>
-  function updatePixStatusBar(currentStep) {
-    const statusBar = document.getElementById("pixStatusBar");
-    if (!statusBar) return;
-
-    const steps = [
-      { id: "statusStep1", label: "Pedido Recebido" },
-      { id: "statusStep2", label: "Aguardando Pagamento" },
-      { id: "statusStep3", label: "Entregador Liberado" },
-      { id: "statusStep4", label: "Em Rota" },
-    ];
-
-    steps.forEach((step, index) => {
-      const stepEl = document.getElementById(step.id);
-      if (stepEl) {
-        stepEl.classList.remove("active", "completed", "highlight");
-        if (index < currentStep - 1) {
-          stepEl.classList.add("completed");
-        } else if (index === currentStep - 1) {
-          stepEl.classList.add("active");
-          if (currentStep === 2) {
-            stepEl.classList.add("highlight"); // Adiciona animação de destaque para 'Aguardando Pagamento'
-          }
-        }
-      }
-    });
-  }
-</script>
-
 
   <!-- Modal de Confirmação de Pagamento -->
 <div class="modal-overlay" id="paymentConfirmOverlay">
@@ -2570,6 +2549,28 @@ function lockBackButton() {
     </div>
   </div>
 </div>
+
+      <!-- Seu conteúdo HTML existente -->
+
+    <!-- Adicione o HTML do componente de notificação AQUI -->
+    <div id="notifOverlay" class="notif-overlay">
+      <div class="notif-card">
+        <div class="notif-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <div class="notif-title">Acompanhar sua entrega? 🛵</div>
+        <div class="notif-text">Gostaria de receber uma notificação quando seu pagamento for aprovado e seu gás sair para entrega? Assim você não precisa ficar conferindo o chat o tempo todo.</div>
+        <div class="notif-actions">
+          <button class="notif-btn-main" id="notifBtnYes">Sim, me avisar</button>
+          <button class="notif-btn-sub" id="notifBtnNo">Agora não</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seus scripts JavaScript (se houver) -->
+    <script src="seu-script.js"></script>
+</body>
+</html>
 
   
 </body>
