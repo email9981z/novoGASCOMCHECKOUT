@@ -1913,7 +1913,7 @@ async function doSend() {
   if (!text) return;
   
   const originalText = text;
-    inputEl.value=\'\'; inputEl.style.height=\'auto\'; inputEl.blur(); // Adiciona .blur() para remover o foco e recolher o teclado
+  inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
 
   const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei", "acabei", "concluí", "conclui", "concluido", "concluído"];
   const lowerText = originalText.toLowerCase();
