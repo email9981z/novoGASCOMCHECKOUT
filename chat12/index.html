@@ -162,6 +162,25 @@
   color: var(--brand);
 }
 
+  .payment-option-card.selected {
+  border-color: var(--brand); /* Borda mais sólida */
+  box-shadow: 0 0 0 3px var(--brand-glow), 0 6px 20px rgba(0,0,0,0.08); /* Sombra mais pronunciada */
+  background: var(--payment-card-active-bg);
+  transform: translateY(-2px); /* Leve elevação */
+}
+
+.payment-option-card.selected .payment-option-card-check {
+  opacity: 1;
+  transform: scale(1) rotate(0deg); /* Garante que o check não gire */
+  color: var(--brand); /* Cor do check */
+}
+
+.payment-option-card:hover {
+  border-color: var(--brand-mid); /* Cor da borda ao passar o mouse */
+  transform: translateY(-3px);
+  box-shadow: var(--payment-card-hover-shadow);
+}
+
   .payment-option-card-check {
   position: absolute;
   top: 8px;
@@ -234,6 +253,16 @@ html,body{
 @keyframes pulse-pix-highlight {
   0% { box-shadow: var(--pix-highlight-shadow); }
   100% { box-shadow: 0 0 0 2px rgba(50,188,173,0.3); } /* Sombra final mais suave */
+}
+
+  @keyframes card-select-bounce {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.01); }
+  100% { transform: translateY(-2px) scale(1); }
+}
+
+.payment-option-card.selected {
+  animation: card-select-bounce 0.3s ease-out; /* Aplica a animação ao selecionar */
 }
 
 /* ── HEADER ── */
@@ -378,7 +407,10 @@ html,body{
 
 @keyframes spin{to{transform:rotate(360deg);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-@keyframes msgIn{from{opacity:0;transform:translateY(10px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes msgIn { 
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 @keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
@@ -617,7 +649,10 @@ html,body{
 }
 .send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;opacity:0.6;}
 .send-btn:not(:disabled):hover{background:var(--brand-mid);transform:scale(1.05);}
-.send-btn:not(:disabled):active{transform:scale(.95);}
+.send-btn:not(:disabled):active {
+  transform: scale(0.9); /* Diminui um pouco mais */
+  box-shadow: 0 2px 8px rgba(15,91,168,.35); /* Sombra mais compacta */
+}
 
 /* ── MODALS ── */
 .modal-overlay{
@@ -955,6 +990,28 @@ html,body{
   margin: 0 auto 16px;
 }
 
+  @keyframes bounce-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.pix-copy-btn.copied svg {
+  animation: bounce-in 0.3s ease-out;
+}
+
+  .confirm-warning-icon {
+  color: var(--orange);
+  margin: 0 auto 15px;
+  background: var(--orange-lt);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+}
 
 </style>
 </head>
@@ -1754,7 +1811,7 @@ function showDeliverySteps(pixCode) {
       copyBtn.classList.add('copied');
       copyBtn.innerHTML = `
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Código copiado!
+        Copiado!
       `;
       setTimeout(()=>{
         copyBtn.classList.remove('copied');
@@ -2162,7 +2219,7 @@ function lockBackButton() {
       pixCopyBtn.onclick = () => {
         navigator.clipboard.writeText(window._currentPixCode).catch(()=>{});
         pixCopyBtn.classList.add('copied');
-        pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Código copiado!`;
+        pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copiado!`;
         setTimeout(()=>{
           pixCopyBtn.classList.remove('copied');
           pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar código Pix`;
@@ -2295,6 +2352,9 @@ function lockBackButton() {
   <div class="confirm-payment-modal">
     <!-- Estado Inicial: Pergunta -->
     <div id="confirmMainContent">
+      <div class="confirm-warning-icon">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+</div>
       <div class="confirm-payment-title">Você tem certeza?</div>
       <div class="confirm-payment-sub" id="confirmPaymentSub">
         <!-- Preenchido via JS -->
