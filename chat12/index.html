@@ -1681,13 +1681,18 @@ async function runConversation(startStep = 0) {
 
             // Força o efeito de "Preparando chave Pix" a durar exatamente 2 segundos
     await pause(3500); 
-    sp.remove();
-
+        sp.remove();
     
-    // Adiciona a etiqueta de validação aqui
+    // 1. Mostra a etiqueta de sucesso
     addSys('Pedido validado com sucesso', 'ok');
-    await pause(500); // Pequena pausa para a etiqueta aparecer antes dos cards
+    await pause(500); 
 
+    // 2. Ativa o efeito de "Digitando" por 1.5 segundos
+    setTyping(true);
+    await pause(1500);
+    setTyping(false);
+
+    // 3. Exibe o bloco do Pix
     showDeliverySteps(pixCode);
   }
 
