@@ -1595,20 +1595,23 @@ async function runConversation(startStep = 0) {
     }
   }
 
-  if (window._currentFlowStep === 4) {
+    if (window._currentFlowStep === 4) {
     // ── STEP 4: post-confirmation validation ──
-    // Advance step BEFORE async work so a refresh mid-spinner resumes at step 5
     window._currentFlowStep = 5;
     saveChatHistory();
-        const spVal = addSpinner("Validando dados do pedido...");
+    const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
 
-    // Removemos a etiqueta e adicionamos o digitando de 1.5s
     setTyping(true);
     await pause(1500);
     setTyping(false);
+
+    // Força o reinício do fluxo para o próximo passo de forma limpa
+    runConversation(5); 
+    return;
   }
+
 
 
     if (window._currentFlowStep === 5) {
