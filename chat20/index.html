@@ -1564,8 +1564,14 @@ const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
     </div>
   `;
 
-  msgsEl.appendChild(card);
+    msgsEl.appendChild(card);
   scrollDown();
+
+  // Adiciona vibração no dispositivo (padrão: 200ms)
+  if ("vibrate" in navigator) {
+    navigator.vibrate(200);
+  }
+
 
   const copyBtn = card.querySelector('#pixCopyBtn');
   copyBtn.onclick = () => {
