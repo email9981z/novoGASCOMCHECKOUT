@@ -58,6 +58,14 @@
   --payment-card-active-bg: var(--brand-lt);
   --payment-card-active-border: var(--brand);
   --payment-card-active-shadow: 0 0 0 3px var(--brand-glow);
+    --promo-tag-bg: var(--orange);
+  --promo-tag-text: #FFFFFF;
+  --promo-tag-radius: 4px;
+  --promo-tag-padding-x: 6px;
+  --promo-tag-padding-y: 2px;
+  --promo-tag-font-size: 9px;
+  --promo-tag-font-weight: 700;
+  --promo-tag-letter-spacing: 0.4px;
 }
 
 .payment-option-card {
@@ -181,6 +189,25 @@
   0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 91, 168, 0.4); }
   70% { transform: scale(1.02); box-shadow: 0 0 0 6px rgba(15, 91, 168, 0); }
   100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 91, 168, 0); }
+}
+
+  .payment-option-card-promo-tag {
+  position: absolute;
+  top: 12px; /* Ajuste conforme necessário para alinhamento vertical */
+  right: 12px; /* Ajuste conforme necessário para alinhamento horizontal */
+  background: var(--promo-tag-bg);
+  color: var(--promo-tag-text);
+  border-radius: var(--promo-tag-radius);
+  padding: var(--promo-tag-padding-y) var(--promo-tag-padding-x);
+  font-size: var(--promo-tag-font-size);
+  font-weight: var(--promo-tag-font-weight);
+  letter-spacing: var(--promo-tag-letter-spacing);
+  text-transform: uppercase;
+  z-index: 1; /* Garante que a etiqueta fique acima de outros elementos */
+}
+
+.payment-option-card.selected .payment-option-card-promo-tag {
+  background: var(--brand-dk); /* Altera a cor da tag quando o card é selecionado */
 }
 
 html,body{
@@ -1519,7 +1546,11 @@ function showPaymentOptions() {
       <div class="payment-option-card-title">${title}</div>
       <div class="payment-option-card-subtitle">${sub}</div>
     </div>
-    <div class="payment-option-card-price">R$ ${priceFormatted}</div>
+        <div class="payment-option-card-price">R$ ${priceFormatted}</div>
+    ${isPix ? 
+      `<div class="payment-option-card-promo-tag">Promoção</div>` 
+      : ''
+    }
     <div class="payment-option-card-check">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
