@@ -43,16 +43,191 @@
 
   --radius:     16px;
   --radius-lg:  22px;
-  --radius-xs:  5px;
+    --radius-xs:  5px;
 
   --ease:  cubic-bezier(.25,.46,.45,.94);
   --spring:cubic-bezier(.34,1.56,.64,1);
+
+    --payment-card-bg: #FFFFFF;
+  --payment-card-border: var(--border-2);
+    --payment-card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --payment-card-hover-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  --payment-card-active-shadow: 0 0 0 3px var(--brand-glow);
+    --pix-highlight-border: 1px solid var(--green);
+  --pix-highlight-shadow: 0 0 0 1px rgba(50,188,173,0.2);
+  --pix-price-color: var(--green-dk); /* Nova variável para a cor do preço do PIX */
+  --payment-card-active-bg: var(--brand-lt);
+  --payment-card-active-border: var(--brand);
+  --payment-card-active-shadow: 0 0 0 3px var(--brand-glow);
+    --promo-tag-bg: var(--orange);
+  --promo-tag-text: #FFFFFF;
+  --promo-tag-radius: 4px;
+  --promo-tag-padding-x: 6px;
+  --promo-tag-padding-y: 2px;
+  --promo-tag-font-size: 9px;
+  --promo-tag-font-weight: 700;
+  --promo-tag-letter-spacing: 0.4px;
+}
+
+.payment-option-card {
+  background: var(--payment-card-bg);
+  border: 1.5px solid var(--payment-card-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all .3s cubic-bezier(.2, .8, .2, 1);
+  box-shadow: var(--payment-card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.payment-option-card:hover {
+  border-color: var(--payment-card-hover-border);
+  transform: translateY(-3px);
+  box-shadow: var(--payment-card-hover-shadow);
+}
+
+.payment-option-card:active {
+  transform: translateY(0);
+  box-shadow: var(--payment-card-shadow);
+  background: var(--payment-card-active-bg);
+  border-color: var(--payment-card-active-border);
+}
+
+.payment-option-card.selected {
+  border-color: var(--payment-card-active-border);
+  box-shadow: var(--payment-card-active-shadow);
+  background: var(--payment-card-active-bg);
+  transform: translateY(-1px); /* Mantém um leve destaque */
+}
+
+.payment-option-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.payment-option-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.payment-option-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.payment-option-card-subtitle {
+  font-size: 11.5px;
+  color: var(--text-3);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.payment-option-card-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+   /* margin-left: 10px; */ /* Removido para melhor alinhamento com o novo ícone de check */
+}
+
+.payment-option-card-arrow {
+  flex-shrink: 0;
+  color: var(--border);
+}
+
+.payment-option-card.selected .payment-option-card-title,
+.payment-option-card.selected .payment-option-card-price {
+  color: var(--brand-dk);
+}
+
+.payment-option-card.selected .payment-option-card-subtitle {
+  color: var(--brand);
+}
+
+.payment-option-card.selected .payment-option-card-arrow {
+  color: var(--brand);
+}
+
+  .payment-option-card.selected {
+  border-color: var(--brand); /* Borda mais sólida */
+  box-shadow: 0 0 0 3px var(--brand-glow), 0 6px 20px rgba(0,0,0,0.08); /* Sombra mais pronunciada */
+  background: var(--payment-card-active-bg);
+  transform: translateY(-2px); /* Leve elevação */
+}
+
+.payment-option-card.selected .payment-option-card-check {
+  opacity: 1;
+  transform: scale(1) rotate(0deg); /* Garante que o check não gire */
+  color: var(--brand); /* Cor do check */
+}
+
+.payment-option-card:hover {
+  border-color: var(--brand-mid); /* Cor da borda ao passar o mouse */
+  transform: translateY(-3px);
+  box-shadow: var(--payment-card-hover-shadow);
+}
+
+  .payment-option-card-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: var(--brand);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all .25s var(--ease);
+}
+
+.payment-option-card.selected .payment-option-card-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+  .payment-option-card.pix-highlight .payment-option-card-price {
+  color: var(--pix-price-color);
+}
+
+.payment-option-card.selected .payment-option-card-arrow {
+  opacity: 0;
 }
 
 @keyframes pulse-brand {
   0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 91, 168, 0.4); }
   70% { transform: scale(1.02); box-shadow: 0 0 0 6px rgba(15, 91, 168, 0); }
   100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(15, 91, 168, 0); }
+}
+
+  .payment-option-card-promo-tag {
+  position: absolute;
+  top: 12px; /* Ajuste conforme necessário para alinhamento vertical */
+  right: 12px; /* Ajuste conforme necessário para alinhamento horizontal */
+  background: var(--promo-tag-bg);
+  color: var(--promo-tag-text);
+  border-radius: var(--promo-tag-radius);
+  padding: var(--promo-tag-padding-y) var(--promo-tag-padding-x);
+  font-size: var(--promo-tag-font-size);
+  font-weight: var(--promo-tag-font-weight);
+  letter-spacing: var(--promo-tag-letter-spacing);
+  text-transform: uppercase;
+  z-index: 1; /* Garante que a etiqueta fique acima de outros elementos */
+}
+
+.payment-option-card.selected .payment-option-card-promo-tag {
+  background: var(--brand-dk); /* Altera a cor da tag quando o card é selecionado */
 }
 
 html,body{
@@ -70,6 +245,27 @@ html,body{
   position:relative;overflow:hidden;
 }
 
+  .payment-option-card.pix-highlight {
+  border: var(--pix-highlight-border);
+  box-shadow: var(--pix-highlight-shadow);
+  animation: pulse-pix-highlight 2s infinite alternate ease-in-out; /* Animação mais lenta */
+}
+
+@keyframes pulse-pix-highlight {
+  0% { box-shadow: var(--pix-highlight-shadow); }
+  100% { box-shadow: 0 0 0 2px rgba(50,188,173,0.3); } /* Sombra final mais suave */
+}
+
+  @keyframes card-select-bounce {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.01); }
+  100% { transform: translateY(-2px) scale(1); }
+}
+
+.payment-option-card.selected {
+  animation: card-select-bounce 0.3s ease-out; /* Aplica a animação ao selecionar */
+}
+  
 /* ── HEADER ── */
 .header{
   background:linear-gradient(160deg,var(--brand-dk) 0%,var(--brand-mid) 100%);
@@ -212,7 +408,10 @@ html,body{
 
 @keyframes spin{to{transform:rotate(360deg);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-@keyframes msgIn{from{opacity:0;transform:translateY(10px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes msgIn { 
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 @keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
@@ -451,7 +650,10 @@ html,body{
 }
 .send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;opacity:0.6;}
 .send-btn:not(:disabled):hover{background:var(--brand-mid);transform:scale(1.05);}
-.send-btn:not(:disabled):active{transform:scale(.95);}
+.send-btn:not(:disabled):active {
+  transform: scale(0.9); /* Diminui um pouco mais */
+  box-shadow: 0 2px 8px rgba(15,91,168,.35); /* Sombra mais compacta */
+}
 
 /* ── MODALS ── */
 .modal-overlay{
@@ -524,7 +726,8 @@ html,body{
   max-width: 340px;
   animation: cardIn 0.5s var(--spring);
   box-shadow: 0 4px 18px rgba(0,0,0,0.05);
-  align-self: flex-start;
+  align-self: center; /* Centraliza o bloco no chat */
+  margin: 15px auto;  /* Garante espaçamento e centralização */
 }
 .pix-card-header {
   display: flex;
@@ -721,7 +924,98 @@ html,body{
 .info-txt{font-size:13px;color:var(--text-2);line-height:1.4;}
 .info-lbl{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;display:block;margin-bottom:1px;}
 
-  /* ── LOGÍSTICA DISKGAS ── */
+  /* --- Estilos do Modal de Confirmação de Pagamento --- */
+#paymentConfirmOverlay {
+  align-items: center; /* Centraliza verticalmente ao invés de ficar no rodapé */
+}
+.confirm-payment-modal {
+  width: 90%;
+  max-width: 380px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: cardIn 0.3s cubic-bezier(.34,1.56,.64,1);
+}
+.confirm-payment-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.confirm-payment-sub {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+.confirm-payment-sub strong {
+  color: var(--brand);
+}
+.confirm-payment-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btn-confirm-pix {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-confirm-pix:active { transform: scale(0.98); }
+.btn-confirm-delivery {
+  background: var(--surface-2);
+  color: var(--text-2);
+  border: 1px solid var(--border-2);
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.confirm-error-icon {
+  width: 50px;
+  height: 50px;
+  background: #FEF2F2;
+  color: #EF4444;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+  @keyframes bounce-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.pix-copy-btn.copied svg {
+  animation: bounce-in 0.3s ease-out;
+}
+
+  .confirm-warning-icon {
+  color: var(--orange);
+  margin: 0 auto 15px;
+  background: var(--orange-lt);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+}
+
+
 .payment-status-card {
   background: #fff;
   border-radius: 16px;
@@ -771,7 +1065,7 @@ html,body{
   left: 0;
   top: 0;
   height: 100%;
-  width: 60%;
+  width: 60%; /* Progresso parcial */
   background: var(--brand);
   animation: pulse-progress 2s infinite ease-in-out;
 }
@@ -820,7 +1114,6 @@ html,body{
   animation: soft-glow 2s infinite ease-in-out;
 }
 
-
 @keyframes soft-glow {
   0%, 100% { opacity: 0.1; transform: scale(1); }
   50% { opacity: 0.3; transform: scale(1.1); }
@@ -839,8 +1132,6 @@ html,body{
   color: var(--text-3);
   margin-top: 2px;
 }
-
-
 
 </style>
 </head>
@@ -887,7 +1178,7 @@ html,body{
     <div class="t-sep">·</div>
     <div class="t-item">
       <span class="t-stars">★★★★★</span>
-      4,9 · Excelente
+      4,9 · 1.647 entregas
     </div>
     <div class="t-sep">·</div>
     <div class="t-item">
@@ -1205,9 +1496,63 @@ msgsEl.addEventListener('scroll', () => {
 });
 fabEl.addEventListener('click', () => { scrollDown(true); unread=0; fabEl.classList.remove('on'); fabBadge.classList.remove('on'); });
 function scrollDown(force=false) {
-  if (atBottom || force) setTimeout(() => msgsEl.scrollTo({top:msgsEl.scrollHeight,behavior:'smooth'}),50);
-  else { unread++; fabBadge.textContent=unread; fabBadge.classList.add('on'); fabEl.classList.add('on'); }
+  if (atBottom || force) {
+    // Aumentamos um pouco o tempo para o navegador processar o novo tamanho do chat
+    setTimeout(() => {
+      msgsEl.scrollTo({
+        top: msgsEl.scrollHeight,
+        behavior: 'smooth'
+      });
+    }, 100);
+  } else {
+    unread++;
+    fabBadge.textContent = unread;
+    fabBadge.classList.add('on');
+    fabEl.classList.add('on');
+  }
 }
+
+function addProfessionalStatusCard() {
+  const card = document.createElement('div');
+  card.className = 'payment-status-card';
+  card.innerHTML = `
+    <div class="status-header">
+      <span class="status-badge">Logística Diskgas</span>
+      <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
+    </div>
+    
+    <div class="status-steps">
+      <div class="step-bar completed"></div>
+      <div class="step-bar completed"></div>
+      <div class="step-bar active"></div>
+      <div class="step-bar"></div>
+    </div>
+    
+    <div class="status-info">
+      <div class="status-icon-pulse">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    <path d="m9 12 2 2 4-4"/>
+  </svg>
+      </div>
+      <div>
+        <div class="status-text-main">Aguardando liberação da carga...</div>
+        <div class="status-text-sub">O entregador será despachado imediatamente após o PIX.</div>
+      </div>
+    </div>
+    
+    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
+       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+       <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
+    </div>
+  `;
+  
+  msgsEl.appendChild(card);
+  scrollDown(true);
+  return card;
+}
+
+
 
 // ── MODAL ────────────────────────────────────────────
 cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
@@ -1360,7 +1705,7 @@ function showIntroCard() {
           <div class="ic-stars"><span class="ic-star">★★★★★</span></div>
           <span class="ic-rating">4,9</span>
           <div class="ic-divider"></div>
-          <span class="ic-orders">Excelente</span>
+          <span class="ic-orders">Oficial</span>
         </div>
       </div>
     </div>`;
@@ -1468,103 +1813,194 @@ function showOrderConfirmation() {
   }
 }
 
+// ── PAYMENT OPTIONS ──────────────────────────────────
+function showPaymentOptions() {
+    const pixPrice = ORDER.productPrice;
+    const deliveryPrice = pixPrice * 1.75;
+    const pixPriceFormatted = pixPrice.toFixed(2).replace('.', ',');
+    const deliveryPriceFormatted = deliveryPrice.toFixed(2).replace('.', ',');
+  return new Promise(resolve => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:12px;margin:12px 0;animation:cardIn .4s var(--spring);align-self:flex-start;width:100%;max-width:340px;';
+
+    
+         const createOption = (title, sub, iconHtml, color, priceFormatted, isPix = false) => {
+  const btn = document.createElement("div");
+  btn.className = `payment-option-card ${isPix ? 'pix-highlight' : ''}`;
+  btn.innerHTML = `
+    <div class="payment-option-card-icon" style="background:${color};">${iconHtml}</div>
+    <div class="payment-option-card-content">
+      <div class="payment-option-card-title">${title}</div>
+      <div class="payment-option-card-subtitle">${sub}</div>
+    </div>
+        <div class="payment-option-card-price">R$ ${priceFormatted}</div>
+    ${isPix ? 
+      `<div class="payment-option-card-promo-tag">Promoção</div>` 
+      : ''
+    }
+    <div class="payment-option-card-check">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <svg class="payment-option-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  `;
+  return btn;
+};
+
+
+    const btnPix = createOption(
+      'Pagar Agora - Pix', 
+      'Liberação instantânea', 
+      '<span style="font-weight:800;font-size:14px;font-family:\'DM Sans\',sans-serif;">PIX</span>', 
+      '#32BCAD',
+      pixPriceFormatted,
+      true // Adiciona o destaque PIX
+    );
+    
+    const btnDelivery = createOption(
+      'Pagar na entrega', 
+      'Dinheiro ou Cartão', 
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polyline points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>', 
+      'var(--brand)' ,
+      deliveryPriceFormatted
+    );
+
+    btnPix.onclick = () => {
+  btnPix.classList.add('selected');
+  btnDelivery.classList.remove('selected');
+  
+  // Bloqueia o container APENAS aqui, pois o PIX foi a escolha final
+  wrap.style.opacity = '0.7';
+  wrap.style.pointerEvents = 'none'; 
+  
+  addMsg('Pagar Agora - Pix', 'user');
+  resolve('pix');
+};
+
+btnDelivery.onclick = () => {
+  // Note que aqui NÃO adicionamos 'selected' nem bloqueamos o 'wrap'
+  // Apenas abrimos o modal para validação
+  openPaymentConfirmationModal(pixPriceFormatted, deliveryPriceFormatted);
+};
+
+
+    
+    wrap.appendChild(btnPix);
+    wrap.appendChild(btnDelivery);
+    msgsEl.appendChild(wrap);
+    scrollDown();
+  });
+}
+
 // ── PIX CARD ────────────────────────────────────────
 function showDeliverySteps(pixCode) {
-  pixCode = pixCode || '(código indisponível)';
-  window._currentPixCode = pixCode;
-  const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
+  return new Promise(resolve => {
+    pixCode = pixCode || '(código indisponível)';
+    window._currentPixCode = pixCode;
+    const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
 
-  const card = document.createElement('div');
-  card.className = 'pix-card';
-  card.innerHTML = `
-    <!-- Header -->
-    <div class="pix-card-header">
-      <div class="pix-brand-mark">
-        <div class="pix-logo">PIX</div>
-        <div>
-          <div class="pix-brand-label">Pix Protegido</div>
-          <div class="pix-brand-sub">Disk Gás Entregas.</div>
+    const card = document.createElement('div');
+    card.className = 'pix-card';
+    card.innerHTML = `
+      <!-- Header -->
+      <div class="pix-card-header">
+        <div class="pix-brand-mark">
+          <div class="pix-logo">PIX</div>
+          <div>
+            <div class="pix-brand-label">Pix Protegido</div>
+            <div class="pix-brand-sub">Disk Gás Entregas.</div>
+          </div>
+        </div>
+        <div class="pix-expiry">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          20 min
         </div>
       </div>
-      <div class="pix-expiry">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        20 min
+
+      <!-- Price hero -->
+      <div class="pix-price-hero">
+        <div class="pix-price-eyebrow">Valor a pagar</div>
+        <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
       </div>
-    </div>
 
-    <!-- Price hero -->
-    <div class="pix-price-hero">
-      <div class="pix-price-eyebrow">Valor a pagar</div>
-      <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
-    </div>
-
-    <!-- ✅ NOVO: Beneficiário verificado -->
-    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
-      <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <!-- ✅ NOVO: Beneficiário verificado -->
+      <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
+        <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
+          <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
+        </div>
       </div>
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
-        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
+
+      <!-- Code display -->
+      <div class="pix-code-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
       </div>
-    </div>
 
-    <!-- Code display -->
-    <div class="pix-code-row">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
-    </div>
-
-    <!-- Copy CTA -->
-    <button class="pix-copy-btn" id="pixCopyBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      Copiar código Pix
-    </button>
-
-    <!-- Trust row -->
-    <div class="pix-trust-row">
-      <div class="pix-trust-item positive">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Confirmação instantânea
-      </div>
-      <div class="pix-trust-item neutral">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Pagamento seguro
-      </div>
-    </div>
-  `;
-
-  msgsEl.appendChild(card);
-  scrollDown();
-
-  const copyBtn = card.querySelector('#pixCopyBtn');
-  copyBtn.onclick = () => {
-    navigator.clipboard.writeText(pixCode).catch(()=>{});
-    copyBtn.classList.add('copied');
-    copyBtn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      Código copiado!
-    `;
-    setTimeout(()=>{
-      copyBtn.classList.remove('copied');
-      copyBtn.innerHTML = `
+      <!-- Copy CTA -->
+      <button class="pix-copy-btn" id="pixCopyBtn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         Copiar código Pix
+      </button>
+
+      <!-- Trust row -->
+      <div class="pix-trust-row">
+        <div class="pix-trust-item positive">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Confirmação instantânea
+        </div>
+        <div class="pix-trust-item neutral">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Pagamento seguro
+        </div>
+      </div>
+    `;
+
+    msgsEl.appendChild(card);
+    // A rolagem será feita após um pequeno atraso para permitir que o card seja renderizado
+    setTimeout(() => {
+      scrollDown(true);
+      resolve(); // Resolve a Promise após a rolagem
+    }, 100);
+
+    const copyBtn = card.querySelector('#pixCopyBtn');
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(pixCode).catch(()=>{});
+      copyBtn.classList.add('copied');
+      copyBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Copiado!
       `;
-    }, 2500);
-  };
+      setTimeout(()=>{
+        copyBtn.classList.remove('copied');
+        copyBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar código Pix
+        `;
+      }, 2500);
+    };
+  });
 }
 
 // ── TYPING STATE ─────────────────────────────────────
 function setTyping(on) {
   typingEl.style.display = on ? 'flex' : 'none';
   if (on) {
-    statusTextEl.textContent='Digitando'; headerStatusEl.classList.add('typing-state'); typingDotsMini.classList.add('show'); scrollDown();
+    statusTextEl.textContent = 'Digitando';
+    headerStatusEl.classList.add('typing-state');
+    typingDotsMini.classList.add('show');
+    scrollDown(true); // Força a rolagem para mostrar Thiago digitando
   } else {
-    statusTextEl.textContent='Online · Diskgas'; headerStatusEl.classList.remove('typing-state'); typingDotsMini.classList.remove('show');
+    statusTextEl.textContent = 'Online · Diskgas';
+    headerStatusEl.classList.remove('typing-state');
+    typingDotsMini.classList.remove('show');
+    scrollDown(true); // Ajusta a rolagem quando a bolha de digitação some
   }
 }
+
 
 // ── CONVERSATION ─────────────────────────────────────
 function getGreeting() {
@@ -1636,31 +2072,56 @@ async function runConversation(startStep = 0) {
     }
   }
 
-  if (window._currentFlowStep === 4) {
+     if (window._currentFlowStep === 4) {
     // ── STEP 4: post-confirmation validation ──
-    // Advance step BEFORE async work so a refresh mid-spinner resumes at step 5
     window._currentFlowStep = 5;
     saveChatHistory();
+    
     const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
-    addSys('Pedido validado com sucesso', 'ok');
+
+    // Chamamos o próximo passo diretamente
+    runConversation(5);
+    return;
   }
 
-  if (window._currentFlowStep === 5) {
-    // ── STEP 5: pre-pix message ──
-    // Advance step BEFORE async work so a refresh mid-message resumes at step 6
-    window._currentFlowStep = 6;
+
+
+
+    if (window._currentFlowStep === 5) {
+    // ── STEP 5: payment choice ──
+    await agentSay(`Certo, prefere pagar agora ou na entrega?`, true, true);
+    await pause(600);
+    const paymentChoice = await showPaymentOptions();
+    if (paymentChoice === 'pix') {
+      window._currentFlowStep = 6;
+    } else {
+      window._currentFlowStep = 7;
+      await agentSay(`Perfeito! O pagamento será feito no ato da entrega.`, true, true);
+    }
     saveChatHistory();
-    await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`);
-    await pause(1000);
   }
 
-  if (window._currentFlowStep === 6) {
+      if (window._currentFlowStep === 6) {
     // ── STEP 6: generate and show PIX ──
-    // Advance step BEFORE async work so a refresh mid-generation resumes at step 7
     window._currentFlowStep = 7;
     saveChatHistory();
+
+        // 1. Efeito de validação (dura 3.5 segundos)
+    const spValPix = addSpinner("Validando dados do pedido...");
+    await pause(3500);
+    spValPix.remove();
+
+    // Adiciona a etiqueta de sucesso antes da digitação do agente
+    addSys("Pedido validado com sucesso", "ok");
+    await pause(600); // Pequena pausa para o usuário ler a etiqueta
+
+    // 2. Fala do agente com efeito de digitando IMEDIATO
+    // O terceiro parâmetro 'true' força o efeito de digitação sem espera extra
+    await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`, true, true);
+    await pause(400);
+
     const sp = addSpinner("Preparando chave Pix...");
     let pixCode = window._currentPixCode;
     const pixStartTime = Date.now();
@@ -1687,7 +2148,7 @@ async function runConversation(startStep = 0) {
           if (!pixCode) {
             const payerName = ORDER.nome
               ? ORDER.nome.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-              : 'Cliente';
+              : 'Pedido Aprovado';
             const amountStr = ORDER.productPrice.toFixed(2).replace('.', ',');
 
             const pixResp = await fetch('/api/pix', {
@@ -1705,17 +2166,25 @@ async function runConversation(startStep = 0) {
       }
     }
 
-    const elapsed = Date.now() - pixStartTime;
-    if (elapsed < 2000) await pause(2000 - elapsed);
-    sp.remove();
+            // Força o efeito de "Preparando chave Pix" a durar exatamente 2 segundos
+    await pause(3500); 
+        sp.remove();
+    
+    // 1. Mostra a etiqueta de sucesso
+    // Etiqueta + digitando ao mesmo tempo
+    addSys('Pix gerado com sucesso', 'ok');
+    setTyping(true);
+    await pause(1800);
+    setTyping(false);
 
-    showDeliverySteps(pixCode);
+    // 3. Exibe o bloco do Pix
+        await showDeliverySteps(pixCode); // Agora aguardamos a exibição completa do card PIX e a rolagem
   }
 
   if (window._currentFlowStep === 7) {
     window._currentFlowStep = 8;
     saveChatHistory();
-    await pause(400);
+    await pause(1500); // Este pause agora acontece *depois* que o card PIX está totalmente exibido e rolado
     setTyping(true);
     await pause(2500);
     setTyping(false);
@@ -1723,17 +2192,19 @@ async function runConversation(startStep = 0) {
   }
 
   if (window._currentFlowStep === 8) {
-    // ── STEP 8: farewell message ──
-    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
-    window._currentFlowStep = 9;
-    saveChatHistory();
-    await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar, estarei a disposição 😊`, true, true);
+  // ── STEP 8: farewell message ──
+  window._currentFlowStep = 9;
+  saveChatHistory();
+  await pause(900); // Adicionado 300ms de espera antes de começar a digitar a última mensagem
+   await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar, estarei a disposição 😊`, true, true);
+  
+  // Adiciona o atraso de 300ms solicitado
+  await pause(300);
 
-    // Incluído: Exibe o cartão de logística logo após a mensagem acima
-    await pause(1000); // Pequena pausa para parecer natural
-    addProfessionalStatusCard();
-    saveChatHistory();
-  }
+  // NOVO: Adiciona spinner persistente de aguardando pagamento PIX
+  window._pixPaymentStatusCard = addProfessionalStatusCard();
+
+}
 }
 
 // ── SEND ─────────────────────────────────────────────
@@ -1762,7 +2233,7 @@ async function doSend() {
   if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
     window._paymentConfirmed = true;
     saveChatHistory();
-    await agentSay("Certo, com o pagamento realizado podemos preparar o envio, o prazo de entrega é de 20-30 minutos", true, true);
+    await agentSay("Certo, após pagamento realizado podemos preparar o envio, o prazo de entrega é de 20-30 minutos", true, true);
     saveChatHistory();
   } else if (foundContactTerm) {
     window._contactMsgSent = true;
@@ -1809,45 +2280,37 @@ async function doSend() {
   scrollDown(true);
 }
 
-  function addProfessionalStatusCard() {
-  const card = document.createElement('div');
-  card.className = 'payment-status-card';
-  card.innerHTML = `
-    <div class="status-header">
-      <span class="status-badge">Logística Diskgas</span>
-      <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
-    </div>
-    
-    <div class="status-steps">
-      <div class="step-bar completed"></div>
-      <div class="step-bar completed"></div>
-      <div class="step-bar active"></div>
-      <div class="step-bar"></div>
-    </div>
-    
-    // Localize este trecho dentro de card.innerHTML e substitua:
-<div class="status-icon-pulse">
-  <!-- Ícone de Escudo Verificado (Shield Check) -->
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-    <path d="m9 12 2 2 4-4"/>
-  </svg>
-</div>
+  function openPaymentConfirmationModal(pixPrice, deliveryPrice) {
+  const overlay = document.getElementById('paymentConfirmOverlay');
+  const sub = document.getElementById('confirmPaymentSub');
+  const btnPix = document.getElementById('btnModalPix');
+  const btnDelivery = document.getElementById('btnModalDelivery');
+  const mainContent = document.getElementById('confirmMainContent');
+  const errorContent = document.getElementById('confirmErrorContent');
+  const btnBack = document.getElementById('btnModalBackToPix');
 
+  // Resetar para o estado inicial
+  mainContent.style.display = 'block';
+  errorContent.style.display = 'none';
 
+  // Definir textos dinâmicos
+  sub.innerHTML = `Ao escolher o pagamento na entrega você paga <strong>R$ ${deliveryPrice}</strong> e perde a promoção via pix de <strong>R$ ${pixPrice}</strong>.`;
+  btnPix.textContent = `Pagar com Pix R$ ${pixPrice}`;
+  btnDelivery.textContent = `Pagar na entrega R$ ${deliveryPrice}`;
 
-    
-    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
-       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-       <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
-    </div>
-  `;
-  
-  msgsEl.appendChild(card);
-  scrollDown(true);
-  return card;
+  // Mostrar modal
+  overlay.classList.add('on');
+
+  // Ação: Pagar com Pix (Fecha o modal para o usuário clicar no card do Pix)
+  btnPix.onclick = () => overlay.classList.remove('on');
+  btnBack.onclick = () => overlay.classList.remove('on');
+
+  // Ação: Pagar na entrega (Mostra erro de primeira compra)
+  btnDelivery.onclick = () => {
+    mainContent.style.display = 'none';
+    errorContent.style.display = 'block';
+  };
 }
-
 
 
 // ── BROWSER BACK LOCK (ROBUST — 7 LAYERS) ────────────────────────────────────
@@ -1928,7 +2391,7 @@ function lockBackButton() {
       pixCopyBtn.onclick = () => {
         navigator.clipboard.writeText(window._currentPixCode).catch(()=>{});
         pixCopyBtn.classList.add('copied');
-        pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Código copiado!`;
+        pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copiado!`;
         setTimeout(()=>{
           pixCopyBtn.classList.remove('copied');
           pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar código Pix`;
@@ -1966,7 +2429,7 @@ function lockBackButton() {
     }
   } else {
     // New conversation
-    const { onReadPromise } = addMsg('Olá! Gostaria de pagar agora via Pix.','user');
+    const { onReadPromise } = addMsg('Olá! Gostaria de solicitar a entrega do Gás.','user');
     await pause(500);
 
     const connSys = addSys('Conexão criptografada estabelecida','secure');
@@ -2055,6 +2518,37 @@ function lockBackButton() {
   };
 })();
 </script>
+
+  <!-- Modal de Confirmação de Pagamento -->
+<div class="modal-overlay" id="paymentConfirmOverlay">
+  <div class="confirm-payment-modal">
+    <!-- Estado Inicial: Pergunta -->
+    <div id="confirmMainContent">
+      <div class="confirm-warning-icon">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+</div>
+      <div class="confirm-payment-title">Você tem certeza?</div>
+      <div class="confirm-payment-sub" id="confirmPaymentSub">
+        <!-- Preenchido via JS -->
+      </div>
+      <div class="confirm-payment-btns">
+        <button class="btn-confirm-pix" id="btnModalPix">Pagar com Pix</button>
+        <button class="btn-confirm-delivery" id="btnModalDelivery">Pagar na entrega</button>
+      </div>
+    </div>
+    
+    <!-- Estado de Erro: Indisponível -->
+    <div id="confirmErrorContent" style="display: none;">
+      <div class="confirm-error-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="confirm-payment-title">Pagamento Indisponível</div>
+      <p class="confirm-payment-sub">Desculpe, pagamentos na entrega estão <strong>indisponíveis para sua primeira compra</strong> por questões de segurança.</p>
+      <button class="btn-confirm-pix" id="btnModalBackToPix">Voltar para o Pix</button>
+    </div>
+  </div>
+</div>
+
   
 </body>
 </html>
