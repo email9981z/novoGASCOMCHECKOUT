@@ -56,98 +56,58 @@
   --payment-card-active-border: var(--brand);
 }
 
-.payment-option-card {
-  background: var(--payment-card-bg);
-  border: 1.5px solid var(--payment-card-border);
-  border-radius: 16px;
-  padding: 16px;
-  cursor: pointer;
+/* ── PAYMENT OPTION CARDS (redesign) ── */
+.payment-section-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 340px;
+  align-self: flex-start;
+}
+.payment-section-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  transition: all .2s ease;
-  box-shadow: var(--payment-card-shadow);
+  gap: 7px;
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+.payment-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+.payment-option-card {
+  background: #fff;
+  border: 1.5px solid var(--border-2);
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all .22s var(--ease);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   position: relative;
   overflow: hidden;
 }
-
-.payment-option-card:hover {
-  border-color: var(--payment-card-hover-border);
-  transform: translateY(-1px);
-  box-shadow: var(--payment-card-hover-shadow);
-}
-
-.payment-option-card:active {
-  transform: translateY(0);
-  box-shadow: var(--payment-card-shadow);
-  background: var(--payment-card-active-bg);
-  border-color: var(--payment-card-active-border);
-}
-
-.payment-option-card.selected {
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px var(--brand-glow);
-  background: var(--brand-lt);
-}
-
-.payment-option-card-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  flex-shrink: 0;
-  font-size: 18px;
-}
-
-.payment-option-card-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.payment-option-card-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.3;
-}
-
-.payment-option-card-subtitle {
-  font-size: 11.5px;
-  color: var(--text-3);
-  font-weight: 500;
-  margin-top: 2px;
-}
-
-.payment-option-card-price {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--text);
-  white-space: nowrap;
-  margin-left: 10px;
-}
-
-.payment-option-card-arrow {
-  flex-shrink: 0;
-  color: var(--border);
-}
-
-.payment-option-card.selected .payment-option-card-title,
-.payment-option-card.selected .payment-option-card-price {
-  color: var(--brand-dk);
-}
-
-.payment-option-card.selected .payment-option-card-subtitle {
-  color: var(--brand-mid);
-}
-
-.payment-option-card.selected .payment-option-card-arrow {
-  color: var(--brand);
-}
+.payment-option-card:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.payment-option-card.pix-opt { border-color: rgba(50,188,173,0.35); box-shadow: 0 3px 14px rgba(50,188,173,0.12); }
+.payment-option-card.pix-opt:hover { border-color: #32BCAD; box-shadow: 0 6px 22px rgba(50,188,173,0.2); transform: translateY(-2px); }
+.payment-option-card.delivery-opt:hover { border-color: var(--brand-mid); box-shadow: 0 4px 14px rgba(15,91,168,0.12); transform: translateY(-1px); }
+.payment-option-card.selected.pix-opt { border-color: #32BCAD; box-shadow: 0 0 0 3px rgba(50,188,173,0.2); background: #F0FDF9; }
+.payment-option-card.selected.delivery-opt { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-glow); background: var(--brand-lt); }
+.poc-accent { height: 3px; width: 100%; }
+.poc-body { padding: 14px 16px; display: flex; align-items: center; gap: 13px; }
+.poc-icon { width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.poc-info { flex: 1; min-width: 0; }
+.poc-name-row { display: flex; align-items: center; gap: 7px; margin-bottom: 3px; }
+.poc-name { font-size: 15px; font-weight: 800; color: var(--text); letter-spacing: -0.2px; }
+.poc-badge { font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: .5px; background: rgba(16,185,129,0.12); color: #047857; }
+.poc-sub { font-size: 11.5px; color: var(--text-3); font-weight: 500; }
+.poc-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
+.poc-price { font-size: 18px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; line-height: 1; }
+.poc-price-tag { font-size: 10px; font-weight: 700; white-space: nowrap; }
+.poc-footer { border-top: 1px solid var(--border-2); padding: 9px 16px; display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; }
+.payment-option-card.pix-opt .poc-footer { background: rgba(50,188,173,0.05); border-top-color: rgba(50,188,173,0.18); color: #047857; }
+.payment-option-card.delivery-opt .poc-footer { color: var(--text-3); }
 
 
 @keyframes pulse-brand {
@@ -1463,13 +1423,100 @@ function showOrderConfirmation() {
 
 // ── PAYMENT OPTIONS ──────────────────────────────────
 function showPaymentOptions() {
-    const pixPrice = ORDER.productPrice;
-    const deliveryPrice = pixPrice * 1.30;
-    const pixPriceFormatted = pixPrice.toFixed(2).replace('.', ',');
-    const deliveryPriceFormatted = deliveryPrice.toFixed(2).replace('.', ',');
+  const pixPrice = ORDER.productPrice;
+  const deliveryPrice = pixPrice * 1.30;
+  const pixPriceFormatted = pixPrice.toFixed(2).replace('.', ',');
+  const deliveryPriceFormatted = deliveryPrice.toFixed(2).replace('.', ',');
+  const feeFormatted = (deliveryPrice - pixPrice).toFixed(2).replace('.', ',');
+
   return new Promise(resolve => {
     const wrap = document.createElement('div');
-    wrap.style.cssText = 'display:flex;flex-direction:column;gap:12px;margin:12px 0;animation:cardIn .4s var(--spring);align-self:flex-start;width:100%;max-width:340px;';
+    wrap.className = 'payment-section-wrap';
+    wrap.style.cssText = 'margin:8px 0;animation:cardIn .4s var(--spring);';
+
+    wrap.innerHTML = `
+      <div class="payment-section-header">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span class="payment-section-label">Escolha como pagar</span>
+      </div>
+    `;
+
+    const pixCard = document.createElement('div');
+    pixCard.className = 'payment-option-card pix-opt';
+    pixCard.style.marginBottom = '10px';
+    pixCard.innerHTML = `
+      <div class="poc-accent" style="background:linear-gradient(90deg,#32BCAD,#20A898);"></div>
+      <div class="poc-body">
+        <div class="poc-icon" style="background:#32BCAD;box-shadow:0 4px 12px rgba(50,188,173,0.3);">
+          <span style="font-weight:900;font-size:11px;font-family:'JetBrains Mono',monospace;color:#fff;letter-spacing:0.5px;">PIX</span>
+        </div>
+        <div class="poc-info">
+          <div class="poc-name-row">
+            <span class="poc-name">Pix</span>
+            <span class="poc-badge">Recomendado</span>
+          </div>
+          <div class="poc-sub">Confirmação instantânea</div>
+        </div>
+        <div class="poc-right">
+          <div class="poc-price">R$ ${pixPriceFormatted}</div>
+          <div class="poc-price-tag" style="color:#059669;">Sem acréscimo</div>
+        </div>
+      </div>
+      <div class="poc-footer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Liberação em segundos após pagamento
+      </div>
+    `;
+
+    const delivCard = document.createElement('div');
+    delivCard.className = 'payment-option-card delivery-opt';
+    delivCard.innerHTML = `
+      <div class="poc-accent" style="background:linear-gradient(90deg,var(--brand),var(--brand-mid));"></div>
+      <div class="poc-body">
+        <div class="poc-icon" style="background:var(--brand);box-shadow:0 4px 12px rgba(15,91,168,0.22);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polyline points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="poc-info">
+          <div class="poc-name-row">
+            <span class="poc-name">Na entrega</span>
+          </div>
+          <div class="poc-sub">Dinheiro ou cartão</div>
+        </div>
+        <div class="poc-right">
+          <div class="poc-price">R$ ${deliveryPriceFormatted}</div>
+          <div class="poc-price-tag" style="color:var(--text-3);">+ R$ ${feeFormatted} taxa</div>
+        </div>
+      </div>
+      <div class="poc-footer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Pague no ato da entrega ao entregador
+      </div>
+    `;
+
+    pixCard.onclick = () => {
+      pixCard.classList.add('selected');
+      delivCard.classList.remove('selected');
+      wrap.style.opacity = '0.7';
+      wrap.style.pointerEvents = 'none';
+      addMsg('Pagar Agora - Pix', 'user');
+      resolve('pix');
+    };
+
+    delivCard.onclick = () => {
+      delivCard.classList.add('selected');
+      pixCard.classList.remove('selected');
+      wrap.style.opacity = '0.7';
+      wrap.style.pointerEvents = 'none';
+      addMsg('Pagar na entrega', 'user');
+      resolve('delivery');
+    };
+
+    wrap.appendChild(pixCard);
+    wrap.appendChild(delivCard);
+    msgsEl.appendChild(wrap);
+    scrollDown();
+  });
+}
 
     
    const createOption = (title, sub, iconHtml, color, priceFormatted) => {
