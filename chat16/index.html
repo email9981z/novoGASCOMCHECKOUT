@@ -1891,98 +1891,98 @@ function showDeliverySteps(pixCode) {
 
     const card = document.createElement('div');
     card.className = 'pix-card';
-        card.innerHTML = `
-      <!-- Header com Selo de Segurança -->
-      <div class="pix-card-header">
-        <div class="pix-brand-mark">
-          <div class="pix-logo">PIX</div>
+    // Aplicando centralização e harmonia diretamente no estilo do card
+    card.style.cssText = 'align-self:center; margin:15px auto; width:100%; max-width:340px; border:1px solid var(--border-2); border-radius:24px; background:#fff; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.05); animation:cardIn 0.5s var(--spring);';
+
+    card.innerHTML = `
+      <!-- Header Profissional -->
+      <div style="background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding:16px; border-bottom:1px solid var(--border-2); display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:32px; height:32px; background:#32BCAD; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'JetBrains Mono',monospace; font-weight:800; font-size:10px;">PIX</div>
           <div>
-            <div class="pix-brand-label">Pagamento Seguro</div>
-            <div class="pix-brand-sub">Criptografia de ponta a ponta</div>
+            <div style="font-size:13px; font-weight:800; color:var(--text); line-height:1.2;">Pagamento Oficial</div>
+            <div style="font-size:10px; color:var(--text-3); font-weight:600; text-transform:uppercase; letter-spacing:0.3px;">Diskgás · Verificado</div>
           </div>
         </div>
-        <div class="pix-expiry" style="background: #FFF1F2; border-color: #FECDD3; color: #E11D48;">
+        <div style="background:#FFF1F2; color:#E11D48; font-size:10px; font-weight:700; padding:4px 8px; border-radius:6px; display:flex; align-items:center; gap:4px; border:1px solid #FECDD3;">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Expira em 15:00
+          Expira em 15min
         </div>
       </div>
 
-      <!-- Valor com Destaque -->
-      <div class="pix-price-hero" style="padding: 10px 0 20px;">
-        <div class="pix-price-eyebrow">Total a pagar com desconto</div>
-        <div class="pix-price-amount" style="color: var(--green-dk);"><span>R$</span>${finalPrice}</div>
-      </div>
-
-      <!-- Alerta de Reserva (Evita Inadimplência) -->
-      <div style="background: #FFFBEB; border: 1px solid #FEF3C7; border-radius: 12px; padding: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <div style="font-size: 11px; color: #92400E; font-weight: 600; line-height: 1.2;">
-          <strong>Sua carga foi reservada!</strong>  
-O pedido será cancelado se o pagamento não for identificado em breve.
+      <!-- Área do Valor -->
+      <div style="padding:24px 20px; text-align:center;">
+        <div style="font-size:11px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px;">Total com desconto PIX</div>
+        <div style="font-size:42px; font-weight:900; color:var(--text); letter-spacing:-1.5px; line-height:1;">
+          <span style="font-size:18px; font-weight:700; margin-right:2px; vertical-align:middle;">R$</span>${finalPrice}
         </div>
       </div>
 
-      <!-- Campo de Código -->
-      <div class="pix-code-row" style="background: #F1F5F9; border: 2px dashed #CBD5E1;">
-        <div class="pix-code-text" style="font-size: 10px; opacity: 0.7;">${pixCode.substring(0,35)}...</div>
+      <!-- Selo de Garantia e Reserva (Maximiza Conversão) -->
+      <div style="margin:0 20px 20px; padding:12px; background:var(--green-lt); border:1px solid var(--green-border); border-radius:14px; display:flex; align-items:center; gap:12px;">
+        <div style="width:36px; height:36px; background:var(--green); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 10px rgba(16,185,129,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div>
+          <div style="font-size:12px; font-weight:800; color:var(--green-dk);">Carga Reservada!</div>
+          <div style="font-size:10.5px; color:#065F46; line-height:1.3; font-weight:500;">Sua entrega prioritária será liberada imediatamente após o pagamento.</div>
+        </div>
       </div>
 
-      <!-- Botão CTA -->
-      <button class="pix-copy-btn" id="pixCopyBtn" style="margin-bottom: 12px; height: 55px; font-size: 16px;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        COPIAR CÓDIGO PIX
-      </button>
+      <!-- Container do Código -->
+      <div style="padding:0 20px 24px;">
+        <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:14px; padding:14px; margin-bottom:12px; position:relative;">
+          <div style="font-size:10px; font-family:'JetBrains Mono',monospace; color:var(--text-3); word-break:break-all; opacity:0.6; line-height:1.2;">${pixCode.substring(0,60)}...</div>
+        </div>
 
-      <!-- Rodapé de Confiança -->
-      <div style="display: flex; justify-content: center; align-items: center; gap: 15px; opacity: 0.8;">
-         <div style="display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-3); font-weight: 600;">
-           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-           Ambiente Seguro
-         </div>
-         <div style="display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-3); font-weight: 600;">
-           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-           Aprovação Instantânea
-         </div>
+        <!-- Botão de Ação Principal -->
+        <button class="pix-copy-btn" id="pixCopyBtn" style="width:100%; height:56px; background:var(--brand); color:#fff; border:none; border-radius:16px; font-size:16px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; transition:all 0.2s; box-shadow:0 8px 20px rgba(15,91,168,0.25);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          COPIAR CÓDIGO PIX
+        </button>
+      </div>
+
+      <!-- Footer de Credibilidade -->
+      <div style="padding:12px; background:#f8fafc; border-top:1px solid var(--border-2); display:flex; justify-content:center; gap:20px;">
+        <div style="display:flex; align-items:center; gap:5px; font-size:10px; color:var(--text-3); font-weight:700;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          SEGURO
+        </div>
+        <div style="display:flex; align-items:center; gap:5px; font-size:10px; color:var(--text-3); font-weight:700;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          INSTANTÂNEO
+        </div>
       </div>
     `;
-
 
     msgsEl.appendChild(card);
-    // A rolagem será feita após um pequeno atraso para permitir que o card seja renderizado
-        setTimeout(() => {
+    setTimeout(() => {
       scrollDown(true);
-      resolve(); // Resolve a Promise após a rolagem
-
-      // NOVO: Lembrete de 30 segundos para copiar o PIX
+      resolve();
+      
+      // Lembrete inteligente de 30 segundos
       setTimeout(async () => {
-        // Verifica se não foi copiado e se o usuário ainda está na tela do PIX
         if (!window._pixCodeCopied && window._currentFlowStep === 7) { 
-          await agentSay("Para agilizar a entrega do seu gás, por favor, copie o código PIX e realize o pagamento. Estamos aguardando para prosseguir com seu pedido!", true, true);
+          await agentSay("Ainda estou aguardando a confirmação do seu PIX para despachar o entregador. Alguma dúvida?", true, true);
         }
-      }, 30000); // 30 segundos
-
+      }, 30000);
     }, 100);
 
-
+    // Lógica do Botão Copiar
     const copyBtn = card.querySelector('#pixCopyBtn');
-copyBtn.onclick = () => {
-  navigator.clipboard.writeText(pixCode).catch(()=>{});
-  copyBtn.classList.add('copied');
-  copyBtn.innerHTML = `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-    Copiado!
-  `;
-  window._pixCodeCopied = true; // NOVO: Marca que o código foi copiado
-  setTimeout(()=>{
-    copyBtn.classList.remove('copied');
-    copyBtn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      Copiar código Pix
-    `;
-  }, 2500);
-};
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(pixCode).catch(()=>{});
+      copyBtn.style.background = 'var(--green)';
+      copyBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> CÓDIGO COPIADO!`;
+      window._pixCodeCopied = true;
+      setTimeout(()=>{
+        copyBtn.style.background = 'var(--brand)';
+        copyBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> COPIAR CÓDIGO PIX`;
+      }, 2500);
+    };
   });
 }
+
 
 // ── TYPING STATE ─────────────────────────────────────
 function setTyping(on) {
