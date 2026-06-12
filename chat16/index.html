@@ -1014,41 +1014,6 @@ html,body{
   box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
 }
 
-
-/* Melhoras de Conversão PIX */
-.pix-timer-urgent {
-    color: #ef4444 !important;
-    animation: pulse-red 1.5s infinite;
-}
-@keyframes pulse-red {
-    0% { opacity: 1; }
-    50% { opacity: 0.6; }
-    100% { opacity: 1; }
-}
-.pix-benefit-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: #dcfce7;
-    color: #166534;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-top: 4px;
-}
-.copy-success-badge {
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    background: #10b981;
-    color: white;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    animation: fadeUp 0.3s ease;
-}
-
 </style>
 </head>
 <body>
@@ -1771,20 +1736,7 @@ function showDeliverySteps(pixCode) {
   return new Promise(resolve => {
     pixCode = pixCode || '(código indisponível)';
     window._currentPixCode = pixCode;
-
-    // Inicia cronômetro de 15 minutos para o PIX
-    let seconds = 900;
-    const timerInterval = setInterval(() => {
-        const min = Math.floor(seconds / 60);
-        const sec = seconds % 60;
-        const timerEl = document.getElementById('pix-countdown');
-        if (timerEl) {
-            timerEl.innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
-        }
-        if (seconds <= 0) clearInterval(timerInterval);
-        seconds--;
-    }, 1000);
-    
+    window._pixCodeCopied = false;
     const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
 
     const card = document.createElement('div');
@@ -1795,24 +1747,20 @@ function showDeliverySteps(pixCode) {
         <div class="pix-brand-mark">
           <div class="pix-logo">PIX</div>
           <div>
-            <div class="pix-brand-label">Pagamento Prioritário</div>
-            <div class="pix-brand-sub">Seu pedido entra na frente da fila.</div>
+            <div class="pix-brand-label">Pix Protegido</div>
+            <div class="pix-brand-sub">Disk Gás Entregas.</div>
           </div>
         </div>
-        <div class="pix-expiry pix-timer-urgent">
+        <div class="pix-expiry">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Expira em <span id="pix-countdown">15:00</span>
+          20 min
         </div>
       </div>
 
       <!-- Price hero -->
       <div class="pix-price-hero">
-        <div class="pix-price-eyebrow">Total com Desconto PIX</div>
+        <div class="pix-price-eyebrow">Valor a pagar</div>
         <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
-        <div class="pix-benefit-tag">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            Entrega Expressa Ativada
-        </div>
       </div>
 
       <!-- ✅ NOVO: Beneficiário verificado -->
@@ -1854,27 +1802,38 @@ function showDeliverySteps(pixCode) {
 
     msgsEl.appendChild(card);
     // A rolagem será feita após um pequeno atraso para permitir que o card seja renderizado
-    setTimeout(() => {
+        setTimeout(() => {
       scrollDown(true);
       resolve(); // Resolve a Promise após a rolagem
+
+      // NOVO: Lembrete de 30 segundos para copiar o PIX
+      setTimeout(async () => {
+        // Verifica se não foi copiado e se o usuário ainda está na tela do PIX
+        if (!window._pixCodeCopied && window._currentFlowStep === 7) { 
+          await agentSay("Para agilizar a entrega do seu gás, por favor, copie o código PIX e realize o pagamento. Estamos aguardando para prosseguir com seu pedido!", true, true);
+        }
+      }, 30000); // 30 segundos
+
     }, 100);
 
-    const copyBtn = card.querySelector('#pixCopyBtn');
-    copyBtn.onclick = () => {
-      navigator.clipboard.writeText(pixCode).catch(()=>{});
-      copyBtn.classList.add('copied');
-      copyBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Copiado!
-      `;
-      setTimeout(()=>{
-        copyBtn.classList.remove('copied');
-        copyBtn.innerHTML = `
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copiar código Pix
-        `;
-      }, 2500);
-    };
+
+   const copyBtn = card.querySelector('#pixCopyBtn');
+copyBtn.onclick = () => {
+  navigator.clipboard.writeText(pixCode).catch(()=>{});
+  copyBtn.classList.add('copied');
+  copyBtn.innerHTML = `
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    Copiado!
+  `;
+  window._pixCodeCopied = true; // NOVO: Marca que o código foi copiado
+  setTimeout(()=>{
+    copyBtn.classList.remove('copied');
+    copyBtn.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copiar código Pix
+    `;
+  }, 2500);
+};
   });
 }
 
@@ -2023,20 +1982,6 @@ async function runConversation(startStep = 0) {
         // Modo demonstração — nenhum parâmetro na URL, exibe código de exemplo
         pixCode = '00020126580014br.gov.bcb.pix0136a1b2c3d4-e5f6-7890-abcd-ef1234567890520400005303986540510.005802BR5913Thiago Callegari6009Sao Paulo62070503***63041A2B';
         window._currentPixCode = pixCode;
-
-    // Inicia cronômetro de 15 minutos para o PIX
-    let seconds = 900;
-    const timerInterval = setInterval(() => {
-        const min = Math.floor(seconds / 60);
-        const sec = seconds % 60;
-        const timerEl = document.getElementById('pix-countdown');
-        if (timerEl) {
-            timerEl.innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
-        }
-        if (seconds <= 0) clearInterval(timerInterval);
-        seconds--;
-    }, 1000);
-    
       } else {
         try {
           const savedState = localStorage.getItem(STATE_STORAGE_KEY);
@@ -2045,20 +1990,6 @@ async function runConversation(startStep = 0) {
             if (state.pixCode) {
               pixCode = state.pixCode;
               window._currentPixCode = pixCode;
-
-    // Inicia cronômetro de 15 minutos para o PIX
-    let seconds = 900;
-    const timerInterval = setInterval(() => {
-        const min = Math.floor(seconds / 60);
-        const sec = seconds % 60;
-        const timerEl = document.getElementById('pix-countdown');
-        if (timerEl) {
-            timerEl.innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
-        }
-        if (seconds <= 0) clearInterval(timerInterval);
-        seconds--;
-    }, 1000);
-    
             }
           }
 
@@ -2077,20 +2008,6 @@ async function runConversation(startStep = 0) {
             if (pixData.success && pixData.pixCode) {
               pixCode = pixData.pixCode;
               window._currentPixCode = pixCode;
-
-    // Inicia cronômetro de 15 minutos para o PIX
-    let seconds = 900;
-    const timerInterval = setInterval(() => {
-        const min = Math.floor(seconds / 60);
-        const sec = seconds % 60;
-        const timerEl = document.getElementById('pix-countdown');
-        if (timerEl) {
-            timerEl.innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
-        }
-        if (seconds <= 0) clearInterval(timerInterval);
-        seconds--;
-    }, 1000);
-    
             }
           }
         } catch (err) { console.error(err); }
@@ -2123,12 +2040,15 @@ async function runConversation(startStep = 0) {
   }
 
   if (window._currentFlowStep === 8) {
-    // ── STEP 8: farewell message ──
-    window._currentFlowStep = 9;
-    saveChatHistory();
-    await pause(900); // Adicionado 300ms de espera antes de começar a digitar a última mensagem
-    await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar, estarei a disposição 😊`, true, true);
-  }
+  // ── STEP 8: farewell message ──
+  window._currentFlowStep = 9;
+  saveChatHistory();
+  await pause(900); // Adicionado 300ms de espera antes de começar a digitar a última mensagem
+  await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar, estarei a disposição 😊`, true, true);
+
+  // NOVO: Adiciona spinner persistente de aguardando pagamento PIX
+  window._pixPaymentSpinner = addSpinner("Aguardando confirmação do pagamento PIX...");
+}
 }
 
 // ── SEND ─────────────────────────────────────────────
