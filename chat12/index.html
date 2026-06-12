@@ -1620,13 +1620,19 @@ async function runConversation(startStep = 0) {
     saveChatHistory();
   }
 
-    if (window._currentFlowStep === 6) {
+      if (window._currentFlowStep === 6) {
     // ── STEP 6: generate and show PIX ──
     window._currentFlowStep = 7;
     saveChatHistory();
 
-    // Removemos a validação e vamos direto para a fala do agente
-    await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`);
+    // 1. Efeito de validação (dura 3.5 segundos)
+    const spValPix = addSpinner("Validando dados do pedido...");
+    await pause(3500);
+    spValPix.remove();
+
+    // 2. Fala do agente com efeito de digitando IMEDIATO
+    // O terceiro parâmetro 'true' força o efeito de digitação sem espera extra
+    await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`, true, true);
     await pause(400);
 
     const sp = addSpinner("Preparando chave Pix...");
