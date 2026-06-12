@@ -1863,12 +1863,10 @@ async function runConversation(startStep = 0) {
         sp.remove();
     
     // 1. Mostra a etiqueta de sucesso
+    // Etiqueta + digitando ao mesmo tempo
     addSys('Pedido validado com sucesso', 'ok');
-    await pause(500); 
-
-    // 2. Ativa o efeito de "Digitando" por 1.5 segundos
     setTyping(true);
-    await pause(1500);
+    await pause(1800);
     setTyping(false);
 
     // 3. Exibe o bloco do Pix
