@@ -1692,22 +1692,10 @@ function showDeliverySteps(pixCode) {
             <div class="pix-brand-sub">Disk Gás Entregas.</div>
           </div>
         </div>
-        // No HTML do card, substitua a div pix-expiry por esta com ID para o cronômetro:
-`<div class="pix-expiry">
-  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-  Expira em: <span id="pixTimer">15:00</span>
-</div>`
-
-// E adicione esta lógica de cronômetro logo após o card ser adicionado ao msgsEl:
-let seconds = 900; // 15 minutos
-const timerInterval = setInterval(() => {
-  seconds--;
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  const timerEl = document.getElementById('pixTimer');
-  if (timerEl) timerEl.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
-  if (seconds <= 0) clearInterval(timerInterval);
-}, 1000);
+        <div class="pix-expiry">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          20 min
+        </div>
       </div>
 
       <!-- Price hero -->
@@ -1969,9 +1957,6 @@ async function runConversation(startStep = 0) {
 
     // 3. Exibe o bloco do Pix
         await showDeliverySteps(pixCode); // Agora aguardamos a exibição completa do card PIX e a rolagem
-        await pause(1000);
-await agentSay("Assim que você copiar e pagar, o sistema me avisa aqui na hora para eu liberar sua entrega, tá bom? 👍", true, true);
-
   }
 
   if (window._currentFlowStep === 7) {
