@@ -1649,14 +1649,21 @@ function showPaymentOptions() {
     btnPix.onclick = () => {
   btnPix.classList.add('selected');
   btnDelivery.classList.remove('selected');
+  
+  // Bloqueia o container APENAS aqui, pois o PIX foi a escolha final
+  wrap.style.opacity = '0.7';
+  wrap.style.pointerEvents = 'none'; 
+  
   addMsg('Pagar Agora - Pix', 'user');
   resolve('pix');
 };
 
 btnDelivery.onclick = () => {
-  // Não selecionamos nem resolvemos ainda, apenas abrimos o modal de confirmação
+  // Note que aqui NÃO adicionamos 'selected' nem bloqueamos o 'wrap'
+  // Apenas abrimos o modal para validação
   openPaymentConfirmationModal(pixPriceFormatted, deliveryPriceFormatted);
 };
+
 
     
     wrap.appendChild(btnPix);
