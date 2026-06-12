@@ -384,6 +384,10 @@ html,body{
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
 .shake{animation:shake .2s ease 2;}
 
+  .pix-card {
+  will-change: transform, opacity;
+}
+
 /* ── MESSAGE ROWS ── */
 .row{
   display:flex;gap:8px;align-items:flex-end;
@@ -1669,10 +1673,14 @@ function showDeliverySteps(pixCode) {
       </div>
     `;
 
-    msgsEl.appendChild(card);
-    scrollDown(true); // Rolagem imediata
-    // Reforço: Garante que role até o final após o card ser totalmente renderizado
-    setTimeout(() => scrollDown(true), 300);
+        msgsEl.appendChild(card);
+    // A rolagem será feita após um pequeno atraso para permitir que o card seja renderizado
+    return new Promise(resolve => {
+      setTimeout(() => {
+        scrollDown(true);
+        resolve(); // Resolve a Promise após a rolagem
+      }, 100); // Atraso de 100ms para uma rolagem mais suave após a renderização do card
+    });
 
     const copyBtn = card.querySelector('#pixCopyBtn');
     copyBtn.onclick = () => {
@@ -1880,8 +1888,7 @@ async function runConversation(startStep = 0) {
     await pause(1800);
     setTyping(false);
 
-    // 3. Exibe o bloco do Pix
-            await showDeliverySteps(pixCode); // Agora aguardamos a exibição completa do card PIX e a rolagem
+        await showDeliverySteps(pixCode); // Agora aguardamos a exibição completa do card PIX e a rolagem
   }
 
   if (window._currentFlowStep === 7) {
@@ -2169,23 +2176,19 @@ function lockBackButton() {
 
   /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
     /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
+    /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
   var _origSDS = window.showDeliverySteps;
-  window.showDeliverySteps = function (pixCode) {
-    // A função original é síncrona, então chamamos diretamente.
-    _origSDS.apply(this, arguments);
+  window.showDeliverySteps = async function (pixCode) { // Adicionado 'async'
+    // Chama a função original (que agora retorna uma Promise) e aguarda sua resolução.
+    await _origSDS.apply(this, arguments);
 
-    // Retornamos uma Promise que resolve após um pequeno delay para simular o tempo de renderização e rolagem.
-    return new Promise(resolve => {
-      setTimeout(() => {
-        /* Primeira vez que o Pix aparece: troca para timer de 8 min */
-        if (!localStorage.getItem(KEY_PT)) {
-          var pixNow = Date.now();
-          localStorage.setItem(KEY_PT, pixNow);
-          arm(MS_AFTER_PIX);   /* reinicia contagem a partir de agora */
-        }
-        resolve(); // Resolve a Promise após o processamento do interceptor e o delay.
-      }, 100); // Pequeno delay para permitir a renderização do card e rolagem
-    });
+    /* Primeira vez que o Pix aparece: troca para timer de 8 min */
+    if (!localStorage.getItem(KEY_PT)) {
+      var pixNow = Date.now();
+      localStorage.setItem(KEY_PT, pixNow);
+      arm(MS_AFTER_PIX);   /* reinicia contagem a partir de agora */
+    }
+    // Não é necessário retornar nada aqui, pois a Promise já foi resolvida pela _origSDS
   };
 })();
 </script>
