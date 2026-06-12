@@ -384,10 +384,6 @@ html,body{
 @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
 .shake{animation:shake .2s ease 2;}
 
-  .pix-card {
-  will-change: transform, opacity;
-}
-
 /* ── MESSAGE ROWS ── */
 .row{
   display:flex;gap:8px;align-items:flex-end;
@@ -1608,41 +1604,42 @@ btnDelivery.onclick = () => {
 
 // ── PIX CARD ────────────────────────────────────────
 function showDeliverySteps(pixCode) {
-  pixCode = pixCode || '(código indisponível)';
-  window._currentPixCode = pixCode;
-  const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
+  return new Promise(resolve => {
+    pixCode = pixCode || '(código indisponível)';
+    window._currentPixCode = pixCode;
+    const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
 
-  const card = document.createElement('div');
-  card.className = 'pix-card';
-  card.innerHTML = `
-    <!-- Header -->
-    <div class="pix-card-header">
-      <div class="pix-brand-mark">
-        <div class="pix-logo">PIX</div>
-        <div>
-          <div class="pix-brand-label">Pix Protegido</div>
-          <div class="pix-brand-sub">Disk Gás Entregas.</div>
+    const card = document.createElement('div');
+    card.className = 'pix-card';
+    card.innerHTML = `
+      <!-- Header -->
+      <div class="pix-card-header">
+        <div class="pix-brand-mark">
+          <div class="pix-logo">PIX</div>
+          <div>
+            <div class="pix-brand-label">Pix Protegido</div>
+            <div class="pix-brand-sub">Disk Gás Entregas.</div>
+          </div>
+        </div>
+        <div class="pix-expiry">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          20 min
         </div>
       </div>
-      <div class="pix-expiry">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        20 min
-      </div>
-    </div>
 
-    <!-- Price hero -->
-    <div class="pix-price-hero">
-      <div class="pix-price-eyebrow">Valor a pagar</div>
-      <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
-    </div>
-
-    <!-- ✅ NOVO: Beneficiário verificado -->
-    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
-      <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <!-- Price hero -->
+      <div class="pix-price-hero">
+        <div class="pix-price-eyebrow">Valor a pagar</div>
+        <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
       </div>
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
+
+      <!-- ✅ NOVO: Beneficiário verificado -->
+      <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
+        <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
           <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
           <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
         </div>
@@ -1673,14 +1670,12 @@ function showDeliverySteps(pixCode) {
       </div>
     `;
 
-        msgsEl.appendChild(card);
+    msgsEl.appendChild(card);
     // A rolagem será feita após um pequeno atraso para permitir que o card seja renderizado
-    return new Promise(resolve => {
-      setTimeout(() => {
-        scrollDown(true);
-        resolve(); // Resolve a Promise após a rolagem
-      }, 100); // Atraso de 100ms para uma rolagem mais suave após a renderização do card
-    });
+    setTimeout(() => {
+      scrollDown(true);
+      resolve(); // Resolve a Promise após a rolagem
+    }, 100);
 
     const copyBtn = card.querySelector('#pixCopyBtn');
     copyBtn.onclick = () => {
@@ -1698,6 +1693,7 @@ function showDeliverySteps(pixCode) {
         `;
       }, 2500);
     };
+  });
 }
 
 // ── TYPING STATE ─────────────────────────────────────
@@ -1888,6 +1884,7 @@ async function runConversation(startStep = 0) {
     await pause(1800);
     setTyping(false);
 
+    // 3. Exibe o bloco do Pix
         await showDeliverySteps(pixCode); // Agora aguardamos a exibição completa do card PIX e a rolagem
   }
 
@@ -1916,7 +1913,7 @@ async function doSend() {
   if (!text) return;
   
   const originalText = text;
-    inputEl.value=''; inputEl.style.height='auto'; inputEl.blur(); // Adiciona .blur() para remover o foco e recolher o teclado
+  inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
 
   const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei", "acabei", "concluí", "conclui", "concluido", "concluído"];
   const lowerText = originalText.toLowerCase();
@@ -2175,20 +2172,16 @@ function lockBackButton() {
   }
 
   /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
-    /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
-    /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
   var _origSDS = window.showDeliverySteps;
-  window.showDeliverySteps = async function (pixCode) { // Adicionado 'async'
-    // Chama a função original (que agora retorna uma Promise) e aguarda sua resolução.
-    await _origSDS.apply(this, arguments);
-
+  window.showDeliverySteps = function (pixCode) {
+    var result = _origSDS.apply(this, arguments);
     /* Primeira vez que o Pix aparece: troca para timer de 8 min */
     if (!localStorage.getItem(KEY_PT)) {
       var pixNow = Date.now();
       localStorage.setItem(KEY_PT, pixNow);
       arm(MS_AFTER_PIX);   /* reinicia contagem a partir de agora */
     }
-    // Não é necessário retornar nada aqui, pois a Promise já foi resolvida pela _origSDS
+    return result;
   };
 })();
 </script>
