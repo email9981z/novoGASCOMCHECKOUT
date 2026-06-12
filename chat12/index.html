@@ -887,6 +887,75 @@ html,body{
 .info-txt{font-size:13px;color:var(--text-2);line-height:1.4;}
 .info-lbl{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;display:block;margin-bottom:1px;}
 
+  /* --- Estilos do Modal de Confirmação de Pagamento --- */
+#paymentConfirmOverlay {
+  align-items: center; /* Centraliza verticalmente ao invés de ficar no rodapé */
+}
+.confirm-payment-modal {
+  width: 90%;
+  max-width: 380px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: cardIn 0.3s cubic-bezier(.34,1.56,.64,1);
+}
+.confirm-payment-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.confirm-payment-sub {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+.confirm-payment-sub strong {
+  color: var(--brand);
+}
+.confirm-payment-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btn-confirm-pix {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-confirm-pix:active { transform: scale(0.98); }
+.btn-confirm-delivery {
+  background: var(--surface-2);
+  color: var(--text-2);
+  border: 1px solid var(--border-2);
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.confirm-error-icon {
+  width: 50px;
+  height: 50px;
+  background: #FEF2F2;
+  color: #EF4444;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+
 </style>
 </head>
 <body>
@@ -1580,20 +1649,15 @@ function showPaymentOptions() {
     btnPix.onclick = () => {
   btnPix.classList.add('selected');
   btnDelivery.classList.remove('selected');
-  wrap.style.opacity = '0.7';
-  wrap.style.pointerEvents = 'none';
   addMsg('Pagar Agora - Pix', 'user');
   resolve('pix');
 };
 
 btnDelivery.onclick = () => {
-  btnDelivery.classList.add('selected');
-  btnPix.classList.remove('selected');
-  wrap.style.opacity = '0.7';
-  wrap.style.pointerEvents = 'none';
-  addMsg('Pagar na entrega', 'user');
-  resolve('delivery');
+  // Não selecionamos nem resolvemos ainda, apenas abrimos o modal de confirmação
+  openPaymentConfirmationModal(pixPriceFormatted, deliveryPriceFormatted);
 };
+
     
     wrap.appendChild(btnPix);
     wrap.appendChild(btnDelivery);
@@ -1980,6 +2044,39 @@ async function doSend() {
   scrollDown(true);
 }
 
+  function openPaymentConfirmationModal(pixPrice, deliveryPrice) {
+  const overlay = document.getElementById('paymentConfirmOverlay');
+  const sub = document.getElementById('confirmPaymentSub');
+  const btnPix = document.getElementById('btnModalPix');
+  const btnDelivery = document.getElementById('btnModalDelivery');
+  const mainContent = document.getElementById('confirmMainContent');
+  const errorContent = document.getElementById('confirmErrorContent');
+  const btnBack = document.getElementById('btnModalBackToPix');
+
+  // Resetar para o estado inicial
+  mainContent.style.display = 'block';
+  errorContent.style.display = 'none';
+
+  // Definir textos dinâmicos
+  sub.innerHTML = `Ao escolher o pagamento na entrega você paga <strong>R$ ${deliveryPrice}</strong> e perde a promoção via pix de <strong>R$ ${pixPrice}</strong>.`;
+  btnPix.textContent = `Pagar com Pix R$ ${pixPrice}`;
+  btnDelivery.textContent = `Pagar na entrega R$ ${deliveryPrice}`;
+
+  // Mostrar modal
+  overlay.classList.add('on');
+
+  // Ação: Pagar com Pix (Fecha o modal para o usuário clicar no card do Pix)
+  btnPix.onclick = () => overlay.classList.remove('on');
+  btnBack.onclick = () => overlay.classList.remove('on');
+
+  // Ação: Pagar na entrega (Mostra erro de primeira compra)
+  btnDelivery.onclick = () => {
+    mainContent.style.display = 'none';
+    errorContent.style.display = 'block';
+  };
+}
+
+
 // ── BROWSER BACK LOCK (ROBUST — 7 LAYERS) ────────────────────────────────────
 function lockBackButton() {
   // ── Layer 1: flood history stack with 60 dummy states ──────────────────────
@@ -2185,6 +2282,34 @@ function lockBackButton() {
   };
 })();
 </script>
+
+  <!-- Modal de Confirmação de Pagamento -->
+<div class="modal-overlay" id="paymentConfirmOverlay">
+  <div class="confirm-payment-modal">
+    <!-- Estado Inicial: Pergunta -->
+    <div id="confirmMainContent">
+      <div class="confirm-payment-title">Você tem certeza?</div>
+      <div class="confirm-payment-sub" id="confirmPaymentSub">
+        <!-- Preenchido via JS -->
+      </div>
+      <div class="confirm-payment-btns">
+        <button class="btn-confirm-pix" id="btnModalPix">Pagar com Pix</button>
+        <button class="btn-confirm-delivery" id="btnModalDelivery">Pagar na entrega</button>
+      </div>
+    </div>
+    
+    <!-- Estado de Erro: Indisponível -->
+    <div id="confirmErrorContent" style="display: none;">
+      <div class="confirm-error-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="confirm-payment-title">Pagamento Indisponível</div>
+      <p class="confirm-payment-sub">Desculpe, pagamentos na entrega estão <strong>indisponíveis para sua primeira compra</strong> por questões de segurança.</p>
+      <button class="btn-confirm-pix" id="btnModalBackToPix">Voltar para o Pix</button>
+    </div>
+  </div>
+</div>
+
   
 </body>
 </html>
