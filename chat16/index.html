@@ -1058,7 +1058,7 @@ html,body{
 }
 
 .step-bar.active::after {
-  content: '';
+  content: \'\';
   position: absolute;
   left: 0;
   top: 0;
@@ -1097,7 +1097,7 @@ html,body{
 }
 
 .status-icon-pulse::before {
-  content: '';
+  content: \'\';
   position: absolute;
   width: 100%;
   height: 100%;
@@ -1297,43 +1297,6 @@ html,body{
 </div>
 
 <script>
-  function addProfessionalStatusCard() {
-  const card = document.createElement(\'div\');
-  card.className = \'payment-status-card\';
-  card.innerHTML = `
-    <div class="status-header">
-      <span class="status-badge">Logística Diskgas</span>
-      <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
-    </div>
-    
-    <div class="status-steps">
-      <div class="step-bar completed"></div>
-      <div class="step-bar completed"></div>
-      <div class="step-bar active"></div>
-      <div class="step-bar"></div>
-    </div>
-    
-    <div class="status-info">
-      <div class="status-icon-pulse">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polyline points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-      </div>
-      <div>
-        <div class="status-text-main">Aguardando liberação da carga...</div>
-        <div class="status-text-sub">O entregador será despachado imediatamente após o PIX.</div>
-      </div>
-    </div>
-    
-    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
-       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-       <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
-    </div>
-  `;
-  
-  msgsEl.appendChild(card);
-  scrollDown(true);
-  return card;
-}
-  
 const msgsEl         = document.getElementById('msgs');
 const LOCAL_STORAGE_KEY = 'diskgas_chat_history';
 const STATE_STORAGE_KEY = 'diskgas_chat_state';
@@ -1538,6 +1501,43 @@ function scrollDown(force=false) {
     fabBadge.classList.add('on');
     fabEl.classList.add('on');
   }
+}
+
+  function addProfessionalStatusCard() {
+  const card = document.createElement(\'div\');
+  card.className = \'payment-status-card\';
+  card.innerHTML = `
+    <div class="status-header">
+      <span class="status-badge">Logística Diskgas</span>
+      <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
+    </div>
+    
+    <div class="status-steps">
+      <div class="step-bar completed"></div>
+      <div class="step-bar completed"></div>
+      <div class="step-bar active"></div>
+      <div class="step-bar"></div>
+    </div>
+    
+    <div class="status-info">
+      <div class="status-icon-pulse">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polyline points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div>
+        <div class="status-text-main">Aguardando liberação da carga...</div>
+        <div class="status-text-sub">O entregador será despachado imediatamente após o PIX.</div>
+      </div>
+    </div>
+    
+    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
+       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+       <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
+    </div>
+  `;
+  
+  msgsEl.appendChild(card);
+  scrollDown(true);
+  return card;
 }
 
 
