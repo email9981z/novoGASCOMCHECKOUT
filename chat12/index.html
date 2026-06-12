@@ -1604,94 +1604,96 @@ btnDelivery.onclick = () => {
 
 // ── PIX CARD ────────────────────────────────────────
 function showDeliverySteps(pixCode) {
-  pixCode = pixCode || '(código indisponível)';
-  window._currentPixCode = pixCode;
-  const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
+  return new Promise(resolve => {
+    pixCode = pixCode || '(código indisponível)';
+    window._currentPixCode = pixCode;
+    const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
 
-  const card = document.createElement('div');
-  card.className = 'pix-card';
-  card.innerHTML = `
-    <!-- Header -->
-    <div class="pix-card-header">
-      <div class="pix-brand-mark">
-        <div class="pix-logo">PIX</div>
-        <div>
-          <div class="pix-brand-label">Pix Protegido</div>
-          <div class="pix-brand-sub">Disk Gás Entregas.</div>
+    const card = document.createElement('div');
+    card.className = 'pix-card';
+    card.innerHTML = `
+      <!-- Header -->
+      <div class="pix-card-header">
+        <div class="pix-brand-mark">
+          <div class="pix-logo">PIX</div>
+          <div>
+            <div class="pix-brand-label">Pix Protegido</div>
+            <div class="pix-brand-sub">Disk Gás Entregas.</div>
+          </div>
+        </div>
+        <div class="pix-expiry">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          20 min
         </div>
       </div>
-      <div class="pix-expiry">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        20 min
+
+      <!-- Price hero -->
+      <div class="pix-price-hero">
+        <div class="pix-price-eyebrow">Valor a pagar</div>
+        <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
       </div>
-    </div>
 
-    <!-- Price hero -->
-    <div class="pix-price-hero">
-      <div class="pix-price-eyebrow">Valor a pagar</div>
-      <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
-    </div>
-
-    <!-- ✅ NOVO: Beneficiário verificado -->
-    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
-      <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <!-- ✅ NOVO: Beneficiário verificado -->
+      <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
+        <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
+          <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
+        </div>
       </div>
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
-        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
+
+      <!-- Code display -->
+      <div class="pix-code-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
       </div>
-    </div>
 
-    <!-- Code display -->
-    <div class="pix-code-row">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
-    </div>
-
-    <!-- Copy CTA -->
-    <button class="pix-copy-btn" id="pixCopyBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      Copiar código Pix
-    </button>
-
-    <!-- Trust row -->
-    <div class="pix-trust-row">
-      <div class="pix-trust-item positive">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Confirmação instantânea
-      </div>
-      <div class="pix-trust-item neutral">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Pagamento seguro
-      </div>
-    </div>
-  `;
-
-    msgsEl.appendChild(card);
-  scrollDown(true); // Rolagem imediata
-  
-  // Reforço: Garante que role até o final após o card ser totalmente renderizado
-  setTimeout(() => scrollDown(true), 300);
-
-
-  const copyBtn = card.querySelector('#pixCopyBtn');
-  copyBtn.onclick = () => {
-    navigator.clipboard.writeText(pixCode).catch(()=>{});
-    copyBtn.classList.add('copied');
-    copyBtn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      Código copiado!
-    `;
-    setTimeout(()=>{
-      copyBtn.classList.remove('copied');
-      copyBtn.innerHTML = `
+      <!-- Copy CTA -->
+      <button class="pix-copy-btn" id="pixCopyBtn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         Copiar código Pix
+      </button>
+
+      <!-- Trust row -->
+      <div class="pix-trust-row">
+        <div class="pix-trust-item positive">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Confirmação instantânea
+        </div>
+        <div class="pix-trust-item neutral">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Pagamento seguro
+        </div>
+      </div>
+    `;
+
+    msgsEl.appendChild(card);
+    // A rolagem será feita após um pequeno atraso para permitir que o card seja renderizado
+    setTimeout(() => {
+      scrollDown(true);
+      resolve(); // Resolve a Promise após a rolagem
+    }, 100);
+
+    const copyBtn = card.querySelector('#pixCopyBtn');
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(pixCode).catch(()=>{});
+      copyBtn.classList.add('copied');
+      copyBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Código copiado!
       `;
-    }, 2500);
-  };
+      setTimeout(()=>{
+        copyBtn.classList.remove('copied');
+        copyBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar código Pix
+        `;
+      }, 2500);
+    };
+  });
 }
 
 // ── TYPING STATE ─────────────────────────────────────
@@ -1883,15 +1885,15 @@ async function runConversation(startStep = 0) {
     setTyping(false);
 
     // 3. Exibe o bloco do Pix
-    showDeliverySteps(pixCode);
+        await showDeliverySteps(pixCode); // Agora aguardamos a exibição completa do card PIX e a rolagem
   }
 
   if (window._currentFlowStep === 7) {
     window._currentFlowStep = 8;
     saveChatHistory();
-    await pause(300);
+    await pause(1500); // Este pause agora acontece *depois* que o card PIX está totalmente exibido e rolado
     setTyping(true);
-    await pause(300);
+    await pause(2500);
     setTyping(false);
     addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. ⏰`, 'agent', true);
   }
