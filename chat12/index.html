@@ -1595,29 +1595,27 @@ async function runConversation(startStep = 0) {
     }
   }
 
-    if (window._currentFlowStep === 4) {
+     if (window._currentFlowStep === 4) {
     // ── STEP 4: post-confirmation validation ──
     window._currentFlowStep = 5;
     saveChatHistory();
+    
     const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
 
-    setTyping(true);
-    await pause(1500);
-    setTyping(false);
-
-    // Força o reinício do fluxo para o próximo passo de forma limpa
-    runConversation(5); 
+    // Chamamos o próximo passo diretamente
+    runConversation(5);
     return;
   }
 
 
 
+
     if (window._currentFlowStep === 5) {
     // ── STEP 5: payment choice ──
-    await agentSay(`Certo, prefere pagar agora ou na entrega?`);
-    await pause(600); // Adiciona o intervalo de 400ms
+    await agentSay(`Certo, prefere pagar agora ou na entrega?`, true, true);
+    await pause(400);
     const paymentChoice = await showPaymentOptions();
     if (paymentChoice === 'pix') {
       window._currentFlowStep = 6;
