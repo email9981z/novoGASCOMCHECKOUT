@@ -1673,9 +1673,10 @@ async function runConversation(startStep = 0) {
       }
     }
 
-        const elapsed = Date.now() - pixStartTime;
-    if (elapsed < 2000) await pause(2000 - elapsed);
+            // Força o efeito de "Preparando chave Pix" a durar exatamente 2 segundos
+    await pause(2000); 
     sp.remove();
+
     
     // Adiciona a etiqueta de validação aqui
     addSys('Pedido validado com sucesso', 'ok');
