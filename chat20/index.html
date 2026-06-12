@@ -1301,7 +1301,10 @@ function saveChatHistory() {
     lastSender: lastSender,
     flowStep: window._currentFlowStep || 0,
     paymentConfirmed: window._paymentConfirmed || false,
-    contactMsgSent: window._contactMsgSent || false
+contactMsgSent: window._contactMsgSent || false,
+pixCopyClicked: window._pixCopyClicked || false,
+pixCopyReminderSent: window._pixCopyReminderSent || false,
+pixPaymentReminderSent: window._pixPaymentReminderSent || false
   };
   localStorage.setItem(STATE_STORAGE_KEY, JSON.stringify(state));
 }
@@ -1471,7 +1474,34 @@ function showOrderConfirmation() {
 function showDeliverySteps(pixCode) {
   pixCode = pixCode || '(código indisponível)';
   window._currentPixCode = pixCode;
-  const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
+
+// Limpa quaisquer timers anteriores para evitar duplicação
+if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
+if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
+window._pixCopyClicked = false;
+window._pixCopyReminderSent = false;
+window._pixPaymentReminderSent = false;
+
+// Timer de 30 segundos para lembrar de copiar o código Pix
+window._pixCopyTimer = setTimeout(async () => {
+  if (!window._pixCopyClicked && !window._pixCopyReminderSent) {
+    await agentSay("Olá! Não se esqueça de copiar o código Pix para realizar o pagamento. 😉", true);
+    window._pixCopyReminderSent = true;
+    saveChatHistory();
+  }
+}, 30 * 1000); // 30 segundos
+
+// Timer de 5 minutos para lembrar do pagamento Pix
+window._pixPaymentTimer = setTimeout(async () => {
+  if (!window._paymentConfirmed && !window._pixPaymentReminderSent) {
+    await agentSay("Ainda aguardando a confirmação do seu pagamento Pix. Assim que for identificado, seu pedido será liberado!", true);
+    window._pixPaymentReminderSent = true;
+    saveChatHistory();
+  }
+}, 5 * 60 * 1000); // 5 minutos
+
+const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
+
 
   const card = document.createElement('div');
   card.className = 'pix-card';
@@ -1539,7 +1569,9 @@ function showDeliverySteps(pixCode) {
 
   const copyBtn = card.querySelector('#pixCopyBtn');
   copyBtn.onclick = () => {
-    navigator.clipboard.writeText(pixCode).catch(()=>{});
+  window._pixCopyClicked = true;
+  if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
+  navigator.clipboard.writeText(pixCode).catch(()=>{});
     copyBtn.classList.add('copied');
     copyBtn.innerHTML = `
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1760,7 +1792,8 @@ async function doSend() {
 
   if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
     window._paymentConfirmed = true;
-    saveChatHistory();
+if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
+saveChatHistory();
     await agentSay("Certo, com o pagamento realizado podemos preparar o envio, o prazo de entrega é de 20-30 minutos", true, true);
     saveChatHistory();
   } else if (foundContactTerm) {
@@ -1916,17 +1949,27 @@ function lockBackButton() {
   if (savedHTML && savedState) {
     const state = JSON.parse(savedState);
     window._currentPixCode = state.pixCode;
+window._pixCopyTimer = null;
+window._pixPaymentTimer = null;
+window._pixCopyClicked = false;
+window._pixCopyReminderSent = false;
+window._pixPaymentReminderSent = false;
     lastSender = state.lastSender;
     window._currentFlowStep = state.flowStep || 0;
     window._paymentConfirmed = state.paymentConfirmed || false;
     window._contactMsgSent = state.contactMsgSent || false;
+window._pixCopyClicked = state.pixCopyClicked || false;
+window._pixCopyReminderSent = state.pixCopyReminderSent || false;
+window._pixPaymentReminderSent = state.pixPaymentReminderSent || false;
     msgsEl.innerHTML = savedHTML;
     
     // Re-attach event listeners for PIX
     const pixCopyBtn = msgsEl.querySelector('#pixCopyBtn');
     if (pixCopyBtn && window._currentPixCode) {
       pixCopyBtn.onclick = () => {
-        navigator.clipboard.writeText(window._currentPixCode).catch(()=>{});
+  window._pixCopyClicked = true;
+  if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
+  navigator.clipboard.writeText(window._currentPixCode).catch(()=>{});
         pixCopyBtn.classList.add('copied');
         pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Código copiado!`;
         setTimeout(()=>{
