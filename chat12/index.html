@@ -1891,7 +1891,7 @@ async function runConversation(startStep = 0) {
     saveChatHistory();
     await pause(1500);
     setTyping(true);
-    await pause(2500);
+    await pause(300);
     setTyping(false);
     addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. ⏰`, 'agent', true);
   }
