@@ -2102,83 +2102,41 @@ async function runConversation(startStep = 0) {
     saveChatHistory();
   }
 
-      if (window._currentFlowStep === 6) {
+        if (window._currentFlowStep === 6) {
     // ── STEP 6: generate and show PIX ──
     window._currentFlowStep = 7;
     saveChatHistory();
 
-        // 1. Efeito de validação (dura 3.5 segundos)
-    const spValPix = addSpinner("Validando dados do pedido...");
-    await pause(3500);
-    spValPix.remove();
-
-    // Adiciona a etiqueta de sucesso antes da digitação do agente
-    addSys("Pedido validado com sucesso", "ok");
-    await pause(600); // Pequena pausa para o usuário ler a etiqueta
-
-    // 2. Fala do agente com efeito de digitando IMEDIATO
-    // O terceiro parâmetro 'true' força o efeito de digitação sem espera extra
+    // 1. O agente fala primeiro avisando que vai gerar
     await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`, true, true);
     await pause(400);
 
-    const sp = addSpinner("Preparando chave Pix...");
-    let pixCode = window._currentPixCode;
-    const pixStartTime = Date.now();
-    
-    if (!pixCode) {
-      const _hasOrderParams = window.location.search &&
-        new URLSearchParams(window.location.search).get('products');
+    // 2. Efeito de validação (acontece após a fala)
+    const spValPix = addSpinner("Validando dados do pedido...");
+    await pause(3000); // 3 segundos de validação
+    spValPix.remove();
 
+    // 3. Etiqueta de sucesso (confirmação visual)
+    addSys("Pedido validado com sucesso", "ok");
+    await pause(500); // Pausa curta para leitura
+
+    // 4. Preparação e exibição DIRETA do Bloco PIX
+    let pixCode = window._currentPixCode;
+    
+    // Se não houver código, gera o padrão ou busca
+    if (!pixCode) {
+      const _hasOrderParams = window.location.search && new URLSearchParams(window.location.search).get('products');
       if (!_hasOrderParams) {
-        // Modo demonstração — nenhum parâmetro na URL, exibe código de exemplo
         pixCode = '00020126580014br.gov.bcb.pix0136a1b2c3d4-e5f6-7890-abcd-ef1234567890520400005303986540510.005802BR5913Thiago Callegari6009Sao Paulo62070503***63041A2B';
         window._currentPixCode = pixCode;
-      } else {
-        try {
-          const savedState = localStorage.getItem(STATE_STORAGE_KEY);
-          if (savedState) {
-            const state = JSON.parse(savedState);
-            if (state.pixCode) {
-              pixCode = state.pixCode;
-              window._currentPixCode = pixCode;
-            }
-          }
-
-          if (!pixCode) {
-            const payerName = ORDER.nome
-              ? ORDER.nome.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-              : 'Pedido Aprovado';
-            const amountStr = ORDER.productPrice.toFixed(2).replace('.', ',');
-
-            const pixResp = await fetch('/api/pix', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ payer_name: payerName, amount: amountStr })
-            });
-            const pixData = await pixResp.json();
-            if (pixData.success && pixData.pixCode) {
-              pixCode = pixData.pixCode;
-              window._currentPixCode = pixCode;
-            }
-          }
-        } catch (err) { console.error(err); }
       }
     }
 
-            // Força o efeito de "Preparando chave Pix" a durar exatamente 2 segundos
-    await pause(3500); 
-        sp.remove();
-    
-    // 1. Mostra a etiqueta de sucesso
-    // Etiqueta + digitando ao mesmo tempo
-    addSys('Pix gerado com sucesso', 'ok');
-    setTyping(true);
-    await pause(1800);
-    setTyping(false);
-
-    // 3. Exibe o bloco do Pix
-        await showDeliverySteps(pixCode); // Agora aguardamos a exibição completa do card PIX e a rolagem
+    // Chama a função que cria o cartão (ela já faz o msgsEl.appendChild)
+    // Note que removemos qualquer 'agentSay' ou 'setTyping' daqui para ser direto
+    showDeliverySteps(pixCode); 
   }
+
 
   if (window._currentFlowStep === 7) {
     window._currentFlowStep = 8;
