@@ -2109,10 +2109,14 @@ async function runConversation(startStep = 0) {
     window._currentFlowStep = 7;
     saveChatHistory();
 
-    // 1. Efeito de validação (dura 3.5 segundos)
+        // 1. Efeito de validação (dura 3.5 segundos)
     const spValPix = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spValPix.remove();
+
+    // Adiciona a etiqueta de sucesso antes da digitação do agente
+    addSys("Pedido validado com sucesso", "ok");
+    await pause(600); // Pequena pausa para o usuário ler a etiqueta
 
     // 2. Fala do agente com efeito de digitando IMEDIATO
     // O terceiro parâmetro 'true' força o efeito de digitação sem espera extra
