@@ -1468,90 +1468,194 @@ function showOrderConfirmation() {
 
 // ── PAYMENT OPTIONS ──────────────────────────────────
 function showPaymentOptions() {
-    const pixPrice = ORDER.productPrice;
-    const deliveryPrice = pixPrice * 1.30;
-    const pixPriceFormatted = pixPrice.toFixed(2).replace('.', ',');
-    const deliveryPriceFormatted = deliveryPrice.toFixed(2).replace('.', ',');
+  const pixPrice = ORDER.productPrice;
+  const deliveryPrice = pixPrice * 1.30;
+  const pixPriceFormatted = pixPrice.toFixed(2).replace('.', ',');
+  const deliveryPriceFormatted = deliveryPrice.toFixed(2).replace('.', ',');
+
   return new Promise(resolve => {
+
+    // ── Container principal com separação clara da mensagem anterior ──
     const outer = document.createElement('div');
-    outer.style.cssText = 'display:flex;flex-direction:column;gap:0;align-self:flex-start;width:100%;max-width:340px;animation:cardIn .4s var(--spring);';
-
-    const stepHeader = document.createElement('div');
-    stepHeader.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:14px;';
-    stepHeader.innerHTML = `
-      <div style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--brand);color:#fff;font-size:10px;font-weight:800;flex-shrink:0;">2</div>
-      <span style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.7px;">Forma de Pagamento</span>
-      <div style="flex:1;height:1px;background:var(--border-2);margin-left:4px;"></div>
+    outer.style.cssText = `
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-self: flex-start;
+      width: 100%;
+      max-width: 340px;
+      margin-top: 10px;
+      animation: cardIn .4s var(--spring);
     `;
-    outer.appendChild(stepHeader);
 
-    const wrap = document.createElement('div');
-    wrap.style.cssText = 'display:flex;flex-direction:column;gap:10px;';
+    // ── Cabeçalho de etapa ──
+    outer.innerHTML = `
+      <div style="
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 12px;
+      ">
+        <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 22px; height: 22px;
+          border-radius: 50%;
+          background: var(--brand);
+          color: #fff;
+          font-size: 10px;
+          font-weight: 900;
+          flex-shrink: 0;
+        ">2</div>
+        <span style="
+          font-size: 11px;
+          font-weight: 700;
+          color: var(--text-2);
+          text-transform: uppercase;
+          letter-spacing: .7px;
+        ">Como deseja pagar?</span>
+        <div style="flex:1; height:1px; background:var(--border-2);"></div>
+      </div>
+    `;
 
-    
-   const createOption = (title, sub, iconHtml, color, priceFormatted) => {
-  const btn = document.createElement('div');
-  btn.className = 'payment-option-card';
-  btn.innerHTML = `
-    <div class="payment-option-card-icon" style="background:${color};">${iconHtml}</div>
-    <div class="payment-option-card-content">
-      <div class="payment-option-card-title">${title}</div>
-      <div class="payment-option-card-subtitle">${sub}</div>
-    </div>
-    <div class="payment-option-card-price">R$ ${priceFormatted}</div>
-    <svg class="payment-option-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-  `;
-  return btn;
-}; 
+    // ── Card container ──
+    const card = document.createElement('div');
+    card.style.cssText = `
+      background: var(--surface);
+      border: 1.5px solid var(--border-2);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    `;
 
+    // ── Opção PIX ──
+    const btnPix = document.createElement('div');
+    btnPix.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 16px 16px 15px;
+      cursor: pointer;
+      position: relative;
+      transition: background .18s ease;
+      background: #fff;
+    `;
+    btnPix.innerHTML = `
+      <div style="
+        width: 46px; height: 46px;
+        border-radius: 13px;
+        background: #32BCAD;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 3px 10px rgba(50,188,173,.28);
+      ">
+        <span style="font-weight:900;font-size:10px;font-family:'JetBrains Mono',monospace;color:#fff;letter-spacing:.5px;">PIX</span>
+      </div>
+      <div style="flex:1; min-width:0;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;">
+          <span style="font-size:14px;font-weight:800;color:var(--text);line-height:1.2;">Pix · Pagar agora</span>
+          <span style="
+            background:#ECFDF5;
+            color:#065F46;
+            font-size:8.5px;
+            font-weight:800;
+            padding:2px 7px;
+            border-radius:20px;
+            text-transform:uppercase;
+            letter-spacing:.4px;
+            border:1px solid rgba(16,185,129,.2);
+            white-space:nowrap;
+          ">✦ Recomendado</span>
+        </div>
+        <span style="font-size:11.5px;color:var(--text-3);font-weight:500;">Aprovação instantânea · Sem taxas</span>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <div style="font-size:16px;font-weight:900;color:#32BCAD;letter-spacing:-.5px;">R$ ${pixPriceFormatted}</div>
+      </div>
+    `;
 
-    const btnPix = createOption(
-      'Pix — Melhor opção', 
-      'Aprovação instantânea · Sem taxas', 
-      '<span style="font-weight:900;font-size:10px;font-family:\'JetBrains Mono\',monospace;">PIX</span>', 
-      '#32BCAD',
-      pixPriceFormatted
-    );
-    // Badge recomendado
-    const recBadge = document.createElement('div');
-    recBadge.style.cssText = 'position:absolute;top:-1px;right:12px;background:#10B981;color:#fff;font-size:9px;font-weight:800;padding:3px 9px;border-radius:0 0 8px 8px;letter-spacing:.4px;text-transform:uppercase;';
-    recBadge.textContent = '✦ Recomendado';
-    btnPix.appendChild(recBadge);
-    
-    const orDivider = document.createElement('div');
-    orDivider.style.cssText = 'display:flex;align-items:center;gap:10px;margin:2px 0;';
-    orDivider.innerHTML = `<div style="flex:1;height:1px;background:var(--border-2);"></div><span style="font-size:10px;color:var(--text-3);font-weight:600;letter-spacing:.5px;">OU</span><div style="flex:1;height:1px;background:var(--border-2);"></div>`;
-    wrap.appendChild(orDivider);
+    // ── Divisor ──
+    const divider = document.createElement('div');
+    divider.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 16px;
+      background: var(--surface-2);
+      border-top: 1px solid var(--border-2);
+      border-bottom: 1px solid var(--border-2);
+    `;
+    divider.innerHTML = `
+      <div style="flex:1;height:1px;background:var(--border-2);"></div>
+      <span style="font-size:10px;color:var(--text-3);font-weight:700;letter-spacing:.5px;padding:7px 0;">OU</span>
+      <div style="flex:1;height:1px;background:var(--border-2);"></div>
+    `;
 
-    const btnDelivery = createOption(
-      'Pagar na entrega', 
-      'Dinheiro ou cartão · +30% de taxa', 
-      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polyline points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>', 
-      'var(--brand)',
-      deliveryPriceFormatted
-    );
+    // ── Opção Entrega ──
+    const btnDelivery = document.createElement('div');
+    btnDelivery.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 15px 16px 16px;
+      cursor: pointer;
+      transition: background .18s ease;
+      background: #fff;
+    `;
+    btnDelivery.innerHTML = `
+      <div style="
+        width: 46px; height: 46px;
+        border-radius: 13px;
+        background: var(--brand);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 3px 10px rgba(15,91,168,.22);
+      ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13"/>
+          <polyline points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+      </div>
+      <div style="flex:1; min-width:0;">
+        <div style="font-size:14px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:3px;">Pagar na entrega</div>
+        <span style="font-size:11.5px;color:var(--text-3);font-weight:500;">Dinheiro ou cartão</span>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <div style="font-size:16px;font-weight:900;color:var(--text);letter-spacing:-.5px;">R$ ${deliveryPriceFormatted}</div>
+        <div style="font-size:9.5px;color:#EF4444;font-weight:700;margin-top:1px;">+30% de taxa</div>
+      </div>
+    `;
 
+    // ── Hover states ──
+    btnPix.onmouseenter      = () => { btnPix.style.background      = '#F0FDFB'; };
+    btnPix.onmouseleave      = () => { btnPix.style.background      = '#fff'; };
+    btnDelivery.onmouseenter = () => { btnDelivery.style.background = 'var(--brand-lt)'; };
+    btnDelivery.onmouseleave = () => { btnDelivery.style.background = '#fff'; };
+
+    // ── Handlers ──
     btnPix.onclick = () => {
-  btnPix.classList.add('selected');
-  btnDelivery.classList.remove('selected');
-  wrap.style.opacity = '0.7';
-  wrap.style.pointerEvents = 'none';
-  addMsg('Pagar Agora - Pix', 'user');
-  resolve('pix');
-};
+      btnPix.style.background = '#F0FDFB';
+      outer.style.opacity = '0.7';
+      outer.style.pointerEvents = 'none';
+      addMsg('Pagar Agora - Pix', 'user');
+      resolve('pix');
+    };
 
-btnDelivery.onclick = () => {
-  btnDelivery.classList.add('selected');
-  btnPix.classList.remove('selected');
-  wrap.style.opacity = '0.7';
-  wrap.style.pointerEvents = 'none';
-  addMsg('Pagar na entrega', 'user');
-  resolve('delivery');
-};
-    
-    wrap.appendChild(btnPix);
-    wrap.appendChild(btnDelivery);
-    outer.appendChild(wrap);
+    btnDelivery.onclick = () => {
+      btnDelivery.style.background = 'var(--brand-lt)';
+      outer.style.opacity = '0.7';
+      outer.style.pointerEvents = 'none';
+      addMsg('Pagar na entrega', 'user');
+      resolve('delivery');
+    };
+
+    card.appendChild(btnPix);
+    card.appendChild(divider);
+    card.appendChild(btnDelivery);
+    outer.appendChild(card);
     msgsEl.appendChild(outer);
     scrollDown();
   });
