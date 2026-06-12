@@ -1600,11 +1600,16 @@ async function runConversation(startStep = 0) {
     // Advance step BEFORE async work so a refresh mid-spinner resumes at step 5
     window._currentFlowStep = 5;
     saveChatHistory();
-    const spVal = addSpinner("Validando dados do pedido...");
+        const spVal = addSpinner("Validando dados do pedido...");
     await pause(3500);
     spVal.remove();
-    addSys('Pedido validado com sucesso', 'ok');
+
+    // Removemos a etiqueta e adicionamos o digitando de 1.5s
+    setTyping(true);
+    await pause(1500);
+    setTyping(false);
   }
+
 
     if (window._currentFlowStep === 5) {
     // ── STEP 5: payment choice ──
