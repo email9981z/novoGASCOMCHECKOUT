@@ -52,8 +52,9 @@
     --payment-card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
   --payment-card-hover-shadow: 0 6px 20px rgba(0,0,0,0.08);
   --payment-card-active-shadow: 0 0 0 3px var(--brand-glow);
-  --pix-highlight-border: 1.5px solid var(--green);
-  --pix-highlight-shadow: 0 0 0 2px rgba(50,188,173,0.3);
+    --pix-highlight-border: 1px solid var(--green);
+  --pix-highlight-shadow: 0 0 0 1px rgba(50,188,173,0.2);
+  --pix-price-color: var(--green-dk); /* Nova variável para a cor do preço do PIX */
   --payment-card-active-bg: var(--brand-lt);
   --payment-card-active-border: var(--brand);
   --payment-card-active-shadow: 0 0 0 3px var(--brand-glow);
@@ -168,6 +169,10 @@
   transform: scale(1);
 }
 
+  .payment-option-card.pix-highlight .payment-option-card-price {
+  color: var(--pix-price-color);
+}
+
 .payment-option-card.selected .payment-option-card-arrow {
   opacity: 0;
 }
@@ -196,12 +201,12 @@ html,body{
   .payment-option-card.pix-highlight {
   border: var(--pix-highlight-border);
   box-shadow: var(--pix-highlight-shadow);
-  animation: pulse-pix-highlight 1.5s infinite alternate ease-in-out;
+  animation: pulse-pix-highlight 2s infinite alternate ease-in-out; /* Animação mais lenta */
 }
 
 @keyframes pulse-pix-highlight {
   0% { box-shadow: var(--pix-highlight-shadow); }
-  100% { box-shadow: 0 0 0 4px rgba(50,188,173,0.5); }
+  100% { box-shadow: 0 0 0 2px rgba(50,188,173,0.3); } /* Sombra final mais suave */
 }
 
 /* ── HEADER ── */
