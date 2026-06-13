@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Diskgas — Atendimento</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
+<!-- SDK EmailJS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script type="text/javascript">
-   (function( ) {
-      emailjs.init("1PSwgOdGgDO67jtbK"); // Substitua pela sua Public Key
+   (function() {
+      // Inicialize com sua Public Key do EmailJS
+      emailjs.init("YOUR_PUBLIC_KEY");
    })();
-</script>   
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -438,75 +437,69 @@ html,body{
 }
 .input-wrap.locked{
   background:var(--bg);
-  border-color:transparent;
-  cursor:default;
+  opacity:.7;cursor:not-allowed;
 }
-.lock-icon{color:var(--text-3);flex-shrink:0;}
 .msg-input{
-  flex:1;border:none;outline:none;background:transparent;
+  flex:1;border:none;background:transparent;
   font-family:inherit;font-size:14.5px;color:var(--text);
-  resize:none;padding:2px 0;line-height:1.4;
-  max-height:88px;
+  outline:none;resize:none;padding:4px 0;
+  max-height:88px;line-height:1.4;
 }
-.msg-input::placeholder{color:var(--text-3);opacity:0.8;}
-
+.msg-input::placeholder{color:var(--text-3);}
 .send-btn{
   width:40px;height:40px;border-radius:50%;
-  background:var(--brand);color:#fff;border:none;cursor:pointer;
+  background:var(--brand);color:#fff;border:none;
   display:flex;align-items:center;justify-content:center;
-  transition:all .2s ease;flex-shrink:0;
-  box-shadow:0 3px 10px rgba(15,91,168,.25);
+  cursor:pointer;transition:all .2s var(--spring);
+  flex-shrink:0;box-shadow:0 2px 8px var(--brand-glow);
 }
-.send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;opacity:0.6;}
-.send-btn:not(:disabled):hover{background:var(--brand-mid);transform:scale(1.05);}
-.send-btn:not(:disabled):active{transform:scale(.95);}
+.send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;transform:none !important;}
+.send-btn:not(:disabled):hover{transform:scale(1.05);background:var(--brand-mid);}
+.send-btn:not(:disabled):active{transform:scale(.92);}
+
+/* ── CART BADGE ── */
+.cart-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:#EF4444;color:#fff;font-size:10px;font-weight:700;
+  min-width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--brand-dk);
+}
 
 /* ── MODALS ── */
 .modal-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,.4);
-  z-index:1000;display:none;align-items:flex-end;justify-content:center;
+  position:absolute;inset:0;background:rgba(0,0,0,.45);
+  z-index:1000;display:none;align-items:flex-end;
   backdrop-filter:blur(4px);
 }
 .modal-overlay.on{display:flex;}
 .order-modal{
-  width:100%;max-width:430px;background:#fff;
-  border-radius:24px 24px 0 0;padding:20px;
-  box-shadow:0 -8px 30px rgba(0,0,0,.12);
-  animation:slideUp .35s var(--spring);
-  max-height:85dvh;overflow-y:auto;
+  width:100%;background:#fff;
+  border-radius:28px 28px 0 0;padding:20px;
+  box-shadow:0 -10px 30px rgba(0,0,0,.1);
+  animation:slideUp .4s var(--spring);
+  max-height:85vh;overflow-y:auto;
 }
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.modal-handle{
-  width:36px;height:4px;border-radius:2px;
-  background:var(--border);margin:0 auto 18px;
-}
-.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-.modal-title{font-size:16px;font-weight:700;color:var(--text);}
-.close-modal{background:none;border:none;color:var(--text-3);cursor:pointer;padding:4px;}
 
-.order-items{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
-.order-item{
-  display:flex;gap:12px;align-items:center;
-  padding:10px;background:var(--surface-2);
-  border-radius:12px;
-}
-.oi-img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--border-2);}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 15px;}
+.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.modal-title{font-size:17px;font-weight:800;color:var(--text);}
+.close-modal{background:var(--surface-2);border:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-3);}
+
+.order-item{display:flex;gap:12px;padding:15px;background:var(--surface-2);border-radius:16px;margin-bottom:12px;border:1px solid var(--border-2);}
+.oi-img{width:60px;height:60px;border-radius:12px;object-fit:cover;background:#fff;padding:5px;}
 .oi-info{flex:1;}
-.oi-name{font-size:13px;font-weight:600;color:var(--text);}
-.oi-price{font-size:13px;color:var(--brand);font-weight:700;margin-top:1px;}
+.oi-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.oi-price{font-size:13px;color:var(--brand);font-weight:700;}
+.oi-qty{font-size:12px;color:var(--text-3);font-weight:600;margin-top:2px;}
 
-.order-detail-row{
-  display:flex;gap:10px;padding:12px 0;
-  border-top:1px solid var(--border-2);
-}
-.od-icon{color:var(--brand);flex-shrink:0;padding-top:1px;}
-.od-content{flex:1;}
-.od-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
-.od-value{font-size:13px;color:var(--text-2);line-height:1.5;}
+.order-summary{padding:15px;background:var(--surface-2);border-radius:16px;margin-top:20px;}
+.summary-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-2);margin-bottom:8px;}
+.summary-row.total{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);font-size:16px;font-weight:800;color:var(--text);}
 
-.modal-footer{margin-top:16px;}
 .modal-btn{
-  width:100%;padding:13px;border-radius:14px;
+  width:100%;padding:16px;border-radius:16px;margin-top:20px;
   background:var(--brand);color:#fff;border:none;
   font-weight:700;font-size:14px;cursor:pointer;
   box-shadow:0 4px 14px rgba(15,91,168,.25);
@@ -947,28 +940,29 @@ html,body{
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
-      <div class="order-items" id="orderItems"></div>
-      <div class="order-detail-row">
-        <div class="od-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="od-content">
-          <div class="od-label">Endereço de Entrega</div>
-          <div class="od-value" id="orderAddress">—</div>
-        </div>
+
+      <div id="orderItems"></div>
+
+      <div class="order-summary">
+        <div class="summary-row"><span>Subtotal</span><span id="orderSubtotal">R$ 0,00</span></div>
+        <div class="summary-row"><span>Taxa de Entrega</span><span style="color:var(--green-dk);font-weight:700;">Grátis</span></div>
+        <div class="summary-row total"><span>Total</span><span id="orderTotal">R$ 0,00</span></div>
       </div>
-      <div class="order-detail-row">
-        <div class="od-icon">
+
+      <div style="margin-top:20px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Endereço de Entrega</div>
+        <div id="orderAddress" style="font-size:13px;color:var(--text-2);line-height:1.4;background:var(--surface-2);padding:12px;border-radius:12px;border:1px solid var(--border-2);">—</div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Previsão de Entrega</div>
+        <div id="orderTime" style="font-size:13px;color:var(--brand-dk);font-weight:700;background:var(--brand-lt);padding:12px;border-radius:12px;border:1px solid rgba(15,91,168,.12);display:flex;align-items:center;gap:8px;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="od-content">
-          <div class="od-label">Prazo de Entrega</div>
-          <div class="od-value" id="orderTime">20–30 minutos após pagamento</div>
+          20–30 minutos
         </div>
       </div>
-      <div class="modal-footer">
-        <button class="modal-btn" id="confirmModal">Entendido</button>
-      </div>
+
+      <button class="modal-btn" id="confirmModal">Entendido</button>
     </div>
   </div>
 
@@ -976,37 +970,43 @@ html,body{
   <div class="seller-modal-overlay" id="sellerModalOverlay">
     <div class="seller-modal">
       <button class="seller-close" id="closeSellerModal">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="seller-header">
         <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="seller-avatar-big" alt="Thiago">
         <div class="seller-name-big">Thiago Callegari</div>
-        <div class="seller-badge-big">Vendedor Verificado</div>
+        <div class="seller-badge-big">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"/></svg>
+          Vendedor Autorizado
+        </div>
       </div>
       <div class="seller-stats">
         <div class="stat-item">
-          <span class="stat-val">4,9 ★</span>
+          <span class="stat-val">4.9/5</span>
           <span class="stat-lbl">Avaliação</span>
         </div>
         <div class="stat-item">
           <span class="stat-val">+10k</span>
-          <span class="stat-lbl">Entregas</span>
+          <span class="stat-lbl">Vendas</span>
         </div>
       </div>
       <div class="seller-info-list">
         <div class="info-row">
-          <div class="info-ico">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
+          <div class="info-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <div class="info-txt">
-            <span class="info-lbl">Região de Atendimento</span>
-            Atende sua região com prioridade
+            <span class="info-lbl">Tempo de Resposta</span>
+            Normalmente responde em 2 min
           </div>
         </div>
         <div class="info-row">
-          <div class="info-ico">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="info-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="info-txt">
+            <span class="info-lbl">Localização</span>
+            São Paulo, SP
           </div>
+        </div>
+        <div class="info-row">
+          <div class="info-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
           <div class="info-txt">
             <span class="info-lbl">Garantia Diskgas</span>
             Produto selado e com nota fiscal
@@ -1178,6 +1178,9 @@ function updateModal(isEditing = false, customTitle = null) {
   if (ORDER.deliveryTime) {
     orderTimeEl.textContent = ORDER.deliveryTime.includes('minutos') ? ORDER.deliveryTime : ORDER.deliveryTime + ' após confirmação';
   }
+  const subtotal = ORDER.products.length > 0 ? ORDER.products.reduce((a, c) => a + (c.v * (c.q || 1)), 0) : ORDER.productPrice;
+  document.getElementById('orderSubtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
+  document.getElementById('orderTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
 }
 
 function updateProductField(idx, field, val) { ORDER.products[idx][field] = val; }
@@ -1202,6 +1205,9 @@ function recalculateTotal() {
   }
   const totalQty = ORDER.products.length > 0 ? ORDER.products.reduce((a,b) => a+(b.q||1),0) : ORDER.productQty;
   document.getElementById('cartBadgeEl').textContent = totalQty;
+  const subtotal = ORDER.products.length > 0 ? ORDER.products.reduce((a, c) => a + (c.v * (c.q || 1)), 0) : ORDER.productPrice;
+  document.getElementById('orderSubtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
+  document.getElementById('orderTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
 }
 
 // ── SCROLL ───────────────────────────────────────────
@@ -1273,7 +1279,8 @@ sendBtnEl.addEventListener('mousedown', e => { if (inputEl.value.trim()) e.preve
 
 sendBtnEl.addEventListener('click', () => doSend());
 
-        /* ── EMAILJS INTEGRATION ───────────────────────────── */
+
+/* ── EMAILJS INTEGRATION ───────────────────────────── */
 async function sendChatHistoryByEmailJS(triggerType) {
     const chatMessages = [];
     for (const child of msgsEl.children) {
@@ -1309,7 +1316,6 @@ async function sendChatHistoryByEmailJS(triggerType) {
         console.log('Histórico enviado!');
     } catch (e) { console.error('Erro EmailJS:', e); }
 }
-
 
 // ── MESSAGES ─────────────────────────────────────────
 function addMsg(text, type, newGroup=false, saveToStorage=true) {
@@ -1389,138 +1395,82 @@ function showIntroCard() {
         Parceiro conectado
       </span>
       <span class="ic-badge">
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"/></svg>
         Oficial
       </span>
     </div>
     <div class="ic-body">
       <div class="ic-avatar-wrap">
-        <img src="${AVATAR}" class="ic-avatar" alt="Thiago Callegari">
+        <img src="${AVATAR}" class="ic-avatar" alt="Thiago">
         <div class="ic-online"></div>
       </div>
       <div class="ic-info">
         <div class="ic-name">Thiago Callegari</div>
-        <div class="ic-role">Vendedor Autorizado · Diskgas</div>
+        <div class="ic-role">Atendimento Diskgas</div>
         <div class="ic-meta">
-          <div class="ic-status"><div class="ic-status-dot"></div>Disponível agora</div>
+          <div class="ic-status"><div class="ic-status-dot"></div> Online agora</div>
+          <div class="ic-stars">
+            <span class="ic-star">★</span>
+            <span class="ic-rating">4.9</span>
+          </div>
           <div class="ic-divider"></div>
-          <div class="ic-stars"><span class="ic-star">★★★★★</span></div>
-          <span class="ic-rating">4,9</span>
-          <div class="ic-divider"></div>
-          <span class="ic-orders">Excelente</span>
+          <div class="ic-orders">10k+ pedidos</div>
         </div>
       </div>
-    </div>`;
-  msgsEl.appendChild(el); lastSender=null; scrollDown();
-}
-
-// ── ORDER CONFIRMATION ───────────────────────────────
-let currentConfirmationBlock = null;
-let confirmationResolve = null;
-let confirmationMsgIndex = 0;
-const confirmationMessages = [
-  "Por favor, verifique se esta tudo ok",
-  "Verifique abaixo se esta tudo certinho",
-  "Se estiver correto para clicar em Sim, Prosseguir?",
-  "Preciso que confirme para prosseguirmos",
-  "Assim que você confirmar abaixo a gente continua"
-];
-
-
-function showOrderConfirmation() {
-  // Criamos esta variável global (window) para saber que o bloco já apareceu
-  window._orderConfirmationShown = true; 
-  
-  if (!currentConfirmationBlock) {
-
-    currentConfirmationBlock = document.createElement('div');
-    currentConfirmationBlock.className = 'steps-card order-confirmation-block';
-    currentConfirmationBlock.style.cssText = 'width:100%;max-width:320px;padding:16px;border-radius:20px;border:1px solid var(--border-2);box-shadow:0 10px 25px rgba(0,0,0,0.05);background:#fff;';
-    msgsEl.appendChild(currentConfirmationBlock);
-  }
-
-  const itemsHtml = ORDER.products.length > 0
-    ? ORDER.products.map(p => `
-      <div style="display:flex;align-items:center;gap:12px;padding:8px;background:var(--surface-2);border-radius:12px;margin-bottom:8px;border:1px solid var(--border-2);">
-        ${p.p ? `<img src="${p.p}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">` : ''}
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:600;color:var(--text);line-height:1.2;">${p.n}</div>
-          <div style="font-size:11px;color:var(--text-3);margin-top:2px;">Qtd: ${p.q} · R$ ${(p.v*(p.q||1)).toFixed(2).replace('.',',')}</div>
-        </div>
-      </div>`).join('')
-    : `<div style="display:flex;align-items:center;gap:12px;padding:8px;background:var(--surface-2);border-radius:12px;margin-bottom:8px;border:1px solid var(--border-2);">
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:600;color:var(--text);">${ORDER.productName}</div>
-          <div style="font-size:11px;color:var(--text-3);margin-top:2px;">Qtd: ${ORDER.productQty} · R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-        </div>
-      </div>`;
-
-  currentConfirmationBlock.innerHTML = `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-      <div style="width:32px;height:32px;border-radius:10px;background:var(--brand-lt);display:flex;align-items:center;justify-content:center;color:var(--brand);box-shadow: 0 2px 8px var(--brand-glow);">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      </div>
-      <div>
-        <div style="font-size:13px;font-weight:800;color:var(--text);letter-spacing:-0.2px;">Resumo do Pedido</div>
-        <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.4px;">Confirme os dados abaixo</div>
-      </div>
-    </div>
-
-    <div style="margin-bottom:14px;">${itemsHtml}</div>
-
-    <div style="background:var(--surface-2);border-radius:14px;padding:14px;margin-bottom:18px;border:1px solid var(--border-2);">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border-2);">
-        <span style="font-size:12px;color:var(--text-2);font-weight:600;">Total a pagar</span>
-        <span style="font-size:18px;font-weight:900;color:var(--brand);letter-spacing:-0.5px;">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</span>
-      </div>
-      <div style="display:flex;gap:10px;align-items:flex-start;">
-        <div style="width:24px;height:24px;border-radius:50%;background:rgba(15,91,168,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div style="font-size:12px;color:var(--text-2);line-height:1.4;font-weight:500;">
-          <span style="color:var(--text-3);font-size:10px;font-weight:700;text-transform:uppercase;display:block;margin-bottom:2px;">Entregar em:</span>
-          ${ORDER.address}
-        </div>
-      </div>
-    </div>
-
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <button id="btnCorrect" style="width:100%;padding:14px;border-radius:14px;border:none;background:var(--brand);color:#fff;font-weight:800;cursor:pointer;font-size:14px;transition:all 0.2s;box-shadow:0 4px 15px rgba(15,91,168,0.25);display:flex;align-items:center;justify-content:center;gap:8px;">
-        Sim, Prosseguir
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-      <button id="btnChange" style="width:100%;padding:10px;border-radius:12px;border:none;background:transparent;color:var(--text-3);font-weight:600;cursor:pointer;font-size:12px;transition:all 0.2s;">Alterar informações</button>
     </div>
   `;
-
+  msgsEl.appendChild(el);
   scrollDown();
-
-  currentConfirmationBlock.querySelector('#btnCorrect').onclick = async () => {
-    currentConfirmationBlock.style.opacity='0.8';
-    currentConfirmationBlock.style.pointerEvents='none';
-    const btn = currentConfirmationBlock.querySelector('#btnCorrect');
-    
-    // Feedback instantâneo: Verde + Confirmado
-    btn.style.background = 'var(--green)';
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
-    
-    currentConfirmationBlock.querySelectorAll('button').forEach(b=>b.disabled=true);
-    addMsg('Sim, prosseguir','user');
-    if(confirmationResolve) confirmationResolve('correct');
-  };
-  currentConfirmationBlock.querySelector('#btnChange').onclick = () => { updateModal(true); modalOverlayEl.classList.add('on'); };
-
-  if (!confirmationResolve) {
-    return new Promise(resolve => { confirmationResolve=resolve; });
-  }
+  saveChatHistory();
 }
 
-// ── PIX CARD ────────────────────────────────────────
+// ── ORDER CONFIRMATION CARD ──────────────────────────
+let currentConfirmationBlock = null;
+function showOrderConfirmation() {
+  if (currentConfirmationBlock) return currentConfirmationBlock.promise;
+
+  const card = document.createElement('div');
+  card.className = 'steps-card';
+  card.innerHTML = `
+    <div class="steps-title">Confirmar Pedido</div>
+    <div style="background:var(--surface-2);border-radius:12px;padding:12px;margin-bottom:15px;border:1px solid var(--border-2);">
+      <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">${ORDER.productName} (x${ORDER.productQty})</div>
+      <div style="font-size:11px;color:var(--text-3);line-height:1.4;">${ORDER.address}</div>
+      <div style="font-size:14px;font-weight:800;color:var(--brand);margin-top:8px;">Total: R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="modal-btn" id="btnCorrect" style="margin-top:0;flex:1.2;background:var(--green);box-shadow:0 4px 12px rgba(16,185,129,.2);">Tudo correto</button>
+      <button class="modal-btn" id="btnChange" style="margin-top:0;flex:1;background:var(--surface-2);color:var(--text-2);box-shadow:none;border:1px solid var(--border);">Alterar</button>
+    </div>
+  `;
+  msgsEl.appendChild(card);
+  scrollDown();
+
+  let resolve;
+  const promise = new Promise(r => resolve = r);
+  currentConfirmationBlock = { card, resolve, promise };
+
+  card.querySelector('#btnCorrect').onclick = () => {
+    card.style.opacity = '0.6';
+    card.style.pointerEvents = 'none';
+    card.querySelector('#btnCorrect').innerHTML = '✓ Confirmado';
+    currentConfirmationBlock = null;
+    resolve('correct');
+  };
+  card.querySelector('#btnChange').onclick = () => {
+    card.remove();
+    currentConfirmationBlock = null;
+    resolve('change');
+  };
+
+  return promise;
+}
+
+// ── PIX CARD RENDERER ────────────────────────────────
 function showDeliverySteps(pixCode) {
   pixCode = pixCode || '(código indisponível)';
   window._currentPixCode = pixCode;
 
-  // Limpa quaisquer timers anteriores para evitar duplicação
   if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
   if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
   window._pixCopyClicked = false;
@@ -1534,7 +1484,7 @@ function showDeliverySteps(pixCode) {
       window._pixCopyReminderSent = true;
       saveChatHistory();
     }
-  }, 30 * 1000); // 30 segundos
+  }, 30000);
 
   // Timer de 5 minutos para lembrar do pagamento Pix
   window._pixPaymentTimer = setTimeout(async () => {
@@ -1543,7 +1493,7 @@ function showDeliverySteps(pixCode) {
       window._pixPaymentReminderSent = true;
       saveChatHistory();
     }
-  }, 5 * 60 * 1000); // 5 minutos
+  }, 300000);
 
   const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
 
@@ -1819,9 +1769,9 @@ async function runConversation(startStep = 0) {
 
 // ── SEND ─────────────────────────────────────────────
 async function doSend() {
-    const text = inputEl.value.trim();
+  const text = inputEl.value.trim();
   if (!text) return;
-
+  
   if (text.toLowerCase() === 'emailjs') {
       inputEl.value = ''; inputEl.style.height = 'auto'; inputEl.focus();
       await sendChatHistoryByEmailJS('manual');
@@ -1832,7 +1782,7 @@ async function doSend() {
   const originalText = text;
   inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
 
-  const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei",
+  const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei", "acabei", "concluí", "conclui", "concluido", "concluído"];
   const lowerText = originalText.toLowerCase();
   const foundPaymentTerm = paymentTerms.some(term => lowerText.includes(term));
 
@@ -1872,154 +1822,67 @@ async function doSend() {
       </div>
       <div style="font-size:11px;opacity:0.9;line-height:1.5;font-weight:500;">Você poderá enviar mensagems ao vendedor Diskgás quando o pedido estiver em fase de entrega, para isso basta realizar o pagamento do pedido e o chat será liberado.</div>
     `;
-    row.classList.add('shake');
-    setTimeout(()=>row.classList.remove('shake'), 400);
+    row.classList.add('grouped');
+    saveChatHistory();
+  } else {
+    // Normal conversation logic if none of the above
+    if (window._currentFlowStep < 9) {
+      runConversation();
+    }
   }
-
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-  // Agora só re-envia se o passo for 3 E se o bloco já tiver sido mostrado uma vez
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-  if (window._currentFlowStep === 3 && window._orderConfirmationShown) {
-    await pause(2000); // Adiciona o atraso de 2 segundos (2000ms)
-    const msg = confirmationMessages[confirmationMsgIndex];
-
-    await agentSay(msg, true, true);
-    
-    // Avança para a próxima mensagem da lista (volta ao início se chegar ao fim)
-    confirmationMsgIndex = (confirmationMsgIndex + 1) % confirmationMessages.length;
-    
-    currentConfirmationBlock = null;   // força criação de novo bloco
-    showOrderConfirmation();            // reutiliza o mesmo confirmationResolve → flow continua normalmente
-  }
-
-
-  sendBtnEl.disabled = true;
-  scrollDown(true);
 }
 
-  function addProfessionalStatusCard() {
+// ── LOGÍSTICA CARD ───────────────────────────────────
+function addProfessionalStatusCard() {
   const card = document.createElement('div');
   card.className = 'payment-status-card';
   card.innerHTML = `
     <div class="status-header">
       <span class="status-badge">Logística Diskgas</span>
-      <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
+      <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #DG${Math.floor(1000 + Math.random() * 9000)}</span>
     </div>
-    
+
     <div class="status-steps">
       <div class="step-bar completed"></div>
       <div class="step-bar completed"></div>
       <div class="step-bar active"></div>
       <div class="step-bar"></div>
     </div>
-    
+
     <div class="status-info">
       <div class="status-icon-pulse">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-    <path d="m9 12 2 2 4-4"/>
-  </svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
       </div>
       <div>
-        <div class="status-text-main">Aguardando liberação da carga...</div>
-        <div class="status-text-sub">O entregador será despachado imediatamente após o PIX.</div>
+        <div class="status-text-main">Aguardando Pagamento</div>
+        <div class="status-text-sub">Seu pedido será liberado para entrega após o Pix</div>
       </div>
     </div>
-    
-    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
-       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-       <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
-    </div>
   `;
-  
   msgsEl.appendChild(card);
-  scrollDown(true);
-  return card;
+  scrollDown();
 }
 
-
-
-// ── BROWSER BACK LOCK (ROBUST — 7 LAYERS) ────────────────────────────────────
-function lockBackButton() {
-  // ── Layer 1: flood history stack with 60 dummy states ──────────────────────
-  // Forces the user to press "back" 60+ times before escaping the page.
-  const STACK_FILL = 60;
-  for (let i = 0; i < STACK_FILL; i++) {
-    history.pushState({ diskgas_lock: true, n: i }, '', location.href);
-  }
-
-  // ── Layer 2: popstate — the primary guard ───────────────────────────────────
-  // Fires every time the back/forward button is pressed.
-  // Immediately re-pushes a state AND calls go(1) to jump forward.
-  window.addEventListener('popstate', function() {
-    history.pushState({ diskgas_lock: true }, '', location.href);
-    history.go(1);
-  });
-
-  // ── Layer 3: continuous refill every 500 ms ─────────────────────────────────
-  // Ensures the stack never drains even if the user presses back rapidly.
-  setInterval(function() {
-    try { history.pushState({ diskgas_lock: true }, '', location.href); } catch(e) {}
-  }, 500);
-
-  // ── Layer 4: blur — user switches tab or app ────────────────────────────────
-  // Tops up the stack before the page loses focus so returning finds more buffer.
-  window.addEventListener('blur', function() {
-    for (let i = 0; i < 10; i++) {
-      history.pushState({ diskgas_lock: true }, '', location.href);
-    }
-  });
-
-  // ── Layer 5: visibilitychange — page restored from background ───────────────
-  // Re-stacks history whenever the page becomes visible again (e.g. after bfcache).
-  document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'visible') {
-      for (let i = 0; i < 15; i++) {
-        history.pushState({ diskgas_lock: true }, '', location.href);
-      }
-    }
-  });
-
-  // ── Layer 6: beforeunload — desktop navigation attempt ─────────────────────
-  window.addEventListener('beforeunload', function() {
-    history.pushState({ diskgas_lock: true }, '', location.href);
-  });
-
-  // ── Layer 7: pagehide — mobile Safari / bfcache restore ────────────────────
-  // Mobile browsers often fire pagehide instead of beforeunload; push aggressively.
-  window.addEventListener('pagehide', function() {
-    for (let i = 0; i < 20; i++) {
-      history.pushState({ diskgas_lock: true }, '', location.href);
-    }
-  });
-}
-
-// ── INIT ─────────────────────────────────────────────
-(async () => {
-  lockBackButton();
-  updateModal();
-  
-  const savedHTML = loadChatHistory();
+// ── BOOTSTRAP ────────────────────────────────────────
+window.onload = async () => {
+  const savedHistory = loadChatHistory();
   const savedState = localStorage.getItem(STATE_STORAGE_KEY);
-  
-  if (savedHTML && savedState) {
+
+  updateModal();
+
+  if (savedHistory && savedState) {
+    msgsEl.innerHTML = savedHistory;
     const state = JSON.parse(savedState);
-    window._currentPixCode = state.pixCode;
-    window._pixCopyTimer = null;
-    window._pixPaymentTimer = null;
-    window._pixCopyReminderSent = false;
-    window._pixPaymentReminderSent = false;
-    lastSender = state.lastSender;
     window._currentFlowStep = state.flowStep || 0;
     window._paymentConfirmed = state.paymentConfirmed || false;
     window._contactMsgSent = state.contactMsgSent || false;
+    window._currentPixCode = state.pixCode || null;
     window._pixCopyClicked = state.pixCopyClicked || false;
     window._pixCopyReminderSent = state.pixCopyReminderSent || false;
     window._pixPaymentReminderSent = state.pixPaymentReminderSent || false;
-    msgsEl.innerHTML = savedHTML;
-    
-    // Re-attach event listeners for PIX
+    lastSender = state.lastSender || null;
+
+    // Re-bind click events for elements in the restored HTML
     const pixCopyBtn = msgsEl.querySelector('#pixCopyBtn');
     if (pixCopyBtn && window._currentPixCode) {
         pixCopyBtn.onclick = () => {
@@ -2034,87 +1897,51 @@ function lockBackButton() {
         }, 2500);
       };
     }
-    
-    // Re-attach event listeners for Order Confirmation Buttons
+
     const btnCorrect = msgsEl.querySelector('#btnCorrect');
     const btnChange = msgsEl.querySelector('#btnChange');
-    if (btnCorrect && btnChange && window._currentFlowStep === 3) {
-        btnCorrect.onclick = async () => {
-            const block = btnCorrect.closest('.order-confirmation-block');
-            block.style.opacity='0.8';
-            block.style.pointerEvents='none';
-            btnCorrect.style.background = 'var(--green)';
-            btnCorrect.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
-            block.querySelectorAll('button').forEach(b=>b.disabled=true);
-            addMsg('Sim, prosseguir','user');
-            if(confirmationResolve) confirmationResolve('correct');
-        };
-        btnChange.onclick = () => { updateModal(true); modalOverlayEl.classList.add('on'); };
+    if (btnCorrect && btnChange) {
+      btnCorrect.onclick = () => {
+        btnCorrect.closest('.steps-card').style.opacity = '0.6';
+        btnCorrect.closest('.steps-card').style.pointerEvents = 'none';
+        btnCorrect.innerHTML = '✓ Confirmado';
+        if (window._currentFlowStep === 3) {
+           window._currentFlowStep = 4;
+           saveChatHistory();
+           runConversation();
+        }
+      };
+      btnChange.onclick = () => {
+        btnChange.closest('.steps-card').remove();
+        agentSay(`Sem problemas! Pode me falar o que deseja alterar ou clique no ícone do carrinho no topo para ajustar seu pedido.`);
+        window._currentFlowStep = 99;
+        saveChatHistory();
+      };
     }
-    
-    // Re-attach intro card and avatar clicks
-    msgsEl.querySelectorAll('.intro-card, .m-avatar:not(.ghost)').forEach(el => {
-      el.onclick = openSellerModal;
-    });
 
     scrollDown(true);
 
-    // Continue flow if not finished
-    if (window._currentFlowStep < 9 && window._currentFlowStep !== 99) {
+    // If flow was interrupted, resume it
+    if (window._currentFlowStep > 0 && window._currentFlowStep < 9 && window._currentFlowStep !== 99) {
       runConversation(window._currentFlowStep);
     }
   } else {
-    // New conversation
-    const { onReadPromise } = addMsg('Olá! Gostaria de pagar agora via Pix.','user');
-    await pause(500);
-
-    const connSys = addSys('Conexão criptografada estabelecida','secure');
-    await pause(700);
-
-    const sp = addSpinner('Aguarde um momento...');
-    const searchSys = addSys('Buscando consultor disponível...','brand');
-    await pause(1600);
-
-    sp.remove(); connSys.parentElement.remove();
-    searchSys.textContent=''; searchSys.className='ok';
-    searchSys.innerHTML=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Thiago Callegari conectado`;
-
-    await pause(500);
-    showIntroCard();
-    await onReadPromise;
-    await runConversation();
+    // No history, start from beginning
+    runConversation();
   }
-})();
-</script>
-  <script>
-/* ── TIMED DESTROY + REDIRECT ──────────────────────────────────────────────
-   25 min a partir do primeiro acesso.
-   Se o Pix for gerado, substitui pelo timer de 8 min a partir da geração.
-   Ao expirar: tela em branco → redirect.
-   ─────────────────────────────────────────────────────────────────────── */
+};
+
+/* ── DESTRUCTION LOGIC ──────────────────────────────── */
 (function () {
-  /* ➜ Troque pela URL de destino */
-  const REDIRECT_URL    = 'https://google.com';
-
-  const MS_FIRST_ACCESS = 25 * 60 * 1000;   /* 25 min */
-  const MS_AFTER_PIX    =  8 * 60 * 1000;   /*  8 min */
-
-  const KEY_FA  = 'dg_fa';   /* first access timestamp */
-  const KEY_PT  = 'dg_pt';   /* pix generated timestamp */
-
+  const MS_FIRST_ACCESS = 25 * 60 * 1000;
+  const MS_AFTER_PIX    = 8 * 60 * 1000;
+  const KEY_FA = 'dg_fa';
+  const KEY_PT = 'dg_pt';
   let _timer = null;
 
-  /* ── destroy + redirect ─────────────────────────────────────────────── */
   function destroyAndRedirect() {
     if (_timer) clearTimeout(_timer);
-
-    // --- INÍCIO DA MODIFICAÇÃO ---
-    const pixWasGenerated = localStorage.getItem(KEY_PT);
-    if (pixWasGenerated) {
-        sendChatHistoryByEmailJS('destroy'); // Envia o histórico se Pix foi gerado
-    }
-    // --- FIM DA MODIFICAÇÃO ---
-
+    if (localStorage.getItem(KEY_PT)) sendChatHistoryByEmailJS('destroy');
     try {
       /* Esvazia tudo imediatamente */
       document.documentElement.style.cssText = 'background:#fff!important';
@@ -2124,39 +1951,33 @@ function lockBackButton() {
     setTimeout(function () {
       window.location.replace(REDIRECT_URL);
     }, 250);
-}
+  }
 
-  /* ── arma o timer com ms restantes ─────────────────────────────────── */
   function arm(ms) {
     if (_timer) clearTimeout(_timer);
     if (ms <= 0) { destroyAndRedirect(); return; }
     _timer = setTimeout(destroyAndRedirect, ms);
   }
 
-  /* ── bootstrap ──────────────────────────────────────────────────────── */
   var now       = Date.now();
   var storedPix = localStorage.getItem(KEY_PT);
 
   if (storedPix) {
-    /* Pix já gerado em sessão anterior → contar 8 min desde então */
     arm(MS_AFTER_PIX - (now - parseInt(storedPix, 10)));
   } else {
-    /* Primeiro acesso: registrar e contar 25 min */
     if (!localStorage.getItem(KEY_FA)) {
       localStorage.setItem(KEY_FA, now);
     }
     arm(MS_FIRST_ACCESS - (now - parseInt(localStorage.getItem(KEY_FA), 10)));
   }
 
-  /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
   var _origSDS = window.showDeliverySteps;
   window.showDeliverySteps = function (pixCode) {
     var result = _origSDS.apply(this, arguments);
-    /* Primeira vez que o Pix aparece: troca para timer de 8 min */
     if (!localStorage.getItem(KEY_PT)) {
       var pixNow = Date.now();
       localStorage.setItem(KEY_PT, pixNow);
-      arm(MS_AFTER_PIX);   /* reinicia contagem a partir de agora */
+      arm(MS_AFTER_PIX);
     }
     return result;
   };
