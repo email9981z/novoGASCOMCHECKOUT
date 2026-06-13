@@ -1,19 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function( ) {
-      emailjs.init("1PSwgOdGgDO67jtbK"); // Substitua pela sua Public Key
-   })();
-</script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Diskgas — Atendimento</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<!-- SDK EmailJS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function() {
+      // Inicialize com sua Public Key do EmailJS
+      emailjs.init("YOUR_PUBLIC_KEY");
+   })();
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -438,75 +437,69 @@ html,body{
 }
 .input-wrap.locked{
   background:var(--bg);
-  border-color:transparent;
-  cursor:default;
+  opacity:.7;cursor:not-allowed;
 }
-.lock-icon{color:var(--text-3);flex-shrink:0;}
 .msg-input{
-  flex:1;border:none;outline:none;background:transparent;
+  flex:1;border:none;background:transparent;
   font-family:inherit;font-size:14.5px;color:var(--text);
-  resize:none;padding:2px 0;line-height:1.4;
-  max-height:88px;
+  outline:none;resize:none;padding:4px 0;
+  max-height:88px;line-height:1.4;
 }
-.msg-input::placeholder{color:var(--text-3);opacity:0.8;}
-
+.msg-input::placeholder{color:var(--text-3);}
 .send-btn{
   width:40px;height:40px;border-radius:50%;
-  background:var(--brand);color:#fff;border:none;cursor:pointer;
+  background:var(--brand);color:#fff;border:none;
   display:flex;align-items:center;justify-content:center;
-  transition:all .2s ease;flex-shrink:0;
-  box-shadow:0 3px 10px rgba(15,91,168,.25);
+  cursor:pointer;transition:all .2s var(--spring);
+  flex-shrink:0;box-shadow:0 2px 8px var(--brand-glow);
 }
-.send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;opacity:0.6;}
-.send-btn:not(:disabled):hover{background:var(--brand-mid);transform:scale(1.05);}
-.send-btn:not(:disabled):active{transform:scale(.95);}
+.send-btn:disabled{background:var(--border);color:var(--text-3);cursor:default;box-shadow:none;transform:none !important;}
+.send-btn:not(:disabled):hover{transform:scale(1.05);background:var(--brand-mid);}
+.send-btn:not(:disabled):active{transform:scale(.92);}
+
+/* ── CART BADGE ── */
+.cart-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:#EF4444;color:#fff;font-size:10px;font-weight:700;
+  min-width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--brand-dk);
+}
 
 /* ── MODALS ── */
 .modal-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,.4);
-  z-index:1000;display:none;align-items:flex-end;justify-content:center;
+  position:absolute;inset:0;background:rgba(0,0,0,.45);
+  z-index:1000;display:none;align-items:flex-end;
   backdrop-filter:blur(4px);
 }
 .modal-overlay.on{display:flex;}
 .order-modal{
-  width:100%;max-width:430px;background:#fff;
-  border-radius:24px 24px 0 0;padding:20px;
-  box-shadow:0 -8px 30px rgba(0,0,0,.12);
-  animation:slideUp .35s var(--spring);
-  max-height:85dvh;overflow-y:auto;
+  width:100%;background:#fff;
+  border-radius:28px 28px 0 0;padding:20px;
+  box-shadow:0 -10px 30px rgba(0,0,0,.1);
+  animation:slideUp .4s var(--spring);
+  max-height:85vh;overflow-y:auto;
 }
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.modal-handle{
-  width:36px;height:4px;border-radius:2px;
-  background:var(--border);margin:0 auto 18px;
-}
-.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-.modal-title{font-size:16px;font-weight:700;color:var(--text);}
-.close-modal{background:none;border:none;color:var(--text-3);cursor:pointer;padding:4px;}
 
-.order-items{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
-.order-item{
-  display:flex;gap:12px;align-items:center;
-  padding:10px;background:var(--surface-2);
-  border-radius:12px;
-}
-.oi-img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--border-2);}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 15px;}
+.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.modal-title{font-size:17px;font-weight:800;color:var(--text);}
+.close-modal{background:var(--surface-2);border:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-3);}
+
+.order-item{display:flex;gap:12px;padding:15px;background:var(--surface-2);border-radius:16px;margin-bottom:12px;border:1px solid var(--border-2);}
+.oi-img{width:60px;height:60px;border-radius:12px;object-fit:cover;background:#fff;padding:5px;}
 .oi-info{flex:1;}
-.oi-name{font-size:13px;font-weight:600;color:var(--text);}
-.oi-price{font-size:13px;color:var(--brand);font-weight:700;margin-top:1px;}
+.oi-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.oi-price{font-size:13px;color:var(--brand);font-weight:700;}
+.oi-qty{font-size:12px;color:var(--text-3);font-weight:600;margin-top:2px;}
 
-.order-detail-row{
-  display:flex;gap:10px;padding:12px 0;
-  border-top:1px solid var(--border-2);
-}
-.od-icon{color:var(--brand);flex-shrink:0;padding-top:1px;}
-.od-content{flex:1;}
-.od-label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
-.od-value{font-size:13px;color:var(--text-2);line-height:1.5;}
+.order-summary{padding:15px;background:var(--surface-2);border-radius:16px;margin-top:20px;}
+.summary-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-2);margin-bottom:8px;}
+.summary-row.total{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);font-size:16px;font-weight:800;color:var(--text);}
 
-.modal-footer{margin-top:16px;}
 .modal-btn{
-  width:100%;padding:13px;border-radius:14px;
+  width:100%;padding:16px;border-radius:16px;margin-top:20px;
   background:var(--brand);color:#fff;border:none;
   font-weight:700;font-size:14px;cursor:pointer;
   box-shadow:0 4px 14px rgba(15,91,168,.25);
@@ -947,28 +940,25 @@ html,body{
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
-      <div class="order-items" id="orderItems"></div>
-      <div class="order-detail-row">
-        <div class="od-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="od-content">
-          <div class="od-label">Endereço de Entrega</div>
-          <div class="od-value" id="orderAddress">—</div>
-        </div>
-      </div>
-      <div class="order-detail-row">
-        <div class="od-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="od-content">
-          <div class="od-label">Prazo de Entrega</div>
-          <div class="od-value" id="orderTime">20–30 minutos após pagamento</div>
+
+      <div id="orderItemsContainer">
+        <div class="order-item">
+          <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="oi-img" alt="Gás">
+          <div class="oi-info">
+            <div class="oi-name">Botijão de Gás 13kg</div>
+            <div class="oi-price">R$ 110,00</div>
+            <div class="oi-qty">Qtd: 1</div>
+          </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button class="modal-btn" id="confirmModal">Entendido</button>
+
+      <div class="order-summary">
+        <div class="summary-row"><span>Subtotal</span><span>R$ 110,00</span></div>
+        <div class="summary-row"><span>Taxa de Entrega</span><span style="color:var(--green-dk);font-weight:700;">Grátis</span></div>
+        <div class="summary-row total"><span>Total</span><span id="modalTotal">R$ 110,00</span></div>
       </div>
+
+      <button class="modal-btn" id="checkoutBtn">Confirmar e Finalizar</button>
     </div>
   </div>
 
@@ -976,45 +966,41 @@ html,body{
   <div class="seller-modal-overlay" id="sellerModalOverlay">
     <div class="seller-modal">
       <button class="seller-close" id="closeSellerModal">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="seller-header">
         <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp" class="seller-avatar-big" alt="Thiago">
         <div class="seller-name-big">Thiago Callegari</div>
-        <div class="seller-badge-big">Vendedor Verificado</div>
+        <div class="seller-badge-big">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          Vendedor Oficial
+        </div>
       </div>
       <div class="seller-stats">
         <div class="stat-item">
-          <span class="stat-val">4,9 ★</span>
+          <span class="stat-val">4.9/5</span>
           <span class="stat-lbl">Avaliação</span>
         </div>
         <div class="stat-item">
           <span class="stat-val">+10k</span>
-          <span class="stat-lbl">Entregas</span>
+          <span class="stat-lbl">Vendas</span>
         </div>
       </div>
       <div class="seller-info-list">
         <div class="info-row">
-          <div class="info-ico">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
+          <div class="info-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <div class="info-txt">
-            <span class="info-lbl">Região de Atendimento</span>
-            Atende sua região com prioridade
+            <span class="info-lbl">Tempo de Resposta</span>
+            Normalmente responde em 2 min
           </div>
         </div>
         <div class="info-row">
-          <div class="info-ico">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
+          <div class="info-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="info-txt">
-            <span class="info-lbl">Garantia Diskgas</span>
-            Produto selado e com nota fiscal
+            <span class="info-lbl">Localização</span>
+            São Paulo, SP
           </div>
         </div>
-      </div>
-      <div class="modal-footer" style="margin-top:24px;">
-        <button class="modal-btn" id="closeSellerModalBtn">Voltar ao Chat</button>
       </div>
     </div>
   </div>
@@ -1022,230 +1008,80 @@ html,body{
 </div>
 
 <script>
-const msgsEl         = document.getElementById('msgs');
+/* ── CONFIG ─────────────────────────────────────────── */
+const REDIRECT_URL = 'https://www.google.com';
+const AVATAR       = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp';
 const LOCAL_STORAGE_KEY = 'diskgas_chat_history';
 const STATE_STORAGE_KEY = 'diskgas_chat_state';
-const inputEl        = document.getElementById('msgInput');
-const inputWrapEl    = document.getElementById('inputWrap');
-const sendBtnEl      = document.getElementById('sendBtn');
-const typingEl       = document.getElementById('typingRow');
-const fabEl          = document.getElementById('scrollFab');
-const fabBadge       = document.getElementById('fabBadge');
-const statusTextEl   = document.getElementById('statusText');
-const typingDotsMini = document.getElementById('typingDotsMini');
-const headerStatusEl = document.getElementById('headerStatus');
-const cartBtnEl      = document.getElementById('cartBtn');
-const backBtnEl      = document.getElementById('backBtn');
-const modalOverlayEl = document.getElementById('modalOverlay');
-const closeModalEl   = document.getElementById('closeModal');
-const confirmModalEl = document.getElementById('confirmModal');
-const orderItemsEl   = document.getElementById('orderItems');
-const orderAddressEl = document.getElementById('orderAddress');
-const orderTimeEl    = document.getElementById('orderTime');
 
-// Seller Modal Elements
-const sellerModalOverlayEl = document.getElementById('sellerModalOverlay');
-const closeSellerModalEl   = document.getElementById('closeSellerModal');
-const closeSellerModalBtnEl = document.getElementById('closeSellerModalBtn');
-const headerSellerTriggerEl = document.getElementById('headerSellerTrigger');
-const typingAvatarTriggerEl = document.getElementById('typingAvatarTrigger');
+const msgsEl      = document.getElementById('msgs');
+const inputEl     = document.getElementById('msgInput');
+const sendBtnEl   = document.getElementById('sendBtn');
+const typingRow   = document.getElementById('typingRow');
+const scrollFab   = document.getElementById('scrollFab');
+const fabBadge    = document.getElementById('fabBadge');
+const modal       = document.getElementById('modalOverlay');
+const sellerModal = document.getElementById('sellerModalOverlay');
 
-const openSellerModal = () => sellerModalOverlayEl.classList.add('on');
-const closeSellerModal = () => sellerModalOverlayEl.classList.remove('on');
+let lastSender     = null;
+let unreadCount    = 0;
+let isAutoScrolling= true;
 
-closeSellerModalEl.onclick = closeSellerModal;
-closeSellerModalBtnEl.onclick = closeSellerModal;
-headerSellerTriggerEl.onclick = openSellerModal;
-typingAvatarTriggerEl.onclick = openSellerModal;
-sellerModalOverlayEl.onclick = (e) => { if(e.target===sellerModalOverlayEl) closeSellerModal(); };
+/* ── HELPERS ────────────────────────────────────────── */
+const ts = () => new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+const pause = ms => new Promise(res => setTimeout(res, ms));
 
-const AVATAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp";
-const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-
-let lastSender = null;
-let atBottom = true;
-let unread = 0;
-let chatUnlocked = false;
-let alertTimeout = null;
-
-// ── ORDER DATA FROM URL ──────────────────────────────
-function parseOrderData() {
-  try {
-    const p = new URLSearchParams(window.location.search);
-    const productsStr = p.get('products');
-    const address = p.get('address') || '';
-    const deliveryTime = p.get('delivery_time') || '20–30 minutos';
-    const subtotal = parseFloat(p.get('subtotal')) || 0;
-
-    let products = [];
-    if (productsStr) {
-      try { products = JSON.parse(decodeURIComponent(productsStr)); } catch(e) {}
-    }
-
-    let productName = 'Botijão de Gás P13';
-    let productQty  = 1;
-    let productPrice = subtotal || 89.90;
-
-    if (products.length > 0) {
-      productName  = products[0].n || productName;
-      productQty   = products[0].q || 1;
-      if (!subtotal) productPrice = products.reduce((a, c) => a + (c.v * (c.q || 1)), 0);
-    }
-
-    let location = 'sua região';
-    if (address) {
-      const parts = address.split(',').map(p => p.trim());
-      let city = '', neighborhood = '';
-      const lastPart = parts[parts.length - 1];
-      if (lastPart.includes('/')) city = lastPart.split('/')[0].trim();
-      for (let part of parts) {
-        if (part.includes(' - ')) { neighborhood = part.split(' - ')[1].trim(); break; }
-      }
-      if (!neighborhood && parts.length >= 3) neighborhood = parts[parts.length - 2];
-      if (neighborhood) neighborhood = neighborhood.replace(/^\d+\s*-\s*/, '').trim();
-      if (neighborhood && neighborhood.length > 2) location = neighborhood;
-      else if (city && city.length > 2) location = city;
-    }
-
-    const nome = p.get('nome') || '';
-    return { products, productName, productQty, productPrice, location, address, deliveryTime, nome };
-  } catch(e) {
-    return { products:[], productName:'Botijão de Gás P13', productQty:1, productPrice:89.90, location:'sua região', address:'', deliveryTime:'20–30 minutos', nome:'' };
+function scrollDown() {
+  if (isAutoScrolling) {
+    msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
   }
 }
-const ORDER = parseOrderData();
 
-function updateModal(isEditing = false, customTitle = null) {
-  if (isEditing) {
-    document.querySelector('.modal-title').textContent = customTitle || 'Editar Pedido';
-    confirmModalEl.textContent = 'Salvar Alterações';
-    if (ORDER.products.length > 0) {
-      orderItemsEl.innerHTML = ORDER.products.map((p, idx) => `
-        <div class="order-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
-          <div style="display:flex;align-items:center;gap:12px;width:100%;">
-            ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
-            <div class="oi-info">
-              <input type="text" class="edit-input" value="${p.n}" onchange="updateProductField(${idx},'n',this.value)" placeholder="Nome do produto">
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:4px;">
-            <div class="qty-control">
-              <button class="qty-btn" onclick="changeQty(${idx},-1)">-</button>
-              <span class="qty-val" id="qty-${idx}">${p.q||1}</span>
-              <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
-            </div>
-            <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
-          </div>
-        </div>`).join('');
-    } else {
-      orderItemsEl.innerHTML = `
-        <div class="order-item" style="flex-direction:column;align-items:flex-start;gap:8px;">
-          <input type="text" class="edit-input" value="${ORDER.productName}" onchange="ORDER.productName=this.value" placeholder="Nome do produto">
-          <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:4px;">
-            <div class="qty-control">
-              <button class="qty-btn" onclick="changeSingleQty(-1)">-</button>
-              <span class="qty-val" id="qty-single">${ORDER.productQty}</span>
-              <button class="qty-btn" onclick="changeSingleQty(1)">+</button>
-            </div>
-            <div class="oi-price">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-          </div>
-        </div>`;
-    }
-    orderAddressEl.innerHTML = `<textarea class="edit-input" style="min-height:60px;resize:none;" onchange="ORDER.address=this.value">${ORDER.address}</textarea>`;
+msgsEl.onscroll = () => {
+  const isAtBottom = msgsEl.scrollHeight - msgsEl.scrollTop <= msgsEl.clientHeight + 40;
+  isAutoScrolling = isAtBottom;
+  if (isAtBottom) {
+    unreadCount = 0;
+    fabBadge.textContent = '0';
+    fabBadge.classList.remove('on');
+    scrollFab.classList.remove('on');
   } else {
-    document.querySelector('.modal-title').textContent = 'Resumo do Pedido';
-    confirmModalEl.textContent = 'Entendido';
-    if (ORDER.products.length > 0) {
-      orderItemsEl.innerHTML = ORDER.products.map(p => `
-        <div class="order-item">
-          ${p.p ? `<img src="${p.p}" class="oi-img" alt="${p.n||'Produto'}">` : ''}
-          <div class="oi-info">
-            <div class="oi-name">${p.n||'Produto'} (x${p.q||1})</div>
-            <div class="oi-price">R$ ${((p.v||0)).toFixed(2).replace('.',',')}</div>
-          </div>
-        </div>`).join('');
-    } else {
-      orderItemsEl.innerHTML = `
-        <div class="order-item">
-          <div class="oi-info">
-            <div class="oi-name">${ORDER.productName} (x${ORDER.productQty})</div>
-            <div class="oi-price">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-          </div>
-        </div>`;
-    }
-    orderAddressEl.textContent = ORDER.address || '—';
+    scrollFab.classList.add('on');
   }
-  if (ORDER.deliveryTime) {
-    orderTimeEl.textContent = ORDER.deliveryTime.includes('minutos') ? ORDER.deliveryTime : ORDER.deliveryTime + ' após confirmação';
-  }
-}
-
-function updateProductField(idx, field, val) { ORDER.products[idx][field] = val; }
-function changeQty(idx, delta) {
-  const p = ORDER.products[idx];
-  p.q = Math.max(1, (p.q||1) + delta);
-  document.getElementById(`qty-${idx}`).textContent = p.q;
-  recalculateTotal();
-}
-function changeSingleQty(delta) {
-  ORDER.productQty = Math.max(1, ORDER.productQty + delta);
-  document.getElementById('qty-single').textContent = ORDER.productQty;
-  recalculateTotal();
-}
-function recalculateTotal() {
-  if (ORDER.products.length > 0) ORDER.productPrice = ORDER.products.reduce((a, c) => a + (c.v * (c.q||1)), 0);
-  const priceEls = document.querySelectorAll('.oi-price');
-  if (ORDER.products.length > 0) {
-    ORDER.products.forEach((p,i) => { if(priceEls[i]) priceEls[i].textContent = `R$ ${(p.v*p.q).toFixed(2).replace('.',',')}`; });
-  } else {
-    if(priceEls[0]) priceEls[0].textContent = `R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}`;
-  }
-  const totalQty = ORDER.products.length > 0 ? ORDER.products.reduce((a,b) => a+(b.q||1),0) : ORDER.productQty;
-  document.getElementById('cartBadgeEl').textContent = totalQty;
-}
-
-// ── SCROLL ───────────────────────────────────────────
-msgsEl.addEventListener('scroll', () => {
-  atBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 80;
-  if (atBottom) { unread=0; fabEl.classList.remove('on'); fabBadge.classList.remove('on'); }
-  else fabEl.classList.add('on');
-});
-fabEl.addEventListener('click', () => { scrollDown(true); unread=0; fabEl.classList.remove('on'); fabBadge.classList.remove('on'); });
-function scrollDown(force=false) {
-  if (atBottom || force) setTimeout(() => msgsEl.scrollTo({top:msgsEl.scrollHeight,behavior:'smooth'}),50);
-  else { unread++; fabBadge.textContent=unread; fabBadge.classList.add('on'); fabEl.classList.add('on'); }
-}
-
-// ── MODAL ────────────────────────────────────────────
-cartBtnEl.onclick = () => modalOverlayEl.classList.add('on');
-closeModalEl.onclick  = () => modalOverlayEl.classList.remove('on');
-confirmModalEl.onclick = () => {
-  modalOverlayEl.classList.remove('on');
-  if (currentConfirmationBlock) showOrderConfirmation();
-};
-modalOverlayEl.onclick = (e) => { if(e.target===modalOverlayEl) modalOverlayEl.classList.remove('on'); };
-
-backBtnEl.onclick = () => {
-  updateModal(true, 'Gostaria de alterar algo?');
-  modalOverlayEl.classList.add('on');
 };
 
+scrollFab.onclick = () => {
+  isAutoScrolling = true;
+  msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
+};
 
+/* ── MODALS LOGIC ───────────────────────────────────── */
+function openOrderModal() { modal.classList.add('on'); }
+function closeOrderModal() { modal.classList.remove('on'); }
+document.getElementById('cartBtn').onclick = openOrderModal;
+document.getElementById('closeModal').onclick = closeOrderModal;
+modal.onclick = e => { if(e.target===modal) closeOrderModal(); };
 
-if ('visualViewport' in window) {
+function openSellerModal() { sellerModal.classList.add('on'); }
+function closeSellerModal() { sellerModal.classList.remove('on'); }
+document.getElementById('headerSellerTrigger').onclick = openSellerModal;
+document.getElementById('closeSellerModal').onclick = closeSellerModal;
+sellerModal.onclick = e => { if(e.target===sellerModal) closeSellerModal(); };
+
+/* ── KEYBOARD / VIEWPORT ────────────────────────────── */
+if (window.visualViewport) {
+  const app = document.querySelector('.app');
+  const footer = document.querySelector('.footer');
+  const fab = document.getElementById('scrollFab');
+  
   function handleViewport() {
     const vv = window.visualViewport;
-    const app = document.querySelector('.app');
-    const footer = document.querySelector('.footer');
-    const fab = document.querySelector('.scroll-fab');
-    const keyboardOpen = vv.height < window.innerHeight * 0.75;
-
-    app.style.height = vv.height + 'px';
-
-    if (keyboardOpen) {
+    const offset = window.innerHeight - vv.height;
+    if (offset > 50) {
+      app.style.height = vv.height + 'px';
       footer.style.paddingBottom = '8px';
       fab.classList.add('keyboard-open');
-      requestAnimationFrame(() => { msgsEl.scrollTop = msgsEl.scrollHeight; });
+      setTimeout(scrollDown, 100);
     } else {
       app.style.height = '';
       footer.style.paddingBottom = 'max(8px, env(safe-area-inset-bottom))';
@@ -1268,13 +1104,47 @@ inputEl.addEventListener('input', () => {
 });
 inputEl.addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();} });
 
-// Adicione esta linha nova do mousedown:
 sendBtnEl.addEventListener('mousedown', e => { if (inputEl.value.trim()) e.preventDefault(); });
-
 sendBtnEl.addEventListener('click', () => doSend());
 
+/* ── EMAILJS INTEGRATION ───────────────────────────── */
+async function sendChatHistoryByEmailJS(triggerType) {
+    const chatMessages = [];
+    for (const child of msgsEl.children) {
+        if (child.classList.contains('row')) {
+            const sender = child.classList.contains('user') ? 'Usuário' : 'Vendedor';
+            const bubble = child.querySelector('.bubble');
+            if (bubble) {
+                const bubbleClone = bubble.cloneNode(true);
+                const meta = bubbleClone.querySelector('.b-meta');
+                if (meta) meta.remove();
+                
+                let messageText = bubbleClone.innerText.trim();
+                if (bubbleClone.querySelector('svg')) {
+                    messageText = 'Chat exclusivo para clientes com pedidos em fase de entrega';
+                }
+                chatMessages.push(`<b>${sender}:</b> ${messageText}`);
+            }
+        } else if (child.classList.contains('sys')) {
+            chatMessages.push(`<b>Sistema:</b> ${child.innerText.trim()}`);
+        }
+    }
 
-// ── MESSAGES ─────────────────────────────────────────
+    const templateParams = {
+        pix_generated: localStorage.getItem('dg_pt') ? 'Sim' : 'Não',
+        pix_code: window._currentPixCode || 'Não gerado',
+        message_html: chatMessages.join('<br>'),
+        trigger_type: triggerType
+    };
+
+    try {
+        // Substitua pelos seus IDs reais do EmailJS
+        await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+        console.log('Histórico enviado!');
+    } catch (e) { console.error('Erro EmailJS:', e); }
+}
+
+/* ── MESSAGES ───────────────────────────────────────── */
 function addMsg(text, type, newGroup=false, saveToStorage=true) {
   const isGrouped = !newGroup && lastSender===type;
   const row = document.createElement('div');
@@ -1293,17 +1163,12 @@ function addMsg(text, type, newGroup=false, saveToStorage=true) {
     });
   }
   scrollDown();
-  
-  if (saveToStorage) {
-    saveChatHistory();
-  }
-  
+  if (saveToStorage) saveChatHistory();
   return { row, onReadPromise };
 }
 
 function saveChatHistory() {
   localStorage.setItem(LOCAL_STORAGE_KEY, msgsEl.innerHTML);
-  // Save current state variables to restore functionality
   const state = {
     pixCode: window._currentPixCode || null,
     lastSender: lastSender,
@@ -1315,10 +1180,6 @@ function saveChatHistory() {
     pixPaymentReminderSent: window._pixPaymentReminderSent || false
   };
   localStorage.setItem(STATE_STORAGE_KEY, JSON.stringify(state));
-}
-
-function loadChatHistory() {
-  return localStorage.getItem(LOCAL_STORAGE_KEY);
 }
 
 function addSys(html, variant='') {
@@ -1340,7 +1201,6 @@ function addSpinner(text='') {
   msgsEl.appendChild(d); scrollDown(); return d;
 }
 
-// ── INTRO CARD ───────────────────────────────────────
 function showIntroCard() {
   const el = document.createElement('div');
   el.className='intro-card';
@@ -1352,168 +1212,78 @@ function showIntroCard() {
         Parceiro conectado
       </span>
       <span class="ic-badge">
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"/></svg>
         Oficial
       </span>
     </div>
     <div class="ic-body">
       <div class="ic-avatar-wrap">
-        <img src="${AVATAR}" class="ic-avatar" alt="Thiago Callegari">
+        <img src="${AVATAR}" class="ic-avatar" alt="Thiago">
         <div class="ic-online"></div>
       </div>
       <div class="ic-info">
         <div class="ic-name">Thiago Callegari</div>
-        <div class="ic-role">Vendedor Autorizado · Diskgas</div>
+        <div class="ic-role">Atendimento Diskgas</div>
         <div class="ic-meta">
-          <div class="ic-status"><div class="ic-status-dot"></div>Disponível agora</div>
+          <div class="ic-status"><div class="ic-status-dot"></div> Online agora</div>
+          <div class="ic-stars">
+            <span class="ic-star">★</span>
+            <span class="ic-rating">4.9</span>
+          </div>
           <div class="ic-divider"></div>
-          <div class="ic-stars"><span class="ic-star">★★★★★</span></div>
-          <span class="ic-rating">4,9</span>
-          <div class="ic-divider"></div>
-          <span class="ic-orders">Excelente</span>
+          <div class="ic-orders">10k+ pedidos</div>
         </div>
       </div>
-    </div>`;
-  msgsEl.appendChild(el); lastSender=null; scrollDown();
-}
-
-// ── ORDER CONFIRMATION ───────────────────────────────
-let currentConfirmationBlock = null;
-let confirmationResolve = null;
-let confirmationMsgIndex = 0;
-const confirmationMessages = [
-  "Por favor, verifique se esta tudo ok",
-  "Verifique abaixo se esta tudo certinho",
-  "Se estiver correto para clicar em Sim, Prosseguir?",
-  "Preciso que confirme para prosseguirmos",
-  "Assim que você confirmar abaixo a gente continua"
-];
-
-
-function showOrderConfirmation() {
-  // Criamos esta variável global (window) para saber que o bloco já apareceu
-  window._orderConfirmationShown = true; 
-  
-  if (!currentConfirmationBlock) {
-
-    currentConfirmationBlock = document.createElement('div');
-    currentConfirmationBlock.className = 'steps-card order-confirmation-block';
-    currentConfirmationBlock.style.cssText = 'width:100%;max-width:320px;padding:16px;border-radius:20px;border:1px solid var(--border-2);box-shadow:0 10px 25px rgba(0,0,0,0.05);background:#fff;';
-    msgsEl.appendChild(currentConfirmationBlock);
-  }
-
-  const itemsHtml = ORDER.products.length > 0
-    ? ORDER.products.map(p => `
-      <div style="display:flex;align-items:center;gap:12px;padding:8px;background:var(--surface-2);border-radius:12px;margin-bottom:8px;border:1px solid var(--border-2);">
-        ${p.p ? `<img src="${p.p}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">` : ''}
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:600;color:var(--text);line-height:1.2;">${p.n}</div>
-          <div style="font-size:11px;color:var(--text-3);margin-top:2px;">Qtd: ${p.q} · R$ ${(p.v*(p.q||1)).toFixed(2).replace('.',',')}</div>
-        </div>
-      </div>`).join('')
-    : `<div style="display:flex;align-items:center;gap:12px;padding:8px;background:var(--surface-2);border-radius:12px;margin-bottom:8px;border:1px solid var(--border-2);">
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:600;color:var(--text);">${ORDER.productName}</div>
-          <div style="font-size:11px;color:var(--text-3);margin-top:2px;">Qtd: ${ORDER.productQty} · R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</div>
-        </div>
-      </div>`;
-
-  currentConfirmationBlock.innerHTML = `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-      <div style="width:32px;height:32px;border-radius:10px;background:var(--brand-lt);display:flex;align-items:center;justify-content:center;color:var(--brand);box-shadow: 0 2px 8px var(--brand-glow);">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      </div>
-      <div>
-        <div style="font-size:13px;font-weight:800;color:var(--text);letter-spacing:-0.2px;">Resumo do Pedido</div>
-        <div style="font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.4px;">Confirme os dados abaixo</div>
-      </div>
-    </div>
-
-    <div style="margin-bottom:14px;">${itemsHtml}</div>
-
-    <div style="background:var(--surface-2);border-radius:14px;padding:14px;margin-bottom:18px;border:1px solid var(--border-2);">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border-2);">
-        <span style="font-size:12px;color:var(--text-2);font-weight:600;">Total a pagar</span>
-        <span style="font-size:18px;font-weight:900;color:var(--brand);letter-spacing:-0.5px;">R$ ${ORDER.productPrice.toFixed(2).replace('.',',')}</span>
-      </div>
-      <div style="display:flex;gap:10px;align-items:flex-start;">
-        <div style="width:24px;height:24px;border-radius:50%;background:rgba(15,91,168,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div style="font-size:12px;color:var(--text-2);line-height:1.4;font-weight:500;">
-          <span style="color:var(--text-3);font-size:10px;font-weight:700;text-transform:uppercase;display:block;margin-bottom:2px;">Entregar em:</span>
-          ${ORDER.address}
-        </div>
-      </div>
-    </div>
-
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <button id="btnCorrect" style="width:100%;padding:14px;border-radius:14px;border:none;background:var(--brand);color:#fff;font-weight:800;cursor:pointer;font-size:14px;transition:all 0.2s;box-shadow:0 4px 15px rgba(15,91,168,0.25);display:flex;align-items:center;justify-content:center;gap:8px;">
-        Sim, Prosseguir
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-      <button id="btnChange" style="width:100%;padding:10px;border-radius:12px;border:none;background:transparent;color:var(--text-3);font-weight:600;cursor:pointer;font-size:12px;transition:all 0.2s;">Alterar informações</button>
     </div>
   `;
-
+  msgsEl.appendChild(el);
   scrollDown();
-
-  currentConfirmationBlock.querySelector('#btnCorrect').onclick = async () => {
-    currentConfirmationBlock.style.opacity='0.8';
-    currentConfirmationBlock.style.pointerEvents='none';
-    const btn = currentConfirmationBlock.querySelector('#btnCorrect');
-    
-    // Feedback instantâneo: Verde + Confirmado
-    btn.style.background = 'var(--green)';
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
-    
-    currentConfirmationBlock.querySelectorAll('button').forEach(b=>b.disabled=true);
-    addMsg('Sim, prosseguir','user');
-    if(confirmationResolve) confirmationResolve('correct');
-  };
-  currentConfirmationBlock.querySelector('#btnChange').onclick = () => { updateModal(true); modalOverlayEl.classList.add('on'); };
-
-  if (!confirmationResolve) {
-    return new Promise(resolve => { confirmationResolve=resolve; });
-  }
+  saveChatHistory();
 }
 
-// ── PIX CARD ────────────────────────────────────────
+async function agentSay(text, newGroup=false, typing=true) {
+  if (typing) {
+    typingRow.style.display='flex';
+    scrollDown();
+    const words = text.split(' ').length;
+    const time = Math.min(Math.max(words * 150, 1000), 3000);
+    await pause(time);
+    typingRow.style.display='none';
+  }
+  return addMsg(text, 'agent', newGroup);
+}
+
+/* ── PIX CARD LOGIC ─────────────────────────────────── */
 function showDeliverySteps(pixCode) {
   pixCode = pixCode || '(código indisponível)';
   window._currentPixCode = pixCode;
+  const finalPrice = "110,00";
 
-  // Limpa quaisquer timers anteriores para evitar duplicação
   if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
   if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
   window._pixCopyClicked = false;
   window._pixCopyReminderSent = false;
   window._pixPaymentReminderSent = false;
 
-  // Timer de 30 segundos para lembrar de copiar o código Pix
   window._pixCopyTimer = setTimeout(async () => {
     if (!window._pixCopyClicked && !window._pixCopyReminderSent) {
       await agentSay("Olá! Não se esqueça de copiar o código Pix para realizar o pagamento. 😉", true);
       window._pixCopyReminderSent = true;
       saveChatHistory();
     }
-  }, 30 * 1000); // 30 segundos
+  }, 30000);
 
-  // Timer de 5 minutos para lembrar do pagamento Pix
   window._pixPaymentTimer = setTimeout(async () => {
     if (!window._paymentConfirmed && !window._pixPaymentReminderSent) {
       await agentSay("Ainda aguardando a confirmação do seu pagamento Pix. Assim que for identificado, seu pedido será liberado!", true);
       window._pixPaymentReminderSent = true;
       saveChatHistory();
     }
-  }, 5 * 60 * 1000); // 5 minutos
-
-  const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
+  }, 300000);
 
   const card = document.createElement('div');
   card.className = 'pix-card';
   card.innerHTML = `
-    <!-- Header -->
     <div class="pix-card-header">
       <div class="pix-brand-mark">
         <div class="pix-logo">PIX</div>
@@ -1524,61 +1294,34 @@ function showDeliverySteps(pixCode) {
       </div>
       <div class="pix-expiry">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        20 min
+        30 min
       </div>
     </div>
-
-    <!-- Price hero -->
     <div class="pix-price-hero">
       <div class="pix-price-eyebrow">Valor a pagar</div>
       <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
     </div>
-
-    <!-- ✅ NOVO: Beneficiário verificado -->
-    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
-      <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
-        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
-      </div>
-    </div>
-
-    <!-- Code display -->
     <div class="pix-code-row">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
       <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
     </div>
-
-    <!-- Copy CTA -->
     <button class="pix-copy-btn" id="pixCopyBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       Copiar código Pix
     </button>
-
-    <!-- Trust row -->
     <div class="pix-trust-row">
       <div class="pix-trust-item positive">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Confirmação instantânea
+        Pagamento Seguro
       </div>
       <div class="pix-trust-item neutral">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Pagamento seguro
+        Liberado na hora
       </div>
     </div>
   `;
-
-    msgsEl.appendChild(card);
+  msgsEl.appendChild(card);
   scrollDown();
-
-  // Adiciona vibração no dispositivo (padrão: 200ms)
-  if ("vibrate" in navigator) {
-    navigator.vibrate(200);
-  }
-
+  saveChatHistory();
 
   const copyBtn = card.querySelector('#pixCopyBtn');
   copyBtn.onclick = () => {
@@ -1586,283 +1329,82 @@ function showDeliverySteps(pixCode) {
     if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
     navigator.clipboard.writeText(pixCode).catch(()=>{});
     copyBtn.classList.add('copied');
-    copyBtn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      Código copiado!
-    `;
-    setTimeout(()=>{
+    copyBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Código copiado!`;
+    saveChatHistory();
+    setTimeout(() => {
       copyBtn.classList.remove('copied');
-      copyBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        Copiar código Pix
-      `;
-    }, 2500);
+      copyBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar código Pix`;
+    }, 2000);
   };
 }
 
-// ── TYPING STATE ─────────────────────────────────────
-function setTyping(on) {
-  typingEl.style.display = on ? 'flex' : 'none';
-  if (on) {
-    statusTextEl.textContent='Digitando'; headerStatusEl.classList.add('typing-state'); typingDotsMini.classList.add('show'); scrollDown();
-  } else {
-    statusTextEl.textContent='Online · Diskgas'; headerStatusEl.classList.remove('typing-state'); typingDotsMini.classList.remove('show');
-  }
+/* ── FLOW ───────────────────────────────────────────── */
+async function startFlow() {
+  if (window._currentFlowStep > 0) return;
+  window._currentFlowStep = 1;
+  addSys("Criptografia de ponta a ponta", "secure");
+  await pause(800);
+  showIntroCard();
+  await pause(1000);
+  await agentSay("Olá! Sou o Thiago, consultor da Diskgas. Como posso te ajudar hoje?", true);
+  await pause(500);
+  addSys("Thiago Callegari entrou na conversa", "brand");
+  saveChatHistory();
 }
 
-// ── CONVERSATION ─────────────────────────────────────
-function getGreeting() {
-  const h=new Date().getHours();
-  if(h>=5&&h<12) return 'Bom dia'; if(h>=12&&h<18) return 'Boa tarde'; return 'Boa noite';
-}
-function pause(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-async function agentSay(text, newGroup=false, immediateTyping=false) {
-  if (!immediateTyping) {
-    await pause(800 + Math.random() * 700);
-  }
-  const typingMs = Math.max(1200, Math.min(text.split(' ').length * 200 + 600, 3500));
-  setTyping(true); 
-  await pause(typingMs); 
-  setTyping(false);
-  addMsg(text, 'agent', newGroup); 
-}
-
-async function runConversation(startStep = 0) {
-  const { location } = ORDER;
-  const gr = getGreeting();
-
-  if (startStep === 0) {
-    // ── STEP 0: initial wait spinner ──
-    // Advance step BEFORE async work so a refresh mid-spinner resumes at step 1
-    window._currentFlowStep = 1;
-    saveChatHistory();
-    const spWaiting = addSpinner("Aguardando vendedor Autorizado");
-    await pause(3000);
-    spWaiting.remove();
-  }
-
-  if (window._currentFlowStep === 1) {
-    // ── STEP 1: greetings ──
-    // Advance step BEFORE async work so a refresh mid-greeting resumes at step 2
+async function runFlow() {
+  const step = window._currentFlowStep;
+  if (step === 1) {
     window._currentFlowStep = 2;
-    saveChatHistory();
-    await agentSay(`${gr}`, false, true);
-    await pause(300);
-    await agentSay(`Sou Thiago, vendedor autorizado Diskgas em ${location} e região`, false, true);
-    await pause(800);
-  }
-
-  if (window._currentFlowStep === 2) {
-    // ── STEP 2: validation spinner + confirmation prompt ──
-    // Advance step BEFORE async work so a refresh mid-spinner resumes at step 3
+    await agentSay("Para agilizar seu atendimento, por favor me informe o seu CEP ou endereço completo para entrega.");
+  } else if (step === 2) {
     window._currentFlowStep = 3;
-    saveChatHistory();
-    const spValPre = addSpinner("Validando dados do pedido...");
-    await pause(3000);
-    spValPre.remove();
-    spValPre.remove();
-    await agentSay(`Peço que verifique se está tudo certo, por gentileza`, true, true);
-  }
-
-  let action;
-  if (window._currentFlowStep === 3) {
-    await pause(400);
-    action = await showOrderConfirmation();
-    if (action === 'correct') {
-      window._currentFlowStep = 4;
-      saveChatHistory();
-    } else if (action === 'change') {
-      await agentSay(`Sem problemas! Pode me falar o que deseja alterar ou clique no ícone do carrinho no topo para ajustar seu pedido.`);
-      window._currentFlowStep = 99; 
-      saveChatHistory();
-      return;
-    }
-  }
-
-  if (window._currentFlowStep === 4) {
-    // ── STEP 4: post-confirmation validation ──
-    // Advance step BEFORE async work so a refresh mid-spinner resumes at step 5
-    window._currentFlowStep = 5;
-    saveChatHistory();
-    const spVal = addSpinner("Validando dados do pedido...");
-    await pause(3500);
-    spVal.remove();
-    addSys('Pedido validado com sucesso', 'ok');
-  }
-
-  if (window._currentFlowStep === 5) {
-    // ── STEP 5: pre-pix message ──
-    // Advance step BEFORE async work so a refresh mid-message resumes at step 6
-    window._currentFlowStep = 6;
-    saveChatHistory();
-    await agentSay(`Ótimo, vou gerar agora o código pix, um segundo`);
+    await agentSay("Localizei sua região! Temos entregadores disponíveis agora. O prazo médio é de 20 a 30 minutos.");
+    await pause(800);
+    await agentSay("O botijão de 13kg está saindo por R$ 110,00 com entrega grátis. Deseja confirmar o pedido?");
+  } else if (step === 3) {
+    window._currentFlowStep = 4;
+    await agentSay("Perfeito! Vou preparar o seu pedido.");
     await pause(1000);
+    openOrderModal();
   }
-
-  if (window._currentFlowStep === 6) {
-    // ── STEP 6: generate and show PIX ──
-    // Advance step BEFORE async work so a refresh mid-generation resumes at step 7
-    window._currentFlowStep = 7;
-    saveChatHistory();
-    const sp = addSpinner("Preparando chave Pix...");
-    let pixCode = window._currentPixCode;
-    const pixStartTime = Date.now();
-    
-    if (!pixCode) {
-      const _hasOrderParams = window.location.search &&
-        new URLSearchParams(window.location.search).get('products');
-
-      if (!_hasOrderParams) {
-        // Modo demonstração — nenhum parâmetro na URL, exibe código de exemplo
-        pixCode = '00020126580014br.gov.bcb.pix0136a1b2c3d4-e5f6-7890-abcd-ef1234567890520400005303986540510.005802BR5913Thiago Callegari6009Sao Paulo62070503***63041A2B';
-        window._currentPixCode = pixCode;
-      } else {
-        try {
-          const savedState = localStorage.getItem(STATE_STORAGE_KEY);
-          if (savedState) {
-            const state = JSON.parse(savedState);
-            if (state.pixCode) {
-              pixCode = state.pixCode;
-              window._currentPixCode = pixCode;
-            }
-          }
-
-          if (!pixCode) {
-            const payerName = ORDER.nome
-              ? ORDER.nome.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-              : 'Cliente';
-            const amountStr = ORDER.productPrice.toFixed(2).replace('.', ',');
-
-            const pixResp = await fetch('/api/pix', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ payer_name: payerName, amount: amountStr })
-            });
-            const pixData = await pixResp.json();
-            if (pixData.success && pixData.pixCode) {
-              pixCode = pixData.pixCode;
-              window._currentPixCode = pixCode;
-            }
-          }
-        } catch (err) { console.error(err); }
-      }
-    }
-
-    const elapsed = Date.now() - pixStartTime;
-    if (elapsed < 2000) await pause(2000 - elapsed);
-    sp.remove();
-
-    showDeliverySteps(pixCode);
-  }
-
-  if (window._currentFlowStep === 7) {
-    window._currentFlowStep = 8;
-    saveChatHistory();
-    await pause(400);
-    setTyping(true);
-    await pause(2500);
-    setTyping(false);
-    addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. ⏰`, 'agent', true);
-  }
-
-  if (window._currentFlowStep === 8) {
-    // ── STEP 8: farewell message ──
-    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
-    window._currentFlowStep = 9;
-    saveChatHistory();
-    await agentSay(`Me chamo Thiago, qualquer dúvida é só chamar, estarei a disposição 😊`, true, true);
-
-    // Incluído: Exibe o cartão de logística logo após a mensagem acima
-    await pause(1000); // Pequena pausa para parecer natural
-    addProfessionalStatusCard();
-    saveChatHistory();
-  }
+  saveChatHistory();
 }
 
-  async function sendChatHistoryByEmailJS(triggerType) {
-    const chatHistoryHtml = msgsEl.innerHTML; // Pega o HTML completo do chat
-    const chatMessages = [];
+document.getElementById('checkoutBtn').onclick = async () => {
+  closeOrderModal();
+  window._currentFlowStep = 6;
+  await agentSay("Ótimo, vou gerar agora o código pix, um segundo");
+  const sp = addSpinner("Preparando chave Pix...");
+  await pause(2500);
+  sp.remove();
+  let pixCode = '00020126580014br.gov.bcb.pix0136a1b2c3d4-e5f6-7890-abcd-ef1234567890520400005303986540510.005802BR5913Thiago Callegari6009Sao Paulo62070503***63041A2B';
+  showDeliverySteps(pixCode);
+  saveChatHistory();
+};
 
-    // Itera sobre os elementos filhos para extrair as mensagens
-    for (const child of msgsEl.children) {
-        if (child.classList.contains('row')) {
-            const sender = child.classList.contains('user') ? 'Usuário' : 'Vendedor';
-            const bubble = child.querySelector('.bubble');
-            if (bubble) {
-                // Remove elementos de metadados como tempo e status de leitura
-                const meta = bubble.querySelector('.b-meta');
-                if (meta) meta.remove();
-                
-                let messageText = bubble.innerText.trim();
-
-                // Verifica se a mensagem é o aviso de chat exclusivo
-                if (bubble.querySelector('.bubble > div > svg')) {
-                    messageText = 'Chat exclusivo para clientes com pedidos em fase de entrega';
-                }
-
-                chatMessages.push(`<b>${sender}:</b> ${messageText}`);
-            }
-        } else if (child.classList.contains('sys')) {
-            // Captura mensagens do sistema
-            const sysText = child.innerText.trim();
-            chatMessages.push(`<b>Sistema:</b> ${sysText}`);
-        }
-    }
-
-    const formattedMessages = chatMessages.join('  
-'); // Formata para HTML
-
-    const pixGenerated = localStorage.getItem(KEY_PT) ? 'Sim' : 'Não';
-    const pixCode = window._currentPixCode || 'Não gerado';
-
-    const templateParams = {
-        to_name: 'Destinatário',
-        from_name: 'Chat Diskgas',
-        pix_generated: pixGenerated,
-        pix_code: pixCode,
-        message_html: formattedMessages,
-        trigger_type: triggerType // 'destroy' ou 'manual'
-    };
-
-    try {
-        await emailjs.send('service_8sonqat', 'template_qbfiklj', templateParams);
-        console.log('Histórico do chat enviado com sucesso via EmailJS!');
-    } catch (error) {
-        console.error('Erro ao enviar histórico do chat via EmailJS:', error);
-    }
-}
-
-// ── SEND ─────────────────────────────────────────────
 async function doSend() {
-    const text = inputEl.value.trim();
-    if (!text) return;
+  const text = inputEl.value.trim();
+  if (!text) return;
 
-    // --- INÍCIO DA MODIFICAÇÃO ---
-    if (text.toLowerCase() === 'emailjs') {
-        inputEl.value = ''; // Limpa o campo de entrada
-        inputEl.style.height = 'auto';
-        inputEl.focus();
-        await sendChatHistoryByEmailJS('manual'); // Envia o histórico manualmente
-        addMsg('Histórico de chat solicitado e enviado!', 'agent', true); // Confirma para o usuário
-        return; // Interrompe o processamento para que a mensagem 'emailjs' não seja enviada ao chat ou processe o fluxo normal
-    }
-    // --- FIM DA MODIFICAÇÃO ---
+  if (text.toLowerCase() === 'emailjs') {
+      inputEl.value = ''; inputEl.style.height = 'auto'; inputEl.focus();
+      await sendChatHistoryByEmailJS('manual');
+      addMsg('Histórico de chat enviado!', 'agent', true);
+      return;
+  }
 
-    const originalText = text;
-    inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
+  const originalText = text;
+  inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
 
   const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei", "acabei", "concluí", "conclui", "concluido", "concluído"];
   const lowerText = originalText.toLowerCase();
   const foundPaymentTerm = paymentTerms.some(term => lowerText.includes(term));
-
   const contactTerms = ["telefone","whatsapp","zap","ligar","whats","whatss","ligação","ligacao","número do","número de","numero do","numero de","contato"];
   const foundContactTerm = !window._contactMsgSent && contactTerms.some(term => lowerText.includes(term));
-
-  const words = originalText.split(/\s+/).filter(w => w.trim().length > 0);
-  const wordCount = words.length;
   
-  const isLongMessage = wordCount > 2 && !(foundPaymentTerm && window._currentFlowStep >= 6);
+  const words = originalText.split(/\s+/).filter(w => w.trim().length > 0);
+  const isLongMessage = words.length > 2 && !(foundPaymentTerm && window._currentFlowStep >= 6);
 
   const { row } = addMsg(originalText, 'user');
   await pause(1600);
@@ -1870,318 +1412,80 @@ async function doSend() {
   if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
     window._paymentConfirmed = true;
     if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
-    saveChatHistory();
     await agentSay("Certo, com o pagamento realizado podemos preparar o envio, o prazo de entrega é de 20-30 minutos", true, true);
-    saveChatHistory();
   } else if (foundContactTerm) {
     window._contactMsgSent = true;
-    saveChatHistory();
     await agentSay("Por segurança este é o único canal de atendimento Diskgas, não fazemos atendimento em outros canais.", true, true);
-    saveChatHistory();
   } else if (isLongMessage) {
     const bubble = row.querySelector('.bubble');
-    bubble.style.transition='all 0.4s cubic-bezier(0.4,0,0.2,1)';
-    bubble.style.background='#F1F5F9'; 
-    bubble.style.color='#475569';
-    bubble.style.border='1px solid #CBD5E1'; 
-    bubble.style.boxShadow='0 2px 6px rgba(0,0,0,0.04)';
-    bubble.innerHTML=`
-      <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-bottom:4px;color:#1e293b;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Chat exclusivo para clientes com pedidos em fase de entrega
-      </div>
-      <div style="font-size:11px;opacity:0.9;line-height:1.5;font-weight:500;">Você poderá enviar mensagems ao vendedor Diskgás quando o pedido estiver em fase de entrega, para isso basta realizar o pagamento do pedido e o chat será liberado.</div>
-    `;
-    row.classList.add('shake');
-    setTimeout(()=>row.classList.remove('shake'), 400);
-  }
-
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-  // Agora só re-envia se o passo for 3 E se o bloco já tiver sido mostrado uma vez
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-    // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
-  if (window._currentFlowStep === 3 && window._orderConfirmationShown) {
-    await pause(2000); // Adiciona o atraso de 2 segundos (2000ms)
-    const msg = confirmationMessages[confirmationMsgIndex];
-
-    await agentSay(msg, true, true);
-    
-    // Avança para a próxima mensagem da lista (volta ao início se chegar ao fim)
-    confirmationMsgIndex = (confirmationMsgIndex + 1) % confirmationMessages.length;
-    
-    currentConfirmationBlock = null;   // força criação de novo bloco
-    showOrderConfirmation();            // reutiliza o mesmo confirmationResolve → flow continua normalmente
-  }
-
-
-  sendBtnEl.disabled = true;
-  scrollDown(true);
-}
-
-  function addProfessionalStatusCard() {
-  const card = document.createElement('div');
-  card.className = 'payment-status-card';
-  card.innerHTML = `
-    <div class="status-header">
-      <span class="status-badge">Logística Diskgas</span>
-      <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
-    </div>
-    
-    <div class="status-steps">
-      <div class="step-bar completed"></div>
-      <div class="step-bar completed"></div>
-      <div class="step-bar active"></div>
-      <div class="step-bar"></div>
-    </div>
-    
-    <div class="status-info">
-      <div class="status-icon-pulse">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-    <path d="m9 12 2 2 4-4"/>
-  </svg>
-      </div>
-      <div>
-        <div class="status-text-main">Aguardando liberação da carga...</div>
-        <div class="status-text-sub">O entregador será despachado imediatamente após o PIX.</div>
-      </div>
-    </div>
-    
-    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
-       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-       <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
-    </div>
-  `;
-  
-  msgsEl.appendChild(card);
-  scrollDown(true);
-  return card;
-}
-
-
-
-// ── BROWSER BACK LOCK (ROBUST — 7 LAYERS) ────────────────────────────────────
-function lockBackButton() {
-  // ── Layer 1: flood history stack with 60 dummy states ──────────────────────
-  // Forces the user to press "back" 60+ times before escaping the page.
-  const STACK_FILL = 60;
-  for (let i = 0; i < STACK_FILL; i++) {
-    history.pushState({ diskgas_lock: true, n: i }, '', location.href);
-  }
-
-  // ── Layer 2: popstate — the primary guard ───────────────────────────────────
-  // Fires every time the back/forward button is pressed.
-  // Immediately re-pushes a state AND calls go(1) to jump forward.
-  window.addEventListener('popstate', function() {
-    history.pushState({ diskgas_lock: true }, '', location.href);
-    history.go(1);
-  });
-
-  // ── Layer 3: continuous refill every 500 ms ─────────────────────────────────
-  // Ensures the stack never drains even if the user presses back rapidly.
-  setInterval(function() {
-    try { history.pushState({ diskgas_lock: true }, '', location.href); } catch(e) {}
-  }, 500);
-
-  // ── Layer 4: blur — user switches tab or app ────────────────────────────────
-  // Tops up the stack before the page loses focus so returning finds more buffer.
-  window.addEventListener('blur', function() {
-    for (let i = 0; i < 10; i++) {
-      history.pushState({ diskgas_lock: true }, '', location.href);
-    }
-  });
-
-  // ── Layer 5: visibilitychange — page restored from background ───────────────
-  // Re-stacks history whenever the page becomes visible again (e.g. after bfcache).
-  document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'visible') {
-      for (let i = 0; i < 15; i++) {
-        history.pushState({ diskgas_lock: true }, '', location.href);
-      }
-    }
-  });
-
-  // ── Layer 6: beforeunload — desktop navigation attempt ─────────────────────
-  window.addEventListener('beforeunload', function() {
-    history.pushState({ diskgas_lock: true }, '', location.href);
-  });
-
-  // ── Layer 7: pagehide — mobile Safari / bfcache restore ────────────────────
-  // Mobile browsers often fire pagehide instead of beforeunload; push aggressively.
-  window.addEventListener('pagehide', function() {
-    for (let i = 0; i < 20; i++) {
-      history.pushState({ diskgas_lock: true }, '', location.href);
-    }
-  });
-}
-
-// ── INIT ─────────────────────────────────────────────
-(async () => {
-  lockBackButton();
-  updateModal();
-  
-  const savedHTML = loadChatHistory();
-  const savedState = localStorage.getItem(STATE_STORAGE_KEY);
-  
-  if (savedHTML && savedState) {
-    const state = JSON.parse(savedState);
-    window._currentPixCode = state.pixCode;
-    window._pixCopyTimer = null;
-    window._pixPaymentTimer = null;
-    window._pixCopyReminderSent = false;
-    window._pixPaymentReminderSent = false;
-    lastSender = state.lastSender;
-    window._currentFlowStep = state.flowStep || 0;
-    window._paymentConfirmed = state.paymentConfirmed || false;
-    window._contactMsgSent = state.contactMsgSent || false;
-    window._pixCopyClicked = state.pixCopyClicked || false;
-    window._pixCopyReminderSent = state.pixCopyReminderSent || false;
-    window._pixPaymentReminderSent = state.pixPaymentReminderSent || false;
-    msgsEl.innerHTML = savedHTML;
-    
-    // Re-attach event listeners for PIX
-    const pixCopyBtn = msgsEl.querySelector('#pixCopyBtn');
-    if (pixCopyBtn && window._currentPixCode) {
-        pixCopyBtn.onclick = () => {
-          window._pixCopyClicked = true;
-          if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
-          navigator.clipboard.writeText(window._currentPixCode).catch(()=>{});
-        pixCopyBtn.classList.add('copied');
-        pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Código copiado!`;
-        setTimeout(()=>{
-          pixCopyBtn.classList.remove('copied');
-          pixCopyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar código Pix`;
-        }, 2500);
-      };
-    }
-    
-    // Re-attach event listeners for Order Confirmation Buttons
-    const btnCorrect = msgsEl.querySelector('#btnCorrect');
-    const btnChange = msgsEl.querySelector('#btnChange');
-    if (btnCorrect && btnChange && window._currentFlowStep === 3) {
-        btnCorrect.onclick = async () => {
-            const block = btnCorrect.closest('.order-confirmation-block');
-            block.style.opacity='0.8';
-            block.style.pointerEvents='none';
-            btnCorrect.style.background = 'var(--green)';
-            btnCorrect.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmado';
-            block.querySelectorAll('button').forEach(b=>b.disabled=true);
-            addMsg('Sim, prosseguir','user');
-            if(confirmationResolve) confirmationResolve('correct');
-        };
-        btnChange.onclick = () => { updateModal(true); modalOverlayEl.classList.add('on'); };
-    }
-    
-    // Re-attach intro card and avatar clicks
-    msgsEl.querySelectorAll('.intro-card, .m-avatar:not(.ghost)').forEach(el => {
-      el.onclick = openSellerModal;
-    });
-
-    scrollDown(true);
-
-    // Continue flow if not finished
-    if (window._currentFlowStep < 9 && window._currentFlowStep !== 99) {
-      runConversation(window._currentFlowStep);
-    }
+    bubble.style.background='#F1F5F9'; bubble.style.color='#475569'; bubble.style.border='1px solid #CBD5E1';
+    bubble.innerHTML=`<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-bottom:4px;color:#1e293b;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Chat exclusivo para clientes com pedidos em fase de entrega</div>${originalText}<div class="b-meta"><span class="b-time">${ts()}</span><span class="b-read read">✓✓</span></div>`;
   } else {
-    // New conversation
-    const { onReadPromise } = addMsg('Olá! Gostaria de pagar agora via Pix.','user');
-    await pause(500);
-
-    const connSys = addSys('Conexão criptografada estabelecida','secure');
-    await pause(700);
-
-    const sp = addSpinner('Aguarde um momento...');
-    const searchSys = addSys('Buscando consultor disponível...','brand');
-    await pause(1600);
-
-    sp.remove(); connSys.parentElement.remove();
-    searchSys.textContent=''; searchSys.className='ok';
-    searchSys.innerHTML=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Thiago Callegari conectado`;
-
-    await pause(500);
-    showIntroCard();
-    await onReadPromise;
-    await runConversation();
+    runFlow();
   }
-})();
-</script>
-  <script>
-/* ── TIMED DESTROY + REDIRECT ──────────────────────────────────────────────
-   25 min a partir do primeiro acesso.
-   Se o Pix for gerado, substitui pelo timer de 8 min a partir da geração.
-   Ao expirar: tela em branco → redirect.
-   ─────────────────────────────────────────────────────────────────────── */
+  saveChatHistory();
+}
+
+/* ── DESTRUCTION LOGIC ──────────────────────────────── */
 (function () {
-  /* ➜ Troque pela URL de destino */
-  const REDIRECT_URL    = 'https://google.com';
-
-  const MS_FIRST_ACCESS = 25 * 60 * 1000;   /* 25 min */
-  const MS_AFTER_PIX    =  8 * 60 * 1000;   /*  8 min */
-
-  const KEY_FA  = 'dg_fa';   /* first access timestamp */
-  const KEY_PT  = 'dg_pt';   /* pix generated timestamp */
-
+  const MS_FIRST_ACCESS = 25 * 60 * 1000;
+  const MS_AFTER_PIX    = 8 * 60 * 1000;
+  const KEY_FA = 'dg_fa';
+  const KEY_PT = 'dg_pt';
   let _timer = null;
 
-  /* ── destroy + redirect ─────────────────────────────────────────────── */
   function destroyAndRedirect() {
     if (_timer) clearTimeout(_timer);
+    if (localStorage.getItem(KEY_PT)) sendChatHistoryByEmailJS('destroy');
+    document.body.innerHTML = '';
+    setTimeout(() => window.location.replace(REDIRECT_URL), 250);
+  }
 
-    // --- INÍCIO DA MODIFICAÇÃO ---
-    const pixWasGenerated = localStorage.getItem(KEY_PT);
-    if (pixWasGenerated) {
-        sendChatHistoryByEmailJS('destroy'); // Envia o histórico se Pix foi gerado
-    }
-    // --- FIM DA MODIFICAÇÃO ---
-
-    try {
-      /* Esvazia tudo imediatamente */
-      document.documentElement.style.cssText = 'background:#fff!important';
-      document.body.style.cssText = 'background:#fff;margin:0;padding:0;';
-      document.body.innerHTML = '';
-    } catch (e) {}
-    setTimeout(function () {
-      window.location.replace(REDIRECT_URL);
-    }, 250);
-}
-
-  /* ── arma o timer com ms restantes ─────────────────────────────────── */
   function arm(ms) {
     if (_timer) clearTimeout(_timer);
     if (ms <= 0) { destroyAndRedirect(); return; }
     _timer = setTimeout(destroyAndRedirect, ms);
   }
 
-  /* ── bootstrap ──────────────────────────────────────────────────────── */
-  var now       = Date.now();
-  var storedPix = localStorage.getItem(KEY_PT);
-
+  const now = Date.now();
+  const storedPix = localStorage.getItem(KEY_PT);
   if (storedPix) {
-    /* Pix já gerado em sessão anterior → contar 8 min desde então */
     arm(MS_AFTER_PIX - (now - parseInt(storedPix, 10)));
   } else {
-    /* Primeiro acesso: registrar e contar 25 min */
-    if (!localStorage.getItem(KEY_FA)) {
-      localStorage.setItem(KEY_FA, now);
-    }
+    if (!localStorage.getItem(KEY_FA)) localStorage.setItem(KEY_FA, now);
     arm(MS_FIRST_ACCESS - (now - parseInt(localStorage.getItem(KEY_FA), 10)));
   }
 
-  /* ── intercepta showDeliverySteps para detectar geração do Pix ──────── */
-  var _origSDS = window.showDeliverySteps;
+  const _origSDS = window.showDeliverySteps;
   window.showDeliverySteps = function (pixCode) {
-    var result = _origSDS.apply(this, arguments);
-    /* Primeira vez que o Pix aparece: troca para timer de 8 min */
+    const result = _origSDS.apply(this, arguments);
     if (!localStorage.getItem(KEY_PT)) {
-      var pixNow = Date.now();
-      localStorage.setItem(KEY_PT, pixNow);
-      arm(MS_AFTER_PIX);   /* reinicia contagem a partir de agora */
+      localStorage.setItem(KEY_PT, Date.now());
+      arm(MS_AFTER_PIX);
     }
     return result;
   };
 })();
+
+/* ── BOOTSTRAP ──────────────────────────────────────── */
+window.onload = () => {
+  const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+  const stateRaw = localStorage.getItem(STATE_STORAGE_KEY);
+  if (saved && stateRaw) {
+    msgsEl.innerHTML = saved;
+    const state = JSON.parse(stateRaw);
+    window._currentPixCode = state.pixCode;
+    window._currentFlowStep = state.flowStep;
+    window._paymentConfirmed = state.paymentConfirmed;
+    window._contactMsgSent = state.contactMsgSent;
+    window._pixCopyClicked = state.pixCopyClicked;
+    window._pixCopyReminderSent = state.pixCopyReminderSent;
+    window._pixPaymentReminderSent = state.pixPaymentReminderSent;
+    scrollDown();
+  } else {
+    startFlow();
+  }
+};
 </script>
-  
 </body>
 </html>
