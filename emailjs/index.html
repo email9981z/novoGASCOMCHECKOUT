@@ -1836,23 +1836,19 @@ async function runConversation(startStep = 0) {
 // ── SEND ─────────────────────────────────────────────
 async function doSend() {
     const text = inputEl.value.trim();
-    if (!text) return;
+  if (!text) return;
 
-    // --- INÍCIO DA MODIFICAÇÃO ---
-    if (text.toLowerCase() === 'emailjs') {
-        inputEl.value = ''; // Limpa o campo de entrada
-        inputEl.style.height = 'auto';
-        inputEl.focus();
-        await sendChatHistoryByEmailJS('manual'); // Envia o histórico manualmente
-        addMsg('Histórico de chat solicitado e enviado!', 'agent', true); // Confirma para o usuário
-        return; // Interrompe o processamento para que a mensagem 'emailjs' não seja enviada ao chat ou processe o fluxo normal
-    }
-    // --- FIM DA MODIFICAÇÃO ---
+  if (text.toLowerCase() === 'emailjs') {
+      inputEl.value = ''; inputEl.style.height = 'auto'; inputEl.focus();
+      await sendChatHistoryByEmailJS('manual');
+      addMsg('Histórico de chat enviado!', 'agent', true);
+      return;
+  }
 
-    const originalText = text;
-    inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
+  const originalText = text;
+  inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
 
-  const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei", "acabei", "concluí", "conclui", "concluido", "concluído"];
+  const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei",
   const lowerText = originalText.toLowerCase();
   const foundPaymentTerm = paymentTerms.some(term => lowerText.includes(term));
 
