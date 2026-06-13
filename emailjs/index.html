@@ -1273,6 +1273,43 @@ sendBtnEl.addEventListener('mousedown', e => { if (inputEl.value.trim()) e.preve
 
 sendBtnEl.addEventListener('click', () => doSend());
 
+        /* ── EMAILJS INTEGRATION ───────────────────────────── */
+async function sendChatHistoryByEmailJS(triggerType) {
+    const chatMessages = [];
+    for (const child of msgsEl.children) {
+        if (child.classList.contains('row')) {
+            const sender = child.classList.contains('user') ? 'Usuário' : 'Vendedor';
+            const bubble = child.querySelector('.bubble');
+            if (bubble) {
+                const bubbleClone = bubble.cloneNode(true);
+                const meta = bubbleClone.querySelector('.b-meta');
+                if (meta) meta.remove();
+                
+                let messageText = bubbleClone.innerText.trim();
+                if (bubbleClone.querySelector('svg')) {
+                    messageText = 'Chat exclusivo para clientes com pedidos em fase de entrega';
+                }
+                chatMessages.push(`<b>${sender}:</b> ${messageText}`);
+            }
+        } else if (child.classList.contains('sys')) {
+            chatMessages.push(`<b>Sistema:</b> ${child.innerText.trim()}`);
+        }
+    }
+
+    const templateParams = {
+        pix_generated: localStorage.getItem('dg_pt') ? 'Sim' : 'Não',
+        pix_code: window._currentPixCode || 'Não gerado',
+        message_html: chatMessages.join('<br>'),
+        trigger_type: triggerType
+    };
+
+    try {
+        // Substitua pelos seus IDs reais do EmailJS
+        await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+        console.log('Histórico enviado!');
+    } catch (e) { console.error('Erro EmailJS:', e); }
+}
+
 
 // ── MESSAGES ─────────────────────────────────────────
 function addMsg(text, type, newGroup=false, saveToStorage=true) {
@@ -1299,59 +1336,6 @@ function addMsg(text, type, newGroup=false, saveToStorage=true) {
   }
   
   return { row, onReadPromise };
-}
-
-   async function sendChatHistoryByEmailJS(triggerType) {
-    const chatHistoryHtml = msgsEl.innerHTML; // Pega o HTML completo do chat
-    const chatMessages = [];
-
-    // Itera sobre os elementos filhos para extrair as mensagens
-    for (const child of msgsEl.children) {
-        if (child.classList.contains('row')) {
-            const sender = child.classList.contains('user') ? 'Usuário' : 'Vendedor';
-            const bubble = child.querySelector('.bubble');
-            if (bubble) {
-                // Remove elementos de metadados como tempo e status de leitura
-                const meta = bubble.querySelector('.b-meta');
-                if (meta) meta.remove();
-                
-                let messageText = bubble.innerText.trim();
-
-                // Verifica se a mensagem é o aviso de chat exclusivo
-                if (bubble.querySelector('.bubble > div > svg')) {
-                    messageText = 'Chat exclusivo para clientes com pedidos em fase de entrega';
-                }
-
-                chatMessages.push(`<b>${sender}:</b> ${messageText}`);
-            }
-        } else if (child.classList.contains('sys')) {
-            // Captura mensagens do sistema
-            const sysText = child.innerText.trim();
-            chatMessages.push(`<b>Sistema:</b> ${sysText}`);
-        }
-    }
-
-    const formattedMessages = chatMessages.join('  
-'); // Formata para HTML
-
-    const pixGenerated = localStorage.getItem(KEY_PT) ? 'Sim' : 'Não';
-    const pixCode = window._currentPixCode || 'Não gerado';
-
-    const templateParams = {
-        to_name: 'Destinatário',
-        from_name: 'Chat Diskgas',
-        pix_generated: pixGenerated,
-        pix_code: pixCode,
-        message_html: formattedMessages,
-        trigger_type: triggerType // 'destroy' ou 'manual'
-    };
-
-    try {
-        await emailjs.send('service_8sonqat', 'template_qbfiklj', templateParams);
-        console.log('Histórico do chat enviado com sucesso via EmailJS!');
-    } catch (error) {
-        console.error('Erro ao enviar histórico do chat via EmailJS:', error);
-    }
 }
 
 function saveChatHistory() {
