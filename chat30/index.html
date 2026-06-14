@@ -150,7 +150,7 @@ html,body{
 /* ── MESSAGES AREA ── */
 .msgs{
   flex:1;overflow-y:auto;overflow-x:hidden;
-  padding:16px 14px 6px;
+  padding:16px 14px 40px; /* Aumentado padding inferior para 40px */
   display:flex;flex-direction:column;gap:3px;
   position:relative;
 }
@@ -521,15 +521,16 @@ html,body{
   background: #fff;
   border-radius: 20px;
   padding: 18px;
-  margin: 15px 0;
+  margin: 15px 0 25px; /* Aumentado margem inferior */
   border: 1px solid rgba(15, 91, 168, 0.15);
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Mudado de hidden para visible para não cortar sombras ou badges */
   animation: fadeUp 0.5s ease;
   align-self: center;
-  width: 100%;
+  width: calc(100% - 10px); /* Pequeno respiro nas laterais */
   max-width: 340px;
+  flex-shrink: 0; /* Garante que o flexbox não esmague o card */
 }
 
 .pix-card::before {
@@ -1318,7 +1319,7 @@ function addMsg(text, type, newGroup=false, saveToStorage=true) {
       setTimeout(()=>{ readEl.textContent='✓✓'; readEl.className='b-read sent'; setTimeout(()=>{readEl.className='b-read read';resolve();},1300); },700);
     });
   }
-  scrollDown();
+  setTimeout(scrollDown, 50);
   
   if (saveToStorage) {
     saveChatHistory();
@@ -1355,7 +1356,7 @@ function addSys(html, variant='') {
   if(variant==='secure') icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
   if(variant==='gold')   icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
   if(variant==='brand')  icon=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
-  s.innerHTML=icon+' '+html; d.appendChild(s); msgsEl.appendChild(d); scrollDown();
+  s.innerHTML=icon+' '+html; d.appendChild(s); msgsEl.appendChild(d); setTimeout(scrollDown, 50);
   saveChatHistory();
   return s;
 }
@@ -1363,7 +1364,7 @@ function addSys(html, variant='') {
 function addSpinner(text='') {
   const d=document.createElement('div'); d.className='spinner-wrap';
   d.innerHTML=`<div class="spinner"></div>${text?`<span class="spinner-text">${text}</span>`:''}`;
-  msgsEl.appendChild(d); scrollDown(); return d;
+  msgsEl.appendChild(d); setTimeout(scrollDown, 50); return d;
 }
 
 // ── INTRO CARD ───────────────────────────────────────
@@ -1400,7 +1401,7 @@ function showIntroCard() {
         </div>
       </div>
     </div>`;
-  msgsEl.appendChild(el); lastSender=null; scrollDown();
+  msgsEl.appendChild(el); lastSender=null; setTimeout(scrollDown, 50);
 }
 
 // ── ORDER CONFIRMATION ───────────────────────────────
@@ -1482,7 +1483,7 @@ function showOrderConfirmation() {
     </div>
   `;
 
-  scrollDown();
+  setTimeout(scrollDown, 50);
 
   currentConfirmationBlock.querySelector('#btnCorrect').onclick = async () => {
     currentConfirmationBlock.style.opacity='0.8';
@@ -1582,7 +1583,7 @@ function showDeliverySteps(pixCode) {
   `;
 
   msgsEl.appendChild(card);
-  scrollDown();
+  setTimeout(scrollDown, 50);
 
   const copyBtn = card.querySelector('#pixCopyBtn');
   if (copyBtn) {
@@ -1612,7 +1613,7 @@ function showDeliverySteps(pixCode) {
 function setTyping(on) {
   typingEl.style.display = on ? 'flex' : 'none';
   if (on) {
-    statusTextEl.textContent='Digitando'; headerStatusEl.classList.add('typing-state'); typingDotsMini.classList.add('show'); scrollDown();
+    statusTextEl.textContent='Digitando'; headerStatusEl.classList.add('typing-state'); typingDotsMini.classList.add('show'); setTimeout(scrollDown, 50);
   } else {
     statusTextEl.textContent='Online · Diskgas'; headerStatusEl.classList.remove('typing-state'); typingDotsMini.classList.remove('show');
   }
