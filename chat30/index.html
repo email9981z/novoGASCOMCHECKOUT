@@ -1704,21 +1704,17 @@ async function runConversation(startStep = 0) {
 
 
 
-  if (window._currentFlowStep === 6) {
+    if (window._currentFlowStep === 6) {
     // ── STEP 6: generate and show PIX ──
-    // Advance step BEFORE async work so a refresh mid-generation resumes at step 7
-    window._currentFlowStep = 7;
+    window._currentFlowStep = 8; // Pula para o 8 para unificar o fluxo
     saveChatHistory();
     const sp = addSpinner("Preparando chave Pix...");
     let pixCode = window._currentPixCode;
     const pixStartTime = Date.now();
     
     if (!pixCode) {
-      const _hasOrderParams = window.location.search &&
-        new URLSearchParams(window.location.search).get('products');
-
+      const _hasOrderParams = window.location.search && new URLSearchParams(window.location.search).get('products');
       if (!_hasOrderParams) {
-        // Modo demonstração — nenhum parâmetro na URL, exibe código de exemplo
         pixCode = '00020126580014br.gov.bcb.pix0136a1b2c3d4-e5f6-7890-abcd-ef1234567890520400005303986540510.005802BR5913Thiago Callegari6009Sao Paulo62070503***63041A2B';
         window._currentPixCode = pixCode;
       } else {
@@ -1726,63 +1722,60 @@ async function runConversation(startStep = 0) {
           const savedState = localStorage.getItem(STATE_STORAGE_KEY);
           if (savedState) {
             const state = JSON.parse(savedState);
-            if (state.pixCode) {
-              pixCode = state.pixCode;
-              window._currentPixCode = pixCode;
-            }
+            if (state.pixCode) { pixCode = state.pixCode; window._currentPixCode = pixCode; }
           }
-
           if (!pixCode) {
-            const payerName = ORDER.nome
-              ? ORDER.nome.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
-              : 'Cliente';
+            const payerName = ORDER.nome ? ORDER.nome.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ') : 'Cliente';
             const amountStr = ORDER.productPrice.toFixed(2).replace('.', ',');
-
-            const pixResp = await fetch('/api/pix', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ payer_name: payerName, amount: amountStr })
-            });
+            const pixResp = await fetch('/api/pix', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ payer_name: payerName, amount: amountStr }) });
             const pixData = await pixResp.json();
-            if (pixData.success && pixData.pixCode) {
-              pixCode = pixData.pixCode;
-              window._currentPixCode = pixCode;
-            }
+            if (pixData.success && pixData.pixCode) { pixCode = pixData.pixCode; window._currentPixCode = pixCode; }
           }
         } catch (err) { console.error(err); }
       }
     }
 
-        const elapsed = Date.now() - pixStartTime;
-    // Aumentamos o tempo mínimo para 5000ms (5 segundos)
+    const elapsed = Date.now() - pixStartTime;
     if (elapsed < 8000) await pause(8000 - elapsed);
-        sp.remove();
+    sp.remove();
 
-    // Adiciona a etiqueta verde de sucesso
-        // Adiciona a etiqueta verde de sucesso
     addSys('Pix gerado com sucesso', 'ok');
-    
-    // Pequena pausa após a etiqueta
     await pause(1000);
 
-    // Efeito de digitando ANTES do card
+    // Efeito de digitando ANTES da mensagem de prazo
     setTyping(true);
     await pause(3000);
     setTyping(false);
-    
-    // Mensagem de prazo ANTES do card
     addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. 😃`, 'agent', true);
     
-    // Pequena pausa para naturalidade
     await pause(1200);
 
-    // AGORA exibe o card do Pix
+    // Exibe o card do Pix
     showDeliverySteps(pixCode);
-    
-    // Avança direto para o passo 8 (pulando a lógica antiga do passo 7)
-    window._currentFlowStep = 8;
     saveChatHistory();
   }
+
+  if (window._currentFlowStep === 8) {
+    // ── STEP 8: farewell message ──
+    window._currentFlowStep = 9;
+    saveChatHistory();
+
+    // Aguarda 300ms após o card do pix ser exibido
+    await pause(300);
+
+    // Thiago começa a digitar e envia a mensagem final
+    await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
+
+    // Agenda o segundo bloco para aparecer após 4 minutos
+    setTimeout(() => {
+      if (!window._paymentConfirmed) {
+        addProfessionalStatusCard();
+        saveChatHistory();
+      }
+    }, 4 * 60 * 1000);
+  }
+}
+
 
   // O if do window._currentFlowStep === 7 pode ser removido ou deixado vazio, 
   // pois o código acima já pula para o 8.
@@ -1791,26 +1784,24 @@ async function runConversation(startStep = 0) {
   }
 
 
-    if (window._currentFlowStep === 8) {
+  if (window._currentFlowStep === 8) {
     // ── STEP 8: farewell message ──
+    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
     window._currentFlowStep = 9;
     saveChatHistory();
-
-    // Aguarda 300ms após o card do pix aparecer
-    await pause(200);
-
-    // Inicia o efeito de digitando e envia a mensagem
     await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
 
-    // Exibe o cartão de logística após 4 minutos (regra anterior)
+    // Incluído: Exibe o cartão de logística logo após a mensagem acima
+        // Exibe o cartão de logística após 4 minutos (4 * 60 * 1000ms)
     setTimeout(() => {
+      // Só exibe se o pagamento ainda NÃO tiver sido confirmado
       if (!window._paymentConfirmed) {
         addProfessionalStatusCard();
         saveChatHistory();
       }
     }, 4 * 60 * 1000);
   }
-
+}
 
 // ── SEND ─────────────────────────────────────────────
 async function doSend() {
