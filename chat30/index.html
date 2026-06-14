@@ -1535,7 +1535,7 @@ function showDeliverySteps(pixCode) {
       </div>
       <div>
         <div class="status-text-main">Aguardando pagamento do PIX...</div>
-        <div class="status-text-sub">O entregador será acionado imediatamente após o PIX.</div>
+        <div class="status-text-sub">Aprovação Imediata.</div>
       </div>
     </div>
 
@@ -1795,7 +1795,7 @@ async function runConversation(startStep = 0) {
     // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
     window._currentFlowStep = 9;
     saveChatHistory();
-    await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
+    await agentSay(`Estou acompanhando aqui 😃. Após o pagamento o pedido é aprovado automaticamente, ja irei preparando tudo para o envio do seu gás. 😊`, true, true);
 
     // Incluído: Exibe o cartão de logística logo após a mensagem acima
        // Exibe o cartão de logística após 4 minutos (4 * 60 * 1000ms)
