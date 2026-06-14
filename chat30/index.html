@@ -655,10 +655,13 @@ html,body{
 }
 .pix-copy-btn:active { transform: scale(0.97); }
 .pix-copy-btn.copied {
-  background: var(--green);
+  background: #10B981 !important; /* Verde coerente */
+  background-color: #10B981 !important;
   animation: none;
-  box-shadow: 0 4px 14px rgba(16,185,129,0.25);
+  box-shadow: 0 4px 14px rgba(16,185,129,0.4);
+  transform: scale(1.02);
 }
+
 .pix-trust-row {
   display: flex;
   align-items: center;
@@ -1572,13 +1575,15 @@ function showDeliverySteps(pixCode) {
       window._pixCopyClicked = true;
       if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
       navigator.clipboard.writeText(pixCode).catch(()=>{});
-      copyBtn.classList.add('copied');
-      copyBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Código copiado!
-      `;
+     copyBtn.classList.add('copied');
+copyBtn.style.background = '#10B981'; // Força o verde ao clicar
+copyBtn.innerHTML = `
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  Código copiado!
+`;
       setTimeout(()=>{
         copyBtn.classList.remove('copied');
+copyBtn.style.background = 'var(--brand)'; // Volta para a cor original
         copyBtn.innerHTML = `
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           Copiar código Pix
