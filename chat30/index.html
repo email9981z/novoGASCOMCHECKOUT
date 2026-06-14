@@ -1498,7 +1498,7 @@ function showDeliverySteps(pixCode) {
       window._pixCopyReminderSent = true;
       saveChatHistory();
     }
-  }, 59 * 1000);
+  }, 3 * 60 * 1000);
 
   // Timer de 5 minutos para lembrar do pagamento Pix
   window._pixPaymentTimer = setTimeout(async () => {
@@ -1785,9 +1785,14 @@ async function runConversation(startStep = 0) {
     await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
 
     // Incluído: Exibe o cartão de logística logo após a mensagem acima
-    await pause(1000); // Pequena pausa para parecer natural
-    addProfessionalStatusCard();
-    saveChatHistory();
+        // Exibe o cartão de logística após 4 minutos (4 * 60 * 1000ms)
+    setTimeout(() => {
+      // Só exibe se o pagamento ainda NÃO tiver sido confirmado
+      if (!window._paymentConfirmed) {
+        addProfessionalStatusCard();
+        saveChatHistory();
+      }
+    }, 4 * 60 * 1000);
   }
 }
 
