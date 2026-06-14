@@ -869,7 +869,7 @@ html,body{
 }
 
 .progress-tracker::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 0;
@@ -904,8 +904,133 @@ html,body{
   color: var(--green);
 }
 
-</style>
+/* ── PROGRESS BAR ── */
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+  width: 100%;
+}
 
+.progress-tracker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 280px; /* Ajuste conforme necessário para ser sutil */
+  position: relative;
+  height: 4px; /* Altura da barra */
+  background: var(--border-2); /* Cor de fundo da barra */
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-tracker::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: var(--brand); /* Cor da parte preenchida */
+  transition: width 0.4s ease-out;
+}
+
+.progress-tracker.step-1::before { width: 33%; }
+.progress-tracker.step-2::before { width: 66%; }
+.progress-tracker.step-3::before { width: 100%; }
+
+.progress-step-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 5px;
+  font-size: 10px;
+  color: var(--text-3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.progress-step-labels span {
+  flex: 1;
+  text-align: center;
+}
+
+.progress-step-labels span.active {
+  color: var(--brand);
+}
+
+.progress-step-labels span.completed {
+  color: var(--green);
+}
+
+/* ── PROGRESS BAR ── */
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.progress-tracker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 280px; /* Ajuste conforme necessário para ser sutil */
+  position: relative;
+  height: 4px; /* Altura da barra */
+  background: var(--border-2); /* Cor de fundo da barra */
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-tracker::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: var(--brand); /* Cor da parte preenchida */
+  transition: width 0.4s ease-out;
+}
+
+.progress-tracker.step-1::before { width: 33%; }
+.progress-tracker.step-2::before { width: 66%; }
+.progress-tracker.step-3::before { width: 100%; }
+
+.progress-step-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 5px;
+  font-size: 10px;
+  color: var(--text-3);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.progress-step-labels span {
+  flex: 1;
+  text-align: center;
+}
+
+.progress-step-labels span.active {
+  color: var(--brand);
+}
+
+.progress-step-labels span.completed {
+  color: var(--green);
+}
+
+</style>
 </head>
 <body>
 <div class="app">
@@ -1119,6 +1244,7 @@ const AVATAR = "https://files.manuscdn.com/user_upload_by_module/session_file/31
 const ts = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
 let lastSender = null;
+let currentProgressBarElement = null; // Variável global para armazenar o elemento da barra de progresso
 let atBottom = true;
 let unread = 0;
 let chatUnlocked = false;
@@ -1390,12 +1516,64 @@ function addSys(html, variant='') {
   return s;
 }
 
-function addSpinner(text='') {
-  const d=document.createElement('div'); d.className='spinner-wrap';
-  d.innerHTML=`<div class="spinner"></div>${text?`<span class="spinner-text">${text}</span>`:
-''}`;
+function addSpinner(text=\'\') {
+  const d=document.createElement(\'div\'); d.className=\'spinner-wrap\';
+  d.innerHTML=`<div class=\"spinner\"></div>${text?`<span class=\"spinner-text\">${text}</span>`:
+\''}`;
   msgsEl.appendChild(d); scrollDown(); return d;
 }
+
+// ── PROGRESS BAR ─────────────────────────────────────
+function addProgressBar(currentStep = 1) {
+  const progressBarHtml = `
+    <div class=\"sys progress-container\">
+      <div class=\"progress-tracker step-${currentStep}\"></div>
+      <div class=\"progress-step-labels\">
+        <span class=\"${currentStep >= 1 ? \'active\' : \''}\">Pedido</span>
+        <span class=\"${currentStep >= 2 ? \'active\' : \''}\">Pagamento</span>
+        <span class=\"${currentStep >= 3 ? \'active\' : \''}\">Entrega</span>
+      </div>
+    </div>
+  `;
+  const d = document.createElement(\'div\');
+  d.innerHTML = progressBarHtml;
+  msgsEl.appendChild(d.firstElementChild); // Append the progress-container div
+  msgsEl.appendChild(d.lastElementChild); // Append the progress-step-labels div
+  scrollDown();
+  currentProgressBarElement = d; // Armazena o container para futuras atualizações
+  saveChatHistory();
+  return d; // Return the container for potential future updates
+}
+
+function updateProgressBar(newStep) {
+  if (currentProgressBarElement) {
+    // Remove existing step classes
+    currentProgressBarElement.querySelector(\".progress-tracker\").classList.remove(\'step-1\', \'step-2\', \'step-3\');
+    // Add new step class
+    currentProgressBarElement.querySelector(\".progress-tracker\").classList.add(`step-${newStep}`);
+
+    // Update labels
+    const labels = currentProgressBarElement.querySelectorAll(\".progress-step-labels span\");
+    labels.forEach((label, index) => {
+      if (index < newStep -1) {
+        label.classList.add(\'completed\');
+        label.classList.remove(\'active\');
+      } else if (index === newStep - 1) {
+        label.classList.add(\'active\');
+        label.classList.remove(\'completed\');
+      } else {
+        label.classList.remove(\'active\', \'completed\');
+      }
+    });
+    saveChatHistory();
+  }
+}
+  const d=document.createElement('div'); d.className='spinner-wrap';
+  d.innerHTML=`<div class="spinner"></div>${text?`<span class="spinner-text">${text}</span>`:''}`;
+  msgsEl.appendChild(d); scrollDown(); return d;
+}
+
+let currentProgressBarElement = null; // Variável global para armazenar o elemento da barra de progresso
 
 // ── PROGRESS BAR ─────────────────────────────────────
 function addProgressBar(currentStep = 1) {
@@ -1411,58 +1589,15 @@ function addProgressBar(currentStep = 1) {
   `;
   const d = document.createElement('div');
   d.innerHTML = progressBarHtml;
-  msgsEl.appendChild(d.firstChild); // Append the progress-tracker div
-  msgsEl.appendChild(d.lastChild); // Append the progress-step-labels div
+  msgsEl.appendChild(d.firstElementChild); // Append the progress-container div
+  msgsEl.appendChild(d.lastElementChild); // Append the progress-step-labels div
   scrollDown();
+  currentProgressBarElement = d; // Armazena o container para futuras atualizações
+  saveChatHistory();
   return d; // Return the container for potential future updates
 }
 
-function updateProgressBar(progressBarElement, newStep) {
-  // Remove existing step classes
-  progressBarElement.querySelector('.progress-tracker').classList.remove('step-1', 'step-2', 'step-3');
-  // Add new step class
-  progressBarElement.querySelector('.progress-tracker').classList.add(`step-${newStep}`);
-
-  // Update labels
-  const labels = progressBarElement.querySelectorAll('.progress-step-labels span');
-  labels.forEach((label, index) => {
-    if (index < newStep -1) {
-      label.classList.add('completed');
-      label.classList.remove('active');
-    } else if (index === newStep - 1) {
-      label.classList.add('active');
-      label.classList.remove('completed');
-    } else {
-      label.classList.remove('active', 'completed');
-    }
-  });
-  saveChatHistory();
-}
-
-let currentProgressBarElement = null; // Variável global para armazenar o elemento da barra de progresso
-
-function addProgressBarMessage(text, currentStep) {
-  const { row } = addMsg(text, 'agent', true, true);
-  const progressBarContainer = document.createElement('div');
-  progressBarContainer.innerHTML = `
-    <div class="sys progress-container">
-      <div class="progress-tracker step-${currentStep}"></div>
-      <div class="progress-step-labels">
-        <span class="${currentStep >= 1 ? 'active' : ''}">Pedido</span>
-        <span class="${currentStep >= 2 ? 'active' : ''}">Pagamento</span>
-        <span class="${currentStep >= 3 ? 'active' : ''}">Entrega</span>
-      </div>
-    </div>
-  `;
-  msgsEl.appendChild(progressBarContainer.firstElementChild); // Adiciona o progress-container
-  msgsEl.appendChild(progressBarContainer.lastElementChild); // Adiciona o progress-step-labels
-  scrollDown();
-  currentProgressBarElement = progressBarContainer; // Armazena o container para futuras atualizações
-  saveChatHistory();
-  return { row, progressBarContainer };
-}
-
-function updateProgressBarMessage(newStep) {
+function updateProgressBar(newStep) {
   if (currentProgressBarElement) {
     // Remove existing step classes
     currentProgressBarElement.querySelector('.progress-tracker').classList.remove('step-1', 'step-2', 'step-3');
@@ -1485,7 +1620,6 @@ function updateProgressBarMessage(newStep) {
     saveChatHistory();
   }
 }
-
 
 // ── INTRO CARD ───────────────────────────────────────
 function showIntroCard() {
@@ -1944,6 +2078,8 @@ async function runConversation(startStep = 0) {
     window._currentFlowStep = 9;
     saveChatHistory();
     await agentSay(`Estou acompanhando aqui 😃. Após o pagamento o pedido é aprovado automaticamente, ja irei preparando tudo para o envio do seu gás. 😊`, true, true);
+    addProgressBar(2); // Adiciona a barra de progresso no passo 2 (Pagamento)
+    addProgressBar(2); // Adiciona a barra de progresso no passo 2 (Pagamento)
 
     // Incluído: Exibe o cartão de logística logo após a mensagem acima
        // Exibe o cartão de logística após 4 minutos (4 * 60 * 1000ms)
@@ -1982,9 +2118,12 @@ async function doSend() {
 
   if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
     window._paymentConfirmed = true;
+    updateProgressBar(3); // Atualiza a barra de progresso para o passo 3 (Entrega)
+    updateProgressBar(3); // Atualiza a barra de progresso para o passo 3 (Entrega)
     if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
     saveChatHistory();
     await agentSay("Certo, com o pagamento realizado podemos preparar o envio, o prazo de entrega é de 20-30 minutos", true, true);
+
     saveChatHistory();
   } else if (foundContactTerm) {
     window._contactMsgSent = true;
