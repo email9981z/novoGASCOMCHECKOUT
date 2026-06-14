@@ -790,8 +790,11 @@ html,body{
 .status-info {
   display: flex;
   align-items: center;
+  justify-content: center; /* Adicionado para centralizar */
   gap: 12px;
+  text-align: center; /* Garante que as linhas de texto também centralizem */
 }
+
 
 /* Ícone de status com brilho profissional */
 .status-icon-pulse {
@@ -1557,10 +1560,10 @@ function showDeliverySteps(pixCode) {
 
     <!-- Código Pix e Botão de Copiar -->
     <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2);">
-      <div class="pix-code-row" style="margin-bottom: 12px; background: var(--surface-2); border: 1px solid var(--border-2); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 8px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <div class="pix-code-text" style="flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${pixCode.substring(0,40)}…</div>
-      </div>
+      <div class="pix-code-row" style="margin-bottom: 12px; background: var(--surface-2); border: 1px solid var(--border-2); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+  <div class="pix-code-text" style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600; color: var(--text-2); text-align: center;">${pixCode.substring(0,20)}...${pixCode.slice(-5)}</div>
+</div>
       <button class="pix-copy-btn" id="pixCopyBtn" style="width: 100%; padding: 13px; background: var(--brand); color: #fff; border: none; border-radius: 14px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; box-shadow: 0 4px 14px rgba(15,91,168,0.22); margin-bottom: 0;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         Copiar código Pix
