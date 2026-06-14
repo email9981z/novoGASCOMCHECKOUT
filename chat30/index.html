@@ -1759,22 +1759,22 @@ async function runConversation(startStep = 0) {
         sp.remove();
 
     // Adiciona a etiqueta verde de sucesso
-        // Adiciona a etiqueta verde de sucesso
     addSys('Pix gerado com sucesso', 'ok');
     
-    // Pequena pausa para o usuário ler a etiqueta
-    await pause(800);
+    // Pequena pausa para o usuário ler a etiqueta antes do bloco aparecer
+    await pause(1000);
 
-    // Nova mensagem inserida aqui antes do card
-    setTyping(true);
-    await pause(2000);
-    setTyping(false);
-    await addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. 😃`, 'agent', true);
-    
-    await pause(600);
-
-    // Agora exibe o card do PIX
     showDeliverySteps(pixCode);
+  }
+
+  if (window._currentFlowStep === 7) {
+    window._currentFlowStep = 8;
+    saveChatHistory();
+    await pause(400);
+    setTyping(true);
+    await pause(2500);
+    setTyping(false);
+    addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. 😃`, 'agent', true);
   }
 
   if (window._currentFlowStep === 8) {
