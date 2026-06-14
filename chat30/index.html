@@ -515,109 +515,110 @@ html,body{
 .edit-input:focus{border-color:var(--brand-mid);background:#fff;box-shadow:0 0 0 3px var(--brand-glow);}
 
 /* ── PIX CARD (new clean design) ── */
+/* ── PIX CARD (new clean design - Compacto) ── */
 .pix-card {
   background: var(--surface);
   border: 1px solid var(--border-2);
-  border-radius: 22px;
-  padding: 22px;
-  margin: 10px 0;
+  border-radius: 18px; /* Levemente menor */
+  padding: 16px; /* Reduzir padding */
+  margin: 8px 0; /* Reduzir margin */
   width: 100%;
-  max-width: 340px;
+  max-width: 320px; /* Levemente menor para focar no conteúdo */
   animation: cardIn 0.5s var(--spring);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.04); /* Sombra mais suave */
   align-self: flex-start;
 }
 .pix-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 22px;
+  margin-bottom: 16px; /* Reduzir margin */
 }
 .pix-brand-mark {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px; /* Reduzir gap */
 }
 .pix-logo {
-  width: 36px;
-  height: 36px;
+  width: 32px; /* Menor */
+  height: 32px; /* Menor */
   background: #32BCAD;
-  border-radius: 9px;
+  border-radius: 8px; /* Menor */
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-weight: 900;
-  font-size: 9.5px;
+  font-size: 8.5px; /* Menor */
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.4px;
   flex-shrink: 0;
 }
 .pix-brand-label {
-  font-size: 14px;
+  font-size: 13px; /* Menor */
   font-weight: 700;
   color: var(--text);
   line-height: 1.2;
 }
 .pix-brand-sub {
-  font-size: 11px;
+  font-size: 10px; /* Menor */
   color: var(--text-3);
-  margin-top: 1px;
+  margin-top: 0px; /* Remover margin */
 }
 .pix-expiry {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px; /* Reduzir gap */
   background: #FFF7ED;
   border: 1px solid rgba(249,115,22,0.22);
   color: #9A3412;
-  font-size: 10px;
+  font-size: 9px; /* Menor */
   font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 7px;
+  padding: 4px 8px; /* Reduzir padding */
+  border-radius: 6px; /* Menor */
   flex-shrink: 0;
 }
 .pix-price-hero {
   text-align: center;
-  padding: 16px 0 22px;
+  padding: 12px 0 18px; /* Reduzir padding */
 }
 .pix-price-eyebrow {
-  font-size: 10.5px;
+  font-size: 9.5px; /* Menor */
   font-weight: 700;
   color: var(--text-3);
   text-transform: uppercase;
-  letter-spacing: 1.3px;
-  margin-bottom: 8px;
+  letter-spacing: 1px; /* Ajustar letter-spacing */
+  margin-bottom: 6px; /* Reduzir margin */
 }
 .pix-price-amount {
-  font-size: 40px;
+  font-size: 36px; /* Menor */
   font-weight: 900;
   color: var(--text);
-  letter-spacing: -2px;
+  letter-spacing: -1.5px; /* Ajustar letter-spacing */
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 .pix-price-amount span {
-  font-size: 19px;
+  font-size: 17px; /* Menor */
   font-weight: 700;
   letter-spacing: 0;
-  margin-right: 3px;
-  vertical-align: 4px;
+  margin-right: 2px; /* Reduzir margin */
+  vertical-align: 3px; /* Ajustar alinhamento */
 }
 .pix-code-row {
   background: #F8FAFC;
-  border: 1.5px solid var(--border-2);
-  border-radius: 12px;
-  padding: 11px 14px;
-  margin-bottom: 12px;
+  border: 1px solid var(--border-2); /* Borda mais fina */
+  border-radius: 10px; /* Menor */
+  padding: 9px 12px; /* Reduzir padding */
+  margin-bottom: 10px; /* Reduzir margin */
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px; /* Reduzir gap */
 }
 .pix-code-text {
   flex: 1;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11.5px;
+  font-size: 10.5px; /* Menor */
   font-weight: 600;
   color: var(--text-2);
   overflow: hidden;
@@ -626,51 +627,54 @@ html,body{
 }
 .pix-copy-btn {
   width: 100%;
-  padding: 15px;
+  padding: 12px; /* Reduzir padding */
   background: var(--brand);
   color: #fff;
   border: none;
-  border-radius: 14px;
-  font-size: 15px;
+  border-radius: 12px; /* Menor */
+  font-size: 14px; /* Menor */
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px; /* Reduzir gap */
   transition: background 0.2s ease, transform 0.15s ease;
-  margin-bottom: 18px;
+  margin-bottom: 14px; /* Reduzir margin */
   font-family: inherit;
-  box-shadow: 0 4px 14px rgba(15,91,168,0.22);
+  box-shadow: 0 3px 10px rgba(15,91,168,0.2); /* Sombra mais suave */
   animation: pulse-brand 2.8s infinite;
 }
 .pix-copy-btn:hover {
   background: var(--brand-mid);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(15,91,168,0.28);
+  box-shadow: 0 4px 12px rgba(15,91,168,0.25);
 }
 .pix-copy-btn:active { transform: scale(0.97); }
 .pix-copy-btn.copied {
   background: var(--green);
   animation: none;
-  box-shadow: 0 4px 14px rgba(16,185,129,0.25);
+  box-shadow: 0 3px 10px rgba(16,185,129,0.2);
 }
 .pix-trust-row {
   display: flex;
   align-items: center;
-  padding-top: 14px;
+  padding-top: 12px; /* Reduzir padding */
   border-top: 1px solid var(--border-2);
 }
 .pix-trust-item {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 11px;
+  gap: 4px; /* Reduzir gap */
+  font-size: 10px; /* Menor */
   font-weight: 600;
 }
 .pix-trust-item.positive { color: var(--green-dk); }
 .pix-trust-item.neutral { color: var(--text-3); justify-content: flex-end; }
+
+/* Novo estilo para o bloco 
+
 
 /* ── SELLER MODAL ── */
 .seller-modal-overlay{
@@ -1776,18 +1780,17 @@ async function runConversation(startStep = 0) {
     addMsg(`Após o pagamento o prazo de entrega do seu gás é de 20-30 minutos. 😃`, 'agent', true);
   }
 
-    if (window._currentFlowStep === 8) {
+  if (window._currentFlowStep === 8) {
     // ── STEP 8: farewell message ──
-    saveChatHistory(); // Salva o histórico antes da mensagem final
+    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
+    window._currentFlowStep = 9;
+    saveChatHistory();
     await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
 
-    // Atrasar a exibição do cartão de status em 8 minutos (480000 ms)
-    setTimeout(async () => {
-      addProfessionalStatusCard();
-      saveChatHistory();
-      window._currentFlowStep = 9; // Avança o passo do fluxo APÓS a exibição do cartão
-      saveChatHistory(); // Salva o histórico novamente com o passo atualizado
-    }, 480000); // 8 minutos = 8 * 60 * 1000 ms
+    // Incluído: Exibe o cartão de logística logo após a mensagem acima
+    await pause(1000); // Pequena pausa para parecer natural
+    addProfessionalStatusCard();
+    saveChatHistory();
   }
 }
 
