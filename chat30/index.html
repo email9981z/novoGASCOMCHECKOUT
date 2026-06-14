@@ -1791,16 +1791,11 @@ async function runConversation(startStep = 0) {
   }
 
   if (window._currentFlowStep === 8) {
-  // ── STEP 8: farewell message ──
-  // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
-  window._currentFlowStep = 9;
-  saveChatHistory();
-  
-  // Aguarda 300ms após a exibição do card antes de começar a digitar
-  await pause(900);
-  
-  await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
-
+    // ── STEP 8: farewell message ──
+    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
+    window._currentFlowStep = 9;
+    saveChatHistory();
+    await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
 
     // Incluído: Exibe o cartão de logística logo após a mensagem acima
        // Exibe o cartão de logística após 4 minutos (4 * 60 * 1000ms)
