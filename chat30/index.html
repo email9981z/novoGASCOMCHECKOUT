@@ -518,13 +518,13 @@ html,body{
 .pix-card {
   background: var(--surface);
   border: 1px solid var(--border-2);
-  border-radius: 22px;
-  padding: 22px;
-  margin: 10px 0;
+  border-radius: 16px; /* Alterado de 22px para 16px */
+  padding: 20px; /* Alterado de 22px para 20px */
+  margin: 15px 0; /* Alterado de 10px 0 para 15px 0 */
   width: 100%;
   max-width: 340px;
-  animation: cardIn 0.5s var(--spring);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  animation: fadeUp 0.5s ease; /* Alterado de cardIn 0.5s var(--spring) para fadeUp 0.5s ease */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Alterado de 0 4px 18px para 0 4px 15px */
   align-self: flex-start;
 }
 .pix-card-header {
@@ -605,10 +605,10 @@ html,body{
   vertical-align: 4px;
 }
 .pix-code-row {
-  background: #F8FAFC;
-  border: 1.5px solid var(--border-2);
-  border-radius: 12px;
-  padding: 11px 14px;
+  background: var(--surface-2); /* Alterado de #F8FAFC para var(--surface-2) */
+  border: 1px solid var(--border-2); /* Alterado de 1.5px para 1px */
+  border-radius: 10px; /* Alterado de 12px para 10px */
+  padding: 10px 12px; /* Alterado de 11px 14px para 10px 12px */
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -626,12 +626,12 @@ html,body{
 }
 .pix-copy-btn {
   width: 100%;
-  padding: 15px;
+  padding: 13px; /* Alterado de 15px para 13px */
   background: var(--brand);
   color: #fff;
   border: none;
   border-radius: 14px;
-  font-size: 15px;
+  font-size: 14px; /* Alterado de 15px para 14px */
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -639,7 +639,7 @@ html,body{
   justify-content: center;
   gap: 8px;
   transition: background 0.2s ease, transform 0.15s ease;
-  margin-bottom: 18px;
+  margin-bottom: 0; /* Alterado de 18px para 0 */
   font-family: inherit;
   box-shadow: 0 4px 14px rgba(15,91,168,0.22);
   animation: pulse-brand 2.8s infinite;
@@ -1507,63 +1507,50 @@ function showDeliverySteps(pixCode) {
   card.className = 'pix-card';
   card.innerHTML = `
     <!-- Header -->
-    <div class="pix-card-header">
-      <div class="pix-brand-mark">
-        <div class="pix-logo">PIX</div>
-        <div>
-          <div class="pix-brand-label">Pix Protegido</div>
-          <div class="pix-brand-sub">Disk Gás Entregas.</div>
-        </div>
-      </div>
-      <div class="pix-expiry">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        20 min
-      </div>
+      card.innerHTML = `
+    <div class="status-header">
+      <span class="status-badge">Diskgas Oficial</span>
+      <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
     </div>
-
-    <!-- Price hero -->
-    <div class="pix-price-hero">
-      <div class="pix-price-eyebrow">Valor a pagar</div>
-      <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
+    
+    <div class="status-steps">
+      <div class="step-bar completed"></div>
+      <div class="step-bar completed"></div>
+      <div class="step-bar active"></div>
+      <div class="step-bar"></div>
     </div>
-
-    <!-- ✅ NOVO: Beneficiário verificado -->
-    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
-      <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    
+    <div class="status-info">
+      <div class="status-icon-pulse">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
       </div>
       <div>
-        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
-        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
+        <div class="status-text-main">Aguardando pagamento do PIX...</div>
+        <div class="status-text-sub">O entregador será acionado imediatamente após o PIX.</div>
       </div>
     </div>
 
-    <!-- Code display -->
-    <div class="pix-code-row">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
+    <!-- Adição do código Pix e botão de copiar -->
+    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2);">
+      <div class="pix-code-row" style="margin-bottom: 12px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.7 7.6 12 12.1 20.3 7.6"/><polyline points="12 22.1 12 12.1"/></svg>
+        <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
+      </div>
+      <button class="pix-copy-btn" id="pixCopyBtn" style="margin-bottom: 0;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar código Pix
+      </button>
     </div>
 
-    <!-- Copy CTA -->
-    <button class="pix-copy-btn" id="pixCopyBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      Copiar código Pix
-    </button>
-
-    <!-- Trust row -->
-    <div class="pix-trust-row">
-      <div class="pix-trust-item positive">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Confirmação instantânea
-      </div>
-      <div class="pix-trust-item neutral">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Pagamento seguro
-      </div>
+    <!-- Manter a garantia de entrega, se desejar -->
+    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
+       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+       <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
     </div>
   `;
-
     msgsEl.appendChild(card);
   scrollDown();
 
