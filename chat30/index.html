@@ -515,73 +515,162 @@ html,body{
 .edit-input:focus{border-color:var(--brand-mid);background:#fff;box-shadow:0 0 0 3px var(--brand-glow);}
 
 /* ── PIX CARD (new clean design) ── */
-/* ── PIX CARD (Otimizado e Centralizado) ── */
 .pix-card {
   background: var(--surface);
   border: 1px solid var(--border-2);
-  border-radius: 18px;
-  padding: 16px;
-  margin: 12px auto; /* Centraliza horizontalmente */
-  width: 90%;
-  max-width: 320px;
+  border-radius: 22px;
+  padding: 22px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 340px;
   animation: cardIn 0.5s var(--spring);
-  box-shadow: 0 3px 12px rgba(0,0,0,0.04);
-  display: flex;
-  flex-direction: column;
-  align-self: center; /* Garante a centralização no chat */
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  align-self: flex-start;
 }
 .pix-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
-  width: 100%;
+  margin-bottom: 22px;
 }
-.pix-brand-mark { display: flex; align-items: center; gap: 8px; }
+.pix-brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .pix-logo {
-  width: 32px; height: 32px; background: #32BCAD; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-weight: 900; font-size: 8.5px; font-family: 'JetBrains Mono', monospace;
+  width: 36px;
+  height: 36px;
+  background: #32BCAD;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 900;
+  font-size: 9.5px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
 }
-.pix-brand-label { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.2; }
-.pix-brand-sub { font-size: 10px; color: var(--text-3); }
+.pix-brand-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+.pix-brand-sub {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 1px;
+}
 .pix-expiry {
-  display: flex; align-items: center; gap: 3px; background: #FFF7ED;
-  border: 1px solid rgba(249,115,22,0.22); color: #9A3412;
-  font-size: 9px; font-weight: 700; padding: 4px 8px; border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #FFF7ED;
+  border: 1px solid rgba(249,115,22,0.22);
+  color: #9A3412;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 7px;
+  flex-shrink: 0;
 }
-.pix-price-hero { text-align: center; padding: 10px 0 14px; width: 100%; }
-.pix-price-eyebrow { font-size: 9px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-.pix-price-amount { font-size: 34px; font-weight: 900; color: var(--text); letter-spacing: -1.5px; line-height: 1; }
-.pix-price-amount span { font-size: 16px; font-weight: 700; margin-right: 2px; vertical-align: 3px; }
+.pix-price-hero {
+  text-align: center;
+  padding: 16px 0 22px;
+}
+.pix-price-eyebrow {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  margin-bottom: 8px;
+}
+.pix-price-amount {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -2px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.pix-price-amount span {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-right: 3px;
+  vertical-align: 4px;
+}
 .pix-code-row {
-  background: #F8FAFC; border: 1px solid var(--border-2); border-radius: 10px;
-  padding: 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; width: 100%;
+  background: #F8FAFC;
+  border: 1.5px solid var(--border-2);
+  border-radius: 12px;
+  padding: 11px 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.pix-code-text { flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pix-code-text {
+  flex: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .pix-copy-btn {
-  width: 100%; padding: 14px; background: var(--brand); color: #fff; border: none;
-  border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  margin-bottom: 12px; box-shadow: 0 4px 12px rgba(15,91,168,0.2);
-  animation: pulse-brand 2.8s infinite; font-family: inherit;
+  width: 100%;
+  padding: 15px;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.15s ease;
+  margin-bottom: 18px;
+  font-family: inherit;
+  box-shadow: 0 4px 14px rgba(15,91,168,0.22);
+  animation: pulse-brand 2.8s infinite;
 }
-.pix-copy-btn.copied { background: var(--green); animation: none; }
-.pix-seller-info {
-  background: #F0FDF4; border: 1px solid rgba(16,185,129,0.15); border-radius: 10px;
-  padding: 8px 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; width: 100%;
+.pix-copy-btn:hover {
+  background: var(--brand-mid);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15,91,168,0.28);
 }
-.pix-seller-icon {
-  width: 28px; height: 28px; background: var(--green); border-radius: 7px;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+.pix-copy-btn:active { transform: scale(0.97); }
+.pix-copy-btn.copied {
+  background: var(--green);
+  animation: none;
+  box-shadow: 0 4px 14px rgba(16,185,129,0.25);
 }
-.pix-seller-title { font-size: 9px; font-weight: 700; color: #065F46; text-transform: uppercase; margin-bottom: 1px; }
-.pix-seller-name { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.1; }
-.pix-trust-row { display: flex; align-items: center; padding-top: 10px; border-top: 1px solid var(--border-2); width: 100%; }
-.pix-trust-item { flex: 1; display: flex; align-items: center; gap: 4px; font-size: 9.5px; font-weight: 600; }
+.pix-trust-row {
+  display: flex;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-2);
+}
+.pix-trust-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+}
 .pix-trust-item.positive { color: var(--green-dk); }
 .pix-trust-item.neutral { color: var(--text-3); justify-content: flex-end; }
-
 
 /* ── SELLER MODAL ── */
 .seller-modal-overlay{
@@ -1387,16 +1476,37 @@ function showDeliverySteps(pixCode) {
   pixCode = pixCode || '(código indisponível)';
   window._currentPixCode = pixCode;
 
+  // Limpa quaisquer timers anteriores para evitar duplicação
   if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
   if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
   window._pixCopyClicked = false;
   window._pixCopyReminderSent = false;
   window._pixPaymentReminderSent = false;
 
+  // Timer de 30 segundos para lembrar de copiar o código Pix
+  window._pixCopyTimer = setTimeout(async () => {
+    if (!window._pixCopyClicked && !window._pixCopyReminderSent) {
+      await agentSay("Basta copiar o código pix acima e pagar pelo app do seu banco, faremos o envio do seu gás imediatamente após o pagamento. 😉", true);
+      window._pixCopyReminderSent = true;
+      saveChatHistory();
+    }
+  }, 59 * 1000); // 30 segundos
+
+  // Timer de 5 minutos para lembrar do pagamento Pix
+  window._pixPaymentTimer = setTimeout(async () => {
+    if (!window._paymentConfirmed && !window._pixPaymentReminderSent) {
+      await agentSay("Ainda aguardando a confirmação do seu pagamento Pix. Assim que for identificado, seu pedido será liberado!", true);
+      window._pixPaymentReminderSent = true;
+      saveChatHistory();
+    }
+  }, 5 * 60 * 1000); // 5 minutos
+
   const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
+
   const card = document.createElement('div');
   card.className = 'pix-card';
   card.innerHTML = `
+    <!-- Header -->
     <div class="pix-card-header">
       <div class="pix-brand-mark">
         <div class="pix-logo">PIX</div>
@@ -1406,49 +1516,55 @@ function showDeliverySteps(pixCode) {
         </div>
       </div>
       <div class="pix-expiry">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         20 min
       </div>
     </div>
 
+    <!-- Price hero -->
     <div class="pix-price-hero">
       <div class="pix-price-eyebrow">Valor a pagar</div>
       <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
     </div>
 
+    <!-- ✅ NOVO: Beneficiário verificado -->
+    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
+      <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
+        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
+      </div>
+    </div>
+
+    <!-- Code display -->
     <div class="pix-code-row">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
     </div>
 
+    <!-- Copy CTA -->
     <button class="pix-copy-btn" id="pixCopyBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       Copiar código Pix
     </button>
 
-    <div class="pix-seller-info" onclick="openSellerModal()">
-      <div class="pix-seller-icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <div class="pix-seller-text">
-        <div class="pix-seller-title">Vendedor Autorizado</div>
-        <div class="pix-seller-name">Thiago Callegari.</div>
-      </div>
-    </div>
-
+    <!-- Trust row -->
     <div class="pix-trust-row">
       <div class="pix-trust-item positive">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         Confirmação instantânea
       </div>
       <div class="pix-trust-item neutral">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Seguro
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Pagamento seguro
       </div>
     </div>
   `;
 
-  msgsEl.appendChild(card);
+    msgsEl.appendChild(card);
   scrollDown();
 
   const copyBtn = card.querySelector('#pixCopyBtn');
@@ -1457,14 +1573,19 @@ function showDeliverySteps(pixCode) {
     if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
     navigator.clipboard.writeText(pixCode).catch(()=>{});
     copyBtn.classList.add('copied');
-    copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Código copiado!`;
+    copyBtn.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Código copiado!
+    `;
     setTimeout(()=>{
       copyBtn.classList.remove('copied');
-      copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar código Pix`;
+      copyBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar código Pix
+      `;
     }, 2500);
   };
 }
-
 
 // ── TYPING STATE ─────────────────────────────────────
 function setTyping(on) {
@@ -1657,20 +1778,16 @@ async function runConversation(startStep = 0) {
 
   if (window._currentFlowStep === 8) {
     // ── STEP 8: farewell message ──
-    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done
-    // Avança o passo para evitar repetição ao recarregar
+    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
     window._currentFlowStep = 9;
     saveChatHistory();
-
     await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
 
-    // AGUARDA 8 MINUTOS (480.000ms) antes de mostrar o status de logística
-    setTimeout(() => {
-      addProfessionalStatusCard();
-      saveChatHistory();
-    }, 480000); 
+    // Incluído: Exibe o cartão de logística logo após a mensagem acima
+    await pause(1000); // Pequena pausa para parecer natural
+    addProfessionalStatusCard();
+    saveChatHistory();
   }
-
 }
 
 // ── SEND ─────────────────────────────────────────────
