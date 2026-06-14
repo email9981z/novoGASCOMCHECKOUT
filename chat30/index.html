@@ -516,23 +516,24 @@ html,body{
 
 /* ── PIX CARD (new clean design) ── */
 /* ── PIX CARD (new clean design - Compacto) ── */
+/* ── PIX CARD (new clean design - Compacto e Centralizado) ── */
 .pix-card {
   background: var(--surface);
   border: 1px solid var(--border-2);
   border-radius: 18px; /* Levemente menor */
   padding: 16px; /* Reduzir padding */
-  margin: 8px 0; /* Reduzir margin */
+  margin: 8px auto; /* Alterado para centralizar o bloco no chat */
   width: 100%;
   max-width: 320px; /* Levemente menor para focar no conteúdo */
   animation: cardIn 0.5s var(--spring);
   box-shadow: 0 3px 12px rgba(0,0,0,0.04); /* Sombra mais suave */
-  align-self: flex-start;
+  /* align-self: flex-start; -- Removido, pois margin: auto já centraliza em flex column */
 }
 .pix-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px; /* Reduzir margin */
+  margin-bottom: 12px; /* Reduzir margin */
 }
 .pix-brand-mark {
   display: flex;
@@ -673,50 +674,56 @@ html,body{
 .pix-trust-item.positive { color: var(--green-dk); }
 .pix-trust-item.neutral { color: var(--text-3); justify-content: flex-end; }
 
-/* Novo estilo para o bloco 
+/* Novo estilo para o bloco do vendedor, para ser mais compacto */
+.pix-seller-info {
+  background:#F0FDF4;
+  border:1px solid rgba(16,185,129,.22);
+  border-radius:10px; /* Menor */
+  padding:8px 12px; /* Reduzir padding */
+  margin-bottom:12px; /* Reduzir margin */
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+}
+.pix-seller-icon {
+  width:30px; /* Menor */
+  height:30px; /* Menor */
+  background:var(--green);
+  border-radius:8px; /* Menor */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 2px 6px rgba(16,185,129,.2);
+}
+.pix-seller-icon svg {
+  width:14px; /* Menor */
+  height:14px; /* Menor */
+}
+.pix-seller-text {
+  flex:1;
+}
+.pix-seller-title {
+  font-size:9.5px; /* Menor */
+  font-weight:700;
+  color:#065F46;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:1px; /* Reduzir margin */
+}
+.pix-seller-name {
+  font-size:12px; /* Menor */
+  font-weight:700;
+  color:var(--text);
+  line-height:1.2;
+}
+.pix-seller-role {
+  font-size:9.5px; /* Menor */
+  color:var(--text-3);
+  margin-top:1px; /* Reduzir margin */
+}
 
-
-/* ── SELLER MODAL ── */
-.seller-modal-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,.4);
-  z-index:1100;display:none;align-items:center;justify-content:center;
-  backdrop-filter:blur(6px);padding:20px;
-}
-.seller-modal-overlay.on{display:flex;}
-.seller-modal{
-  width:100%;max-width:340px;background:#fff;
-  border-radius:28px;padding:24px;
-  box-shadow:0 15px 40px rgba(0,0,0,.15);
-  animation:cardIn .4s var(--spring);
-  position:relative;
-}
-.seller-close{
-  position:absolute;top:16px;right:16px;
-  width:32px;height:32px;border-radius:50%;
-  background:var(--surface-2);border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--text-3);transition:all .2s;
-}
-.seller-close:hover{background:var(--border-2);color:var(--text);}
-.seller-header{text-align:center;margin-bottom:20px;}
-.seller-avatar-big{
-  width:84px;height:84px;border-radius:50%;
-  object-fit:cover;border:3px solid var(--brand-lt);
-  box-shadow:0 4px 15px var(--brand-glow);
-  margin-bottom:12px;
-}
-.seller-name-big{font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
-.seller-badge-big{
-  display:inline-flex;align-items:center;gap:4px;
-  background:var(--brand-lt);color:var(--brand);
-  font-size:11px;font-weight:700;padding:4px 10px;
-  border-radius:20px;text-transform:uppercase;letter-spacing:.4px;
-}
-.seller-stats{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px;
-  margin-bottom:20px;padding:16px;background:var(--surface-2);
-  border-radius:18px;
-}
 .stat-item{text-align:center;}
 .stat-val{font-size:15px;font-weight:800;color:var(--text);display:block;}
 .stat-lbl{font-size:10px;color:var(--text-3);font-weight:600;text-transform:uppercase;}
@@ -1511,6 +1518,7 @@ function showDeliverySteps(pixCode) {
   card.className = 'pix-card';
   card.innerHTML = `
     <!-- Header -->
+        <!-- Header -->
     <div class="pix-card-header">
       <div class="pix-brand-mark">
         <div class="pix-logo">PIX</div>
@@ -1531,18 +1539,6 @@ function showDeliverySteps(pixCode) {
       <div class="pix-price-amount"><span>R$</span>${finalPrice}</div>
     </div>
 
-    <!-- ✅ NOVO: Beneficiário verificado -->
-    <div style="background:#F0FDF4;border:1px solid rgba(16,185,129,.22);border-radius:12px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:center;gap:11px;cursor:pointer;" onclick="openSellerModal()">
-      <div style="width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px rgba(16,185,129,.25);">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Vendedor Autorizado</div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.2;">Thiago Callegari.</div>
-        <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;">Vendedor Oficial · Diskgás</div>
-      </div>
-    </div>
-
     <!-- Code display -->
     <div class="pix-code-row">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -1554,6 +1550,18 @@ function showDeliverySteps(pixCode) {
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       Copiar código Pix
     </button>
+
+    <!-- NOVO: Beneficiário verificado (mais compacto) -->
+    <div class="pix-seller-info" onclick="openSellerModal()">
+      <div class="pix-seller-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="pix-seller-text">
+        <div class="pix-seller-title">Vendedor Autorizado</div>
+        <div class="pix-seller-name">Thiago Callegari.</div>
+        <div class="pix-seller-role">Vendedor Oficial · Diskgás</div>
+      </div>
+    </div>
 
     <!-- Trust row -->
     <div class="pix-trust-row">
