@@ -1791,24 +1791,26 @@ async function runConversation(startStep = 0) {
   }
 
 
-  if (window._currentFlowStep === 8) {
+    if (window._currentFlowStep === 8) {
     // ── STEP 8: farewell message ──
-    // Advance step BEFORE async work so a refresh mid-message resumes at step 9 (done)
     window._currentFlowStep = 9;
     saveChatHistory();
+
+    // Aguarda 300ms após o card do pix aparecer
+    await pause(200);
+
+    // Inicia o efeito de digitando e envia a mensagem
     await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
 
-    // Incluído: Exibe o cartão de logística logo após a mensagem acima
-        // Exibe o cartão de logística após 4 minutos (4 * 60 * 1000ms)
+    // Exibe o cartão de logística após 4 minutos (regra anterior)
     setTimeout(() => {
-      // Só exibe se o pagamento ainda NÃO tiver sido confirmado
       if (!window._paymentConfirmed) {
         addProfessionalStatusCard();
         saveChatHistory();
       }
     }, 4 * 60 * 1000);
   }
-}
+
 
 // ── SEND ─────────────────────────────────────────────
 async function doSend() {
