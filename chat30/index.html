@@ -840,7 +840,25 @@ html,body{
   margin-top: 2px;
 }
 
+/* Garanta que o efeito fadeUp exista */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
+/* O estilo do card para bater com o de aguardando pagamento */
+.pix-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 15px 0;
+  border: 1px solid var(--border-2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  animation: fadeUp 0.5s ease;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 340px;
+}
 
 </style>
 </head>
@@ -1483,14 +1501,14 @@ function showDeliverySteps(pixCode) {
   window._pixCopyReminderSent = false;
   window._pixPaymentReminderSent = false;
 
-  // Timer de 30 segundos para lembrar de copiar o código Pix
+  // Timer de 59 segundos para lembrar de copiar o código Pix
   window._pixCopyTimer = setTimeout(async () => {
     if (!window._pixCopyClicked && !window._pixCopyReminderSent) {
       await agentSay("Basta copiar o código pix acima e pagar pelo app do seu banco, faremos o envio do seu gás imediatamente após o pagamento. 😉", true);
       window._pixCopyReminderSent = true;
       saveChatHistory();
     }
-  }, 59 * 1000); // 30 segundos
+  }, 59 * 1000);
 
   // Timer de 5 minutos para lembrar do pagamento Pix
   window._pixPaymentTimer = setTimeout(async () => {
@@ -1499,15 +1517,13 @@ function showDeliverySteps(pixCode) {
       window._pixPaymentReminderSent = true;
       saveChatHistory();
     }
-  }, 5 * 60 * 1000); // 5 minutos
+  }, 5 * 60 * 1000);
 
   const finalPrice = ORDER.productPrice.toFixed(2).replace('.',',');
 
   const card = document.createElement('div');
   card.className = 'pix-card';
   card.innerHTML = `
-    <!-- Header -->
-      card.innerHTML = `
     <div class="status-header">
       <span class="status-badge">Diskgas Oficial</span>
       <span style="font-size: 11px; color: var(--text-3); font-weight: 600;">Pedido #2849</span>
@@ -1533,51 +1549,53 @@ function showDeliverySteps(pixCode) {
       </div>
     </div>
 
-    <!-- Valor a pagar, similar ao pix-price-hero -->
+    <!-- Valor a pagar integrado -->
     <div style="text-align: center; padding: 16px 0 22px;">
       <div style="font-size: 10.5px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 1.3px; margin-bottom: 8px;">Valor a pagar</div>
-      <div style="font-size: 40px; font-weight: 900; color: var(--text); letter-spacing: -2px; line-height: 1; font-variant-numeric: tabular-nums;"><span>R$</span>${finalPrice}</div>
+      <div style="font-size: 40px; font-weight: 900; color: var(--text); letter-spacing: -2px; line-height: 1; font-variant-numeric: tabular-nums;"><span style="font-size: 19px; font-weight: 700; letter-spacing: 0; margin-right: 3px; vertical-align: 4px;">R$</span>${finalPrice}</div>
     </div>
 
-    <!-- Adição do código Pix e botão de copiar -->
+    <!-- Código Pix e Botão de Copiar -->
     <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2);">
-      <div class="pix-code-row" style="margin-bottom: 12px;">
+      <div class="pix-code-row" style="margin-bottom: 12px; background: var(--surface-2); border: 1px solid var(--border-2); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 8px;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <div class="pix-code-text">${pixCode.substring(0,40)}…</div>
+        <div class="pix-code-text" style="flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${pixCode.substring(0,40)}…</div>
       </div>
-      <button class="pix-copy-btn" id="pixCopyBtn" style="margin-bottom: 0;">
+      <button class="pix-copy-btn" id="pixCopyBtn" style="width: 100%; padding: 13px; background: var(--brand); color: #fff; border: none; border-radius: 14px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; box-shadow: 0 4px 14px rgba(15,91,168,0.22); margin-bottom: 0;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         Copiar código Pix
       </button>
     </div>
 
-    <!-- Manter a garantia de entrega, se desejar (adaptado para o novo estilo) -->
     <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--border-2); display: flex; align-items: center; gap: 8px;">
        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
        <span style="font-size: 11px; color: #059669; font-weight: 700;">Garantia de Entrega Prioritária Ativa</span>
     </div>
   `;
-    msgsEl.appendChild(card);
+
+  msgsEl.appendChild(card);
   scrollDown();
 
   const copyBtn = card.querySelector('#pixCopyBtn');
-  copyBtn.onclick = () => {
-    window._pixCopyClicked = true;
-    if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
-    navigator.clipboard.writeText(pixCode).catch(()=>{});
-    copyBtn.classList.add('copied');
-    copyBtn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      Código copiado!
-    `;
-    setTimeout(()=>{
-      copyBtn.classList.remove('copied');
+  if (copyBtn) {
+    copyBtn.onclick = () => {
+      window._pixCopyClicked = true;
+      if (window._pixCopyTimer) clearTimeout(window._pixCopyTimer);
+      navigator.clipboard.writeText(pixCode).catch(()=>{});
+      copyBtn.classList.add('copied');
       copyBtn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        Copiar código Pix
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Código copiado!
       `;
-    }, 2500);
-  };
+      setTimeout(()=>{
+        copyBtn.classList.remove('copied');
+        copyBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar código Pix
+        `;
+      }, 2500);
+    };
+  }
 }
 
 // ── TYPING STATE ─────────────────────────────────────
