@@ -1797,7 +1797,7 @@ async function runConversation(startStep = 0) {
   saveChatHistory();
   
   // Aguarda 300ms após a exibição do card antes de começar a digitar
-  await pause(300);
+  await pause(900);
   
   await agentSay(`Estou acompanhando aqui. Assim que você concluir no banco, o pedido é aprovado automaticamente. 😊`, true, true);
 
