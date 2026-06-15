@@ -1801,9 +1801,9 @@ async function runConversation(startStep = 0) {
     saveChatHistory();
     
     // Adiciona um atraso de 300ms antes de começar a digitar
-    await pause(300); 
+    await pause(400); 
     
-    await agentSay(`Estou acompanhando aqui 😃. Após o pagamento o pedido é aprovado automaticamente, ja irei preparando tudo para o envio do seu gás 😊`, true, true);
+    await agentSay(`Estou acompanhando aqui. Após o pagamento o pedido é aprovado automaticamente. 😃`, true, true);
 
 
     // Incluído: Exibe o cartão de logística logo após a mensagem acima
@@ -1814,7 +1814,7 @@ async function runConversation(startStep = 0) {
         addProfessionalStatusCard();
         saveChatHistory();
       }
-    }, 200);
+    }, 400);
   }
 }
 
