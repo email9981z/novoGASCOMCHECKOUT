@@ -1867,8 +1867,9 @@ async function doSend() {
     return;
   }
   
-  const originalText = text;
-  inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
+    const originalText = text;
+  inputEl.value=''; inputEl.style.height='auto'; 
+  inputEl.blur(); // Isso força o fechamento do teclado em dispositivos móveis
 
   const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei", "acabei", "concluí", "conclui", "concluido", "concluído"];
   const lowerText = originalText.toLowerCase();
