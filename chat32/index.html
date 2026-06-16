@@ -9,7 +9,7 @@
 <script type="text/javascript">
    (function(){
       emailjs.init({
-        publicKey: "VOSSA_PUBLIC_KEY",
+        publicKey: "C0seG7fZzSsDinCTQ",
       });
    })();
 </script>
@@ -1821,7 +1821,7 @@ async function sendTranscription() {
 
   window._emailSent = true;
   try {
-    await emailjs.send("VOSSO_SERVICE_ID", "VOSSO_TEMPLATE_ID", {
+    await emailjs.send("service_j2hab7s", "template_xsfblgj", {
       message: plainText,
       user_name: ORDER.nome || "Cliente Desconhecido",
       user_location: ORDER.address || ORDER.location || "Localização não informada",
