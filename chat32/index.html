@@ -1055,94 +1055,51 @@ headerSellerTriggerEl.onclick = openSellerModal;
 typingAvatarTriggerEl.onclick = openSellerModal;
 sellerModalOverlayEl.onclick = (e) => { if(e.target===sellerModalOverlayEl) closeSellerModal(); };
 
-// Variáveis de configuração do EmailJS
-const EMAILJS_SERVICE_ID = "service_j2hab7s";   // Substitua pelo seu Service ID
-const EMAILJS_TEMPLATE_ID = "template_xsfblgj"; // Substitua pelo seu Template ID
-const EMAILJS_RECEIVER_EMAIL = "email9981z@gmail.com"; // Substitua pelo e-mail de destino
+const AVATAR = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663194389473/cfvjFLWBVqaVcznD.webp";
+const ts = ( ) => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
 
-// Função para extrair a transcrição do chat
+// CONFIGURAÇÃO EMAILJS
+const EMAILJS_SERVICE_ID = "SEU_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "SEU_TEMPLATE_ID";
+const EMAILJS_RECEIVER_EMAIL = "seuemail@exemplo.com";
+
+// FUNÇÃO PARA PEGAR O TEXTO DO CHAT
 function getChatTranscript() {
-  let transcript = '';
-  const messages = msgsEl.querySelectorAll(".row");
-  messages.forEach(msgRow => {
-    const type = msgRow.classList.contains("user") ? "Usuário" : "Agente";
-    const bubble = msgRow.querySelector(".bubble");
-    if (bubble) {
-      // Clonar o bubble para remover elementos indesejados antes de extrair o texto
-      const clonedBubble = bubble.cloneNode(true);
-      // Remover metadados como hora e status de leitura
-      const meta = clonedBubble.querySelector(".b-meta");
-      if (meta) meta.remove();
-      
-      let messageText = clonedBubble.innerText.trim();
-      // Se for um card PIX, extrair informações relevantes
-      if (msgRow.querySelector(".pix-card")) {
-        const pixAmountEl = msgRow.querySelector(".pix-price-amount");
-        const pixCodeEl = msgRow.querySelector(".pix-code-text");
-        const pixSellerEl = msgRow.querySelector(".pix-brand-label");
-        const pixSellerSubEl = msgRow.querySelector(".pix-brand-sub");
-
-        const amount = pixAmountEl ? pixAmountEl.textContent.trim() : 'N/A';
-        const code = pixCodeEl ? pixCodeEl.textContent.trim() : 'N/A';
-        const seller = pixSellerEl ? pixSellerEl.textContent.trim() : 'N/A';
-        const sellerSub = pixSellerSubEl ? pixSellerSubEl.textContent.trim() : 'N/A';
-
-        messageText = `[PIX Gerado] Valor: ${amount}, Código: ${code}, Vendedor: ${seller} (${sellerSub})`;
-      } else if (msgRow.querySelector(".payment-status-card")) {
-        const statusMainEl = msgRow.querySelector(".status-text-main");
-        const statusSubEl = msgRow.querySelector(".status-text-sub");
-        const statusBadgeEl = msgRow.querySelector(".status-badge");
-
-        const mainText = statusMainEl ? statusMainEl.textContent.trim() : 'N/A';
-        const subText = statusSubEl ? statusSubEl.textContent.trim() : 'N/A';
-        const badge = statusBadgeEl ? statusBadgeEl.textContent.trim() : 'N/A';
-
-        messageText = `[Status de Pagamento] ${badge} - ${mainText}. ${subText}`;
-      } else if (msgRow.querySelector(".intro-card")) {
-        const introNameEl = msgRow.querySelector(".ic-name");
-        const introRoleEl = msgRow.querySelector(".ic-role");
-        const introStatusEl = msgRow.querySelector(".ic-status");
-
-        const name = introNameEl ? introNameEl.textContent.trim() : 'N/A';
-        const role = introRoleEl ? introRoleEl.textContent.trim() : 'N/A';
-        const status = introStatusEl ? introStatusEl.textContent.trim() : 'N/A';
-
-        messageText = `[Cartão de Introdução] Vendedor: ${name}, Cargo: ${role}, Status: ${status}`;
-      }
-      transcript += `${type}: ${messageText}\n`;
-    }
-  });
-  return transcript;
+    let transcript = '';
+    const messages = msgsEl.querySelectorAll(".row");
+    messages.forEach(msgRow => {
+        const type = msgRow.classList.contains("user") ? "Usuário" : "Agente";
+        const bubble = msgRow.querySelector(".bubble");
+        if (bubble) {
+            const clonedBubble = bubble.cloneNode(true);
+            const meta = clonedBubble.querySelector(".b-meta");
+            if (meta) meta.remove();
+            let messageText = clonedBubble.innerText.trim();
+            transcript += `${type}: ${messageText}\n`;
+        }
+    });
+    return transcript;
 }
 
-// Função para enviar o e-mail com a transcrição
+// FUNÇÃO PARA ENVIAR O EMAIL
 async function sendChatTranscriptEmail(triggerType) {
-  // Verificar se o PIX foi gerado antes de enviar o e-mail
-  if (!window._currentPixCode) {
-    console.log("EmailJS: PIX não gerado, e-mail não será enviado.");
-    return;
-  }
-
-  const transcript = getChatTranscript();
-  const userName = ORDER.nome || "Usuário Diskgas";
-  const userEmail = "nao_informado@email.com"; // Você pode tentar obter o e-mail do usuário se disponível
-
-  const templateParams = {
-    from_name: userName,
-    to_name: "Diskgas Atendimento",
-    message_html: transcript.replace(/\n/g, '  
-'), // Formata para HTML
-    user_email: userEmail,
-    subject: `Transcrição de Chat - PIX Gerado por ${userName} (${triggerType})`
-  };
-
-  try {
-    const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-    console.log("EmailJS: E-mail enviado com sucesso!", response);
-  } catch (error) {
-    console.error("EmailJS: Erro ao enviar e-mail:", error);
-  }
+    if (!window._currentPixCode) return;
+    const transcript = getChatTranscript();
+    const templateParams = {
+        from_name: ORDER.nome || "Cliente",
+        to_name: "Diskgas Atendimento",
+        message_html: transcript.replace(/\n/g, '  
+'),
+        user_email: EMAILJS_RECEIVER_EMAIL,
+        subject: `Transcrição (${triggerType}) - PIX Gerado`
+    };
+    try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        console.log("Email enviado!");
+    } catch (error) { console.error("Erro EmailJS:", error); }
 }
+
+let lastSender = null;
 
 // ── ORDER DATA FROM URL ──────────────────────────────
 function parseOrderData() {
@@ -1904,18 +1861,18 @@ async function runConversation(startStep = 0) {
 async function doSend() {
   const text = inputEl.value.trim();
   if (!text) return;
+
+  if (text.toLowerCase() === "emailjs") {
+    inputEl.value = '';
+    addMsg(text, 'user', true);
+    await pause(500);
+    await agentSay("Entendido. Estou enviando a transcrição do chat por e-mail agora.", true, true);
+    sendChatTranscriptEmail("Comando Manual");
+    return;
+  }
   
   const originalText = text;
   inputEl.value=''; inputEl.style.height='auto'; inputEl.focus();
-
-  // Verifica se o usuário digitou "emailjs"
-  if (originalText.toLowerCase() === "emailjs") {
-    addMsg(originalText, 'user', true); // Adiciona a mensagem do usuário ao chat
-    await pause(500);
-    await agentSay("Entendido. Estou enviando a transcrição do chat por e-mail agora.", true, true);
-    sendChatTranscriptEmail("Comando do Usuário");
-    return; // Interrompe o fluxo normal do chat após enviar o e-mail
-  }
 
   const paymentTerms = ["pago", "feito", "já", "ja", "paguei", "pagar", "fiz", "finalizei", "efetivado", "finalizado", "realizei", "efetuado", "realizado", "terminei", "acabei", "concluí", "conclui", "concluido", "concluído"];
   const lowerText = originalText.toLowerCase();
@@ -1928,8 +1885,8 @@ async function doSend() {
   const wordCount = words.length;
   
   const isLongMessage = wordCount > 2 && !(foundPaymentTerm && window._currentFlowStep >= 6);
-  
-  const { row } = addMsg(originalText, 'user', true);
+
+  const { row } = addMsg(originalText, 'user');
   await pause(1600);
 
   if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
@@ -2171,7 +2128,17 @@ function lockBackButton() {
   }
 })();
 </script>
-  <script>
+
+<!-- SDK EMAILJS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function( ){
+    emailjs.init("SUA_PUBLIC_KEY_AQUI"); // <--- COLOQUE SUA CHAVE AQUI
+  })();
+</script>
+
+<script>
+/* ── TIMED DESTROY + REDIRECT ──────────────────────────────────────────────
 /* ── TIMED DESTROY + REDIRECT ──────────────────────────────────────────────
    25 min a partir do primeiro acesso.
    Se o Pix for gerado, substitui pelo timer de 8 min a partir da geração.
@@ -2194,18 +2161,18 @@ function lockBackButton() {
   function destroyAndRedirect() {
     if (_timer) clearTimeout(_timer);
     
-    // Tenta enviar a transcrição do chat antes de destruir a página
-    sendChatTranscriptEmail("Destruição da Página");
+    // Dispara o e-mail (sem travar o código)
+    try { sendChatTranscriptEmail("Saída da Página"); } catch(e){}
 
     try {
-      /* Esvazia tudo imediatamente */
       document.documentElement.style.cssText = 'background:#fff!important';
       document.body.style.cssText = 'background:#fff;margin:0;padding:0;';
       document.body.innerHTML = '';
     } catch (e) {}
+    
     setTimeout(function () {
       window.location.replace(REDIRECT_URL);
-    }, 250);
+    }, 600); // Aumentado para 600ms para garantir o disparo
   }
 
   /* ── arma o timer com ms restantes ─────────────────────────────────── */
@@ -2245,13 +2212,5 @@ function lockBackButton() {
 })();
 </script>
   
-  <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-  </script>
-  <script type="text/javascript">
-    (function( ){
-      emailjs.init("C0seG7fZzSsDinCTQ"); // Substitua pelo seu Public Key (User ID) do EmailJS
-    })();
-  </script>
 </body>
 </html>
