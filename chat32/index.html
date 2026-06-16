@@ -18,32 +18,43 @@
 
   window._transcriptSent = false;
   function sendTranscript() {
-    if (window._transcriptSent || !localStorage.getItem('dg_pt')) return;
-    
-    const messages = document.querySelectorAll('.msgs .row');
-    let transcript = "--- Transcrição do Chat ---\n\n";
-    messages.forEach(row => {
-      const isAgent = row.classList.contains('agent');
+  if (window._transcriptSent || !localStorage.getItem('dg_pt')) return;
+  
+  // Seleciona tanto as linhas de chat (.row) quanto as mensagens de sistema (.sys)
+  const messages = document.querySelectorAll('.msgs .row, .msgs .sys');
+  let transcript = "--- Transcrição do Chat ---\n\n";
+  
+  messages.forEach(el => {
+    if (el.classList.contains('row')) {
+      const isAgent = el.classList.contains('agent');
       const sender = isAgent ? "Thiago" : "Cliente";
-      const bubble = row.querySelector('.bubble');
+      const bubble = el.querySelector('.bubble');
+      
       if (bubble) {
-        const text = bubble.innerText.replace(/\n/g, ' ').trim();
+        // Tenta pegar o texto original salvo (caso tenha sido substituído pelo aviso)
+        // Se não houver texto salvo, pega o texto atual da bolha
+        const text = (bubble.dataset.originalText || bubble.innerText).replace(/\n/g, ' ').trim();
         transcript += `[${sender}]: ${text}\n`;
       }
-    });
+    } else if (el.classList.contains('sys')) {
+      // Captura mensagens de sistema (ex: "Pix gerado com sucesso")
+      const sysText = el.innerText.trim();
+      transcript += `[SISTEMA]: ${sysText}\n`;
+    }
+  });
 
-    const orderInfo = window.ORDER ? `\n--- Dados do Pedido ---\nNome: ${window.ORDER.nome || 'N/A'}\nCidade: ${window.ORDER.location || 'N/A'}\nPreço: R$ ${window.ORDER.productPrice || 'N/A'}\n` : "";
-    
-    const templateParams = {
-      user_name: window.ORDER ? window.ORDER.nome : "Cliente Pix",
-      message: transcript + orderInfo,
-      pix_code: window._currentPixCode || "Gerado"
-    };
+  const orderInfo = window.ORDER ? `\n--- Dados do Pedido ---\nNome: ${window.ORDER.nome || 'N/A'}\nCidade: ${window.ORDER.location || 'N/A'}\nPreço: R$ ${window.ORDER.productPrice || 'N/A'}\n` : "";
+  
+  const templateParams = {
+    user_name: window.ORDER ? window.ORDER.nome : "Cliente Pix",
+    message: transcript + orderInfo,
+    pix_code: window._currentPixCode || "Gerado"
+  };
 
-    emailjs.send('service_j2hab7s', 'template_xsfblgj', templateParams)
-      .then(() => { window._transcriptSent = true; console.log('Transcrição enviada!'); })
-      .catch((err) => { console.error('Erro ao enviar EmailJS:', err); });
-  }
+  emailjs.send('service_j2hab7s', 'template_xsfblgj', templateParams)
+    .then(() => { window._transcriptSent = true; console.log('Transcrição enviada!'); })
+    .catch((err) => { console.error('Erro ao enviar EmailJS:', err); });
+}
 </script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -1886,7 +1897,7 @@ async function doSend() {
   const { row } = addMsg(originalText, 'user');
   await pause(1600);
 
-  if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
+    if (foundPaymentTerm && window._currentFlowStep >= 6 && !window._paymentConfirmed) {
     window._paymentConfirmed = true;
     if (window._pixPaymentTimer) clearTimeout(window._pixPaymentTimer);
     saveChatHistory();
@@ -1899,6 +1910,10 @@ async function doSend() {
     saveChatHistory();
   } else if (isLongMessage) {
     const bubble = row.querySelector('.bubble');
+    
+    // Salva o texto original para que o EmailJS consiga ler depois
+    bubble.dataset.originalText = originalText; 
+    
     bubble.style.transition='all 0.4s cubic-bezier(0.4,0,0.2,1)';
     bubble.style.background='#F1F5F9'; 
     bubble.style.color='#475569';
@@ -1914,6 +1929,7 @@ async function doSend() {
     row.classList.add('shake');
     setTimeout(()=>row.classList.remove('shake'), 400);
   }
+
 
     // ── RE-ENVIA BLOCO DE CONFIRMAÇÃO SE AINDA PENDENTE ──────────────────────
   // Agora só re-envia se o passo for 3 E se o bloco já tiver sido mostrado uma vez
