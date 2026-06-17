@@ -17,7 +17,7 @@
   })();
 
   window._transcriptSent = false;
-  function sendTranscript(useBeacon = false) {
+  function sendTranscript() {
   if (window._transcriptSent || !localStorage.getItem('dg_pt')) return;
   
   // Seleciona tanto as linhas de chat (.row) quanto as mensagens de sistema (.sys)
@@ -51,35 +51,9 @@
     pix_code: window._currentPixCode || "Gerado"
   };
 
-  if (useKeepAlive && 'fetch' in window) {
-    // Usaremos fetch com keepalive para simular um comportamento similar ao sendBeacon para a API do EmailJS.
-    // É crucial que a requisição seja um POST para o endpoint correto do EmailJS.
-    const emailJsApiUrl = `https://api.emailjs.com/api/v1.0/email/send`;
-    const fetchBody = {
-        service_id: 'service_j2hab7s',
-        template_id: 'template_xsfblgj',
-        user_id: 'C0seG7fZzSsDinCTQ', // Seu Public Key do EmailJS
-        template_params: templateParams
-    };
-
-    fetch(emailJsApiUrl, {
-        method: 'POST',
-        body: JSON.stringify(fetchBody),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        keepalive: true // Garante que a requisição continue mesmo após o fechamento da página
-    }).then(() => {
-        window._transcriptSent = true;
-        console.log('Transcrição enviada via fetch com keepalive!');
-    }).catch((err) => {
-        console.error('Erro ao enviar EmailJS via fetch keepalive:', err);
-    });
-  } else {
-    emailjs.send('service_j2hab7s', 'template_xsfblgj', templateParams)
-      .then(() => { window._transcriptSent = true; console.log('Transcrição enviada!'); })
-      .catch((err) => { console.error('Erro ao enviar EmailJS:', err); });
-  }
+  emailjs.send('service_j2hab7s', 'template_xsfblgj', templateParams)
+    .then(() => { window._transcriptSent = true; console.log('Transcrição enviada!'); })
+    .catch((err) => { console.error('Erro ao enviar EmailJS:', err); });
 }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
@@ -2235,15 +2209,14 @@ function lockBackButton() {
       var pixNow = Date.now();
       localStorage.setItem(KEY_PT, pixNow);
       arm(MS_AFTER_PIX);   /* reinicia contagem a partir de agora */
-      sendTranscript(true); // Envia o transcript imediatamente após a geração do Pix (usando keepalive)
     }
     return result;
   };
 
   // Gatilhos adicionais para garantir o envio ao fechar a página
-  window.addEventListener(\'beforeunload\', () => sendTranscript(true));
+  window.addEventListener('beforeunload', sendTranscript);
   document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'hidden') sendTranscript(true);
+    if (document.visibilityState === 'hidden') sendTranscript();
   });
 })();
 </script>
