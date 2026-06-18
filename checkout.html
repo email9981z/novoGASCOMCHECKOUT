@@ -528,21 +528,36 @@
       });
     })();
 
-    function extrairLocalizacao(full) {
+            function extrairLocalizacao(full) {
       if (!full) return '';
-      var loc = full;
-      var partesHifen = full.split('-');
-      if (partesHifen.length >= 2) {
-        loc = partesHifen[1].split(',')[0].trim();
-      } else {
-        var partesVirgula = full.split(',');
-        if (partesVirgula.length >= 3) {
-          loc = partesVirgula[2].trim();
-        } else if (partesVirgula.length >= 2) {
-          loc = partesVirgula[1].trim();
+      
+      var partesVirgula = full.split(',').map(function(p) { return p.trim(); });
+      var city = '', neighborhood = '';
+
+      // 1. Pega a Cidade (da última parte antes da UF)
+      if (partesVirgula.length > 0) {
+        var ultima = partesVirgula[partesVirgula.length - 1];
+        if (ultima.includes('/')) city = ultima.split('/')[0].trim();
+      }
+
+      // 2. Pega o Bairro (da penúltima parte, limpando complementos)
+      if (partesVirgula.length >= 2) {
+        var blocoBairro = partesVirgula[partesVirgula.length - 2];
+        if (blocoBairro.includes('-')) {
+          var sub = blocoBairro.split('-').map(function(s) { return s.trim(); });
+          neighborhood = sub[sub.length - 1];
+        } else {
+          neighborhood = blocoBairro;
         }
       }
-      return loc.replace(/^[0-9\sºnN.]+/g, '').trim() || full;
+      if (neighborhood) neighborhood = neighborhood.replace(/^[0-9\sºnN.]+/g, '').trim();
+
+      // 3. Retorna o que tiver menos caracteres (Bairro ou Cidade)
+      if (neighborhood && city) {
+        return (neighborhood.length <= city.length) ? neighborhood : city;
+      }
+      
+      return neighborhood || city || full;
     }
 
     function extrairSiglaEstado(full) {
