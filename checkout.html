@@ -606,6 +606,7 @@
 
         var montarUrl = function() {
           var tp = new URLSearchParams();
+          tp.set('exibicaoativa', '1');
           tp.set('subtotal', subtotal || '0.00');
           if (address)  tp.set('address',       address);
           if (cep)      tp.set('cep',           cep);
