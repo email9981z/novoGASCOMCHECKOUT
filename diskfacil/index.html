@@ -987,6 +987,7 @@ confirmPaymentBtn.addEventListener('click', () => {
     }));
 
     const params = new URLSearchParams({
+        exibicaoativa: '1',
         subtotal:      subtotal.toFixed(2),
         products:      JSON.stringify(productsData),
         address:       `${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''} - ${addressData.bairro}, ${addressData.localidade}/${addressData.uf}`,
