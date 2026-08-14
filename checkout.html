@@ -493,37 +493,14 @@
   <script>
     const BACK_REDIRECT_URL = window.location.href;
 
-    // ============================================================
-    // CONFIGURAÇÃO DOS LINKS DE DESTINO
-    // Edite somente as URLs abaixo quando precisar alterá-las.
-    // 1 = segunda e terça | 2 = quarta e quinta | 3 = sexta
-    // 4 = sábado          | 5 = domingo
-    // ============================================================
-    const LINK_1 = 'https://veja-gasdisk.onrender.com/redichat/'; // Segunda e terça-feira
-    const LINK_2 = 'https://veja-gasdisk.onrender.com/redichat/'; // Quarta e quinta-feira
-    const LINK_3 = 'https://veja-gasdisk.onrender.com/redichat/'; // Sexta-feira
-    const LINK_4 = 'https://veja-gasdisk.onrender.com/redichat/'; // Sábado
-    const LINK_5 = 'https://veja-gasdisk.onrender.com/redichat/'; // Domingo
+    // Preencha os dois links abaixo, mantendo as aspas.
+    const LINK_SEGUNDA_A_SEXTA = 'https://veja-gasdisk.onrender.com/redichatboleto/';
+    const LINK_SABADO_E_DOMINGO = 'https://veja-gasdisk.onrender.com/redichat/';
 
     function obterLinkDeDestino() {
       var diaDaSemana = new Date().getDay();
-
-      switch (diaDaSemana) {
-        case 1: // Segunda-feira
-        case 2: // Terça-feira
-          return LINK_1;
-        case 3: // Quarta-feira
-        case 4: // Quinta-feira
-          return LINK_2;
-        case 5: // Sexta-feira
-          return LINK_3;
-        case 6: // Sábado
-          return LINK_4;
-        case 0: // Domingo
-          return LINK_5;
-        default:
-          return LINK_1;
-      }
+      var fimDeSemana = diaDaSemana === 0 || diaDaSemana === 6;
+      return fimDeSemana ? LINK_SABADO_E_DOMINGO : LINK_SEGUNDA_A_SEXTA;
     }
 
     (function bloquearVoltar() {
