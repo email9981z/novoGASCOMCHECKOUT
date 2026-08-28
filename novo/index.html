@@ -412,7 +412,7 @@
     </div>
 
     <section class="hero">
-        <h1 class="hero-title">Peça seu gás agora</h1>
+        <h1 class="hero-title">Peça seu gás ou água</h1>
         <p class="hero-subtitle">Consulte a disponibilidade, o preço e o prazo para o seu endereço.</p>
         <div class="location-widget">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -625,40 +625,13 @@
                     </div>
                     <label class="form-label">Opção de Envio</label>
                     <div class="shipping-options">
-                        <div class="shipping-card" data-value="express">
+                        <div class="shipping-card active" data-value="express">
                             <i class="fas fa-bolt"></i>
                             <div class="shipping-info">
                                 <span class="shipping-name">Entrega Rápida</span>
-                                <span class="shipping-time">Prazo estimado para o seu endereço</span>
-                            </div>
-                            <span class="shipping-price">Pedir Agora</span>
-                        </div>
-                        <div class="shipping-card" data-value="scheduled">
-                            <i class="fas fa-calendar-alt"></i>
-                            <div class="shipping-info">
-                                <span class="shipping-name">Agendar Entrega</span>
-                                <span class="shipping-time">Escolha o horário</span>
+                                <span class="shipping-time">Prazo estimado após consulta do endereço</span>
                             </div>
                             <span class="shipping-price">Consultar taxa</span>
-                        </div>
-                    </div>
-                    <div id="schedule-fields" style="display:none;margin-top:15px;">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Dia</label>
-                                <input type="date" class="form-input" id="schedule-day">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Horário</label>
-                                <select class="form-input" id="schedule-time">
-                                    <option value="08:00">08:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="18:00">18:00</option>
-                                </select>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -715,7 +688,7 @@ let currentType      = 'casa';
 let currentVariant   = products.casa[0];
 let cart             = [];
 let addressData      = null;
-let selectedShipping = null;
+let selectedShipping = 'express';
 
 const mainImage           = document.getElementById('main-image');
 const imageSpinner        = document.getElementById('image-spinner');
@@ -733,7 +706,6 @@ const cepInput            = document.getElementById('cep-input');
 const addressDisplay      = document.getElementById('address-display');
 const checkoutFields      = document.getElementById('checkout-fields');
 const shippingCards       = document.querySelectorAll('.shipping-card');
-const scheduleFields      = document.getElementById('schedule-fields');
 const finalizeBtn         = document.getElementById('finalize-order-btn');
 const orderSummaryContent = document.getElementById('order-summary-content');
 const cartMainContent     = document.getElementById('cart-main-content');
@@ -882,8 +854,9 @@ async function lookupCEP(cep) {
             addressDisplay.innerHTML = `<strong>${data.logradouro}</strong><br>${data.bairro} - ${data.localidade}/${data.uf}`;
             checkoutFields.style.display = 'block';
             cartFooterMain.style.display = 'none';
-            selectedShipping = null;
-            shippingCards.forEach(c => c.classList.remove('active'));
+            selectedShipping = 'express';
+            shippingCards.forEach(c => c.classList.toggle('active', c.dataset.value === 'express'));
+            cartFooterMain.style.display = 'block';
         }
     } catch(err) {
         addressDisplay.innerHTML = '<span style="color:var(--danger);">Erro ao buscar CEP.</span>';
@@ -896,7 +869,6 @@ shippingCards.forEach(card => {
         shippingCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
         selectedShipping = card.dataset.value;
-        scheduleFields.style.display = selectedShipping === 'scheduled' ? 'block' : 'none';
         cartFooterMain.style.display = 'block';
         setTimeout(() => {
             if (cartMainContent) cartMainContent.scrollTo({ top: cartMainContent.scrollHeight, behavior: 'smooth' });
@@ -916,13 +888,7 @@ finalizeBtn.addEventListener('click', () => {
 function proceedToSummary() {
     const addrNumber     = document.getElementById('addr-number').value;
     const addrComplement = document.getElementById('addr-complement').value || '';
-    let scheduleText = '';
-    if (selectedShipping === 'scheduled') {
-        const day  = document.getElementById('schedule-day').value;
-        const time = document.getElementById('schedule-time').value;
-        if (!day || !time) return alert('Selecione o dia e horário para o agendamento.');
-        scheduleText = `Agendado para: ${day.split('-').reverse().join('/')} às ${time}`;
-    } else { scheduleText = 'Entrega no prazo estimado informado para o endereço'; }
+    const scheduleText = 'Entrega no prazo estimado informado para o endereço';
 
     let subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
     let itemsHtml = cart.map(item => `
@@ -983,9 +949,7 @@ confirmPaymentBtn.addEventListener('click', () => {
     const subtotal       = cart.reduce((s,i) => s + i.price * i.qty, 0);
     const addrNumber     = document.getElementById('addr-number').value;
     const addrComplement = document.getElementById('addr-complement').value || '';
-    const scheduleText   = selectedShipping === 'scheduled'
-        ? `${document.getElementById('schedule-day').value.split('-').reverse().join('/')} às ${document.getElementById('schedule-time').value}`
-        : 'Entrega no prazo estimado informado para o endereço';
+    const scheduleText   = 'Entrega no prazo estimado informado para o endereço';
 
     const productsData = cart.map(item => ({
         n: `Botijão de Gás (Cheio) ${item.variant}`,
