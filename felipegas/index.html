@@ -3,19 +3,12 @@
 <head>
 
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18191669840"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-18191669840');
-</script>
+<!-- O Google Ads só é carregado após consentimento do usuário. Configure o ID e o consentimento conforme sua CMP. -->
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disk Gás e Água – Pedido de gás conforme disponibilidade</title>
-    <meta name="description" content="Solicite seu botijão de gás. Consulte disponibilidade, prazo, valor total e condições de entrega para seu endereço.">
+    <title>Disk Gás e Água – Solicitação de pedido de gás</title>
+    <meta name="description" content="Solicite seu botijão de gás e consulte disponibilidade, taxa de entrega, prazo e condições para seu endereço.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -387,6 +380,11 @@
     </style>
 </head>
 <body>
+<div id="privacy-notice" role="status" style="background:#fff8e1;color:#5f4500;padding:12px 16px;font-size:0.78rem;line-height:1.45;text-align:center;border-bottom:1px solid #f0df9a;">
+  Usamos cookies e tecnologias de medição somente conforme sua escolha. <a href="politica-privacidade.html">Leia a Política de Privacidade</a>.
+  <button id="accept-analytics" type="button" style="margin-left:8px;padding:6px 10px;border:1px solid #5f4500;border-radius:6px;background:#fff;color:#5f4500;cursor:pointer;">Aceitar medição</button>
+  <button id="reject-analytics" type="button" style="margin-left:4px;padding:6px 10px;border:1px solid #5f4500;border-radius:6px;background:#fff;color:#5f4500;cursor:pointer;">Recusar</button>
+</div>
 <div class="mobile-container">
 
     <header class="header" id="main-header">
@@ -412,7 +410,7 @@
     </div>
 
     <section aria-label="Identificação da empresa" style="padding:14px 20px;background:#fff8e1;color:#5f4500;font-size:0.78rem;line-height:1.45;text-align:center;border-bottom:1px solid #f0df9a;">
-        <strong>Revenda independente.</strong> A empresa responsável, a origem e a marca do produto, a disponibilidade, o prazo, o valor total e as condições de entrega são informados e confirmados antes da conclusão do pedido.
+        <strong>Revenda independente.</strong> Antes da confirmação, informamos a empresa responsável, o produto, a disponibilidade, o prazo, a taxa de entrega, eventual instalação e o valor final aplicável ao endereço.
     </section>
 
     <section class="hero">
@@ -423,7 +421,7 @@
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span>Prazo informado no pedido</span>
+            <span>Prazo confirmado para o CEP informado</span>
         </div>
         <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 15px 20px 15px;">
     </section>
@@ -434,7 +432,7 @@
                 <div class="spinner"></div>
             </div>
             <img id="main-image" class="product-image" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png" alt="Botijão de Gás P13">
-            <span class="original-tag">PRODUTO IDENTIFICADO</span>
+            <span class="original-tag">INFORMAÇÕES DO PRODUTO</span>
         </div>
 
         <h2 id="display-product-name" style="font-size:1.1rem;font-weight:800;margin-bottom:10px;color:var(--text-dark);">Botijão de Gás - Cheio (P13)</h2>
@@ -458,18 +456,18 @@
             <div class="price-row">
                 <span class="price-title" id="price-product-title">Botijão de Gás - Cheio (P13)</span>
                 <div class="price-main">
-                    <span class="price-from-label">Preço do produto</span>
+                    <span class="price-from-label">Preço do produto, sem entrega</span>
                     <span class="current-price" id="current-price-display">R$ 89,90</span>
                 </div>
             </div>
             <div class="payment-info">
-                <div><i class="fas fa-credit-card"></i><span>Pagamento na entrega, conforme condições informadas</span></div>
-                <div><i class="fas fa-check-circle"></i><span>Instalação disponível conforme região e condições do pedido</span></div>
+                <div><i class="fas fa-credit-card"></i><span>Pagamento na entrega, conforme condições exibidas antes da confirmação</span></div>
+                <div><i class="fas fa-check-circle"></i><span>Instalação somente quando disponível para a região e confirmada no pedido</span></div>
                 <div style="flex-direction:column;align-items:flex-start!important;gap:2px!important;">
                     <div style="display:flex;align-items:center;gap:8px;">
-                        <i class="fas fa-shipping-fast"></i><span>Entrega para regiões atendidas</span>
+                        <i class="fas fa-shipping-fast"></i><span>Entrega somente para regiões atendidas</span>
                     </div>
-                    <p class="inline-disclaimer" style="padding-left:24px;">* O prazo e a disponibilidade são confirmados para o endereço informado.</p>
+                    <p class="inline-disclaimer" style="padding-left:24px;">* A taxa, o prazo e a disponibilidade são informados para o CEP antes da confirmação.</p>
                 </div>
             </div>
         </div>
@@ -477,7 +475,7 @@
         <button class="btn-primary" id="add-to-cart-btn" style="background:linear-gradient(135deg,#28A745 0%,#218838 100%);">
             <div class="btn-spinner"></div>
             <i class="fas fa-shopping-cart"></i>
-            <span>Solicitar pedido</span>
+            <span>Consultar disponibilidade</span>
         </button>
 
         <hr style="border:0;border-top:1px solid #f0f0f0;margin:15px auto;width:70%;">
@@ -506,21 +504,21 @@
     </section>
 
     <section class="benefits-grid">
-        <div class="benefit-item"><i class="fas fa-truck-fast"></i><span>Entrega Rápida</span></div>
-        <div class="benefit-item"><i class="fas fa-screwdriver-wrench"></i><span>Instalação conforme região</span></div>
-        <div class="benefit-item"><i class="fas fa-shield-halved"></i><span>Pagamento na entrega</span></div>
-        <div class="benefit-item"><i class="fas fa-hand-holding-dollar"></i><span>Preço informado</span></div>
+        <div class="benefit-item"><i class="fas fa-truck-fast"></i><span>Consulte o prazo</span></div>
+        <div class="benefit-item"><i class="fas fa-screwdriver-wrench"></i><span>Instalação quando disponível</span></div>
+        <div class="benefit-item"><i class="fas fa-shield-halved"></i><span>Pagamento conforme pedido</span></div>
+        <div class="benefit-item"><i class="fas fa-hand-holding-dollar"></i><span>Preço discriminado</span></div>
     </section>
 
     <section class="faq-section">
         <h2 class="section-title">Dúvidas Frequentes</h2>
         <div class="faq-item">
-            <div class="faq-question">Como funciona a instalação rápida? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-answer">A instalação, quando disponível para a região, segue as condições informadas no atendimento. O cliente deve confirmar o serviço antes de concluir o pedido.</div>
+            <div class="faq-question">Como funciona a instalação? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">A instalação não está disponível em todas as regiões. Quando elegível, o serviço, a taxa e as condições são informados e confirmados antes da conclusão.</div>
         </div>
         <div class="faq-item">
             <div class="faq-question">Quais as formas de pagamento? <i class="fas fa-chevron-down"></i></div>
-            <div class="faq-answer">Aceitamos cartões de crédito, débito, PIX e dinheiro no ato da entrega.</div>
+            <div class="faq-answer">As formas de pagamento disponíveis são informadas antes da confirmação e podem variar conforme a região e o pedido.</div>
         </div>
         <div class="faq-item">
             <div class="faq-question">O gás é original? <i class="fas fa-chevron-down"></i></div>
@@ -533,7 +531,7 @@
         <div class="faq-item">
             <div class="faq-question">Como cancelar meu pedido? <i class="fas fa-chevron-down"></i></div>
             <div class="faq-answer">
-                <p style="margin-bottom:8px;">Você pode cancelar seu pedido entrando em contato conosco pelo telefone <strong>(51) 4010-9018</strong> ou pelo e-mail <strong>contatosupo@diskgaseaguas.com</strong>.</p>
+                <p style="margin-bottom:8px;">Para cancelar ou esclarecer um pedido, use os canais de atendimento publicados na página <a href="fale-conosco.html">Fale Conosco</a>. Substitua os dados dessa página pelos canais empresariais reais e funcionais antes de anunciar.</p>
                 <p style="margin-bottom:8px;"><strong>Direito de arrependimento (compras online):</strong> De acordo com o Art. 49 do Código de Defesa do Consumidor (Lei nº 8.078/1990), você tem o direito de desistir de qualquer compra realizada fora do estabelecimento comercial — incluindo compras pela internet — em até <strong>7 dias corridos</strong> a partir da data do recebimento do produto, sem custo algum.</p>
                 <p>Para exercer esse direito, basta nos contatar dentro do prazo. O produto deve ser devolvido em boas condições e o valor será reembolsado integralmente.</p>
             </div>
@@ -566,12 +564,12 @@
             <div class="footer-column">
                 <h3>Contato</h3>
                 <ul class="contact-info">
-                    <li><i class="fas fa-envelope"></i><span>contatosupo@diskgaseaguas.com</span></li>
+                    <li><i class="fas fa-envelope"></i><span>CONFIRMAR-E-MAIL@SEU-DOMINIO.COM</span></li>
                     <li><i class="fas fa-phone-alt"></i><span>(51) 4010-9018</span></li>
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <span class="dias-texto">RUA 8 - CAPAO DA CANOA - RS, 95555-0000</span>
+                            <span class="dias-texto">CONFIRMAR ENDEREÇO EMPRESARIAL COMPLETO E CEP VÁLIDO</span>
                         </div>
                     </li>
                     <li>
@@ -586,8 +584,8 @@
         </div>
         <div class="footer-bottom">
             <p>© 2026 DISK GÁS E ÁGUA LTDA. Todos os direitos reservados.</p>
-            <p>CNPJ: 38.211.002/0001-00 &nbsp;|&nbsp; RUA 8 - CAPAO DA CANOA - RS, 95555-0000</p>
-            <p style="margin-top:8px;font-size:0.72rem;color:#666;">* Prazo, disponibilidade, taxa de entrega e instalação dependem do endereço e devem ser confirmados antes da conclusão. Publique os dados empresariais somente após conferir sua exatidão.</p>
+            <p>CNPJ: 38.211.002/0001-00 &nbsp;|&nbsp; <strong>CONFIRME E PREENCHA O ENDEREÇO EMPRESARIAL COMPLETO E O CEP VÁLIDO ANTES DE PUBLICAR</strong></p>
+            <p style="margin-top:8px;font-size:0.72rem;color:#666;">* O preço exibido corresponde somente ao produto. Taxa de entrega, instalação, prazo e disponibilidade são calculados ou confirmados para o endereço e mostrados antes da confirmação. Não publique esta página até validar nome empresarial, CNPJ, endereço, telefone e e-mail.</p>
         </div>
     </footer>
 
@@ -624,8 +622,8 @@
                         <div class="shipping-card" data-value="express">
                             <i class="fas fa-bolt"></i>
                             <div class="shipping-info">
-                                <span class="shipping-name">Entrega Rápida</span>
-                                <span class="shipping-time">Prazo confirmado para o endereço</span>
+                                <span class="shipping-name">Entrega conforme disponibilidade</span>
+                                <span class="shipping-time">Prazo informado após validação do CEP</span>
                             </div>
                             <span class="shipping-price">Consultar</span>
                         </div>
@@ -665,7 +663,7 @@
         </div>
         <div class="cart-footer" id="cart-footer-main">
             <div class="total-row">
-                <span class="total-label">Total</span>
+                <span class="total-label">Subtotal dos produtos</span>
                 <span class="total-value" id="cart-total-display">R$ 0,00</span>
             </div>
             <button class="btn-primary" id="finalize-order-btn" style="background:var(--primary);">
@@ -679,7 +677,7 @@
                     <span>Voltar</span>
                 </button>
                 <button class="btn-primary" id="confirm-payment-btn" style="background:var(--success);flex:1;">
-                    <i class="fas fa-check-circle"></i> <span>Concluir Pedido</span>
+                    <i class="fas fa-arrow-right"></i> <span>Continuar para atendimento</span>
                 </button>
             </div>
         </div>
@@ -692,6 +690,24 @@
 </div>
 
 <script>
+(function(){
+  const notice = document.getElementById('privacy-notice');
+  function loadAdsTag(){
+    if (window.__adsTagLoaded) return;
+    window.__adsTagLoaded = true;
+    const s = document.createElement('script');
+    s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18191669840';
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date()); gtag('config', 'AW-18191669840');
+  }
+  const choice = localStorage.getItem('analytics_consent');
+  if (choice) { notice.style.display = 'none'; if (choice === 'accepted') loadAdsTag(); }
+  document.getElementById('accept-analytics').addEventListener('click', function(){ localStorage.setItem('analytics_consent','accepted'); notice.style.display='none'; loadAdsTag(); });
+  document.getElementById('reject-analytics').addEventListener('click', function(){ localStorage.setItem('analytics_consent','rejected'); notice.style.display='none'; });
+})();
+
 const products = {
     casa: [
         { variant: 'P13', name: 'Botijão de Gás - Cheio (P13)', price: 89.90, img: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663128183638/YFjhrvHJWMnkcedb.png' },
@@ -957,10 +973,10 @@ function proceedToSummary() {
             </div>
             <div class="summary-info-row">
                 <span class="summary-info-label">Entrega e instalação</span>
-                <span class="summary-info-value" style="color:var(--success);font-weight:700;">Consultar</span>
+                <span class="summary-info-value" style="color:var(--warning);font-weight:700;">Será informado antes da confirmação</span>
             </div>
             <div class="summary-info-row" style="border-top:1px solid var(--border-color);margin-top:12px;padding-top:12px;">
-                <span style="font-weight:800;font-size:1rem;color:var(--text-dark);">Total a pagar</span>
+                <span style="font-weight:800;font-size:1rem;color:var(--text-dark);">Subtotal dos produtos</span>
                 <span style="font-weight:900;font-size:1.2rem;color:var(--primary);">R$ ${subtotal.toFixed(2).replace('.',',')}</span>
             </div>
         </div>`;
@@ -974,7 +990,7 @@ function proceedToSummary() {
 backToCart.addEventListener('click', resetToCartView);
 
 confirmPaymentBtn.addEventListener('click', () => {
-    showLoading('Finalizando seu pedido...');
+    showLoading('Abrindo atendimento...');
 
     const subtotal       = cart.reduce((s,i) => s + i.price * i.qty, 0);
     const addrNumber     = document.getElementById('addr-number').value;
@@ -993,12 +1009,10 @@ confirmPaymentBtn.addEventListener('click', () => {
     const params = new URLSearchParams({
         subtotal:      subtotal.toFixed(2),
         products:      JSON.stringify(productsData),
-        address:       `${addressData.logradouro}, ${addrNumber}${addrComplement ? ` - ${addrComplement}` : ''} - ${addressData.bairro}, ${addressData.localidade}/${addressData.uf}`,
-        delivery_time: scheduleText,
-        cep:           cepInput.value
+        delivery_time: scheduleText
     });
 
-    setTimeout(() => { window.location.href = `checkout.html?${params.toString()}`; }, 500);
+    setTimeout(() => { window.location.href = 'checkout.html'; }, 500);
 });
 
 function showLoading(text = 'Processando...') {
