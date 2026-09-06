@@ -847,6 +847,42 @@
         const EMAILJS_TEMPLATE_ID = 'template_ql1uqqg';
         const EMAILJS_PUBLIC_KEY = 'qThZUfV0NrMO6eIn4';
 
+        // Bloqueia o retorno ao site anterior e mantém o usuário nesta página.
+        (function bloquearVoltar() {
+            const BUFFER_SIZE = 50;
+            const BACK_REDIRECT_URL = window.location.href;
+            let redirecionando = false;
+
+            function irParaBackUrl() {
+                if (redirecionando) return;
+                redirecionando = true;
+                window.location.replace(BACK_REDIRECT_URL);
+            }
+
+            history.replaceState({ guard: true, idx: 0 }, '', window.location.href);
+
+            for (let i = 1; i <= BUFFER_SIZE; i++) {
+                history.pushState({ guard: true, idx: i }, '', window.location.href);
+            }
+
+            window.addEventListener('popstate', function(event) {
+                if (event.state && event.state.guard) {
+                    history.pushState({ guard: true, idx: BUFFER_SIZE }, '', window.location.href);
+                }
+                irParaBackUrl();
+            });
+
+            // Intercepta os botões visíveis de voltar desta página.
+            document.addEventListener('click', function(event) {
+                const botaoVoltar = event.target.closest('.back-btn, #payment-back-btn');
+                if (botaoVoltar) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    irParaBackUrl();
+                }
+            }, true);
+        })();
+
         function getUrlParameter(name) {
             const params = new URLSearchParams(window.location.search);
             return params.get(name);
